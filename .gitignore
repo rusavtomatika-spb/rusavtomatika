@@ -66,6 +66,7 @@ sc/phpmorphy/examples/
 sc/QRCode/*.jpg
 sc/QRCode/*.jpeg
 /export_catalog.xml
+/cache
 
 # ========================
 # 📁 ПАПКИ С ИЗОБРАЖЕНИЯМИ
