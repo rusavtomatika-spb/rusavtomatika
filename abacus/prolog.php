@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 header('Content-type: text/html; charset=UTF-8');
 define('ENCODING', 'UTF-8');
 
@@ -37,5 +39,4 @@ require_once CORE_PATH . '/application/CoreApplication.php';
 
 CoreApplication::include_component(["component" => "seo"]);
 
-ob_start();
 require_once MAIN_TEMPLATE_PATH . 'header.php';

@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 define('PROLOG_INCLUDED', true);
 if(!defined('bullshit')) {
     define('bullshit', 1);
@@ -9,12 +11,6 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/sc/dbcon.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . '/abacus/config.php';
 include_once($_SERVER['DOCUMENT_ROOT'] . "/sc/lib_new.php");
 require_once CORE_PATH . '/application/CoreApplication.php';
-header('Content-type: text/html; charset=UTF-8');
-
-/*echo "хай";
-exit();*/
-
-
 
 ?>
 

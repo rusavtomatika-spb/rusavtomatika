@@ -295,7 +295,6 @@ footer {
   footer {
     padding: 0.75rem 1rem 0.75rem;
   }
-
   body.current_page_ .padding_wrapper .has-background-light {
     margin-left: -1rem;
     margin-right: -1rem;
@@ -330,7 +329,6 @@ footer {
     width: 40px !important;
     border-radius: 50%;
   }
-
   #topcontrol__arrow {
     top: -3px;
     font-size: 40px;
@@ -546,14 +544,12 @@ iframe {
     margin: 20px auto;
     max-width: 100%;
   }
-
   .image-align-left {
     display: block;
     float: none;
     margin: 20px auto;
     max-width: 100%;
   }
-
   iframe {
     max-width: 100%;
   }
@@ -881,11 +877,9 @@ footer ul, footer li {
     padding-left: 0rem;
     padding-right: 0rem;
   }
-
   main {
     padding-top: 1px;
   }
-
   html {
     font-size: 14px;
   }
@@ -899,7 +893,6 @@ footer ul, footer li {
   main {
     overflow: hidden;
   }
-
   h1 {
     font-size: 1.5rem;
   }
@@ -908,6 +901,4 @@ footer ul, footer li {
   h1 {
     font-size: 1.25rem;
   }
-}
-
-/*# sourceMappingURL=template_styles.css.map */
+}/*# sourceMappingURL=template_styles.css.map */

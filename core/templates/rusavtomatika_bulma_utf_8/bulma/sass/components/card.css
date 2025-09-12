@@ -1,9 +1,9 @@
 /*$blue:         hsl(229, 53%,  53%) !default*/
 .card {
-  background-color: white;
+  background-color: hsl(0, 0%, 100%);
   border-radius: 0.25rem;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-  color: #4a4a4a;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10.2, 10.2, 10.2, 0.1), 0 0px 0 1px rgba(10.2, 10.2, 10.2, 0.02);
+  color: hsl(0, 0%, 29%);
   max-width: 100%;
   position: relative;
 }
@@ -20,13 +20,13 @@
 .card-header {
   background-color: transparent;
   align-items: stretch;
-  box-shadow: 0 0.125em 0.25em rgba(10, 10, 10, 0.1);
+  box-shadow: 0 0.125em 0.25em rgba(10.2, 10.2, 10.2, 0.1);
   display: flex;
 }
 
 .card-header-title {
   align-items: center;
-  color: #363636;
+  color: hsl(0, 0%, 21%);
   display: flex;
   flex-grow: 1;
   font-weight: 700;
@@ -74,7 +74,7 @@
 
 .card-footer {
   background-color: transparent;
-  border-top: 1px solid #ededed;
+  border-top: 1px solid hsl(0, 0%, 93%);
   align-items: stretch;
   display: flex;
 }
@@ -89,11 +89,9 @@
   padding: 0.75rem;
 }
 .card-footer-item:not(:last-child) {
-  border-right: 1px solid #ededed;
+  border-right: 1px solid hsl(0, 0%, 93%);
 }
 
 .card .media:not(:last-child) {
   margin-bottom: 1.5rem;
-}
-
-/*# sourceMappingURL=card.css.map */
+}/*# sourceMappingURL=card.css.map */

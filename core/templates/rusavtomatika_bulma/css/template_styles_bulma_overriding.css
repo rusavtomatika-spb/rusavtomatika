@@ -68,6 +68,10 @@ a.box:hover, a.box:focus {
   margin: 0.5rem 0;
 }
 
+strong {
+  color: inherit !important;
+}
+
 @media (max-width: 768px) {
   .button.is-small-mobile {
     font-size: 0.75rem;
@@ -75,6 +79,4 @@ a.box:hover, a.box:focus {
   .button.is-small-mobile .icon_hamburger {
     width: 10px;
   }
-}
-
-/*# sourceMappingURL=template_styles_bulma_overriding.css.map */
+}/*# sourceMappingURL=template_styles_bulma_overriding.css.map */

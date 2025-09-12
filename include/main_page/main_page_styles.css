@@ -134,7 +134,7 @@ section.cloud_tags {
 .company_pluses_item {
   display: block;
   text-decoration: none;
-  color: #4a4a4a;
+  color: rgb(74, 74, 74);
   text-align: center;
   padding: 24px;
   font-size: 14px;
@@ -144,7 +144,7 @@ section.cloud_tags {
 }
 
 .company_pluses_item:hover {
-  color: #4a4a4a;
+  color: rgb(74, 74, 74);
   text-decoration: none;
   transform: scale(1.05);
   transition: 0.2s;
@@ -292,9 +292,7 @@ ul.glide__slides li {
 
 .gradient_hide_text {
   height: 100px;
-  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#00ffffff", endColorstr="#ffffff",GradientType=0 );
 }
 
@@ -371,7 +369,6 @@ a.bright_text:hover {
   width: 100%;
   overflow: hidden;
   -ms-filter: grayscale(0.7);
-  -webkit-filter: grayscale(0.7);
   -moz-filter: grayscale(0.7);
   -o-filter: grayscale(0.7);
   filter: grayscale(0.7);
@@ -391,12 +388,10 @@ a.bright_text:hover {
   .cert_gallery {
     max-width: 1024px;
   }
-
   #glide_brands_gallery_tray .glide__slides a {
     margin: 0;
     height: 60px;
   }
-
   .glide_brands_gallery_tray_wrapper {
     padding: 0 1rem;
   }
@@ -406,7 +401,6 @@ a.bright_text:hover {
     font-size: var(--font-size-sm);
     height: 33%;
   }
-
   .glide__arrows {
     top: auto;
     bottom: 0;
@@ -414,11 +408,9 @@ a.bright_text:hover {
     left: 50%;
     margin-left: -42px;
   }
-
   .glide--carousel {
     padding-bottom: 40px;
   }
-
   #glide_brands_gallery_tray {
     padding-bottom: 0px;
   }
@@ -427,6 +419,4 @@ a.bright_text:hover {
   #glide_brands_gallery_tray .glide__slides a {
     height: 50px;
   }
-}
-
-/*# sourceMappingURL=main_page_styles.css.map */
+}/*# sourceMappingURL=main_page_styles.css.map */

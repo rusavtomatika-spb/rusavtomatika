@@ -295,7 +295,6 @@ footer {
   footer {
     padding: 0.75rem 1rem 0.75rem;
   }
-
   body.current_page_ .padding_wrapper .has-background-light {
     margin-left: -1rem;
     margin-right: -1rem;
@@ -330,7 +329,6 @@ footer {
     width: 40px !important;
     border-radius: 50%;
   }
-
   #topcontrol__arrow {
     top: -3px;
     font-size: 40px;
@@ -357,7 +355,7 @@ footer {
   width: 200px;
 }
 
-.download_chm, .download_zip, .download_pdf, .download_ext, .download_linkext, .download_android, .download_ipad, .download_rar, .download_linkext_big, .download_online, .download_wmf, .download_sldprt, .download_step, .download_SLDPRT, .download_STEP, .download_WMF, .download_RAR, .download_dwg, .download_DWG, .download_doc, .download_DOC, .download_pdf, .download_PDF, .download_zip, .download_ZIP, .download_eds, .download_EDS {
+.download_chm, .download_zip, .download_pdf, .download_ext, .download_linkext, .download_android, .download_ipad, .download_rar, .download_linkext_big, .download_online, .download_wmf, .download_sldprt, .download_step, .download_SLDPRT, .download_STEP, .download_WMF, .download_RAR, .download_dwg, .download_DWG, .download_doc, .download_DOC, .download_pdf, .download_PDF, .download_zip, .download_ZIP {
   display: inline-block;
   color: #009b1e;
   font-size: 14px;
@@ -546,14 +544,12 @@ iframe {
     margin: 20px auto;
     max-width: 100%;
   }
-
   .image-align-left {
     display: block;
     float: none;
     margin: 20px auto;
     max-width: 100%;
   }
-
   iframe {
     max-width: 100%;
   }
@@ -669,10 +665,6 @@ header ul, header li {
 
 .header_top__soc_buttons .social.youtube a:hover, .footer__soc_buttons .social.youtube a:hover {
   background: #ea3223;
-}
-
-.header_top__soc_buttons .social.rutube a:hover, .footer__soc_buttons .social.rutube a:hover {
-  background: #100943;
 }
 
 .header_top__soc_buttons .social a:hover svg, .footer__soc_buttons .social a:hover svg {
@@ -885,11 +877,9 @@ footer ul, footer li {
     padding-left: 0rem;
     padding-right: 0rem;
   }
-
   main {
     padding-top: 1px;
   }
-
   html {
     font-size: 14px;
   }
@@ -903,7 +893,6 @@ footer ul, footer li {
   main {
     overflow: hidden;
   }
-
   h1 {
     font-size: 1.5rem;
   }
@@ -912,24 +901,4 @@ footer ul, footer li {
   h1 {
     font-size: 1.25rem;
   }
-}
-
-/*# sourceMappingURL=template_styles.css.map */
-a.nodecor {
-  color: #000;
-  text-decoration: none;
-}
-a.nodecor:hover {
-  color: #00ad61;
-  text-decoration: none;
-}
-.new-label {
-  background-color: #34AB5E;
-  color: white;
-  font-size: 10px;
-  line-height: 1;
-  padding: 3px 5px;
-  border-radius: 3px;
-  top: 0;
-  right: 0;
-}
+}/*# sourceMappingURL=template_styles.css.map */

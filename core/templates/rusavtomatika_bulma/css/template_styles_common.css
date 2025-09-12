@@ -9,9 +9,6 @@ body {
   transition: opacity 2s;
   background: white;
 }
-body.template_rusavtomatika_bulma {
-  opacity: 1 !important;
-}
 body.template_rusavtomatika_bulma.blear {
   opacity: 0.2 !important;
 }
@@ -52,6 +49,7 @@ a.bright_text {
 }
 a.bright_text:hover {
   color: #00ad61;
+  text-decoration: none;
   border-bottom: dotted 1px #00ad61;
 }
 
@@ -90,12 +88,12 @@ h1 {
   font-weight: 600;
   margin: 1rem 0 1rem;
 }
+
 @media (max-width: 400px) {
   h1 {
     font-size: 1.25rem;
   }
 }
-
 h2 {
   font-size: 1.5rem;
   line-height: 1.2;
@@ -153,7 +151,6 @@ footer {
   footer {
     padding: 0.75rem 1rem 0.75rem;
   }
-
   body.current_page_ .padding_wrapper .has-background-light {
     margin-left: -1rem;
     margin-right: -1rem;
@@ -188,7 +185,6 @@ footer {
     width: 40px !important;
     border-radius: 50%;
   }
-
   #topcontrol__arrow {
     top: -3px;
     font-size: 40px;
@@ -404,17 +400,13 @@ iframe {
     margin: 20px auto;
     max-width: 100%;
   }
-
   .image-align-left {
     display: block;
     float: none;
     margin: 20px auto;
     max-width: 100%;
   }
-
   iframe {
     max-width: 100%;
   }
-}
-
-/*# sourceMappingURL=template_styles_common.css.map */
+}/*# sourceMappingURL=template_styles_common.css.map */

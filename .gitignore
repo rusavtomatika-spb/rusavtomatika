@@ -63,3 +63,57 @@ sc/phpmorphy/data/
 sc/phpmorphy/temp/
 sc/phpmorphy/docs/
 sc/phpmorphy/examples/
+sc/QRCode/*.jpg
+sc/QRCode/*.jpeg
+/export_catalog.xml
+
+# ========================
+# 📁 ПАПКИ С ИЗОБРАЖЕНИЯМИ
+# ========================
+# /mqtt/*.png
+# /weintek_projects/tmp_bufer/images
+
+# /abacus/components/*/templates/*/psd/
+# /abacus/components/*/templates/*/*.png
+# /abacus/templates/*.jpg
+# /admin/controllers/*.jpg
+# /admin/controllers/*.gif
+# /admin/products_all/*.gif
+# /core/components/*/templates/*/*.png
+# /css/tango/*.png
+# /documents/chap_files/*.png
+# /email/*.jpg
+# /ewon/_dim/*.png
+# /ewon/_software/*.png
+# /ico.png
+# /monitors/_dim/*.png
+# /orders/invoices/*.png
+# /sc/mistakes-4.1/*.gif
+# /sc/mistakes-4.1/*.png
+# /sc/QRCode/*.png
+# /sc/QRCode/*.jpg
+# /sc/slack/*.png
+# /updater/css/*.gif
+# /weintek/*.png
+# /weintek/_dim/*.png
+# /weintek_libraries/*.png
+# /abacus/components/*/psd/
+# /ewon/_dim/
+# /monitors/_dim/
+# /weintek/_dim/
+# *loading.gif
+# *loading_old.gif
+# *overlay.png
+# *shadow.png
+# *fog.png
+# *_dim.png
+# *_dim.jpg
+# *.psd/
+# /admin/controllers/57547.jpg
+# /admin/controllers/loading.gif
+# /admin/controllers/loading_old.gif
+# /orders/invoices/1.png
+# /weintek/cMT-iV5_1.png
+# /weintek/com1com2_f.png
+# /articles/images
+# /news/images

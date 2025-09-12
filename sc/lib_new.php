@@ -36,32 +36,6 @@ if (defined("ENCODING") and ENCODING == "UTF-8") {
     header('Content-Type: text/html; charset=windows-1251');
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (!defined("MAIN_FILE_EXECUTED")) define("MAIN_FILE_EXECUTED", TRUE);
 
 ?>

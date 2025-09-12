@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 global $CONTENT_ON_WIDE_SCREEN;
 $CONTENT_ON_WIDE_SCREEN = true;
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";

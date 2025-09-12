@@ -17,26 +17,26 @@
 }
 .menu-list a {
   border-radius: 2px;
-  color: #4a4a4a;
+  color: hsl(0, 0%, 29%);
   display: block;
   padding: 0.5em 0.75em;
 }
 .menu-list a:hover {
-  background-color: whitesmoke;
-  color: #363636;
+  background-color: hsl(0, 0%, 96%);
+  color: hsl(0, 0%, 21%);
 }
 .menu-list a.is-active {
-  background-color: #48c78e;
+  background-color: hsl(153, 53%, 53%);
   color: #fff;
 }
 .menu-list li ul {
-  border-left: 1px solid #dbdbdb;
+  border-left: 1px solid hsl(0, 0%, 86%);
   margin: 0.75em;
   padding-left: 0.75em;
 }
 
 .menu-label {
-  color: #7a7a7a;
+  color: hsl(0, 0%, 48%);
   font-size: 0.75em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -46,6 +46,4 @@
 }
 .menu-label:not(:last-child) {
   margin-bottom: 1em;
-}
-
-/*# sourceMappingURL=menu.css.map */
+}/*# sourceMappingURL=menu.css.map */

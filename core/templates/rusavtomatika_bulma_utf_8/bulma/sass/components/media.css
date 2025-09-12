@@ -8,7 +8,7 @@
   margin-bottom: 0.75rem;
 }
 .media .media {
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
+  border-top: 1px solid rgba(219.3, 219.3, 219.3, 0.5);
   display: flex;
   padding-top: 0.75rem;
 }
@@ -23,7 +23,7 @@
   margin-top: 0.5rem;
 }
 .media + .media {
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
+  border-top: 1px solid rgba(219.3, 219.3, 219.3, 0.5);
   margin-top: 1rem;
   padding-top: 1rem;
 }
@@ -58,6 +58,4 @@
   .media-content {
     overflow-x: auto;
   }
-}
-
-/*# sourceMappingURL=media.css.map */
+}/*# sourceMappingURL=media.css.map */
