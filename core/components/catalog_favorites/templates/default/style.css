@@ -1,0 +1,20 @@
+.catalog_favorites__button_clearall_wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+
+.catalog_favorites__button_clearall{
+    display: inline-block;
+    padding: 8px 23px;
+    background: #44bb6e;
+    color: #ffffff;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: larger;
+}
+
+.catalog_favorites__button_clearall:hover {
+    background: #34ab5e;
+}

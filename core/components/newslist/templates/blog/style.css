@@ -1,0 +1,503 @@
+[v-cloak] {
+    display: none;
+}
+
+.component_newslist {
+    padding: 0 0 30px;
+}
+
+.component_newslist a {
+    color: #333;
+    text-decoration: none;
+}
+
+.component_newslist_buttons_panel {
+    display: flex;
+    justify-content: center;
+    margin: 0 -10px 10px;
+    flex-basis: 100%;
+
+}
+.blog_item_list{
+    width: 600px;
+    margin: 0 auto;
+}
+
+.blog_galery {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  .blog_image_vertical {
+    flex: 1 1 100px;
+    padding: 1px;
+  }
+
+  .blog_image_horizontal {
+    flex: 1 1 170px;
+    padding: 1px;
+  }
+  
+  .blog_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(90%);
+  }
+  
+  .blog_image:hover {
+    filter: brightness(120%);
+  }
+
+
+.component_newslist .brand_item, .component_newslist .discount_categories_item {
+    flex-grow: 2;
+    padding: 5px 10px;
+    display: inline-block;
+    background: #f0f0f0;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+.component_newslist .brand_item {
+    text-align: center;
+    min-width: 100px;
+}
+
+.component_newslist .brand_item:hover, .component_newslist .discount_categories_item:hover {
+    background: #e3e3e3;
+}
+
+.component_newslist .brand_item.active, .component_newslist .discount_categories_item.active {
+    background: #44bb6e;
+    color: #fff;
+}
+
+.component_newslist .item {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    min-height: 100px;
+    margin: 10px -5px;
+    transition: 0.2s;
+    position: relative;
+    z-index: 1;
+    border: 1px solid #bcc0c3;
+}
+#next_page{
+    position: relative;
+display: block;
+text-align: center;
+width: 100%;
+}
+
+.component_newslist .item.show_0 {
+    opacity: 50%;
+}
+
+.component_newslist .item hr {
+    color: #333; /*для IE */
+    background-color: #333; /*для Firefox, Opera, Safari*/
+    border: 0px none;
+    height: 1px; /* высота 1px IE, Firefox, Opera, Safari */
+    clear: both; /* для очистки, если тег идет после float елемента */
+}
+
+.component_newslist .text {
+    font-size: 16px;
+}
+span.newposts{background: rgb(68, 187, 110);
+    color: white;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.component_newslist .title, .component_newslist .title a {
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s;
+    color: #444;
+    text-decoration: none;
+}
+.component_newslist .title:hover , .component_newslist .title a:hover {
+    color: #000;
+}
+.component_newslist .title {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+}
+
+.component_newslist .title span.date {
+    font-weight: normal;
+    display: inline-block;
+    padding: 3px 8px 2px;
+    background: #fff;
+    font-size: 12px;
+    color: #555;
+    width: max-content;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.component_newslist .price {
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.component_newslist .price .rub {
+    line-height: 6px;
+    width: 0.5em;
+    border-bottom: 3px solid #333;
+    display: inline-block;
+}
+
+.component_newslist .item_buttons {
+    display: flex;
+    justify-content: stretch;
+}
+
+.component_newslist .item_buttons .button_order, .component_newslist .item_buttons .detail_link {
+    font-size: 14px;
+    cursor: pointer;
+    color: #44bb6e;
+    transition: 0.2s;
+    text-decoration: none;
+    margin-top: 10px;
+
+}
+.component_newslist .item_buttons .button_order:hover, .component_newslist .item_buttons .detail_link:hover {
+    color: #12913f;
+
+}
+
+
+.item .preview_image_wrapper {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    margin: 0px 20px 0px 0px;
+}
+
+.item .preview_image_wrapper a {
+    cursor: pointer;
+}
+
+.item .text_wrapper {
+    width: 100%;
+}
+
+
+.preview_image {
+    width: 150px;
+    background: center no-repeat;
+    background-size: contain;
+    height: 100px;
+
+}
+
+.pager_wrapper {
+    display: flex;
+    justify-content: center;
+    user-select: none;
+}
+
+
+.pager_wrapper span {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    background: #f0f0f0;
+
+}
+
+.pager_wrapper .pager_title span {
+    background: none;
+    padding-right: 0;
+}
+
+.pager_wrapper a {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #44bb6e;
+    color: white;
+    transition: 0.2s;
+    margin: 5px;
+}
+
+.pager_wrapper a:hover {
+    background: #34ab5e;
+    color: white;
+}
+
+.pager_wrapper .pager_title {
+    margin-left: -100px;
+}
+
+.switch_edit_mode__wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: #f0f0f0;
+    margin: 10px 0;
+}
+
+.switch_edit_mode__wrapper div {
+    display: flex;
+    align-items: center;
+}
+
+.switch_edit_mode__wrapper div span {
+    padding: 10px;
+}
+
+.switch_edit_mode__wrapper button {
+    cursor: pointer;
+    border: none;
+    margin: 10px;
+    width: 120px;
+    text-align: center;
+    background: #888888;
+    padding: 5px 10px;
+    color: white;
+    transition: 0.2s;
+}
+
+.switch_edit_mode__button {
+}
+
+.switch_edit_mode__button.active {
+    background: #3aca6c;
+}
+
+.switch_edit_mode__button:hover {
+    background: #709070;
+}
+
+.switch_edit_mode__button.active:hover {
+    background: #60e060;
+}
+
+.edit_element_buttons_wrapper {
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.edit_panel_item.buttons button {
+    margin: 5px 15px;
+}
+
+.edit_element_buttons_wrapper button {
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    margin: 5px 15px;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    padding: 5px 10px;
+    color: white;
+    transition: 0.2s;
+    box-sizing: border-box;
+}
+
+.edit_element_buttons_wrapper button:hover, .edit_panel_item.buttons button:hover {
+    background: #3aca6c;
+    /*border: 1px solid #64db8e;*/
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.edit_panel_item button {
+    cursor: pointer;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    color: #fff;
+    width: auto;
+    font-size: larger;
+    border: none;
+    transition: 0.2s;
+}
+
+.edit_panel_item button.red {
+    background: #ee0000;
+}
+
+
+.edit_panel_item button:hover {
+    background: #34ab5e;
+    color: #fff;
+    /*border: 1px solid #64db8e;*/
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+
+}
+
+.edit_panel .edit_panel_item.buttons span {
+    width: auto;
+    font-weight: bold;
+    font-size: larger;
+    display: inline-block;
+    padding: 8px;
+}
+
+.edit_panel {
+    padding: 20px;
+    background: #dcf6e0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    z-index: 1001;
+}
+
+.edit_panel_item {
+    display: flex;
+    justify-items: left;
+    padding: 10px;
+    background: #eeeeee;
+}
+
+.edit_panel_item:nth-child(2n) {
+    background: #e0e0e0;
+}
+
+.edit_panel_item.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.edit_panel .edit_panel_item span, .edit_panel .edit_panel_item label {
+    width: 140px;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.edit_panel .edit_panel_item label, .edit_panel .edit_panel_item input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.edit_panel .edit_panel_item input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+.edit_panel .edit_panel_item input[type=text], .edit_panel .edit_panel_item textarea {
+    background: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) inset;
+}
+
+.edit_panel .edit_panel_item input[type=text]:focus, .edit_panel .edit_panel_item textarea:focus {
+    background: #fff;
+}
+
+.edit_panel .edit_panel_item textarea {
+    padding: 10px;
+}
+
+.edit_panel_item.stext_wrap, .edit_panel_item.btext_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit_panel_item.stext_wrap textarea {
+    height: 80px;
+}
+
+.edit_panel_item.btext_wrap textarea {
+    height: 400px;
+}
+
+.edit_panel .edit_panel_item.stext_wrap span, .edit_panel .edit_panel_item.btext_wrap span {
+    width: 100%;
+}
+
+.edit_panel .edit_panel_item .edit_panel_item__more_images {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.4);
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+.edit_panel .close_button{
+    position: absolute;
+    top:0;
+    right: 0;
+    cursor: pointer;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    color: #fff;
+    width: auto;
+    font-size: larger;
+    border: none;
+    transition: 0.2s;
+    padding: 10px 20px;
+    font-size: 22px;
+}
+.edit_panel .close_button:hover {
+    background: #3aca6c;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.edit_panel .edit_panel_item .edit_panel_item__more_images > span {
+    width: auto;
+}
+
+.popup_message, .popup_confirm_message {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    background: #95dbac;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 20px 20px;
+    width: 400px;
+    margin-left: -200px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+
+.popup_confirm_message {
+    background: #ff6969;
+    z-index: 10001;
+    color: #fff;
+}
+
+.popup_confirm_message button{
+    padding: 8px 10px;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+
+#vue_app_blog{display: block!important;}
+

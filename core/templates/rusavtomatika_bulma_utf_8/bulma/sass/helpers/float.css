@@ -1,0 +1,16 @@
+/*$blue:         hsl(229, 53%,  53%) !default*/
+.is-clearfix::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+.is-pulled-left {
+  float: left !important;
+}
+
+.is-pulled-right {
+  float: right !important;
+}
+
+/*# sourceMappingURL=float.css.map */

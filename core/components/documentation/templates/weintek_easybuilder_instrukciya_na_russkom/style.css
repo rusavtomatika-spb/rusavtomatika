@@ -1,0 +1,435 @@
+.component_ebpro_instruction_rus_wrapper {
+    display: flex;
+}
+
+.component_ebpro_instruction_rus_wrapper .component_ebpro_instruction_rus_menu {
+    width: 220px;
+    flex: none;
+}
+
+.component_ebpro_instruction_rus_text {
+    padding: 0 0px 0 30px;
+    flex: 1;
+}
+/*
+.component_ebpro_instruction_rus_menu .block_floating{
+    box-shadow: -3px -2px 3px rgba(0,0,0,0.3) inset ;
+    padding-right: 3px;
+}*/
+
+.component_ebpro_instruction_rus_text ul {
+    margin-left: 20px;
+}
+
+.component_ebpro_instruction_rus_text ul li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.component_ebpro_instruction_rus_text h1 {
+    margin: 2px auto 20px;
+    font-size: 30px;
+    padding: 0;
+}
+
+.component_ebpro_instruction_rus_text h2 {
+    margin: 20px auto 10px;
+    font-size: 27px;
+    padding: 0;
+}
+
+.component_ebpro_instruction_rus_text h3 {
+    margin: 20px auto 10px;
+    font-size: 24px;
+    padding: 0;
+}
+
+.component_ebpro_instruction_rus_text h4 {
+    margin: 20px auto 10px;
+    font-size: 21px;
+    padding: 0;
+}
+
+
+.component_ebpro_instruction_rus_text.Welcome {
+    display: block;
+}
+
+.component_ebpro_instruction_rus_text table {
+    width: 100%;
+    border: 1px solid #999;
+}
+.component_ebpro_instruction_rus_text img{
+    max-width: 100%;
+}
+
+
+.component_ebpro_instruction_rus_text table td,
+.component_ebpro_instruction_rus_text table th {
+    border: 1px dotted #999;
+    padding: 5px 10px;
+}
+
+.component_ebpro_instruction_rus_text table th {
+    background-color: #cce9cc;
+}
+
+
+.component_ebpro_instruction_rus_wrapper .menu_root_item > a {
+    display: block;
+    background: #f0f0f0;
+    padding: 8px 10px;
+    margin-bottom: 2px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 14px;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+
+
+
+
+.component_ebpro_instruction_rus_wrapper .menu_root_item .menu_subitems {
+    display: none;
+}
+
+.component_ebpro_instruction_rus_wrapper .menu_root_item.active .menu_subitems {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.component_ebpro_instruction_rus_wrapper a.anchor {
+    display: block;
+    background: url('/images/sub-li.png') 3px 8px no-repeat;
+    padding: 4px 5px 4px 17px;
+    margin: 0px 5px 0px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 13px;
+    line-height: 1.1;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.component_ebpro_instruction_rus_wrapper .menu_root_item.active > a, .component_ebpro_instruction_rus_wrapper .menu_root_item a:hover  {
+    background-color: #cce9cc;
+}
+
+.panel_link_original_and_update {
+    width: 200px;
+    padding: 5px 10px;
+    background: #cce9cc;
+    float: right;
+    margin: 0 0 20px 20px;
+    font-size: 13px;
+}
+
+
+.switch_edit_mode__wrapper {
+    display: flex;
+    justify-content: space-between;
+    background: #f0f0f0;
+    margin: 10px 0;
+}
+
+.switch_edit_mode__wrapper div {
+    display: flex;
+    align-items: center;
+}
+
+.switch_edit_mode__wrapper div span {
+    padding: 10px;
+}
+
+.switch_edit_mode__wrapper button {
+    cursor: pointer;
+    border: none;
+    margin: 10px;
+    width: 120px;
+    text-align: center;
+    background: #888888;
+    padding: 5px 10px;
+    color: white;
+    transition: 0.2s;
+}
+
+.switch_edit_mode__button {
+}
+.switch_edit_mode__wrapper button.button_edit_item {
+    width: auto;
+}
+.switch_edit_mode__button.active, .button_edit_item.active {
+    background: #3aca6c;
+}
+
+.switch_edit_mode__button:hover, .button_edit_item:hover {
+    background: #709070;
+}
+
+.switch_edit_mode__button.active:hover, .button_edit_item.active:hover {
+    background: #60e060;
+}
+
+
+.edit_panel_item.buttons button {
+    margin: 5px 15px;
+}
+
+.edit_element_buttons_wrapper button {
+    width: 130px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    margin: 5px 15px;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    padding: 5px 10px;
+    color: white;
+    transition: 0.2s;
+    box-sizing: border-box;
+}
+
+.edit_element_buttons_wrapper button:hover, .edit_panel_item.buttons button:hover {
+    background: #3aca6c;
+    /*border: 1px solid #64db8e;*/
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.edit_panel_item button {
+    cursor: pointer;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    color: #fff;
+    width: auto;
+    font-size: larger;
+    border: none;
+    transition: 0.2s;
+}
+
+.edit_panel_item button.red {
+    background: #ee0000;
+}
+
+
+.edit_panel_item button:hover {
+    background: #34ab5e;
+    color: #fff;
+    /*border: 1px solid #64db8e;*/
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+
+}
+
+.edit_panel .edit_panel_item.buttons span {
+    width: auto;
+    font-weight: bold;
+    font-size: larger;
+    display: inline-block;
+    padding: 8px;
+}
+
+.edit_panel {
+    padding: 20px 5% 40px;
+    background: #dcf6e0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    z-index: 1001;
+}
+@media(min-width: 1600px){
+    .edit_panel {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
+.edit_panel_item {
+    display: flex;
+    justify-items: left;
+    padding: 10px;
+    background: #eeeeee;
+}
+
+.edit_panel_item > *{
+    margin: 0 5px;
+}
+
+
+.edit_panel_item:nth-child(2n) {
+    background: #e0e0e0;
+}
+
+.edit_panel_item.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.edit_panel .edit_panel_item span, .edit_panel .edit_panel_item label {
+    width: 140px;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.edit_panel .edit_panel_item label, .edit_panel .edit_panel_item input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.edit_panel .edit_panel_item input[type="checkbox"] {
+    transform: scale(1.2);
+}
+
+.edit_panel .edit_panel_item input[type=text], .edit_panel .edit_panel_item textarea {
+    background: #f0f0f0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) inset;
+}
+
+.edit_panel .edit_panel_item input[type=text]:focus, .edit_panel .edit_panel_item textarea:focus {
+    background: #fff;
+}
+
+.edit_panel .edit_panel_item textarea {
+    padding: 10px;
+}
+
+.edit_panel_item.stext_wrap, .edit_panel_item.btext_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit_panel_item.stext_wrap textarea {
+    height: 80px;
+}
+
+.edit_panel_item.btext_wrap textarea {
+    height: 400px;
+}
+
+.edit_panel .edit_panel_item.stext_wrap span, .edit_panel .edit_panel_item.btext_wrap span {
+    width: 100%;
+}
+
+.edit_panel .edit_panel_item .edit_panel_item__more_images {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.4);
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+.edit_panel .close_button{
+    position: absolute;
+    top:0;
+    right: 0;
+    cursor: pointer;
+    background: #44bb6e;
+    border: 1px solid #44bb6e;
+    color: #fff;
+    width: auto;
+    font-size: larger;
+    border: none;
+    transition: 0.2s;
+    padding: 10px 20px;
+    font-size: 22px;
+}
+.edit_panel .close_button:hover {
+    background: #3aca6c;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.edit_panel .edit_panel_item .edit_panel_item__more_images > span {
+    width: auto;
+}
+
+.popup_message, .popup_confirm_message {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    background: #95dbac;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 20px 20px;
+    width: 400px;
+    margin-left: -200px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+}
+
+.popup_confirm_message {
+    background: #ff6969;
+    z-index: 10001;
+    color: #fff;
+}
+
+.popup_confirm_message button{
+    padding: 8px 10px;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px;
+    cursor: pointer;
+}
+.weintek-easybuilder-instrukciya-na-russkom__navigator{
+    overflow: hidden;
+    border-top: 2px solid #44bb6e;
+    padding-top: 10px;
+    margin-top: 20px;
+}
+.weintek-easybuilder-instrukciya-na-russkom__navigator a{
+    background: #44bb6e;
+    line-height: 2;
+    font-size: 14px;
+    display: inline-block;
+    margin: 0;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff !important;
+    text-align: center;
+    min-width: 100px;
+    padding: 0px 10px;
+    text-decoration: none;
+}
+
+.weintek-easybuilder-instrukciya-na-russkom__navigator a:hover {
+    background-color: #34ab5e;
+    color: #fff !important;
+    text-decoration: none;
+}
+.weintek-easybuilder-instrukciya-na-russkom__navigator a.btn_left{float: left;}
+.weintek-easybuilder-instrukciya-na-russkom__navigator a.btn_right{float: right;}
+
+
+.component_ebpro_instruction_rus_text a[data-fancybox] img{
+    padding: 10px;
+    box-sizing: border-box;
+    background: #efe;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: 0.2s;
+}
+.component_ebpro_instruction_rus_text a[data-fancybox]:hover img{
+    transform: scale(1.01);    }
+
+.component_ebpro_instruction_rus_title {
+    font-size: 22px;
+    font-weight: bold;
+}
+

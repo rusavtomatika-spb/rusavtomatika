@@ -1,0 +1,28 @@
+.social {display: inline-block;}
+.social a {
+	display: block;
+	width: 32px;
+	height: 32px;
+	margin: 0 0 10px 8px;
+	text-align: center;
+	color: #000;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 16px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 0 50px rgba(0,0,0,0.1);
+}
+.social a:hover {color: #fff;}
+.social svg{
+	margin-top: 7px;
+	width: 18px;
+	height: 18px;
+}
+.social img {
+	margin-top: 7px;
+	height: 18px;
+}
+.facebook a:hover {background: #3b5998;}
+.instagram a:hover {background: #3f729b;}
+.telegram a:hover {background: #249bd7;}
+.vk a:hover {background: #4a76a8;}
+.youtube a:hover {background: #c4302b;}

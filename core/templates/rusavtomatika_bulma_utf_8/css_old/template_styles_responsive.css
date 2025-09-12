@@ -1,0 +1,28 @@
+/* RESPONSIVENESS */
+@media(max-width: 1024px){
+    .padding_wrapper{
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+@media(max-width: 768px){
+    .breadcrumb{
+        font-size: 0.875rem;
+    }
+}
+@media (max-width: 600px){
+    main{
+        overflow: hidden;
+    }
+    h1{
+        font-size: var(--font-size-lg);
+    }
+}
+@media (max-width: 400px){
+    h1{
+        font-size: var(--font-size-md);
+    }
+
+}
+
+

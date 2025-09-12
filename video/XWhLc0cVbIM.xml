@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ovs:video xmlns:ovs="http://webmaster.yandex.ru/schemas/video"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://webmaster.yandex.ru/schemas/video">
+  <ovs:content_id>XWhLc0cVbIM</ovs:content_id>
+  <ovs:url>https://www.youtube.com/watch?v=XWhLc0cVbIM </ovs:url>
+  <ovs:thumbnail>http://i.ytimg.com/vi/XWhLc0cVbIM/maxresdefault.jpg</ovs:thumbnail>
+  <ovs:title>eWON - промышленные VPN-роутеры</ovs:title>
+  <ovs:description>
+   eWON, Знакомство с промышленными VPN-роутерами eWON Cosy 131, Cosy 141, Flexy.
+   В этом видео показано, как применяются промышленные VPN роутеры eWON Cosy 131, eWON Cosy 141,
+   демонстрируется подключение eWON Cosy на удаленном объекте в локальной сети предприятия за файрволом,
+   подключение к VPN роутеру eWON Cosy через бесплатный сервис от eWON Talk2M
+  </ovs:description>
+  <ovs:upload_date>2015-04-22T00:00:00Z</ovs:upload_date>
+  <ovs:duration>175</ovs:duration>
+  <ovs:adult>no</ovs:adult>
+  <ovs:login>admin</ovs:login>
+  <ovs:category>education</ovs:category>
+  <ovs:category>technology</ovs:category>
+  <ovs:category>industrial automation</ovs:category>
+  <ovs:genre>Обучающее видео</ovs:genre>
+  <ovs:status>published</ovs:status>
+  <ovs:is_official>yes</ovs:is_official>
+  <ovs:embed_url>https://www.youtube.com/embed/XWhLc0cVbIM</ovs:embed_url>
+  <ovs:embed_html><![CDATA[<iframe width="560" height="315" src="https://www.youtube.com/embed/XWhLc0cVbIM" frameborder="0" allowfullscreen="true"></iframe>]]></ovs:embed_html>
+  <ovs:languages>ru, en</ovs:languages>
+  <ovs:tag>VPN-роутер, eWON, Cosy 131, Cosy 141, Flexy, Talk2M, m2Web, промышленные VPN роутеры, промышленные VPN маршрутизаторы, удаленнея прошивка PLC, удаленное обслуживание PLC</ovs:tag>
+</ovs:video>

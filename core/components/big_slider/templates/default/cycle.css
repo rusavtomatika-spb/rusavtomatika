@@ -1,0 +1,138 @@
+	.cycle-slideshow, 
+	.cycle-slideshow * {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box; 
+		box-sizing: border-box; 
+	}
+	.cycle-slideshow a{
+		display: block;
+	}
+
+	/*.cycle-slideshow { 
+		background: none;
+		-webkit-perspective: 1000;
+		-webkit-transform-style: preserve-3d;
+		-moz-perspective: 1000;
+		-moz-transform-style: preserve-3d;
+		-o-perspective: 1000;
+		-o-transform-style: preserve-3d;
+		perspective: 1000;
+		transform-style: preserve-3d;  
+		padding: 0; 
+		position: relative;
+	}*/
+	.cycle-slideshow img { 
+		position: absolute; 
+		top: 0; 
+		left: 0;
+		width: 100%;
+		padding: 0; 
+		display: block;
+	}	
+	.cycle-slideshow img:first-child {
+		position: static; z-index: 100;
+	}
+
+	.cycle-pager {
+		user-select: none;
+		outline: none;
+		text-align: center; 
+		width: 100%; 
+		z-index: 150; 
+		/*position: absolute;*/
+		/*top: -16px;*/
+		overflow: hidden;
+	}
+	.cycle-pager.cycle_pager_in_box{
+		position: absolute; 
+		bottom: 0px;
+
+	}
+@media (max-width: 768px){
+	.cycle-pager.cycle_pager_in_box{
+		bottom: -15px;
+	}
+}
+	.cycle-pager.cycle_pager_bottom_box{
+		position: static; 
+		margin-top: -16px;
+	}
+	.cycle-pager span { 
+		font-family: arial; 
+		font-size: 3.75rem; 
+		width: 2rem;
+		height: 1.2rem; 
+		display: inline-block; 
+		color: #ddd; 
+		cursor: pointer; 
+	}
+	@media (max-width: 768px) {
+		.cycle-pager span {
+			width: 1.5rem;
+		}
+	}
+
+	.cycle-pager span.cycle-pager-active { color: #00ad61}
+	.cycle-pager > * { cursor: pointer;}
+	
+	/* prev / next links */
+	.cycle-prev, .cycle-next { 
+		position: absolute; 
+		top: 0; 
+		width: 30%; 
+		opacity: 0; 
+		filter: alpha(opacity=0); 
+		z-index: 800; 
+		height: 100%; 
+		cursor: pointer; 
+	}
+	.cycle-prev { 
+		left: 0;  
+		background: url(http://malsup.github.com/images/left.png) 50% 50% no-repeat;
+	}
+	.cycle-next { 
+		right: 0; background: url(http://malsup.github.com/images/right.png) 50% 50% no-repeat;
+	}
+	.cycle-prev:hover, .cycle-next:hover { 
+		opacity: .7; 
+		filter: alpha(opacity=70) 
+	}
+	/* caption */
+	.cycle-caption { position: absolute; color: white; bottom: 15px; right: 15px; z-index: 700; }
+
+
+	/* overlay */
+	.cycle-overlay { 
+		/*font-family: tahoma, arial;*/
+		position: absolute; 
+		bottom: 0; 
+		width: 100%; 
+		z-index: 600;
+		background: black; 
+		color: white; 
+		padding: 15px; 
+		opacity: .5;
+	}
+
+	#progress {
+		position: absolute;
+		top: 0;
+		height: 6px;
+		width: 0px;
+		background: #00ad61;
+		z-index: 500;
+		opacity: 0.7;
+	}
+
+	.cycle-slideshow {
+		-webkit-perspective: 1000;
+		-webkit-transform-style: preserve-3d;
+		-moz-perspective: 1000;
+		-moz-transform-style: preserve-3d;
+		-o-perspective: 1000;
+		-o-transform-style: preserve-3d;
+		perspective: 1000;
+		transform-style: preserve-3d;
+	}
+	
+	

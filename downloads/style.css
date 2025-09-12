@@ -1,0 +1,37 @@
+.page_library__a{
+    color: black;
+    text-decoration: none;
+
+}
+.page_library__a:hover{
+    color: black;
+    text-decoration: none;
+    transition: 0.2s;
+    transform: scale(1.05);
+}
+.page_library__a > div {
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    height: 145px;
+    background: center top/cover no-repeat;
+    margin: 0 auto;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s;
+    box-shadow: none;
+    /*background-color: white;*/
+    /*border-radius: 4px;*/
+    /*box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);*/
+}
+
+
+.page_library__a div.extra_text {
+    font-size: 1rem;
+    display: block;
+}
+
+.page_library .box:hover {
+}

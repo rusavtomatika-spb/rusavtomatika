@@ -1,0 +1,564 @@
+a.dd{
+
+ text-shadow: -1px -1px 1px #aaaaaa, 1px 1px 1px #f9c5c5;
+        color: red;
+       // opacity: 0.9;
+        font: 60px 'Museo700';
+       // font: 13px/1em MyriadProBold;
+        height:80px;
+        //width:1000px;
+        text-align: left;
+        text-decoration:none;
+}
+a.dd:hover{color:#dd0000;
+}
+
+
+
+.menu_h{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 8px;
+font-style: normal;
+font-variant: normal;
+font-weight: bold;
+line-height: 15px;
+color:#111111;
+cursor: default;
+//background: #f1f1f1;
+text-align:left;
+//padding-left: 5px;
+}
+
+a.te{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+text-decoration:none;
+color: black;
+}
+a.te:hover{color:red;
+}
+
+
+
+a.bot_but{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 10px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color: black;
+text-align:left;
+//cursor: default;
+text-decoration:none;
+
+}
+
+a.bot_but:hover{color:red;
+text-decoration:none;
+}
+
+
+.imgcenter {vertical-align: middle;}
+
+table.mytable {
+border:1px solid #e1e1e1;
+}
+table.mytable td {
+border:1px solid #e1e1e1;
+padding-left:5px;
+}
+
+#out{width:90%;
+text-align:left;
+}
+
+.filter{border: 1px solid #e1e1e1;
+position: relative;
+top:30px;
+left:10px;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 23px;
+}
+
+a.filter1{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 20px;
+text-decoration: none;
+color: black;
+}
+a.filter1:hover{color: #740606;
+}
+
+
+.email {
+background-image: url('images/email3.jpg');
+background-repeat: no-repeat;
+height: 30px;
+width: 30px;
+border-width: 0px;
+background-position: 50% 50%;
+}
+
+.mob {
+background-image: url('images/mob2.jpg');
+background-repeat: no-repeat;
+height: 30px;
+width: 30px;
+border-width: 0px;
+background-position: 50% 50%;
+}
+
+
+.wein_txt{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 13px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#black;
+cursor: default;
+width: 80%;
+text-align: justify;
+}
+
+
+.dost_text{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#111111;
+cursor: default;
+//background: #f1f1f1;
+text-align:left;
+//padding-left: 5px;
+}
+
+
+#conn_info{height: 20px;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+text-align: left;
+}
+
+.inp2{width:20px;
+border: 1px solid #e1e1e1;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+}
+
+.ord_goods{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+cursor: pointer;
+//background: #f1f1f1;
+text-align:left;
+cursor: default;
+//padding-left: 5px;
+}
+
+a.ord_goods{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+cursor: pointer;
+//background: #f1f1f1;
+text-align:left;
+cursor: pointer;
+text-decoration:none
+}
+
+a.ord_goods:hover{color: #740606;
+text-decoration:none
+}
+
+
+
+
+.delbut{cursor: pointer;
+}
+
+
+.par_name{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 10px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+cursor: pointer;
+//background: #f1f1f1;
+text-align:left;
+cursor: default;
+}
+/*
+.par_name1{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+text-align:left;
+cursor: default;
+padding-left:10px;
+}
+
+.par_val1{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+text-align:left;
+cursor: default;
+padding-left:10px;
+}
+*/
+.price{
+font-family:Verdana;
+font-size:12px;
+color: #4a1715;
+font-weight:bold;
+text-decoration:none
+}
+
+.prpr{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color: #000;
+cursor: pointer;
+}
+
+.val_name{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color: #740606;
+cursor: pointer;
+}
+
+.item_on_stock{
+font-family:Verdana;
+font-size:10px;
+color: #38b904;
+font-weight:bold;
+text-decoration:none
+}
+
+.item_no_stock{
+font-family:Verdana;
+font-size:10px;
+color: #fa7c31;
+font-weight:bold;
+text-decoration:none
+}
+
+.par_val{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 10px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+//font-weight:bold;
+//color: #000;
+color: #740606;
+cursor: default;
+text-align:left;
+}
+.pan_name{
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color: #c02e1b;
+//text-align:right;
+text-align:left;
+cursor: default;
+}
+
+a.skach{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#222222;
+text-align:left;
+cursor: default;
+text-decoration:none
+
+}
+
+a.skach:hover{font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+color:#c02e1b;
+text-align:left;
+cursor: pointer;
+text-decoration:none
+}
+
+
+a.price_req{
+font-family:Verdana;
+font-size:10px;
+color: #64b1ff;
+font-weight:bold;
+text-decoration:none
+}
+a.price_req:hover{
+font-family:Verdana;
+font-size:10px;
+color: blue;
+font-weight:bold;
+text-decoration:none
+}
+
+
+div#mmm1
+{position: relative;
+top:30px;
+left:10px;
+border: 1px solid #e1e1e1;
+
+}
+
+.bor{border: 1px solid #e1e1e1;
+}
+
+
+ul#navmenu-v,
+ul#navmenu-v li,
+ul#navmenu-v ul {
+margin: 0;
+border: 1px, solid #e1e1e1;
+padding: 0;
+width: 130px;
+list-style: none;
+
+}
+
+ul#navmenu-v:after {
+clear: both;
+display: block;
+font: 1px/0px serif;
+content: ".";
+height: 0;
+visibility: hidden;
+}
+
+ul#navmenu-v li {
+float: left;
+display: block !important;
+display: inline;
+position: relative;
+color: #000;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+//background: #eeeeee;
+//border: 1px solid #000;
+//border-right-color: #dddddd;
+//border-bottom-color: #dddddd;
+text-align: left;
+height:25px;
+
+}
+
+ul#navmenu-v .inch {
+float: left;
+display: block !important;
+display: inline;
+position: relative;
+color: #000;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+text-decoration: none;
+//background: #eeeeee;
+//border: 1px solid #000;
+//border-right-color: #dddddd;
+//border-bottom-color: #dddddd;
+text-align: left;
+cursor: default;
+height:25px;
+}
+
+
+
+
+ul#navmenu-v a {
+//border: 1px solid #e1e1e1;
+//border-right-color: #dddddd;
+//border-bottom-color: #dddddd;
+padding: 0 6px;
+display: block;
+//background: #eeeeee;
+color: #000;
+font: 11px/15px Arial,sans-serif;
+font-family: Arial, sans-serif;
+font-size: 11px;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: 15px;
+text-decoration: none;
+height: auto !important;
+height: 1%;
+}
+
+
+ul#navmenu-v a:hover,
+ul#navmenu-v li:hover a,
+ul#navmenu-v li.iehover a {
+//background: #dddddd;
+color: #c02e1b;
+}
+
+
+ul#navmenu-v li:hover li a,
+ul#navmenu-v li.iehover li a {
+//background: #dddddd;
+color: #000;
+}
+
+
+ul#navmenu-v li:hover li a:hover,
+ul#navmenu-v li:hover li:hover a,
+ul#navmenu-v li.iehover li a:hover,
+ul#navmenu-v li.iehover li.iehover a {
+//background: #ddddd;
+color: #c02e1b;
+}
+
+
+ul#navmenu-v li:hover li:hover li a,
+ul#navmenu-v li.iehover li.iehover li a {
+//background: #dddddd;
+color: #000;
+}
+
+
+ul#navmenu-v li:hover li:hover li a:hover,
+ul#navmenu-v li:hover li:hover li:hover a,
+ul#navmenu-v li.iehover li.iehover li a:hover,
+ul#navmenu-v li.iehover li.iehover li.iehover a {
+//background: #dddddd;
+color: #000;
+}
+
+
+ul#navmenu-v li:hover li:hover li:hover li a,
+ul#navmenu-v li.iehover li.iehover li.iehover li a {
+//background: #dddddd;
+color: #000;
+}
+
+
+ul#navmenu-v li:hover li:hover li:hover li a:hover,
+ul#navmenu-v li.iehover li.iehover li.iehover li a:hover {
+//background: #dddddd;
+color: #000;
+}
+
+ul#navmenu-v ul,
+ul#navmenu-v ul ul,
+ul#navmenu-v ul ul ul {
+display: none;
+position: absolute;
+top: 0;
+left: 130px;
+}
+
+
+ul#navmenu-v li:hover ul ul,
+ul#navmenu-v li:hover ul ul ul,
+ul#navmenu-v li.iehover ul ul,
+ul#navmenu-v li.iehover ul ul ul {
+display: none;
+}
+
+ul#navmenu-v li:hover ul,
+ul#navmenu-v ul li:hover ul,
+ul#navmenu-v ul ul li:hover ul,
+ul#navmenu-v li.iehover ul,
+ul#navmenu-v ul li.iehover ul,
+ul#navmenu-v ul ul li.iehover ul {
+display: block;
+}

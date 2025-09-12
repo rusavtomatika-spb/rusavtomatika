@@ -1,0 +1,13 @@
+.image-align-right{
+    float: right;
+    margin: 0 0 20px 20px;
+}
+.image-align-left{
+    float: left;
+    margin: 0 20px 20px 0;
+}
+.image-align-center{
+    float: none;
+    display: block;
+    margin: 20px auto;
+}

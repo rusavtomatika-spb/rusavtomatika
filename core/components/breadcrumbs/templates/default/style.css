@@ -1,0 +1,25 @@
+.breadcrumbs{
+    margin: 0 0 5px;
+    color: var(--color-dark-gray);
+}
+.breadcrumbs a{
+    color: var(--color-dark-green);
+    transition: 200ms;
+    text-decoration: none;
+}
+.breadcrumbs a:hover{
+    color: var(--color-green);
+    text-decoration: underline;
+}
+
+@media(max-width: 768px){
+    .breadcrumb  ul li {
+        margin: 0rem;
+    }
+    .breadcrumb  ul li a,
+    .breadcrumb  ul li span
+    {
+        padding: 0.357143em 0.75em;;
+    }
+
+}

@@ -1,0 +1,812 @@
+label[for="close-catalog"], .top-menu-punkt.fill {display:none; cursor: auto !important;}
+label[for="select-catalog"] {display:inherit; cursor: auto !important;}
+.top-menu-punkt.full {display: initial; cursor: pointer !important;}
+#select-catalog:checked ~ ul label[for="select-catalog"] {display:none;}
+#select-catalog:checked ~ ul label[for="close-catalog"]  {display:inherit;}
+#select-catalog:checked ~ ul .top-menu-punkt.fill  {display: initial; cursor: pointer !important;}
+
+
+  
+
+#cssmenut-new {
+    opacity: 1 !important;
+    height: 50px;
+    background-color: #464646;
+    box-shadow: 0px 2px 3px rgba(0,0,0,.1);
+    /*min-width: 1050px;*/
+    /*max-width: 1150px;*/
+    position: relative;	
+    /*font-family: Verdana, "Lucida Grande";*/
+    font-size: 16px;	
+}
+/*
+#cssmenut-new label {
+cursor:pointer;
+}
+*/
+#cssmenut-new ul {
+    list-style: none;
+    color: #E8E8E8;
+    margin: 0;
+    padding: 0;	
+    width: 100%;	
+}
+#cssmenut-new ul.information {
+	width: auto;	
+}
+
+#cssmenut-new input {
+	display:none;
+	visibility:hidden;
+	position: absolute;
+}
+#cssmenut-new > ul {
+	position:absolute;
+
+    height: 46px;
+	display: inline-block;
+	line-height: 46px;
+	text-align: left;
+	cursor: auto;
+	/*
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;	
+	*/
+}
+#cssmenut-new > ul > li {
+    margin-left: 0px;
+    padding: 0px 45px;
+	position: relative;
+    z-index: 50;
+	cursor: pointer;
+}
+#cssmenut-new > ul > li > div.top-menu-punkt {
+    padding: 3px 0px 5px 0px;
+	color: lightblue;
+    font-family: Verdana, "Lucida Grande";
+    font-size: 15px;
+/*	
+    -webkit-transition: color .15s;
+    -moz-transition: color .15s;
+    -o-transition: color .15s;
+    transition: color .15s; */
+    cursor: pointer;
+    font-size-adjust: 0.5;	
+}
+#wide-menu {
+	display: none;
+    margin-top: 50px;	
+    position: absolute;		
+    margin-left: 20px;
+	width: 1070px;
+    padding: 16px 20px 20px 20px;
+    background-color: white;
+	border-radius: 0px 0px 5px 5px;	
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+    box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+  /*  transition: all 1s;	*/
+    z-index: 51;	
+	color: black;
+    /*box-sizing: border-box;*/	
+	height: 334px;
+	/*border: 1px solid gray;*/
+}
+#wide-menu  ~ #wide-menu {
+	display: none;
+  /*  transition: all 1s;	*/
+	height: 0px;
+}
+
+input#select-catalog:checked ~ #wide-menu {
+	display: inline-block !important;
+    /*
+	display: flex;
+	justify-content: space-between;
+	*/	
+	height: auto;
+
+}
+#wide-menu > div {
+    padding-left: 10px;
+
+}
+#wide-menu .header {
+	/*text-decoration: underline;*/
+	font-weight: bold;
+	padding-bottom: 21px;
+}
+#wide-menu ul {
+	color: black;
+
+}
+#wide-menu-manufacturers ul {
+    border-right: 1px solid silver;
+    border-left: 1px solid silver;	
+	padding-left: 30px;
+	margin-left: -20px;	
+	position: relative;
+	box-sizing: border-box;
+    height: 423px;
+}
+#wide-menu-manufacturers .new:after, #wide-menu-manufacturers .old:after {
+	    font-size: 9px;
+}
+
+#wide-menu ul li {
+    padding: 5px 8px 3px 0px;
+    /*width: 100%;*/
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+#wide-menu #wide-menu-manufacturers ul li a {display: none;text-decoration:none;}
+#wide-menu ul li a .arrow
+{
+    color: gray;
+    border-right: 0px solid transparent;
+    border-top: 6px solid transparent;
+    border-left: 8px solid black;
+    border-bottom: 6px solid transparent;
+    width: 0px;
+	height: 0px;
+    padding: 0px;
+    /*transform: rotate(-90deg);*/
+    right: 5px;
+margin-top: 4px;
+
+/*	transition: color 1s; */
+}
+
+#wide-menu-manufacturers a {
+	position: absolute;
+		    left: 87%;
+}
+
+#wide-menu ul li:hover a .arrow {
+    color: black;
+}
+
+#wide-menu ul li label {    float: left;}
+
+#wide-menu > div#wide-menu-products {
+	/*width: calc(100% - 465px);*/
+	width: 575px;
+    height: 100%;
+    float: right;
+	box-sizing: border-box;
+}
+
+#wide-menu > div#wide-menu-products  > .header {
+	z-index: 3;
+    position: relative;
+}
+.top-menu-punkt.full:after {
+    content: " ";
+    padding-left: 20px;
+    position: absolute;
+    border-bottom: 0px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid white;
+    border-left: 6px solid transparent;
+    width: 0px;
+    padding: 0px;
+    margin-top: 21px;
+    margin-left: 5px;
+transition: all 0.3s;		
+}
+#wide-menu-category {
+	width: 300px;
+    height: 100%;
+    float: left;
+    text-align: left;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+#wide-menu-manufacturers {
+	/*width: 215px;*/
+    width: 174px;
+    height: 100%;
+    float: left;	
+}
+#wide-menu-category ul li{
+    line-height: 1.2;
+}
+#wide-menu-category ul li ,#wide-menu-manufacturers ul li {
+	width: 100%;
+	cursor: pointer;
+	
+}
+
+
+/*#wide-menu-manufacturers .header {    padding-left: 10px;}*/
+#wide-menu-category label, #wide-menu-manufacturers label {
+	/* transition: color 1s; */
+	cursor: pointer;
+}
+
+input#select-catalog.show-wide:checked ~ ul .top-menu-punkt.full:after
+{
+    transform: rotate(-180deg);
+}
+
+.top-menu-punkt.fill:after {
+    content: " ";
+    padding-left: 20px;
+    position: absolute;
+    border-bottom: 8px solid white;
+    border-right: 6px solid transparent;
+    border-top: 0px solid transparent;
+    border-left: 6px solid transparent;
+    width: 0px;
+    padding: 0px;
+    margin-top: 21px;
+    margin-left: 5px;
+	/*transform: rotate(-180deg);*/
+}
+
+.rotate:after {
+	transform: rotate(-180deg);
+}
+
+input[name="select-type"]:checked ~ #wide-menu #wide-menu-category label, 
+input[name="select-type"]:checked ~ #wide-menu #wide-menu-manufacturers label 
+{
+   /* color: #848484; */
+	text-shadow: none;
+}
+input#r-select-paneli:checked ~ #wide-menu #wide-menu-category label[for="r-select-paneli"],
+input#r-select-panel-pc:checked ~ #wide-menu #wide-menu-category label[for="r-select-panel-pc"],
+input#r-select-pc-full-ip65:checked ~ #wide-menu #wide-menu-category label[for="r-select-pc-full-ip65"],
+input#r-select-box-pc:checked ~ #wide-menu #wide-menu-category label[for="r-select-box-pc"],
+input#r-select-monitory:checked ~ #wide-menu #wide-menu-category label[for="r-select-monitory"],
+input#r-select-routery:checked ~ #wide-menu #wide-menu-category label[for="r-select-routery"],
+input#r-select-plc:checked ~ #wide-menu #wide-menu-category label[for="r-select-plc"],
+input#r-select-modbus:checked ~ #wide-menu #wide-menu-category label[for="r-select-modbus"],
+input#r-select-power-supply:checked ~ #wide-menu #wide-menu-category label[for="r-select-power-supply"],
+input#r-select-android:checked ~ #wide-menu #wide-menu-category label[for="r-select-android"],
+input#r-select-wince:checked ~ #wide-menu #wide-menu-category label[for="r-select-wince"],
+
+input#r-select-paneli:checked ~ #wide-menu #wide-menu-manufacturers label .p-paneli,
+input#r-select-panel-pc:checked ~ #wide-menu #wide-menu-manufacturers label .p-panel-pc,
+input#r-select-pc-full-ip65:checked ~ #wide-menu #wide-menu-manufacturers label .p-pc-full-ip65,
+input#r-select-box-pc:checked ~ #wide-menu #wide-menu-manufacturers label .p-box-pc,
+input#r-select-monitory:checked ~ #wide-menu #wide-menu-manufacturers label .p-monitors,
+input#r-select-routery:checked ~ #wide-menu #wide-menu-manufacturers label .p-routers,
+input#r-select-plc:checked ~ #wide-menu #wide-menu-manufacturers label .p-plc,
+input#r-select-modbus:checked ~ #wide-menu #wide-menu-manufacturers label .p-modbus,
+input#r-select-power-supply:checked ~ #wide-menu #wide-menu-manufacturers label .p-power-supply, 
+input#r-select-android:checked ~ #wide-menu #wide-menu-manufacturers label .p-android,
+input#r-select-wince:checked ~ #wide-menu #wide-menu-manufacturers label .p-wince,
+
+input#select-weintek:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-weintek"],
+input#select-weintek:checked ~ #wide-menu #wide-menu-category label[for="r-select-paneli"],
+input#select-weintek:checked ~ #wide-menu #wide-menu-category label[for="r-select-panel-pc"],
+input#select-samkoon:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-samkoon"],
+input#select-samkoon:checked ~ #wide-menu #wide-menu-category label[for="r-select-paneli"],
+
+input#select-ifc:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-ifc"],
+input#select-ifc:checked ~ #wide-menu #wide-menu-category label[for="r-select-panel-pc"],
+input#select-ifc:checked ~ #wide-menu #wide-menu-category label[for="r-select-box-pc"],
+input#select-ifc:checked ~ #wide-menu #wide-menu-category label[for="r-select-monitory"],
+
+input#select-aplex:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-aplex"],
+input#select-aplex:checked ~ #wide-menu #wide-menu-category label[for="r-select-panel-pc"],
+input#select-aplex:checked ~ #wide-menu #wide-menu-category label[for="r-select-pc-full-ip65"],
+input#select-cincoze:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-cincoze"],
+input#select-cincoze:checked  ~ #wide-menu #wide-menu-category label[for="r-select-panel-pc"],
+input#select-cincoze:checked ~ #wide-menu #wide-menu-category label[for="r-select-monitory"],
+input#select-cincoze:checked ~ #wide-menu #wide-menu-category label[for="r-select-box-pc"],
+input#select-ewon:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-ewon"],
+input#select-ewon:checked ~ #wide-menu #wide-menu-category label[for="r-select-routery"],
+
+
+input#select-yottacontrol:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-yottacontrol"],
+input#select-yottacontrol:checked ~ #wide-menu #wide-menu-category label[for="r-select-plc"],
+
+input#select-modbus:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-modbus"],
+input#select-modbus:checked ~ #wide-menu #wide-menu-category label[for="r-select-modbus"],
+
+input#select-2n:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-2n"],
+input#select-2n:checked ~ #wide-menu #wide-menu-category label[for="r-select-android"],
+
+input#select-faraday:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-faraday"],
+input#select-faraday:checked ~ #wide-menu #wide-menu-category label[for="r-select-power-supply"]
+{	color: black;
+    color: #1D425F;
+    font-weight: bold;	
+}
+
+.script-black
+{	color: black;
+    color: #1D425F;
+    font-weight: bold;	
+}
+
+input#select-weintek:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-weintek"] + a,
+input#select-samkoon:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-samkoon"] + a,
+input#select-ifc:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-ifc"] + a,
+input#select-aplex:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-aplex"] + a,
+input#select-cincoze:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-cincoze"] + a,
+input#select-ewon:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-ewon"] + a,
+input#select-yottacontrol:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-yottacontrol"] + a,
+input#select-modbus:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-modbus"] + a,
+input#select-2n:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-2n"] + a,
+input#select-faraday:checked ~ #wide-menu #wide-menu-manufacturers label[for="select-faraday"] + a
+{
+display: inherit;
+float: right;
+}
+
+#wide-menu-products-content {
+	height: 295px;
+    overflow-y: auto;
+    /*margin-top: -35px;*/
+    height: 423px;
+}
+
+#wide-menu-products-content > div {
+display:none;
+}
+
+input[name="select-type"]:checked ~ #wide-menu #wide-menu-manufacturers ul,
+input[name="select-type"]:checked ~ #wide-menu #wide-menu-products-content
+{
+	color: #C1C1C1;
+}
+
+#wide-menu-products #wide-menu-products-content:before {
+content: "Выберите тип продукции или производителя";
+    color: lightgray;
+    font-style: italic;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+input.show-models[name="select-type"]:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content:before {
+Content: "";
+	display:none;
+}
+
+input#select-weintek:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-weintek,
+input#select-samkoon:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-samkoon,
+input#select-ifc:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-ifc,
+input#select-aplex:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-aplex,
+input#select-cincoze:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-cincoze,
+input#select-ewon:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-ewon,
+input#select-yottacontrol:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-yottacontrol,
+input#select-modbus:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-modbus,
+input#select-2n:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-2n,
+input#select-faraday:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content > div#m-faraday
+{
+display:inherit;
+}
+
+
+#all-models {
+display:none;
+}
+input.show-models[name="select-type"]:checked ~ #wide-menu #wide-menu-products #wide-menu-products-content #all-models{
+display:inherit;
+/*padding-top: 35px;*/
+}
+input#select-weintek:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-weintek),
+input#select-samkoon:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-samkoon),
+input#select-ifc:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-ifc),
+input#select-aplex:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-aplex),
+input#select-cincoze:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-cincoze),
+input#select-ewon:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-ewon),
+input#select-yottacontrol:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-yottacontrol),
+input#select-modbus:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-modbus),
+input#select-2n:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-2n),
+input#select-faraday:checked ~ #wide-menu #wide-menu-products #all-models > li:not(#m-faraday)
+{display:none;}
+#all-models > li ul.models  li, #all-models > li ul.information  li, #all-models > li ul.series  li {
+float: left;
+    position: relative;
+    width: auto;
+}
+
+#all-models > li ul.models  li.man-logo {
+    width: 146px;
+    float: right;
+	right: 0;	
+} 
+
+
+#all-models > li ul.models, #all-models > li ul.information, #all-models > li ul.series {
+	float: left;
+	/*
+display: inline-block;
+width: 100%;
+*/
+}
+#all-models > li:not(#m-yottacontrol) ul.series:before {
+    content: "Серии: ";
+    float: left;
+    padding: 3px 8px 2px 0px;
+    color: gray;
+}
+
+#all-models > li ul.information, #all-models > li ul.series, #all-models > li ul.models {
+/*margin-top: 15px;*/
+}
+
+#all-models > li ul.information:before {
+	content: "Технологии: ";
+    padding: 5px 8px 0px 0px;
+    float: left;	
+    color: #34ab5e;
+	font-weight: bold;
+}
+ul.models  li:not:(.man-logo):after, ul.information  li:after, ul.series  li:after {
+    content: "•";
+    color: #8E8E8E;
+    display: inline-block;
+    text-align: center;
+    width: 29px;
+    margin-right: -7px;
+    font-size: 13px;
+}
+
+ul.models  li:last-child::after, ul.information  li:last-child::after, ul.series  li:last-child::after
+{
+    content: "";
+}
+#all-models > li > ul > li > a{
+
+}
+#all-models > li ul.information li a {
+    color: #34ab5e;
+	text-decoration:underline;	
+	font-size: 15px;
+}
+#all-models > li ul.series li a {
+    color: darkgray;
+	text-decoration:none;	
+font-size: 0.8em;	
+}
+
+#all-models > li ul.models li a {
+color: inherit;
+text-decoration:none;
+/*transition: all 1s;*/
+font-size: 0.8em;
+}
+#all-models > li ul li a:hover {
+text-decoration:underline;
+}#all-models > li > ul > li > a{
+text-decoration:underline;
+}
+#all-models > li > div > a {
+font-weight: normal;
+text-decoration: none;
+color: inherit;
+}
+
+#all-models .my_span {
+
+}
+
+ input.show-type:checked ~ #wide-menu #all-models > li .information 
+ {display:none} 
+ input.show-type:checked ~ #wide-menu #all-models > li .series 
+{display:none} 
+
+input#r-select-paneli:checked ~ #wide-menu #all-models > li:not(.m-paneli) {display:none;}
+input#r-select-panel-pc:checked  ~ #wide-menu #all-models > li:not(.m-panel-pc)  {display:none;}
+input#r-select-pc-full-ip65:checked  ~ #wide-menu #all-models > li:not(.m-pc-full-ip65)  {display:none;}
+input#r-select-box-pc:checked  ~ #wide-menu #all-models > li:not(.m-box-pc)  {display:none;}
+input#r-select-monitory:checked  ~ #wide-menu #all-models > li:not(.m-monitors)  {display:none;}
+input#r-select-routery:checked  ~ #wide-menu #all-models > li:not(.m-routers)  {display:none;}
+input#r-select-plc:checked  ~ #wide-menu #all-models > li:not(.m-plc)  {display:none;}
+input#r-select-modbus:checked  ~ #wide-menu #all-models > li:not(.m-modbus)   {display:none;}
+input#r-select-power-supply:checked ~ #wide-menu #all-models > li:not(.m-power-supply)  {display:none;}
+input#r-select-android:checked  ~ #wide-menu #all-models > li:not(.m-android)  {display:none;}
+input#r-select-wince:checked  ~ #wide-menu #all-models > li:not(.m-wince)  {display:none;}
+
+input#r-select-paneli:checked ~ #wide-menu #all-models > li .models:not(.m-paneli) {display:none;}
+input#r-select-panel-pc:checked  ~ #wide-menu #all-models > li .models:not(.m-panel-pc) {display:none;}
+input#r-select-pc-full-ip65:checked  ~ #wide-menu #all-models > li .models:not(.m-pc-full-ip65) {display:none;}
+input#r-select-box-pc:checked  ~ #wide-menu #all-models > li .models:not(.m-box-pc)  {display:none;}
+input#r-select-monitory:checked  ~ #wide-menu #all-models > li .models:not(.m-monitors) {display:none;}
+input#r-select-routery:checked  ~ #wide-menu #all-models > li .models:not(.m-routers)  {display:none;}
+input#r-select-plc:checked  ~ #wide-menu #all-models > li .models:not(.m-plc)  {display:none;}
+input#r-select-modbus:checked  ~ #wide-menu #all-models > li .models:not(.m-modbus)  {display:none;}
+input#r-select-power-supply:checked ~ #wide-menu #all-models > li .models:not(.m-power-supply)  {display:none;}
+input#r-select-android:checked  ~ #wide-menu #all-models > li .models:not(.m-android)  {display:none;}
+input#r-select-wince:checked  ~ #wide-menu #all-models > li .models:not(.m-wince)  {display:none;}
+
+input#r-select-paneli:checked ~ #wide-menu #all-models > li .cat-name:not(.m-paneli) {display:none;}
+input#r-select-panel-pc:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-panel-pc) {display:none;}
+input#r-select-pc-full-ip65:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-pc-full-ip65) {display:none;}
+input#r-select-box-pc:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-box-pc)  {display:none;}
+input#r-select-monitory:checked  ~ #wide-menu #all-models > li  .cat-name:not(.m-monitors) {display:none;}
+input#r-select-routery:checked  ~ #wide-menu #all-models > li  .cat-name:not(.m-routers) {display:none;}
+input#r-select-plc:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-plc) {display:none;}
+input#r-select-modbus:checked  ~ #wide-menu #all-models > li  .cat-name:not(.m-modbus) {display:none;}
+input#r-select-power-supply:checked ~ #wide-menu #all-models > li .cat-name:not(.m-power-supply) {display:none;}
+input#r-select-android:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-android) {display:none;}
+input#r-select-wince:checked  ~ #wide-menu #all-models > li .cat-name:not(.m-wince) {display:none;}
+
+input#r-select-paneli:checked ~ #wide-menu #all-models > li .man-logo:not(.m-paneli) {display:none;}
+input#r-select-panel-pc:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-panel-pc) {display:none;}
+input#r-select-pc-full-ip65:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-pc-full-ip65) {display:none;}
+input#r-select-box-pc:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-box-pc)  {display:none;}
+input#r-select-monitory:checked  ~ #wide-menu #all-models > li  .man-logo:not(.m-monitors) {display:none;}
+input#r-select-routery:checked  ~ #wide-menu #all-models > li  .man-logo:not(.m-routers) {display:none;}
+input#r-select-plc:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-plc) {display:none;}
+input#r-select-modbus:checked  ~ #wide-menu #all-models > li  .man-logo:not(.m-modbus) {display:none;}
+input#r-select-power-supply:checked ~ #wide-menu #all-models > li .man-logo:not(.m-power-supply) {display:none;}
+input#r-select-android:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-android) {display:none;}
+input#r-select-wince:checked  ~ #wide-menu #all-models > li .man-logo:not(.m-wince) {display:none;}
+
+.close {
+    height: 20px;
+    display: inline-block;
+    width: 100%;
+}
+.close #close-button {
+float: right;
+display: inherit;
+}	
+.close #close-button:before {
+    content: " ";
+    width: 4px;
+    height: 15px;
+    display: inline-block;
+    background-color: #C55F5F;
+    transform: rotate(45deg);
+    margin-top: 11px;
+    margin-right: 2px;
+}
+
+.close #close-button:after {
+    content: " ";
+    width: 4px;
+    height: 15px;
+    display: inline-block;
+    transform: rotate(-45deg);
+    background-color: #C55F5F;
+    margin-left: -11px;
+}
+
+label:hover {text-shadow: none;
+color: gray;
+}
+
+#cssmenut-new > ul > li > .label {
+    color: #E8E8E8;
+	text-shadow: none;
+	transition: all 0.3s;
+
+}
+
+
+
+#cssmenut-new .top-menu-punkt:hover {
+ 
+	    color: #34ab5e;
+}
+/*
+#cssmenut-new .top-menu-punkt:hover::after {
+    border-top: 8px solid #03FE01;
+
+}
+*/
+
+#all-models .my_span {
+    float: initial;
+	width: auto;
+}
+
+.man-logo {
+	/*display: none;*/
+	background-repeat: no-repeat;
+    background-position: top right;
+    background-size: contain;
+}
+
+.man-logo  img {
+	float: right;
+	max-height: 110px; 
+    max-width: 146px;	
+}
+#wide-menu .man-logo {
+    height: 110px;
+    right: 60px;
+    z-index: 2;
+    display: inherit;
+    width: 146px;
+    float: right;
+    top: -20px;
+    margin-top: -40px;
+}
+
+#wide-menu .man-log + div {
+	width: calc(100% - 150px);
+}
+#wide-menu  .cat-name {
+	float: left;
+	margin-bottom: 15px;	
+    
+}
+#wide-menu  .cat-name a{
+text-decoration: underline;	
+}
+#wide-menu  .cat-name {
+	    margin-top: 20px;
+}
+#wide-menu  .cat-name2 {
+    font-size: 14px;
+    font-weight: 700;
+	margin-top: 0px;	
+	margin-bottom: 0px;	
+    text-decoration: none;	
+    clear: both;
+}
+
+.free-space {
+    position: absolute;
+    width: 81px;
+    height: 27px;
+    top: 17px;
+    background: white;
+    z-index: 1;
+}
+
+#cssmenut-new  .menu_top {
+	color: #C5C5C5;
+        /*margin-right: -40px;*/
+}
+#cssmenut-new  .menu_top > ul {display: block;}
+#cssmenut-new  .menu_top > ul > li {display: inline-block;}
+
+#cssmenut-new  .menu_top > ul > li > ul {display:none;position: absolute;z-index: 11;
+                         padding-bottom: 5px;background-color: #464646;width: auto;opacity: 0;transition: 0.2s;}
+#cssmenut-new  .menu_top > ul > li:hover > ul {display:block;opacity: 1;}
+
+
+#cssmenut-new  .menu_top a {
+color: #fdfdfd;
+padding: 13px 13px;
+display: block;
+}
+
+
+#cssmenut-new  .menu_top li li  {margin-top: 1px;margin-bottom: 1px;}
+
+#cssmenut-new  .menu_top li li a {
+    line-height: 1.1;
+padding: 5px 10px;
+}
+#cssmenut-new  .menu_top li li.separator {border-bottom: 1px solid #dedede;margin: 2px 9px 1px;}
+
+#cssmenut-new  .menu_top > a:first-child{
+margin-left: -3px;
+}
+
+.it-logo {
+	height: 34px;
+	background-repeat: no-repeat;
+	background-position: top right;
+	/*width: calc(100% - 150px);*/
+	width: 385px;
+	/*float: left;*/
+}
+
+.it-logo img {
+	float: right;
+	max-height: 60px;
+	
+}
+
+ul.models {
+	text-align: left;
+}
+
+ul.models  li:after {
+    content: "•";
+	color: #c1c1c1;
+    display: inline-block;
+    text-align: center;
+    width: 29px;
+    margin-right: -7px;
+    font-size: 13px;
+}
+
+
+ul.models  li.man-logo:after  {
+	
+	    content: "";
+	    display: none;	
+}
+
+#all-models .my_span {
+	float: none;
+	display: initial;
+}
+
+#all-models  .models li:not(.man-logo) {
+	float: none;
+}
+
+#cssmenut-new .menu_top a {
+	text-shadow: none;
+	transition: all 0.2s;
+        text-decoration: none;
+}
+
+#cssmenut-new .menu_top a span.arrow-down{
+    background: url('/images/arrow_down_white_green.png') right top no-repeat;
+    width:15px;
+    height: 8px;
+    display: inline-block;
+}
+#cssmenut-new .menu_top a:hover span.arrow-down{
+    background: url('/images/arrow_down_white_green.png') right -50px no-repeat;
+}
+#cssmenut-new .menu_top a span.store-new-badge{
+    background: url('/images/store-new-badge-white.png') center top no-repeat;
+    width:25px;
+    height: 25px;
+    display: inline-block;
+    margin-top: -7px;
+    margin-bottom: -7px;
+    margin-right: 5px;
+    margin-left: -4px;
+}
+#cssmenut-new .menu_top a span.youtube{
+    background: url('/images/youtube.png') center 3px no-repeat;
+    width:25px;
+    height: 22px;
+    display: inline-block;
+    margin-top: -2px;
+    margin-bottom: -7px;
+    margin-right: 1px;
+    margin-left: -4px;
+}
+
+
+
+
+#cssmenut-new .menu_top a:hover {
+  /*  
+	    text-shadow: 0px 0px 4px #89C4FF, 0px 0px 2px #68B3FF;	
+		*/
+	    color: #34ab5e;
+}
+
+
+.w70 {
+	width: 70px;
+    display: inline-block;	
+}
+
+.w100 {
+	width: 100px;
+    display: inline-block;	
+}
+
+.w110 {
+	width: 110px;
+    display: inline-block;	
+}
+/*
+.w150 {
+	width: 164px;
+    display: inline-block;	
+}
+*/
+.w150 span {
+	color: #adadad;
+} 
+
+ul.models  li.no-after:after {
+	content: '';
+}

@@ -1,0 +1,75 @@
+.news_list__item_picture_preview{
+    width: 330px;
+    height: 187px;
+    background: center no-repeat;
+}
+    .news_list__item{
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        padding: 0px 10px 0px 0px;
+        transition: box-shadow 0.2s;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 0px;
+        position: relative;
+        overflow: hidden;
+    }
+    .news_list__item:hover{
+                           box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+
+    }
+
+    .news_list__item_picture_preview_wrap{
+        padding: 0px;
+        box-sizing: border-box;        
+        height: 130px;
+        background:  #f9f9f9;
+        margin: 0px 0px 0px 0;       
+        
+    }
+    .news_list__item:hover .news_list__item_picture_preview_wrap{top:53px;}
+
+
+    .news_list__item_picture_preview{
+        width: 100%;
+        max-width: 150px;
+        height: 130px;
+    /*    background: center /100% auto no-repeat;*/
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin: 0 auto;
+    }
+    .news_list__item_link{
+        text-decoration: none;
+        color: #333;
+    }
+    .news_list__item_link:hover{
+        text-decoration: none;
+        color: #333;
+    }
+    .news_list__item_name_wrap{display: block;width: 100%;background: rgba(255,255,255,0.5);
+                               margin: 0;padding: 0 0px;box-sizing: border-box;
+                               position: relative;z-index: 10;}
+    .news_list__item_name{
+        display:block;width: 100%;font-size: 14px;font-weight: bold;line-height: 1.4;
+                          vertical-align: middle;height:auto;text-align: left;margin: 15px 0 10px;}
+    .news_list__item_text_wrap{width: 100%;box-sizing: border-box;
+                               background: #fff;z-index: 10;}
+
+    .news_list__item:hover .news_list__item_text_wrap{}
+
+    .news_list__item_text{display: display;width: 100%;height: auto;overflow: hidden;text-align: left;line-height: 1.4;
+                          padding-bottom: 5px;
+    }
+    .news_list__item_text__date{
+        background: #bce9bc;
+        padding: 0 5px;
+        margin-right: 1px;
+        font-size: 11px;
+        line-height: 11px;
+    }
+    .news_list__h2{background:  #bce9bc;padding: 5px 10px;margin: 0;}
+.block_content h2.news_list__h2 {
+	margin:5px 0 5px ;
+	font-size: 16px;
+}    

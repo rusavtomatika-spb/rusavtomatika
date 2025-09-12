@@ -1,0 +1,136 @@
+body,*{font-family: Tahoma, Geneva, Verdana, sans-serif; font-size: 15px;}
+h1{font-size: 1.2em;text-align: center;}
+h2{font-size: 1.1em;text-align: center;}
+h3{font-size: 1em;text-align: center;}
+table{width: 100%;border: none;}
+td,th{border: none;padding: 5px 10px;}
+pre{max-width: 100%;white-space: pre-wrap;}
+
+
+.menu-bar{background: #eee;padding: 5px 20px;margin-top: -20px;text-align: center;font-size: 12px;}
+.menu-bar a{margin: 10px;}
+
+form{background: #eee;padding: 10px 20px;margin: 10px 0;}
+.input_text_style1{width: 100%;border: none;padding: 10px;margin: 5px;box-sizing: border-box;}
+
+.input_submit_style1{width: 100px;border: none;padding: 10px;margin: 5px;background: #000;color: #fff;cursor: pointer;}
+.input_submit_style1:hover{background: #333;}
+.wrap_all{width: 1035px;margin: 10px auto;padding: 20px;box-sizing: border-box}
+.message_error{background: #efe;color: #e00;padding: 5px 20px;font-size: 10px;}
+
+.block_spoiler{padding: 10px;background: #eef;overflow: hidden;height: 150px;}
+.block_spoiler.opened{height: auto;}
+.block_spoiler_show_hide{text-decoration: underline;cursor: pointer;padding: 5px 10px;background: rgba(155,155,255,0.2);}
+.block_spoiler_show_hide.top{margin: -10px -10px 10px;}
+.block_spoiler_show_hide.bottom{margin: 10px -10px -10px;}            
+.block_spoiler_show_hide:hover{background: rgba(0,0,0,0.1);}
+
+#panel_adding_pages_from_xml_processing{
+    background: #eee;padding: 10px 20px;margin: 10px 0;
+}
+#panel_adding_pages_from_xml_processing.processing{
+    background: #fee;
+}
+#panel_adding_pages_from_xml_processing.finished{
+    background: #6bd66b;
+}
+#panel_adding_pages_from_xml_processing .status_panel{
+    max-width: 900px;
+    font-size: 14px;line-height: 20px;
+    display: block;padding: 0 5px;background: rgba(255,255,255,0.8);border: 1px solid #d5d5d5;
+    margin-right: 10px;
+}
+#panel_adding_pages_from_xml_processing button{
+    font-size: 14px;line-height: 35px;background: #000;color: #fff;
+    display: inline-block;padding: 0 15px;border: 1px solid #000;
+    cursor: pointer;
+}
+#panel_adding_pages_from_xml_processing button:hover {	background: #333;}
+
+#panel_adding_pages_from_xml_processing button:disabled,
+#panel_adding_pages_from_xml_processing button[disabled]{
+    background: #444;
+    color: #777;
+    border: 1px solid #444;
+}
+.word_hint{margin: 0 10px; padding: 0;font-size: 12px;cursor: pointer;display: inline-block;text-decoration: underline;}
+.word_hint .highlight{background: #dfd;font-weight: 400;padding: 1px 0;}
+
+.table_search_results .picture{
+    display: inline-block;
+    width: 20px;height: 20px;
+    background: center;
+    background-size:  contain;
+}
+
+
+.table_search_results{
+    width: 100%;
+    margin: 10px 0;
+    border-collapse: collapse;
+}
+.table_search_results tr:nth-child(2n+1){
+    background: #eee;
+}
+.table_search_results td:first-child{
+    text-align: center;
+}
+.table_search_results td{
+    padding: 10px;
+    vertical-align: top;font-size: 13px;
+}
+.table_search_results td a{
+display: block;
+text-decoration: none;
+}
+.table_search_results tr:hover{
+    background: #cef1ce;
+}
+.table_search_results td a .h1{
+    color: #333;
+    font-weight: bold;
+}
+.table_search_results td a .link {
+    text-decoration: underline;
+}
+
+/**********************************************************************/
+.search_pre_text {
+    background: #14226b;
+    padding: 7px 12px;
+    color: #f7f1f1;
+    border: none;
+    border-radius: 3px;
+    animation-name: flash;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0, 0, 0.7, 0.94);
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: cubic-bezier(0, 0, 0.68, 0.99);
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+/*Firefox 1+*/
+@-webkit-keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+/*Safari 3-4*/
+@-moz-keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+/**********************************************************************/

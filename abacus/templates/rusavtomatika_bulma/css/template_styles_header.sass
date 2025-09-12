@@ -1,0 +1,244 @@
+header
+    ul, li
+        list-style: none
+        margin: 0
+        padding: 0
+
+.header_top
+    font-weight: 500
+    display: flex
+    justify-content: space-between
+    gap: 30px
+    align-items: center
+    max-width: 1340px
+    margin: 0 auto
+    padding: 5px 0
+
+.header_top__item
+    display: flex
+    justify-content: space-between
+    align-items: center
+    gap: 30px
+
+.header_top__wrapper
+    margin-bottom: 15px
+    border-bottom: 1px solid #eee
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4)
+
+.header_top__logo
+    img
+        height: 50px
+        width: auto
+
+    display: flex
+    align-items: center
+
+.header_top__email
+    display: flex
+    align-items: center
+
+.header_top__soc_buttons
+    display: flex
+    justify-content: space-between
+    gap: 10px
+    align-items: center
+
+.header_top__separator
+    border-top: solid 1px #ccc
+    max-width: 1340px
+    margin: 0px auto
+
+.header_top__soc_buttons .social a
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 32px
+    height: 32px
+    margin: 2px
+    text-align: center
+    vertical-align: middle
+    color: #000
+    background: #eee
+    border-radius: 16px
+    transition: 0.2s
+
+.footer__soc_buttons .social a
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 32px
+    height: 32px
+    margin: 2px
+    text-align: center
+    vertical-align: middle
+    color: #000
+    background: #eee
+    border-radius: 16px
+    transition: 0.2s
+    background: #ddd
+
+.header_top__soc_buttons .social a:hover, .footer__soc_buttons .social a:hover
+    color: white
+    background: #00ad61
+
+.header_top__soc_buttons .social.facebook a:hover, .footer__soc_buttons .social.facebook a:hover
+    background: #1877f2
+
+.header_top__soc_buttons .social.instagram a:hover, .footer__soc_buttons .social.instagram a:hover
+    background: #df3775
+
+.header_top__soc_buttons .social.telegram a:hover, .footer__soc_buttons .social.telegram a:hover
+    background: #54a9eb
+
+.header_top__soc_buttons .social.vk a:hover, .footer__soc_buttons .social.vk a:hover
+    background: #0077FF
+
+.header_top__soc_buttons .social.youtube a:hover, .footer__soc_buttons .social.youtube a:hover
+    background: #ea3223
+
+.header_top__soc_buttons .social a:hover svg, .footer__soc_buttons .social a:hover svg
+    color: white !important
+
+.header_top__email .header_email
+    color: black
+    text-decoration: none
+
+    &:hover
+        color: #00ad61
+        text-decoration: none
+
+.header_top__menu .top_menu
+    ul
+        display: flex
+        justify-content: left
+        gap: 30px
+        list-style: none
+        padding: 0
+        margin: 0
+
+    a
+        white-space: nowrap
+        font-size: 0.875rem
+        text-decoration: none
+        color: #000
+        border-bottom: dotted 1px transparent
+        cursor: pointer
+
+        &:hover
+            color: #000
+            border-bottom: dotted 1px #000
+
+    li
+        padding: 0
+        margin: 0
+
+.header_top
+    .work_time
+        font-size: 0.75rem
+        line-height: 0.75rem
+        letter-spacing: 0.035rem
+
+    .header_phone
+        font-size: 1.5rem
+        line-height: 2rem
+        text-decoration: none
+        color: black
+
+        &:hover
+            color: #00ad61
+            text-decoration: none
+
+    .pop_panel_contacts
+        .header_phone
+            font-size: 1.5rem
+            line-height: 2.5rem
+
+        &.mobile
+            .header_phone, .header_email
+                font-size: 1rem
+                line-height: 1.5rem
+
+            .work_time
+                font-size: 0.75rem
+                line-height: 1rem
+
+        .header_phone .to-ltsp
+            letter-spacing: .06rem
+
+        .header_email
+            font-size: 1.0625rem
+
+.header_top__contacts_block
+    text-align: right
+
+.header_top__main_menu
+    margin: 2rem 0
+
+    li.top-menu-item
+        margin: 0.625rem 0
+
+    a
+        color: black
+        text-decoration: none
+
+        &:hover
+            color: #00ad61
+            text-decoration: none
+
+.header_top__phone
+    padding-top: 6px
+
+.icon_hamburger
+    background: url("/abacus/templates/rusavtomatika_bulma/images/menu-cataloge2.svg") (center / cover) no-repeat
+    width: 24px
+    height: 34px
+    margin: 0 0.5rem
+
+.button_open_panel_contacts
+    position: relative
+    z-index: 1011
+
+    &.is-active
+        overflow: hidden
+        text-indent: -9999px
+        background: url("/abacus/templates/rusavtomatika_bulma/images/close-light.svg") (center / cover) no-repeat
+        height: 40px
+        width: 40px
+        margin: 0 0 0 64px
+        padding: 0
+        outline: none
+        border: none
+
+        .icon_hamburger
+            display: none
+
+.pop_panel_contacts
+    position: absolute
+    top: 19px
+    right: 1px
+    background: white
+    width: 380px
+    display: none
+    z-index: 1010
+
+.panel_background
+    display: none
+
+.pop_panel_contacts
+    &.is-active + .panel_background
+        display: block
+        background: rgba(0, 0, 0, 0.3)
+        position: fixed
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        z-index: 1009
+
+    &.mobile
+        width: 280px
+        display: none
+        box-sizing: border-box
+
+        .box
+            padding: 30px

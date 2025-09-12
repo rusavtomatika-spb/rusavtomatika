@@ -1,0 +1,95 @@
+.linked_products{
+    margin-bottom: 30px;
+}
+.linked_products .item {
+    padding: 15px 10px;
+}
+
+
+.linked_products .tns-outer{
+    position: relative;
+}
+
+.linked_products .tns-outer button[data-controls="prev"],
+.linked_products .tns-outer button[data-controls="next"]{
+    position: absolute;
+    top:50%;
+    width: 48px;
+    height: 48px;
+    margin-top: -24px;
+    z-index: 1000;
+    overflow: hidden;
+    display: block;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    transform: translateZ(0);
+}
+.linked_products .tns-outer button[data-controls="prev"]{
+    left: -15px;
+    background: url("prev.svg") center/24px no-repeat;
+}
+.linked_products .tns-outer button[data-controls="next"]{
+    right: -15px;
+    background: url("next.svg") center/24px no-repeat;
+}
+.linked_products .tns-outer button[data-controls="prev"]:hover,
+.linked_products .tns-outer button[data-controls="next"]:hover
+{
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.linked_products .tns-outer button[data-action="stop"],
+.linked_products .tns-outer button[data-action="start"]
+{
+    display: none;
+}
+
+
+
+
+.linked_products .tns-controls{
+    display: flex;
+    justify-content: right;
+}
+
+.linked_products h2{
+    font-size: var(--font-size-lg);
+}
+
+.linked_products .item a{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: .25rem;
+    box-shadow: 0 .3em 1em -.125em rgba(10,10,10,.2),0 0 0 1px rgba(10,10,10,.02);
+    transition: 0.1s;
+}
+.linked_products .item a:hover {
+    padding: 15px;
+    margin: -5px;
+    height: 130px;
+
+}
+.linked_products .item a span.picture{
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: center/contain no-repeat;
+}
+.linked_products .item a span.text{
+    padding: 10px 5px 10px 0px;
+     display: block;
+     width: 100%;
+    box-sizing: border-box;
+     background: center/cover no-repeat;
+ }

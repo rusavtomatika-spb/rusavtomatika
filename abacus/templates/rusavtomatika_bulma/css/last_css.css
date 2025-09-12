@@ -1,0 +1,6 @@
+body{
+    opacity: 1 !important;
+}
+.fancybox__slide {
+    padding: 0px 70px;
+}

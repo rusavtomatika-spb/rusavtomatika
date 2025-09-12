@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@400;700&display=swap');
+
+* {
+    font-family: 'Jura', sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Jura', sans-serif;
+    font-size: calc(16px + 4 * ((100vw) / 680));
+    color: #000;
+}
+
+body {
+    font-size: calc(0.3rem + 0.7vw);
+}
+
+b {
+    font-weight: bold;
+}
+
+label, input {
+    font-family: 'Jura', sans-serif;
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: bold;
+    margin: 1em 0;
+}
+
+h1 {
+    font-size: calc(0.1rem + 2vw);
+    margin-top: 0;
+}
+
+h1 a {
+    font-size: calc(0.1rem + 1.4vw);
+}
+
+h2 {
+    font-size: 5vw;
+}
+
+h3 {
+    font-size: 4px;
+}
+
+h4 {
+    font-size: 3px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+.wrap_all {
+    width: 100%;
+    padding: 10px 1%;
+    max-width: 1800px;
+    margin: 20px auto;
+}
+
+
+.panel_settings {
+    background: #eeffee;
+    padding: 50px;
+    position: fixed;
+    top: 2%;
+    left: 10%;
+    right: 10%;
+    overflow-y: scroll;
+    box-shadow: 0 0 500px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.panel_settings__item {
+    margin: 10px;
+}
+
+.panel_settings__wrap_inn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.panel_settings label {
+    width: 100%;
+    display: inline-block;
+    margin: 5px;
+}
+
+.setting_item {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.setting_item label {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px 30px 5px 5px;
+    text-align: right;
+    display: block;
+    margin: 5px;
+}
+
+.setting_item input {
+    box-sizing: border-box;
+    padding: 5px;
+    width: 100%;
+    margin: 10px;
+}
+
+.button_submit, .panel_settings__close {
+    padding: 8px 15px;
+    margin: 5px;
+    background: #44bb6e;
+    color: #fff;
+    transition: 0.3s;
+    border-color: #44bb6e;
+    cursor: pointer;
+}
+
+.button_submit:hover, .panel_settings__close:hover {
+    background: #34ab5e;
+}
+
+.button_submit[disable="true"] {
+    background: #C5C5C5;
+    border: 2px solid #c5c5c5;
+    cursor: initial;
+}
+
+.panel_settings__item .button_submit {
+    width: 95%;
+    display: block;
+
+}
+
+.panel_settings__close {
+
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    line-height: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+
+}
+
+.button_settings {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
+.panel {
+    padding: 10px;
+    background: #eee;
+}
+
+
+.panel_ajax_reply {
+    padding: 50px;
+    background: #eeffee;
+    line-height: 2;
+}
+
+.panel_loading {
+    background: url('loading.gif') center 35% no-repeat #001100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+.progress_bar {
+    width: 100%;
+}
+
+input[type=text] {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    display: block;
+    padding: 15px 15px;
+    width: 100%;
+    margin: 15px 0;
+    font-size: 20px;
+}
+
+
+/*/////////////////////////////////////////*/
+@media (max-width: 1920px) {
+    h1 {
+        font-size: calc(0.5rem + 1.4vw);
+    }
+
+    h1 a {
+        font-size: calc(0.5rem + 1vw);
+    }
+
+    body {
+        font-size: calc(0.5rem + 1vw);
+    }
+
+
+}
+
+
+@media (max-width: 800px) {
+    html, body {
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: calc(1rem + 4vw);
+        text-align: center
+    }
+
+    .setting_item {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .setting_item label {
+        width: 100%;
+        padding: 5px;
+        text-align: center;
+        display: block;
+    }
+
+    .setting_item input {
+        padding: 5px;
+        width: 100%;
+    }
+
+    .panel_settings {
+        top: 1%;
+        left: 1%;
+        right: 1%;
+        padding: 40px 10px 10px;
+    }
+
+    .panel_settings__wrap_inn {
+        display: block;
+        justify-content: initial;
+    }
+
+
+}
+
+@media (max-width: 480px) {
+    .panel_settings .panel_settings__item {
+        margin: 0;
+    }
+
+    .panel_settings .panel_settings__item label, .panel_settings .panel_settings__item input {
+        margin: 2px 0;
+    }
+
+    .setting_item input[type=submit], .button_submit {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        display: block;
+        padding: 15px 15px;
+        width: 100%;
+        margin: 15px 0;
+        font-size: 20px;
+        background: #44bb6e;
+        color: #fff;
+        transition: 0.3s;
+        border-color: #44bb6e;
+        cursor: pointer;
+    }
+
+
+}

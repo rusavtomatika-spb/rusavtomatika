@@ -1,0 +1,9 @@
+#template_theme_1 td {
+    line-height: 1.2;
+    font-size: 15px;
+}
+.sticky.stickytop input[type="submit"], .sticky.stickytop input[type="reset"], .sticky.stickytop input[type="button"],
+input[type="submit"], input[type="reset"], input[type="button"] {
+    width: 220px;
+}
+

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ovs:video xmlns:ovs="http://webmaster.yandex.ru/schemas/video"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://webmaster.yandex.ru/schemas/video">
+  <ovs:content_id>9-719obB0rU</ovs:content_id>
+  <ovs:url>https://www.youtube.com/watch?v=9-719obB0rU </ovs:url>
+  <ovs:thumbnail>http://i.ytimg.com/vi/9-719obB0rU/maxresdefault.jpg</ovs:thumbnail>
+  <ovs:title>cMT серия Cloud HMI От Weintek - HMI на планшете</ovs:title>
+  <ovs:description> 
+  Серия cMT Weintek ( cMT-SVR-100, cMT-iV5 ).
+  cMT-SVR-100 представляет из себя HMI без дисплея.
+  Дисплеем может являться любое устройство на Android, iPad, ПК, для которых используется приложение cMT Viewer, либо панель cMT-iV5
+  На этом видео представлена новая серия продуктов от Weintek - серия cMT, в которую входят
+  cMT-SVR-100 и cMT-iV5.
+  К одному cMT-SVR-100 подключатся до 3х устройств (планшет, либо телефон на Android, iPad, либо ПК )
+  На видео демонстрируется как выглядит cMT-SVR-100, cMT-iV5, возможности по подключению к серии cMT планшетов на Android и iPad.
+  Для подключения к cMT-SVR-100 используется приложение cMT Viewer, доступное для Android, iPad и ПК.
+  для ПК cMT Viewer устанавливается в комплекте с EasyBuilder Pro.
+  </ovs:description>
+  <ovs:upload_date>2015-04-20T00:00:00Z</ovs:upload_date>
+  <ovs:duration>95</ovs:duration>
+  <ovs:adult>no</ovs:adult>
+  <ovs:login>admin</ovs:login>
+  <ovs:category>technology</ovs:category>
+  <ovs:category>industrial automation</ovs:category>
+  <ovs:category>HMI</ovs:category>
+  <ovs:genre>Обучающее видео</ovs:genre>
+  <ovs:status>published</ovs:status>
+  <ovs:is_official>yes</ovs:is_official>
+  <ovs:embed_url>https://www.youtube.com/embed/9-719obB0rU</ovs:embed_url>
+  <ovs:embed_html><![CDATA[<iframe width="560" height="315" src="https://www.youtube.com/embed/9-719obB0rU" frameborder="0" allowfullscreen="true"></iframe>]]></ovs:embed_html>
+  <ovs:languages>ru, en</ovs:languages>
+  <ovs:tag>Weintek, cMT,  cMT-SVR-100, cMT-iV5, Cloud HMI, HMI iPad, HMI Adnroid, Weintek iPad, Weintek Android, Weintek планшет, Weintek с телефона </ovs:tag>
+</ovs:video>

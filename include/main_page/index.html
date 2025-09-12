@@ -1,0 +1,2355 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Шаблон		</title>
+		<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">-->
+		<link rel="stylesheet" href="css/icons.css">
+		<link rel="stylesheet" href="css/animate.min.css">
+		<link rel="stylesheet" href="css/bulma.css">
+		<link rel="stylesheet" href="css/lightgallery.css">
+		<link rel="stylesheet" href="css/lightgallery_castom.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/main-page.css">
+		<link rel="stylesheet" href="css/cycle.css">
+		<link rel="shortcut icon" type="image/svg+xml" href="favicon.svg">
+		<link rel="icon" type="image/svg+xml" href="favicon.svg">	
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	</head>
+	<body>
+	<header class="with-shadow">
+		<div class="header container_ flex-container">
+			<div class="logo-block flex-container">
+				<a href="#" itemscope itemtype="https://schema.org/ImageObject">
+					<img itemprop="contentUrl" class="logo" src="images/logo.svg" alt="Русавтоматика">
+					<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+						<meta itemprop="name" content="ООО Русавтоматика">
+						<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+						<meta itemprop="url" content="https://www.rusavtomatika.com/">
+						<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+							<meta itemprop="addressLocality" content="Санкт-Петербург">
+							<meta itemprop="postalCode" content="199178">
+							<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+						</span>
+						<meta itemprop="telephone" content="+7 812 648-03-47">
+						<meta itemprop="email" content="sales@rusavtomatika.com">
+					</span>
+				</a>
+				<!--<a class="header-email is-hidden-touch" href="mailto:sales@rusavtomatika.com" title="Отправьте нам сообщение по электронной почте">
+				sales@rusavtomatika.com
+				</a>-->
+			</div>
+			<div class="contacts-block flex-container">
+				<a class="header-email is-hidden-touch" href="mailto:sales@rusavtomatika.com" title="Отправьте нам сообщение по электронной почте">
+					sales@rusavtomatika.com
+				</a>
+				<div class="phone-block">
+					<span class="nowrap work-time">пн-чт 09:00-18:00, пт 09:00-17:00</span><br/>
+					<a href="tel:+78126480347" class="nowrap header_phone">+7 (812) 648-03-47</a>
+				</div>
+				<a href="#" class="header-link-contacts">
+					<span class="button is-success">Контакты</span>
+				</a>
+				<input type="checkbox" id="top-hmt" class="hidden-top-menu-ticker">
+				<label class="btn-top-menu" for="top-hmt"></label>
+			</div>
+		</div>
+		<nav class="top-menu-tray container_ ">
+			<div class="top-menu-box flex-container">
+				<div class="phone-block">
+					<span class="nowrap work-time">пн-чт 09:00-18:00, пт 09:00-17:00</span><br/>
+					<a href="tel:+78126480347" class="nowrap header_phone">+7 <span class="to-ltsp">(812</span>) 648-03-47</a>
+					<a href="tel:+74951081275" class="nowrap header_phone">+7 (495<span class="to-ltsp">) 108-12-75</span></a>
+					<a class="header-email" href="mailto:sales@rusavtomatika.com">sales@rusavtomatika.com</a>
+				</div>
+				<ul class="top-menu">
+					<li class="top-menu-item">
+						<a href="#">Компания</a>
+					</li>
+					<li class="top-menu-item">
+						<a href="#">Новости </a>
+					</li>
+					<li class="top-menu-item">
+						<a href="#">Техподдержка</a>
+					</li>
+					<li class="top-menu-item">
+						<a href="#">Форум</a>
+					</li>
+					<li class="top-menu-item">
+						<a href="#">Библиотека</a>
+					</li>
+					<li class="top-menu-item">
+						<a href="#" >Оплата и доставка</a>
+					</li>
+				</ul>
+				<div class="social_nets">
+					<!--div class="social facebook">
+						<a href="https://www.facebook.com/weintek.official">
+							<svg role="img" viewBox="0 0 320 512">
+								<path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+							</svg>
+						</a>
+					</div>
+					<div class="social instagram">
+						<a href="https://www.instagram.com/rusavtomatika/">
+							<svg role="img" viewBox="0 0 448 512">
+								<path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+							</svg>
+						</a>
+					</div-->
+					<div class="social telegram">
+						<a  rel="nofollow" href="https://t.me/rusavtomatika">
+							<svg role="img" viewBox="0 0 448 512">
+								<path fill="currentColor" d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/>
+							</svg>
+						</a>
+					</div>
+					<div class="social vk">
+						<a rel="nofollow" href="https://vk.com/weintek_official">
+							<svg role="img" viewBox="0 0 576 512">
+								<path fill="currentColor" d="M545 117.7c3.7-12.5 0-21.7-17.8-21.7h-58.9c-15 0-21.9 7.9-25.6 16.7 0 0-30 73.1-72.4 120.5-13.7 13.7-20 18.1-27.5 18.1-3.7 0-9.4-4.4-9.4-16.9V117.7c0-15-4.2-21.7-16.6-21.7h-92.6c-9.4 0-15 7-15 13.5 0 14.2 21.2 17.5 23.4 57.5v86.8c0 19-3.4 22.5-10.9 22.5-20 0-68.6-73.4-97.4-157.4-5.8-16.3-11.5-22.9-26.6-22.9H38.8c-16.8 0-20.2 7.9-20.2 16.7 0 15.6 20 93.1 93.1 195.5C160.4 378.1 229 416 291.4 416c37.5 0 42.1-8.4 42.1-22.9 0-66.8-3.4-73.1 15.4-73.1 8.7 0 23.7 4.4 58.7 38.1 40 40 46.6 57.9 69 57.9h58.9c16.8 0 25.3-8.4 20.4-25-11.2-34.9-86.9-106.7-90.3-111.5-8.7-11.2-6.2-16.2 0-26.2.1-.1 72-101.3 79.4-135.6z"/>
+							</svg>
+						</a>
+					</div>
+					<div class="social youtube">
+						<a rel="nofollow" href="https://www.youtube.com/c/rusavtomatikacom">
+							<svg role="img" viewBox="0 0 576 512">
+								<path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/>
+							</svg>
+						</a>
+					</div>
+				</div>	
+				<div class="addres-block is-hidden-tablet">
+					199178, Санкт-Петербург,<br/>Малый пр. В. О. 57 корп. 3
+				</div>				
+
+			</div>
+		</nav>
+	</header>
+	<nav class="container_ ">
+	<div class="fixed-block">
+		<input type="checkbox" id="hmt" class="hidden-menu-ticker">
+		<label class="btn-menu button is-success fixed-block-cataloge" for="hmt">
+			Каталог
+		</label>
+		<form class="form-search dark">
+			<input class="header-search" type="search" placeholder="Что ищем?">
+		</form>
+		<div class="fixed-block-icons flex-container">
+			<a href="#" class="fixed-block-link flex-container">
+				<img class="fixed-block-icon" src="images/compaire-dark.svg" alt="Сравнение">
+				<span class="is-hidden-mobile">Сравнение</span>
+				<!--<button class="button is-success count-label">0</button>-->
+			</a>
+			<a href="#" class="fixed-block-link flex-container">
+				<img class="fixed-block-icon" src="images/star-dark.svg" alt="Избранное">
+				<span class="is-hidden-mobile">Избранное</span>
+				<!--<button class="button is-success count-label">20</button>-->
+			</a>
+			<a href="#" class="fixed-block-link flex-container">
+				<img class="fixed-block-icon" src="images/basket-dark.svg" alt="Заказ">
+				<span class="is-hidden-mobile">Заказ</span>
+				<!--<button class="button is-success count-label">0</button>-->
+			</a>
+
+		</div>
+		<div class="hidden-menu ">
+			<div class=" container_ ">
+				<div class="box cataloge">
+					<div class="cataloge-left-side">
+						<form  class="form-search color-light">
+							<input type="search" placeholder="Что ищем?">
+						</form>
+						<ul class="cataloge-left-side-switch">
+							<li class="cataloge-switch cataloge-switch-active" data-show="cataloge_list" data-hide="brand-list">Категории</li>
+							<li class="cataloge-switch" data-show="brand-list" data-hide="cataloge_list">Бренды</li>
+						</ul>
+						<ul class="cataloge_list">
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/hmi.png" alt="Панель оператора">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title active-item">
+										Панели оператора
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#" class="item-active">Weintek</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Samkoon</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/pc.png" alt="Панельный компьютер">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										Панельные компьютеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/box-pc.png" alt="Встраиваемый компьютер">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										Встраиваемые компьютеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/monitors.png" alt="Промышленный монитор">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										Промышленные мониторы
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/ewon.png" alt="VPN роутер">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										VPN роутеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">HMS (eWON)</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/mvv.png" alt="Модули ввода-вывода">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										Модули ввода-вывода
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<img class="is-hidden-mobile" src="images/power.png" alt="Блоки питания">
+								<ul>
+									<li>
+									<a href="#" class="cataloge_list-title">
+										Блоки питания
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Faraday</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list-item">
+								<ul>
+									<li  class="cataloge_list_item_subitem single-subitem">
+										<a href="#">Аксессуары</a>
+									</li>
+									<li  class="cataloge_list_item_subitem cataloge_list_item_subitem-column">
+										<a href="#">Программное обеспечение</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="brand-list">
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Weintek
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title item-active">Панели оператора</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Панельные компьютеры</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Промышленные мониторы</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Модули ввода-вывода</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Контроллеры (PLC)</a>
+									</li>
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Aplex
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title">Панельные компьютеры</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Встраиваемые компьютеры</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Промышленные мониторы</a>
+									</li>											
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Samkoon
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title">Панели оператора</a>
+									</li>											
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									IFC
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title">Панельные компьютеры</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Встраиваемые компьютеры</a>
+									</li>
+									<li>
+										<a href="#" class="cataloge_list-title">Промышленные мониторы</a>
+									</li>											
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									HMS(eWon) 
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title">VPN роутеры</a>
+									</li>											
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Faraday
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="cataloge_list-title">Блоки питания</a>
+									</li>											
+								</ul>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Аксессуары
+								</a>
+							</li>
+							<li class="brand-list-item">
+								<a href="#" class="cataloge_list_item_subitem">
+									Программное обеспечение
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="cataloge-right-side">
+						<!--<p>Панели оператора Wientek</p>-->
+						<ul class="series-list">
+							<li class="series-list-item">
+							<a href="#">Серия MT8000iP</a>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="">4.3&Prime; MT8051iP </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; MT8071iP </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; MT8071iP2 </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; MT8102iP</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="series-list">
+							<li class="series-list-item">
+							<span class="current-item">Серия MT8000iE</span>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="#">4.3&Prime; MT8050iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<!--<a href="#">4.3&Prime; MT8053iE </a>-->
+									<span class="current-item">4.3&Prime; MT8053iE </span>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">7.0&Prime; MT8070iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">7.0&Prime; MT8070iER </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">7.0&Prime; MT8071iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">7.0&Prime; MT8073iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">7.0&Prime; MT8071iER </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">10.1&Prime; MT8100iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">10.1&Prime; MT8101iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; MT8102iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">10.1&Prime; MT8103iE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="#">12.1&Prime; MT8121iE</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="series-list">
+							<li class="series-list-item">
+							<a href="#"> Серия MT8000XE</a>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="">9.7&Prime; MT8090XE </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">9.7&Prime; MT8092XE  </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">12.1&Prime; MT8121XE  </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">12.1&Prime; MT8121XE3 </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">15.0&Prime; MT8150XE</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="series-list">
+							<li class="series-list-item">
+							<a href="#">Серия cMT X</a>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; cMT3072X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; cMT3072XH </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; cMT2078X</a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">9.7&Prime; cMT3092X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; cMT2108X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; cMT3102X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; cMT1106X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">15.0&Prime; cMT3152X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">15.0&Prime; cMT2158X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">15.6&Prime; cMT3162X </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">15.6&Prime; cMT3161X</a>
+									</li>									
+								</ul>
+							</li>
+						</ul>
+						<ul class="series-list">
+							<li class="series-list-item">
+							<a href="#">Серия cMT (Cloud HMI)</a>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="">10.1&Prime; cMT3103</a>
+									</li>
+									
+								</ul>
+							</li>
+						</ul>
+						<ul class="series-list">
+							<li class="series-list-item">
+							<a href="#">Серия eMT3000</a>
+								<ul class="series-list-item-list">
+									<li class="series-list-item-subitem">
+									<a href="">7.0&Prime; eMT3070B </a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">10.4&Prime; eMT3105P</a>
+									</li>
+									<li class="series-list-item-subitem">
+									<a href="">12.1&Prime; eMT3120A</a>
+									</li>									
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</nav>
+	<main class="container_">
+	<!--<main>-->
+		<div class="cycle-slideshow gallery" 
+			data-cycle-fx="tileBlind"
+			data-cycle-tile-vertical=false
+			data-cycle-timeout=3000
+			data-cycle-slides="> a"
+			data-cycle-pager="#pager"
+			data-cycle-swipe="true"
+			data-cycle-swipe-fx="tileBlind"
+			>
+			<a href="#" itemscope itemtype="https://schema.org/ImageObject">
+				<img itemprop="contentUrl" src="images/temp/1.jpg" alt="Панель оператора Weintek MT8092XE">
+				<meta itemprop="caption" content="Панель оператора Weintek MT8092XE">
+				<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+					<meta itemprop="name" content="ООО Русавтоматика">
+					<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+					<meta itemprop="url" content="https://www.rusavtomatika.com/">
+					<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+						<meta itemprop="addressLocality" content="Санкт-Петербург">
+						<meta itemprop="postalCode" content="199178">
+						<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+					</span>
+					<meta itemprop="telephone" content="+7 812 648-03-47">
+					<meta itemprop="email" content="sales@rusavtomatika.com">
+				</span>
+			</a>
+			<a href="#" itemscope itemtype="https://schema.org/ImageObject">
+				<img itemprop="contentUrl" src="images/temp/2.jpg" alt="Панель оператора Weintek cMT1106X">
+				<meta itemprop="caption" content="Панель оператора Weintek cMT1106X">
+				<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+					<meta itemprop="name" content="ООО Русавтоматика">
+					<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+					<meta itemprop="url" content="https://www.rusavtomatika.com/">
+					<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+						<meta itemprop="addressLocality" content="Санкт-Петербург">
+						<meta itemprop="postalCode" content="199178">
+						<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+					</span>
+					<meta itemprop="telephone" content="+7 812 648-03-47">
+					<meta itemprop="email" content="sales@rusavtomatika.com">
+				</span>
+			</a>
+			<a href="#" itemscope itemtype="https://schema.org/ImageObject">
+				<img itemprop="contentUrl" src="images/temp/3.jpg" alt="Панель оператора Weintek cMT2108X2">
+				<meta itemprop="caption" content="Панель оператора Weintek cMT2108X2">
+				<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+					<meta itemprop="name" content="ООО Русавтоматика">
+					<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+					<meta itemprop="url" content="https://www.rusavtomatika.com/">
+					<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+						<meta itemprop="addressLocality" content="Санкт-Петербург">
+						<meta itemprop="postalCode" content="199178">
+						<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+					</span>
+					<meta itemprop="telephone" content="+7 812 648-03-47">
+					<meta itemprop="email" content="sales@rusavtomatika.com">
+				</span>
+			</a>
+			<div class="center cycle-pager cycle_pager_in_box" id="pager"></div>
+		</div>
+		<div class="gallery_tray brands_gallery_tray">
+			<div class="cycle-slideshow brands_gallery" 
+				data-cycle-fx="carousel"
+				data-cycle-timeout=3000
+				data-cycle-carousel-visible=10
+				data-cycle-slides="> a"
+				>
+				<a href="#"  class="brand_slide">
+					<img src="images/weintek.svg" alt="Weintek">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/samkoon.svg" alt="Samkoon">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/IFC.svg" alt="IFC">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/aplex.svg" alt="Aplex">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/ewon.svg" alt="eWON">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/Haiwell.svg" alt="Haiwell">
+				</a>
+				<a href="#"  class="brand_slide">
+					<img src="images/yottacontrol.png" alt="Yottacontrol">
+				</a>
+			</div>
+		</div>
+		<div class="hor_gallery_block">
+			<p class="is-size-3 has-text-weight-medium bright_text">Сейчас в наличии</p>
+			<div class="gallery_tray">
+				<div class="cycle-slideshow stock_gallery" 
+				data-cycle-fx="carousel"
+				data-cycle-timeout=3000
+				data-cycle-carousel-visible=7
+				data-cycle-slides="> div"
+				data-cycle-next="#next_stock"
+				data-cycle-prev="#prev_stock"
+				>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+								<img src="images/gallery/model1.jpg" alt="Placeholder image">
+								</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold">MT8051iP</strong><br/>
+							4.3&Prime;  Панель оператора<br/>
+							<span class="brand_name">Weintek</span><br/>
+							<span class="model_price has-text-weight-bold is-size-5">205 $</span>
+							<span class="has-text-weight-semibold is-size-6">(15198&nbsp;&#8381;)</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+								<img src="images/gallery/model2.jpg" alt="Placeholder image">
+								</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">MT8071iP2</strong><br/>
+							7&Prime;  Панель оператора<br/>
+							<span class="brand_name">Weintek</span><br/>
+							<span class="model_price has-text-weight-semibold is-size-6">цена по запросу</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+							<!--(15198&nbsp;&#8381;)-->
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+							<img src="images/gallery/model3.jpg" alt="Placeholder image">
+							</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">IFC IFC-BOXJ1900-8COM</strong><br/>
+							Встраиваемый компьютер<br/>
+							<span class="brand_name">IFC</span><br/>
+							<span class="model_price has-text-weight-bold is-size-5">1240 $</span>
+							<span class="has-text-weight-semibold is-size-6">(115198&nbsp;&#8381;)</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+							<img src="images/gallery/model4.jpg" alt="Placeholder image">
+							</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">MT8071iP2</strong><br/>
+							7&Prime;  Панель оператора<br/>
+							<span class="brand_name">Weintek</span><br/>
+							<span class="model_price has-text-weight-semibold is-size-6">цена по запросу</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+							<!--(15198&nbsp;&#8381;)-->
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+							<img src="images/gallery/model5.jpg" alt="Placeholder image">
+							</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">MT8071iP2</strong><br/>
+							Встраиваемый компьютер<br/>
+							<span class="brand_name">Aplex</span><br/>
+							<span class="model_price has-text-weight-bold is-size-5">240 $</span>
+							<span class="has-text-weight-semibold is-size-6">(15198&nbsp;&#8381;)</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+							<img src="images/gallery/model6.jpg" alt="Placeholder image">
+							</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">MT8071iP2</strong><br/>
+							7&Prime;  Панель оператора<br/>
+							<span class="brand_name">Weintek</span><br/>
+							<span class="model_price has-text-weight-bold is-size-5">240 $</span>
+							<span class="has-text-weight-semibold is-size-6">(15198&nbsp;&#8381;)</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+						</div>
+					</div>
+					<div class="hor_gallery_item">
+						<a href="#">
+							<div class="card-image box round_card_image">
+								<figure class="model_image">
+							<img src="images/gallery/model1.jpg" alt="Placeholder image">
+							</figure>
+							</div>
+						</a>
+						<div class="content box product_info">
+							<strong class="is-size-6 has-text-weight-semibold has-text-centered">MT8071iP2</strong><br/>
+							7&Prime;  Панель оператора<br/>
+							<span class="brand_name">Weintek</span><br/>
+							<span class="model_price has-text-weight-bold is-size-5">240 $</span>
+							<span class="has-text-weight-semibold is-size-6">(15198&nbsp;&#8381;)</span>
+							<div class="hor_gallery_item_hover_link product_hover">подробнее</div>
+						</div>
+					</div>
+				</div>
+				<div class="gallery_top_right_nav">
+					<span id="prev_stock" class="cycle_prev">
+						<img src="images/prev-light.svg" alt="Назад">
+					</span>
+					<span id="next_stock" class="cycle_next">
+						<img src="images/next-light.svg" alt="Вперёд">
+					</span>
+				</div>
+			</div>
+
+		</div>
+		<article>
+			<!--<div class="wow fadeInUp">-->
+				<h1 class="title is-1">
+					Компания &laquo;Русавтоматика&raquo;&nbsp;&mdash; поставка оборудования для автоматизации производства
+				</h1>
+				 <p class="subtitle">
+					Мы сотрудничаем с известными мировыми брендами и предлагаем продукцию высокого качества от ведущих мировых производителей со склада и под заказ.
+					ООО &laquo;Русавтоматика&raquo; является официальным дистрибьютором на территории России продукции:
+				</p>
+				<ul>
+				<li><strong>Weintek</strong>&nbsp;и <strong>Samkoon</strong>&nbsp;(операторские панели);</li>
+				<li><strong>IFC</strong>&nbsp;(промышленные компьютеры, встраиваемые компьютеры, промышленные мониторы);</li>
+				<li><strong>Aplex </strong>(панельные компьютеры);</li>
+				<li><strong>eWON</strong>&nbsp;(vpn-роутеры);</li>
+				<li><strong>Yottacontrol</strong> (контроллеры, plc, и modbus-модули). </li>
+				</ul>
+				<div id="lightgallery" class="cert_gallery top_2rem">
+					<a href="images/cert/weintek.jpg" class="objects_gallery_item">
+						<img src="images/cert/weintek_t.jpg" alt="Weintek Distributor Certificate">
+					</a>
+					<a href="images/cert/samkoon.jpg"  class="objects_gallery_item">
+						<img src="images/cert/samkoon_t.jpg" alt="Samkoon Distributor Certificate">
+					</a>
+					<a href="images/cert/ifc.jpg"  class="objects_gallery_item">
+						<img src="images/cert/ifc_t.jpg" alt="IFC Distributor Certificate">
+					</a>
+					<a href="images/cert/aplex.jpg"  class="objects_gallery_item">
+						<img src="images/cert/aplex_t.jpg" alt="Aplex Distributor Certificate">
+					</a>
+					<a href="images/cert/eWON.jpg"  class="objects_gallery_item">
+						<img src="images/cert/eWON_t.jpg" alt="eWON Distributor Certificate">
+					</a>
+					<a href="images/cert/haiwell.jpg"  class="objects_gallery_item">
+						<img src="images/cert/haiwell_t.jpg" alt="Haiwell Distributor Certificate">
+					</a>
+					<a href="images/cert/yottacontrol.jpg"  class="objects_gallery_item">
+						<img src="images/cert/yottacontrol_t.jpg" alt="Yottacontrol Distributor Certificate">
+					</a>
+
+				</div>
+				<p class="is-size-4 has-text-centered bright_text top_2rem bottom_2rem">
+					Всего на нашем сайте представлено более 200 наименований продукции c ценами и подробными техническими характеристиками.
+				</p>
+				<div class="canvas_tray">
+					<canvas id = "catalog_canvas" width="1200" height="500" class="width_100">
+						<!--Anything in here will be replaced on browsers that support the canvas element-->
+						<ul>
+						<li>
+							<a href="#">
+							панель оператора с ethernet
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с Codesys
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора со встроенным  ПЛК
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора c 2xLAN
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с WiFi
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с EasyAccess
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с web сервером
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с экраном на смартфоне
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с просмотром изображения с ПК
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с Android
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с JavaScript
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с подключением IP камер
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора с Modbus
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора оператора на ТВ
+							</a>
+						</li>
+						<li>
+							<a href="#">
+							панель оператора Full HD
+							</a>
+						</li>
+						</ul>
+					</canvas>
+				</div>
+				<div class="columns is-multiline company_pluses">
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-6-widescreen
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-6-tablet is-6-desktop  company_pluses_item">
+								<img src="images/testdrive.svg" alt="Тест-драйв оборудования">
+								<p class="is-size-6 has-text-weight-bold black_text">
+								Тест-драйв оборудования
+								</p>
+								<div  class="has-text-left company_pluses_item_text">
+									<p>
+									Для желающих протестировать поставляемую нами продукцию действует специальная программа &laquo;Тест-драйв&raquo;. В&nbsp;её&nbsp;рамках вы&nbsp;сможете изучить функциональные возможности, а&nbsp;также оценить качество и&nbsp;надежность оборудования.
+									</p>
+									<p>
+									В&nbsp;период тестирования вы&nbsp;можете обратиться к&nbsp;нашим специалистам технической поддержки для консультации по&nbsp;работе с&nbsp;взятым на&nbsp;тест оборудованием.
+									</p>
+								</div>
+							</div>
+							<div class="column is-12-mobile is-6-tablet is-6-desktop  company_pluses_item">
+								<img src="images/support.svg" alt="Техническая поддержка">
+								<p  class="is-size-6 has-text-weight-bold black_text">
+								Техническая поддержка
+								</p>
+								<div  class="has-text-left company_pluses_item_text">
+									<p class="bottom_16">
+									Мы&nbsp;оказываем техническую поддержку по&nbsp;всей поставляемой нами продукции. К&nbsp;нашим инженерам могут обратиться как наши клиенты, так и&nbsp;те, кто приобрёл приобрел продукцию не&nbsp;у&nbsp;нас. 
+									<br/>Звоните, пишите в&nbsp;чат (справа внизу) или на&nbsp;электронную почту.
+									</p>
+									<p  class="is-size-6 has-text-weight-bold black_text">
+									<span class="nowrap">+7 (812) 648-03-47</span>
+									</p>
+									<p  class="is-size-6 has-text-weight-bold">
+									<a href="mailto:support@rusavtomatika.com" class="bright_text">
+									support@rusavtomatika.com
+									</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-6-widescreen
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-6-tablet is-6-desktop  company_pluses_item">
+								<img src="images/warehouse.svg" alt="Склад">
+								<p  class="is-size-6 has-text-weight-bold black_text">
+								Склады в&nbsp;Санкт-Петербурге и&nbsp;Москве
+								</p>
+								<div  class="has-text-left company_pluses_item_text">
+									<p>
+									Мы&nbsp;поддерживаем на&nbsp;наших складах в&nbsp;Санкт-Петербурге и&nbsp;Москве достаточное количество продукции. Мы&nbsp;постоянно анализируем потребности наших клиентов и&nbsp;страемся держать продукцию с&nbsp;запасом.
+									</p>
+									<p>
+									В&nbsp;90% случаев при обращении к&nbsp;нам необходимый товар будет на&nbsp;складе.
+									</p>
+								</div>
+							</div>
+							<div class="column is-12-mobile is-6-tablet is-6-desktop company_pluses_item">
+								<img src="images/delivery.svg" alt="Склад">
+								<p  class="is-size-6 has-text-weight-bold black_text">
+								Доставка в&nbsp;регионы
+								</p>
+								<div  class="has-text-left company_pluses_item_text">
+									<p>
+									Мы&nbsp;доставляем продукцию с&nbsp;наших складов нашим клиентам Деловыми Линиями, DPD и&nbsp;другими транспортными компаниями.
+									</p>
+									<p>
+									Доставка может осуществляеться как до&nbsp;терминала транспортной компании в&nbsp;вашем городе, так и&nbsp;до&nbsp;вашего адреса.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!--</div>-->
+			<section class="hor_gallery_block">
+				<h2 class="is-size-3 has-text-weight-medium bright_text">
+					<a class="bright_text" href="#">Новости компании</a>
+				</h2>
+				<!--<div class="gallery_tray">
+					<div class="cycle-slideshow stock_gallery" 
+					data-cycle-fx="carousel"
+					data-cycle-timeout=0
+					data-cycle-carousel-visible=5					
+					data-cycle-slides="> div"
+					data-cycle-next="#next_new"
+					data-cycle-prev="#prev_new"
+					data-allow-wrap=false
+					>-->
+				<div class="gallery_tray">
+					<div class="cycle-slideshow stock_gallery" 
+					data-cycle-fx="carousel"
+					data-cycle-timeout=0
+					data-cycle-carousel-visible=5					
+					data-cycle-slides="> div"
+					data-cycle-next="#next_new"
+					data-cycle-prev="#prev_new"
+					>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new1.jpg" alt="Панели Weintek+ CODESYS+ I/O модули как замена ПЛК">
+										<meta itemprop="caption" content="Панели Weintek+ CODESYS+ I/O модули как замена ПЛК">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									01.12.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Панели Weintek&nbsp;+ CODESYS&nbsp;+ I/O модули как замена ПЛК
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new2.jpg" alt="Weintek cMT2108X2">
+										<meta itemprop="caption" content="Weintek cMT2108X2">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									11.11.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Новая панель оператора Weintek cMT2108X2 с&nbsp;возможностью подключения модуля Wifi&nbsp;M2
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>
+	
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new3.jpg" alt="Панель оператора Weintek cMT1106X">
+										<meta itemprop="caption" content="Панель оператора Weintek cMT1106X">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									05.11.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Компания Weintek объявила о&nbsp;выпуске новой панели оператора cMT1106X
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>
+
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new4.jpg" alt="Отзыв клиента">
+										<meta itemprop="caption" content="Отзыв клиента">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									13.10.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									[Отзыв клиента] Применение панели Weintek cMT2078X&nbsp;в системе управления поливом
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>	
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new5.jpg" alt="Дашборд в&nbsp;Weincloud от&nbsp;Weintek">
+										<meta itemprop="caption" content="Дашборд в&nbsp;Weincloud от&nbsp;Weintek">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									13.09.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Сервис Дашборд в&nbsp;Weincloud от&nbsp;Weintek. Быстрый старт.
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>	
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/new6.jpg" alt="WeinCloud&nbsp;&mdash; панель управления (Дашборд) от&nbsp;Weintek">
+										<meta itemprop="caption" content="WeinCloud&nbsp;&mdash; панель управления (Дашборд) от&nbsp;Weintek">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									21.08.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									WeinCloud&nbsp;&mdash; панель управления (Дашборд) от&nbsp;Weintek
+									</p>
+									<p>
+									Напоминаем, что в модельном ряду Weintek есть панели со встроенной CODESYS Runtime PLC. По сути, это полноценный, высокопроизводительный ПЛК, встроенный в панель оператора. Он работает на отдельном ядре процессора, у него есть своя оперативная и FLASH память, файловая система, операционная система RTOS, к которым ядро панели оператора не имеет доступа. То есть, в одном корпусе мы получаем два независимых устройства - HMI и ПЛК, на которых крутится два независимых софта - EasyBuilderPro и Runtime CODESYS.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image">
+									<figure class="model_image"
+									itemscope itemtype="https://schema.org/ImageObject">
+										<img itemprop="contentUrl" src="images/gallery/all-news.jpg" alt="Русавтоматика">
+										<meta itemprop="caption" content="Русавтоматика">
+										<span itemprop="creator" itemscope itemtype="https://schema.org/Organization">
+											<meta itemprop="name" content="ООО Русавтоматика">
+											<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+											<meta itemprop="url" content="https://www.rusavtomatika.com/">
+											<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+												<meta itemprop="addressLocality" content="Санкт-Петербург">
+												<meta itemprop="postalCode" content="199178">
+												<meta itemprop="streetAddress" content="Малый пр. В.О. 57 корп. 3">
+											</span>
+											<meta itemprop="telephone" content="+7 812 648-03-47">
+											<meta itemprop="email" content="sales@rusavtomatika.com">
+										</span>
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16 has-text-centered">
+									<span class="is-size-3  has-text-weight-semibold bright_text">
+									все<br/>новости
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									
+									</p>
+									<p>
+									
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Читать</span>
+								</div>	
+							</a>
+						</div>
+						
+						
+						
+						
+						
+					</div>
+					<div class="gallery_top_right_nav">
+						<span id="prev_new" class="cycle_prev">
+							<img src="images/prev-light.svg" alt="Назад">
+						</span>
+						<span id="next_new" class="cycle_next">
+							<img src="images/next-light.svg" alt="Вперёд">
+						</span>
+					</div>
+				</div>
+			</section>
+			<section class="hor_gallery_block">
+				<h2 class="is-size-3 has-text-weight-medium bright_text">
+					<a class="bright_text" href="#">Новинки продукции</a>
+				</h2>
+				<div class="gallery_tray">
+					<div class="cycle-slideshow stock_gallery" 
+					data-cycle-fx="carousel"
+					data-cycle-timeout=0
+					data-cycle-carousel-visible=4
+					data-cycle-slides="> div"
+					data-cycle-next="#next_new_model"
+					data-cycle-prev="#prev_new_model"
+					>
+						<div class="hor_gallery_item">
+							<a href="#">
+								<div class="card-image box round_card_image">
+									<figure class="model_image">
+										<img src="images/gallery/model2.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text box">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									01.11.2021
+									</span>
+									</p>
+									<p>
+									Модель cMT1106X открывает новую категорию в&nbsp;серии cMT X&nbsp;&mdash; бюджетные по&nbsp;цене, но&nbsp;продвинутые по&nbsp;производительности панели.
+									Панель оператора cMT1106X превосходит iP&nbsp;и&nbsp;iE&nbsp;серию по&nbsp;скорости, объему памяти (процессор 4&nbsp;ядра, флеш память 4&nbsp;Гб).
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									product_hover product_new_hover">Все характеристики</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item">
+							<a href="#">
+								<div class="card-image box round_card_image">
+									<figure class="model_image">
+										<img src="images/gallery/model3.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text box">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									20.07.2021
+									</span>
+									</p>
+									<p>
+									Панель оператора Weintek cMT3102X&nbsp;с производительным процессором и&nbsp;экраном 10.1&Prime; c&nbsp;разрешением 1024&times;600px.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									product_hover product_new_hover">Все характеристики</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item">
+							<a href="#">
+								<div class="card-image box round_card_image">
+									<figure class="model_image">
+										<img src="images/gallery/model4.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text box">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									11.02.2021
+									</span>
+									</p>
+									<p>
+									Панель оператора Weintek cMT2158X&nbsp;с производительным процессором и&nbsp;IPS экраном&nbsp;15&Prime; c&nbsp;разрешением 1024&times;768px.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									product_hover product_new_hover">Все характеристики</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item">
+							<a href="#">
+								<div class="card-image box round_card_image">
+									<figure class="model_image">
+										<img src="images/gallery/model4.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text box">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									11.02.2021
+									</span>
+									</p>
+									<p>
+									Панель оператора Weintek cMT2108X&nbsp;с производительным процессором и&nbsp;экраном 10.1&Prime; c&nbsp;разрешением 1024&times;600px.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									product_hover product_new_hover">Все характеристики</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item">
+							<a href="#">
+								<div class="card-image box round_card_image">
+									<figure class="model_image">
+										<img src="images/gallery/model6.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text box">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									14.01.2021
+									</span>
+									</p>
+									<p>
+									Панель оператора Weintek cMT2078X&nbsp;с производительным процессором и&nbsp;экраном&nbsp;7&Prime; c&nbsp;разрешением 800&times;480px.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									product_hover product_new_hover">Все характеристики</span>
+								</div>	
+							</a>
+						</div>
+					
+					</div>
+					<div class="gallery_top_right_nav">
+						<span id="prev_new_model" class="cycle_prev">
+							<img src="images/prev-light.svg" alt="Назад">
+						</span>
+						<span id="next_new_model" class="cycle_next">
+							<img src="images/next-light.svg" alt="Вперёд">
+						</span>
+					</div>
+				</div>																	
+			</section>
+			<section class="hor_gallery_block">
+				<h2 class="is-size-3 has-text-weight-medium bright_text">
+					<a class="bright_text" href="#">Видеоканал rusavtomatika.com</a>
+				</h2>
+				<div class="gallery_tray">
+					<div class="cycle-slideshow stock_gallery" 
+					data-cycle-fx="carousel"
+					data-cycle-timeout=0
+					data-cycle-carousel-visible=4
+					data-cycle-slides="> div"
+					data-cycle-next="#next_video"
+					data-cycle-prev="#prev_video"				
+					>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v1.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									05.08.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Weintek панели оператора, серия cMT X&nbsp;&mdash; быстрые, стабильные, умные.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>	
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v2.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									01.07.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									RFID и&nbsp;панели оператора Weintek. Пример проекта считывателя RFID&nbsp;меток. СКУД, складской учет.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v3.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									28.05.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									JavaScript в&nbsp;панелях оператора Weintek, пример создания проекта.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v4.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									19.05.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Сканер штрих- и&nbsp;QR-кодов + панель Weintek + БД&nbsp;MySQL.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v5.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									20.04.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Веб-браузер в&nbsp;панелях оператора Weintek, объект Web браузер ПЛК.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/v6.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16">
+									<span class="is-size-6 has-text-weight-bold bright_text">
+									11.02.2021
+									</span>
+									</p>
+									<p class="has-text-weight-bold black_text">
+									Объект цифровой, Numeric object&nbsp;&mdash; отображение и&nbsp;ввод чисел в&nbsp;EasyBuilder Pro.
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+						<div class="hor_gallery_item card">
+							<a href="#">
+								<div class="card-image video_cover">
+									<div class="hor_gallery_item_hover_link video_hover">
+										<img src="images/youtube.svg" alt = "Смотреть">
+									</div>
+									<figure class="model_image">
+										<img src="images/gallery/all-news.jpg" alt="Placeholder image">
+									</figure>
+								</div>
+								<div class="cutted_text">
+									<p class="bottom_16 has-text-centered">
+									<span class="is-size-4  has-text-weight-semibold bright_text">
+									все<br/>видео
+									</span>
+									</p>
+									<div class="gradient_hide_text bottom_hide"></div>
+									<span class="hor_gallery_item_hover_link
+									bottom_hide
+									is-size-6 has-text-weight-bold bright_text">Смотреть</span>
+								</div>	
+							</a>
+						</div>
+					</div>
+					<div class="gallery_top_right_nav">
+						<span id="prev_video" class="cycle_prev">
+							<img src="images/prev-light.svg" alt="Назад">
+						</span>
+						<span id="next_video" class="cycle_next">
+							<img src="images/next-light.svg" alt="Вперёд">
+						</span>
+					</div>
+				</div>
+			</section>
+			<section class="hor_gallery_block sphere">
+				<h2 class="is-size-3 has-text-weight-medium bright_text">
+					Сферы применения
+				</h2>
+				<div class="gallery_tray bottom_2rem">
+					<div class="cycle-slideshow stock_gallery" 
+					data-cycle-fx="carousel"
+					data-cycle-timeout=3000
+					data-cycle-carousel-visible=4
+					data-cycle-slides="> div"
+					data-cycle-next="#next_sph"
+					data-cycle-prev="#prev_sph"
+					>
+						
+						<div class="hor_gallery_item card">
+							<img alt="Пищевая промышленность" src="images/gallery/s1.jpg">
+							<div class="gallery_item_caption">
+							Пищевая<br/>промышленность
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Медицина" src="images/gallery/s2.jpg">
+							<div class="gallery_item_caption">
+							Медицинская<br/>сфера
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Сельское хозяйство" src="images/gallery/s3.jpg">
+							<div class="gallery_item_caption">
+							Сельское<br/>хозяйство
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Химическая промышленность" src="images/gallery/s4.jpg">
+							<div class="gallery_item_caption">
+							Химическая<br/>промышленность
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Горнодобывающая промышленность" src="images/gallery/s5.jpg">
+							<div class="gallery_item_caption">
+							Горнодобывающая<br/>промышленность
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Транспортная сфера" src="images/gallery/s6.jpg">
+							<div class="gallery_item_caption">
+							Транспортная<br/>сфера
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Отопление, водоснабжение, вентиляция" src="images/gallery/s7.jpg">
+							<div class="gallery_item_caption">
+							Отопление, водоснабжение,<br/>вентиляция
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Приборостроение и электротехника" src="images/gallery/s8.jpg">
+							<div class="gallery_item_caption">
+							Приборостроение<br/>и&nbsp;электротехника
+							</div>
+						</div>
+						<div class="hor_gallery_item card">
+							<img alt="Деревообрабатывающая промышленность" src="images/gallery/s9.jpg">
+							<div class="gallery_item_caption">
+							Деревообрабатывающая<br/>промышленность
+							</div>
+						</div>						
+					</div>
+					<div class="gallery_top_right_nav">
+						<span id="prev_sph" class="cycle_prev">
+							<img src="images/prev-light.svg" alt="Назад">
+						</span>
+						<span id="next_sph" class="cycle_next">
+							<img src="images/next-light.svg" alt="Вперёд">
+						</span>
+					</div>
+				</div>
+				<div class="canvas_tray top_2rem">
+					<canvas id = "sphere_canvas" width="1200" height="500" class="width_100">
+						<ul>
+							<li>
+							<a>
+							управление климатом
+							</a>
+							</li>
+							<li>
+							<a>
+							умный дом
+							</a>
+							</li>
+							<li>
+							<a>
+							ЖКХ
+							</a>
+							</li>
+							<li>
+							<a>
+							автоматизации зданий и производств
+							</a>
+							</li>
+							<li>
+							<a>
+							энергетика
+							</a>
+							</li>
+							<li>
+							<a>
+							HVAC
+							</a>
+							</li>
+							<li>
+							<a>
+							упаковочное оборудование
+							</a>
+							</li>
+							<li>
+							<a>
+							хлебопекарное оборудование
+							</a>
+							</li>
+							<li>
+							<a>
+							системы маркировки &laquo;Честный знак&raquo;
+							</a>
+							</li>
+							<li>
+							<a>
+							сельское хозяйство
+							</a>
+							</li>
+							<li>
+							<a>
+							теплицы
+							</a>
+							</li>
+							<li>
+							<a>
+							транспорт
+							</a>
+							</li>
+							<li>
+							<a>
+							автомойки
+							</a>
+							</li>
+							<li>
+							<a>
+							котельные
+							</a>
+							</li>
+							<li>
+							<a>
+							оборудование для  нефтегазовых месторождений
+							</a>
+							</li>
+							<li>
+							<a>
+							метрополитен
+							</a>
+							</li>
+							<li>
+							<a>
+							РЖД
+							</a>
+							</li>
+							<li>
+							<a>
+							медицинская техника
+							</a>
+							</li>
+							<li>
+							<a>
+							фармацевтика
+							</a>
+							</li>
+							<li>
+							<a>
+							станки
+							</a>
+							</li>
+							<li>
+							<a>
+							деревообработка
+							</a>
+							</li>
+							<li>
+							<a>
+							отопление
+							</a>
+							</li>
+							<li>
+							<a>
+							водоснабжение
+							</a>
+							</li>
+							<li>
+							<a>
+							вентиляция
+							</a>
+							</li>
+							<li>
+							<a>
+							молочное оборудование
+							</a>
+							</li>
+						</ul>
+					</canvas>
+				</div>
+			</section>
+			<section class="company_pluses">
+				<h2 class="is-size-3 has-text-weight-medium bright_text bottom_1rem">Продукция</h2>
+				<div class="columns is-multiline">
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-12-widescreen bottom_2rem
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-12-tablet is-6-desktop">
+								<div class="cycle-slideshow products" 
+								data-cycle-fx="tileBlind"
+								data-cycle-tile-vertical=false
+								data-cycle-timeout=3000
+								data-cycle-slides="> a"
+								data-cycle-pager="#pager_weintek"
+								data-cycle-swipe="true"
+								data-cycle-swipe-fx="tileBlind"
+								>									
+									<a href="#">
+										<img src="images/gallery/weintek-cmt-x.jpg" alt="Панели оператора Weintek cMT X">
+									</a>
+									<a href="#">
+										<img src="images/gallery/weintek-mt8000ip.jpg" alt="Панели оператора Weintek MT8000iP">
+									</a>
+									<a href="#">
+										<img src="images/gallery/weintek-mt8000ie.jpg" alt="Панели оператора Weintek MT8000iE">
+									</a>
+									<a href="#">
+										<img src="images/gallery/weintek-mt8000xe.jpg" alt="Панели оператора Weintek MT8000XE">
+									</a>
+									<div class="center cycle-pager cycle_pager_bottom_box" id="pager_weintek"></div>
+								</div>
+							</div>
+							<div class="column is-12-mobile is-12-tablet is-6-desktop item_offset_top">
+								<h3 class="is-size-4 has-text-weight-medium bright_text">
+								Операторские панели Weintek
+								</h3>
+								<p>
+								Компания Weintek (Тайвань) входит в&nbsp;тройку лидеров в&nbsp;мире по&nbsp;количеству выпускаемых операторских панелей. При этом их&nbsp;качество остается настолько высоким, что наша компания практически не&nbsp;сталкивается с&nbsp;браком продукции у&nbsp;наших клиентов. Weintek выпускает несколько серий панелей оператора, MT6000i, MT8000i, eMT3000, MT8000iE, mTV, Cloud HMI. Все серии мы&nbsp;поддерживаем на&nbsp;наших складах.
+								</p>
+							</div>
+						</div>
+					
+					</div>
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-12-widescreen bottom_2rem
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-12-tablet is-6-desktop">
+								<div class="cycle-slideshow products" 
+								data-cycle-fx="tileBlind"
+								data-cycle-tile-vertical=false
+								data-cycle-timeout=3000
+								data-cycle-slides="> a"
+								data-cycle-pager="#pager_ifc"
+								>
+									<a href="#">
+										<img src="images/gallery/ifc-panel-comps.jpg" alt="Панельные компьютеры IFC" >
+									</a>
+									<a href="#">
+										<img src="images/gallery/ifc-inbox-comps.jpg" alt="Встраиваемые компьютеры IFC">
+									</a>
+									<a href="#">
+										<img src="images/gallery/ifc-monitors.jpg" alt="Промышленные мониторы IFC">
+									</a>
+									<div class="center cycle-pager cycle_pager_bottom_box" id="pager_ifc"></div>
+								</div>
+							</div>
+							<div class="column is-12-mobile is-12-tablet is-6-desktop item_offset_top">
+								<h3 class="is-size-4 has-text-weight-medium bright_text">
+								Панельные компьютеры, встраиваемые компьютеры и&nbsp;мониторы IFC
+								</h3>
+								<p>
+								Компания IFC (Китай)&nbsp;&mdash; профессиональный производитель промышленных панельных компьютеров. Компания постоянно развивается и&nbsp;выпускает новые модели панельных компьютеров.
+								</p>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+				<div class="columns is-multiline">					
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-12-widescreen bottom_2rem
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-12-tablet is-6-desktop">
+								<div class="cycle-slideshow products" 
+								data-cycle-fx="tileBlind"
+								data-cycle-tile-vertical=false
+								data-cycle-timeout=3000
+								data-cycle-slides="> a"
+								data-cycle-pager="#pager_aplex"
+								>
+									<a href="#">
+										<img src="images/gallery/aplex-panel-comps.jpg" alt="Панельные компьютеры Aplex" >
+									</a>
+									<a href="#">
+										<img src="images/gallery/aplex-inbox-comps.jpg" alt="Встраиваемые компьютеры Aplex">
+									</a>
+									<a href="#">
+										<img src="images/gallery/aplex-monitors.jpg" alt="Промышленные мониторы Aplex">
+									</a>
+									<div class="center cycle-pager cycle_pager_bottom_box" id="pager_aplex"></div>
+								</div>
+							</div>
+							<div class="column is-12-mobile is-12-tablet is-6-desktop item_offset_top">
+								<h3 class="is-size-4 has-text-weight-medium bright_text">
+								Панельные компьютеры, встраиваемые компьютеры и мониторы Aplex
+								</h3>
+								<p>
+								Компания Aplex (Тайвань) профессионально разрабатывает и&nbsp;производит панельные компьютеры.
+								Уникальной является серия панельных компьютеров ARCHMI, выполненных в&nbsp;литом алюминиевом корпусе с&nbsp;безвентилятроной системой охлаждения, твердотельным жестким диском, емксотным сенсорным дисплеем с&nbsp;функцией &laquo;мультитач&raquo;, расширенным диапазоном питания 9-36&nbsp;В.
+								</p>
+							</div>
+						</div>					
+					</div>
+					<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-12-desktop 
+					is-12-widescreen bottom_2rem
+					">
+						<div class="columns is-multiline">
+							<div class="column is-12-mobile is-12-tablet is-6-desktop">
+								<a href="#">
+									<img src="images/gallery/samkoon-banner.jpg" alt ="Панели оператора Weintek Samkoon">
+								</a>
+							</div>
+							<div class="column is-12-mobile is-12-tablet is-6-desktop item_offset_top">
+								<h3 class="is-size-4 has-text-weight-medium bright_text">
+								Операторские панели Samkoon
+								</h3>
+								<p>
+								Компания Samkoon (Китай) производит панели оператора более 10&nbsp;лет. Ее&nbsp;продукция отличается невысокой ценой и&nbsp;хорошим качеством.
+								</p>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			
+			</section>
+			<section class="hor_gallery_block" itemscope itemtype="https://schema.org/Organization">
+				<h2 class="is-size-3 has-text-weight-medium bright_text bottom_1rem">Контакты</h2>
+				<h3 class="is-size-4 has-text-weight-medium bright_text">
+				Головной офис и&nbsp;склад в&nbsp;Санкт-Петербурге
+				</h3>
+				<meta itemprop="description" content="Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.">
+				<a itemprop="url" href="https://www.rusavtomatika.com/"></a>
+				<p class="has-text-weight-bold"
+				itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+					<span itemprop="postalCode">199178</span>, 
+					<span itemprop="addressLocality">Санкт-Петербург</span>, 
+					<span itemprop="streetAddress" class="nowrap">Малый пр. В. О., 57 корп. 3</span><br/>
+					<span itemprop="name">ООО &laquo;Русавтоматика&raquo;</span>
+				</p>
+				<p>
+					<a href="tel:+78126480347" class="nowrap header_phone black_text" itemprop="telephone">+7 (812) 648-03-47</a>
+				</p>
+				<p>
+					<a class="is-size-6 has-text-weight-semibold bright_text" href="mailto:sales@rusavtomatika.com">sales@rusavtomatika.com</a>
+					<meta itemprop="email" content="sales@rusavtomatika.com">
+				</p>
+				<p>
+				Время работы: <span class="nowrap">пн-чт 09:00-18:00</span>, <span class="nowrap">пт 09:00-17:00</span>. Обеденный перерыв <span class="nowrap">c 13:00 до 14:00</span>.
+				</p>
+				<div class="yandex_map">								
+					<iframe class="yandex_map_box" src="https://yandex.ru/map-widget/v1/-/CCUyUEAFLC" width="360" height="450"></iframe>
+				</div>
+				<h3 class="is-size-4 has-text-weight-medium bright_text top_2rem">
+				Склад в&nbsp;Москве
+				</h3>
+				<p class="has-text-weight-bold">
+				117405, Москва, <span class="nowrap">ул. Дорожная</span>, <span class="nowrap">60Б, 5 этаж</span>, <span class="nowrap">офис 516</span>
+				</p>
+				<div class="yandex_map">								
+					<iframe class="yandex_map_box" src="https://yandex.ru/map-widget/v1/-/CCUyUEgj0D" width="360" height="450"></iframe>
+				</div>
+			</section>
+			
+		</article>
+	</main>
+	<footer>
+		<div class="container_">
+			<div class="columns is-multiline">
+				<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-6-desktop 
+					">
+					<div class="columns">
+						<div class="column is-12-mobile is-6-tablet">
+							<p class="is-size-5 has-text-weight-semibold footer_column_title">
+							Продукция
+							</p>
+							<ul class="cataloge_list">
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Панели оператора
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#" class="item-active">Weintek</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Samkoon</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Панельные компьютеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Встраиваемые компьютеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Промышленные мониторы
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">IFC</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Aplex</a>
+										</li>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										VPN роутеры
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">HMS (eWON)</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Модули ввода-вывода
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Weintek</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+									<a href="#">
+										Блоки питания
+									</a>
+									<ul>
+										<li  class="cataloge_list_item_subitem">
+											<a href="#">Faraday</a>
+										</li>
+									</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="cataloge_list_item_icon">
+								<ul>
+									<li>
+										<a href="#">Аксессуары</a>
+									</li>
+									<li>
+										<a href="#">Программное обеспечение</a>
+									</li>
+								</ul>
+							</li>
+							</ul>
+						</div>
+						<div class="column is-12-mobile is-6-tablet">
+							<p class="is-size-5 has-text-weight-semibold footer_column_title">
+							Компания
+							</p>
+							<ul class="cataloge_list">
+								<li class="cataloge_list_item_icon">
+									<a href="#">О компании</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Новости</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Новинки продукции</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Сертификаты дистрибьютора</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Техподдержка</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Оплата и доставка</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Форум</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Контакты</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="column
+					is-12-mobile 
+					is-12-tablet 
+					is-6-desktop 
+					">
+					<div class="columns">
+						<div class="column is-12-mobile is-6-tablet">
+							<p class="is-size-5 has-text-weight-semibold footer_column_title">
+							Библиотека
+							</p>
+							<ul class="cataloge_list">
+								<li class="cataloge_list_item_icon">
+									<a href="#">Статьи</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Видео</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Приложения и драйверы</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Документы</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Демо-проекты Weintek</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Демо-макросы Weintek</a>
+								</li>
+								<li class="cataloge_list_item_icon">
+									<a href="#">Библиотеки для Easy Builder</a>
+								</li>
+							</ul>
+						</div>
+						<div class="column is-12-mobile is-6-tablet">
+							<p class="is-size-5 has-text-weight-semibold footer_column_title">
+							<img class="logo" src="images/logo.svg" alt="Русавтоматика">
+							</p>
+							<div class="phone_block">
+								<p>
+								<span class="nowrap work_time">пн-чт 09:00-18:00, пт 09:00-17:00</span>
+								</p>
+								<p>
+								<a href="tel:+78126480347" class="nowrap header_phone">+7 <span class="to-ltsp">(812</span>) 648-03-47</a>
+								</p>
+								<p>
+								<a href="tel:+74951081275" class="nowrap header_phone">+7 (495<span class="to-ltsp">) 108-12-75</span></a>
+								</p>
+								<p>
+								<a class="header_email is-size-6 has-text-weight-semibold" href="mailto:sales@rusavtomatika.com">sales@rusavtomatika.com</a>
+								</p>
+							</div>
+							<div class="social_nets">
+								<!--div class="social facebook">
+									<a href="https://www.facebook.com/weintek.official">
+										<svg role="img" viewBox="0 0 320 512">
+											<path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+										</svg>
+									</a>
+								</div>
+								<div class="social instagram">
+									<a href="https://www.instagram.com/rusavtomatika/">
+										<svg role="img" viewBox="0 0 448 512">
+											<path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+										</svg>
+									</a>
+								</div-->
+								<div class="social telegram">
+									<a href="https://t.me/rusavtomatika">
+										<svg role="img" viewBox="0 0 448 512">
+											<path fill="currentColor" d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"/>
+										</svg>
+									</a>
+								</div>
+								<div class="social vk">
+									<a href="https://vk.com/weintek_official">
+										<svg role="img" viewBox="0 0 576 512">
+											<path fill="currentColor" d="M545 117.7c3.7-12.5 0-21.7-17.8-21.7h-58.9c-15 0-21.9 7.9-25.6 16.7 0 0-30 73.1-72.4 120.5-13.7 13.7-20 18.1-27.5 18.1-3.7 0-9.4-4.4-9.4-16.9V117.7c0-15-4.2-21.7-16.6-21.7h-92.6c-9.4 0-15 7-15 13.5 0 14.2 21.2 17.5 23.4 57.5v86.8c0 19-3.4 22.5-10.9 22.5-20 0-68.6-73.4-97.4-157.4-5.8-16.3-11.5-22.9-26.6-22.9H38.8c-16.8 0-20.2 7.9-20.2 16.7 0 15.6 20 93.1 93.1 195.5C160.4 378.1 229 416 291.4 416c37.5 0 42.1-8.4 42.1-22.9 0-66.8-3.4-73.1 15.4-73.1 8.7 0 23.7 4.4 58.7 38.1 40 40 46.6 57.9 69 57.9h58.9c16.8 0 25.3-8.4 20.4-25-11.2-34.9-86.9-106.7-90.3-111.5-8.7-11.2-6.2-16.2 0-26.2.1-.1 72-101.3 79.4-135.6z"/>
+										</svg>
+									</a>
+								</div>
+								<div class="social youtube">
+									<a href="https://www.youtube.com/c/rusavtomatikacom">
+										<svg role="img" viewBox="0 0 576 512">
+											<path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/>
+										</svg>
+									</a>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<p class="has-text-right">
+				Все материалы, характеристики, цены представленные на&nbsp;сайте, не&nbsp;являются 
+				<span class="nowrap">публичной офертой.</span>
+			</p>
+			<p class="has-text-right">
+			&copy;&nbsp;2008-2021 ООО&nbsp;&laquo;Русавтоматика&raquo;
+			</p>
+		</div>
+	</footer>
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/jquery.cycle2.js"></script>
+	<script src="js/jquery.cycle2.carousel.js"></script>
+	<script src="js/jquery.cycle2.tile.js"></script>
+	<!--<script src="js/jquery.cycle2.swipe.js"></script>
+	<script src="js/ios6fix.js"></script>-->
+	<script src="js/lightgallery.min.js"></script>
+	<script src="js/jquery.tagcanvas.min.js"></script>
+	<script src="js/template.js"></script>
+	<script src="js/main-page.js"></script>
+	</body>
+</html>

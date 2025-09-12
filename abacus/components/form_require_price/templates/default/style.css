@@ -1,0 +1,143 @@
+.component_form_require_price {
+    display: none;
+    transition: 1s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    justify-content: center;
+    align-items: center;
+    z-index: 1020;
+    font-size: 15px;
+    opacity: 0;
+}
+
+
+.component_form_require_price.active {
+    display: flex !important;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.component_form_require_price .form_elements{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0 20px;
+}
+.component_form_require_price .phone_symbol_plus{
+    margin-right: 5px;
+    float: left;
+    font-size: 20px;
+    line-height: 40px;
+}
+.component_form_require_price input[type=tel].input_phone{
+    width: 170px;
+    font-size: 15px;
+}
+.component_form_require_price input[type=tel] {
+    display: block;
+    background: var(--color-light-gray);
+    border: none;
+    padding: 0px 1px 0 10px;
+    font-size: 16px;
+    line-height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    color: #999;
+}
+.component_form_require_price input[type=tel]:not(:empty),.component_form_require_price input[type=tel]:focus
+{
+    color: #000;
+}
+
+
+.component_form_require_price input[type=submit] {
+    /*
+    font-size: 15px;
+    line-height: 40px;
+    display: block;
+    border: none;
+    padding: 0px 10px;
+    width: 150px;
+    box-sizing: border-box;
+    background: var(--color-dark-green);
+    color: white;
+    cursor: pointer;
+    */
+}
+/*
+.component_form_require_price input[type=submit]:hover {
+    background: var(--color-green);
+}
+*/
+
+.component_form_require_price .text {
+    margin: 10px 0;
+    text-align: left;
+}
+.component_form_require_price .title {
+    margin: 20px 0 20px;
+    font-size: 20px;
+}
+.component_form_require_price p {
+    margin: 10px 0;
+}
+
+
+.component_form_require_price__form_wrapper {
+    min-height: 100px;
+    width: 400px;
+    background: rgba(255,255,255,0);
+    text-align: center;
+    padding: 10px 20px 20px 20px;
+    box-sizing: border-box;
+    position: relative;
+    transition: 1s;
+}
+.component_form_require_price.active .component_form_require_price__form_wrapper {
+    background: #fff;
+}
+
+
+
+
+.component_form_require_price .close_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-green);
+    color: white;
+    text-align: center;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+
+
+    overflow: hidden;
+    height: 40px;
+    width: 40px;
+    text-indent: -999px;
+    background: url("/abacus/templates/rusavtomatika_bulma/images/clear_button.png") center 12px no-repeat;
+}
+.component_form_require_price .close_button:hover {
+    background-position: center -88px;
+    background-color: var(--color-green);
+}
+
+@media (max-width: 400px){
+    .component_form_require_price .form_elements{
+        display: block;
+    }
+    .component_form_require_price input[type="text"].input_phone {
+        width: 90%;
+        margin: 10px 0;
+    }
+    .component_form_require_price input[type=submit] {
+        width: 100%;
+    }
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ovs:video xmlns:ovs="http://webmaster.yandex.ru/schemas/video"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://webmaster.yandex.ru/schemas/video">
+  <ovs:content_id>IWceGndJBm4</ovs:content_id>
+  <ovs:url>https://www.youtube.com/watch?v=IWceGndJBm4 </ovs:url>
+  <ovs:thumbnail>http://i.ytimg.com/vi/IWceGndJBm4/maxresdefault.jpg</ovs:thumbnail>
+  <ovs:title>Weintek, видеоурок создание проекта в EasyBuilder Pro для MT8071iE</ovs:title>
+  <ovs:description>
+   Weintek, обучение работе с EasyBuilder Pro, быстрый старт, создание проекта для MT8071iE, связь с Modbus модулем.
+ В этом видео демонстрируется:
+- Соединение операторской панели Weintek MT8071iE c модбас модулем
+- Скачивание программного обеспечения EasyBuilder Pro
+  со страницы http://www.rusavtomatika.com/download.php
+- Обучение работе с EasyBuilder Pro на примере создания 
+   простого проекта
+- В примере демонстрируется использование следующих
+ объектов: часы реального времени, доступ к регистру секунд,
+ использование объекта "слайдер", использование объекта "выборки данных" использование объекта "приборный индикатор", использование объекта "выборки данных", использование объекта "графические выборки", переход по страницам, использование графических файлов на примере формата gif, использование протокола Modbus RTU для связи с модулем, использование объекта "битовый переключатель"
+Результатом этого обучающего видео является демонстрация
+загруженного в панель оператора MT8071iE рабочего проекта. 
+  </ovs:description>
+  <ovs:upload_date>2015-04-19T00:00:00Z</ovs:upload_date>
+  <ovs:duration>2209</ovs:duration>
+  <ovs:adult>no</ovs:adult>
+  <ovs:login>admin</ovs:login>
+   <ovs:category>industrial automation</ovs:category>
+    <ovs:category>education</ovs:category>
+  <ovs:category>building automation</ovs:category>
+  <ovs:category>factory automation</ovs:category> 
+  <ovs:category>technology</ovs:category>
+  <ovs:category>HMI</ovs:category> 
+  <ovs:genre>Обучающее видео, видеоурок</ovs:genre>
+  <ovs:status>published</ovs:status>
+  <ovs:is_official>yes</ovs:is_official>
+  <ovs:embed_url>https://www.youtube.com/embed/IWceGndJBm4</ovs:embed_url>
+  <ovs:embed_html><![CDATA[<iframe width="560" height="315" src="https://www.youtube.com/embed/IWceGndJBm4" frameborder="0" allowfullscreen="true"></iframe>]]></ovs:embed_html>
+  <ovs:languages>ru, en</ovs:languages>
+  <ovs:tag>Weintek, Weintek демо, Weintek обучение, Weintek видео, обучение EasyBuilder Pro, EasyBuilder Pro, быстрый старт, создание проекта для MT8071iE, MT8071iE, связь с Modbus модулем, Modbus</ovs:tag>
+</ovs:video>

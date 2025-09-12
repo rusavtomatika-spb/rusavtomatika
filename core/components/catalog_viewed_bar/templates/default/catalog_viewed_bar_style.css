@@ -1,0 +1,109 @@
+.viewed_products{
+    margin: 0 auto 30px;
+    width: 98%;
+
+}
+.viewed_products .item {
+    padding: 15px 10px;
+}
+
+
+.viewed_products .tns-outer{
+    position: relative;
+}
+
+.viewed_products .tns-outer button[data-controls="prev"],
+.viewed_products .tns-outer button[data-controls="next"]{
+    position: absolute;
+    top:50%;
+    width: 48px;
+    height: 48px;
+    margin-top: -24px;
+    z-index: 1000;
+    overflow: hidden;
+    display: block;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    transform: translateZ(0);
+}
+.viewed_products .tns-outer button[data-controls="prev"]{
+    left: -25px;
+    background: url("prev.svg") center/24px no-repeat;
+}
+.viewed_products .tns-outer button[data-controls="next"]{
+    right: -25px;
+    background: url("next.svg") center/24px no-repeat;
+}
+
+@media(max-width: 799px){
+    .viewed_products .tns-outer button[data-controls="prev"]{
+        left: -15px;
+    }
+    .viewed_products .tns-outer button[data-controls="next"]{
+        right: -15px;
+    }
+
+}
+
+.viewed_products .tns-outer button[data-controls="prev"]:hover,
+.viewed_products .tns-outer button[data-controls="next"]:hover
+{
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.viewed_products .tns-outer button[data-action="stop"],
+.viewed_products .tns-outer button[data-action="start"]
+{
+    display: none;
+}
+
+
+
+
+.viewed_products .tns-controls{
+    display: flex;
+    justify-content: right;
+}
+
+.viewed_products h2{
+    font-size: var(--font-size-lg);
+}
+
+.viewed_products .item a{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 0px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 0 10px 0 20px;
+    margin-right: 7px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: .25rem;
+    box-shadow: 0 .2em 0.7em -.125em rgba(10,10,10,.2),0 0 0 1px rgba(10,10,10,.02);
+    transition: 0.1s;
+}
+.viewed_products .item a:hover {
+    padding: 15px;
+    margin: -5px 2px -5px -5px;
+    height: 130px;
+
+}
+.viewed_products .item a span.picture{
+    display: block;
+    width: 130px;
+    height: 100px;
+    background: center/contain no-repeat;
+}
+.viewed_products .item a span.text{
+    padding: 0px 5px 0px 10px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background: center/cover no-repeat;
+}

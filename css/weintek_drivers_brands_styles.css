@@ -1,0 +1,25 @@
+.ser-title-big{line-height: 30px;}
+.mod-param #searchdiv {	margin-top: -42px;}
+.model-param td{
+        font-size: 16px;
+        line-height: 21px;
+}
+.model-param tr td:nth-child(1),.model-param tr td:nth-child(3) {
+	width: 400px;
+        text-align: left;
+}
+
+.model-param .t_row:nth-child(2n+1) td{background: #ecf8ec;}
+
+.model-param td a img {	display: block;	margin: 2px auto;}
+.mod-param .back a {
+	display: inline-block;
+	padding: 4px 14px;
+	margin: 1px 2px;
+	background: #009b1e;
+	color: #fff;
+	text-decoration: none;
+}
+.mod-param .back a:hover {
+	background: #008b00;
+}

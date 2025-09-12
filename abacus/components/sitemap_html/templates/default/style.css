@@ -1,0 +1,41 @@
+.component_site_map{
+
+
+}
+
+.component_site_map a{
+    line-height: 1.1;
+    color: black;
+    text-decoration: none;
+}
+.component_site_map a:hover{
+    line-height: 1.1;
+    color: #00ad61;
+    text-decoration: underline;
+}
+
+.folded_block.folded .folded_block_content{
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+.folded_block.folded .folded_block_content .folded_block_content_shadow{
+    position: absolute;
+    left:0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    background: url("fog.png") left bottom repeat-x;
+    opacity: 0.95;
+}
+.folded_block{
+    margin-bottom: 2rem;
+}
+
+.folded_block.folded .folded_block__button_fold{
+    display: none;
+}
+.folded_block.unfolded .folded_block__button_unfold{
+    display: none;
+}
+

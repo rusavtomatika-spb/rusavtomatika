@@ -1,0 +1,197 @@
+.catalog_compare{
+
+}
+.catalog_compare .table_compare{
+    width: 100%;
+}
+.catalog_compare .table_compare tr.num_values_0:not(.field_name_image):not(.field_name_separator){
+    display: none;
+}
+
+
+.catalog_compare .table_compare td{
+    padding: 0.5rem 1rem;
+    border: #DDDDDD 1px solid;
+    text-align: left;
+    vertical-align: middle;
+    width: 10%;
+    min-width: 200px;
+}
+.catalog_compare .table_compare td.noborder{
+    border: none;
+}
+.catalog_compare .table_compare td.first_column{
+    width: 15%;
+}
+
+.catalog_compare .table_compare.num_columns_4 td:not(.first_column){
+    width: 20%;
+}
+.catalog_compare .table_compare.num_columns_3 td:not(.first_column){
+    width: 30%;
+}
+.catalog_compare .table_compare.num_columns_2 td:not(.first_column){
+    width: 45%;
+}
+
+
+
+
+
+.catalog_compare__button_clearall_wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+
+
+.catalog_compare .table_compare .preview_image {
+    min-width: 190px;
+    max-width: 100%;
+    background: center no-repeat;
+    background-size: contain;
+    height: 150px;
+    margin: 0 auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.catalog_compare .table_compare .preview_image img{
+    width: auto;
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 0;
+}
+
+
+.catalog_compare .table_compare.view_mode_2 tr.different{
+    display: none;
+}
+.catalog_compare .table_compare.view_mode_1 tr.same{
+    display: none;
+}
+.catalog_compare .table_compare tr.different{
+    background: #fff7f7;
+}
+
+
+.catalog_compare__button_clearall{
+    display: inline-block;
+    padding: 8px 23px;
+    background: #44bb6e;
+    color: #ffffff;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: larger;
+}
+
+.catalog_compare__button_clearall:hover {
+    background: #34ab5e;
+}
+
+.table_compare_tools_wrapper{
+    position: relative;
+}
+.table_compare_tools{
+    width: 100%;
+    padding: 0rem 1rem 1rem 1rem;
+
+    box-sizing: border-box;
+    text-align: center;
+
+}
+
+.catalog_compare .favorites
+{
+    margin: 5px 5px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #777;
+    white-space: nowrap;
+}
+
+.catalog_compare .favorites:hover, .catalog_compare .favorites.active {
+    background-position: left -1px;
+    color: var(--color-green);
+}
+
+
+
+
+.table_compare__button_cart {
+    margin: 5px 5px;
+    height: auto;
+    /* background: none; */
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    box-sizing: border-box;
+    background-color: var(--color-dark-green);
+    border: 1px solid var(--color-dark-green);
+    /* box-sizing: border-box; */
+    white-space: nowrap;
+    cursor: pointer;
+	font-size: 16px !important;
+}
+.table_compare__button_cart:hover,.table_compare__button_cart.active {
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+    color: #fff;
+	font-size: 16px;
+}
+
+
+
+
+
+
+
+.catalog_compare .delete_item {
+    position: absolute;
+    top:0;
+    right: 0;
+    background: url("/abacus/templates/rusavtomatika_bulma/images/recycle1.png") center top no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+.catalog_compare .delete_item:hover {
+    background-position: center -100px;
+}
+.table_compare__choice_features_block{
+    margin: 0 -1rem 0 0;
+}
+.table_compare__choice_features_block ul{
+    list-style: none;
+    margin: 0;
+}
+.table_compare__choice_features_block ul li{
+    margin: 0.5rem 0;
+}
+.table_compare__choice_features_block ul li label{
+    white-space: nowrap;
+    cursor: pointer;
+}
+.table_compare__choice_features_block__title{
+    font-size: 1.3rem;
+}
+
+
+.catalog_compare input[type="radio"] {
+    display: none;
+}
+.catalog_compare input[type="radio"] + label::before {
+    content: "";
+    background: url("/abacus/templates/rusavtomatika_bulma/images/radiobutton_green.png") center 0px no-repeat;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 5px 2px -5px 0px;
+}
+.catalog_compare input[type="radio"]:checked + label::before {
+    background-position: center -50px;
+}

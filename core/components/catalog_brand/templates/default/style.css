@@ -1,0 +1,115 @@
+.component_catalog_brand {
+    margin: 1.5rem 0 1rem;
+}
+
+.component_catalog_brand .preview_image {
+    width: 150px;
+    height: 100px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.component_catalog_brand .section_link {
+    font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    gap: 2rem;
+    align-items: center;
+    margin: 2rem 3rem;
+
+}
+
+.component_catalog_brand__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.component_catalog_brand__head h1.title {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.component_catalog_brand__logo {
+    min-width: 200px;
+    text-align: right;
+}
+
+.component_catalog_brand__logo img {
+    /*margin-top: -0.5rem;*/
+}
+
+
+.block_sertificates__link {
+    box-sizing: border-box;
+    display: block;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 0 auto 20px;
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    color: #333;
+}
+
+.block_sertificates__link:hover {
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+
+
+.block_sertificates__item {
+    width: 300px;
+    height: 200px;
+    margin: 0 auto 10px;
+    background: center/auto 100% no-repeat #fff;
+    box-sizing: border-box;
+    display: block;
+}
+
+.component_catalog_brand__body {
+    /*    display: flex;
+        justify-content: space-between;
+        gap: 1rem;*/
+}
+
+.brand_menu {
+    width: 180px;
+    margin-top: 0px;
+    margin-right: 0;
+    list-style: none;
+    display: block;
+    padding: 20px 1rem 27px 1.7rem;
+    border-left: 2px solid #eee;
+
+}
+.brand_menu li a{
+    color: #333;
+    text-decoration: none;
+}
+.brand_menu li a:hover{
+    color: #00ad61;
+    text-decoration: underline;
+}
+.brand_menu li span{
+    font-weight: bold;
+
+}
+
+.block_sertificates__img_sertificate_link{
+    text-align: center;
+    display: block;
+    width: 100%;
+    max-width: 1116px;
+    box-sizing: border-box;
+    padding: 2rem 1rem;
+    background: #eeeeee;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+
+}
+.block_sertificates__img_sertificate_link:hover img{
+    transition: 0.2s;
+    transform: scale(1.05);
+ }

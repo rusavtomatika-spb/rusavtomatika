@@ -1,0 +1,5076 @@
+<?
+include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/check_catalog_404.php";
+global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
+global $db;
+$DESCRIPTION = 'Документация Weintek, eWON';
+$SERVER_PROTOCOL = $_SERVER['SERVER_PROTOCOL'] == "HTTP/1.1" ? "http://" : "https://";
+$CANONICAL = $SERVER_PROTOCOL . "www.rusavtomatika.com/documents/";
+include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
+
+require '../sc/lib_new.php';
+?>
+<script type="text/javascript" src="/js/vue.js"></script>
+<script type="text/javascript" src="/js/axios.min.js"></script>
+<div id="app">
+
+    <div class="btn" v-on:click="addDocumentsAjax()">давай</div>
+</div>
+<script>
+    var availableTags = [{
+        title: "MT6050i CE Certificate(English)",
+        label: "MT6050iMT6050i CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT6050i_MT605i_TK6050i.pdf"
+    }, {
+        title: "MT6056i CE Certificate(English)",
+        label: "N/AMT6056i CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT6056i.pdf"
+    }, {
+        title: "MT6070i MT8070i MT6070iH MT8070iH MT607i CE Certificate(English)",
+        label: "MT6070iH,MT8070iH,MT607iMT6070i MT8070i MT6070iH MT8070iH MT607i CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT6070i_6070iH_8070i_8070iH_607i.pdf"
+    }, {
+        title: "MT6100i MT8100i MT610i CE Certificate(English)",
+        label: "MT6100i,MT8100i,MT610iMT6100i MT8100i MT610i CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT8100i_MT6100i_MT610i_TK6102i.pdf"
+    }, {
+        title: "MT610X MT8104X MT610XH MT8104XH CE Certificate(English)",
+        label: "N/AMT610X MT8104X MT610XH MT8104XH CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT610X_MT8104X_MT610XH_MT8104XH.pdf"
+    }, {
+        title: "MT612X MT8121X CE Certificate(English)",
+        label: "N/AMT612X MT8121X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT612X_MT8121X.pdf"
+    }, {
+        title: "MT615X MT8150X CE Certificate(English)",
+        label: "N/AMT615X MT8150X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT615X_MT8150X.pdf"
+    }, {
+        title: "MT8104iH CE Certificate(English)",
+        label: "MT8104iHMT8104iH CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT8104iH.pdf"
+    }, {
+        title: "MT606TV2 MT8056T CE Certificate(English)",
+        label: "N/AMT606TV2 MT8056T CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT606TV2_MT8056T.pdf"
+    }, {
+        title: "MT6070T MT607TV2 MT8070T CE Certificate(English)",
+        label: "N/AMT6070T MT607TV2 MT8070T CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT6070T_MT607TV2_MT8070T.pdf"
+    }, {
+        title: "MT608TV2 MT8080T CE Certificate(English)",
+        label: "N/AMT608TV2 MT8080T CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT608TV2_MT8080T.pdf"
+    }, {
+        title: "MT610TV2 MT8104T CE Certificate(English)",
+        label: "N/AMT610TV2 MT8104T CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT610TV2_MT8104T.pdf"
+    }, {
+        title: "MT612TV2 MT8121T CE Certificate(English)",
+        label: "N/AMT612TV2 MT8121T CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT612TV2_MT8121T.pdf"
+    }, {
+        title: "ISO 9001:2008(English)",
+        label: "MT6050i,eMT607A,eMT3120A,eMT612A,eMT3150A,eMT615A,eMT3105P,eMT610P,MT8070iE,MT607iE,MT8100iE,MT610iE,mTV-100,cMT-SVR-100,eMT3070A,MT6070iH,MT607i,MT6100i,MT610i,MT610XH,MT612X,MT615X,MT8050i,MT8070iH,MT8100i,MT8104iH,MT8104XH,MT8121X,MT8150XISO 9001:2008CertificateDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/ISO_201307201607.pdf"
+    }, {
+        title: "UL Listed Models(English)",
+        label: "MT605i,MT605iE,MT607i,MT607iE,MT610i,MT610iE,MT8050i,MT80,cMT-G01,cMT-iPC10,cMT-iPC15,cMT-iv5,cMT-SVR-100,cMT3090,cMT3121,cMT3151,eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,eMT607A,eMT607B,eMT610P,eMT612A,eMT615A,MT6050i,MT6056iUL Listed ModelsCertificateULDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/UL_Listed_Models.pdf"
+    }, {
+        title: "MT8050i CE Certificate(English)",
+        label: "MT8050iMT8050i CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT8050i_MT605i.pdf"
+    }, {
+        title: "MT8100i MT6100i MT610i MT6100iV2EV MT8100iV2EN CE Certificate(English)",
+        label: "MT8100i,MT6100i,MT610i,MT6100iV2EV,MT8100iV2ENMT8100i MT6100i MT610i MT6100iV2EV MT8100iV2EN CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/CE_Certificate_MT8100i_6100i_610i_TK6102i_8100i_6100i_MT6100iV2EV_MT8100iV2EN.pdf"
+    }, {
+        title: "RoHS(English)",
+        label: "N/ARoHSCertificateROHSDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/Certificate/RoHS_Declaration_of_Conformity_20131212.pdf"
+    }, {
+        title: "MT8100iE CE Certificate(English)",
+        label: "MT8100iE,MT610iE,MT8101iEMT8100iE CE CertificateCertificateCEDocumentMT8000iE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8100iE_MT610iE_MT8101iE.pdf"
+    }, {
+        title: "MT8050iE MT8051iP CE Certificate(English)",
+        label: "MT8050iE,MT8051iPMT8050iE MT8051iP CE CertificateCertificateCEDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Certificate/CE_Certificate_MT8050iE_MT8051iP.pdf"
+    }, {
+        title: "MT8121XE1 CE Certificate(English)",
+        label: "MT8121XE1MT8121XE1 CE CertificateCertificateCEDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/Certificate/CE_Certificate_MT8121XE.pdf"
+    }, {
+        title: "MT8150XE CE Certificate(English)",
+        label: "MT8150XEMT8150XE CE CertificateCertificateCEDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/Certificate/CE_Certificate_MT8150XE.pdf"
+    }, {
+        title: "MT6070/8070iE/iER CE Certificate(English)",
+        label: "cMT3090,MT6070iE,MT8070iE,MT6070iER,MT8070iER,MT8071iEMT6070/8070iE/iER CE CertificateCertificateCEDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8070iE_MT607iE_MT6070iE_MT8071iE_MT6071iE_MT6070iER_MT8070iER_MT607iER.pdf"
+    }, {
+        title: "cMT-iV5 CE Certificate(English)",
+        label: "cMT-iV5,cMT3090cMT-iV5 CE CertificateCertificateCEDocumentcMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_iV5.pdf"
+    }, {
+        title: "RoHS(English)",
+        label: "MT8070iH,MT6070iH,MT8100i,MT6100i,MT610i,MT8050i,MT6050i,MT605i,MT8104iH,eMT3070A,eMT607A,eMT3070B,eMT607B,eMT3105P,eMT610P,eMT3120A,eMT612A,eMT3150A,eMT615A,MT8070iE,MT607iE,MT6071iE,MT8100iE,MT610iE,MT8050iE,MT605iE,MT8,MT607iRoHSCertificateROHSDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/Certificate/RoHS-20190507.pdf"
+    }, {
+        title: "eMT3070B1 CE Certificate(English)",
+        label: "eMT3070B1eMT3070B1 CE CertificateCertificateDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3070B_eMT607B.pdf"
+    }, {
+        title: "MT8090XE CE Certificate(English)",
+        label: "N/AMT8090XE CE CertificateCertificateCEDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/Certificate/CE_Certificate_MT8090_8091XE.pdf"
+    }, {
+        title: "MT8073iE CE Certificate(English)",
+        label: "MT8073iEMT8073iE CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8073iE.pdf"
+    }, {
+        title: "MT8092XE CE Certificate(English)",
+        label: "MT8092XEMT8092XE CE CertificateCertificateCEDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/Certificate/CE_Certificate_MT8092XE.pdf"
+    }, {
+        title: "cMT-iPC15 CE Certificate(English)",
+        label: "cMT-iPC15cMT-iPC15 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_iPC15.pdf"
+    }, {
+        title: "cMT3151 CE Certificate(English)",
+        label: "cMT3151cMT3151 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3151.pdf"
+    }, {
+        title: "MT8102iE CE Certificate(English)",
+        label: "MT8102iE,MT8102iEMT8102iE CE CertificateCertificateCEDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8102iE.pdf"
+    }, {
+        title: "MT8102iE CE Certificate(English)",
+        label: "MT8102iE,MT8102iEMT8102iE CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8102iE.pdf"
+    }, {
+        title: "MT8103iE CE Certificate(English)",
+        label: "MT8103iEMT8103iE CE CertificateCertificateDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8103iE.pdf"
+    }, {
+        title: "MT6051iP CE Certificate(English)",
+        label: "MT6051iPMT6051iP CE CertificateCertificateCEDocumentMT8001",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Certificate/CE_Certificate_MT6051iP.pdf"
+    }, {
+        title: "MT6071iP MT8071iP CE Certificate(English)",
+        label: "MT6071iP,MT8071iPMT6071iP MT8071iP CE CertificateCertificateCEDocumentMT8002",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Certificate/CE_Certificate_MT8071iP_MT6071iP.pdf"
+    }, {
+        title: "MT6103iP MT8102iE CE Certificate(English)",
+        label: "MT6103iP,MT8102iEMT6103iP MT8102iE CE CertificateCertificateCEDocumentMT8003",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Certificate/CE_Certificate_MT8102iE_MT6103iP.pdf"
+    }, {
+        title: "cMT-G01 CE Certificate(English)",
+        label: "cMT-G01,cMT-G01,cMT-G01cMT-G01 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_G01.pdf"
+    }, {
+        title: "cMT3090 CE Certificate(English)",
+        label: "cMT3090,cMT3090cMT3090 CE CertificateCertificateCEDocumentMT8001",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3090.pdf"
+    }, {
+        title: "cMT-iPC10 CE Certificate(English)",
+        label: "cMT-iPC10,cMT-iPC10cMT-iPC10 CE CertificateCertificateCEDocumentMT8002",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_iPC10.pdf"
+    }, {
+        title: "cMT-G02 CE Certificate(English)",
+        label: "cMT-G02cMT-G02 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_G02.pdf"
+    }, {
+        title: "cMT3072 CE Certificate(English)",
+        label: "cMT3072cMT3072 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3071_cMT3072.pdf"
+    }, {
+        title: "cMT3103 CE Certificate(English)",
+        label: "cMT3103cMT3103 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3103.pdf"
+    }, {
+        title: "cMT-iM21  CE Certificate(English)",
+        label: "cMT-iM21cMT-iM21  CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_iM21.pdf"
+    }, {
+        title: "cMT-G03 CE Certificate(English)",
+        label: "cMT-G03cMT-G03 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_G03.pdf"
+    }, {
+        title: "cMT-G04 CE Certificate(English)",
+        label: "cMT-G04cMT-G04 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_G04.pdf"
+    }, {
+        title: "iR-AI04 CE Certificate(English)",
+        label: "N/AiR-AI04 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/Certificate/iR-AI04-TR_Certificate.pdf"
+    }, {
+        title: "iR-AM06-VI, iR-AI04-VI CE Certificate(English)",
+        label: "N/AiR-AM06-VI, iR-AI04-VI CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/Certificate/iR-AM06-VI_AI04-VI_Certificate.pdf"
+    }, {
+        title: "iR-AQ04-VI CE Certificate(English)",
+        label: "N/AiR-AQ04-VI CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/Certificate/iR-AQ04-VI_Certificate.pdf"
+    }, {
+        title: "cMT3071 CE Certificate(English)",
+        label: "cMT3071cMT3071 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3071_cMT3072.pdf"
+    }, {
+        title: "cMT-FHD CE Certificate(English)",
+        label: "cMT-FHDcMT-FHD CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_FHD.pdf"
+    }, {
+        title: "MT8053iE CE Certificate(English)",
+        label: "MT8053iEMT8053iE CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8053iE.pdf"
+    }, {
+        title: "cMT-SVR-200 CE Certificate(English)",
+        label: "cMT-SVR-200cMT-SVR-200 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_SVR_200.pdf"
+    }, {
+        title: "MT8121XE3 CE Certificate(English)",
+        label: "N/AMT8121XE3 CE CertificateCertificateCEDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/Certificate/CE_Certificate_MT8121XE3.pdf"
+    }, {
+        title: "MT8071iE MT8070iE MT607iE MT6070iE MT6070iER MT8070iER MT607iER MT6071iE MT8071iER CE Certificate(English)",
+        label: "MT8071iER1MT8071iE MT8070iE MT607iE MT6070iE MT6070iER MT8070iER MT607iER MT6071iE MT8071iER CE CertificateCertificateCEDocumentMT8000iE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8071iE_MT8070iE_MT607iE_MT6070iE_MT6070iER_MT8070iER_MT607iER_MT6071iE_MT8071iER.pdf"
+    }, {
+        title: "cMT-iV6 CE Certificate(English)",
+        label: "cMT-iV6cMT-iV6 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3090_cMT_iV6.pdf"
+    }, {
+        title: "iR-PU01-P CE Certificate(English)",
+        label: "iR-PU01-PiR-PU01-P CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/Certificate/iR-PU01-P_Certificate.pdf"
+    }, {
+        title: "cMT-CTRL01 CE Certificate(English)",
+        label: "cMT-CTRL01cMT-CTRL01 CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_CTRL01.pdf"
+    }, {
+        title: "cMT-FHDX CE Certificate(English)",
+        label: "cMT-FHDX-220cMT-FHDX CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT_FHDX.pdf"
+    }, {
+        title: "cMT3072X CE Certificate(English)",
+        label: "cMT3072XcMT3072X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3072X.pdf"
+    }, {
+        title: "cMT3072XH CE Certificate(English)",
+        label: "cMT3072XHcMT3072XH CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3072XH.pdf"
+    }, {
+        title: "cMT3092X CE Certificate(English)",
+        label: "cMT3092XcMT3092X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3092X.pdf"
+    }, {
+        title: "cMT3152X CE Certificate(English)",
+        label: "cMT3152XcMT3152X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3152X.pdf"
+    }, {
+        title: "cMT3161X CE Certificate(English)",
+        label: "cMT3161XcMT3161X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3161X.pdf"
+    }, {
+        title: "cMT3162X CE Certificate(English)",
+        label: "cMT3162XcMT3162X CE CertificateCertificateCEDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/Certificate/CE_Certificate_cMT3162X.pdf"
+    }, {
+        title: "cMT-FHDX-220 Datasheet(Traditional Chinese)",
+        label: "cMT-FHDX-220cMT-FHDX-220 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-FHDX-220_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-FHDX-220 Datasheet(English)",
+        label: "cMT-FHDX-220cMT-FHDX-220 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-FHDX-220_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-FHDX-220 Datasheet(Japanese)",
+        label: "cMT-FHDX-220cMT-FHDX-220 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-FHDX-220_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-FHDX Installation(English)",
+        label: "cMT-FHDX-220cMT-FHDX InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEFHDX00_cMT-FHDX_Installation.pdf"
+    }, {
+        title: "cMT-FHDX ?????(Japanese)",
+        label: "cMT-FHDX-220cMT-FHDX ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJFHDX00_cMT-FHDX_Installation.pdf"
+    }, {
+        title: "cMT series Brochure(English)",
+        label: "cMT2078X,cMT2108X,cMT2158X,cMT3071,cMT3072,cMT3072X,cMT3072XH,cMT3090,cMT3092X,cMT3103,cMT3151,cMT3152X,cMT3161X,cMT3162X,cMT-CTRL01,cMT-FHD,cMT-FHDX-220,cMT-G01,cMT-G02,cMT-G03,cMT-G04,cMT-HDMI,cMT-iM21,cMT-iPC10,cMT-iPC15,cMT-iV5,cMT-iV6,cMT-SVR-100,cMT-SVR-102,cMT-SVR-200,iR-COP,iR-DI16-K,iR-DM16-N,iR-DM16-P,iR-ETNcMT series BrochureBrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Brochure/cMT_Brochure_ENG.pdf"
+    }, {
+        title: "cMT series ????(Traditional Chinese)",
+        label: "cMT2078X,cMT2108X,cMT2158X,cMT3071,cMT3072,cMT3072X,cMT3072XH,cMT3090,cMT3092X,cMT3103,cMT3151,cMT3152X,cMT3161X,cMT3162X,cMT-CTRL01,cMT-FHD,cMT-FHDX-220,cMT-G01,cMT-G02,cMT-G03,cMT-G04,cMT-HDMI,cMT-iM21,cMT-iPC10,cMT-iPC15,cMT-iV5,cMT-iV6,cMT-SVR-100,cMT-SVR-102,cMT-SVR-200,iR-COP,iR-DI16-K,iR-DM16-N,iR-DM16-P,iR-ETNcMT series ????BrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Brochure/cMT_Brochure_CHT.pdf"
+    }, {
+        title: "cMT-SVR-100 Data Sheet(English)",
+        label: "cMT-SVR-100cMT-SVR-100 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_SVR_100_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-SVR-100 Data Sheet(Traditional Chinese)",
+        label: "cMT-SVR-100cMT-SVR-100 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_SVR_100_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-SVR-100 Installation Instruction(English)",
+        label: "cMT-SVR-100,cMT-SVR-102cMT-SVR-100 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECSVR00_cMT_SVR_Installation.pdf"
+    }, {
+        title: "cMT-iV5 Data Sheet(English)",
+        label: "cMT-iV5cMT-iV5 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_iV5_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-iV5 Data Sheet(Traditional Chinese)",
+        label: "cMT-iV5cMT-iV5 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_iV5_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-iV5 Installation Instruction(English)",
+        label: "cMT-iV5cMT-iV5 Installation InstructionInstallationDocumentcMT series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECIV501_cMT_iV5_Installation.pdf"
+    }, {
+        title: "cMT-iV5 User Manual(English)",
+        label: "cMT-iV5cMT-iV5 User ManualUserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/cMT_iV5_UserManual_en.pdf"
+    }, {
+        title: "cMT-iV5 ????(Traditional Chinese)",
+        label: "cMT-iV5cMT-iV5 ????UserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/cMT_iV5_UserManual_tw.pdf"
+    }, {
+        title: "cMT-iPC15 Data Sheet(English)",
+        label: "cMT-iPC15cMT-iPC15 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_iPC15_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-iPC15 Data Sheet(Traditional Chinese)",
+        label: "cMT-iPC15cMT-iPC15 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_iPC15_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3151 Data Sheet(English)",
+        label: "cMT3151cMT3151 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3151_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3151 Data Sheet(Traditional Chinese)",
+        label: "cMT3151cMT3151 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3151_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-iPC15 Installation Instruction(English)",
+        label: "cMT-iPC15cMT-iPC15 Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECIP150_cMT_iPC15_Installation.pdf"
+    }, {
+        title: "cMT3151 Installation Instruction(English)",
+        label: "cMT3151cMT3151 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GME3151A0_cMT3151_Installation.pdf"
+    }, {
+        title: "cMT-iPC15 Installation Instruction(Traditional Chinese)",
+        label: "cMT-iPC15cMT-iPC15 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Installation/cMT-iPC15_Installation_tw.pdf"
+    }, {
+        title: "cMT-SVR-102 Data Sheet(English)",
+        label: "cMT-SVR-102cMT-SVR-102 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_SVR_102_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-SVR-102 Data Sheet(Traditional Chinese)",
+        label: "cMT-SVR-102cMT-SVR-102 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_SVR_102_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-SVR-100 Data Sheet(Japanese)",
+        label: "cMT-SVR-100cMT-SVR-100 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_SVR_100_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-SVR-102 Data Sheet(Japanese)",
+        label: "cMT-SVR-102cMT-SVR-102 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_SVR_102_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iV5 Data Sheet(Japanese)",
+        label: "cMT-iV5cMT-iV5 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_iV5_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3151 Data Sheet(Japanese)",
+        label: "cMT3151cMT3151 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3151_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iPC15 Data Sheet(Japanese)",
+        label: "cMT-iPC15cMT-iPC15 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_iPC15_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iPC15 ?????(Japanese)",
+        label: "cMT-iPC15cMT-iPC15 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCIP150_cMT-iPC15_Installation.pdf"
+    }, {
+        title: "cMT series ????????(Japanese)",
+        label: "N/AcMT series ????????BrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Brochure/cMT_Brochure_JPN.pdf"
+    }, {
+        title: "cMT-iV5 ?????(Japanese)",
+        label: "cMT-iV5cMT-iV5 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCIV501_cMT_iV5_Installation.pdf"
+    }, {
+        title: "cMT-SVR-100 ?????(Japanese)",
+        label: "cMT-SVR-100,cMT-SVR-102cMT-SVR-100 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCSVR00_cMT_SVR_Installation.pdf"
+    }, {
+        title: "cMT3151 ?????(Japanese)",
+        label: "cMT3151cMT3151 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJ315100_cMT3151_Installation.pdf"
+    }, {
+        title: "cMT-G01 Data Sheet(English)",
+        label: "cMT-G01cMT-G01 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-G01_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-G01 Data Sheet(Traditional Chinese)",
+        label: "cMT-G01cMT-G01 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-G01_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-G01 Installation(English)",
+        label: "cMT-G01cMT-G01 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMG100_cMT-G01_Installation.pdf"
+    }, {
+        title: "cMT-G01 Data Sheet(Japanese)",
+        label: "cMT-G01cMT-G01 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-G01_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3090 Data Sheet(English)",
+        label: "cMT3090cMT3090 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3090_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3090 Data Sheet(Traditional Chinese)",
+        label: "cMT3090cMT3090 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3090_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3090 Data Sheet(Japanese)",
+        label: "cMT3090cMT3090 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3090_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iPC10 Data Sheet(English)",
+        label: "cMT-iPC10cMT-iPC10 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_iPC10_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-iPC10 Data Sheet(Traditional Chinese)",
+        label: "cMT-iPC10cMT-iPC10 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_iPC10_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3090 Installation(English)",
+        label: "cMT3090,cMT3090cMT3090 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC39000_cMT3090_Installation.pdf"
+    }, {
+        title: "cMT-iPC10 Installation Instruction(English)",
+        label: "cMT-iPC10,cMT-iPC10cMT-iPC10 Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMI100_cMT_iPC10_Installation.pdf"
+    }, {
+        title: "cMT-iPC10 Data Sheet(Japanese)",
+        label: "cMT-iPC10cMT-iPC10 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_iPC10_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-G02 Data Sheet(English)",
+        label: "cMT-G02cMT-G02 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-G02_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-G02 Data Sheet(Traditional Chinese)",
+        label: "cMT-G02cMT-G02 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-G02_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-G02 Data Sheet(Japanese)",
+        label: "cMT-G02cMT-G02 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-G02_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-G02 Installation(English)",
+        label: "cMT-G02cMT-G02 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMG200_cMT-G02_Installation.pdf"
+    }, {
+        title: "cMT3072 Data Sheet(English)",
+        label: "cMT3072cMT3072 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3072_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3072 Data Sheet(Traditional Chinese)",
+        label: "cMT3072cMT3072 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3072_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3072 Data Sheet(Japanese)",
+        label: "cMT3072cMT3072 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3072_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3072 Installation(English)",
+        label: "cMT3072cMT3072 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC37200_cMT3072_Installation.pdf"
+    }, {
+        title: "cMT3103 Data Sheet(English)",
+        label: "cMT3103cMT3103 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3103_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3103 Data Sheet(Traditional Chinese)",
+        label: "cMT3103cMT3103 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3103_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3103 Data Sheet(Japanese)",
+        label: "cMT3103cMT3103 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3103_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3103 Installation(English)",
+        label: "cMT3103cMT3103 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC3A300_cMT3103_Installation.pdf"
+    }, {
+        title: "cMT3103 ?????(Japanese)",
+        label: "cMT3103cMT3103 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJC3A300_cMT3103_Installation_171215.pdf"
+    }, {
+        title: "cMT-G02 ?????(Japanese)",
+        label: "cMT-G02cMT-G02 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMG200_cMT-G02_Installation_171215.pdf"
+    }, {
+        title: "cMT-iM21 Data Sheet(English)",
+        label: "cMT-iM21cMT-iM21 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-iM21_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-iM21 Data Sheet(Traditional Chinese)",
+        label: "cMT-iM21cMT-iM21 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-iM21_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-iM21 Data Sheet(Japanese)",
+        label: "cMT-iM21cMT-iM21 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-iM21_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iM21 Installation(English)",
+        label: "cMT-iM21cMT-iM21 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECM2100_cMT_iM21_Installation.pdf"
+    }, {
+        title: "cMT-G03 Data Sheet(English)",
+        label: "cMT-G03cMT-G03 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-G03_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-G03 Data Sheet(Traditional Chinese)",
+        label: "cMT-G03cMT-G03 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-G03_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-G03 Data Sheet(Japanese)",
+        label: "cMT-G03cMT-G03 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-G03_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-G03 Installation(English)",
+        label: "cMT-G03cMT-G03 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMG300_cMT-G03_Installation.pdf"
+    }, {
+        title: "cMT-G04 Data Sheet(English)",
+        label: "cMT-G04cMT-G04 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-G04_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-G04 Data Sheet(Traditional Chinese)",
+        label: "cMT-G04cMT-G04 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-G04_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-G04 Data Sheet(Japanese)",
+        label: "cMT-G04cMT-G04 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-G04_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-G04 Installation(English)",
+        label: "cMT-G04cMT-G04 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMG400_cMT-G04_Installation.pdf"
+    }, {
+        title: "cMT3071 Installation(English)",
+        label: "cMT3071cMT3071 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC371P0_cMT3071_3072_Installation.pdf"
+    }, {
+        title: "cMT3071/cMT3072 ?????(Japanese)",
+        label: "cMT3072,cMT3071cMT3071/cMT3072 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJC371P0_cMT3071_3072_Installation.pdf"
+    }, {
+        title: "cMT3071 Data Sheet(English)",
+        label: "cMT3071cMT3071 Data SheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3071_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3071 Data Sheet(Traditional Chinese)",
+        label: "cMT3071cMT3071 Data SheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3071_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3071 Data Sheet(Japanese)",
+        label: "cMT3071cMT3071 Data SheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3071_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-FHD Datasheet(Traditional Chinese)",
+        label: "cMT-FHDcMT-FHD DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-FHD_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-FHD Datasheet(English)",
+        label: "cMT-FHDcMT-FHD DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-FHD_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-FHD Datasheet(Japanese)",
+        label: "cMT-FHDcMT-FHD DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-FHD_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-FHD Installation(English)",
+        label: "cMT-FHDcMT-FHD InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECFHD00_cMT-FHD_Installation.pdf"
+    }, {
+        title: "cMT-FHD ?????(Japanese)",
+        label: "cMT-FHDcMT-FHD ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCFHD00_cMT-FHD_Installation.pdf"
+    }, {
+        title: "cMT ???? OS ????(Traditional Chinese)",
+        label: "cMT3072cMT ???? OS ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM018010T_cMT_Series_OS_Update_Instructions_20190122_tw.pdf"
+    }, {
+        title: "cMT Series OS Update Instructions(English)",
+        label: "cMT3072cMT Series OS Update InstructionsUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM018010E_cMT_Series_OS_Update_Instructions_20190122_en.pdf"
+    }, {
+        title: "cMT ???? OS ????(Japanese)",
+        label: "cMT3072cMT ???? OS ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM018010J_cMT_Series_OS_Update_Instructions_20190122_jp.pdf"
+    }, {
+        title: "cMT ?????? CODESYS ??(Traditional Chinese)",
+        label: "N/AcMT ?????? CODESYS ??UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM018005T_Activate_CODESYS_Feature_on_cMT_UserManual_cht.pdf"
+    }, {
+        title: "cMT Activate CODESYS Feature(English)",
+        label: "N/AcMT Activate CODESYS FeatureUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM018005E_Activate_CODESYS_Feature_on_cMT_UserManual_eng.pdf"
+    }, {
+        title: "cMT ???? HMI ? CODESYS ???(Japanese)",
+        label: "N/AcMT ???? HMI ? CODESYS ???UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM018005J_Activate_CODESYS_Feature_on_cMT_UserManual_jpn.pdf"
+    }, {
+        title: "cMT+CODESYS and Remote I/O Quick Start Guide(English)",
+        label: "N/AcMT+CODESYS and Remote I/O Quick Start GuideUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM018003E_cMT_Codesys_Install_UserManual_eng.pdf"
+    }, {
+        title: "cMT+CODESYS ? Remote I/O ??????(Traditional Chinese)",
+        label: "N/AcMT+CODESYS ? Remote I/O ??????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM018003T_cMT_Codesys_Install_UserManual_cht.pdf"
+    }, {
+        title: "cMT+CODESYS ?? Remote I/O ????????????(Japanese)",
+        label: "N/AcMT+CODESYS ?? Remote I/O ????????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM018003J_cMT_Codesys_Install_UserManual_jpn.pdf"
+    }, {
+        title: "cMT-SVR-200 Datasheet(Traditional Chinese)",
+        label: "cMT-SVR-200cMT-SVR-200 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_SVR_200_202_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-SVR-200 Datasheet(English)",
+        label: "cMT-SVR-200cMT-SVR-200 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_SVR_200_202_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-SVR-200 Datasheet(Japanese)",
+        label: "cMT-SVR-200cMT-SVR-200 DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_SVR_200_202_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-SVR-200 Installation(English)",
+        label: "cMT-SVR-200cMT-SVR-200 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECSV200_cMT_SVR_200_202_Installation.pdf"
+    }, {
+        title: "cMT-SVR-200 ?????(Japanese)",
+        label: "cMT-SVR-200cMT-SVR-200 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCSV200_cMT_SVR_200_202_Installation.pdf"
+    }, {
+        title: "cMT-G01/cMT-G02 User Manual(English)",
+        label: "cMT-G01,cMT-G02cMT-G01/cMT-G02 User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM017003E_cMT-G01G02_UserManual_eng.pdf"
+    }, {
+        title: "cMT-G01/cMT-G02 ????(Traditional Chinese)",
+        label: "cMT-G01,cMT-G02cMT-G01/cMT-G02 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM017003T_cMT-G01G02_UserManual_cht.pdf"
+    }, {
+        title: "cMT-G01/cMT-G02 ????????? (Japanese)",
+        label: "cMT-G01,cMT-G02cMT-G01/cMT-G02 ????????? UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM017003J_cMT-G01G02_UserManual_20171113_jpn.pdf"
+    }, {
+        title: "cMT-G03 User Manual(English)",
+        label: "cMT-G03cMT-G03 User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM018007E_cMT-G03_UserManual_eng.pdf"
+    }, {
+        title: "cMT-G03 ????(Traditional Chinese)",
+        label: "cMT-G03cMT-G03 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM018007T_cMT-G03_UserManual_cht.pdf"
+    }, {
+        title: "cMT-G03 ????????? (Japanese)",
+        label: "cMT-G03cMT-G03 ????????? UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM018007J_cMT-G03_UserManual_jpn.pdf"
+    }, {
+        title: "cMT-G04 User Manual(English)",
+        label: "cMT-G04cMT-G04 User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM018008E_cMT-G04_UserManual_eng.pdf"
+    }, {
+        title: "cMT-G04 ????(Traditional Chinese)",
+        label: "cMT-G04cMT-G04 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM018008T_cMT-G04_UserManual_cht.pdf"
+    }, {
+        title: "cMT-G04 ????????? (Japanese)",
+        label: "cMT-G04cMT-G04 ????????? UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM018008J_cMT-G04_UserManual_20180817_jpn.pdf"
+    }, {
+        title: "cMT-G01 ?????(Japanese)",
+        label: "cMT-G01cMT-G01 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMG100_cMT-G01_Installation.pdf"
+    }, {
+        title: "cMT-G03 ?????(Japanese)",
+        label: "cMT-G03cMT-G03 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMG300_cMT-G03_Installation.pdf"
+    }, {
+        title: "cMT-G04 ?????(Japanese)",
+        label: "cMT-G04cMT-G04 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMG400_cMT-G04_Installation.pdf"
+    }, {
+        title: "cMT-iM21 ?????(Japanese)",
+        label: "cMT-iM21cMT-iM21 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCM2100_cMT_iM21_Installation_181210.pdf"
+    }, {
+        title: "cMT3090 ?????(Japanese)",
+        label: "cMT3090cMT3090 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJC39000_cMT3090_Installation_170918.pdf"
+    }, {
+        title: "cMT-iPC10 ?????(Japanese)",
+        label: "cMT-iPC10cMT-iPC10 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMI100_cMT-iPC10_Installation_180105.pdf"
+    }, {
+        title: "cMT+CODESYS Datasheet(English)",
+        label: "cMT3151,cMT3090,cMT3071,cMT3072cMT+CODESYS DatasheetDataSheetDocumentCODESYS",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT_CODESYS_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT+CODESYS Datasheet(Traditional Chinese)",
+        label: "cMT3151,cMT3090,cMT3071,cMT3072cMT+CODESYS DatasheetDataSheetDocumentCODESYS",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT_CODESYS_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT+CODESYS Datasheet(Japanese)",
+        label: "cMT3151,cMT3090,cMT3071,cMT3072cMT+CODESYS DatasheetDataSheetDocumentCODESYS",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT_CODESYS_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT2078X Datasheet(Traditional Chinese)",
+        label: "cMT2078XcMT2078X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT2078X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT2078X Datasheet(English)",
+        label: "cMT2078XcMT2078X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT2078X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT2108X Datasheet(Traditional Chinese)",
+        label: "cMT2108XcMT2108X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT2108X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT2108X Datasheet(English)",
+        label: "cMT2108XcMT2108X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT2108X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT2158X Datasheet(Traditional Chinese)",
+        label: "cMT2158XcMT2158X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT2158X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT2158X Datasheet(English)",
+        label: "cMT2158XcMT2158X DatasheetDatasheetDocumentDatasheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT2158X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3072X Data Sheet(Traditional Chinese)",
+        label: "cMT3072XcMT3072X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3072X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3072X Data Sheet(English)",
+        label: "cMT3072XcMT3072X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3072X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3072X Data Sheet(Japanese)",
+        label: "cMT3072XcMT3072X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3072X_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3072XH Data Sheet(Traditional Chinese)",
+        label: "cMT3072XHcMT3072XH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3072XH_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3072XH Data Sheet(English)",
+        label: "cMT3072XHcMT3072XH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3072XH_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3072XH Data Sheet(Japanese)",
+        label: "cMT3072XHcMT3072XH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3072XH_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3092X Data Sheet(Traditional Chinese)",
+        label: "cMT3092XcMT3092X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3092X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3092X Data Sheet(English)",
+        label: "cMT3092XcMT3092X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3092X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3092X Data Sheet(Japanese)",
+        label: "cMT3092XcMT3092X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3092X_Datasheet_JPN.pdf"
+    }, {
+        title: "EBPro??????-?01?_??EasyBuilder??(Traditional Chinese)",
+        label: "N/AEBPro??????-?01?_??EasyBuilder??UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC01%E7%AB%A0_%E9%97%9C%E6%96%BCEasyBuilder%E5%AE%89%E8%A3%9D.pdf"
+    }, {
+        title: "EBPro??????-?02?_Utility_Manager(Traditional Chinese)",
+        label: "N/AEBPro??????-?02?_Utility_ManagerUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC02%E7%AB%A0_Utility_Manager.pdf"
+    }, {
+        title: "EBPro??????-?03?_?????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?03?_?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC03%E7%AB%A0_%E5%BB%BA%E7%AB%8B%E7%B0%A1%E5%96%AE%E7%9A%84%E5%B7%A5%E7%A8%8B%E6%AA%94%E6%A1%88.pdf"
+    }, {
+        title: "EBPro??????-?04?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?04?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC04%E7%AB%A0_%E7%A1%AC%E9%AB%94%E8%A8%AD%E5%AE%9A.pdf"
+    }, {
+        title: "EBPro??????-?05?_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?05?_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC05%E7%AB%A0_%E7%B3%BB%E7%B5%B1%E5%8F%83%E6%95%B8%E8%A8%AD%E5%AE%9A.pdf"
+    }, {
+        title: "EBPro??????-?06?_??(Traditional Chinese)",
+        label: "N/AEBPro??????-?06?_??UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC06%E7%AB%A0_%E8%A6%96%E7%AA%97.pdf"
+    }, {
+        title: "EBPro??????-?07?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?07?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC07%E7%AB%A0_%E4%BA%8B%E4%BB%B6%E7%99%BB%E9%8C%84.pdf"
+    }, {
+        title: "EBPro??????-?08?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?08?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC08%E7%AB%A0_%E8%B3%87%E6%96%99%E5%8F%96%E6%A8%A3.pdf"
+    }, {
+        title: "EBPro??????-?09?_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?09?_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC09%E7%AB%A0_%E7%89%A9%E4%BB%B6%E4%B8%80%E8%88%AC%E5%B1%AC%E6%80%A7.pdf"
+    }, {
+        title: "EBPro??????-?10?_????????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?10?_????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC10%E7%AB%A0_%E4%BD%BF%E7%94%A8%E8%80%85%E5%AF%86%E7%A2%BC%E8%88%87%E7%89%A9%E4%BB%B6%E5%AE%89%E5%85%A8%E9%98%B2%E8%AD%B7.pdf"
+    }, {
+        title: "EBPro??????-?11?_?????(Traditional Chinese)",
+        label: "N/AEBPro??????-?11?_?????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC11%E7%AB%A0_%E7%B4%A2%E5%BC%95%E6%9A%AB%E5%AD%98%E5%99%A8.pdf"
+    }, {
+        title: "EBPro??????-?12?_????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?12?_????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC12%E7%AB%A0_%E9%8D%B5%E7%9B%A4%E7%9A%84%E8%A8%AD%E8%A8%88%E8%88%87%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro??????-?13?_??(Traditional Chinese)",
+        label: "N/AEBPro??????-?13?_??UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC13%E7%AB%A0_%E7%89%A9%E4%BB%B6.pdf"
+    }, {
+        title: "EBPro??????-?14?_???????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?14?_???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC14%E7%AB%A0_%E5%90%91%E9%87%8F%E5%9C%96%E5%BA%AB%E8%88%87%E5%9C%96%E7%89%87%E5%BA%AB%E7%9A%84%E5%BB%BA%E7%AB%8B.pdf"
+    }, {
+        title: "EBPro??????-?15?_????????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?15?_????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC15%E7%AB%A0_%E6%96%87%E5%AD%97%E6%A8%99%E7%B1%A4%E5%BA%AB%E8%88%87%E5%A4%9A%E5%9C%8B%E8%AA%9E%E8%A8%80%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro??????-?16?_???????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?16?_???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC16%E7%AB%A0_%E4%BD%8D%E5%9D%80%E6%A8%99%E7%B1%A4%E5%BA%AB%E7%9A%84%E5%BB%BA%E7%AB%8B%E8%88%87%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro??????-?17?_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?17?_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC17%E7%AB%A0_%E9%85%8D%E6%96%B9%E8%B3%87%E6%96%99%E5%82%B3%E9%80%81.pdf"
+    }, {
+        title: "EBPro??????-?18?_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?18?_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC18%E7%AB%A0_%E5%B7%A8%E9%9B%86%E6%8C%87%E4%BB%A4%E8%AA%AA%E6%98%8E.pdf"
+    }, {
+        title: "EBPro??????-?19?_???HMI???MODBUS??(Traditional Chinese)",
+        label: "N/AEBPro??????-?19?_???HMI???MODBUS??UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC19%E7%AB%A0_%E5%A6%82%E4%BD%95%E5%B0%87HMI%E8%A8%AD%E5%AE%9A%E6%88%90MODBUS%E8%A3%9D%E7%BD%AE.pdf"
+    }, {
+        title: "EBPro??????-?20?_?????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?20?_?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC20%E7%AB%A0_%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%A2%9D%E7%A2%BC%E6%8E%83%E6%8F%8F%E5%99%A8.pdf"
+    }, {
+        title: "EBPro??????-?21?_???????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?21?_???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC21%E7%AB%A0_%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF%E8%88%87%E5%A4%9A%E5%8F%B0%E4%BA%BA%E6%A9%9F%E9%80%A3%E7%B7%9A.pdf"
+    }, {
+        title: "EBPro??????-?22?_?????(Traditional Chinese)",
+        label: "N/AEBPro??????-?22?_?????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC22%E7%AB%A0_%E4%BD%8D%E5%9D%80%E6%9A%AB%E5%AD%98%E5%99%A8.pdf"
+    }, {
+        title: "EBPro??????-?23?_HMI_????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?23?_HMI_????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC23%E7%AB%A0_HMI_%E6%94%AF%E6%8F%B4%E7%9A%84%E5%8D%B0%E8%A1%A8%E6%A9%9F%E9%A1%9E%E5%9E%8B.pdf"
+    }, {
+        title: "EBPro??????-?24?_Recipe_Editor(Traditional Chinese)",
+        label: "N/AEBPro??????-?24?_Recipe_EditorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC24%E7%AB%A0_Recipe_Editor.pdf"
+    }, {
+        title: "EBPro??????-?25?_EasyConverter(Traditional Chinese)",
+        label: "N/AEBPro??????-?25?_EasyConverterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC25%E7%AB%A0_EasyConverter.pdf"
+    }, {
+        title: "EBPro??????-?26?_EasyPrinter(Traditional Chinese)",
+        label: "N/AEBPro??????-?26?_EasyPrinterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC26%E7%AB%A0_EasyPrinter.pdf"
+    }, {
+        title: "EBPro??????-?27?_EasySimulator(Traditional Chinese)",
+        label: "N/AEBPro??????-?27?_EasySimulatorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC27%E7%AB%A0_EasySimulator.pdf"
+    }, {
+        title: "EBPro??????-?28?_EasySystemSetting(Traditional Chinese)",
+        label: "N/AEBPro??????-?28?_EasySystemSettingUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC28%E7%AB%A0_EasySystemSetting.pdf"
+    }, {
+        title: "EBPro??????-?29?_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?29?_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC29%E7%AB%A0_%E7%A9%BF%E9%80%8F%E9%80%9A%E8%A8%8A%E5%8A%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro??????-?30?_????????(Traditional Chinese)",
+        label: "N/AEBPro??????-?30?_????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC30%E7%AB%A0_%E5%B7%A5%E7%A8%8B%E6%AA%94%E6%A1%88%E4%BF%9D%E8%AD%B7%E5%8A%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro??????-?31?_cMT_Diagnoser(Traditional Chinese)",
+        label: "N/AEBPro??????-?31?_cMT_DiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC31%E7%AB%A0_cMT_Diagnoser.pdf"
+    }, {
+        title: "EBPro??????-?32?_FTP??????(Traditional Chinese)",
+        label: "N/AEBPro??????-?32?_FTP??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC32%E7%AB%A0_FTP%E4%BC%BA%E6%9C%8D%E5%99%A8%E4%B9%8B%E9%81%8B%E7%94%A8.pdf"
+    }, {
+        title: "EBPro??????-?33?_EasyDiagnoser(Traditional Chinese)",
+        label: "N/AEBPro??????-?33?_EasyDiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC33%E7%AB%A0_EasyDiagnoser.pdf"
+    }, {
+        title: "EBPro??????-?34?_Rockwell_EtherNet_IP_Free_Tag_Names(Traditional Chinese)",
+        label: "N/AEBPro??????-?34?_Rockwell_EtherNet_IP_Free_Tag_NamesUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC34%E7%AB%A0_Rockwell_EtherNet_IP_Free_Tag_Names.pdf"
+    }, {
+        title: "EBPro??????-?35?_EasyWatch(Traditional Chinese)",
+        label: "N/AEBPro??????-?35?_EasyWatchUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC35%E7%AB%A0_EasyWatch.pdf"
+    }, {
+        title: "EBPro??????-?36?_?????(Traditional Chinese)",
+        label: "N/AEBPro??????-?36?_?????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC36%E7%AB%A0_%E7%AE%A1%E7%90%86%E5%93%A1%E5%B7%A5%E5%85%B7.pdf"
+    }, {
+        title: "EBPro??????-?37?_MODBUS_TCP_IP_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?37?_MODBUS_TCP_IP_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC37%E7%AB%A0_MODBUS_TCP_IP_%E9%96%98%E9%81%93%E5%8A%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro??????-?38?_EasyDownload(Traditional Chinese)",
+        label: "N/AEBPro??????-?38?_EasyDownloadUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC38%E7%AB%A0_EasyDownload.pdf"
+    }, {
+        title: "EBPro??????-?39?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?39?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC39%E7%AB%A0_%E8%B3%87%E6%96%99%E4%BF%9D%E8%AD%B7.pdf"
+    }, {
+        title: "EBPro??????-?40?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?40?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC40%E7%AB%A0_%E7%B6%B2%E8%B7%AF%E4%B8%B2%E6%B5%81.pdf"
+    }, {
+        title: "EBPro??????-?41?_????(Traditional Chinese)",
+        label: "N/AEBPro??????-?41?_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC41%E7%AB%A0_%E8%83%BD%E6%BA%90%E7%AE%A1%E7%90%86.pdf"
+    }, {
+        title: "EBPro??????-?42?_IIoT(Traditional Chinese)",
+        label: "N/AEBPro??????-?42?_IIoTUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC42%E7%AB%A0_IIoT.pdf"
+    }, {
+        title: "EBPro??????-?43?_JS???JS?(Traditional Chinese)",
+        label: "N/AEBPro??????-?43?_JS???JS?UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E7%AC%AC43%E7%AB%A0_JS%E7%89%A9%E4%BB%B6%E5%92%8CJS%E5%BA%AB.pdf"
+    }, {
+        title: "EBPro??????-??A_???_HMI_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-??A_???_HMI_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E9%99%84%E9%8C%84A_%E5%90%84%E7%B3%BB%E5%88%97_HMI_%E8%BB%9F%E9%AB%94%E5%8A%9F%E8%83%BD%E5%B7%AE%E7%95%B0.pdf"
+    }, {
+        title: "EBPro??????-??B_cMT_Viewer_????(Traditional Chinese)",
+        label: "N/AEBPro??????-??B_cMT_Viewer_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E9%99%84%E9%8C%84B_cMT_Viewer_%E4%BD%BF%E7%94%A8%E9%99%90%E5%88%B6.pdf"
+    }, {
+        title: "EBPro??????-??C_PC_??????(Traditional Chinese)",
+        label: "N/AEBPro??????-??C_PC_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/UserManual_separate_chapter/%E9%99%84%E9%8C%84C_PC_%E6%A8%A1%E6%93%AC%E4%BD%BF%E7%94%A8%E9%99%90%E5%88%B6.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_01_EasyBuilder_Pro_Installation_and_Startup_Guide(English)",
+        label: "N/AEBPro User Manual-Chapter_01_EasyBuilder_Pro_Installation_and_Startup_GuideUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_01_EasyBuilder_Pro_Installation_and_Startup_Guide.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_02_Utility_Manager(English)",
+        label: "N/AEBPro User Manual-Chapter_02_Utility_ManagerUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_02_Utility_Manager.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_03_Create_an_EasyBuilder_Pro_Project(English)",
+        label: "N/AEBPro User Manual-Chapter_03_Create_an_EasyBuilder_Pro_ProjectUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_03_Create_an_EasyBuilder_Pro_Project.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_04_Hardware_Settings(English)",
+        label: "N/AEBPro User Manual-Chapter_04_Hardware_SettingsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_04_Hardware_Settings.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_05_System_Parameter_Settings(English)",
+        label: "N/AEBPro User Manual-Chapter_05_System_Parameter_SettingsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_05_System_Parameter_Settings.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_06_Window_Operations(English)",
+        label: "N/AEBPro User Manual-Chapter_06_Window_OperationsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_06_Window_Operations.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_07_Event_Log(English)",
+        label: "N/AEBPro User Manual-Chapter_07_Event_LogUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_07_Event_Log.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_08_Data_Sampling(English)",
+        label: "N/AEBPro User Manual-Chapter_08_Data_SamplingUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_08_Data_Sampling.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_09_Object_General_Properties(English)",
+        label: "N/AEBPro User Manual-Chapter_09_Object_General_PropertiesUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_09_Object_General_Properties.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_10_User_Password_and_Object_Security(English)",
+        label: "N/AEBPro User Manual-Chapter_10_User_Password_and_Object_SecurityUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_10_User_Password_and_Object_Security.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_11_Index_Register(English)",
+        label: "N/AEBPro User Manual-Chapter_11_Index_RegisterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_11_Index_Register.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_12_Keyboard_Design_and_Usage(English)",
+        label: "N/AEBPro User Manual-Chapter_12_Keyboard_Design_and_UsageUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_12_Keyboard_Design_and_Usage.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_13_Objects(English)",
+        label: "N/AEBPro User Manual-Chapter_13_ObjectsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_13_Objects.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_14_Shape_Library_and_Picture_Library(English)",
+        label: "N/AEBPro User Manual-Chapter_14_Shape_Library_and_Picture_LibraryUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_14_Shape_Library_and_Picture_Library.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_15_Label_Tag_Library_and_Multi_Language(English)",
+        label: "N/AEBPro User Manual-Chapter_15_Label_Tag_Library_and_Multi_LanguageUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_15_Label_Tag_Library_and_Multi_Language.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_16_Address_Tag_Library(English)",
+        label: "N/AEBPro User Manual-Chapter_16_Address_Tag_LibraryUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_16_Address_Tag_Library.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_17_Transferring_Recipe_Data(English)",
+        label: "N/AEBPro User Manual-Chapter_17_Transferring_Recipe_DataUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_17_Transferring_Recipe_Data.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_18_Macro_Reference(English)",
+        label: "N/AEBPro User Manual-Chapter_18_Macro_ReferenceUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_18_Macro_Reference.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_19_Configure_HMI_as_MODBUS_Server(English)",
+        label: "N/AEBPro User Manual-Chapter_19_Configure_HMI_as_MODBUS_ServerUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_19_Configure_HMI_as_MODBUS_Server.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_20_How_to_Connect_Barcode_Reader(English)",
+        label: "N/AEBPro User Manual-Chapter_20_How_to_Connect_Barcode_ReaderUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_20_How_to_Connect_Barcode_Reader.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_21_Ethernet_Communication_and_Multi_HMI_Connection(English)",
+        label: "N/AEBPro User Manual-Chapter_21_Ethernet_Communication_and_Multi_HMI_ConnectionUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_21_Ethernet_Communication_and_Multi_HMI_Connection.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_22_System_Registers(English)",
+        label: "N/AEBPro User Manual-Chapter_22_System_RegistersUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_22_System_Registers.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_23_HMI_Supported_Printers(English)",
+        label: "N/AEBPro User Manual-Chapter_23_HMI_Supported_PrintersUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_23_HMI_Supported_Printers.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_24_Recipe_Editor(English)",
+        label: "N/AEBPro User Manual-Chapter_24_Recipe_EditorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_24_Recipe_Editor.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_25_EasyConverter(English)",
+        label: "N/AEBPro User Manual-Chapter_25_EasyConverterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_25_EasyConverter.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_26_EasyPrinter(English)",
+        label: "N/AEBPro User Manual-Chapter_26_EasyPrinterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_26_EasyPrinter.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_27_EasySimulator(English)",
+        label: "N/AEBPro User Manual-Chapter_27_EasySimulatorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_27_EasySimulator.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_28_EasySystemSetting(English)",
+        label: "N/AEBPro User Manual-Chapter_28_EasySystemSettingUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_28_EasySystemSetting.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_29_Pass_Through(English)",
+        label: "N/AEBPro User Manual-Chapter_29_Pass_ThroughUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_29_Pass_Through.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_30_Project_Protection(English)",
+        label: "N/AEBPro User Manual-Chapter_30_Project_ProtectionUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_30_Project_Protection.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_31_cMT Diagnoser(English)",
+        label: "N/AEBPro User Manual-Chapter_31_cMT DiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_31_cMT_Diagnoser.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_32_FTP_Server_Application(English)",
+        label: "N/AEBPro User Manual-Chapter_32_FTP_Server_ApplicationUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_32_FTP_Server_Application.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_33_EasyDiagnoser(English)",
+        label: "N/AEBPro User Manual-Chapter_33_EasyDiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_33_EasyDiagnoser.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_34_Rockwell_EtherNet_IP_Free_Tag_Names(English)",
+        label: "N/AEBPro User Manual-Chapter_34_Rockwell_EtherNet_IP_Free_Tag_NamesUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_34_Rockwell_EtherNet_IP_Free_Tag_Names.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_35_EasyWatch(English)",
+        label: "N/AEBPro User Manual-Chapter_35_EasyWatchUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_35_EasyWatch.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_36_Administrator_Tools(English)",
+        label: "N/AEBPro User Manual-Chapter_36_Administrator_ToolsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_36_Administrator_Tools.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_37_MODBUS_TCP_IP_Gateway(English)",
+        label: "N/AEBPro User Manual-Chapter_37_MODBUS_TCP_IP_GatewayUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_37_MODBUS_TCP_IP_Gateway.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_38_EasyDownload(English)",
+        label: "N/AEBPro User Manual-Chapter_38_EasyDownloadUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_38_EasyDownload.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_39_Data_Security(English)",
+        label: "N/AEBPro User Manual-Chapter_39_Data_SecurityUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_39_Data_Security.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_40_Web_Streaming(English)",
+        label: "N/AEBPro User Manual-Chapter_40_Web_StreamingUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_40_Web_Streaming.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_41_Energy(English)",
+        label: "N/AEBPro User Manual-Chapter_41_EnergyUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_41_Energy.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_42_IIoT(English)",
+        label: "N/AEBPro User Manual-Chapter_42_IIoTUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_42_IIoT.pdf"
+    }, {
+        title: "EBPro User Manual-Chapter_43_JS_Object_and_JS_Library(English)",
+        label: "N/AEBPro User Manual-Chapter_43_JS_Object_and_JS_LibraryUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Chapter_43_JS_Object_and_JS_Library.pdf"
+    }, {
+        title: "EBPro User Manual-Appendix_A_Comparison_of_HMI_Software_Features(English)",
+        label: "N/AEBPro User Manual-Appendix_A_Comparison_of_HMI_Software_FeaturesUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Appendix_A_Comparison_of_HMI_Software_Features.pdf"
+    }, {
+        title: "EBPro User Manual-Appendix_B_cMT_Viewer_Limitations(English)",
+        label: "N/AEBPro User Manual-Appendix_B_cMT_Viewer_LimitationsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Appendix_B_cMT_Viewer_Limitations.pdf"
+    }, {
+        title: "EBPro User Manual-Appendix_C_PC_Simulation_Limitations(English)",
+        label: "N/AEBPro User Manual-Appendix_C_PC_Simulation_LimitationsUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/UserManual_separate_chapter/Appendix_C_PC_Simulation_Limitations.pdf"
+    }, {
+        title: "EBPro?????????????-01_EasyBuilder Pro???????????(Japanese)",
+        label: "N/AEBPro?????????????-01_EasyBuilder Pro???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/01_EasyBuilder%20Pro%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6.pdf"
+    }, {
+        title: "EBPro?????????????-02_Utility Manager(Japanese)",
+        label: "N/AEBPro?????????????-02_Utility ManagerUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/02_Utility%20Manager.pdf"
+    }, {
+        title: "EBPro?????????????-03_???????????(Japanese)",
+        label: "N/AEBPro?????????????-03_???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/03_%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B.pdf"
+    }, {
+        title: "EBPro?????????????-04_????????(Japanese)",
+        label: "N/AEBPro?????????????-04_????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/04_%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2%E8%A8%AD%E5%AE%9A.pdf"
+    }, {
+        title: "EBPro?????????????-05_???????????(Japanese)",
+        label: "N/AEBPro?????????????-05_???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/05_%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%91%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%BF%E8%A8%AD%E5%AE%9A.pdf"
+    }, {
+        title: "EBPro?????????????-06_?????(Japanese)",
+        label: "N/AEBPro?????????????-06_?????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/06_%E3%82%A6%E3%82%A4%E3%83%B3%E3%83%89%E3%82%A6.pdf"
+    }, {
+        title: "EBPro?????????????-07_??????(Japanese)",
+        label: "N/AEBPro?????????????-07_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/07_%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%83%AD%E3%82%B0.pdf"
+    }, {
+        title: "EBPro?????????????-08_?????????(Japanese)",
+        label: "N/AEBPro?????????????-08_?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/08_%E3%83%87%E3%83%BC%E3%82%BF%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AA%E3%83%B3%E3%82%B0.pdf"
+    }, {
+        title: "EBPro?????????????-09_?????????????(Japanese)",
+        label: "N/AEBPro?????????????-09_?????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/09_%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E4%B8%80%E8%88%AC%E7%9A%84%E3%81%AA%E5%B1%9E%E6%80%A7.pdf"
+    }, {
+        title: "EBPro?????????????-10_??????????????????????(Japanese)",
+        label: "N/AEBPro?????????????-10_??????????????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/10_%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%A8%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3.pdf"
+    }, {
+        title: "EBPro?????????????-11_??????????(Japanese)",
+        label: "N/AEBPro?????????????-11_??????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/11_%E3%82%A4%E3%83%B3%E3%83%87%E3%83%83%E3%82%AF%E3%82%B9%E3%83%AC%E3%82%B8%E3%82%B9%E3%82%BF.pdf"
+    }, {
+        title: "EBPro?????????????-12_?????????????(Japanese)",
+        label: "N/AEBPro?????????????-12_?????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/12_%E3%82%AD%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89%E3%81%AE%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%81%A8%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro?????????????-13_??????(Japanese)",
+        label: "N/AEBPro?????????????-13_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/13_%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88.pdf"
+    }, {
+        title: "EBPro?????????????-14_???????????????????(Japanese)",
+        label: "N/AEBPro?????????????-14_???????????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/14_%E5%9B%B3%E5%BD%A2%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E5%8F%8A%E3%81%B3%E7%94%BB%E5%83%8F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AE%E4%BD%9C%E6%88%90.pdf"
+    }, {
+        title: "EBPro?????????????-15_??????????????????(Japanese)",
+        label: "N/AEBPro?????????????-15_??????????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/15_%E3%83%A9%E3%83%99%E3%83%AB%E3%82%BF%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E5%8F%8A%E3%81%B3%E5%A4%9A%E8%A8%80%E8%AA%9E%E3%81%AE%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro?????????????-16_??????????????????(Japanese)",
+        label: "N/AEBPro?????????????-16_??????????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/16_%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%BF%E3%82%B0%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%81%AE%E4%BD%9C%E6%88%90%E5%8F%8A%E3%81%B3%E4%BD%BF%E7%94%A8.pdf"
+    }, {
+        title: "EBPro?????????????-17_?????????(Japanese)",
+        label: "N/AEBPro?????????????-17_?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/17_%E3%83%AC%E3%82%B7%E3%83%94%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%BB%A2%E9%80%81.pdf"
+    }, {
+        title: "EBPro?????????????-18_??????(Japanese)",
+        label: "N/AEBPro?????????????-18_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/18_%E3%83%9E%E3%82%AF%E3%83%AD%E3%81%AE%E8%AA%AC%E6%98%8E.pdf"
+    }, {
+        title: "EBPro?????????????-19_HMI?MODBUS?????????(Japanese)",
+        label: "N/AEBPro?????????????-19_HMI?MODBUS?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/19_HMI%E3%82%92MODBUS%E8%A3%85%E7%BD%AE%E3%81%AB%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95.pdf"
+    }, {
+        title: "EBPro?????????????-20_?????????????????(Japanese)",
+        label: "N/AEBPro?????????????-20_?????????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/20_%E3%83%90%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%82%B9%E3%82%AD%E3%83%A3%E3%83%8A%E3%83%BC%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95.pdf"
+    }, {
+        title: "EBPro?????????????-21_???????????????(Japanese)",
+        label: "N/AEBPro?????????????-21_???????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/21_%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%8D%E3%83%83%E3%83%88%E9%80%9A%E4%BF%A1%E5%8F%8A%E3%81%B3%E3%83%9E%E3%83%AB%E3%83%81%E6%8E%A5%E7%B6%9A.pdf"
+    }, {
+        title: "EBPro?????????????-22_????(Japanese)",
+        label: "N/AEBPro?????????????-22_????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/22_%E3%83%AC%E3%82%B8%E3%82%B9%E3%82%BF.pdf"
+    }, {
+        title: "EBPro?????????????-23_HMI???????????????(Japanese)",
+        label: "N/AEBPro?????????????-23_HMI???????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/23_HMI%E3%81%8C%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%99%E3%82%8B%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BF%E3%83%BC%E3%81%AE%E7%A8%AE%E9%A1%9E.pdf"
+    }, {
+        title: "EBPro?????????????-24_Recipe Editor(Japanese)",
+        label: "N/AEBPro?????????????-24_Recipe EditorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/24_Recipe%20Editor.pdf"
+    }, {
+        title: "EBPro?????????????-25_EasyConverter(Japanese)",
+        label: "N/AEBPro?????????????-25_EasyConverterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/25_EasyConverter.pdf"
+    }, {
+        title: "EBPro?????????????-26_EasyPrinter(Japanese)",
+        label: "N/AEBPro?????????????-26_EasyPrinterUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/26_EasyPrinter.pdf"
+    }, {
+        title: "EBPro?????????????-27_EasySimulator(Japanese)",
+        label: "N/AEBPro?????????????-27_EasySimulatorUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/27_EasySimulator.pdf"
+    }, {
+        title: "EBPro?????????????-28_EasySystemSetting(Japanese)",
+        label: "N/AEBPro?????????????-28_EasySystemSettingUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/28_EasySystemSetting.pdf"
+    }, {
+        title: "EBPro?????????????-29_???????(Japanese)",
+        label: "N/AEBPro?????????????-29_???????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/29_%E3%83%91%E3%82%B9%E3%82%B9%E3%83%AB%E3%83%BC%E6%A9%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro?????????????-30_??????????(Japanese)",
+        label: "N/AEBPro?????????????-30_??????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/30_%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BF%9D%E8%AD%B7%E6%A9%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro?????????????-31_cMT_Diagnoser(Japanese)",
+        label: "N/AEBPro?????????????-31_cMT_DiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/31_cMT_Diagnoser.pdf"
+    }, {
+        title: "EBPro?????????????-32_FTP???????(Japanese)",
+        label: "N/AEBPro?????????????-32_FTP???????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/32_FTP%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E9%81%8B%E7%94%A8.pdf"
+    }, {
+        title: "EBPro?????????????-33_EasyDiagnoser(Japanese)",
+        label: "N/AEBPro?????????????-33_EasyDiagnoserUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/33_EasyDiagnoser.pdf"
+    }, {
+        title: "EBPro?????????????-34_Rockwell EtherNet  IP Free Tag Names(Japanese)",
+        label: "N/AEBPro?????????????-34_Rockwell EtherNet  IP Free Tag NamesUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/34_Rockwell%20EtherNet%20%20IP%20Free%20Tag%20Names.pdf"
+    }, {
+        title: "EBPro?????????????-35_EasyWatch(Japanese)",
+        label: "N/AEBPro?????????????-35_EasyWatchUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/35_EasyWatch.pdf"
+    }, {
+        title: "EBPro?????????????-36_??????(Japanese)",
+        label: "N/AEBPro?????????????-36_??????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/36_%E7%AE%A1%E7%90%86%E8%80%85%E3%83%84%E3%83%BC%E3%83%AB.pdf"
+    }, {
+        title: "EBPro?????????????-37_MODBUS TCP  IP????????(Japanese)",
+        label: "N/AEBPro?????????????-37_MODBUS TCP  IP????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/37_MODBUS%20TCP%20%20IP%E3%82%B2%E3%83%BC%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A4%E6%A9%9F%E8%83%BD.pdf"
+    }, {
+        title: "EBPro?????????????-38_EasyDownload(Japanese)",
+        label: "N/AEBPro?????????????-38_EasyDownloadUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/38_EasyDownload.pdf"
+    }, {
+        title: "EBPro?????????????-39_?????????(Japanese)",
+        label: "N/AEBPro?????????????-39_?????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/39_%E3%83%87%E3%83%BC%E3%82%BF%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3.pdf"
+    }, {
+        title: "EBPro?????????????-40_??????????(Japanese)",
+        label: "N/AEBPro?????????????-40_??????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/40_%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%9F%E3%83%B3%E3%82%B0.pdf"
+    }, {
+        title: "EBPro?????????????-41_???????(Japanese)",
+        label: "N/AEBPro?????????????-41_???????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/41_%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC%E7%AE%A1%E7%90%86.pdf"
+    }, {
+        title: "EBPro?????????????-42_IIoT(Japanese)",
+        label: "N/AEBPro?????????????-42_IIoTUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/42_IIoT.pdf"
+    }, {
+        title: "EBPro?????????????-??A_?????HMI???????????(Japanese)",
+        label: "N/AEBPro?????????????-??A_?????HMI???????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/%E4%BB%98%E9%8C%B2A_%E5%90%84%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BAHMI%E3%81%AE%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AE%E7%9B%B8%E9%81%95%E7%82%B9.pdf"
+    }, {
+        title: "EBPro?????????????-??B_cMT Viewer ????(Japanese)",
+        label: "N/AEBPro?????????????-??B_cMT Viewer ????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/%E4%BB%98%E9%8C%B2B_cMT%20Viewer%20%E4%BD%BF%E7%94%A8%E5%88%B6%E9%99%90.pdf"
+    }, {
+        title: "EBPro?????????????-??C_PC????????????(Japanese)",
+        label: "N/AEBPro?????????????-??C_PC????????????UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/UserManual_separate_chapter/%E4%BB%98%E9%8C%B2C_PC%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E4%BD%BF%E7%94%A8%E5%88%B6%E9%99%90.pdf"
+    }, {
+        title: "RoHS(English)",
+        label: "eMT3120A,eMT3150A,eMT3105P,eMT3070A,eMT612A,eMT615A,eMT610P,eMT607A,MT6050i,mTV,MT610iE,MT8100iE,MT607iE,MT8070iE,cMT-SVR-100,MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iHRoHSCertificateROHSDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/RoHS_2013-4-24.pdf"
+    }, {
+        title: "eMT3070A CE Certificate, eMT607A CE Certificate(English)",
+        label: "eMT607A,eMT3070AeMT3070A CE Certificate, eMT607A CE CertificateCertificateCEDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3070A_eMT607A.pdf"
+    }, {
+        title: "HMI Pin Assignment(English)",
+        label: "N/AHMI Pin AssignmentUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/PLC_Connect_Guide/HMI_Pin_Assignment.pdf"
+    }, {
+        title: "HMI Pin Assignment(Japanese)",
+        label: "N/AHMI Pin AssignmentUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/PLC_Connect_Guide/HMI_Pin_Assignment.pdf"
+    }, {
+        title: "HMI Pin Assignment(Traditional Chinese)",
+        label: "N/AHMI Pin AssignmentUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/PLC_Connect_Guide/HMI_Pin_Assignment.pdf"
+    }, {
+        title: "MT8104XH2 Installation Instruction(English)",
+        label: "MT8104XHMT8104XH2 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME8610H1_MT610XH_MT8104XH2WK_Installation_120409.pdf"
+    }, {
+        title: "MT8121XV2 Installation Instruction(English)",
+        label: "MT8121XMT8121XV2 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME8612V0_MT612X_MT8121XV2WK_Installation_120409.pdf"
+    }, {
+        title: "MT8150XV2 Installation Instruction(English)",
+        label: "MT8150XMT8150XV2 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME8615V0_MT615X_MT8150XV2WK_Installation_120409.pdf"
+    }, {
+        title: "MT6050iV2,MT8050iV2 Installation Instruction(English)",
+        label: "MT6050i,MT8050iMT6050iV2,MT8050iV2 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME6805I0_MT6050i_8050i_Installation_121227.pdf"
+    }, {
+        title: "MT6056i Installation Instruction(English)",
+        label: "N/AMT6056i Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME6056I1_MT6056i_Installation_120409.pdf"
+    }, {
+        title: "MT8104iH Installation Instruction(English)",
+        label: "MT8104iHMT8104iH Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME8104H0_MT8104iH_Installation_120409.pdf"
+    }, {
+        title: "MT6070iH, MT8070iH, MT6100i, MT8100i Installation Instruction(English)",
+        label: "MT6070iH,MT8070iH,MT6100i,MT8100iMT6070iH, MT8070iH, MT6100i, MT8100i Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Installation/GME680700_MT68070iH2iH3_MT68100iV2_Installation_121108.pdf"
+    }, {
+        title: "eMT607A 610P 612A 615A Installation Instruction(English)",
+        label: "eMT607A,eMT610P,eMT612A,eMT615AeMT607A 610P 612A 615A Installation InstructionInstallationDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT600/eMT600/Installation/GME610P00_eMT610P_607_612_615A_Installation_130410.pdf"
+    }, {
+        title: "MT8070iE CE Certificate(English)",
+        label: "MT8070iEMT8070iE CE CertificateCertificateCEDocumentiE Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8070iE_MT6070iE.pdf"
+    }, {
+        title: "MT6000iE, MT8000iE Installation Instruction(English)",
+        label: "MT6070iE,MT8070iE,MT8100iEMT6000iE, MT8000iE Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME608IE0_MT6070_8070_8100iE_Installation.pdf"
+    }, {
+        title: "MT8070iE Data Sheet(English)",
+        label: "MT8070iEMT8070iE Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8070iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8100iE Data Sheet(English)",
+        label: "MT8100iEMT8100iE Data SheetDataSheetDocumentMT8000iE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8100iE2_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8070iE Data Sheet(Traditional Chinese)",
+        label: "MT8070iEMT8070iE Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8070iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8100iE Data Sheet(Traditional Chinese)",
+        label: "MT8100iEMT8100iE Data SheetDataSheetDocumentMT8000iE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8100iE2_Datasheet_CHT.pdf"
+    }, {
+        title: "MT6070iE Data Sheet(English)",
+        label: "MT6070iEMT6070iE Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT6070iE2_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8050iE Data Sheet(English)",
+        label: "MT8050iEMT8050iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8050iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT6070iE Data Sheet(Traditional Chinese)",
+        label: "MT6070iEMT6070iE Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT6070iE2_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8050iE Data Sheet(Traditional Chinese)",
+        label: "MT8050iEMT8050iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8050iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8050iE Installation Instruction(English)",
+        label: "MT8050iEMT8050iE Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME805000_MT8050iE_Installation.pdf"
+    }, {
+        title: "iE/XE/iP Series Brochure(English)",
+        label: "MT8121XE1,MT8050iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,MT8102iE,MT8103iE,mTV-100,MT8053iE,MT8051iP,MT8071iP,MT8102iP,MT8121XE3iE/XE/iP Series BrochureBrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Brochure/iE_XE_iP_Brochure_ENG.pdf"
+    }, {
+        title: "iE/XE/iP ????(Traditional Chinese)",
+        label: "MT8050iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,MT8102iE,MT8103iE,mTV-100,MT8053iE,MT8051iP,MT8071iP,MT8102iP,MT8121XE1,MT8121XE3iE/XE/iP ????BrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Brochure/iE_XE_iP_Brochure_CHT.pdf"
+    }, {
+        title: "MT8070iE/MT8071iE/MT8070iER(English)",
+        label: "MT8070iE,MT8071iE,MT6071iE,MT8070iERMT8070iE/MT8071iE/MT8070iERCertificateDocumentMT8000iE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Certificate/CE_Certificate_MT8070iE_MT8071iE_MT8070iER.pdf"
+    }, {
+        title: "MT8071iE Data Sheet(English)",
+        label: "MT8071iEMT8071iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8071iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8101iE Data Sheet(English)",
+        label: "MT8101iEMT8101iE Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8101iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8071iE Data Sheet(Traditional Chinese)",
+        label: "MT8071iEMT8071iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8071iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8101iE Data Sheet(Traditional Chinese)",
+        label: "MT8101iEMT8101iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8101iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8071iE/MT8101iE Installation(English)",
+        label: "MT8071iE,MT8101iEMT8071iE/MT8101iE InstallationInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME6871E0_MT6071_8071_8101iE1_Installation.pdf"
+    }, {
+        title: "MT8070iER1 Data Sheet(Traditional Chinese)",
+        label: "MT8070iER1MT8070iER1 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8070iER1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8070iER1 Installation Instruction(English)",
+        label: "MT8070iER1MT8070iER1 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME680702_MT8070iER1_Installation.pdf"
+    }, {
+        title: "MT8070iER1 Data Sheet(English)",
+        label: "MT8070iER1MT8070iER1 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8070iER1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8073iE Data Sheet(English)",
+        label: "MT8073iEMT8073iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8073iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8073iE Data Sheet(Traditional Chinese)",
+        label: "MT8073iEMT8073iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8073iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8073iE Installation Instruction(English)",
+        label: "MT8073iE1,MT8073iE1,MT8073iE1,MT8073iEMT8073iE Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME8073E0_MT8073iE1_Installation.pdf"
+    }, {
+        title: "MT8102iE1 Data Sheet(English)",
+        label: "MT8102iEMT8102iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8102iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8102iE1 Data Sheet(Traditional Chinese)",
+        label: "MT8102iEMT8102iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8102iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8102iE Installation Instruction(English)",
+        label: "MT8102iE,MT8102iEMT8102iE Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME8A23E1_MT8102iE1_8102iEU_8103iE1_Installation.pdf"
+    }, {
+        title: "MT8103iE1 Data Sheet(English)",
+        label: "MT8103iEMT8103iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8103iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8103iE1 Data Sheet(Traditional Chinese)",
+        label: "MT8103iEMT8103iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8103iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8103iE Installation Instruction(English)",
+        label: "MT8103iE,MT8103iE,MT8103iE,MT8103iEMT8103iE Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME8A23E1_MT8102iE1_8102iEU_8103iE1_Installation.pdf"
+    }, {
+        title: "MT8050iE Data Sheet(Japanese)",
+        label: "MT8050iEMT8050iE Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Datasheet/MT8050iE1_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8071iE1 Data Sheet(Japanese)",
+        label: "MT8071iEMT8071iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Datasheet/MT8071iE1_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8073iE1 Data Sheet(Japanese)",
+        label: "MT8073iEMT8073iE1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Datasheet/MT8073iE1_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8102iE1 Datasheet(Japanese)",
+        label: "MT8102iEMT8102iE1 DatasheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jpn/Datasheet/MT8102iE1_Datasheet_JPN.pdf"
+    }, {
+        title: "MT8103iE1 Datasheet(Japanese)",
+        label: "MT8103iEMT8103iE1 DatasheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jpn/Datasheet/MT8103iE1_Datasheet_JPN.pdf"
+    }, {
+        title: "MT8071 8101iE1 ?????(Japanese)",
+        label: "MT8071iE,MT8101iEMT8071 8101iE1 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Installation/GMJ680710_MT6071_6072_8071_8072_8101iE1_Installation.pdf"
+    }, {
+        title: "MT8050iE ?????(Japanese)",
+        label: "MT8050iEMT8050iE ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Installation/GMJ805000_MT8050iE_Installation.pdf"
+    }, {
+        title: "MT8073iE1 ?????(Japanese)",
+        label: "MT8073iEMT8073iE1 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Installation/GMJ8073E0_MT8073iE1_Installation.pdf"
+    }, {
+        title: "MT8102iE1 ?????(Japanese)",
+        label: "MT8102iEMT8102iE1 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Installation/GMJ8A23E1_MT8102iE1_8102iEU_8103iE1_Installation.pdf"
+    }, {
+        title: "MT8103iE1 ?????(Japanese)",
+        label: "MT8103iEMT8103iE1 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Installation/GMJ8A23E1_MT8102iE1_8102iEU_8103iE1_Installation.pdf"
+    }, {
+        title: "iE/XE/iP ????????(Japanese)",
+        label: "N/AiE/XE/iP ????????BrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/Brochure/iE_XE_iP_Brochure_JPN.pdf"
+    }, {
+        title: "MT6051iP Datasheet(English)",
+        label: "MT6051iPMT6051iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT6051iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT6071iP Datasheet(English)",
+        label: "MT6071iPMT6071iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT6071iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT6103iP Datasheet(English)",
+        label: "MT6103iPMT6103iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT6103iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8071iP Datasheet(English)",
+        label: "MT8071iPMT8071iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT8071iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT6051iP Datasheet(Traditional Chinese)",
+        label: "MT6051iPMT6051iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT6051iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT6071iP Datasheet(Traditional Chinese)",
+        label: "MT6071iPMT6071iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT6071iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT6103iP Datasheet(Traditional Chinese)",
+        label: "MT6103iPMT6103iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT6103iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8071iP Datasheet(Traditional Chinese)",
+        label: "MT8071iPMT8071iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT8071iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8051iP Datasheet(English)",
+        label: "MT8051iPMT8051iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT8051iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8051iP Datasheet(Japanese)",
+        label: "MT8051iPMT8051iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/jpn/MT8051iP1_Datasheet_JPN.pdf"
+    }, {
+        title: "MT8051iP Datasheet(Traditional Chinese)",
+        label: "MT8051iPMT8051iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT8051iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT6051iP MT8051iP Installation instrauction(English)",
+        label: "MT6051iP,MT8051iP,MT8102iPMT6051iP MT8051iP Installation instrauctionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Installation/eng/GME6851P2_MT6051_8051iP1V2.0_Installation_171129.pdf"
+    }, {
+        title: "MT6071iP MT8071iP Installation instrauction(English)",
+        label: "MT8102iP,MT6071iP,MT8071iPMT6071iP MT8071iP Installation instrauctionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Installation/eng/GME6871I0_MT6071_8071iP1_Installation_170613.pdf"
+    }, {
+        title: "MT6103iP Installation instruction(English)",
+        label: "MT6103iPMT6103iP Installation instructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Installation/eng/GME6103I0_MT6103iP1_Installation.pdf"
+    }, {
+        title: "MT8053iE Datasheet(English)",
+        label: "MT8053iEMT8053iE DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8053iE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8053iE Datasheet(Traditional Chinese)",
+        label: "MT8053iEMT8053iE DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8053iE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8053iE Datasheet(Japanese)",
+        label: "MT8053iEMT8053iE DatasheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jpn/Datasheet/MT8053iE1_Datasheet_JPN.pdf"
+    }, {
+        title: "MT8053iE Installation Instruction(English)",
+        label: "MT8053iEMT8053iE Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Installation/GME853EU0_MT8053iE_UL_Installation.pdf"
+    }, {
+        title: "MT8000iP Brochure(English)",
+        label: "MT6051iP,MT8051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iPMT8000iP BrochureBrochureDocumentBrochure",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Brochure/MT8000iP_Brochure_201704_en.pdf"
+    }, {
+        title: "MT8000iP ??(Traditional Chinese)",
+        label: "MT6051iP,MT8051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iPMT8000iP ??BrochureDocumentBrochure",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Brochure/MT8000iP_Brochure_201704_tw.pdf"
+    }, {
+        title: "MT8102iP Datasheet(Traditional Chinese)",
+        label: "MT8102iP,MT8102iPMT8102iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/cht/MT8102iP1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8102iP Datasheet(English)",
+        label: "MT8102iP,MT8102iPMT8102iP DatasheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Datasheet/eng/MT8102iP1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8102iP Installation Instruction(English)",
+        label: "MT8102iPMT8102iP Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iP/Installation/eng/GME8102P0_MT8102iP_Installation_170222.pdf"
+    }, {
+        title: "iR-Series Data Sheet(English)",
+        label: "iR-Series,iR-PU01-PiR-Series Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Datasheet/iR_Datasheet_ENG.pdf"
+    }, {
+        title: "iR-Series Data Sheet(Traditional Chinese)",
+        label: "iR-Series,iR-PU01-PiR-Series Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/Datasheet/iR_Datasheet_CHT.pdf"
+    }, {
+        title: "iR-Series Data Sheet(Japanese)",
+        label: "iR-Series,iR-PU01-PiR-Series Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Datasheet/iR_Datasheet_JPN.pdf"
+    }, {
+        title: "iR-COP ?????(Japanese)",
+        label: "iR-COPiR-COP ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJIRCP00_iR-COP_Installation.pdf"
+    }, {
+        title: "iR-COP Installation(English)",
+        label: "iR-COPiR-COP InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMEIRCP00_iR-COP_Installation.pdf"
+    }, {
+        title: "iR-Dxxx Installation(English)",
+        label: "iR-SeriesiR-Dxxx InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERDXM00_iR-Dxxx_Installation.pdf"
+    }, {
+        title: "iR-Dxxx ?????(Japanese)",
+        label: "iR-SeriesiR-Dxxx ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJRDXM00_iR-Dxxx_Installation.pdf"
+    }, {
+        title: "iR-ETN Installation(English)",
+        label: "iR-ETNiR-ETN InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERETN00_iR-ETN_Installation.pdf"
+    }, {
+        title: "iR-ETN ?????(Japanese)",
+        label: "iR-ETNiR-ETN ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJRETN00_iR-ETN_Installation.pdf"
+    }, {
+        title: "iR-Axxx ?????(Japanese)",
+        label: "iR-AxxxiR-Axxx ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJRAXX00_iR-Axxx_Installation.pdf"
+    }, {
+        title: "iR-AI04-TR ?????(Japanese)",
+        label: "iR-AI04-TRiR-AI04-TR ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJRI4T00_iR-AI04-TR_Installation.pdf"
+    }, {
+        title: "iR-AI04-TR Installation(English)",
+        label: "iR-AI04-TRiR-AI04-TR InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERI4T00_iR-AI04-TR_Installation.pdf"
+    }, {
+        title: "iR-Axxx Installation(English)",
+        label: "iR-AxxxiR-Axxx InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERAXX00_iR-Axxx_Installation.pdf"
+    }, {
+        title: "iR-ECAT ESI File(English)",
+        label: "N/AiR-ECAT ESI FileDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/Utility/iR_ECAT_ESI_20190328.zip"
+    }, {
+        title: "iR-ECAT Installation(English)",
+        label: "iR-ECATiR-ECAT InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERECT00_iR-ECAT_Installation.pdf"
+    }, {
+        title: "iR-ECAT ?????(Japanese)",
+        label: "N/AiR-ECAT ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/Installation/GMJRECT00_iR-ECAT_Installation.pdf"
+    }, {
+        title: "eMT3105P CE Certificate, eMT610P CE Certificate(English)",
+        label: "eMT610P,eMT3105PeMT3105P CE Certificate, eMT610P CE CertificateCertificateCEDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3105P_eMT610P.pdf"
+    }, {
+        title: "eMT3120A CE Certificate, eMT612A CE Certificate(English)",
+        label: "eMT612A,eMT3120AeMT3120A CE Certificate, eMT612A CE CertificateCertificateCEDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3120A_eMT612A.pdf"
+    }, {
+        title: "eMT3150A CE Certificate, eMT615A CE Certificate(English)",
+        label: "eMT615A,eMT3150AeMT3150A CE Certificate, eMT615A CE CertificateCertificateCEDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3150A_eMT615A.pdf"
+    }, {
+        title: "eMT3070A Data Sheet(English)",
+        label: "eMT3070AeMT3070A Data SheetDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/eMT3070A1_Datasheet.pdf"
+    }, {
+        title: "eMT3105P Data Sheet(English)",
+        label: "eMT3105PeMT3105P Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/eMT3105P1_Datasheet_ENG.pdf"
+    }, {
+        title: "eMT3120A Data Sheet(English)",
+        label: "eMT3120AeMT3120A Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/eMT3120A1_Datasheet_ENG.pdf"
+    }, {
+        title: "eMT3150A Data Sheet(English)",
+        label: "eMT3150AeMT3150A Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/eMT3150A1_Datasheet_ENG_20190806.pdf"
+    }, {
+        title: "eMT3000 Installation Instruction(English)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150AeMT3000 Installation InstructionInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Installation/GME3105P1_eMT3105P_3070_3120_3150A_Installation.pdf"
+    }, {
+        title: "eMT3000 series Brochure(English)",
+        label: "eMT3105P,eMT3150A,eMT3120AeMT3000 series BrochureBrochureDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Brochure/eng/Brochure_eng.pdf"
+    }, {
+        title: "eMT3000 series RS485/232 CAN Bus cable(English)",
+        label: "eMT3120A,eMT3150A,eMT3105P,eMT3070AeMT3000 series RS485/232 CAN Bus cableDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/FLZ23000_FLZ485000_ Datasheet_120220.pdf"
+    }, {
+        title: "eMT3000 series ??????(Traditional Chinese)",
+        label: "eMT3105P,eMT3150A,eMT3120AeMT3000 series ??????BrochureDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Brochure/cht/Brochure_cht.pdf"
+    }, {
+        title: "eMT3070A1 Data Sheet(Traditional Chinese)",
+        label: "eMT3070AeMT3070A1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/cht/Datasheet/eMT3070A1_Datasheet_CHT.pdf"
+    }, {
+        title: "eMT3000 series RS485/232 CAN Bus cable(English)",
+        label: "eMT3070A,eMT3120A,eMT3150A,eMT3105PeMT3000 series RS485/232 CAN Bus cableDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/FLZ23000_FLZ485000_%20Datasheet_120322.pdf"
+    }, {
+        title: "eMT3150A CE Certificate(English)",
+        label: "eMT3150AeMT3150A CE CertificateCertificateCEDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/Certificate/CE_eMT3150A_eMT615A.pdf"
+    }, {
+        title: "VESA Wall Mount(English)",
+        label: "MT8070iH,MT8100i,MT8104iH, eMT3120A ,eMT3105P, eMT3150A,MT8150XE,cMT-iV5,MT8070iH,MT8100i,MT8104iH, eMT3120A ,eMT3105P, eMT3150A,MT8150XE,cMT-iV5VESA Wall MountDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/Accessory/RZVFZ1010_Datasheet_ENG.pdf"
+    }, {
+        title: "VESA Wall Mount(Traditional Chinese)",
+        label: "MT8104iH,MT8070iH,MT8100i,eMT3120A,eMT3105P,eMT3150A,MT8121XE1,MT8150XE,cMT-iV5VESA Wall MountDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/??/RZVFZ1010_Datasheet_CHT.pdf"
+    }, {
+        title: "eMT3105P1 Data Sheet(Traditional Chinese)",
+        label: "eMT3105PeMT3105P1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/cht/Datasheet/eMT3105P1_Datasheet_CHT.pdf"
+    }, {
+        title: "eMT3120A1 Data Sheet(Traditional Chinese)",
+        label: "eMT3120AeMT3120A1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/cht/Datasheet/eMT3120A1_Datasheet_CHT.pdf"
+    }, {
+        title: "eMT3150A1 Data Sheet(Traditional Chinese)",
+        label: "eMT3150AeMT3150A1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/cht/Datasheet/eMT3150A1_Datasheet_CHT_20190806.pdf"
+    }, {
+        title: "eMT3070B1 Data Sheet(English)",
+        label: "eMT3070BeMT3070B1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/eng/Datasheet/eMT3070B1_Datasheet_ENG.pdf"
+    }, {
+        title: "eMT3070B1 Data Sheet(Traditional Chinese)",
+        label: "eMT3070BeMT3070B1 Data SheetDataSheetDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/cht/Datasheet/eMT3070B1_Datasheet_CHT.pdf"
+    }, {
+        title: "eMT3105P1 Data Sheet(Japanese)",
+        label: "eMT3105PeMT3105P1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/jap/Datasheet/eMT3105P1_Datasheet_JAP.pdf"
+    }, {
+        title: "eMT3120A1 Data Sheet(Japanese)",
+        label: "eMT3120AeMT3120A1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/jap/Datasheet/eMT3120A1_Datasheet_JAP.pdf"
+    }, {
+        title: "eMT3150A1 Data Sheet(Japanese)",
+        label: "eMT3150AeMT3150A1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/jap/Datasheet/eMT3150A1_Datasheet_JPN_20190806.pdf"
+    }, {
+        title: "eMT3070B1 Data Sheet(Japanese)",
+        label: "eMT3070BeMT3070B1 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/eMT3000/jap/Datasheet/eMT3070B1_Datasheet_JAP.pdf"
+    }, {
+        title: "???????????(Traditional Chinese)",
+        label: "N/A???????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_103_Replace_Battery_tw.pdf"
+    }, {
+        title: "How to replace a coin lithium battery(English)",
+        label: "N/AHow to replace a coin lithium batteryFAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_103_Replace_Battery_en.pdf"
+    }, {
+        title: "HMI ????????????????(Japanese)",
+        label: "N/AHMI ????????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_103_Replace_Battery_jp.pdf"
+    }, {
+        title: "?????????(Traditional Chinese)",
+        label: "N/A?????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_104_Replace_Fuse_tw.pdf"
+    }, {
+        title: "How to replace fuse(English)",
+        label: "N/AHow to replace fuseFAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_104_Replace_Fuse_en.pdf"
+    }, {
+        title: "??????????(Japanese)",
+        label: "N/A??????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_104_Replace_Fuse_jp.pdf"
+    }, {
+        title: "EasyBuilder ????????????????(Traditional Chinese)",
+        label: "N/AEasyBuilder ????????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_110_Installed_Font_Missing_in_EasyBuilder_cht.pdf"
+    }, {
+        title: "How to use the fonts installed on PC in EasyBuilder?(English)",
+        label: "N/AHow to use the fonts installed on PC in EasyBuilder?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_110_Installed_Font_Missing_in_EasyBuilder_eng.pdf"
+    }, {
+        title: "???Siemens S7-1200/1500 (Symbolic Addressing) ???Siemens S7-1200/1500 (Absolute Addressing)?(Traditional Chinese)",
+        label: "N/A???Siemens S7-1200/1500 (Symbolic Addressing) ???Siemens S7-1200/1500 (Absolute Addressing)?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_111_S7-1200%201500_Symbolic_to_Absolute_cht.pdf"
+    }, {
+        title: "How to convert from S7-1200/1500 (Symbolic Addressing) to Siemens S7-1200/1500 (Absolute Addressing)?(English)",
+        label: "N/AHow to convert from S7-1200/1500 (Symbolic Addressing) to Siemens S7-1200/1500 (Absolute Addressing)?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_111_S7-1200%201500_Symbolic_to_Absolute_eng.pdf"
+    }, {
+        title: "?????Siemens S7-1200/1500 (Symbolic Addressing)?Siemens S7-1200/1500 (Absolute Addressing)????????(Japanese)",
+        label: "N/A?????Siemens S7-1200/1500 (Symbolic Addressing)?Siemens S7-1200/1500 (Absolute Addressing)????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_111_S7-1200%201500_Symbolic_to_Absolute_jpn.pdf"
+    }, {
+        title: "cMT+CODESYS????CODESYS Development System???????????????(Traditional Chinese)",
+        label: "N/AcMT+CODESYS????CODESYS Development System???????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_112_CODESYS_Version_cht.pdf"
+    }, {
+        title: "Which CODESYS Development System version is suitable for cMT+CODESYS? Is there any other version to use?(English)",
+        label: "N/AWhich CODESYS Development System version is suitable for cMT+CODESYS? Is there any other version to use?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_112_CODESYS_Version_eng.pdf"
+    }, {
+        title: "cMT+CODESYS?CODESYS Development System???????????????????????????????????????????(Japanese)",
+        label: "N/AcMT+CODESYS?CODESYS Development System???????????????????????????????????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_112_CODESYS_Version_jpn.pdf"
+    }, {
+        title: "???? iP ?? HMI ? VNC ???(Traditional Chinese)",
+        label: "N/A???? iP ?? HMI ? VNC ???FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_113_Enable_iP_Series_VNC_Server_cht.pdf"
+    }, {
+        title: "How to enable the VNC Server of an iP Series HMI(English)",
+        label: "N/AHow to enable the VNC Server of an iP Series HMIFAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_113_Enable_iP_Series_VNC_Server_eng.pdf"
+    }, {
+        title: "iP ???? HMI ? VNC ?????????????(Japanese)",
+        label: "N/AiP ???? HMI ? VNC ?????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_113_Enable_iP_Series_VNC_Server_jpn.pdf"
+    }, {
+        title: "???? HMI ? USB ?/SD ??????(Traditional Chinese)",
+        label: "N/A???? HMI ? USB ?/SD ??????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_114_Prolong_Lifespan_of_USB_SD_cht.pdf"
+    }, {
+        title: "How to prolong the lifespan of a USB disk / SD(English)",
+        label: "N/AHow to prolong the lifespan of a USB disk / SDFAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_114_Prolong_Lifespan_of_USB_SD_eng.pdf"
+    }, {
+        title: "HMI ????? USB ????/SD ????????????(Japanese)",
+        label: "N/AHMI ????? USB ????/SD ????????????FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_114_Prolong_Lifespan_of_USB_SD_jpn.pdf"
+    }, {
+        title: "??? TK ? iP ????????? EasyAccess 2.0?(Traditional Chinese)",
+        label: "N/A??? TK ? iP ????????? EasyAccess 2.0?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_115_Activate_EasyAccess_2.0_on_TK_iP_cht.pdf"
+    }, {
+        title: "How to activate EasyAccess 2.0 in the system settings of TK and iP Series HMI?(English)",
+        label: "N/AHow to activate EasyAccess 2.0 in the system settings of TK and iP Series HMI?FAQDocumentFAQ",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/FAQ/FAQ_115_Activate_EasyAccess_2.0_on_TK_iP_eng.pdf"
+    }, {
+        title: "cMT2078X Installation(English)",
+        label: "cMT2078XcMT2078X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC278X0_cMT2078X_Installation.pdf"
+    }, {
+        title: "cMT2108X Installation(Traditional Chinese)",
+        label: "cMT2108XcMT2108X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC2A8X0_cMT2108X_Installation.pdf"
+    }, {
+        title: "cMT2158X Installation(English)",
+        label: "cMT2158XcMT2158X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC2F8X0_cMT2158X_Installation.pdf"
+    }, {
+        title: "cMT3072X/XH Installation(English)",
+        label: "cMT3072XH,cMT3072XcMT3072X/XH InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC372X0_cMT3072X_XH_Installation.pdf"
+    }, {
+        title: "cMT3092X Installation(English)",
+        label: "cMT3092XcMT3092X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMEC390X0_cMT3092X_Installation.pdf"
+    }, {
+        title: "cMT3152X Installation(English)",
+        label: "cMT3152XcMT3152X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECF1X00_cMT3152X_Installation.pdf"
+    }, {
+        title: "cMT3161X Installation(English)",
+        label: "cMT3161XcMT3161X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECG1X00_cMT3161X_Installation.pdf"
+    }, {
+        title: "cMT3162X Installation(English)",
+        label: "cMT3162XcMT3162X InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECG2X00_cMT3162X_Installation.pdf"
+    }, {
+        title: "cMT-CTRL01 Installation(English)",
+        label: "cMT-CTRL01cMT-CTRL01 InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECTR100_cMT_CTRL01_Installation.pdf"
+    }, {
+        title: "iR-PU01-P Installation(English)",
+        label: "iR-PU01-PiR-PU01-P InstallationInstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/Installation/GMERU1P00_iR-PU01-P_Installation.pdf"
+    }, {
+        title: "cMT3072X/XH ?????(Japanese)",
+        label: "cMT3072XH,cMT3072XcMT3072X/XH ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJC372X0_cMT3072X_XH_Installation.pdf"
+    }, {
+        title: "cMT3092X ?????(Japanese)",
+        label: "cMT3092XcMT3092X ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJC392X0_cMT3092X_Installation.pdf"
+    }, {
+        title: "cMT3152X ?????(Japanese)",
+        label: "cMT3152XcMT3152X ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCF2X00_cMT3152X_Installation.pdf"
+    }, {
+        title: "cMT3161X ?????(English)",
+        label: "N/AcMT3161X ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCG1X00_cMT3161X_Installation.pdf"
+    }, {
+        title: "cMT3162X ?????(Japanese)",
+        label: "cMT3162XcMT3162X ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCG2X00_cMT3162X_Installation.pdf"
+    }, {
+        title: "cMT-CTRL01 ?????(Japanese)",
+        label: "cMT-CTRL01cMT-CTRL01 ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCTR100_cMT_CTRL01_Installation.pdf"
+    }, {
+        title: "MT8104iH Data Sheet(English)",
+        label: "MT8104iHMT8104iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT8104iHV2WK_Datasheet_ENG_110512.pdf"
+    }, {
+        title: "MT6050i Data Sheet(English)",
+        label: "MT6050iMT6050i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT6050iV2WK_Datasheet_ENG_110512.pdf"
+    }, {
+        title: "MT6056i Data Sheet(English)",
+        label: "N/AMT6056i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT6056i_Datasheet_ENG_110520.pdf"
+    }, {
+        title: "MT6070iH Data Sheet(English)",
+        label: "MT6070iHMT6070iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT6070iH_Datasheet_ENG_120814.pdf"
+    }, {
+        title: "MT6100i Data Sheet(English)",
+        label: "MT6100iMT6100i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT6100i_Datasheet_ENG_110520.pdf"
+    }, {
+        title: "MT8070iH Data Sheet(English)",
+        label: "MT8070iHMT8070iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT8070iH_Datasheet_ENG_120814.pdf"
+    }, {
+        title: "MT8100i Data Sheet(English)",
+        label: "MT8100iMT8100i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT8100iV2WK_Datasheet_ENG_110512.pdf"
+    }, {
+        title: "MT8050i Data Sheet(English)",
+        label: "MT8050iMT8050i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/i_series/MT8050iV2WK_Datasheet_ENG_111007.pdf"
+    }, {
+        title: "MT8104XH Data Sheet(English)",
+        label: "MT8104XHMT8104XH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/X_series/MT8104XH2WK_Datasheet_110512.pdf"
+    }, {
+        title: "MT8121X Data Sheet(English)",
+        label: "MT8121XMT8121X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/X_series/MT8121XV2WK_Datasheet_110512.pdf"
+    }, {
+        title: "MT8150X Data Sheet(English)",
+        label: "MT8150XMT8150X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Datasheet/X_series/MT8150XV2WK_Datasheet_110512.pdf"
+    }, {
+        title: "MT8104iH Data Sheet(Traditional Chinese)",
+        label: "MT8104iHMT8104iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/i_series/MT8104iH_Datasheet_CHT_101022.pdf"
+    }, {
+        title: "MT6050iV3 Data Sheet(Traditional Chinese)",
+        label: "MT6050iV3MT6050iV3 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/i_series/MT6050iV3_Datasheet_CHT_120823.pdf"
+    }, {
+        title: "MT6070iH Data Sheet(Traditional Chinese)",
+        label: "MT6070iHMT6070iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/i_series/MT6070iH_Datasheet_CHT_120814.pdf"
+    }, {
+        title: "MT6100i Data Sheet(Traditional Chinese)",
+        label: "MT6100iMT6100i Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/i_series/MT6100i_Datasheet_CHT_101021.pdf"
+    }, {
+        title: "MT8070iH Data Sheet(Traditional Chinese)",
+        label: "MT8070iHMT8070iH Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Datasheet/i_series/MT8070iH_Datasheet_CHT_120814.pdf"
+    }, {
+        title: "eMT607A Data Sheet(English)",
+        label: "eMT607AeMT607A Data SheetDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT600/eMT600/Datasheet/eMT607A_Datasheet.pdf"
+    }, {
+        title: "eMT610P Data Sheet(English)",
+        label: "eMT610PeMT610P Data SheetDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT600/eMT600/Datasheet/eMT610P_Datasheet.pdf"
+    }, {
+        title: "eMT612A Data Sheet(English)",
+        label: "eMT612AeMT612A Data SheetDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT600/eMT600/Datasheet/eMT612A_Datasheet.pdf"
+    }, {
+        title: "eMT615A Data Sheet(English)",
+        label: "eMT615AeMT615A Data SheetDataSheetDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT600/eMT600/Datasheet/eMT615A_Datasheet.pdf"
+    }, {
+        title: "cMT3152X Data Sheet(Traditional Chinese)",
+        label: "cMT3152XcMT3152X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3152X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3152X Data Sheet(English)",
+        label: "cMT3152XcMT3152X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3152X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3152X Data Sheet(Japanese)",
+        label: "cMT3152XcMT3152X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3152X_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3161X Data Sheet(Traditional Chinese)",
+        label: "cMT3161XcMT3161X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3161X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3161X Data Sheet(English)",
+        label: "cMT3161XcMT3161X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3161X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3161X Data Sheet(Japanese)",
+        label: "cMT3161XcMT3161X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3161X_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT3162X Data Sheet(Traditional Chinese)",
+        label: "cMT3162XcMT3162X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT3162X_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT3162X Data Sheet(English)",
+        label: "cMT3162XcMT3162X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT3162X_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT3162X Data Sheet(Japanese)",
+        label: "cMT3162XcMT3162X Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT3162X_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-CTRL01 Data Sheet(Traditional Chinese)",
+        label: "cMT-CTRL01cMT-CTRL01 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-CTRL01_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-CTRL01 Data Sheet(English)",
+        label: "cMT-CTRL01cMT-CTRL01 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-CTRL01_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-CTRL01 Data Sheet(Japanese)",
+        label: "cMT-CTRL01cMT-CTRL01 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-CTRL01_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iV6 Data Sheet(Traditional Chinese)",
+        label: "cMT-iV6cMT-iV6 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/Datasheet/cMT-iV6_Datasheet_CHT.pdf"
+    }, {
+        title: "cMT-iV6 Data Sheet(English)",
+        label: "cMT-iV6cMT-iV6 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Datasheet/cMT-iV6_Datasheet_ENG.pdf"
+    }, {
+        title: "cMT-iV6 Data Sheet(Japanese)",
+        label: "cMT-iV6cMT-iV6 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Datasheet/cMT-iV6_Datasheet_JPN.pdf"
+    }, {
+        title: "cMT-iV6 Installation Instruction(English)",
+        label: "cMT-iV6cMT-iV6 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/Installation/GMECMT600_cMT-iV6_Installation_190531.pdf"
+    }, {
+        title: "cMT-iV6 Installation Instruction(Japanese)",
+        label: "cMT-iV6cMT-iV6 Installation InstructionInstallationDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/Installation/GMJCMT600_cMT_iV6_Installation_190619.pdf"
+    }, {
+        title: "MT8000/6000 & WT?? ??????(Traditional Chinese)",
+        label: "MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iH,MT8104XH,MT8121X,MT8150XMT8000/6000 & WT?? ??????BrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/Brochure/GMCF80000_2011_Brochure_cht.pdf"
+    }, {
+        title: "MT8000/6000 series Brochure(English)",
+        label: "MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iHMT8000/6000 series BrochureBrochureDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/Brochure/MT8000_20130415.pdf"
+    }, {
+        title: "mTV CE Certificate(English)",
+        label: "mTV-100,cMT-SVR-100mTV CE CertificateCertificateCEDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/Certificate/CE_Certificate_mTV-1xx_cMT-SVR-1xx.pdf"
+    }, {
+        title: "MT8071iER1 Data Sheet(Traditional Chinese)",
+        label: "MT8071iER1MT8071iER1 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/cht/Datasheet/MT8071iER1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8071iER1 Data Sheet(English)",
+        label: "MT8071iER1MT8071iER1 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/eng/Datasheet/MT8071iER1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8071iER1 Data Sheet(Japanese)",
+        label: "MT8071iER1,MT8071iERMT8071iER1 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000iE/jap/Datasheet/MT8071iER1_Datasheet_JPN.pdf"
+    }, {
+        title: "mTV-100 Installation(English)",
+        label: "mTV-100mTV-100 InstallationInstallationDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/eng/Installation/GMEETV000_mTV_Installation.pdf"
+    }, {
+        title: "mTV-100 Data Sheet(English)",
+        label: "mTV-100mTV-100 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/eng/Datasheet/mTV_100_Datasheet_ENG.pdf"
+    }, {
+        title: "mTV-100 Data Sheet(Traditional Chinese)",
+        label: "mTV-100mTV-100 Data SheetDataSheetDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/cht/Datasheet/mTV_100_Datasheet_CHT.pdf"
+    }, {
+        title: "mTV & cMT-SVR Series Multi-Connector Cable(English)",
+        label: "mTV-100,cMT-SVR-100mTV & cMT-SVR Series Multi-Connector CableDataSheetDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/eng/Datasheet/RZC232300_Datasheet_140815.pdf"
+    }, {
+        title: "mTV-100 Data Sheet(Japanese)",
+        label: "mTV-100mTV-100 Data SheetDataSheetDocumentDataSheet",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/jap/Datasheet/mTV_100_Datasheet_JAP.pdf"
+    }, {
+        title: "mTV ?????(Japanese)",
+        label: "mTV-100mTV ?????InstallationDocumentInstallation",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/jap/Installation/GMJMTV000_mTV_Installation.pdf"
+    }, {
+        title: "EasyBuilder 8000 User manual-All in one(English)",
+        label: "MT6050i,MT8050i,MT6050iP,MT8050iP,MT6056i,MT6070iH,MT8070iH,MT6100i,MT8100i,MT6070iP,MT8070iP,MT8104iHEasyBuilder 8000 User manual-All in oneUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/eng/UserManual/UserManual_all_in_one/EB8000_Manual_All_In_One.pdf"
+    }, {
+        title: "EasyBuilder 8000 ?????? (???)(Traditional Chinese)",
+        label: "MT6050i,MT8050i,MT6050iP,MT8050iP,MT6056i,MT6070iH,MT8070iH,MT6100i,MT8100i,MT6070iP,MT8070iP,MT8104iHEasyBuilder 8000 ?????? (???)UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000/tw/UserManual/UserManual_all_in_one/EB8000_????_???.pdf"
+    }, {
+        title: "EasyBuilder Pro User Manual (All chapters)(English)",
+        label: "N/AEasyBuilder Pro User Manual (All chapters)UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/eng/EasyBuilderPro_V60501_UserManual_eng.pdf"
+    }, {
+        title: "EasyBuilder Pro ?????? (???)(Traditional Chinese)",
+        label: "N/AEasyBuilder Pro ?????? (???)UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/cht/EasyBuilderPro_V60501_UserManual_cht.pdf"
+    }, {
+        title: "Siemens S7-1200 V4 User Manual(English)",
+        label: "MT6050i,MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iHSiemens S7-1200 V4 User ManualUserManualDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/Siemens_S7-1200_V4_UserManual_en.pdf"
+    }, {
+        title: "Siemens S7-1200 V4 ????(Traditional Chinese)",
+        label: "N/ASiemens S7-1200 V4 ????UserManualDocument",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/Siemens_S7-1200_V4_UserManual_tw.pdf"
+    }, {
+        title: "CANBus User Manual(English)",
+        label: "N/ACANBus User ManualUserManualDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM014001E_CAN_Bus_UserManual_en.pdf"
+    }, {
+        title: "CANBus ????(Traditional Chinese)",
+        label: "N/ACANBus ????UserManualDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM014001T_CAN_Bus_UserManual_tw.pdf"
+    }, {
+        title: "Recipe Database User Manual(English)",
+        label: "N/ARecipe Database User ManualUserManualDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/Recipe_Database_UserManual_en.pdf"
+    }, {
+        title: "Recipe Database ????(Traditional Chinese)",
+        label: "N/ARecipe Database ????UserManualDocumenteMTSeries",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/Recipe_Database_UserManual_tw.pdf"
+    }, {
+        title: "EasyAccess 2.0 Data Sheet(English)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8150XE,mTV-100,cMT-SVR-100EasyAccess 2.0 Data SheetDatasheetDocumentEasyAccess",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EasyAccess20/Datasheet/EasyAccess_2.0_Datasheet_ENG_20150728.pdf"
+    }, {
+        title: "EasyAccess 2.0 Data Sheet(Traditional Chinese)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8150XE,mTV-100,cMT-SVR-100EasyAccess 2.0 Data SheetDatasheetDocumentEasyAccess",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EasyAccess20/Datasheet/EasyAccess_2.0_Datasheet_CHT_20150728.pdf"
+    }, {
+        title: "EasyLauncher User Manual(English)",
+        label: "cMT-iPC15EasyLauncher User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/EasyLauncher/UserManual/EasyLauncher_UserManual_en.pdf"
+    }, {
+        title: "EasyLauncher ????(Traditional Chinese)",
+        label: "cMT-iPC15EasyLauncher ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/EasyLauncher/UserManual/EasyLauncher_UserManual_tw.pdf"
+    }, {
+        title: "BACnet MS/TP Connection Manual(English)",
+        label: "eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151BACnet MS/TP Connection ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016004E_BACnet_MSTP_Connection_UserManual_eng.pdf"
+    }, {
+        title: "BACnet MS/TP????(Traditional Chinese)",
+        label: "eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151BACnet MS/TP????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016004T_BACnet_MSTP_Connection_UserManual_cht.pdf"
+    }, {
+        title: "MQTT Manual(English)",
+        label: "MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151MQTT ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016005E_MQTT_UserManual_20190730_eng.pdf"
+    }, {
+        title: "MQTT????(Traditional Chinese)",
+        label: "MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151MQTT????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016005T_MQTT_UserManual_20190730_cht.pdf"
+    }, {
+        title: "Wifi Setting User Manual(English)",
+        label: "MT8090XE,MT8091XE,MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8090XE,MT8091XE,MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8121XE1,MT8090XE,MT8091XE,MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151Wifi Setting User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016008E_WiFi_Setting_UserManual_en.pdf"
+    }, {
+        title: "Wifi????????(Traditional Chinese)",
+        label: "MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8090XE,MT8090XE,MT8091XE,MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8091XE,MT8121XE1,MT8090XE,MT8091XE,MT8092XE,MT8150XE,mTV-100,cMT-SVR-100,cMT3151Wifi????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016008T_WiFi_Setting_UserManual_tw.pdf"
+    }, {
+        title: "EasyBuilder Pro ????????????? (??)(Japanese)",
+        label: "N/AEasyBuilder Pro ????????????? (??)UserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/UserManual/jpn/EasyBuilderPro_V60402_UserManual_jpn.pdf"
+    }, {
+        title: "OPC UA Server(English)",
+        label: "cMT-SVR-100,cMT3151OPC UA ServerUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016009E_OPC_UA_UserManual_en.pdf"
+    }, {
+        title: "OPC UA ???(Traditional Chinese)",
+        label: "cMT-SVR-100,cMT3151OPC UA ???UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016009T_OPC_UA_UserManual_tw.pdf"
+    }, {
+        title: "OPC UA????(Japanese)",
+        label: "cMT-SVR-100,cMT3151OPC UA????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016009J_OPC_UA_UserManual_jp.pdf"
+    }, {
+        title: "EasyBuilder500 Manual(English)",
+        label: "MT510S/T/L,MT508S/T,MT509L/M,MT506EasyBuilder500 ManualUserManualDocumentEB",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT500/English/Docs/UserManual/EB500_Manual.zip"
+    }, {
+        title: "MQTT ?????????(Japanese)",
+        label: "MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151MQTT ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EBPro/Document/UM016005J_MQTT_UserManual_20190730_jpn.pdf"
+    }, {
+        title: "cMT-SVR User Manual(English)",
+        label: "cMT-SVR-100,cMT-SVR-200cMT-SVR User ManualUserManualDocumentcMT series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM015002E_cMT_SVR_UserManual_eng.pdf"
+    }, {
+        title: "cMT-SVR ???? ?????(Japanese)",
+        label: "cMT-SVR-100,cMT-SVR-200cMT-SVR ???? ?????UserManualDocumentcMT series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM015002J_cMT_SVR_UserManual_jpn.pdf"
+    }, {
+        title: "cMT-SVR ????(Traditional Chinese)",
+        label: "cMT-SVR-100,cMT-SVR-200cMT-SVR ????UserManualDocumentcMT series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM015002T_cMT_SVR_UserManual_cht.pdf"
+    }, {
+        title: "PC-HMI Direct Ethernet Download with Static IP(English)",
+        label: "N/APC-HMI Direct Ethernet Download with Static IPUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM015008E_Ethernet_Download_UserManual_en.pdf"
+    }, {
+        title: "???? IP ?? PC-HMI ??????(Traditional Chinese)",
+        label: "N/A???? IP ?? PC-HMI ??????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM015008T_Ethernet_Download_UserManual_tw.pdf"
+    }, {
+        title: "mTV-100 User Manual(English)",
+        label: "mTV-100mTV-100 User ManualUserManualDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/eng/UserManual/UM015015E_mTV-100_UserManual_20191210_eng.pdf"
+    }, {
+        title: "mTV-100 ?????????(Traditional Chinese)",
+        label: "mTV-100mTV-100 ?????????UserManualDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/jpn/UserManual/UM015015J_mTV-100_UserManual_20191210_jpn.pdf"
+    }, {
+        title: "mTV-100 ????(Traditional Chinese)",
+        label: "mTV-100mTV-100 ????UserManualDocumentmTV Series",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/mTV/cht/UserManual/UM015015T_mTV-100_UserManual_20191210_cht.pdf"
+    }, {
+        title: "EasyAccess 2.0 User Manual(English)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100EasyAccess 2.0 User ManualUserManualDocumentEasyAccess",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EasyAccess20/Manual/UM016001E_EasyAccess2_UserManual_eng.pdf"
+    }, {
+        title: "EasyAccess 2.0 ?????????(Japanese)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100EasyAccess 2.0 ?????????UserManualDocumentEasyAccess",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EasyAccess20/Manual/UM016001J_EasyAccess2_UserManual_jpn.pdf"
+    }, {
+        title: "EasyAccess 2.0 ????(Traditional Chinese)",
+        label: "eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iE,MT8100iE,MT8101iE,MT8090XE,MT8091XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100EasyAccess 2.0 ????UserManualDocumentEasyAccess",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/EasyAccess20/Manual/UM016001T_EasyAccess2_UserManual_cht.pdf"
+    }, {
+        title: "Database Server & MySQL(English)",
+        label: "cMT-SVR-100,cMT3151,cMT-SVR-100,cMT3151Database Server & MySQLUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM016007E_Database_Server_and_MySQL_UserManual_20190805_eng.pdf"
+    }, {
+        title: "?????????? & MySQL(Japanese)",
+        label: "cMT-SVR-100?????????? & MySQLUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM016007J_Database_Server_and_MySQL_UserManual_20190805_jpn.pdf"
+    }, {
+        title: "?????? & MySQL(Traditional Chinese)",
+        label: "cMT-SVR-100,cMT3151,cMT-SVR-100,cMT3151?????? & MySQLUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM016007T_Database_Server_and_MySQL_UserManual_20190805_cht.pdf"
+    }, {
+        title: "cMT-iPC10/cMT-iPC15 User Manual(English)",
+        label: "cMT-iPC10,cMT-iPC15cMT-iPC10/cMT-iPC15 User ManualUserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM016011E_cMT_iPC10_iPC15_UserManual_20190617_eng.pdf"
+    }, {
+        title: "cMT-iPC10/cMT-iPC15 ?????????(English)",
+        label: "cMT-iPC15,cMT-iPC10cMT-iPC10/cMT-iPC15 ?????????UserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM016011J_cMT_iPC10_iPC15_UserManual_20190617_jpn.pdf"
+    }, {
+        title: "cMT-iPC10/cMT-iPC15 ????(Traditional Chinese)",
+        label: "cMT-iPC15,cMT-iPC10cMT-iPC10/cMT-iPC15 ????UserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM016011T_cMT_iPC10_iPC15_UserManual_20190617_cht.pdf"
+    }, {
+        title: "AWS IoT(English)",
+        label: "cMT-G01AWS IoTUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017004E_AWS_IoT_UserManual_20181108_en.pdf"
+    }, {
+        title: "AWS IoT(Japanese)",
+        label: "cMT-G01AWS IoTUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017004J_AWS_IoT_UserManual_20181108_jp.pdf"
+    }, {
+        title: "AWS IoT(Traditional Chinese)",
+        label: "cMT-G01AWS IoTUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017004T_AWS_IoT_UserManual_20181108_tw.pdf"
+    }, {
+        title: "cMT Viewer Startup Guide(English)",
+        label: "N/AcMT Viewer Startup GuideUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017006E_cMT_Viewer_UserManual_eng.pdf"
+    }, {
+        title: "cMT-Viewer ?????????(Japanese)",
+        label: "N/AcMT-Viewer ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017006J_cMT_Viewer_UserManual_jpn.pdf"
+    }, {
+        title: "cMT Viewer ????(Traditional Chinese)",
+        label: "N/AcMT Viewer ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM017006T_cMT_Viewer_UserManual_cht.pdf"
+    }, {
+        title: "iR-COP User Manual(English)",
+        label: "iR-ETNiR-COP User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018001E_iR-COP_UserManual_eng.pdf"
+    }, {
+        title: "iR-COP ?????????(Japanese)",
+        label: "iR-ETNiR-COP ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018001J_iR-COP_UserManual_jpn.pdf"
+    }, {
+        title: "iR-COP ????(Traditional Chinese)",
+        label: "iR-ETNiR-COP ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018001T_iR-COP_UserManual_cht.pdf"
+    }, {
+        title: "iR-ETN User Manual(English)",
+        label: "iR-ETNiR-ETN User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018002E_iR-ETN_UserManual_eng.pdf"
+    }, {
+        title: "iR-ETN ?????????(Japanese)",
+        label: "iR-ETNiR-ETN ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018002J_iR-ETN_UserManual_jpn.pdf"
+    }, {
+        title: "iR-ETN ????(Traditional Chinese)",
+        label: "iR-ETNiR-ETN ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018002T_iR-ETN_UserManual_cht.pdf"
+    }, {
+        title: "EasyRemoteIO User Manual(English)",
+        label: "N/AEasyRemoteIO User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018004E_EasyRemoteIO_UserManual_eng.pdf"
+    }, {
+        title: "EasyRemoteIO ?????????(Japanese)",
+        label: "N/AEasyRemoteIO ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018004J_EasyRemoteIO_UserManual_jpn.pdf"
+    }, {
+        title: "EasyRemoteIO ????(Traditional Chinese)",
+        label: "N/AEasyRemoteIO ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018004T_EasyRemoteIO_UserManual_cht.pdf"
+    }, {
+        title: "Database Server & MS SQL Server(English)",
+        label: "cMT-SVR-100Database Server & MS SQL ServerUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM018011E_Database_Server_and_MSSQL_UserManual_20180927_eng.pdf"
+    }, {
+        title: "?????????? & MS SQL Server(Japanese)",
+        label: "cMT-SVR-100?????????? & MS SQL ServerUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM018011J_Database_Server_and_MSSQL_UserManual_20180927_jpn.pdf"
+    }, {
+        title: "?????? & MS SQL Server(Traditional Chinese)",
+        label: "cMT-SVR-100?????? & MS SQL ServerUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM018011T_Database_Server_and_MSSQL_UserManual_20180927_cht.pdf"
+    }, {
+        title: "iR-AI04-VI,iR-AM06-VI,iR-AQ04-VI User Manual(English)",
+        label: "iR-ETNiR-AI04-VI,iR-AM06-VI,iR-AQ04-VI User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018013E_iR-Axxx-VI_UserManual_eng.pdf"
+    }, {
+        title: "iR-AQ04-VI iR-AM06-VI iR-AI04-VI ?????????(Japanese)",
+        label: "iR-ETNiR-AQ04-VI iR-AM06-VI iR-AI04-VI ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018013J_iR-Axxx-VI_UserManual_jpn.pdf"
+    }, {
+        title: "iR-AI04-VI,iR-AM06-VI,iR-AQ04-VI User Manual(Traditional Chinese)",
+        label: "iR-ETNiR-AI04-VI,iR-AM06-VI,iR-AQ04-VI User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018013T_iR-Axxx-VI_UserManual_cht.pdf"
+    }, {
+        title: "iR-AI04-TR User Manual(English)",
+        label: "iR-ETNiR-AI04-TR User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018014E_iR-Axxx-TR_UserManual_eng.pdf"
+    }, {
+        title: "iR-Ai04-TR ?????????(Japanese)",
+        label: "iR-ETNiR-Ai04-TR ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018014J_iR-Axxx-TR_UserManual_jpn.pdf"
+    }, {
+        title: "iR-AI04-TR ????(Traditional Chinese)",
+        label: "iR-ETNiR-AI04-TR ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018014T_iR-Axxx-TR_UserManual_cht.pdf"
+    }, {
+        title: "iR-ETN Analog Module Startup Guide(English)",
+        label: "iR-ETNiR-ETN Analog Module Startup GuideUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018015E_iR_ETN_Analog_Getting_Start_UserManual_eng.pdf"
+    }, {
+        title: "iR-ETN ???????????(Japanese)",
+        label: "iR-ETNiR-ETN ???????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018015J_iR_ETN_Analog_Getting_Start_UserManual_jpn.pdf"
+    }, {
+        title: "iR-ETN ????????(Traditional Chinese)",
+        label: "iR-ETNiR-ETN ????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018015T_iR_ETN_Analog_Getting_Start_UserManual_cht.pdf"
+    }, {
+        title: "cMT CODESYS and iR Remote IO resources(English)",
+        label: "iR-ETNcMT CODESYS and iR Remote IO resourcesUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018016E_CODESYS_iR_Resources_eng.pdf"
+    }, {
+        title: "CODESYS ? iR Remote IO ????(Japanese)",
+        label: "iR-ETNCODESYS ? iR Remote IO ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018016J_CODESYS_iR_Resources_jpn.pdf"
+    }, {
+        title: "CODESYS ? iR Remote IO ??????(Traditional Chinese)",
+        label: "iR-ETNCODESYS ? iR Remote IO ??????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018016T_CODESYS_iR_Resources_cht.pdf"
+    }, {
+        title: "Weintek CODESYS Library(English)",
+        label: "iR-ETNWeintek CODESYS LibraryUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM018017E_CODESYS_Weintek_Library_UserManual_eng.pdf"
+    }, {
+        title: "Weintek CODESYS ???????(Japanese)",
+        label: "iR-ETNWeintek CODESYS ???????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM018017J_CODESYS_Weintek_Library_UserManual_jpn.pdf"
+    }, {
+        title: "Weintek CODESYS ???(Traditional Chinese)",
+        label: "iR-ETNWeintek CODESYS ???UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM018017T_CODESYS_Weintek_Library_UserManual_cht.pdf"
+    }, {
+        title: "iR-ECAT User Manual(English)",
+        label: "iR-ECATiR-ECAT User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM019001E_iR-ECAT_UserManual_eng.pdf"
+    }, {
+        title: "iR-ECAT ?????????(Japanese)",
+        label: "iR-ECATiR-ECAT ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM019001J_iR-ECAT_UserManual_jpn.pdf"
+    }, {
+        title: "iR-ECAT ????(Traditional Chinese)",
+        label: "iR-ECATiR-ECAT ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM019001T_iR-ECAT_UserManual_cht.pdf"
+    }, {
+        title: "FDA 21 CFR Part 11 Compliance(English)",
+        label: "N/AFDA 21 CFR Part 11 ComplianceUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM019002E_FDA 21_CFR_Part 11_Compliance_UserManual_20190426_eng.pdf"
+    }, {
+        title: "FDA 21 CFR Part 11 ????(Traditional Chinese)",
+        label: "N/AFDA 21 CFR Part 11 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM019002T_FDA 21_CFR_Part 11_Compliance_UserManual_20190426_cht.pdf"
+    }, {
+        title: "cMT-iV6 User Manual(English)",
+        label: "cMT-iV6cMT-iV6 User ManualUserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM019003E_cMT_iV6_UserManual_20190806_eng.pdf"
+    }, {
+        title: "cMT-iV6 ??????????(Japanese)",
+        label: "cMT-iV6cMT-iV6 ??????????UserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM019003J_cMT_iV6_UserManual_20190806_jpn.pdf"
+    }, {
+        title: "cMT-iV6 ????(Traditional Chinese)",
+        label: "cMT-iV6cMT-iV6 ????UserManualDocumentMT8000",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM019003T_cMT_iV6_UserManual_20190806_cht.pdf"
+    }, {
+        title: "iR-PU01-P User Manual(English)",
+        label: "iR-PU01-PiR-PU01-P User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM019004E_iR-PU01-P_UserManual_eng.pdf"
+    }, {
+        title: "iR-PU01-P ?????????(Japanese)",
+        label: "iR-PU01-PiR-PU01-P ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM019004J_iR-PU01-P_UserManual_jpn.pdf"
+    }, {
+        title: "iR-PU01-P ????(Traditional Chinese)",
+        label: "iR-PU01-PiR-PU01-P ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM019004T_iR-PU01-P_UserManual_cht.pdf"
+    }, {
+        title: "iR Series Firmware Update(English)",
+        label: "iR-ETNiR Series Firmware UpdateUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/eng/UserManual/UM019005E_iR_Series_Firmware_Update_UserManual_eng.pdf"
+    }, {
+        title: "iR ??????????????(Japanese)",
+        label: "iR-ETNiR ??????????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/jpn/UserManual/UM019005J_iR_Series_Firmware_Update_UserManual_jpn.pdf"
+    }, {
+        title: "iR ??????(Traditional Chinese)",
+        label: "iR-ETNiR ??????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/iR/cht/UserManual/UM019005T_iR_Series_Firmware_Update_UserManual_cht.pdf"
+    }, {
+        title: "cMT-CTRL01 User Manual(English)",
+        label: "cMT-CTRL01cMT-CTRL01 User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/eng/UserManual/UM019006E_cMT-CTRL01_UserManual_eng.pdf"
+    }, {
+        title: "cMT-CTRL01 ?????????(Japanese)",
+        label: "cMT-CTRL01cMT-CTRL01 ?????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/jpn/UserManual/UM019006J_cMT-CTRL01_UserManual_jpn.pdf"
+    }, {
+        title: "cMT-CTRL01 ????(Traditional Chinese)",
+        label: "cMT-CTRL01cMT-CTRL01 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/cMT/cht/UserManual/UM019006T_cMT-CTRL01_UserManual_cht.pdf"
+    }, {
+        title: "cMT X Series Easyweb 2.0 User Manual(English)",
+        label: "N/AcMT X Series Easyweb 2.0 User ManualUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020001E_cMT_X_Series_Easyweb_2.0_UserManual_eng.pdf"
+    }, {
+        title: "cMT X Series Easyweb 2.0 ?????(Japanese)",
+        label: "N/AcMT X Series Easyweb 2.0 ?????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020001J_cMT_X_Series_Easyweb_2.0_UserManual_jpn.pdf"
+    }, {
+        title: "cMT X Series Easyweb 2.0 ????(Traditional Chinese)",
+        label: "N/AcMT X Series Easyweb 2.0 ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020001T_cMT_X_Series_Easyweb_2.0_UserManual_cht.pdf"
+    }, {
+        title: "EasyBuilder Pro Quick Start(English)",
+        label: "N/AEasyBuilder Pro Quick StartUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020003E_EasyBuilder_Pro_Quick_Start_eng.pdf"
+    }, {
+        title: "EasyBuilder Pro Quick Start(Japanese)",
+        label: "N/AEasyBuilder Pro Quick StartUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020003T_EasyBuilder_Pro_Quick_Start_cht.pdf"
+    }, {
+        title: "EasyBuilder Pro Quick Start(Traditional Chinese)",
+        label: "N/AEasyBuilder Pro Quick StartUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020003J_EasyBuilder_Pro_Quick_Start_jpn.pdf"
+    }, {
+        title: "iR-ETN EtherNet/IP Connection Guide(English)",
+        label: "N/AiR-ETN EtherNet/IP Connection GuideUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020006E_iR-ETN_EtherNetIP_Connection_Guide_eng.pdf"
+    }, {
+        title: "iR-ETN- EtherNet/IP ?????(Japanese)",
+        label: "N/AiR-ETN- EtherNet/IP ?????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020006J_iR-ETN_EtherNetIP_Connection_Guide_jpn.pdf"
+    }, {
+        title: "iR-ETN- EtherNet/IP ????(Traditional Chinese)",
+        label: "N/AiR-ETN- EtherNet/IP ????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020006T_iR-ETN_EtherNetIP_Connection_Guide_cht.pdf"
+    }, {
+        title: "Notes on Migrating EasyBuilder Pro Project(English)",
+        label: "N/ANotes on Migrating EasyBuilder Pro ProjectUserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020007E_Notes_on_Converting_EasyBuilder_Pro_Project_eng.pdf"
+    }, {
+        title: "EasyBuilder Pro ????????(Traditional Chinese)",
+        label: "N/AEasyBuilder Pro ????????UserManualDocumentUserManual",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/Document/UM0/UM020007T_Notes_on_Converting_EasyBuilder_Pro_Project_cht.pdf"
+    }, {
+        title: "MT8121XE3 Data Sheet(English)",
+        label: "MT8121XE3MT8121XE3 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8121XE3_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8150XE Data Sheet(English)",
+        label: "MT8150XEMT8150XE Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8150XE_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8121XE3 Data Sheet(Traditional Chinese)",
+        label: "MT8121XE3MT8121XE3 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8121XE3_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8150XE Data Sheet(Traditional Chinese)",
+        label: "MT8150XEMT8150XE Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8150XE_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8121/8150XE Installation(English)",
+        label: "MT8121XE1,MT8150XE,MT8121XE3MT8121/8150XE InstallationInstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Installation/GME810XE0_MT8121_8150XE_Installation.pdf"
+    }, {
+        title: "MT8090XE1 Data Sheet(English)",
+        label: "MT8090XEMT8090XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8090XE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8090XE1 Data Sheet(Traditional Chinese)",
+        label: "MT8090XEMT8090XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8090XE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8091XE1 Data Sheet(English)",
+        label: "MT8091XEMT8091XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8091XE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8091XE1 Data Sheet(Traditional Chinese)",
+        label: "MT8091XEMT8091XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8091XE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8090/8091/8092XE Installation(English)",
+        label: "MT8090XE,MT8092XE,MT8091XEMT8090/8091/8092XE InstallationInstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Installation/GME8090X2_MT8090_8091_8092XE1_Installation.pdf"
+    }, {
+        title: "MT8092XE Data Sheet(English)",
+        label: "MT8092XEMT8092XE Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8092XE1_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8092XE Data Sheet(Traditional Chinese)",
+        label: "MT8092XEMT8092XE Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8092XE1_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8090XE1 Data Sheet(Japanese)",
+        label: "MT8090XEMT8090XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Datasheet/MT8090XE1_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8092XE1 Data Sheet(Japanese)",
+        label: "MT8092XEMT8092XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Datasheet/MT8092XE1_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8121XE3 Data Sheet(Japanese)",
+        label: "MT8121XE3MT8121XE3 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jpn/Datasheet/MT8121XE3_Datasheet_JPN.pdf"
+    }, {
+        title: "MT8150XE Data Sheet(Japanese)",
+        label: "MT8150XEMT8150XE Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Datasheet/MT8150XE_Datasheet_JAP.pdf"
+    }, {
+        title: "MT8090 8091 8092XE ?????(Japanese)",
+        label: "MT8090XE,MT8091XE,MT8092XEMT8090 8091 8092XE ?????InstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Installation/GMJ8090X0_MT8090_8091_8092XE_Installation.pdf"
+    }, {
+        title: "MT8090 8091 8092XE ?????(Japanese)",
+        label: "N/AMT8090 8091 8092XE ?????InstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Installation/GMJ8090X0_MT8090_8091_8092XE_Installation.pdf"
+    }, {
+        title: "MT8121 8150XE ?????(Japanese)",
+        label: "MT8121XE1,MT8150XEMT8121 8150XE ?????InstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Installation/GMJ8125X0_MT8121_8150XE_Installation.pdf"
+    }, {
+        title: "MT8121 8150XE ?????(Japanese)",
+        label: "N/AMT8121 8150XE ?????InstallationDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Installation/GMJ8125X0_MT8121_8150XE_Installation.pdf"
+    }, {
+        title: "MT8121XE1 Data Sheet(English)",
+        label: "MT8121XE1MT8121XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/eng/Datasheet/MT8121XE_Datasheet_ENG.pdf"
+    }, {
+        title: "MT8121XE1 Data Sheet(Traditional Chinese)",
+        label: "MT8121XE1MT8121XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/cht/Datasheet/MT8121XE_Datasheet_CHT.pdf"
+    }, {
+        title: "MT8121XE1 Data Sheet(Japanese)",
+        label: "MT8121XE1MT8121XE1 Data SheetDataSheetDocumentMT8000XE",
+        category: "Документация",
+        url: "https://dl.weintek.com/public/MT8000XE/jap/Datasheet/MT8121XE_Datasheet_JAP.pdf"
+    }, {
+        title: "Device (PLC) Connection Guide(English)",
+        label: "MT8071iEDevice (PLC) Connection GuideUserManualDocumentEB",
+        category: "Документация",
+        url: "http://www.weintek.com/globalw/Software/PLC.htm"
+    }, {
+        title: "MT8070iE 2D CAD",
+        label: "N/AMT8070iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8070iE_outlet_160526.dwg"
+    }, {
+        title: "MT8071iE 2D CAD",
+        label: "N/AMT8071iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8071iE_outlet_161006.dwg"
+    }, {
+        title: "MT8071iE 2D CAD",
+        label: "N/AMT8071iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8071iE_outlet_161011.dwg"
+    }, {
+        title: "MT8073iE 2D CAD",
+        label: "N/AMT8073iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8073iE_outlet_161006.dwg"
+    }, {
+        title: "MT8073iE 2D CAD",
+        label: "N/AMT8073iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8073iE_outlet_161011.dwg"
+    }, {
+        title: "MT8050iE 2D CAD",
+        label: "N/AMT8050iE 2D CAD2D CAD2D CADiE Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8050iE_outlet_130731.dwg"
+    }, {
+        title: "cMT-G01 2D CAD",
+        label: "N/AcMT-G01 2D CAD2D CAD2D CADcMT Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-G01_outlet_160922.dwg"
+    }, {
+        title: "iR-DI16-K 2D CAD",
+        label: "N/AiR-DI16-K 2D CAD2D CAD2D CADiR Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/iR/Drawing/iR-DI16-K_outlet_180417.dwg"
+    }, {
+        title: "iR-DQ08-R 2D CAD",
+        label: "N/AiR-DQ08-R 2D CAD2D CAD2D CADiR Series",
+        category: "2D CAD",
+        url: "https://dl.weintek.com/public/iR/Drawing/iR-DQ08-R_outlet_180417.dwg"
+    }, {
+        title: "iR-ETN 3D Model",
+        label: "N/AiR-ETN 3D Model3D Model3D ModeliR Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/iR/Drawing/iR-ETN.rar"
+    }, {
+        title: "cMT-G01 3D Model",
+        label: "N/AcMT-G01 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-G01.rar"
+    }, {
+        title: "cMT-G02 3D Model",
+        label: "N/AcMT-G02 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-G02.rar"
+    }, {
+        title: "cMT-G03 3D Model",
+        label: "N/AcMT-G03 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-G03.rar"
+    }, {
+        title: "cMT-G04 3D Model",
+        label: "N/AcMT-G04 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-G04.rar"
+    }, {
+        title: "cMT-iM21 3D Model",
+        label: "N/AcMT-iM21 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-iM21.rar"
+    }, {
+        title: "cMT-iPC10 3D Model",
+        label: "N/AcMT-iPC10 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-iPC10.rar"
+    }, {
+        title: "cMT-iPC15 3D Model",
+        label: "N/AcMT-iPC15 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-iPC15.rar"
+    }, {
+        title: "MT8050iE 3D Model",
+        label: "N/AMT8050iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8050iE.rar"
+    }, {
+        title: "MT8051iP 3D Model",
+        label: "N/AMT8051iP 3D Model3D Model3D ModeliP Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iP/Drawing/MT8051iP.rar"
+    }, {
+        title: "MT8053iE 3D Model",
+        label: "N/AMT8053iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8053iE.rar"
+    }, {
+        title: "cMT-SVR-100 3D Model",
+        label: "N/AcMT-SVR-100 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-SVR-100.rar"
+    }, {
+        title: "cMT-SVR-102 3D Model",
+        label: "N/AcMT-SVR-102 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-SVR-102.rar"
+    }, {
+        title: "cMT-SVR-200 3D Model",
+        label: "N/AcMT-SVR-200 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT-SVR-200.rar"
+    }, {
+        title: "eMT3070B 3D Model",
+        label: "N/AeMT3070B 3D Model3D Model3D ModeleMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/eMT3000/Drawing/eMT3070B.rar"
+    }, {
+        title: "cMT3103 3D Model",
+        label: "N/AcMT3103 3D Model3D Model3D ModelcMT Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/cMT/Drawing/cMT3103.rar"
+    }, {
+        title: "MT8073iE 3D Model",
+        label: "N/AMT8073iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8073iE.rar"
+    }, {
+        title: "MT8090XE 3D Model",
+        label: "N/AMT8090XE 3D Model3D Model3D ModelXE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000XE/Drawing/MT8090XE.rar"
+    }, {
+        title: "MT8092XE 3D Model",
+        label: "N/AMT8092XE 3D Model3D Model3D ModelXE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000XE/Drawing/MT8092XE.rar"
+    }, {
+        title: "MT8100iE 3D Model",
+        label: "N/AMT8100iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8100iE.rar"
+    }, {
+        title: "MT8101iE 3D Model",
+        label: "N/AMT8101iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8101iE.rar"
+    }, {
+        title: "MT8102iE 3D Model",
+        label: "N/AMT8102iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8102iE.rar"
+    }, {
+        title: "MT8102iP 3D Model",
+        label: "N/AMT8102iP 3D Model3D Model3D ModeliP Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iP/Drawing/MT8102iP.rar"
+    }, {
+        title: "MT8103iE 3D Model",
+        label: "N/AMT8103iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8103iE.rar"
+    }, {
+        title: "MT8121XE 3D Model",
+        label: "N/AMT8121XE 3D Model3D Model3D ModelXE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000XE/Drawing/MT8121XE.rar"
+    }, {
+        title: "MT8150XE 3D Model",
+        label: "N/AMT8150XE 3D Model3D Model3D ModelXE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000XE/Drawing/MT8150XE.rar"
+    }, {
+        title: "MT8071iE 3D Model",
+        label: "N/AMT8071iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8071iE.rar"
+    }, {
+        title: "MT8070iE 3D Model",
+        label: "N/AMT8070iE 3D Model3D Model3D ModeliE Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8070iE.rar"
+    }, {
+        title: "MT8070iER1 3D Model",
+        label: "N/AMT8070iER1 3D Model3D Model3D ModeliER Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iE/Drawing/MT8070iER1.rar"
+    }, {
+        title: "MT8071iP 3D Model",
+        label: "N/AMT8071iP 3D Model3D Model3D ModeliP Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/MT8000iP/Drawing/MT8071iP.rar"
+    }, {
+        title: "mTV-100 3D Model",
+        label: "N/AmTV-100 3D Model3D Model3D ModelmTV Series",
+        category: "3D Модели",
+        url: "https://dl.weintek.com/public/mTV/Drawing/mTV-100.rar"
+    }, {
+        title: "AB MicroLogix 1100 EtherNet/IP(English)",
+        label: "N/AAB MicroLogix 1100 EtherNet/IPPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/AB/MicroLogix1100_EthernetIP.zip"
+    }, {
+        title: "Media Player demo project(English)",
+        label: "N/AMedia Player demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2008SPSdemo/MPlayer_1024x768.zip"
+    }, {
+        title: "OMRON E5ZN(English)",
+        label: "N/AOMRON E5ZNPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/OMRON/MT8ki_E5ZN.zip"
+    }, {
+        title: "OMRON E5ZN(English)",
+        label: "N/AOMRON E5ZNPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/OMRON/MT8121T_E5ZN.zip"
+    }, {
+        title: "MITSUBISHI Q03UDE(English)",
+        label: "N/AMITSUBISHI Q03UDEPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/MITSUBISHI/Q03UDE/MT8000i_Q03UDE.zip"
+    }, {
+        title: "LS MASTER-K10S1(English)",
+        label: "N/ALS MASTER-K10S1PLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/LS/LS_MASTER_K10S1.zip"
+    }, {
+        title: "Free Protocol(English)",
+        label: "N/AFree ProtocolMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Free_Protocol.zip"
+    }, {
+        title: "Macro Math(English)",
+        label: "N/AMacro MathMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_Math.zip"
+    }, {
+        title: "Alarm Event Display Watch(English)",
+        label: "N/AAlarm Event Display WatchPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Alarm_Event_Display_Watch.zip"
+    }, {
+        title: "Data Block(English)",
+        label: "N/AData BlockPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Data_Block.zip"
+    }, {
+        title: "Input Order(English)",
+        label: "N/AInput OrderPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Input_Order.zip"
+    }, {
+        title: "Keyboard(English)",
+        label: "N/AKeyboardPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Keyboard.zip"
+    }, {
+        title: "Media Player(English)",
+        label: "N/AMedia PlayerPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Media_Player.zip"
+    }, {
+        title: "Option List(English)",
+        label: "N/AOption ListPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Option_List.zip"
+    }, {
+        title: "Scheduler(English)",
+        label: "eMT3070A,eMT3105P,eMT3120A,eMT3150A,MT6050i,MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iH,MT8104XH,MT8121X,MT8150XSchedulerPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Scheduler.zip"
+    }, {
+        title: "Security(English)",
+        label: "MT6050i,MT8150X,eMT3070A,eMT3105P,eMT3120A,eMT3150A,MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iH,MT8104XH,MT8121XSecurityPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Security.zip"
+    }, {
+        title: "Timer(English)",
+        label: "MT6050i,eMT3070A,eMT3150A,eMT3120A,eMT3105P,MT6070iH,MT6100i,MT8050i,MT8070iH,MT8100i,MT8104iH,MT8104XH,MT8121X,MT8150XTimerPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Timer.zip"
+    }, {
+        title: "Trend Data Display(English)",
+        label: "N/ATrend Data DisplayPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Trend_Data_Display.zip"
+    }, {
+        title: "Factory Security System(English)",
+        label: "N/AFactory Security SystemSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Factory_Security_System.zip"
+    }, {
+        title: "History Data Alarm Option(English)",
+        label: "N/AHistory Data Alarm OptionSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/History_Data_Alarm_Option.zip"
+    }, {
+        title: "History data backup Schedule(English)",
+        label: "N/AHistory data backup ScheduleSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/History_data_backup_Schedule.zip"
+    }, {
+        title: "Index Function(English)",
+        label: "N/AIndex FunctionSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Index_Function.zip"
+    }, {
+        title: "Multi Language with Option(English)",
+        label: "N/AMulti Language with OptionSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Multi_Language_with_Option.zip"
+    }, {
+        title: "Printer Backup Server(English)",
+        label: "N/APrinter Backup ServerSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Printer_Backup_Server.zip"
+    }, {
+        title: "Project Key(English)",
+        label: "N/AProject KeySystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Project_Key.zip"
+    }, {
+        title: "Renew PLC IP Online Autoconnect(English)",
+        label: "N/ARenew PLC IP Online AutoconnectSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Renew_PLC_IP_Online_Autoconnect.zip"
+    }, {
+        title: "Station Number Variable(English)",
+        label: "N/AStation Number VariableSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Station_Number_Variable.zip"
+    }, {
+        title: "Advance features(English)",
+        label: "N/AAdvance featuresSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2009SPSdemo/SPS_2009_ADVANCE_FEATURES.cmp"
+    }, {
+        title: "MT8121X(English)",
+        label: "N/AMT8121XSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2009SPSdemo/SPS_2009_MT8121X.cmp"
+    }, {
+        title: "Pass Through(English)",
+        label: "N/APass ThroughSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2009SPSdemo/SPS_2009_PassThrough.cmp"
+    }, {
+        title: "Whac a Mole(English)",
+        label: "N/AWhac a MoleSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2009SPSdemo/SPS_2009_Whac_a_Mole.ecmp"
+    }, {
+        title: "S7-1200 Ethernet(English)",
+        label: "N/AS7-1200 EthernetPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/S71200/S7-1200.zip"
+    }, {
+        title: "Rockwell Ethernet IP - Free Tag(English)",
+        label: "N/ARockwell Ethernet IP - Free TagPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/AB/Ethernet_IP_Free_Tag/Ethernet_IP_Free_Tag.zip"
+    }, {
+        title: "Event Display with History Mode(English)",
+        label: "N/AEvent Display with History ModePart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Demo_Project_of_Event_Display_with_History_Mode.zip"
+    }, {
+        title: "Video Input(English)",
+        label: "N/AVideo InputPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Video_Input.zip"
+    }, {
+        title: "2010 SPS - Rockwell Tag Address(English)",
+        label: "N/A2010 SPS - Rockwell Tag AddressPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2010SPSdemo/AB_Tag.zip"
+    }, {
+        title: "2010 SPS - Redundant System(English)",
+        label: "N/A2010 SPS - Redundant SystemSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2010SPSdemo/Redundant_HMI.zip"
+    }, {
+        title: "2010 SPS - EasyAccess(English)",
+        label: "N/A2010 SPS - EasyAccessSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2010SPSdemo/EasyAccess.zip"
+    }, {
+        title: "2010 SPS - Video Input(English)",
+        label: "N/A2010 SPS - Video InputPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/2010SPSdemo/VIP.zip"
+    }, {
+        title: "Alarm Event with Continue Sound(English)",
+        label: "N/AAlarm Event with Continue SoundPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Continue_Beep.zip"
+    }, {
+        title: "Option List with Item Address(English)",
+        label: "N/AOption List with Item AddressPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Option_List_with_Source_of_Item_Address.zip"
+    }, {
+        title: "SAIA S-Bus Ethernet(English)",
+        label: "N/ASAIA S-Bus EthernetPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/SAIA_S_Bus_Ethernet/SAIA.zip"
+    }, {
+        title: "TOPVERT(English)",
+        label: "N/ATOPVERTPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/TOPVERT/Topvert.cmp"
+    }, {
+        title: "Backup Control(English)",
+        label: "N/ABackup ControlPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Backup_Control.zip"
+    }, {
+        title: "Screen Saver with Password(English)",
+        label: "N/AScreen Saver with PasswordSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Screen_Saver_with_Password.zip"
+    }, {
+        title: "Backup User Defined Day Range(English)",
+        label: "N/ABackup User Defined Day RangePart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Backup_user_defined_day_range.zip"
+    }, {
+        title: "Find Data Log Date(English)",
+        label: "N/AFind Data Log DateMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_Find_DataLog_Date.zip"
+    }, {
+        title: "Find Data Log Index(English)",
+        label: "N/AFind Data Log IndexMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_find_datalog_index.zip"
+    }, {
+        title: "Find Event Log Date(English)",
+        label: "N/AFind Event Log DateMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_find_event_date.zip"
+    }, {
+        title: "Find Event Log Index(English)",
+        label: "N/AFind Event Log IndexMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_find_event_index.zip"
+    }, {
+        title: "Barcode Scanner(English)",
+        label: "N/ABarcode ScannerPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/Barcode_Scanner/Demo_Barcode_Scanner.zip"
+    }, {
+        title: "Trace (English)",
+        label: "N/ATrace Macro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_Trace.zip"
+    }, {
+        title: "Mathematical(English)",
+        label: "N/AMathematicalMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_mathematical.zip"
+    }, {
+        title: "Data Transformation(English)",
+        label: "N/AData TransformationMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Macro_data_transformation.zip"
+    }, {
+        title: "Change window with finger slider(English)",
+        label: "N/AChange window with finger sliderMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Demo_Changing_Windows_with_Finger_Slide.zip"
+    }, {
+        title: "Cyrillic ASCII2Unicode(English)",
+        label: "N/ACyrillic ASCII2UnicodeMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Cyrillic_ASCII2Unicode.zip"
+    }, {
+        title: "Change window with Opton List(English)",
+        label: "N/AChange window with Opton ListPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Demo_Change_Window_with_Option_List.zip"
+    }, {
+        title: "24 hours Trend Display(English)",
+        label: "N/A24 hours Trend DisplayPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/24_hours_trend_display.zip"
+    }, {
+        title: "SHIMADEN(English)",
+        label: "N/ASHIMADENPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/SHIMDEN/SHIMADEN.zip"
+    }, {
+        title: "Recipe Search(English)",
+        label: "N/ARecipe SearchMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Recipe_Search.zip"
+    }, {
+        title: "Auto. Backlight(English)",
+        label: "N/AAuto. BacklightSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/auto_backlight.zip"
+    }, {
+        title: "Station Variable(English)",
+        label: "N/AStation VariableSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Station_Variable.zip"
+    }, {
+        title: "PELCO-D Speed Dome Camera(English)",
+        label: "N/APELCO-D Speed Dome CameraMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/pelco_d_speed_dome_camera.zip"
+    }, {
+        title: "String Operation Function(English)",
+        label: "N/AString Operation FunctionMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/String_Operation_Functon.zip"
+    }, {
+        title: "e-Mail(English)",
+        label: "N/Ae-MailPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/e_Mail.zip"
+    }, {
+        title: "Enhanced Security(English)",
+        label: "N/AEnhanced SecurityPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/Enhanced_Security.zip"
+    }, {
+        title: "CANopen Connection(English)",
+        label: "N/ACANopen ConnectionPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/PLC_Sample/CANopen/CANbus.zip"
+    }, {
+        title: "RTC(English)",
+        label: "N/ARTCMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/RTC_EBPro.zip"
+    }, {
+        title: "Measurement Converter(English)",
+        label: "N/AMeasurement ConverterMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Measurement_Converter_EBPro.zip"
+    }, {
+        title: "ASCII2UNICODE(English)",
+        label: "N/AASCII2UNICODEMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/ASCII2UNICODE_EBPro.zip"
+    }, {
+        title: "Recipe View(English)",
+        label: "N/ARecipe ViewMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Macro_Recipe.zip"
+    }, {
+        title: "BACnet Connection(English)",
+        label: "N/ABACnet ConnectionPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/PLC_Sample/BACnet/BACnet.zip"
+    }, {
+        title: "Recipe Transferring(English)",
+        label: "N/ARecipe TransferringSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/Recipe_Transferring.zip"
+    }, {
+        title: "RFID(English)",
+        label: "N/ARFIDMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/RFID.zip"
+    }, {
+        title: "Trend Hide Channels(English)",
+        label: "N/ATrend Hide ChannelsPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Trend_Hide_Channels.zip"
+    }, {
+        title: "Modbus Server with Option List(English)",
+        label: "N/AModbus Server with Option ListPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/ModbusServer/Demo_Modbus_Server/Demo_Modbus_Server.zip"
+    }, {
+        title: "Pass Through with Option List(English)",
+        label: "N/APass Through with Option ListSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Demo_Pass_through.zip"
+    }, {
+        title: "Time Tags of Evenlog(English)",
+        label: "N/ATime Tags of EvenlogSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Demo_Time_tags_of_eventlog.zip"
+    }, {
+        title: "Window Title Bar(English)",
+        label: "N/AWindow Title BarPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Window_Title_Bar.zip"
+    }, {
+        title: "Meter with Anti-clockwise(English)",
+        label: "N/AMeter with Anti-clockwiseMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Meter_with_Anticlockwise.zip"
+    }, {
+        title: "Event Write Address(English)",
+        label: "N/AEvent Write AddressSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Demo_Event_Write_Address.zip"
+    }, {
+        title: "Flow Block(English)",
+        label: "N/AFlow BlockPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Demo_Flow_Block.zip"
+    }, {
+        title: "Folder Name of Backup(English)",
+        label: "N/AFolder Name of BackupSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Demo_Folder_Name_of_Backup.zip"
+    }, {
+        title: "Multi Trend Display(English)",
+        label: "N/AMulti Trend DisplaySystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/System_Sample/Demo_Multi_Trend_Display.zip"
+    }, {
+        title: "USB Auto Login Logout(English)",
+        label: "N/AUSB Auto Login LogoutSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/Demo_USB_Auto_Login_Logout.zip"
+    }, {
+        title: "Trend Display with Dynamic X axis(English)",
+        label: "N/ATrend Display with Dynamic X axisPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/Trend_Dynamic_Interval.zip"
+    }, {
+        title: "Media Player(English)",
+        label: "N/AMedia PlayerPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Demo_Media_Player.zip"
+    }, {
+        title: "Free Protocol Server (Ethernet)(English)",
+        label: "MT6050i,MT8050i,MT6050iP,MT8050iP,MT6056i,MT6070iH,MT8070iH,MT6100i,MT8100i,MT6070iP,MT8070iP,MT8104iH,MT6051iP,MT6071iP,MT8071iP,MT6103iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100Free Protocol Server (Ethernet)Macro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Demo_Free_Protocol_Server.zip"
+    }, {
+        title: "SOE(English/Simplified Chinese/Tradition Chinese)",
+        label: "N/ASOEPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Part_Sample/SOE.zip"
+    }, {
+        title: "Operaition Log(English)",
+        label: "N/AOperaition LogPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Demo_Operation_Log.zip"
+    }, {
+        title: "PATLITE VM/VMS Series(English/Tradition Chinese)",
+        label: "N/APATLITE VM/VMS SeriesPLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/PATLITE/PATLITE_LED.zip"
+    }, {
+        title: "Scaling Method(English/Tradition Chinese)",
+        label: "N/AScaling MethodMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Use_Macro_Subroutine_as_Scaling_Method.zip"
+    }, {
+        title: "2013SPS cMT demo 1",
+        label: "N/A2013SPS cMT demo 1Application_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/A2_cMT_Slides_20131204.ccmp"
+    }, {
+        title: "2013SPS cMT demo 3",
+        label: "N/A2013SPS cMT demo 3Application_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/A3_cMT_CommSpeed_20131204.ccmp"
+    }, {
+        title: "2013SPS mTV demo",
+        label: "N/A2013SPS mTV demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/C1_mTV.ecmp"
+    }, {
+        title: "2013SPS MT8050iE demo",
+        label: "N/A2013SPS MT8050iE demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/D1_MT8050iE_Meter.ecmp"
+    }, {
+        title: "2013SPS MT8070iE demo",
+        label: "N/A2013SPS MT8070iE demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/D2_MT8070iE_HeaterSystem.ecmp"
+    }, {
+        title: "2013SPS MT8100iE demo",
+        label: "N/A2013SPS MT8100iE demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/D3_MT8100iE_AC_System.ecmp"
+    }, {
+        title: "2013SPS MT8121XE demo",
+        label: "N/A2013SPS MT8121XE demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/E1_MT8121XE_Libraries.ecmp"
+    }, {
+        title: "2013SPS MT8150XE demo",
+        label: "N/A2013SPS MT8150XE demoApplication_sampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/SPS2013/E2_MT8150XE_DEMO.ecmp"
+    }, {
+        title: "eMT3070A USB Camera demo project",
+        label: "N/AeMT3070A USB Camera demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/USB_Camera.zip"
+    }, {
+        title: "Picture View object demo project(English)",
+        label: "N/APicture View object demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Demo_Picture_View_object.zip"
+    }, {
+        title: "Combo Button(English/Tradition Chinese)",
+        label: "N/ACombo ButtonPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Demo_Combo_Button.zip"
+    }, {
+        title: "USB Camera with Picture View(English/Tradition Chinese)",
+        label: "N/AUSB Camera with Picture ViewPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/USB_Camera_Picture_View_Demo.zip"
+    }, {
+        title: "EasyAccess V2 Demo(English/Tradition Chinese)",
+        label: "N/AEasyAccess V2 DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EasyAccess20/Project/EasyAccess_2_Demo.zip"
+    }, {
+        title: "Backup Recipe Database to USB Demo(English/Tradition Chinese)",
+        label: "N/ABackup Recipe Database to USB DemoMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Backup_Recipe_Database_to_USB_Demo.zip"
+    }, {
+        title: "Tag Over Your Project(English/Tradition Chinese)",
+        label: "N/ATag Over Your ProjectMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Tag_over_your_project.zip"
+    }, {
+        title: "Solar Day Converter demo project(English/Tradition Chinese)",
+        label: "N/ASolar Day Converter demo projectMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/Macro_Sample/Solar_Day_Converter.zip"
+    }, {
+        title: "Data Log Customized File Handling(English/Tradition Chinese)",
+        label: "N/AData Log Customized File HandlingPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Data_Log_Customized_File_Handling_Demo.zip"
+    }, {
+        title: "Modbus Special Device Type(English/Tradition Chinese)",
+        label: "N/AModbus Special Device TypePLC_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000/Project/PLC_Sample/ModbusRTU/Modbus_Special_Device_Type_Demo.zip"
+    }, {
+        title: "Customized hardcopy Filename(English/Tradition Chinese)",
+        label: "N/ACustomized hardcopy FilenamePart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Screen_Hardcopy_Customized_Filename_Handling.zip"
+    }, {
+        title: "Recipe Import Export File Browser(English/Tradition Chinese)",
+        label: "N/ARecipe Import Export File BrowserPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Recipe_Import_Export_File_Browser_Demo.zip"
+    }, {
+        title: "User Management using Recipe(English/Tradition Chinese)",
+        label: "N/AUser Management using RecipeMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/User_Management_using_Recipe_Database.rar"
+    }, {
+        title: "Calculator(English/Tradition Chinese)",
+        label: "N/ACalculatorMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Calculator.zip"
+    }, {
+        title: "iR-DM16, iR-COP, iR-ETN Demo(English/Tradition Chinese)",
+        label: "N/AiR-DM16, iR-COP, iR-ETN DemoMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/System_Sample/DEM18002_iR-DM16_iR-COP_iR-ETN_Demo.zip"
+    }, {
+        title: "Pie Chart demo project(English/Tradition Chinese)",
+        label: "MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8073iE,MT8100iE,eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iEPie Chart demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Pie_Chart.zip"
+    }, {
+        title: "SQL Query(English/Tradition Chinese)",
+        label: "MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8073iE,MT8100iE,eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iESQL QueryMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/Part_Sample/DEM18003_SQL_Query_Demo_20181225.zip"
+    }, {
+        title: "MQTT demo project(English/Tradition Chinese)",
+        label: "MT6050i,MT8050i,MT6050iP,MT8050iP,MT6056i,MT6070iH,MT8070iH,MT6100i,MT8100i,MT6070iP,MT8070iP,MT8104iHMQTT demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/MQTT_Demo.zip"
+    }, {
+        title: "USB Tethering Demo demo project(English/Tradition Chinese)",
+        label: "N/AUSB Tethering Demo demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/USB_Tethering_Demo.zip"
+    }, {
+        title: "Dynamic Drawing Demo demo project(English/Tradition Chinese)",
+        label: "N/ADynamic Drawing Demo demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Dynamic_Drawing_Demo.zip"
+    }, {
+        title: "Video Streaming demo project(English/Tradition Chinese)",
+        label: "N/AVideo Streaming demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Video_Streaming_Demo.zip"
+    }, {
+        title: "MT8102iE Demo Project",
+        label: "N/AMT8102iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_1024x600_8102.emtp"
+    }, {
+        title: "MT8103iE Demo Project",
+        label: "N/AMT8103iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_1024x600_8103.emtp"
+    }, {
+        title: "MT8050iE Demo Project",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT-G01MT8050iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_480x272.emtp"
+    }, {
+        title: "MT8070iE MT8100iE Demo Project",
+        label: "cMT-SVR-100,cMT3072,cMT3090,cMT3103,cMT3151,cMT-HDMI,cMT3071MT8070iE MT8100iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_800x480.emtp"
+    }, {
+        title: "Convert Unix Timestamp to Date Time in Microsoft SQL Server(English/Tradition Chinese)",
+        label: "N/AConvert Unix Timestamp to Date Time in Microsoft SQL ServerMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/System_Sample/DEM18004_Convert_Unix_Timestamp_to_Date_Time_in_MS_SQL_Demo_20181228.zip"
+    }, {
+        title: "iR-DM16-P, iR-COP on cMT3090 Settings(English/Tradition Chinese)",
+        label: "N/AiR-DM16-P, iR-COP on cMT3090 SettingsCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/EBPro/Project/System_Sample/DEM18005_iR-DM16-P_iR-COP_cMT3090c_Settings_Demo.zip"
+    }, {
+        title: "Trend Display Y Scale Demo(English/Tradition Chinese)",
+        label: "N/ATrend Display Y Scale DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Trend_Display_Y_Scale_Demo.zip"
+    }, {
+        title: "Database Server demo project(English/Tradition Chinese)",
+        label: "N/ADatabase Server demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Database_Server_Demo.zip"
+    }, {
+        title: "Dynamic Scale demo project(English/Tradition Chinese)",
+        label: "cMT-iPC15,cMT-iPC10Dynamic Scale demo projectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Dynamic_Scale.zip"
+    }, {
+        title: "MT8071iE MT8072iE Demo Project",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100MT8071iE MT8072iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_800x480_8071_8072.emtp"
+    }, {
+        title: "MT8073iE Demo Project",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100MT8073iE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000iE/Project/Demo/mt_iE_demo_800x480_8073.emtp"
+    }, {
+        title: "MT8090XE Demo Project",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100MT8090XE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000XE/Project/Demo/MT8090XE_demo_1024x768.emtp"
+    }, {
+        title: "MT8092XE Demo Project",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100MT8092XE Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/MT8000XE/Project/Demo/MT8092XE_demo_1024x768.emtp"
+    }, {
+        title: "eMT3070 Demo Project",
+        label: "iR-ETNeMT3070 Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Demo/emt_demo_800x480.emtp"
+    }, {
+        title: "eMT3105 Demo Project",
+        label: "MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8070iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8150XE,mTV-100,cMT-SVR-100,MT8071iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8070iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8150XE,mTV-100,cMT-SVR-100,MT8121XE1,MT8071iPeMT3105 Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Demo/emt_demo_800x600.emtp"
+    }, {
+        title: "eMT3120 eMT3150 Demo Project",
+        label: "MT8150XE,mTV-100,cMT-SVR-100,MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XEeMT3120 eMT3150 Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Demo/emt_demo_1024x768.emtp"
+    }, {
+        title: "mTV Demo Project",
+        label: "cMT3071,cMT3072,cMT3090,cMT3103,cMT3151,cMT-FHD,cMT-G01,cMT-G02,cMT-G03,cMT-G04,cMT-iV5,cMT-SVR-100,cMT-SVR-102,eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT6051iP,MT6070iE,MT6071iP,MT6103iP,MT8050iE,MT8051iP,MT8070iE,MT8070iER1,MT8071iE,MT8071iP,MT8073iE,MT8090XE,MT8091XE,MT8092XE,MT8100iE,MT8101iE,MT8102iE,MT8102iP,MT8103iE,MT8121XE1,MT8150XE,mTV-100mTV Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/mTV/Project/mTV_demo.emtp"
+    }, {
+        title: "cMT-SVR Demo Project",
+        label: "cMT3071,cMT3072,cMT3090,cMT3151cMT-SVR Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/cMT/Project/Demo/cmt_svr_demo.cmtp"
+    }, {
+        title: "cMT3151 Demo Project",
+        label: "cMT3071,cMT3072,cMT3090,cMT3151cMT3151 Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/cMT/Project/Demo/cmt3151_demo.cmtp"
+    }, {
+        title: "Energy Demand Demo Project(English/Tradition Chinese)",
+        label: "N/AEnergy Demand Demo ProjectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Energy_Demand_Demo.zip"
+    }, {
+        title: "VNC Viewer Demo Project(English/Tradition Chinese/Japanese)",
+        label: "N/AVNC Viewer Demo ProjectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/VNC_Viewer_Demo.zip"
+    }, {
+        title: "Save Time to Recipe Database Demo(English/Tradition Chinese/Japanese)",
+        label: "N/ASave Time to Recipe Database DemoMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Save_Time_to_Recipe_Database_Demo.zip"
+    }, {
+        title: "Event Log Statistics Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AEvent Log Statistics DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Event_Log_Statistics_Demo.zip"
+    }, {
+        title: "Dynamic Meter Demo(English/Tradition Chinese/Japanese)",
+        label: "N/ADynamic Meter DemoMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Dynamic_Meter_Demo.zip"
+    }, {
+        title: "PDF Reader Demo Project(English/Tradition Chinese)",
+        label: "cMT3071,cMT3072,cMT3090,cMT3103,cMT3151,cMT-FHD,cMT-G01,cMT-G02,cMT-G03,cMT-G04PDF Reader Demo ProjectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/PDF_Reader_Demo.zip"
+    }, {
+        title: "IP Camera Demo Project(English/Tradition Chinese)",
+        label: "cMT3071,cMT3072,cMT3090,cMT3103,cMT3151,cMT-FHD,cMT-G01,cMT-G02,cMT-G03,cMT-G04IP Camera Demo ProjectPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/IP_Camera_Demo.zip"
+    }, {
+        title: "Barcode Scanner(Android)(English/Tradition Chinese)",
+        label: "cMT3090,cMT3151,cMT3071,cMT3072,cMT-SVR-100,cMT-SVR-200,cMT-G01,cMT-G02,cMT-G03,cMT-G04,cMT-CTRL01,MT8070iE,MT8100iEBarcode Scanner(Android)Part_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Part_Sample/Barcode_Scanner(Android)_Demo.zip"
+    }, {
+        title: "Unix Timestamp Converter(English/Tradition Chinese)",
+        label: "cMT-FHDX-220,cMT3152X,cMT3162X,cMT3092XUnix Timestamp ConverterMacro_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/Macro_Sample/Unix_Timestamp_Converter_Demo.zip"
+    }, {
+        title: "Dynamic Drawing Wood Cutting Demo(English/Tradition Chinese/Japanese)",
+        label: "cMT-FHDX-220,cMT3072X,cMT3072XHDynamic Drawing Wood Cutting DemoSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/Dynamic_Drawing_Wood_Cutting_Demo.zip"
+    }, {
+        title: "Siemens PPI MPI Pass Through Demo(English/Tradition Chinese/Japanese)",
+        label: "cMT-FHDX-220,cMT3072X,cMT3072XHSiemens PPI MPI Pass Through DemoSystem_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/eMT3000/Project/System_Sample/Siemens_PPI_MPI_Pass_Through_Demo.zip"
+    }, {
+        title: "iR-DM16 iR-COP iR-ETN Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AiR-DM16 iR-COP iR-ETN DemoCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM18002_iR-DM16_iR-COP_iR-ETN_Demo.zip"
+    }, {
+        title: "iR-DM16 iR-COP cMT3090 Settings Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AiR-DM16 iR-COP cMT3090 Settings DemoCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM18005_iR-DM16-P_iR-COP_cMT3090c_Settings_Demo.zip"
+    }, {
+        title: "iR_Application_Oven_Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AiR_Application_Oven_DemoCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM19001_iR_Application_Oven_Demo.zip"
+    }, {
+        title: "iR Configuration CODESYS iR-COP AI04-TR Demo(English/Tradition Chinese/Japanese)",
+        label: "iR-PU01-P,iR-COPiR Configuration CODESYS iR-COP AI04-TR DemoCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM19002_iR_Configuration_CODESYS_iR-COP_AI04-TR_Demo_20190513.zip"
+    }, {
+        title: "iR-DM16-P, iR-COP on cMT3090 Settings(English/Tradition Chinese/Japanese)",
+        label: "iR-PU01-P,iR-COPiR-DM16-P, iR-COP on cMT3090 SettingsCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM19003_iR_Configuration_CODESYS_iR-COP_AM06-VI_Demo_20190513.zip"
+    }, {
+        title: "iR-PU01-P Jog (Velocity) Control(English/Tradition Chinese/Japanese)",
+        label: "iR-PU01-PiR-PU01-P Jog (Velocity) ControlCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM19004_iR_Application_JOG_Demo.zip"
+    }, {
+        title: "iR-PU01-P Positioning Control(English/Tradition Chinese/Japanese)",
+        label: "iR-PU01-PiR-PU01-P Positioning ControlCODESYS_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM19005_iR_Application_Positioning_Demo.zip"
+    }, {
+        title: "Touch Gesture(English/Tradition Chinese/Japanese)",
+        label: "N/ATouch GesturePart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20002_Touch_Gesture_Demo.zip"
+    }, {
+        title: "Action Trigger(English/Tradition Chinese/Japanese)",
+        label: "N/AAction TriggerPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20003_Action_Trigger_Demo.zip"
+    }, {
+        title: "XY Plot(English/Tradition Chinese/Japanese)",
+        label: "N/AXY PlotPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20004_XY_Plot_Demo.zip"
+    }, {
+        title: "EtherCAT MAster Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AEtherCAT MAster DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20005_EtherCAT_Master_Demo.zip"
+    }, {
+        title: "iR Application PU PWM Inverter Demo(English/Tradition Chinese/Japanese)",
+        label: "N/AiR Application PU PWM Inverter DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20006_iR_Application_PU_PWM_Inverter_Demo.zip"
+    }, {
+        title: "CODESYS Library SysTimeRtc Demo(English/Tradition Chinese/Japanese)",
+        label: "N/ACODESYS Library SysTimeRtc DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20007_CODESYS_Library_SysTimeRtc_Demo.zip"
+    }, {
+        title: "CODESYS Library SysFile SysDir Demo(English/Tradition Chinese/Japanese)",
+        label: "N/ACODESYS Library SysFile SysDir DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20008_CODESYS_Library_SysFile_SysDir_Demo.zip"
+    }, {
+        title: "Combo Button File Transfer Demo(English/Tradition Chinese/Japanese)",
+        label: "N/ACombo Button File Transfer DemoPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20009_Combo_Button_File_Transfer_Demo.zip"
+    }, {
+        title: "CODESYS SD Card Access(English/Tradition Chinese/Japanese)",
+        label: "N/ACODESYS SD Card AccessPart_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/Document/DEM/DEM20010_CODESYS_SDcard_Access_Demo.zip"
+    }, {
+        title: "cMT3092X Demo Project(English)",
+        label: "cMT3092XcMT3092X Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/cMT/Project/Demo/cMT3092X_1024_768.cmtp"
+    }, {
+        title: "cMT3152X Demo Project(English)",
+        label: "cMT3152XcMT3152X Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/cMT/Project/Demo/cMT3152X_1024_768.cmtp"
+    }, {
+        title: "cMT3162X Demo Project(English)",
+        label: "cMT3162XcMT3162X Demo ProjectHMI_SampleDemo ProjectDemo Project",
+        category: "Демо проекты",
+        url: "https://dl.weintek.com/public/cMT/Project/Demo/cMT3162X_1920_1080.cmtp"
+    }, {
+        title: "ActiveSync Driver(English)",
+        label: "MT607i,MT610i,MT610XH,MT612X,MT615XActiveSync DriverWinCEDriverMT600",
+        category: "Драйверы",
+        url: "https://dl.weintek.com/public/MT600/MT600iV1/MT600i_ActiveSync_Driver.zip"
+    }, {
+        title: "eMT607A SDK(English)",
+        label: "eMT607AeMT607A SDKWinCEDriverMT600",
+        category: "Драйверы",
+        url: "https://dl.weintek.com/public/MT600/eMT600/SDK/eMT607A_SDK_20120925.zip"
+    }, {
+        title: "eMT610P, 612A, 615A SDK(English)",
+        label: "eMT610P,eMT612A,eMT615AeMT610P, 612A, 615A SDKWinCEDriverMT600",
+        category: "Драйверы",
+        url: "https://dl.weintek.com/public/MT600/eMT600/SDK/eMT61x_SDK_20120925.zip"
+    }, {
+        title: "Button 01(English)",
+        label: "N/AButton 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pushbutton/button_type11.zip"
+    }, {
+        title: "Button 02(English)",
+        label: "N/AButton 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pushbutton/button_type12.zip"
+    }, {
+        title: "Button 03(English)",
+        label: "N/AButton 03Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pushbutton/button_type13.zip"
+    }, {
+        title: "Button 04(English)",
+        label: "N/AButton 04Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pushbutton/button_type14.zip"
+    }, {
+        title: "Motors 01(English)",
+        label: "N/AMotors 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/motors/Motor_01/motor_01.zip"
+    }, {
+        title: "Pipes 01(English)",
+        label: "N/APipes 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_01/Pipes_01.zip"
+    }, {
+        title: "Pipes 02(English)",
+        label: "N/APipes 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_02/Pipes_02.zip"
+    }, {
+        title: "Pumps_01(English)",
+        label: "N/APumps_01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pumps/Pumps_01/Pumps_01.zip"
+    }, {
+        title: "Pumps 02(English)",
+        label: "N/APumps 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pumps/Pumps_02/Pumps_02.zip"
+    }, {
+        title: "Tanks 01(English)",
+        label: "N/ATanks 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/tanks/Tanks_01.zip"
+    }, {
+        title: "Tanks 02(English)",
+        label: "N/ATanks 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/tanks/Tanks_02.zip"
+    }, {
+        title: "Tanks 03(English)",
+        label: "N/ATanks 03Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/tanks/Tanks_03.zip"
+    }, {
+        title: "Valves 01(English)",
+        label: "N/AValves 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/valves/Valves_01.zip"
+    }, {
+        title: "Valves 02(English)",
+        label: "N/AValves 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/valves/Valves_02.zip"
+    }, {
+        title: "Blower 01(English)",
+        label: "N/ABlower 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/blower/blower_01/Blower_01.zip"
+    }, {
+        title: "Mixer 01(English)",
+        label: "N/AMixer 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/mixer/mixer_01/Mixer_01.zip"
+    }, {
+        title: "Pipes 03(English)",
+        label: "N/APipes 03Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_03/Pipes_03.zip"
+    }, {
+        title: "Pipes 04(English)",
+        label: "N/APipes 04Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_04/Pipes_04.zip"
+    }, {
+        title: "Building 01(English)",
+        label: "N/ABuilding 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/building/Building_01/Building_01.zip"
+    }, {
+        title: "Boiler 01(English)",
+        label: "N/ABoiler 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/boiler/Boiler_01.zip"
+    }, {
+        title: "Icons 01(English)",
+        label: "N/AIcons 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/icons/Icon_01.zip"
+    }, {
+        title: "Button 05(English)",
+        label: "N/AButton 05Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/buttons/button_05/Button_05.zip"
+    }, {
+        title: "Fire & Ice 01(English)",
+        label: "N/AFire & Ice 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/fire_Ice/fire_ice_01/Fire_Ice_01.zip"
+    }, {
+        title: "Button 06(English)",
+        label: "N/AButton 06Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/buttons/button_06/Button_06.zip"
+    }, {
+        title: "Hoppers 01(English)",
+        label: "N/AHoppers 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/Hoppers/Hoppers_01/Hoppers_01.zip"
+    }, {
+        title: "Pipes 05(English)",
+        label: "N/APipes 05Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_05/Pipes_05.zip"
+    }, {
+        title: "Pipes small 01(English)",
+        label: "N/APipes small 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/pipes/Pipes_small_01/Pipes_small_01.zip"
+    }, {
+        title: "Fan 01(English)",
+        label: "N/AFan 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/fan/fan_01/Fan_01.zip"
+    }, {
+        title: "Cooling 01(English)",
+        label: "N/ACooling 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/cooling/cooling_01/Cooling_01.zip"
+    }, {
+        title: "Chemical 01(English)",
+        label: "N/AChemical 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/chemical/Chemical_01/chemical_01.zip"
+    }, {
+        title: "Arrow 01(English)",
+        label: "N/AArrow 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/arrow/Arrow_01/Arrow_01.zip"
+    }, {
+        title: "Arrow 02(English)",
+        label: "N/AArrow 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/arrow/Arrow_02/Arrow_02.zip"
+    }, {
+        title: "Arrow Square 01(English)",
+        label: "N/AArrow Square 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/arrow_square/Arrow_Square_01/arrow_square_01.zip"
+    }, {
+        title: "Audio / Video 01(English)",
+        label: "N/AAudio / Video 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/audio_video/audio_video_01/audio_video_01.zip"
+    }, {
+        title: "Containers 01(English)",
+        label: "N/AContainers 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/container/Containers_01/containers_01.zip"
+    }, {
+        title: "Containers 02(English)",
+        label: "N/AContainers 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/container/Containers_02/containers_02.zip"
+    }, {
+        title: "Heating 01(English)",
+        label: "N/AHeating 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/Heating/Heating_01/heating_01.zip"
+    }, {
+        title: "Heating 02(English)",
+        label: "N/AHeating 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/Heating/Heating_02/heating_02.zip"
+    }, {
+        title: "Arrow Small 01(English)",
+        label: "N/AArrow Small 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/arrow/Arrow_Small_01/Arrow_Small_01.zip"
+    }, {
+        title: "Arrow Small 02(English)",
+        label: "N/AArrow Small 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/arrow/Arrow_Small_02/Arrow_Small_02.zip"
+    }, {
+        title: "Auido / Video Samll 01(English)",
+        label: "N/AAuido / Video Samll 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/picture/audio_video/audio_video_small_01/Audo_Video_Small_01.zip"
+    }, {
+        title: "Lamps 05(English)",
+        label: "N/ALamps 05Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Round6.zip"
+    }, {
+        title: "Lamps 01(English)",
+        label: "N/ALamps 01Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square1.zip"
+    }, {
+        title: "Lamps 02(English)",
+        label: "N/ALamps 02Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square2.zip"
+    }, {
+        title: "Lamps 03(English)",
+        label: "N/ALamps 03Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square3.zip"
+    }, {
+        title: "Lamps 04(English)",
+        label: "N/ALamps 04Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square4.zip"
+    }, {
+        title: "Lamps 06(English)",
+        label: "N/ALamps 06Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square5.zip"
+    }, {
+        title: "Lamps 07(English)",
+        label: "N/ALamps 07Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/MT8000/Library/0711/Lamps_Square6.zip"
+    }, {
+        title: "SVG_Arrow(color)(English)",
+        label: "N/ASVG_Arrow(color)Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(color).zip"
+    }, {
+        title: "SVG_Arrow(color)_2(English)",
+        label: "N/ASVG_Arrow(color)_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(color)_2.zip"
+    }, {
+        title: "SVG_Arrow(sqr_bk)(English)",
+        label: "N/ASVG_Arrow(sqr_bk)Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(sqr_bk).zip"
+    }, {
+        title: "SVG_Arrow(sqr_bk)_2(English)",
+        label: "N/ASVG_Arrow(sqr_bk)_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(sqr_bk).zip"
+    }, {
+        title: "SVG_Arrow(sqr_y)(English)",
+        label: "N/ASVG_Arrow(sqr_y)Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(sqr_y).zip"
+    }, {
+        title: "SVG_Arrow(sqr_y)_2(English)",
+        label: "N/ASVG_Arrow(sqr_y)_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Arrow(sqr_y)_2.zip"
+    }, {
+        title: "SVG_AudioVideo(English)",
+        label: "N/ASVG_AudioVideoPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_AudioVideo.zip"
+    }, {
+        title: "SVG_Blower(English)",
+        label: "N/ASVG_BlowerPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Blower.zip"
+    }, {
+        title: "SVG_Boiler(English)",
+        label: "N/ASVG_BoilerPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Boiler.zip"
+    }, {
+        title: "SVG_Building(English)",
+        label: "N/ASVG_BuildingPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Building.zip"
+    }, {
+        title: "SVG_Button(English)",
+        label: "N/ASVG_ButtonPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Button.zip"
+    }, {
+        title: "SVG_Chemical(English)",
+        label: "N/ASVG_ChemicalPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Chemical.zip"
+    }, {
+        title: "SVG_Chemical_2(English)",
+        label: "N/ASVG_Chemical_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Chemical_2.zip"
+    }, {
+        title: "SVG_Containers(English)",
+        label: "N/ASVG_ContainersPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Containers.zip"
+    }, {
+        title: "SVG_Containers_2(English)",
+        label: "N/ASVG_Containers_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Containers_2.zip"
+    }, {
+        title: "SVG_Cooling(English)",
+        label: "N/ASVG_CoolingPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Cooling.zip"
+    }, {
+        title: "SVG_Icons(English)",
+        label: "N/ASVG_IconsPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Icons.zip"
+    }, {
+        title: "SVG_Icons_2(English)",
+        label: "N/ASVG_Icons_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Icons_2.zip"
+    }, {
+        title: "SVG_Icons_3(English)",
+        label: "N/ASVG_Icons_3Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Icons_3.zip"
+    }, {
+        title: "SVG_Icons_4(English)",
+        label: "N/ASVG_Icons_4Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Icons_4.zip"
+    }, {
+        title: "SVG_Icons_5(English)",
+        label: "N/ASVG_Icons_5Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Icons_5.zip"
+    }, {
+        title: "SVG_Mixers(English)",
+        label: "N/ASVG_MixersPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Mixers.zip"
+    }, {
+        title: "SVG_Motors(English)",
+        label: "N/ASVG_MotorsPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Motors.zip"
+    }, {
+        title: "SVG_Pipes(English)",
+        label: "N/ASVG_PipesPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Pipes.zip"
+    }, {
+        title: "SVG_Pipes_12p(English)",
+        label: "N/ASVG_Pipes_12pPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Pipes_12p.zip"
+    }, {
+        title: "SVG_Process_Heating(English)",
+        label: "N/ASVG_Process_HeatingPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Process_Heating.zip"
+    }, {
+        title: "SVG_Process_Heating_2(English)",
+        label: "N/ASVG_Process_Heating_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Process_Heating_2.zip"
+    }, {
+        title: "SVG_Pumps(English)",
+        label: "N/ASVG_PumpsPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Pumps.zip"
+    }, {
+        title: "SVG_Pumps_2(English)",
+        label: "N/ASVG_Pumps_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Pumps_2.zip"
+    }, {
+        title: "SVG_Tanks(English)",
+        label: "N/ASVG_TanksPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Tanks.zip"
+    }, {
+        title: "SVG_Tanks_2(English)",
+        label: "N/ASVG_Tanks_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Tanks_2.zip"
+    }, {
+        title: "SVG_Tanks_3(English)",
+        label: "N/ASVG_Tanks_3Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Tanks_3.zip"
+    }, {
+        title: "SVG_Fan(English)",
+        label: "N/ASVG_FanPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Fan.zip"
+    }, {
+        title: "SVG_Fire_Ice(English)",
+        label: "N/ASVG_Fire_IcePicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Fire_Ice.zip"
+    }, {
+        title: "SVG_Hopper(English)",
+        label: "N/ASVG_HopperPicture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Hopper.zip"
+    }, {
+        title: "SVG_Valves_1(English)",
+        label: "N/ASVG_Valves_1Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Valves_1.zip"
+    }, {
+        title: "SVG_Valves_2(English)",
+        label: "N/ASVG_Valves_2Picture LibraryPicture LibraryPicture Library",
+        category: "Библиотека изображений",
+        url: "https://dl.weintek.com/public/EBPro/Library/Picture_Library_SVG/SVG_Valves_2.zip"
+    }, {
+        title: "EasyBuilder Pro V6.05.01.565(English/Simplified Chinese/Traditional Chinese/French/German/Italian/Japanese/Korean/Polish/Spanish/Russian/Turkish)",
+        label: "cMT-FHDX-220,cMT3072X,cMT3072XHEasyBuilder Pro V6.05.01.565SoftwareSoftwareEB",
+        category: "Программы",
+        url: "https://dl.weintek.com/EBPro/Installer/EBproV60501565.zip"
+    }, {
+        title: "MT600i series CE image(English)",
+        label: "MT607i,MT610iMT600i series CE imageSoftwareSoftwareMT600",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT600/MT600iV1/CE_images/NK_20101029.zip"
+    }, {
+        title: "Project Manager(English)",
+        label: "eMT3070A,eMT3105P,eMT3120A,eMT3150A,mTV-100,MT6070iE,MT8050iE,MT8070iE,MT8100iE,cMT-SVR-100,cMT-iV5,MT8150XE,MT8121XE1,MT8070iER1Project ManagerSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT8000/utility/ProjectManager_V430.zip"
+    }, {
+        title: "EasyPrinter(English)",
+        label: "eMT3070A,eMT3105P,eMT3120A,eMT3150A,mTV-100,MT6070iE,MT8050iE,MT8070iE,MT8100iE,cMT-SVR-100,cMT-iV5,MT8150XE,MT8121XE1,MT8070iER1EasyPrinterSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/EBPro/Utility/EasyPrinter-1.28.zip"
+    }, {
+        title: "EasyConverter(Dutch/English/Spanish/French/Italian/Polish/Turkish/Russian/Simplified Chinese/Japanese/Traditional Chinese/Korean)",
+        label: "MT6051iP,MT6071iP,MT8071iP,MT6103iP,MT8102iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100iE,MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100EasyConverterSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/EBPro/Utility/EasyConverterV2010100_20210115.zip"
+    }, {
+        title: "Recipe Editor(English)",
+        label: "eMT3070A,eMT3105P,eMT3120A,eMT3150A,mTV-100,MT6070iE,MT8050iE,MT8070iE,MT8100iE,cMT-SVR-100,cMT-iV5,MT8150XE,MT8121XE1,MT8070iER1Recipe EditorSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT8000/utility/RecipeEditor.zip"
+    }, {
+        title: "EasyDiagnoser(English)",
+        label: "eMT3070A,eMT3105P,eMT3120A,eMT3150A,mTV-100,MT6070iE,MT8050iE,MT8070iE,MT8100iE,cMT-SVR-100,cMT-iV5,MT8150XE,MT8121XE1,MT8070iER1EasyDiagnoserSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT8000/utility/EasyDiagnoser_V420_100906.zip"
+    }, {
+        title: "cMT Viewer (Android)(English)",
+        label: "N/AcMT Viewer (Android)SoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/cMTViewer/Mobile/cMTViewer_arm_V21455.apk"
+    }, {
+        title: "cMT+CODESYS Package (PC)(English)",
+        label: "cMT3071,cMT3072,cMT3090,cMT3151cMT+CODESYS Package (PC)SoftwareSoftwareCODESYS",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/cMT/CODESYS/Weintek_CODESYS_and_RemoteIO_package/Weintek_CODESYS_and_RemoteIO_1.0.0.280.package"
+    }, {
+        title: "cMT+CODESYS Firmware (HMI)(English)",
+        label: "cMT3071,cMT3072,cMT3090,cMT3151cMT+CODESYS Firmware (HMI)SoftwareSoftwareCODESYS",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/cMT/CODESYS/Firmware/codesys_20200731.446.bin"
+    }, {
+        title: "EasyRemoteIO(English/Simplified Chinese/Traditional Chinese/French/German/Italian/Japanese/Korean/Polish/Spanish/Russian/Turkish)",
+        label: "iR-ETNEasyRemoteIOSoftwareSoftwareRemoteIO",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/iR/EasyRemoteIO/EasyRemoteIO_V1.3.2.0.zip"
+    }, {
+        title: "EasyLauncher(English/French/Italian/Spanish/Russian/Simplified Chinese/Traditional Chinese/Korean/German/Japanese/Polish)",
+        label: "cMT-iPC15,cMT-iPC10EasyLauncherSoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/EasyLauncher/EasyLauncher_V1.16.55.zip"
+    }, {
+        title: "cMT Viewer (PC)(English/French/Italian/Spanish/Russian/Simplified Chinese/Traditional Chinese/Korean//German/Japanese/Polish)",
+        label: "cMT-SVR-100,cMT3072,cMT3090,cMT3103,cMT3151,cMT-HDMI,cMT3071cMT Viewer (PC)SoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/cMTViewer/cMTViewer_V21455.zip"
+    }, {
+        title: "EasyAccess 2.0(English/French/Italian/Spanish/Russian/Simplified Chinese/Traditional Chinese/Korean/German/Japanese/Polish)",
+        label: "MT8101iE,MT8102iE,MT8103iE,MT8090XE,MT8091XE,MT8092XE,MT8121XE1,MT8150XE,mTV-100,cMT-SVR-100,cMT3151,MT8073iE,MT8100iE,eMT3070A,eMT3070B,eMT3105P,eMT3120A,eMT3150A,MT8050iE,MT8070iE,MT8071iEEasyAccess 2.0SoftwareSoftwareEasyAccess",
+        category: "Программы",
+        url: "https://dl.weintek.com/EasyAccess20/Installer/EasyAccess2_V21007_20200720.zip"
+    }, {
+        title: "EasyDownload V1.0.0.6(English/Simplified Chinese/Tradition Chinese/French/Korean/Italian/Spanish/Russian/Polish)",
+        label: "MT6050i,MT8050i,MT6050iP,MT8050iP,MT6056i,MT6070iH,MT8070iH,MT6100i,MT8100i,MT6070iP,MT8070iP,MT8104iH,MT6051iP,MT6071iP,MT8071iP,MT6103iP,eMT3070,eMT3105,eMT3120,eMT3150,MT8050iE,MT6070iE,MT6071iE,MT8070iE,MT8071iE,MT8073iE,MT8100EasyDownload V1.0.0.6SoftwareSoftwareUtility",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/EasyDownload/ED_V1006_20171220.zip"
+    }, {
+        title: "MT600TV2 SDK(English)",
+        label: "N/AMT600TV2 SDKSoftwareSoftwareMT600",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT600/MT600V2SDK/ep931x_CE50_SDK1.1.zip"
+    }, {
+        title: "MT600X SDK(English)",
+        label: "MT610XH,MT612X,MT615XMT600X SDKSoftwareSoftwareMT600",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT600/MT600X_SDK/MT600X_WINCE500_SDK.zip"
+    }, {
+        title: "MT600X XPE EWFAPI(English)",
+        label: "MT610XH,MT612X,MT615XMT600X XPE EWFAPISoftwareSoftwareMT600",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT600/MT600X/API/EWFAPI.zip"
+    }, {
+        title: "MT600X XPE FBWFAPI(English)",
+        label: "MT610XH,MT612X,MT615XMT600X XPE FBWFAPISoftwareSoftwareMT600",
+        category: "Программы",
+        url: "https://dl.weintek.com/public/MT600/MT600X/API/FBWFAPI.zip"
+    },];
+
+
+    new Vue({
+        el: '#app',
+        data: {
+            dataJSONcollect: []
+
+        },
+        mounted: function () {
+            currentContext = this;
+
+            //dataJSON = this.dataJSON;
+            //dataJSONcollect = this.dataJSONcollect;
+            url = document.createElement('a');
+            counter = 0;
+            currentContext.dataJSONcollect = [];
+            availableTags.forEach(function (item, i, arr) {
+
+                dataJSON = {};
+                if (
+
+                    !item.url.includes("/jpn/") &&
+                    !item.url.includes("/cht/") &&
+                    !item.url.includes("/jap/") &&
+                    !item.url.includes("_jpn") &&
+                    !item.url.includes("_cht") &&
+                    !item.url.includes("_tw") &&
+                    !item.url.includes("_jp") &&
+                    !item.url.includes("/MT600/") &&
+                    !item.url.includes("/MT8000/") &&
+                    !item.url.includes("/MT500/") &&
+                    !item.url.includes(".zip") &&
+                    !item.url.includes(".apk") &&
+                    !item.url.includes(".package") &&
+                    !item.url.includes(".cmtp") &&
+                    !item.url.includes(".ccmp") &&
+                    !item.url.includes(".ecmp") &&
+                    !item.url.includes(".rar") &&
+                    !item.url.includes(".dwg") &&
+                    !item.url.includes(".bin") &&
+                    !item.url.includes(".emtp") &&
+                    !item.url.includes(".htm") &&
+                    !item.title.includes("(Japanese)") &&
+                    !item.title.includes("(Traditional Chinese)") &&
+                    !item.title.includes("HMI Pin Assignment")
+
+
+                ) {
+
+                    url.href = item.url;
+                    arrDocumentUrlOriginPath = url.pathname.split("/");
+
+
+
+                    switch (arrDocumentUrlOriginPath[2]) {
+                      case "Document":
+                      dataJSON.documentSubSection  = "Часто задаваемые вопросы";
+                      break;
+                      case "EasyAccess20":
+                      dataJSON.documentSubSection  = "Удаленный доступ EasyAccess 2.0";
+                      break;
+                      case "EBPro":
+                      dataJSON.documentSubSection  = "Среда разработки EasyBuilder Pro";
+                      break;
+                      case "cMT":
+                      dataJSON.documentSubSection  = "Серия cMT";
+                      break;
+                      case "iR":
+                      dataJSON.documentSubSection  = "Модули ввода-вывода серии iR";
+                      break;
+                      case "MT8000iP":
+                      dataJSON.documentSubSection  = "Серия MT8000iP";
+                      break;
+                      case "eMT3000":
+                      dataJSON.documentSubSection  = "Серия eMT3000";
+                      break;
+                      case "MT8000iE":
+                      dataJSON.documentSubSection  = "Серия MT8000iE";
+                      break;
+                      case "MT8000XE":
+                      dataJSON.documentSubSection = "Серия MT8000iE";
+                      break;
+                      case "mTV":
+                      dataJSON.documentSubSection  = "Серия mTV";
+                      break;
+                      default:
+                      dataJSON.documentSubSection = arrDocumentUrlOriginPath[2]; // subSection
+                    }
+
+                    dataJSON.counter = counter;
+
+                    dataJSON.documentSection = "Weintek"; // section
+
+                    arrDocumentUrlOriginPath.splice(0, 2);
+                    arrDocumentUrlOriginPath = arrDocumentUrlOriginPath.join('/')
+
+                    dataJSON.documentEngUrl = "https://www.rusavtomatika.com/upload_files/documents/weintek/" + arrDocumentUrlOriginPath; // url eng
+
+                    //this.dataJSON.documentOriginUrl = item.url; // origin url for meta data
+
+                    nameFormatPos = url.pathname.split("/").pop().lastIndexOf(".") + 1;
+
+                    dataJSON.documentFormat = url.pathname.split("/").pop().substr(nameFormatPos); // format
+
+
+                    dataJSON.documentName = item.title.replace('(English)', ''); // name
+
+                    //await this.pullDataToPhpAjax(dataJSON);
+
+
+
+                    currentContext.dataJSONcollect.push(dataJSON);
+
+
+                //    counter++;
+
+
+                }
+
+            });
+
+        },
+        methods: {
+            addDocumentsAjax: function () {
+                console.log(this.dataJSONcollect.length);
+                data = this.dataJSONcollect.shift();
+
+
+              axios.post('/documents/add_documents_ajax.php', {data}).then((response) => {
+                    console.log(response);
+                    if(this.dataJSONcollect.length > 0){
+                        this.addDocumentsAjax();
+                    }
+
+                });
+
+            },
+            pullDataToPhpAjax: function() {
+
+
+            }
+        }
+    });
+
+
+    // site.com
+</script>

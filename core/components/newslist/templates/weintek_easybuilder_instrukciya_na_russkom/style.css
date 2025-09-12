@@ -1,0 +1,20 @@
+.component_ebpro_instruction_rus_wrapper{
+    display: flex;
+}
+.component_ebpro_instruction_rus_menu{
+    width: 170px;
+}
+
+
+.menu_root_item a{
+    display: block;
+    background: #f0f0f0;
+    padding: 8px 10px;
+    margin-bottom: 2px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 14px;
+    line-height: 1.1;
+    cursor: pointer;
+}

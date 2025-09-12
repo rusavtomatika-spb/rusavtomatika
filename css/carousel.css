@@ -1,0 +1,136 @@
+#gallery {
+
+   margin-bottom: 20px;
+  margin-top: 20px;
+  width: 1150px;
+
+}
+#gallery a
+ {text-decoration: none;
+  color: rgb(81, 105, 121);}
+
+#gallery  >div {
+  margin: auto;
+  width: 1015px;  padding-bottom: 10px;
+/*  
+  background-color: rgb(249, 250, 252);
+  box-shadow: inset 0px 0px 6px rgb(207, 207, 207);
+  background: radial-gradient(circle at 507px 70px, #FAFAFA, #E8E8E8);
+  */
+  }
+
+#gallery .carousel {
+
+    float: left;
+    padding-left: 14px;
+
+    /* Needed for rendering without flicker */
+    position: relative;
+    visibility: hidden;
+    left: -5000px;
+}
+
+    /* Styling for image based carousel content. Only width and height are mandatory */
+    #gallery .carousel>ul>li img {
+        width: 138px;
+        height: 118px;
+        vertical-align:middle;
+
+        /* optional */
+		padding: 0px 7px;
+        margin: 10px 7px 10px 7px;
+
+    }
+
+    /* Styling for text based carousel content. Only width and height are mandatory */
+    #gallery .carousel>ul>li p {
+        width: 130px;
+        height: 98px;
+
+        margin: 10px 10px 10px 0;
+        border: 1px solid #808080;
+        border-radius: 5px;
+        line-height: normal;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+/* Styles for PREV and NEXT anchor buttons */
+#gallery a.prev, #gallery a.next, #gallery a.go {
+  display: block;
+  width: 14px;
+  height: 30px;
+  line-height: 1;
+  color: rgb(0, 33, 55);
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  float: left;
+}
+    #gallery a.prev.disabled, #gallery a.next.disabled,
+    #gallery a.prev.disabled:hover, #gallery a.next.disabled:hover {
+  color: rgb(232, 232, 232);
+        cursor: default;
+    }
+    #gallery a.go.highlight {
+        background-color: #dedede;
+        color: #000;
+    }
+    #gallery a.prev {
+    margin: 65px 0px 0 -21px;
+  text-indent: 3px;
+    }
+    #gallery a.next {
+  margin: 65px 0 0 0px;
+  text-indent: 3px;
+  position: absolute;
+  margin-left: 1021px;
+    }
+        #gallery a.prev:hover, #gallery a.next:hover, #gallery a.go:hover {
+              color: red;
+        }
+
+/* Additional carousel styles for external controls, slider, widget, mid etc. */
+
+#gallery .externalControl button,
+#gallery .imageSliderExt button {
+    margin: 5px 5px 0 0;
+}
+#gallery .externalControl a.next, #gallery .externalControl a.prev, #gallery .externalControl a.go,
+#gallery .imageSliderExt a.next, #gallery .imageSliderExt a.prev, #gallery .imageSliderExt a.go
+{
+    margin: 0 5px 0 0;
+    padding: 7px 5px 0 5px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+#gallery .widget img {
+    cursor: pointer;
+}
+#gallery .mid {
+    margin-left: 50px;
+    width: 400px;
+    height: 300px;
+}
+#gallery .vertical {
+    margin-left: 170px;
+}
+
+#gallery .imageSlider .carousel>ul>li>img,
+#gallery .imageSliderExt .carousel>ul>li>img {
+    width: 400px;
+    height: 300px;
+}
+#gallery .imageSlider .carousel>ul>li>p,
+#gallery .imageSliderExt .carousel>ul>li>p {
+    width: 380px;
+    height: 280px;
+}
+
+/* Other common styles */
+
+.clear {
+    clear: both;
+}

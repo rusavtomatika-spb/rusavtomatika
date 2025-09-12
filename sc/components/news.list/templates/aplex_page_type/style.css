@@ -1,0 +1,61 @@
+.block_content h2 {
+    margin-top: 0px;
+    padding: 5px;
+}
+.weintek_series_panel{
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+}
+.pan_sm_cont {
+    background: #f6f6f6;
+    padding: 13px;
+    border: 1px solid #ededed;
+}
+.pan_price{
+    padding:0px;
+    
+}
+h3.pan_price{
+    padding:0px;
+}
+.weintek_series_panel {
+    width:100%;
+}
+.pan_sm_cont {
+    width: auto;
+}
+.weintek_list_items>tbody{
+    display: block;
+}
+
+.item-collector{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row dense;
+    grid-auto-columns: minmax(30px, 100px);
+    grid-gap: 20px;
+    margin-bottom: 20px;
+}
+.price11 {
+    text-align: center;
+}
+.img_bg-img{
+    width: 100%;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+        transition: 0.2s;
+}
+.img_bg-img:hover{
+    transform: scale(1.1);
+}
+.onstock2{
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    color: black;
+    cursor: default;
+    padding-left: 20px;
+    padding-right: 5px;
+}

@@ -1,0 +1,12 @@
+.img__easyaccess img{
+    max-width: 400px;
+
+}
+
+.codesys_suitable_models a {
+    display: block;
+    width: 100%;
+}
+.codesys_suitable_models img {
+    margin: 0 auto;
+}

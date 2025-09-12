@@ -1,0 +1,140 @@
+#prerendered_content{
+   display: block!important;
+}
+.component_newslist {
+    padding: 0 0 30px;
+}
+
+.component_newslist a {
+    color: #333;
+    text-decoration: none;
+}
+
+.component_newslist_buttons_panel {
+    display: flex;
+    justify-content: center;
+    margin: 0 -10px 10px;
+    flex-basis: 100%;
+}
+.component_newslist .all_buttons{
+    min-height: 200px;
+    opacity: 0;
+}
+
+.component_newslist .discount_brand_item, .component_newslist .discount_categories_item {
+    flex-grow: 2;
+    padding: 5px 10px;
+    display: inline-block;
+    background: #f0f0f0;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.2s;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+.component_newslist .discount_brand_item{
+    text-align: center;
+    min-width: 100px;
+}
+
+.component_newslist .discount_brand_item:hover, .component_newslist .discount_categories_item:hover {
+    background: #e3e3e3;
+}
+
+.component_newslist .discount_brand_item.active, .component_newslist .discount_categories_item.active {
+    background: #44bb6e;
+    color: #fff;
+}
+
+.component_newslist .item {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    min-height: 200px;
+    margin: 10px -5px;
+    transition: 0.2s;
+    background: #EEEEEE;
+    position: relative;
+    z-index: 1;
+}
+
+.component_newslist .item:hover {
+    background: #e3e3e3;
+    z-index: 2;
+}
+
+.component_newslist .item hr {
+    color: #333; /*для IE */
+    background-color: #333; /*для Firefox, Opera, Safari*/
+    border: 0px none;
+    height: 1px; /* высота 1px IE, Firefox, Opera, Safari */
+    clear: both; /* для очистки, если тег идет после float елемента */
+}
+
+.component_newslist .text {
+    
+}
+
+.component_newslist .title, .component_newslist .title a {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+    transition: 0.2s;
+    display: block;
+    color: #333;
+    text-decoration: none;
+}
+
+.component_newslist .price {
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.component_newslist .price .rub {
+    line-height: 6px;
+    width: 0.5em;
+    border-bottom: 3px solid #333;
+    display: inline-block;
+}
+
+.component_newslist .item_buttons {
+    display: flex;
+    justify-content: stretch;
+}
+
+.component_newslist .item_buttons .button_order, .component_newslist .item_buttons .detail_link {
+    font-size: 14px;
+    padding: 3px 10px;
+    cursor: pointer;
+    background: #44bb6e;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    margin: 10px;
+
+}
+
+
+.preview_image_wrapper {
+    text-align: center;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    margin: 0 20px 0 0;
+}
+
+.preview_image {
+    width: 110px;
+    background: center no-repeat;
+    background-size: contain;
+    height: 110px;
+
+}

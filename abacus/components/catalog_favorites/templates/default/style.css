@@ -1,0 +1,88 @@
+.catalog_favorites__button_clearall_wrapper{
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+
+.catalog_favorites__button_clearall{
+    display: inline-block;
+    background: #44bb6e;
+    color: #ffffff;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: larger;
+	padding: 15px 30px;
+}
+
+.catalog_favorites__button_clearall:hover {
+    background: #34ab5e;
+}
+.td_buttons .buttons_panel button, input[type=file]::file-selector-button {
+    background-color: #44bb6e;
+    color: white;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    background-position: center;
+    transition: 0.2s;
+    width: 32px !important;
+    margin: 3px;
+    height: 32px !important;
+    /*background: none;*/
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px !important;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+input[type=file]::file-selector-button {
+	width: 140px;
+	margin-right: 10px;
+	text-align: center;
+	text-transform: uppercase;
+}
+.view-mode-list div div {
+    padding: 5px;
+    border: none;
+    vertical-align: middle;
+    /*text-align: center;*/
+    /*border-bottom: 1px solid #ccc;*/
+}
+.view-mode-list .td_price{
+    line-height: 1;
+    text-align: center;
+    margin: 0px auto 0;
+}
+.view-mode-list .model, .view-mode-list .td_price {
+    font-weight: 600;
+    font-size: 1.3em;
+    line-height: 1.5;
+    text-align: center;
+}
+.view-mode-list .model, .view-mode-list .td_price a, .view-mode-list .model, .view-mode-list .td_model a {
+color:black;
+text-decoration: none !important;
+}
+.view-mode-list .td_onstock{
+    font-size: 14px;
+	padding-left: 0;
+}
+.view-mode-list .td_onstock .green{
+    color: #249b4e;
+    font-size: 14px;
+}
+.view-mode-list .td_onstock .red{
+    color: #ee0000;
+    font-size: 12px;
+}
+.view-mode-list .preview_image{
+    background: #f9f9f9 center no-repeat;
+    border: 1px solid #ccc;
+    background-size: 96% auto;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+}

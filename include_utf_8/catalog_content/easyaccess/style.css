@@ -1,0 +1,54 @@
+.tabs__guide__caption {
+    margin-top: -0.5rem;
+    list-style: none;
+}
+.tabs__guide__caption li{
+    line-height: 1;
+}
+.tabs__guide__content{
+    padding: 1rem 2rem 1rem 2rem;
+    background: #f0f0f0;
+    border-radius: 4px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+}
+.tabs__guide__content h2:first-child{
+    margin-top: 0;
+}
+.tabs__guide__content ol,.tabs__guide__content ul{
+    margin-left: 1rem;
+}
+.tabs__guide__content ol li,.tabs__guide__content ul li{
+    margin: 0.5rem;
+}
+
+
+table.eatable tr {
+    border-bottom: 1px solid grey;
+}
+
+table.eatable td {
+    padding: 4px 0;
+}
+
+h2 {
+    color: #000000;
+}
+
+.block_content h2 {
+    margin-left: 0px;
+}
+
+#tabs {
+    min-height: auto;
+    font-size: 16px;
+}
+
+#tabs div {
+    min-height: auto;
+    font-size: 16px;
+}
+
+#tabs small {
+    font-size: 14px;
+}

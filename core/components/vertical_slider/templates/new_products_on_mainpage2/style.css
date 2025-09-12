@@ -1,0 +1,224 @@
+.wrap_jcarousel{
+        position: relative;
+        height: 572px;
+        padding: 50px 20px 38px 10px;
+        width: 640px;
+    }
+    .jcarousel_new_products {
+        position: relative;
+        overflow: hidden;
+        width: 640px;
+        height: 562px;
+        padding: 0;
+
+    }
+    .jcarousel_new_products ul {
+        width: 540px;
+        height: 10000em;
+        position: relative;
+
+        /* Optional, required in this case since it's a <ul> element */
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .jcarousel_new_products li {
+        width: 640px;
+        height: 140px;
+        padding: 0px !important;
+        box-sizing: border-box;
+        margin: 0 !important;
+        display: block;
+        overflow: hidden;
+    }
+    .jcarousel_new_products li img{
+        /*width: 200px;*/
+    }
+    .jcarousel_new_products li a{
+        color: #333;
+        text-decoration: none;
+    }
+
+
+
+    .jcarousel_new_products .jcarousel-prev-vertical{position: absolute;z-index: 1000;top:0;left:0;width: 20px;height: 20px;background: #f00;}
+    .jcarousel_new_products .jcarousel-next-vertical{position: absolute;z-index: 1000;top:0;right:0;width: 20px;height: 20px;background: #f00;}
+
+
+.wrap_jcarousel .jcarousel-prev, .wrap_jcarousel .jcarousel-next{
+    display: block;
+	position: absolute;
+	width: 40px;
+	left: 50%;
+	margin-left: -20px;
+	height: 30px;
+        overflow: hidden;
+        text-indent: -999px;
+	background-color: #000;
+	color: White;	
+	cursor: pointer;
+	z-index: 50;
+	opacity: 0.3;
+	transition: 0.2s;
+}
+.wrap_jcarousel .jcarousel-prev{
+	background-image: url(/cms/components/vertical_slider/templates/default/img/arr-up.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	top: 25px;    
+}   
+.wrap_jcarousel .jcarousel-next{
+	background-image: url(/cms/components/vertical_slider/templates/default/img/arr-down.png);
+background-repeat: no-repeat;
+background-position: center; 
+top: 605px;
+}   
+
+
+
+.wrap_jcarousel .jcarousel-prev:hover, .wrap_jcarousel .jcarousel-next:hover
+{
+	opacity: 1 !important;
+	background-color: #34ab5e;
+}
+
+
+.vertical_slider_new_productsonmainpage{background: #fff;padding: 0 10px;position: relative;margin-top: 18px;}
+    .vertical_slider_new_productsonmainpage a{text-decoration: none;}
+    .vertical_slider_new_productsonmainpage__item{padding:5px 5px; overflow: hidden;}
+    .vertical_slider_new_productsonmainpage__item_wrapinn{padding:0px 10px 0px 0px ;box-shadow: 0 0 3px rgba(0,0,0,0.3);transition: 0.1s;overflow: hidden;
+                                                 height: 130px;}
+    .vertical_slider_new_productsonmainpage__item_wrapinn:hover{box-shadow: 0 0 5px rgba(0,0,0,0.4);
+                                                        padding:1px 11px 1px 1px ;
+                                                        margin: -1px;
+    }
+
+    .vertical_slider_new_productsonmainpage__item_date{background: #bce9bc;color:#333;padding: 0px 5px;font-size: 11px;font-weight: 400;margin-right: 4px;}
+
+    .vertical_slider_new_productsonmainpage__item__item_link{
+        position:relative;
+        height: 130px;
+        display: flex;
+    }
+
+    .vertical_slider_new_productsonmainpage__item__item_name{
+        padding:10px 0px 0px;
+        color: #333;
+        font-size: 13px;
+        line-height: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: left;
+
+    }
+    .vertical_slider_new_productsonmainpage__item__item_name_wrap{display: inline;padding-top: 5px;}
+    .vertical_slider_new_productsonmainpage__item__item_picture_preview_wrap{
+        display: block;
+        flex-shrink: 0;
+        width: 160px;
+        height:100%;
+        margin-right: 10px; background: #f9f9f9;padding: 5px;
+        box-sizing: border-box;}
+    .vertical_slider_new_productsonmainpage__item__item_picture_preview{
+        background: center/100% auto  no-repeat;
+        width: 100%;
+        height:120px;
+        background-size: contain;
+    }
+    .vertical_slider_new_productsonmainpage__item__item_text_preview_wrap{padding: 5px 0px 5px;}
+    .vertical_slider_new_productsonmainpage__item__item_text_preview{color: #333;line-height: 1.3;font-size: 13px;}
+
+
+
+    /*Вериткальная карусель CSS*/
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical{                       /* ширина и высота коробки для слайдов */
+        width: 640px;
+        height: 490px;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .vertical_slider_new_productsonmainpage .jscarousal-contents-vertical{              /* ширина и высота области где слайды */
+        overflow: hidden;
+        width: 640px;
+        height: 415px;}
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical-back, .vertical_slider_new_productsonmainpage .jscarousal-vertical-forward{
+        position: absolute;
+        width: 40px;
+        left: 50%;
+        margin-left: -20px;
+        height: 30px;
+        background-color: #000;
+        color: White;
+        position: relative;
+        cursor: pointer;
+        z-index:50;
+        opacity:0.3;
+        transition: 0.2s;}
+    .vertical_slider_new_productsonmainpage .vertical_slider_new_productsonmainpage:hover .jscarousal-vertical-back,
+    .vertical_slider_new_productsonmainpage .vertical_slider_new_productsonmainpage:hover .jscarousal-vertical-forward{
+        opacity:0.7;
+        background-color: #34ab5e;
+    }
+    .vertical_slider_new_productsonmainpage:hover .jscarousal-vertical-back,
+    .vertical_slider_new_productsonmainpage:hover .jscarousal-vertical-forward{
+        opacity:0.7;
+        background-color: #34ab5e;
+    }
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical-back:hover,
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical-forward:hover{
+        opacity:1 !important;
+        background-color: #34ab5e;
+    }
+
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical-back{
+        background-image: url(/cms/components/vertical_slider/templates/default/img/arr-up.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        top:15px;}
+    .vertical_slider_new_productsonmainpage .jscarousal-vertical-forward{
+        background-image: url(/cms/components/vertical_slider/templates/default/img/arr-down.png);
+        background-repeat: no-repeat;
+        background-position: center;}
+    .vertical_slider_new_productsonmainpage .jscarousal-contents-vertical > div{
+        position: absolute;
+        top: 35px;
+        width: 100%;
+        height: 425px;
+        overflow: hidden;}
+    
+    .vertical_slider_new_productsonmainpage__item .fog-white{position: absolute;right:0;bottom:-2px;width: 315px;height: 24px;display: block;
+    background: left 1px url(/images/fog-white.png) repeat-x;}
+    
+    
+    /*.vertical_slider_new_productsonmainpage .jscarousal-contents-vertical > div > div span{
+        display: block;
+        width: 70%;
+        text-align: center;}*/
+    /*Вериткальная карусель CSS*/
+
+    /*Общие*/
+    .hidden{	display: none;    }
+    .visible{	display: block;}
+    .thumbnail-active{
+        filter: alpha(opacity=100);
+        opacity: 1.0;
+        cursor: pointer;}
+    .thumbnail-inactive{
+        filter: alpha(opacity=90);
+        opacity: 0.9;
+        cursor: pointer;}
+    .thumbnail-text {
+        color: #E0E0E0;
+        font-weight: bold;
+        text-align: left;
+        display: block;
+        padding: 2px 2px 2px 0px;
+        line-height: 16px;
+        font-size: 12px;
+    }
+    .thumbnail-text a{
+        color: #E0E0E0; text-decoration: none;    font-size: 12px;}
+    .thumbnail-text a:hover{
+        color: #fff;}

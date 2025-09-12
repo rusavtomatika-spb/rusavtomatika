@@ -1,0 +1,23 @@
+Options -Indexes
+
+
+#php_flag display_errors off
+
+RewriteEngine on
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#ErrorDocument 404 /404.php
+
+
+RewriteRule ^.htaccess$ - [F]
+# запрещает доступ к самому файлу .htaccess
+
+RewriteBase     /plc/yottacontrol
+
+
+RewriteCond %{HTTP_HOST} !^www.
+RewriteRule (.*) http://www.%{HTTP_HOST}/plc/yottacontrol/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]

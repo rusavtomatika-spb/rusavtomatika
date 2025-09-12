@@ -1,0 +1,1145 @@
+.show_in_dev_mode {
+    font-size: 8px;
+    color: red;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.2;
+}
+
+.component_catalog_search {
+    display: block;
+
+}
+
+.component_catalog_search .panel_chosen_filters {
+    margin: 20px 30px;
+    text-align: left;
+    user-select: none;
+
+}
+
+.component_catalog_search .panel_chosen_filters .item {
+    display: inline;
+}
+
+.component_catalog_search .panel_chosen_filters .item > span {
+    background: var(--color-light-gray);
+    border: 1px solid var(--color-gray);
+    margin: 0px 10px 10px 0px;
+    border-radius: 15px;
+    padding: 4px 30px 4px 8px;
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    line-height: 21px;
+}
+
+.component_catalog_search .panel_chosen_filters .item > span.clear_all {
+    background: var(--color-green);
+    border: 1px solid var(--color-green);
+    color: white;
+    font-weight: bold;
+}
+
+
+.component_catalog_search .panel_chosen_filters .item > span .button_clear_filter {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    width: 25px;
+    height: 25px;
+    background: url("/core/templates/rusavtomatika_adaptive/images/clear_button_bw.png") no-repeat;
+    background-position: center 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 13px;
+    margin: 0;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -999px;
+    user-select: none;
+    border-radius: 20px;
+}
+
+.component_catalog_search .panel_chosen_filters .item > span.clear_all .button_clear_filter {
+    background: url("/core/templates/rusavtomatika_adaptive/images/clear_button_bw.png") no-repeat;
+    background-position: center -97px;
+}
+
+.component_catalog_search .panel_chosen_filters .item > span .button_clear_filter:hover {
+    background-color: var(--color-dark-gray);
+    background-position: center -97px;
+}
+
+.component_catalog_search .panel_chosen_filters .item > span.clear_all .button_clear_filter:hover {
+    background-color: var(--color-dark-gray);
+    background-position: center -97px;
+}
+
+
+.component_catalog_search .font_lg {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.component_catalog_search .font_md {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.component_catalog_search .font_sm {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+.component_catalog_search .brand_logo {
+    margin-top: -7px;
+    width: 300px;
+    height: 35px;
+    background: right no-repeat;
+    background-size: contain;
+    float: right;
+}
+
+.component_catalog_search .brand_name {
+    /*line-height: 40px;*/
+}
+
+.brand_logo_wrapper {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px 9px;
+    margin: -1px 0px 1px;
+    background: #f0f0f0;
+}
+
+.component_catalog_search .series_title {
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0px 5px;
+    margin-left: 15px;
+}
+
+.component_catalog_search .filter_string {
+
+}
+
+.component_catalog_search .filter_string_wrapper {
+    margin-bottom: 9px;
+}
+
+.component_catalog_search_wrapper {
+    border: 1px solid #e0e0e0;
+    padding: 0px 0px 10px 0px;
+}
+
+.component_catalog_search a {
+    color: #000;
+    text-decoration: none;
+}
+
+.component_catalog_search table {
+    width: 100%;
+}
+
+@media (max-width: 1023px) {
+    .component_catalog_search table.series_products {
+        display: block;
+    }
+
+    .component_catalog_search table.series_products td {
+    / / display: block;
+    }
+}
+
+
+.component_catalog_search table tr {
+    /*    background: #f3f3f3;*/
+    border-bottom: 1px solid #e0e0e0;
+}
+.component_catalog_search table.series_products {
+    margin-bottom: 1rem;
+}
+
+.component_catalog_search table tr.separator {
+    border-bottom: 1px solid #e0e0e0;
+}
+.component_catalog_search table tr.separator td{
+    padding: 0px;
+}
+
+
+.component_catalog_search tr a:hover .model,
+.component_catalog_search tr a:hover .name {
+    text-decoration: underline;
+}
+
+.component_catalog_search tr a .stext {
+    display: block;
+    text-decoration: none;
+}
+
+.component_catalog_search tr a:hover .stext {
+    display: block;
+    text-decoration: none;
+}
+
+.component_catalog_search .view-mode-table .model, .component_catalog_search .view-mode-table .td_price {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.component_catalog_search .view-mode-table .td_price .no_price {
+    font-size: 12px;
+}
+
+.component_catalog_search .td_buttons {
+    font-size: 12px;
+    opacity: 1;
+    transition: 0.3s;
+    position: relative;
+}
+
+.component_catalog_search .view-mode-list .td_buttons {
+    opacity: 1;
+}
+
+.component_catalog_search tr:hover .td_buttons {
+    opacity: 1
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel {
+    position: absolute;
+    top: 1px;
+    left: -12px;
+    width: 76px;
+    padding: 3px;
+    text-align: center;
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button, .flying_row button {
+    /*background-color: #44bb6e;*/
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border: none;
+    padding: 3px 3px;
+    margin: 2px;
+    display: inline-block;
+    cursor: pointer;
+    /*background-size: 100% auto;*/
+    background-position: center;
+    transition: 0.2s;
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel {
+    padding: 3px;
+    text-align: center;
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel {
+    position: relative;
+    /*
+    top: 3px;
+    left: -2px;
+    */
+    width: 125px;
+    /*background: white;*/
+    /*box-shadow: 0 0 3px rgba(0,0,0,0.4);*/
+    padding: 3px;
+    text-align: right;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel {
+    position: relative;
+}
+
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button {
+    width: 25px;
+    height: 25px;
+    margin: 1px 2px;
+    background-size: cover;
+
+}
+
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button, .flying_row button, button.flying_row {
+    width: 120px;
+    margin: 5px 0;
+    height: auto;
+    background: none;
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    padding: 3px 5px 3px 25px;
+    box-sizing: border-box;
+
+    background-color: var(--color-dark-green);
+    border: 1px solid var(--color-dark-green);
+
+    background: url("/core/templates/rusavtomatika_adaptive/images/order_button.png") 5px 4px no-repeat var(--color-dark-green);
+    background-size: initial;
+    display: inline-block;
+    box-sizing: border-box;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/*
+.component_catalog_search tr .td_buttons .buttons_panel button:hover, button.flying_row  {
+    background-color: #34ab5e;
+    border-color:  #34ab5e;
+    color: #ffffff;
+}
+*/
+button.flying_row {
+    background-color: #34ab5e;
+    border-color: #34ab5e;
+    color: #ffffff;
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.cart {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/cart_icon_gray.png");
+
+
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.compare {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/compare_icon_gray.png");
+
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.favorite {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/favorite_icon_gray.png");
+
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.cart:hover, .component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.cart.active {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/cart_icon_green.png");
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.compare:hover, .component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.compare.active {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/compare_icon_green.png");
+}
+
+.component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.favorite:hover, .component_catalog_search .view-mode-table tr .td_buttons .buttons_panel button.favorite.active {
+    background-image: url("/core/templates/rusavtomatika_adaptive/images/favorite_icon_green.png");
+}
+
+
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button.active,
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button:hover {
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button:hover {
+    border: 1px solid var(--color-green);
+    color: #fff;
+}
+
+.component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button.active:hover {
+    opacity: 0.5;
+}
+
+
+.component_catalog_search .view-mode-list .buttons_panel button.active span {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background-color: #3aca6c !important;
+    margin-left: -14px;
+    margin-right: 6px;
+    margin-bottom: 0px;
+    display: none;
+}
+
+
+.component_catalog_search .view-mode-table table td {
+    padding: 0px 5px;
+    border: none;
+    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+}
+
+.component_catalog_search .view-mode-table table td.td_preview_image {
+    padding: 0px;
+}
+
+
+.component_catalog_search .view-mode-table table td.td_model {
+    width: 13%;
+    line-height: 1.2;
+}
+
+.component_catalog_search .view-mode-table table td.td_short_description {
+    width: 60%;
+    line-height: 1.2;
+}
+
+.component_catalog_search .view-mode-table table td.td_price {
+    width: 8%;
+    line-height: 1;
+    text-align: right;
+}
+
+.component_catalog_search .view-mode-table table td.td_price .rub_price {
+    font-size: 14px;
+    font-weight: normal;
+    color: #249b4e;
+    margin-top: 5px;
+}
+
+.component_catalog_search .view-mode-table table td.td_onstock {
+    font-size: 14px;
+}
+
+.component_catalog_search .view-mode-table table td.td_onstock .green {
+    color: #249b4e;
+}
+
+.component_catalog_search .view-mode-table table td.td_onstock .red {
+    color: #ee0000;
+}
+
+
+.component_catalog_search .view-mode-table table td.td_buttons {
+    width: 3%;
+    text-align: right;
+}
+
+
+.component_catalog_search .view-mode-table table td span.name_short {
+    font-size: 12px;
+}
+
+.component_catalog_search .view-mode-table .preview_image {
+    background: #F9F9F9 center no-repeat;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background-size: 90% auto;
+    width: 77px;
+    height: 62px;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 0px;
+}
+
+.component_catalog_search .sort_mode {
+    border: 1px solid #e0e0e0;
+    display: inline-block;
+    height: 30px;
+    padding: 5px 10px;
+}
+
+.component_catalog_search .section_list_view_sort .elements {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 5px;
+    float: right;
+    height: 30px;
+    text-align: right;
+    padding: 5px 0px;
+    box-sizing: border-box;
+}
+
+.component_catalog_search .section_list_view_sort select {
+    font-size: 12px;
+    padding: 4px;
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+
+.component_catalog_search .section_list_view_sort select option {
+    display: block;
+    padding: 5px;
+    background-color: var(--color-light-gray);
+    color: black;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+
+.component_catalog_search .section_list_view_mode {
+    display: block;
+    text-align: right;
+}
+
+.component_catalog_search .section_list_view_mode .elements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.component_catalog_search .section_list_view_mode .section_list_view_mode_button {
+    display: inline-block;
+    height: 26px;
+    width: 28px;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 4px;
+    margin-left: 5px;
+    background: url("/core/templates/rusavtomatika_adaptive/images/buttons_list_view_mode_2.png") no-repeat var(--color-gray);
+    cursor: pointer;
+}
+
+.component_catalog_search .section_list__set_availablity .elements {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: 29px;
+    width: auto;
+    text-align: right;
+    padding: 5px 0px;
+    box-sizing: border-box;
+}
+
+
+.component_catalog_search .section_list__set_diagonal_span {
+    display: block;
+}
+
+.component_catalog_search .section_list__set_diagonal_span .elements {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 5px;
+    height: 29px;
+    text-align: right;
+    padding: 5px 0px;
+    box-sizing: border-box;
+}
+
+.component_catalog_search .section_list_currency_block .info {
+    padding: 4px 0 0;
+    font-weight: bold;
+}
+
+
+.component_catalog_search .section_list__set_diagonal_span .section_list__title,
+.component_catalog_search .section_list__set_availablity .section_list__title,
+.component_catalog_search .section_list_view_sort .section_list__title,
+.component_catalog_search .section_list_view_mode .section_list__title,
+.component_catalog_search .section_list_currency_block .section_list__title {
+    display: block;
+    margin-bottom: 1px;
+}
+
+
+.section_list__set_diagonal_span__button, .section_list__set_availablity__button {
+    display: inline-block;
+    height: 28px;
+    min-width: 50px;
+    text-align: center;
+    padding: 0;
+    border: 1px solid var(--color-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    background: #eee;
+    box-sizing: border-box;
+    user-select: none;
+    font-size: 12px;
+    line-height: 28px;
+}
+
+.section_list__set_availablity__button {
+    min-width: 80px;
+}
+
+.section_list__set_diagonal_span__button.clear_button {
+    overflow: hidden;
+    width: 30px;
+    min-width: 30px;
+    text-indent: -999px;
+    background: url("/core/templates/rusavtomatika_adaptive/images/clear_button.png") center 6px no-repeat;
+    background-color: var(--color-light-gray);
+
+}
+
+.section_list__set_diagonal_span__button.clear_button.active {
+    display: none;
+
+}
+
+.section_list__set_diagonal_span__button.clear_button:hover {
+    background: url("/core/templates/rusavtomatika_adaptive/images/clear_button.png") center -94px no-repeat;
+    background-color: var(--color-green);
+}
+
+.section_list__set_diagonal_span__button.active, .section_list__set_diagonal_span__button:hover,
+.section_list__set_availablity__button.active, .section_list__set_availablity__button:hover {
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+    color: white;
+    font-weight: bold;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_tiles {
+    background-position: 6px 7px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_list {
+    background-position: -26px 5px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_list.active {
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+    background-position: -26px -30px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_table {
+    background-position: -57px 5px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_table.active {
+    background-position: -57px -30px;
+    background-color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_tiles:hover {
+    background-position: 6px -30px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_list:hover {
+    background-position: -26px -30px;
+}
+
+.component_catalog_search .section_list_view_mode .button_view_mode_table:hover {
+    background-position: -57px -30px;
+}
+
+
+.component_wrapper {
+
+}
+
+.component_catalog .section_link {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    display: block;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    height: 170px;
+    margin-bottom: 30px;
+    transition: 0.2s;
+    background: white;
+}
+
+.component_catalog .section_link:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    background: #f8f8f8;
+}
+
+.component_catalog .section_list__title {
+    font-size: 16px;
+    line-height: 1.1;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 8px;
+    height: 36px;
+    text-align: center;
+}
+
+.preview_image {
+    width: 80%;
+    background: center no-repeat;
+    background-size: contain;
+    height: 110px;
+    margin: 0 auto 0;
+
+}
+
+.component_catalog_search .breadcrumbs {
+    margin-left: 30px;
+}
+
+.component_catalog_search h1 {
+    margin: 10px 10px 8px 0px;
+}
+
+
+.component_catalog_search .component_catalog_search__tags {
+    padding: 10px;
+    text-align: center;
+    background: #f6f6f6;
+    margin-bottom: 15px;
+}
+
+.component_catalog_search .component_catalog_search__filter {
+    margin-bottom: 15px;
+    margin-right: -1px;
+    min-width: 200px;
+}
+
+.component_catalog_search .component_catalog_search__panels {
+    padding: 10px;
+    text-align: center;
+    background: #f6f6f6;
+    margin-bottom: 15px;
+
+}
+
+.section_list_view_mode_button_wrapper {
+    height: 65px;
+    padding-left: 30px;
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .section_list_view_mode_button_wrapper {
+        padding: 0;
+        gap: 20px;
+        justify-content: left;
+    }
+
+
+    .component_catalog_search h1 {
+        margin: 0px;
+        font-size: var(--font-size-lg);
+    }
+
+    .component_catalog_search .panel_chosen_filters .item > span {
+        margin: 0px 10px 10px 0px;
+        padding: 0px 30px 0px 8px;
+        line-height: 22px;
+    }
+
+    .component_catalog_search .panel_chosen_filters .item > span .button_clear_filter {
+        top: -2px;
+    }
+
+    .component_catalog_search .panel_chosen_filters {
+        margin: 0px 0px;
+    }
+
+}
+
+
+.button_open_filter__icon {
+    background: url("images/filter.svg") center/cover no-repeat;
+    width: 27px;
+    height: 13px;
+    display: inline-block;
+    margin-left: -0.3rem;
+    margin-right: 0.3rem;
+}
+
+
+/************************************************************************************************************************/
+
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons {
+    display: flex;
+    gap: 30px;
+    justify-content: left;
+    padding: 10px 0 0;
+    user-select: none;
+}
+.component_catalog_search .view-mode-list .series_products.in_two_cols .series_products__panel_buttons {
+    display: block;
+    padding: 0 0;
+}
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .buttons_add {
+    display: flex;
+    gap: 30px;
+}
+
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .favorites {
+    background: url("/core/templates/rusavtomatika_adaptive/images/add_button_favorite.png") left -101px no-repeat;
+    padding-left: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #777;
+    white-space: nowrap;
+}
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .favorites.active {
+    background-position: left -1px;
+    color: var(--color-green);
+}
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .compare {
+    background: url("/core/templates/rusavtomatika_adaptive/images/add_button_compare.png") left -100px no-repeat;
+    padding-left: 20px;
+    line-height: 20px;
+    cursor: pointer;
+    color: #777;
+    white-space: nowrap;
+}
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .compare.active {
+    background-position: left 0px;
+    color: var(--color-green);
+}
+
+.component_catalog_search .view-mode-list .series_products__panel_buttons .brand {
+    min-width: 200px;
+    background: url("/core/templates/rusavtomatika_adaptive/images/cogwheel.png") left 3px no-repeat;
+    padding-left: 17px;
+    line-height: 20px;
+    cursor: pointer;
+}
+.component_catalog_search .view-mode-list .in_two_cols .series_products__panel_buttons .brand {
+    min-width: 20px;
+}
+
+
+.component_catalog_search .view-mode-list .indicator_availability .green {
+    text-align: right;
+    color: var(--color-green);
+}
+
+.component_catalog_search .view-mode-list .indicator_availability .red {
+    text-align: right;
+    color: var(--color-red);
+}
+
+.component_catalog_search .view-mode-list .price_block_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    min-height: 40px;
+}
+
+.component_catalog_search .view-mode-list .price_block {
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: left;
+    color: var(--color-green);
+    text-align: right;
+    width: 120px;
+
+}
+
+.component_catalog_search .view-mode-list .price_block .rub_price {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.5;
+    text-align: left;
+    display: block;
+    color: #333;
+    display: block;
+    text-align: right;
+    width: 110px;
+}
+
+
+.component_catalog_search .view-mode-list .model,
+.component_catalog_search .view-mode-list .name {
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.3;
+    text-align: left;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.component_catalog_search .view-mode-list .name .date {
+    font-size: 0.875rem;
+    font-weight: normal;
+    float: right;
+    display: inline-block;
+    background: #eeeeee;
+    padding: 2px 5px;
+}
+
+.catalog_favorites .component_catalog_search .view-mode-list .model {
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+
+.component_catalog_search .view-mode-list .td_price {
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.component_catalog_search .view-mode-list .price_block .no_price {
+    display: inline-block;
+
+    margin: 0;
+    width: 120px;
+    text-align: center;
+    padding: 0 0px;
+    border: 1px solid var(--color-gray);
+    color: black;
+    border-radius: 4px;
+    margin-left: 0px;
+    cursor: pointer;
+    background: #eee;
+    box-sizing: border-box;
+    user-select: none;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 24px;
+
+}
+
+
+.component_catalog_search .view-mode-list table td {
+    padding: 10px 10px;
+    border: none;
+    vertical-align: middle;
+    /*border-bottom: 1px solid #ccc;*/
+}
+
+.component_catalog_search .view-mode-list table td.td_preview_image {
+    vertical-align: top;
+}
+
+tr.flying_row td {
+    background: #dbf8db;
+    vertical-align: middle;
+    opacity: 0.5;
+}
+
+.component_catalog_search .view-mode-list table td.td_model {
+    width: 20%;
+    line-height: 1.5;
+    padding-left: 0;
+    font-weight: bold;
+}
+
+.catalog_favorites .component_catalog_search .view-mode-list table td.td_model {
+    width: 30%;
+}
+
+.component_catalog_search .view-mode-list table td.td_short_description {
+    width: 100%;
+    line-height: 1.5;
+}
+
+.component_catalog_search .view-mode-list table td.td_price {
+    width: 12%;
+    line-height: 1;
+    text-align: right;
+}
+
+.component_catalog_search .view-mode-list table td.td_price .rub_price {
+    font-size: 14px;
+    font-weight: normal;
+    color: #249b4e;
+    margin-top: 5px;
+}
+
+.component_catalog_search .view-mode-list table td.td_onstock {
+    font-size: 14px;
+}
+
+.component_catalog_search .view-mode-list table td.td_onstock .green {
+    color: #249b4e;
+}
+
+.component_catalog_search .view-mode-list table td.td_onstock .red {
+    color: #ee0000;
+}
+
+
+.component_catalog_search .view-mode-list table td.td_buttons {
+    width: 3%;
+    text-align: right;
+}
+.component_catalog_search .view-mode-list table td.td_buttons .indicator_availability{
+    margin-top: -1rem;
+}
+.component_catalog_search .view-mode-list table.series_products.in_two_cols td.td_buttons .indicator_availability{
+    margin-top: 0;
+}
+
+
+
+
+
+
+.component_catalog_search .view-mode-list table td span.name_short {
+    font-size: 12px;
+}
+
+.component_catalog_search .view-mode-list .preview_image {
+    /*  background: #f9f9f9 center no-repeat;*/
+    /*  border: 1px solid #ccc;*/
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    width: 80px;
+    height: 70px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_open_filter {
+    font-weight: 600;
+    padding: 10px 15px;
+    line-height: 27px;
+    height: 27px;
+    border-radius: 4px !important;
+}
+
+@media (max-width: 1023px) {
+    .component_catalog_search .view-mode-list .preview_image {
+        margin-right: auto;
+        margin-left: 0;
+    }
+
+    .component_catalog_search .view-mode-list .preview_image {
+        padding: 0px;
+        box-sizing: border-box;
+        margin-left: 0px;
+        text-align: left;
+    }
+
+    .component_catalog_search .section_list_view_sort select {
+        padding: 5px 5px 5px 10px;
+    }
+
+    .component_catalog_search .view-mode-list table td {
+        padding: 10px 1px;
+    }
+
+    .component_catalog_search .view-mode-list table td.td_buttons {
+        padding-right: 10px;
+    }
+
+    .component_catalog_search_wrapper {
+        border: none;
+
+    }
+}
+
+@media (max-width: 900px) {
+    .component_catalog_search .view-mode-list table td {
+        padding: 1px 5px;
+        display: block;
+    }
+
+    .component_catalog_search .view-mode-list .price_block_wrapper {
+        display: block;
+        height: auto;
+    }
+
+    .component_catalog_search table tr {
+        display: block;
+        padding: 20px 0;
+    }
+
+    .component_catalog_search .view-mode-list table td.td_short_description {
+        width: 100%;
+
+    }
+
+    .component_catalog_search .view-mode-list .series_products__panel_buttons {
+        display: block;
+        padding: 0 0;
+        margin: 10px 0;
+    }
+
+    .component_catalog_search .view-mode-list .series_products__panel_buttons .buttons_add {
+        display: flex;
+        margin: 20px 0;
+        font-size: var(--font-size-xs);
+    }
+
+    .component_catalog_search .view-mode-list .series_products__panel_buttons .favorites {
+        display: block;
+    }
+
+    .component_catalog_search .view-mode-list .price_block {
+        font-size: 32px;
+        text-align: left;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .component_catalog_search .view-mode-list .price_block .rub_price {
+        font-size: 24px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .component_catalog_search .view-mode-list table td.td_buttons {
+        width: 100%;
+        text-align: left;
+    }
+
+    .component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button {
+        width: 170px;
+        font-size: 1rem;
+        padding: 10px 5px 10px 5px;
+        background-image: none;
+    }
+
+    .component_catalog_search .view-mode-list tr .td_buttons .buttons_panel button span {
+        display: none;
+    }
+
+    .component_catalog_search .view-mode-list .price_block .no_price {
+        display: block;
+        margin: 1rem 0;
+        width: 170px;
+        padding: 10px 5px 10px 5px;
+        font-size: 1rem;
+    }
+
+    .component_catalog_search .td_buttons {
+        font-size: var(--font-size-sm);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,177 @@
+.component_catalog_detail {
+
+}
+
+.component_catalog_detail .table_characteristics {
+    background: #fff;
+
+}
+
+.component_catalog_detail .table_characteristics tr:nth-child(1) {
+    background: #dff3df;
+    font-weight: 700;
+}
+
+.component_catalog_detail .table_characteristics tr:nth-child(1):hover {
+    background: #dff3df !important;
+}
+
+.component_catalog_detail .table_characteristics tr:nth-child(2n+1) {
+    background-color: rgb(245, 245, 245);
+}
+
+.component_catalog_detail #tabs .table_characteristics tr:hover {
+    background: #E8E8E8;
+}
+
+.component_catalog_detail .table_characteristics td {
+    border: 1px dotted #999;
+    padding: 6px 10px;
+    text-align: left;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+
+.component_catalog_detail h1 {
+    margin: 0;
+    text-align: left;
+    font-weight: normal;
+    font-size: 35px;
+}
+
+.component_catalog_detail .component_catalog_detail_section_1 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eeeeee;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.component_catalog_detail .component_catalog_detail_section_2 .price_panel, .component_catalog_detail .component_catalog_detail_section_2 .availability_panel {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    justify-content: center;
+    align-content: space-between;
+
+
+    vertical-align: middle;
+    height: 70px;
+}
+
+.component_catalog_detail .component_catalog_detail_section_2 .price_panel .price_value {
+    font-size: 20px;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.component_catalog_detail .component_catalog_detail_section_2 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eeeeee;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.component_catalog_detail_section_column {
+    width: 50%;
+}
+
+
+.component_catalog_detail_section_row {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.component_catalog_detail .green_square {
+    background: #55f648;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 1px 5px;
+    vertical-align: middle;
+}
+
+.component_catalog_detail .advantages_block ul {
+    margin: 10px 0;
+    list-style: none;
+}
+
+.component_catalog_detail .advantages_block ul li {
+    padding: 5px 5px 5px 25px;
+    margin: 10px;
+    background: url("/images/tick.png") left 5px/15px auto no-repeat;
+    list-style: none;
+}
+
+
+.component_catalog_detail__images-mini {
+    background-size: contain;
+    width: 71px;
+    height: 54px;
+    text-align: center;
+    padding: 2px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.component_catalog_detail__image-main {
+    background-size: contain;
+    width: 400px;
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.component_catalog_detail__images-mini__wrapper {
+    text-align: center;
+}
+
+.component_catalog_detail__images-mini__inner {
+    display: inline-block;
+    padding-top: 20px;
+}
+
+.component_catalog_detail__wrapper {
+    text-align: center;
+}
+
+.component_catalog_detail__images-mini {
+    cursor: pointer;
+    border: 1px solid #d8d8d8;
+    box-sizing: border-box;
+}
+
+.component_catalog_detail__images-mini.active {
+    border: 1px solid #34ab5e;
+    box-sizing: border-box;
+}
+
+.component_catalog_detail__image-main_link {
+    box-shadow: 0 0 9px 0px rgba(0, 0, 0, 0.2);
+    display: block;
+    padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

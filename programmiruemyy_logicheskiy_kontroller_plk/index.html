@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html  >
+<head>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Программируемый логический контроллер (ПЛК) cMT-CTRL01 с IIoT, который может работать со всей линейкой модулей Weintek серии iR">
+  
+  
+  <title>Программируемые логические  контроллеры (ПЛК,PLC ) | ПЛК  на Codesys</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/animatecss/animate.min.css">
+  <link rel="stylesheet" href="assets/dropdown/css/style.css">
+  <link rel="stylesheet" href="assets/socicon/css/styles.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+  
+  
+  
+</head>
+<body>
+
+<!-- Analytics -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(114217, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114217" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<style>#footer6-g {}</style>
+<script src="//code.jivosite.com/widget.js" data-jv-id="gno75izSm3" async></script>
+<style>.card-wrapper {background: white;}</style>
+<!-- /Analytics -->
+
+
+  
+  <section class="menu cid-qynYwP0rAw" once="menu" id="menu1-3">
+
+    
+
+    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm bg-color transparent">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="menu-logo">
+            <div class="navbar-brand">
+                <span class="navbar-logo">
+                    <a href="/">
+                         <img src="assets/images/logo.svg" alt="" style="height: 3.8rem;">
+                    </a>
+                </span>
+                
+            </div>
+        </div>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item"><a class="nav-link link text-primary display-4" href="/about/" aria-expanded="false">
+                        
+                        О компании</a></li><li class="nav-item dropdown"><a class="nav-link link dropdown-toggle text-primary display-4" href="#" data-toggle="dropdown-submenu" aria-expanded="true">Каталог</a><div class="dropdown-menu"><a class="dropdown-item text-primary display-4" href="/catalog/operator_panels/?&brand=">Панели оператора</a><a class="dropdown-item text-primary display-4" href="/catalog/operator_panels/?&screenless=yes">Безэкранные панели оператора</a><a class="dropdown-item text-primary display-4" href="/catalog/programmable_logic_controllers/">Контроллеры (ПЛК, PLC)</a><a class="dropdown-item text-primary display-4" href="/catalog/modules_io/">Модули ввода-вывода Weintek</a><a class="dropdown-item text-primary display-4" href="/catalog/gateways/">Шлюзы данных</a><a class="dropdown-item text-primary display-4" href="/catalog/panel_computers/?&os=Windows">Панельные компьютеры с Windows</a><a class="dropdown-item text-primary display-4" href="/catalog/panel_computers/?&os=Android">Панельные компьютеры с Android</a><a class="dropdown-item text-primary display-4" href="/catalog/panel_computers/?&os=Windows_CE">Панельные компьютеры с Windows CE</a><a class="dropdown-item text-primary display-4" href="/catalog/industrial_computers_full_ip65/">Промышленные компьютеры full IP65</a><a class="dropdown-item text-primary display-4" href="/catalog/embedded_computers/">Встраиваемые компьютеры</a><a class="dropdown-item text-primary display-4" href="/catalog/industrial_monitors/">Промышленные мониторы</a><a class="dropdown-item text-primary display-4" href="/catalog/vpn_routers/?brand=EWON">VPN-роутеры</a></div></li></ul>
+            
+        </div>
+    </nav>
+</section>
+
+<section class="header4 cid-qyk0Y195zN mbr-parallax-background" id="header4-1">
+
+    
+
+    <div class="mbr-overlay" style="opacity: 0.9; background-color: rgb(239, 239, 239);">
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="media-content col-md-10">
+                <h1 class="mbr-section-title align-center mbr-white pb-3 mbr-bold mbr-fonts-style display-1">Программируемые логические контроллеры (ПЛК) WEINTEK</h1>
+                
+                <div class="mbr-text align-center mbr-white pb-3">
+                    <p class="mbr-text mbr-fonts-style display-5">Появление промышленного интернета вещей (IIoT), в рамках промышленной революции 4.0, дало огромные возможности по совершенствованию производственных процессов. Компания Weintek собрала в одном устройстве поддержку программного комплекса CODESYS и шлюз IIoT. В результате получился программируемый логический контроллер (ПЛК, PLC) cMT-CTRL01 с IIoT, который может работать со всей линейкой модулей Weintek серии iR.<br></p>
+                </div>
+                
+            </div>
+        
+            <div class="mbr-figure pt-5" style="width: 30%;">
+                <img src="assets/images/weintek800-684x137.png" alt="ПЛК контроллер cMT-CTRL01" title="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="header3 cid-tTdpFi7T0e mbr-parallax-background" id="header3-p">
+
+    
+
+    <div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(35, 35, 35);">
+    </div>
+
+    <div class="container">
+        <div class="media-container-row" itemscope="" itemtype="http://schema.org/Product">
+            <div class="mbr-figure" itemprop="image" style="width: 50%;">
+                <img src="assets/images/cmt-ctrl01.png" alt="">
+            </div>
+
+            <div class="media-content">
+                <h1 class="mbr-section-title mbr-white pb-3 mbr-fonts-style display-1"><span itemprop="name">ПЛК контроллер cMT-CTRL01<span></span></span></h1>
+                <h3 class="mbr-section-subtitle align-left mbr-white mbr-light pb-3 mbr-fonts-style display-5"><span itemprop="description">Программируемый логический контроллер Weintek</span></h3>
+                <div class="mbr-section-text mbr-white pb-3 " itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                    <p class="mbr-text mbr-fonts-style display-7">CODESYS в ПЛК соответствует стандарту IEC61131
+<br>Максимальное количество подключаемых iR модулей по шине iBus: 16
+<br>Широкие возможности комбинирования с модульной системой Weintek серии iR
+<br>Встроенная память 4ГБ, слот для карты SD/SDHC, RTC
+<br>Встроенный шлюз IIoT: поддержка OPC UA Server/Client и MQTT
+<br>Ethernet, COM2/COM3 RS-485 2W с поддержкой MPI 187.5K, Modbus TCP/IP Master
+<br>Удаленный доступ по EasyAccess</p><link itemprop="availability" href="http://schema.org/InStock"><meta itemprop="priceCurrency" content="USD"><meta itemprop="price" content="520.00">
+                </div>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-secondary display-4" href="/weintek/cMT-CTRL01/">Полное описание ПЛК-контроллера</a>
+                    <a class="btn btn-md btn-white-outline display-4" href="/news/weintek-cmt-ctrl01-novyy-produkt-plk-iiot/">Обзор модели</a></div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="features17 cid-tTv7bT8PbI" id="features17-w">
+    
+    
+
+    
+    <div class="container-fluid">
+        <div class="media-container-row">
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/codesys-1-538x359.png" alt="Встроенная поддержка CODESYS">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Встроенная поддержка CODESYS</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">ПЛК имеет строенную поддержку инструментального программного комплекса промышленной автоматизации CODESYS в соответствии со стандартом IEC 61131-3, что означает возможность использования таких языков программирования, как: FBD/LD/IL/ST/SFC/CFC. При этом к устройству можно гибко подключать модули расширения Weintek серии iR, в соответствии с производственными потребностями системы.<br></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/gateway-538x359.png" alt="Встроенный шлюз IIot">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Встроенный шлюз IIot</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Встроенный шлюз поддерживает следующие стандарты протоколов IIoT: OPC UA и MQTT.<br>Используя эти протоколы, данные из CODESYS и подключенного ПЛК могут передаваться в центр обработки данных.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/drivers-538x359.png" alt="Поддержка более 300 драйверов контроллеров ПЛК">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Поддержка более 300 драйверов контроллеров ПЛК</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Кроме шлюза, работающего по протоколу Modbus TCP/IP, контроллер cMT-CTRL01 также поддерживает еще более 300 протоколов различных производителей ПЛК. Поэтому это устройства имеет множество вариантов применения.<br></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/easyaccess-538x359.png" alt="Встроенная поддержка службы удаленного доступа EasyAccess 2.0">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Встроенная поддержка службы удаленного доступа EasyAccess 2.0</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Использование удаленного доступа позволяет быстро обновлять CODESYS проекты на устройствах и оперативно отслеживать статусы процессов производства, тем самым уменьшая стоимость поддержки. С использованием EasyAccess 2.0 пользователи могут получать быстрые уведомления о неполадках на свои мобильные устройства и быстро реагировать на них.<br></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/logs-538x359.png" alt="Выборки данных и Журналы событий">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Выборки данных и Журналы событий</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Шлюз IIoT поддерживает функции выборки данных, журнала событий и связанных исторических данных. Собранные данные могут сохраняться на SD-карту или синхронизироваться с SQL-сервером баз данных.<br></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-3 col-12 col-md-6 col-lg-2">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="assets/images/ports-2-538x359.png" alt="Сдвоенные порты Ethernet">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title pb-3 mbr-fonts-style display-7">Сдвоенные порты Ethernet</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Сдвоенные порты Ethernet e cMT-CTRL01 могут использоваться в следующих вариантах:
+<br>- Один порт для CODESYS, второй для шлюза IIot.
+<br>- Оба порта для шлюза IIot, где один порт подключен к компьютеру или интернету, а другой к Ethernet-порту ПЛК.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="header3 cid-tTdsGopR0T mbr-parallax-background" id="header3-q">
+
+    
+
+    <div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(33, 89, 148);">
+    </div>
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-figure" style="width: 95%;">
+                <img src="assets/images/cmt-ctrl01-51.png" alt="">
+            </div>
+
+            <div class="media-content">
+                <h1 class="mbr-section-title mbr-white pb-3 mbr-fonts-style display-1">Совместимость</h1>
+                <h3 class="mbr-section-subtitle align-left mbr-white mbr-light pb-3 mbr-fonts-style display-5">ПЛК (PLC) cMT-CTRL01 позволяет подключить до 16 модулей</h3>
+                <div class="mbr-section-text mbr-white pb-3 ">
+                    <p class="mbr-text mbr-fonts-style display-7">Более 300 драйверов обеспечат совместимость ПЛК с большинством известных контроллеров</p>
+                </div>
+                <div class="mbr-section-btn"><a class="btn btn-md btn-secondary display-4" href="/catalog/modules_io/">Модули ввода-вывода Weintek&nbsp;<br></a>
+                    <a class="btn btn-md btn-white-outline display-4" href="/articles/modulnyy-vvodvyvod-kaplery-serii-ir-i-plk-weintek/">Обзор модулей Weintek</a></div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="mbr-section article content3 cid-tTdkmRojOj" id="content3-o">
+      
+     
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="row col-12 col-md-12">
+                <div class="col-12 mbr-text mbr-fonts-style display-7 col-md-6">
+                                     <img src="assets/images/2-693x504.png" alt="" style="width: 100%;">
+                     <p><br></p><p><strong>ПЛК (программируемые логические контроллеры)</strong> являются важным компонентом в процессе автоматизации, поскольку они позволяют объединять различные устройства и системы в централизованную систему управления. Они могут контролировать и управлять различными аспектами производства, такими как освещение, отопление, кондиционирование воздуха, безопасность и т.д.
+</p><p>Одной из основных причин, почему <strong>ПЛК </strong>важны для процесса автоматизации, является их гибкость и масштабируемость. Они могут быть настроены для работы с широким спектром устройств и систем, что позволяет им адаптироваться к различным потребностям и требованиям. Кроме того, они могут быть легко расширены и интегрированы с другими системами управления, что делает их идеальным выбором для автоматизации различных процессов.
+</p><p>Еще одна причина, почему <strong>ПЛК </strong>важны для процесса автоматизации, заключается в том, что они обеспечивают высокую степень надежности и безопасности. Они могут обнаруживать и предотвращать потенциальные проблемы и сбои, а также предоставлять защиту от взломов и кибератак. Это особенно важно в промышленных средах, где надежность и безопасность критически важны.</p><p>
+</p><p>
+</p><p>
+</p><p>
+</p>
+                </div>
+                <div class="col-12 mbr-text mbr-fonts-style display-7 col-md-6">
+                     <p>Наконец, <strong>ПЛК </strong>могут значительно улучшить эффективность и производительность процессов автоматизации. Они могут оптимизировать использование ресурсов, уменьшить время цикла и повысить точность и надежность операций. В результате этого компании могут снизить затраты на энергию, улучшить качество продукции и повысить удовлетворенность клиентов.</p><p><strong>ПЛК </strong>широко используются во многих отраслях промышленности, включая производство, логистику, энергетику, нефтегазовую промышленность и другие. Некоторые из наиболее распространенных применений ПЛК включают:
+</p><p><strong>Производство</strong>: <strong>ПЛК </strong>используются для контроля и управления различными аспектами производственных процессов, таких как освещение, отопление, кондиционирование воздуха, вентиляция, контроль качества и т.д.
+</p><p><strong>Логистика</strong>: <strong>ПЛК </strong>используются для управления складами, транспортом и логистическими операциями, такими как управление дверьми, освещением, отоплением и кондиционированием воздуха, контроль запасов и т.д.
+</p><p><strong>Энергетика</strong>: <strong>ПЛК </strong>используются для управления энергосистемами, такими как освещение, отопление, кондиционирование воздуха, системы безопасности и т.д.
+</p><p><strong>Нефтегазовая промышленность</strong>: <strong>ПЛК </strong>используются для управления системами добычи, транспортировки и переработки нефти и газа, такими как управление насосами, клапанами, освещением и т.д.
+</p><p>Другие отрасли: <strong>ПЛК </strong>также используются в других отраслях, таких как сельское хозяйство, строительство, здравоохранение и др.
+</p><p>В целом, <strong>ПЛК </strong>являются универсальным инструментом, который может использоваться в различных отраслях промышленности для управления и контроля различных аспектов операций.</p><p><strong>
+</strong></p><p><strong>
+</strong></p><p><strong>
+</strong></p><p><strong>
+</strong></p><p><strong>
+</strong></p><p><strong>
+</strong></p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="witsec-mailform mbr-section cid-tTdOXnsXwK mbr-parallax-background" id="witsec-mailform-r" data-rv-view="38">
+
+  
+
+  <div class="mbr-overlay" style="opacity: 0.7; background-color: rgb(35, 35, 35);">
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="title col-12 col-lg-8">
+        <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-2">Остались вопросы?</h2>
+        <h3 class="mbr-section-subtitle align-center mbr-light pb-3 mbr-fonts-style display-5">
+          Наши специалисты готовы оперативно помочь Вам.<br>Так же Вы можете позвонить нам по номеру <br>+7 (812) 648-03-47.<br>Или написать на <a href="mailto:sales@rusavtomatika.com" class="text-secondary">sales@rusavtomatika.com</a></h3>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="media-container-column col-lg-8">
+          <form class="mbr-form">
+            
+            <input type="hidden" name="subject" value="Сообщение | Лендинг ПЛК">
+            
+            
+            
+            
+
+            <div class="rowflexrev flex-column">
+              <div class="row">
+                <div class="col-md-12 form-group ws-form-alerts">
+                  <div hidden="hidden" class="alert alert-success col-12 mbr-alert-success mbr-fonts-style display-7">Сообщение отправлено!</div>
+                  <div hidden="hidden" class="alert alert-danger col-12 mbr-alert-danger mbr-fonts-style display-7">Ошибка при отправлении.</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <p class="mbr-section-labels mbr-fonts-style display-7">Имя</p>
+                  <input type="text" name="name" required="required" class="form-control display-7">
+                </div>
+                <div class="col-md-4 form-group">
+                  <p class="mbr-section-labels mbr-fonts-style display-7">Email</p>
+                  <input type="email" name="email" required="required" class="form-control display-7">
+                </div>
+                <div class="col-md-4 form-group">
+                  <p class="mbr-section-labels mbr-fonts-style display-7">Телефон</p>
+                  <input type="tel" name="phone" class="form-control display-7">
+                </div>
+                <div class="col-md-12 form-group">
+                  <p class="mbr-section-labels mbr-fonts-style display-7">Сообщение</p>
+                  <textarea name="message" required="required" class="form-control display-7"></textarea>
+                </div>
+                
+                
+                
+                
+                <div class="col-md-12 input-group-btn align-center"><button type="submit" class="btn btn-form btn-secondary display-4">ОТПРАВИТЬ</button></div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cid-tTu8EFPAqY mbr-reveal" id="footer2-t">
+
+    
+
+    
+
+    <div class="container">
+        <div class="media-container-row content mbr-white" itemscope="" itemtype="https://schema.org/Organization"><meta itemprop="name" content="ООО Русавтоматика">
+            <div class="col-12 col-md-3 mbr-fonts-style display-5" style="font-size:0.9rem;" itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
+                <p class="mbr-text"><strong><span itemprop="name">ООО "Русавтоматика"</span></strong><br><br><strong>Адрес</strong><br><br><span itemprop="postalCode">199178</span>, <span itemprop="addressCountry">Россия</span>, <span itemprop="addressLocality">Санкт-Петербург</span>, <span itemprop="streetAddress">Малый пр. В.О., 57 корп. 3</span><br>ООО «Русавтоматика»<br><br><strong>Контакты</strong><br><br>пн-чт 09:00-18:00, пт 09:00-17:00
+<br><span itemprop="telephone">+7 (812) 648-03-47</span>
+<br><span itemprop="telephone">+7 (495) 108-12-75</span><br><a href="mailto:sales@rusavtomatika.com" class="text-secondary"><span itemprop="email">sales@rusavtomatika.com</span></a><br></p>
+            </div>
+            <div class="col-12 col-md-3 mbr-fonts-style display-7" style="font-size:0.9rem;">
+                <p class="mbr-text">На основном складе в Санкт-Петербурге всегда поддерживается в наличии весь модельный ряд <a href="/catalog/operator_panels/?brand=Weintek" class="text-secondary">операторских панелей Weintek</a>, <a href="/catalog/operator_panels/?brand=Samkoon" class="text-secondary">панелей оператора Samkoon</a>, а также <a href="/catalog/panel_computers/?&brand=Aplex" class="text-secondary">промышленных панельных компьютеров Aplex</a> и <a href="/catalog/panel_computers/?&brand=IFC" class="text-secondary">IFC</a><br><br></p>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="google-map"><iframe frameborder="0" style="border:0" src="https://yandex.ru/map-widget/v1/?lang=ru_RU&amp;scroll=false&amp;um=constructor%3A8bedbdfe30d11e418ba92f068977945135c87ec9df474e49afb3ebdee1b2d00c" allowfullscreen=""></iframe></div>
+            </div>
+        </div>
+        <div class="footer-lower">
+            <div class="media-container-row">
+                <div class="col-sm-12">
+                    <hr>
+                </div>
+            </div>
+            <div class="media-container-row mbr-white">
+                <div class="col-sm-6 copyright">
+                    <p class="mbr-text mbr-fonts-style display-7" style="font-size:0.9rem;">
+                        © Copyright 2023 <a href="/" class="text-secondary">ООО "Русавтоматика"</a>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section><script src="assets/popper/popper.min.js"></script>  <script src="assets/web/assets/jquery/jquery.min.js"></script>  <script src="assets/bootstrap/js/bootstrap.min.js"></script>  <script src="assets/tether/tether.min.js"></script>  <script src="assets/smoothscroll/smooth-scroll.js"></script>  <script src="assets/viewportchecker/jquery.viewportchecker.js"></script>  <script src="assets/dropdown/js/nav-dropdown.js"></script>  <script src="assets/dropdown/js/navbar-dropdown.js"></script>  <script src="assets/touchswipe/jquery.touch-swipe.min.js"></script>  <script src="assets/parallax/jarallax.min.js"></script>  <script src="assets/witsec-mailform/mailform.js"></script>  <script src="assets/theme/js/script.js"></script>  
+  
+  
+  <input name="animation" type="hidden">
+  </body>
+</html>

@@ -1,0 +1,75 @@
+a {
+    color: var(--color-green);
+    text-decoration: underline;
+}
+a:hover {
+    color: var(--color-green2);
+    text-decoration: underline;
+}
+
+
+
+
+.tabs li.is-active a {
+    border-bottom-color: #485fc7;
+    color: #257953;
+}
+
+.tabs.is-boxed li.is-active a {
+    background-color: var(--color-green);
+    border-color:  var(--color-green);
+    border-bottom-color: transparent !important;
+    color: white;
+}
+.tabs.is-boxed a:hover {
+    background-color: var(--color-dark-gray);
+    border-bottom-color: #dbdbdb;
+}
+.button.is-primary {
+    background-color: var(--color-dark-green);
+}
+.button.is-primary:hover {
+    background-color: var(--color-darker-green);
+}
+.button.is-primary:active, .button.is-primary.is-active {
+    background-color: var(--color-green);
+}
+.button.is-success {
+    background-color: var(--color-green);
+}
+.button.is-success:hover {
+    background-color: var(--color-green2);
+}
+
+
+
+a.box:hover, a.box:focus {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px var(--color-green);
+}
+
+
+.table tr.is-selected {
+    background-color: var(--color-green);
+    color: #fff;
+}
+
+.breadcrumb a {
+    color: var(--color-green);
+    text-decoration: none;
+}
+.breadcrumb span {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0 .75em;
+}
+
+@media(max-width: 768px){
+    .button.is-small-mobile {
+        font-size: 0.75rem;
+    }
+    .button.is-small-mobile .icon_hamburger{
+        width: 10px;
+    }
+
+}

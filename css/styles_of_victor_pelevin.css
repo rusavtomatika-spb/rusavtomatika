@@ -1,0 +1,88 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29.01.2019, 10:54:32
+    Author     : Terminator
+*/
+
+.study_icon svg{
+    height: 65px;
+    fill: #44bb6e;
+}
+.study_outer{
+    text-align: left;
+    margin-bottom: 35px;
+    position: relative;
+}
+
+.study_left{
+    position: absolute;
+    top: 50px;
+    text-align: center;
+    left: 0;
+    width: 92px;
+}
+.study_right{
+    padding-left: 113px;
+    padding-right: 10px;
+}
+.study_inner_block{
+    display: inline-block;
+}
+.study_item{
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.study_article_item{
+    margin-bottom: 12px;
+    background: #efefef;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: 0.2s;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+.study_article_item:hover{
+    background: #dcdcdc;
+    transition: 0.2s;
+}
+
+.study_article_item_url{
+    text-decoration: none;
+}
+
+.study_article_date{
+    color: #636363;
+    font-size: 11px;
+    padding-left: 4px;
+}
+
+.study_title{
+    border-bottom: 2px solid #656565;
+    margin-bottom: 22px;
+}
+.study_title h2{
+    font-size: 20px;
+}
+.study_videos_item{
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 163px;
+}
+.study_videos_item_inner{
+    background: #efefef;
+    border-radius: 4px;
+    border: 1px solid #cecece;
+    transition: 0.2s;
+}
+.study_videos_item_inner:hover{
+    border: 1px solid #dcdcdc;
+    background: #dcdcdc;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    transition: 0.2s;
+}

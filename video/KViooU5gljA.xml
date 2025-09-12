@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ovs:video xmlns:ovs="http://webmaster.yandex.ru/schemas/video"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://webmaster.yandex.ru/schemas/video">
+  <ovs:content_id>KViooU5gljA</ovs:content_id>
+  <ovs:url>https://www.youtube.com/watch?v=KViooU5gljA </ovs:url>
+  <ovs:thumbnail>http://i.ytimg.com/vi/KViooU5gljA/maxresdefault.jpg</ovs:thumbnail>
+  <ovs:title>EasyAccess 2.0 - подключение к удаленной панели без выделенного IP адреса</ovs:title>
+  <ovs:description>
+   EasyAccess 2.0 - инновационная технология от Weintek, 
+   которая позволяет подключаться к операторским панелям Weintek, 
+   находящимся на удаленном объекте. При этом панель может находиться в локальной сети объекта,
+   либо за 3G, 4G роутером, и не иметь собственного выделенного IP адреса. Подключившись к операторской панели, 
+   можно видеть ее экран и управлять панелью по VNC, скачивать и закачивать файлы по FTP, 
+   перезагружать проект в панель из EasyBuilder, перепрошивать через панель некоторые контроллеры.
+  </ovs:description>
+  <ovs:upload_date>2015-04-20T00:00:00Z</ovs:upload_date>
+  <ovs:duration>157</ovs:duration>
+  <ovs:adult>no</ovs:adult>
+  <ovs:login>admin</ovs:login>
+  <ovs:category>industrial automation</ovs:category>
+  <ovs:category>building automation</ovs:category>
+  <ovs:category>factory automation</ovs:category>
+  <ovs:category>technology</ovs:category>
+  <ovs:category>HMI</ovs:category>
+  <ovs:genre>Обучающее видео</ovs:genre>
+  <ovs:status>published</ovs:status>
+  <ovs:is_official>yes</ovs:is_official>
+  <ovs:embed_url>https://www.youtube.com/embed/KViooU5gljA</ovs:embed_url>
+  <ovs:embed_html><![CDATA[<iframe width="560" height="315" src="https://www.youtube.com/embed/KViooU5gljA" frameborder="0" allowfullscreen="true"></iframe>]]></ovs:embed_html>
+  <ovs:languages>ru, en</ovs:languages>
+  <ovs:tag>EasyAccess 2.0, Weintek, удаленный доступ, удаленная прошивка HMI, удаленное обслуживание, Weintek без IP, HMI GPRS, HMI GSM, Weintek GSM, Weintek GPRS </ovs:tag>
+</ovs:video>

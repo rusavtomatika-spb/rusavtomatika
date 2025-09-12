@@ -1,0 +1,12 @@
+.ser-title-big{line-height: 30px;position: relative;}
+.mod-param #searchdiv {	margin-top: -42px;}
+.model-param tr td:first-child {
+	width: 400px;
+        text-align: left;
+}
+
+.model-param .t_row:nth-child(2n+1) td{background: #ecf8ec;}
+
+.mod-param .link_weintek_drivers_brands {position: absolute;top:-1px;right: 263px;}
+.mod-param .link_weintek_drivers_brands.back a{padding: 1px 14px;height: 32px;box-sizing: border-box;}
+

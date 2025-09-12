@@ -1,0 +1,90 @@
+$color-light-green: #d8e9e0
+$color-green: #00ad61
+$color-green2: #10cd61
+$color-dark-green: #206f4b
+$color-darker-green: #105f3b
+$color-light-gray: #eee
+$color-gray: #ddd
+$color-dark-gray: #999
+$color-dark-gray2: #484848
+$color-red: #e00
+$font-size-xxs: 0.75rem
+$font-size-xs: 0.875rem
+$font-size-sm: 1rem
+$font-size-md: 1.25rem
+$font-size-lg: 1.5rem
+$font-size-xlg: 2rem
+
+a
+    color: $color-green
+    text-decoration: underline
+
+    &:hover
+        color: $color-green2
+        text-decoration: underline
+
+.tabs
+    li.is-active a
+        border-bottom-color: #485fc7
+        color: #257953
+
+    &.is-boxed
+        li.is-active a
+            background-color: $color-green
+            border-color: $color-green
+            border-bottom-color: transparent !important
+            color: white
+
+        a:hover
+            background-color: $color-dark-gray
+            border-bottom-color: #dbdbdb
+
+.button
+    &.is-primary
+        background-color: $color-dark-green
+
+        &:hover
+            background-color: $color-darker-green
+
+        &:active, &.is-active
+            background-color: $color-green
+
+    &.is-success
+        background-color: $color-green
+
+        &:hover
+            background-color: $color-green2
+
+a.box
+    &:hover, &:focus
+        box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px $color-green
+
+.table tr.is-selected
+    background-color: $color-green
+    color: #fff
+
+.breadcrumb
+    margin-bottom: 1rem !important
+    a
+        color: $color-green
+        text-decoration: none
+    span
+        align-items: center
+        display: flex
+        justify-content: center
+        padding: 0 .75em
+    ul
+        margin-left: 0 !important
+
+#vue_component_catalog_detail nav.breadcrumb, .component_catalog_search nav.breadcrumb
+    margin: 0.5rem 0
+
+strong
+    color: inherit !important
+
+@media (max-width: 768px)
+    .button.is-small-mobile
+        font-size: 0.75rem
+
+        .icon_hamburger
+            width: 10px

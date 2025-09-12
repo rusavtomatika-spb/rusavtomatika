@@ -1,0 +1,177 @@
+
+.weintek-easybuilderpro-user-manual-en {
+}
+
+.weintek-easybuilderpro-user-manual-en__menu {
+    margin: 0;
+    padding: 0;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li {
+    margin: 1px 0;
+    padding: 0;
+    display: block;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li ul {
+    display: none;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li ul {
+    padding: 5px 0;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li ul ul {
+    display: none;
+    margin: 0 0 0 13px;
+    padding: 0;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li a.chapter {
+    display: block;
+    background: #f0f0f0;
+    padding: 8px 6px;
+    margin-bottom: 2px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 13px;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li:hover a.chapter,
+.weintek-easybuilderpro-user-manual-en__menu li a.chapter.active {
+    background-color: #cce9cc;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li ul li a.chapter {
+    display: block;
+    background: #fff url('/images/sub-li.png') 5px 8px no-repeat;
+    padding: 5px 5px 5px 17px;
+    margin: 0px 5px 0px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 13px;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor {
+    display: block;
+    background: #fff url('/images/sub-li.png') 3px 8px no-repeat;
+    padding: 4px 5px 4px 17px;
+    margin: 0px 5px 0px;
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s;
+    font-size: 13px;
+    line-height: 1.1;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor.parent {
+    background: #fff;
+    padding: 5px 5px 5px 4px;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor .tree-plus {
+    background: url('/images/tree-plus.png') left center no-repeat;
+    display: inline-block;
+    height: 20px;
+    width: 15px;
+    top: 3px;
+    left: 0px;
+    position: absolute;
+    z-index: 10;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor .anchor-anchor {
+    padding-left: 15px;
+    display: block;
+
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor .tree-plus.opened {
+    background-image: url('/images/tree-minus.png');
+}
+
+.block_content .weintek-easybuilderpro-user-manual-en__page h1,
+.block_content .weintek-easybuilderpro-user-manual-en__page h2 {
+    margin: 10px auto;
+    font-size: 2rem;
+}
+.weintek-easybuilderpro-user-manual-en h1 {
+    margin: 0px 0 15px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor:hover,
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor.active {
+    background-color: #cce9cc;
+}
+
+/*.weintek-easybuilderpro-user-manual-en__page{display: none;}*/
+.weintek-easybuilderpro-user-manual-en__page img {
+    max-width: 100%;
+    height: auto;
+}
+
+.weintek-easybuilderpro-user-manual-en__page.Welcome {
+    display: block;
+}
+
+.weintek-easybuilderpro-user-manual-en__page table {
+    width: 100%;
+    border: 1px solid #999;
+}
+
+.weintek-easybuilderpro-user-manual-en__page table td {
+    border: 1px dotted #999;
+    padding: 5px 10px;
+}
+
+/**/
+.block_content .weintek-easybuilder-instrukciya-na-russkom__page h1,
+.block_content .weintek-easybuilder-instrukciya-na-russkom__page h2 {
+    margin: 10px auto;
+    font-size: 20px;
+}
+
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor:hover,
+.weintek-easybuilderpro-user-manual-en__menu li div.anchor.active {
+    background-color: #cce9cc;
+}
+
+
+#pdf_object embed {
+    border: 2px solid #555;
+}
+
+.weintek-easybuilderpro-user-manual-en .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.article_weintek_easybuilderpro_user_manual_en .download_pdf,
+.article_weintek_easybuilderpro_user_manual_en .download_zip {
+    background-position: left 0px;
+    min-height: 27px;
+}
+
+.article_weintek_easybuilderpro_user_manual_en .download_linkext_online {
+    display: inline-block;
+    color: #009b1e;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 3px 0 3px 27px;
+    margin: 2px;
+    background: url('/images/online.png') left center no-repeat;
+}

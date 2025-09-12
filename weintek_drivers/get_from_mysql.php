@@ -1,0 +1,98 @@
+<?php
+// разовый скрипт для экспорта 'Руководства по подключению ПЛК' из БД в json
+global $mysqli_db;
+$host = "localhost"; // Имя хоста
+$plc_filename = $_SERVER[ 'DOCUMENT_ROOT' ] . '/weintek_projects__/demo.txt';
+$port = "3306"; // Номер порта, 3306 - по умолчанию
+$user = "moisait_ilval"; // Имя пользователя
+$pass = 'ilval2398'; // Пароль
+$dbnm = "moisait_ra"; // Имя БД
+$mysqli_db = mysqli_connect( $host, $user, $pass, $dbnm );
+if ( !$mysqli_db ) {
+    echo "[inc_database_credentials.php]" . PHP_EOL;
+    echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
+    echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
+    exit();
+} else mysqli_query( $mysqli_db, "SET NAMES utf8" );
+mysqli_query( $mysqli_db, "SET NAMES utf8" );
+header( 'Content-Type: text/html; charset=utf-8' );
+//$query = "SELECT * FROM `documents` WHERE `subSection` LIKE 'Руководства по подключению ПЛК' ORDER BY `documents`.`position` DESC, `documents`.`date` DESC ;";
+$query = "SELECT * FROM `w_projects` ORDER BY `date` DESC ;";
+$outMysqlStrings = [];
+$outMysqlQuery = mysqli_query( $mysqli_db, $query )or die( "Invalid query: " . $query . "  " . mysqli_error( $mysqli_db ) );
+$rows = mysqli_num_rows( $outMysqlQuery );
+if ( $rows > 0 ) {
+    for ( $row = 0; $row < $rows; $row++ ) {
+        $current_row = mysqli_fetch_assoc( $outMysqlQuery );
+        $outMysqlStrings[] = $current_row;
+    }
+} else {
+    $outMysqlStrings = '';
+};
+
+function deep_unset_key( array & $data, string $key ) {
+    if ( is_array( $data ) ) {
+        unset( $data[ $key ] );
+    }
+    foreach ( $data as & $value ) {
+        if ( is_array( $value ) ) {
+            deep_unset_key( $value, $key );
+        }
+    }
+}
+$arr = $outMysqlStrings;
+deep_unset_key( $arr, 'id' );
+deep_unset_key( $arr, 'parent' );
+deep_unset_key( $arr, 'btext' );
+deep_unset_key( $arr, 'show' );
+deep_unset_key( $arr, 'por' );
+deep_unset_key( $arr, 'description' );
+deep_unset_key( $arr, 'position' );
+deep_unset_key( $arr, 'alt' );
+deep_unset_key( $arr, 'img_big' );
+deep_unset_key( $arr, 'keywords' );
+deep_unset_key( $arr, 'author' );
+deep_unset_key( $arr, 'update' );
+foreach ( $arr as $k => $v ) {
+//    $arr[ $k ][ 'section' ] = "plc";
+//    unset( $arr[ $k ][ 'subSection' ] );
+//    $arr[ $k ][ 'url' ] = $arr[ $k ][ 'original_url' ];
+//    unset( $arr[ $k ][ 'original_url' ] );
+//    $url = $arr[ $k ][ 'url' ];
+//    $curl = curl_init( $url );
+//    //Отказываемся от самой стр. Нам только заголовки
+//    curl_setopt( $curl, CURLOPT_NOBODY, true );
+//    //стопим вывод данных в stdout
+//    curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+//    //получаем дату крайней модификации файла
+//    curl_setopt( $curl, CURLOPT_FILETIME, true );
+//    $result = curl_exec( $curl );
+//    if ( $result === false ) {
+//        $file_data = "N/A";
+//    }
+//    $timestamp = curl_getinfo( $curl, CURLINFO_FILETIME );
+//    if ( $timestamp != -1 ) {
+//        $file_data = date( "d.m.Y", $timestamp ); //etc
+//    } else {
+//        $file_data = "N/A";
+//    }
+//    $arr[ $k ][ 'mod_data' ] = $file_data;
+//    $arr[ $k ][ 'label' ] = "";
+//    unset( $arr[ $k ][ 'date' ] );
+    $time = strtotime($arr[ $k ][ 'date' ]);
+$arr[ $k ][ 'date' ] = date('d.m.Y',$time);
+          $info = pathinfo( $arr[ $k ][ 'path' ] );
+    $arr[ $k ][ 'fname' ] = $info[ 'basename' ];;
+    $desc = $arr[ $k ][ 'stext' ];
+    $desc = str_replace('\r\n','',$desc);
+    $desc = str_replace('\n','',$desc);
+    $desc = str_replace('\t','',$desc);
+    $arr[ $k ][ 'stext' ] = $desc;
+}
+
+
+//header( 'Content-type: text/javascript' );
+//echo( json_encode( $arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
+file_put_contents( $plc_filename, json_encode( $arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
+?>

@@ -1,0 +1,812 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+#vue_app_menu {
+    position: relative;
+    z-index: 500;
+    width: 270px;
+    color: #000;
+}
+
+#start_of_catergory {
+}
+
+body.popup_menu_opened {
+    overflow: hidden;
+}
+
+#vue_app_menu .dropdown_main_menu .button_close_menu {
+    width: 30px;
+    height: 30px;
+    background: #fff url("images/button_close_menu.png") center no-repeat;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 600;
+    border-radius: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+#vue_app_menu .dropdown_main_menu .products_block.text a {
+    margin-right: 4px;
+    text-decoration: none;
+    color: #000;
+    font-size: 12px;
+}
+
+#vue_app_menu .dropdown_main_menu .products_block.text a:hover {
+    text-decoration: underline;
+}
+
+#vue_app_menu .dropdown_main_menu .products_block.text a.block_menu_text_section_title {
+    font-size: 15px;
+}
+
+
+/*
+#vue_app_menu .dropdown_main_menu .products_block.text  a::after {
+    font-size: 30px;
+    content: "•";
+    color: #c1c1c1;
+    display: inline-block;
+    text-align: center;
+    width: 20px;
+    margin-right: -4px;
+    font-size: 13px;
+}*/
+#vue_app_menu .dropdown_main_menu .products_block.text ul li {
+    list-style: none;
+    display: inline-block;
+}
+
+#vue_app_menu .dropdown_main_menu .products_block.text ul li span span {
+    color: #adadad;
+    font-size: 13px;
+}
+
+
+#vue_app_menu .dropdown_main_menu .button_close_menu:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+#vue_app_menu .dropdown_main_menu {
+    box-sizing: border-box;
+    background: #a0a0a0;
+    width: 1340px;
+    table-layout: fixed;
+    margin: 0px auto 10px;
+    box-shadow: 0 0 200px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.5);
+    font-family: 'Roboto', sans-serif;
+    /*font-family: 'Tahoma', sans-serif;*/
+    max-height: 50%;
+    font-size: 14px;
+
+}
+
+#vue_app_menu .dropdown_main_menu hr {
+    color: #E0E0E0; /*для IE */
+    background-color: #E0E0E0; /*для Firefox, Opera, Safari*/
+    border: 0px none;
+    height: 5px; /* высота 1px IE, Firefox, Opera, Safari */
+    clear: both; /* для очистки, если тег идет после float елемента */
+    margin: 15px 0;
+}
+
+.vue_app_menu_background_panel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: 0;
+
+    z-index: 100000;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.menu_category_item, .menu_brand_item {
+    cursor: pointer;
+    padding: 6px 10px;
+    margin: 4px 0 4px 0;
+    line-height: 1.2;
+    background: rgba(255, 255, 255, 0.8);
+    transition: 0.2s;
+
+}
+
+.menu_category_item.discounted_items{
+    background: rgba(245, 90, 90, 0.8);
+    color: #fff;
+    font-weight: bold;
+}
+.menu_category_item.discounted_items:hover{
+    background: rgba(245, 90, 90, 1);
+    color: #fff;
+    font-weight: bold;
+}
+
+
+.menu_category_item:hover, .menu_category_item.active,
+.menu_brand_item:hover, .menu_brand_item.active {
+    background: #3aca6c;
+    color: #fff;
+    font-weight: bold;
+}
+
+.menu_brand_item:hover, .menu_brand_item.active {
+}
+
+
+.vue_app_menu_background_panel.menu_is_visible {
+    display: block;
+}
+
+.vue_app_menu_background_panel.menu_is_not_visible {
+    display: none;
+}
+
+.button_open_menu {
+    text-align: center;
+    padding: 12px 10px;
+    cursor: pointer;
+    width: 278px;
+    box-sizing: border-box;
+    margin: 10px;
+    transition: 0.2s;
+    color: #fdfdfd;
+    position: relative;
+}
+.template_rusavtomatika_bulma .button_open_menu {
+    text-align: center;
+    padding: 8px 0px;
+    cursor: pointer;
+    width: 240px;
+    box-sizing: border-box;
+    margin: 0px;
+    transition: 0.2s;
+    color: #ffffff;
+    font-weight: bold;
+    position: relative;
+}
+
+
+.button_open_menu:hover {
+    color: #34ab5e;
+}
+
+.button_open_menu.active {
+    z-index: 20000;
+}
+
+
+.button_open_menu span.arrow-down {
+    background: url('/images/arrow_down_white_green.png') right top no-repeat;
+    width: 15px;
+    height: 8px;
+    display: inline-block;
+}
+
+.button_open_menu:hover span.arrow-down {
+    background: url('/images/arrow_down_white_green.png') right -50px no-repeat;
+}
+
+.button_open_menu:active span.arrow-down {
+    background: url('/images/arrow_up_white.png') right 0px no-repeat;
+}
+
+
+.button_open_menu.button_open_menu_is_visible {
+    display: block;
+}
+
+.button_open_menu.menu_is_not_visible {
+    display: none;
+}
+
+
+#vue_app_menu .dropdown_main_menu .category_block {
+    margin-bottom: 10px;
+}
+
+#vue_app_menu .dropdown_main_menu .product_link {
+    margin-right: 30px;
+    display: inline-block;
+    list-style: disc;
+    font-size: 12px;
+    line-height: 25px;
+    color: #000;
+    text-decoration: none;
+    width: 260px;
+
+}
+
+#vue_app_menu .dropdown_main_menu .product_link:hover {
+    color: #009a1c;
+    text-decoration: underline;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.iP_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.MT8000iE_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.MT8000XE_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.cMT-X_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.cMT_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.eMT3000_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.cMT_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.SK_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.EA_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.OP_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.AK_hmi .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.APC_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ViTAM-9XXA_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ITM_monitor .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ADP_monitors .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.IFC-500_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.IFC-400_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ARCHMI-8_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ARCHMI-9_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ARMPAC-6_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.IFC-OSAL_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.cMT_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.CV-100_P1000_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.CV-100_P2000_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.CV-100_P2000E_panel_pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ARMPAC_WCE_panel_pc_wce .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.x .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ViTAM-8XX_panel_pc .product_link {
+    width: 25%;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.BOX-PC .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ACS .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.BOX-PC_box-pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.ACS_box-pc .product_link,
+#vue_app_menu .dropdown_main_menu .category_block.vpn-router_vpn-router .product_link {
+    width: 97%;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.Haiwell_text .products_block.text a {
+    display: inline-block;
+    width: 15%;
+    font-size: 12px;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.Yottacontrol_text .products_block.text a,
+#vue_app_menu .dropdown_main_menu .category_block.Faraday_text .products_block.text a {
+    display: inline-block;
+    width: 260px;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.Weintek_text .products_block.text a {
+    display: inline-block;
+    width: 260px;
+}
+
+#vue_app_menu .dropdown_main_menu .category_block.IECON_text .products_block.text a {
+    display: inline-block;
+    width: 600px;
+}
+
+
+#vue_app_menu .dropdown_main_menu .products_block {
+    margin-left: 58px;
+}
+
+#vue_app_menu .dropdown_main_menu .products_block.no_image {
+    margin-left: 0px;
+}
+
+.brand_link_logo_image img {
+    max-height: 50px;
+    max-width: 170px;
+    margin: 0px 0 10px;
+
+}
+
+.brand_link_logo_image.brand_2N img, .brand_link_logo_image.brand_IFC img {
+    max-height: 45px;
+
+}
+
+.brand_link_logo_image.brand_Yottacontrol img, .brand_link_logo_image.brand_IECONbrand_IECON img {
+    max-height: 28px;
+    max-width: initial;
+
+}
+
+#vue_app_menu .dropdown_main_menu a.menu_series_item {
+    display: block;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 5px;
+
+    font-size: 15px;
+    overflow: hidden;
+
+}
+
+#vue_app_menu .dropdown_main_menu a.menu_series_item:hover {
+    text-decoration: underline;
+    color: #009a1c;
+}
+
+#vue_app_menu .dropdown_main_menu a.menu_series_item.no_image {
+    padding-left: 0px;
+}
+
+#vue_app_menu .dropdown_main_menu span.menu_series_item {
+    display: block;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #000000;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    font-size: 15px;
+}
+
+#vue_app_menu .dropdown_main_menu span.menu_series_item.no_image {
+    padding-left: 0px;
+
+}
+
+#vue_app_menu .dropdown_main_menu .menu_series_item img {
+    vertical-align: middle;
+    width: 35px;
+
+    margin: 0px 10px 0px -50px;
+    border: 1px solid #eee;
+    padding: 5px;
+    background-color: #E0E0E0;
+}
+
+#vue_app_menu .dropdown_main_menu .series_image_span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+
+    margin: 0px 10px 10px 0px ;
+    border: 1px solid #eee;
+    padding: 5px;
+    background: #E0E0E0 center/90% auto no-repeat;
+    float: left;
+
+}
+
+#vue_app_menu .dropdown_main_menu .menu_series_item .series_name_russian {
+    overflow: hidden;
+}
+
+
+#vue_app_menu .dropdown_main_menu .menu_white_panel__menu_category_item {
+    display: block;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #000000;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px 5px 5px 0px;
+    margin-left: 0px;
+    font-weight: bold
+}
+
+#vue_app_menu .dropdown_main_menu .menu_white_panel__menu_category_item img {
+    vertical-align: middle;
+    max-width: 35px;
+    margin-right: 10px;
+    margin-left: -35px;
+}
+
+
+#vue_app_menu .dropdown_main_menu td {
+    padding: 5px 10px;
+    vertical-align: top;
+    /* border: 2px solid #eee;*/
+}
+
+#vue_app_menu .dropdown_main_menu td.col_1 {
+    width: 16%;
+    padding-right: 5px;
+}
+
+#vue_app_menu .dropdown_main_menu td.col_1.active, #vue_app_menu .dropdown_main_menu td.col_2.active {
+    /*border: 2px solid #3aca6c;*/
+}
+
+#vue_app_menu .dropdown_main_menu td.col_2 {
+    width: 16%;
+    padding-left: 5px;
+
+}
+
+#vue_app_menu .dropdown_main_menu td.col_3 {
+    width: 58%;
+    padding-bottom: 0;
+    padding-left: 0px;
+    position: relative;
+}
+
+#vue_app_menu .dropdown_main_menu .brand_text {
+    margin-left: 5px;
+    margin-bottom: 20px;
+}
+
+#vue_app_menu .dropdown_main_menu .brand_text ul {
+    list-style: none;
+}
+
+#vue_app_menu .dropdown_main_menu #start_of_brand {
+    margin-bottom: 0px;
+}
+
+#vue_app_menu .dropdown_main_menu .block_menu_text__preview_image {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 15px 10px 0px;
+    border: 1px solid #eee;
+    background: #E0E0E0 center/80% auto no-repeat;
+    float: left;
+
+}
+
+#vue_app_menu .dropdown_main_menu .Haiwell_modules_io_text .block_menu_text__preview_image {
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 15px 10px -10px;
+    border: 1px solid #eee;
+    background: #E0E0E0 center/80% auto no-repeat;
+    float: left;
+}
+
+
+#vue_app_menu .dropdown_main_menu .block_menu_text__title2 {
+    font-size: 15px;
+    display: block;
+    margin-bottom: 10px
+}
+
+#vue_app_menu .dropdown_main_menu .block_menu_text_section {
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+#vue_app_menu .dropdown_main_menu ul.information {
+    margin-bottom: 15px;
+    margin-left: 5px;
+}
+
+#vue_app_menu .dropdown_main_menu ul.information li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.block_menu_text_section_title {
+}
+
+.str_menu_get_filtered_items {
+    font-size: 18px;
+    padding: 10px;
+}
+
+.menu_result_panel_category, .menu_result_panel_brand {
+    display: none;
+}
+
+.menu_result_panel_category.active, .menu_result_panel_brand.active {
+    display: block;
+}
+
+.menu_result_panel_category__title, .menu_result_panel_brand__title {
+    background: #fff;
+    color: #000000;
+    font-size: 15px;
+
+    line-height: 30px;
+    padding: 0px 0px 0 10px;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    transition: 0.2s;
+}
+
+.menu_result_panel_category__title:hover, .menu_result_panel_brand__title:hover {
+    background: #3aca6c;
+    color: #ffffff;
+
+}
+
+.go_to_category_button, .go_to_brand_button {
+    background: #3aca6c url("images/arr_right_white.png") 95% center no-repeat;
+    color: #ffffff;
+    width: auto;
+    height: 30px;
+    float: right;
+    margin-left: 10px;
+    font-size: 15px;
+    line-height: 30px;
+    padding: 0px 25px 0 10px;
+    box-sizing: border-box;
+    /*text-transform: uppercase;*/
+
+}
+
+.menu_white_panel {
+    background: #fff;
+    padding: 20px;
+    min-height: 330px;
+    max-height: 440px;
+    overflow-y: scroll;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+
+@media screen and (min-height: 500px) {
+    .menu_white_panel {
+        max-height: 300px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 0px;
+    }
+}
+
+@media screen and (min-height: 600px) {
+    .menu_white_panel {
+        max-height: 400px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (min-height: 700px) {
+    .menu_white_panel {
+        max-height: 500px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-height: 800px) {
+    .menu_white_panel {
+        max-height: 600px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-height: 900px) {
+    .menu_white_panel {
+        max-height: 530px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1000px) {
+    .menu_white_panel {
+        max-height: 630px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1100px) {
+    .menu_white_panel {
+        max-height: 730px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1200px) {
+    .menu_white_panel {
+        max-height: 800px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1300px) {
+    .menu_white_panel {
+        max-height: 900px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1400px) {
+    .menu_white_panel {
+        max-height: 1000px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1500px) {
+    .menu_white_panel {
+        max-height: 1100px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1600px) {
+    .menu_white_panel {
+        max-height: 1200px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1700px) {
+    .menu_white_panel {
+        max-height: 1300px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1800px) {
+    .menu_white_panel {
+        max-height: 1400px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+@media screen and (min-height: 1900px) {
+    .menu_white_panel {
+        max-height: 1500px;
+    }
+
+    #vue_app_menu .dropdown_main_menu {
+        margin-top: 199px;
+    }
+}
+
+
+.menu_white_panel.loading {
+    opacity: 0;
+}
+
+.loading_info_panel {
+    background: url("images/loading-menu.gif") 20px 100px no-repeat #f3f9f9;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    opacity: 0.2;
+    transition: 0.5s;
+}
+
+.loading_info_panel.loading {
+    display: block;
+}
+
+.rolldown_to_brand_buttons, .rolldown_to_category_buttons {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    margin: 2px 0 -3px;
+
+}
+
+.button_gray_md {
+    background: #eeeeee;
+    color: #000;
+    padding: 5px 10px;
+    margin: 2px 2px 2px 0px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.button_gray_md:hover {
+    background: #3aca6c;
+    color: #ffffff;
+}
+
+.button_white_md {
+    background: #ffffff;
+    color: #000;
+    padding: 5px 10px;
+    margin: 2px 4px 2px 0px;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.button_white_md:hover {
+    background: #3aca6c;
+    color: #ffffff;
+}
+
+.rolldown_to_brand_button {
+    padding-right: 25px;
+    background: rgba(255, 255, 255, 0.8) url("images/arr_down.png") 90% center no-repeat;
+
+    transition: 0.2s;
+
+}
+
+.rolldown_to_brand_button:hover {
+    background: #3aca6c url("images/arr_down_white.png") 90% center no-repeat;
+    font-weight: bold;
+}
+
+.rolldown_to_category_button {
+    padding-right: 25px;
+    background: #fff url("images/arr_down.png") 97% center no-repeat;
+    transition: 0.2s;
+}
+
+.rolldown_to_category_button:hover {
+    background: #3aca6c url("images/arr_down_white.png") 97% center no-repeat;
+
+}
+
+#cssmenut-new .dropdown_main_menu ul {
+    list-style: none;
+    color: #000000;
+}
+
+#body_cont nav .dropdown_main_menu a {
+    color: #000000;
+}
+

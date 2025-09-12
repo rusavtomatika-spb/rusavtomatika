@@ -1,0 +1,279 @@
+.mod-param td[colspan="2"] {
+    vertical-align: text-top;
+}
+
+.model-param .h3 td {
+    border: 0px solid gray;
+}
+
+.model-param tr td:first-child {
+
+}
+.model-param tr td.tr_image {
+    width: 40%;
+}
+
+
+.mod-param {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 10px 20px 20px 20px;
+    box-sizing: border-box;
+}
+
+.model-param {
+    color: #5d5d5d;
+    width: 100%;
+}
+
+.model-param a, .dimensions1, .coms {
+    color: #5d5d5d;
+}
+
+.model-param td {
+    padding-left: 35px;
+    background: #fff;
+    text-align: center;
+}
+
+.model-param td a {
+    display: block;
+}
+
+.model-param td a img {
+    display: block;
+    margin: 10px auto;
+}
+
+.model-param td[colspan="5"] {
+    background: none;
+    padding: 1px 20px;
+}
+
+.model-param .libraries td[colspan="4"] {
+    background: none;
+    padding: 1px 20px;
+}
+
+.model-param.download td[colspan="5"] {
+    background: none;
+    padding: 0px 20px;
+}
+
+.model-param td.h3 {
+    padding-left: 0px;
+}
+
+.model-param {
+    border-collapse: collapse;
+}
+
+.model-param.download td {
+    padding: 7px 20px;
+}
+
+.model-param span {
+    white-space: nowrap;
+}
+
+.model-param td {
+    border: 1px solid #e3e3e3;
+}
+
+.model-param td.h3 {
+    border: 0px solid gray;
+}
+
+.mod-param .back {
+    text-align: center;
+    font-size: 16px;
+}
+
+.mod-param .back a {
+    display: inline-block;
+    padding: 4px 14px;
+    margin: 1px 2px;
+    background: #00ad61;
+    color: #fff;
+    text-decoration: none;
+}
+
+.mod-param .back a:hover {
+    background: #008b00;
+}
+
+.mod-param .back span.current_page {
+    display: inline-block;
+    padding: 4px 14px;
+    margin: 1px 2px;
+    background: #777;
+    color: #fff;
+}
+
+.mod-param #ask_drivers {
+    width: 245px;
+    padding: 8px 15px 8px 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+    cursor: text;
+}
+
+.mod-param #drive-button {
+    border: 0px;
+    background: url(/images/search.png) no-repeat;
+    top: 6px;
+    right: 5px;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    z-index: 1010;
+    cursor: pointer;
+    transition: 0.2s;
+    transform: scale(0.8);
+}
+
+.mod-param #drive-button:hover {
+    transform: scale(1);
+}
+
+
+.mod-param #searchdiv {
+    float: right;
+    width: 245px;
+    position: relative;
+    margin-top: -48px;
+    /*margin-bottom: 20px;*/
+}
+
+.mod-param #searchdiv_libraries {
+    float: right;
+    width: 245px;
+    position: relative;
+}
+
+.mod-param .easy {
+    font-weight: 700;
+}
+
+
+.mod-param .jpg {
+    width: 490px;
+}
+
+.mod-param .gif {
+    width: 490px;
+}
+
+.mod-param .model-param .h3 td {
+    border: 0px solid gray;
+}
+
+.mod-param .changeimg img.gif {
+    display: none;
+}
+
+.mod-param .changeimg img.jpg {
+    display: inherit;
+}
+
+.mod-param .changeimg:hover img.gif {
+    display: inherit;
+}
+
+.mod-param .changeimg:hover img.jpg {
+    display: none;
+}
+
+.mod-param #searchdiv_inn {
+    background: white;
+    border: 0px;
+    z-index: 50;
+    position: absolute;
+    top: 8px;
+    right: 3px;
+    width: 24px;
+    height: 24px;
+}
+
+.mod-param #remove {
+    color: red;
+    top: 3px;
+    right: 3px;
+    position: absolute;
+    z-index: 100;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.mod-param #drive-note {
+    padding: 20px;
+    background: #c0efcf;
+    margin: 10px 0 0;
+    border: 1px solid #e0e0e0;
+}
+
+.mod-param .preview_picture_wrapper {
+    width: 250px;
+    height: 125px;
+    margin: 10px auto;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    transition: 0.2s;
+    transform: scale(0.95);
+}
+
+
+.mod-param .preview_picture {
+    width: 100%;
+    height: 105px;
+    background: center;
+    background-size: 100% auto;
+}
+
+.mod-param .preview_picture_wrapper:hover {
+    transform: scale(1);
+}
+
+
+.projects_tabs {
+    display: block;
+}
+
+.projects_tabs li {
+    display: inline-block;
+    padding: 0;
+    margin: 0 1px;
+}
+
+.projects_tabs li a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 7px 10px;
+    text-align: center;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.projects_tabs li a.active {
+    background: #00ad61;
+    color: #fff;
+    border: 1px solid #00ad61;
+}
+
+.projects_tabs li a:hover {
+    background: #00ad61;
+    color: #fff;
+    border: 1px solid #00ad61;
+}
+
+.projects_tabs li a.active:hover {
+    cursor: pointer;
+}

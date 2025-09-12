@@ -1,0 +1,66 @@
+.button_like_link {
+    display: inline-block;
+    color: #000;
+    text-shadow: none;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 400;
+    transition: color 0.2s;
+    text-decoration: none;
+    text-align: center;
+    padding: 0;
+
+    color: var(--color-dark-gray);
+    cursor: pointer;
+}
+
+.button_like_link.add_to_compare {
+    display: flex;
+    align-items: center;
+}
+.button_like_link.add_to_compare span{
+    background: url("/core/templates/rusavtomatika_adaptive/images/add_button_compare.png") left -100px no-repeat;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+}
+.button_like_link.add_to_favorites {
+    display: flex;
+    align-items: center;
+}
+.button_like_link.add_to_favorites span{
+    background: url("/core/templates/rusavtomatika_adaptive/images/add_button_favorite.png") left -101px no-repeat;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+}
+.button_like_link.add_to_compare.is-active
+{
+    color: var(--color-green);
+}
+.button_like_link.add_to_compare.is-active  span
+{
+    background-position: left 0px;
+}
+.button_like_link.add_to_favorites.is-active
+{
+    color: var(--color-green);
+}
+.button_like_link.add_to_favorites.is-active span
+{
+    background-position: left -1px;
+}
+
+a.button{
+    text-decoration: none;
+}
+.icon_hamburger.no_text {
+    margin-left: calc(-0.5em - 1px);
+    margin-right: calc(-0.5em - 1px);
+}
+.icon_hamburger:first-child:not(.no_text) {
+    margin-left: -0.2rem;
+}
+
