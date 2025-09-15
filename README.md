@@ -23,7 +23,4 @@ mysql 5.7
   1. /index.php
   2. /sc/dbcon.php
   3. /sc/lib_new.php
-
-## Commands
-  ___Запуск(если не подгрузились стили и скрипты):___  
-  1. C:\php-5.6\php.exe -S localhost:8000
+  4. В файле /abacus/application/CoreApplication.php нужно раскомментировать блок "Для локальной копии указываем полные пути для загрузки стилей и скриптов"
