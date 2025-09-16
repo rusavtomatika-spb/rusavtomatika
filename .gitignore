@@ -67,6 +67,7 @@ sc/QRCode/*.jpg
 sc/QRCode/*.jpeg
 /export_catalog.xml
 /cache
+!/robots.txt
 
 # ========================
 # 📁 ПАПКИ С ИЗОБРАЖЕНИЯМИ

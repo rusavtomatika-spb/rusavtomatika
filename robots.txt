@@ -1,0 +1,72 @@
+User-Agent: *
+Disallow: /404.php
+Disallow: /catalog/search/
+Disallow: /catalog/compare/
+Disallow: /catalog/favorites/
+Disallow: /catalog/favorites
+Disallow: /catalog/vpn_routers/
+Disallow: /articles/images/
+Disallow: /new_products/
+#Disallow: /upload_files/ # директива запрещала индексацию pdf на нашем картиночном
+Disallow: /test/
+Disallow: /plc/
+Disallow: /ewon/
+Disallow: /cincoze/
+Disallow: /promyshlennye-kompyutery-box-pc/
+Disallow: /panelnie-computery/
+Disallow: /monitors/
+Disallow: /bloki-pitaniya/
+Disallow: /news/images/
+Disallow: /*?page=
+Disallow: /*?&sort
+Disallow: /*?search
+Disallow: /*?models
+Disallow: /sitemap/
+Disallow: /forum/faq.php
+Disallow: /forum/mcp.php
+Disallow: /forum/memberlist.php
+Disallow: /forum/posting.php
+Disallow: /forum/report.php
+Disallow: /forum/search.php
+Disallow: /forum/style.php
+Disallow: /forum/ucp.php
+Disallow: /forum/viewtopic.php?p=*
+Disallow: /forum/viewtopic.php?f=*&t=*&start=0$
+Disallow: /forum/viewtopic.php?f=*&t=*&view=next
+Disallow: /forum/viewtopic.php?f=*&t=*&view=previous
+Disallow: /forum/go.php
+Disallow: /*?ysclid=*
+Disallow: /*?target=*
+#Clean-param: #range_price_min&range_price_max&ethernets_range_min&ethernets_range_max&sdcard&vesa&cmtviewer&webview&screenless&plc_web_browser&camera_ip&camera_usb&availablity&sensor_type&case_material&interfaces&resolutions&processors&sort /catalog/operator_panels/
+#Clean-param: range_diagonal_max&range_diagonal_min&os&availablity&range_price_min&range_price_max&sort /catalog/panel_computers/
+#Clean-param: range_diagonal_min&range_diagonal_max&resolutions&processors&interfaces&sort /catalog/industrial_computers_full_ip65/
+#Clean-param: processors&interfaces&availablity&sort /catalog/embedded_computers/
+#Clean-param: range_diagonal_min&range_diagonal_max&resolutions&sort /catalog/industrial_monitors/
+#Clean-param: sort /catalog/power_supplies/
+#Clean-param: start /forum/
+
+Disallow: */?$ # знак вопроса в конце
+Disallow: */?? # 2 знака вопроса
+Disallow: */?&$ # ?& в конце
+Disallow: /*_/* # любые каталоги с _ в конце. Заменяет кучу директив в старом robots
+Disallow: /*//* # множественные / в середине и конце урл
+Disallow: //* # множественные / в начале
+Disallow: *utm=*
+Disallow: *ask_drivers=*
+Disallow: *find_projects=*
+Disallow: *sid=* # из форума
+Disallow: *tel=*
+Disallow: *submit=*
+Disallow: /documents/?section=* # старые урл
+Disallow: */ra/*
+Disallow: */index* # все с index с любым расширением
+Disallow: */test* # все с test с любым расширением. В том числе и папки
+Disallow: /weintek_drivers/*/?com= # старые урл
+Disallow: /weintek_drivers/*/$ # старые урл
+Disallow: /page*/ # старая пагинация
+Disallow: *.php* # все урл с .php
+
+Allow: /forum/*.php* # допускает урл с .php на форуме
+
+Host: https://www.rusavtomatika.com
+Sitemap: https://www.rusavtomatika.com/sitemap.xml
