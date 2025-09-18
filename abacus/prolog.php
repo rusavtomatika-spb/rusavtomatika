@@ -5,10 +5,19 @@ header('Content-type: text/html; charset=UTF-8');
 if (!defined('ENCODING')) {
 	define('ENCODING', 'UTF-8');
 }
+
 if (!defined('IS_LOCAL')) {
 	$host = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : '';
 	define('IS_LOCAL', stripos($host, 'localhost') !== false || stripos($host, '.local') !== false);
 }
+
+if (IS_LOCAL) {
+	@ini_set('allow_url_fopen', '0');
+	@ini_set('file_uploads', '0');
+	@ini_set('display_errors', '1');
+	define('DISABLE_RUNTIME_WRITES', true);
+}
+
 define('PROLOG_INCLUDED', true);
 if (!defined('bullshit')) {
     define('bullshit', 1);
