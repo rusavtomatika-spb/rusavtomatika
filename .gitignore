@@ -51,6 +51,7 @@
 *.cmtp
 /upload_files
 /uploads
+/upload_files
 /orders/excel
 /admin/config/admin_dbcon.php
 sc/phpmorphy/cache/
@@ -63,6 +64,7 @@ sc/QRCode/*.jpeg
 /export_catalog.xml
 /cache
 !/robots.txt
+/.vscode/settings.json
 
 # ========================
 # 📁 ПАПКИ С ИЗОБРАЖЕНИЯМИ
