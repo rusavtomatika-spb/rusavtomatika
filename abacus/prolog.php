@@ -5,7 +5,10 @@ header('Content-type: text/html; charset=UTF-8');
 if (!defined('ENCODING')) {
 	define('ENCODING', 'UTF-8');
 }
-
+if (!defined('IS_LOCAL')) {
+	$host = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : '';
+	define('IS_LOCAL', stripos($host, 'localhost') !== false || stripos($host, '.local') !== false);
+}
 define('PROLOG_INCLUDED', true);
 if (!defined('bullshit')) {
     define('bullshit', 1);

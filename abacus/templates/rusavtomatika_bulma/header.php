@@ -39,15 +39,21 @@ $current_page = str_replace("/", "_", $current_page);
     <!--link rel="stylesheet" type="text/css" href="/css/tango/skin.css" /-->
     <link rel="stylesheet" href="/js/jquery-ui.css">
     <link rel="stylesheet" href="/sc/jBox.all.min.css">
+    <? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <? endif; ?>
                             <!--script src="/js/jquery-1.10.2.js?310120201008"></script-->
                             <script src="/js/jquery-3.6.0.js?310120201008"></script>
                             <script src="/sc/jBox.all.min.js?310120201008"></script>
     <?
     if ($current_page != ''):
         ?>
+        <? if (defined('IS_LOCAL') && IS_LOCAL): ?>
+        <script src="/js/jquery-ui.js"></script>
+        <? else: ?>
         <!--script src="//code.jquery.com/ui/1.9.2/jquery-ui.js"></script-->
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <? endif; ?>
     <?
     endif;
 	//echo $_SERVER['SCRIPT_FILENAME'];

@@ -39,22 +39,8 @@ endif;
 ?>
 <script type="text/javascript" src="<?= $cms_template_url ?>template_scripts.js"></script>
 <!-- <script type="text/javascript" src="/documents/documents.js"></script> -->
-<? if ($_SERVER['HTTP_HOST'] != "www.rusavto.moisait.net" && $_SERVER['HTTP_HOST'] != "www.rusavtomatika.valovenko.tmweb.ru"): ?>
+<? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
     <script src="//code.jivosite.com/widget.js" data-jv-id="gno75izSm3" async></script>
-    <? /*?>
-        <!-- BEGIN JIVOSITE CODE {literal} -->
-        <script type="text/javascript">
-            (function () {
-                var widget_id = '9991';
-                var s = document.createElement('script');
-                s.type = 'text/javascript';
-                s.async = true;
-                s.src = '//code.jivosite.ru/script/widget/' + widget_id;
-                var ss = document.getElementsByTagName('script')[0];
-                ss.parentNode.insertBefore(s, ss);
-            })();</script> <div id='jivo_copyright' style='display: none'>Модуль <a href='http://www.jivosite.ru' target='_blank'>онлайн консультант</a><br> работает на JivoSite</div>
-        <!-- {/literal} END JIVOSITE CODE -->
-        <?*/ ?>
 <? endif; ?>
 <!-- <?= "PHP_MAJOR_VERSION " . PHP_MAJOR_VERSION ?> -->
 <style>
@@ -76,7 +62,7 @@ CoreApplication::print_scripts_including();
 <div id='mes_backgr'></div>
 <link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>css/last_css.css"/>
 <?php
-if ($_SERVER['HTTP_HOST'] != "www.rusavto.moisait.net") {
+if (!defined('IS_LOCAL') || !IS_LOCAL) {
     ?>
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -104,7 +90,7 @@ if ($_SERVER['HTTP_HOST'] != "www.rusavto.moisait.net") {
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RK888QLSF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){dataLayer.push(arguments);} 
         gtag('js', new Date());
         gtag('config', 'G-1RK888QLSF');
     </script>
