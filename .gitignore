@@ -12,11 +12,6 @@
 *.mov
 *.ogg
 *.raw
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.webp
 *.exe
 *.dll 
 *.so

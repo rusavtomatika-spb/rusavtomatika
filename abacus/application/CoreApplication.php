@@ -34,39 +34,28 @@ class CoreApplication
 
     }
 
-    public static function add_script($path_to_script)
-    {
-        self::$arrScripts[] = $path_to_script."?".refresh_styles_and_scripts;
+    public static function add_style($path_to_style) {
+        $fixed_path = self::fix_asset_path($path_to_style);
+        self::$arrStyles[] = $fixed_path;
     }
 
-    public static function add_style($path_to_style)
-    {
-        self::$arrStyles[] = $path_to_style."?".refresh_styles_and_scripts;
+    public static function add_script($path_to_script) {
+        $fixed_path = self::fix_asset_path($path_to_script);
+        self::$arrScripts[] = $fixed_path;
     }
 
-    // Для локальной копии указываем полные пути для загрузки стилей и скриптов
-    // public static function add_style($path_to_style) {
-    //     $fixed_path = self::fix_asset_path($path_to_style);
-    //     self::$arrStyles[] = $fixed_path;
-    // }
-
-    // public static function add_script($path_to_script) {
-    //     $fixed_path = self::fix_asset_path($path_to_script);
-    //     self::$arrScripts[] = $fixed_path;
-    // }
-
-    // private static function fix_asset_path($path) {
-    //     $path = str_replace('\\', '/', $path);
+    private static function fix_asset_path($path) {
+        $path = str_replace('\\', '/', $path);
         
-    //     $path = str_replace('D:/projects/rusavtomatika/', '', $path);
-    //     $path = str_replace($_SERVER["DOCUMENT_ROOT"] . '/', '', $path);
+        $path = str_replace('D:/projects/rusavtomatika/', '', $path);
+        $path = str_replace($_SERVER["DOCUMENT_ROOT"] . '/', '', $path);
         
-    //     if (strpos($path, '/') !== 0) {
-    //         $path = '/' . $path;
-    //     }
+        if (strpos($path, '/') !== 0) {
+            $path = '/' . $path;
+        }
         
-    //     return $path;
-    // }
+        return $path;
+    }
 
     public static function print_styles_including()
     {
