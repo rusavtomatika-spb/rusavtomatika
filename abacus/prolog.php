@@ -2,7 +2,9 @@
 ob_start();
 
 header('Content-type: text/html; charset=UTF-8');
-define('ENCODING', 'UTF-8');
+if (!defined('ENCODING')) {
+	define('ENCODING', 'UTF-8');
+}
 
 define('PROLOG_INCLUDED', true);
 if (!defined('bullshit')) {
@@ -14,6 +16,11 @@ if (1) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
 }
+
+if (function_exists('mb_internal_encoding')) {
+	@mb_internal_encoding(ENCODING);
+}
+@ini_set('default_charset', ENCODING);
 
 include_once $_SERVER["DOCUMENT_ROOT"] . "/sc/dbcon.php";
 

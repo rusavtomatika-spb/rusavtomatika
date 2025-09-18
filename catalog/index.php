@@ -1,5 +1,7 @@
 <?php
-define('ENCODING', "UTF-8");
+if (!defined('ENCODING')) {
+	define('ENCODING', "UTF-8");
+}
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 $is_core_catalog_page = explode('?', $_SERVER['REQUEST_URI'])[0] == "/catalog/";
@@ -32,8 +34,7 @@ if ($is_core_catalog_page):
             <p>
                 Мы сотрудничаем с известными мировыми брендами и предлагаем продукцию высокого качества от ведущих
                 мировых производителей. Компания «Русавтоматика»&nbsp; поставляет на территории
-                России продукцию <strong>Weintek</strong> и <strong>Samkoon</strong> (операторские панели),
-                <strong>IFC</strong> (панельные компьютеры, встраиваемые компьютеры, промышленные мониторы), <strong>Aplex</strong>
+                России продукцию <strong>Weintek</strong> и <strong>Samkoon</strong> (операторские панели), <strong>IFC</strong> (панельные компьютеры, встраиваемые компьютеры, промышленные мониторы), <strong>Aplex</strong>
                 (панельные компьютеры), <strong>eWON</strong> (vpn-роутеры). Всего на нашем сайте представлено более 100
                 наименований продукции.</p>
 

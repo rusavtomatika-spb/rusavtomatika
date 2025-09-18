@@ -1,5 +1,7 @@
 <?php
-define('ENCODING', "UTF-8");
+if (!defined('ENCODING')) {
+	define('ENCODING', "UTF-8");
+}
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 $is_core_catalog_page = explode('?', $_SERVER['REQUEST_URI'])[0] == "/catalog/";

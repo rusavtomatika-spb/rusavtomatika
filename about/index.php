@@ -1,5 +1,7 @@
 <?php
-define('ENCODING', "UTF-8");
+if (!defined('ENCODING')) {
+	define('ENCODING', "UTF-8");
+}
 global $CONTENT_ON_WIDE_SCREEN;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";

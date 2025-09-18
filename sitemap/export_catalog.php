@@ -1,7 +1,7 @@
 <?php
-if (!defined("ENCODING")) {
-    define("ENCODING","UTF-8");
-}
+	if (!defined("ENCODING")) {
+    	define("ENCODING","UTF-8");
+	}
 if(isset($export_self_launching)){
     ob_start();
 }
