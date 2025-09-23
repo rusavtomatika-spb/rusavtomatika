@@ -444,8 +444,13 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                                         </div>
 --> 
         <?php if ($arResult['product']['view3d'] == 1): ?>
-          <a href="https://www.rusavtomatika.com/weintek/cMT3106XM/3dmodel" class='button' target="_blank">
-              <span class="btn_text">3D модель</span>
+          <?php
+            $modelName = $arResult['product']["model"];
+            $cleanModelName = preg_replace('/[\s\/]+/', '-', $modelName);
+            $model3dPath = "models/{$cleanModelName}-model/";
+          ?>
+          <a href="/<?= $model3dPath ?>" class='button' target="_blank" style="text-decoration: none;">
+            3D просмотр
           </a>
         <?php endif; ?>
         </div>
