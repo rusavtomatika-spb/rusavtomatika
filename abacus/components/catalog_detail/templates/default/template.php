@@ -443,7 +443,11 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                                             Получить скидку
                                         </div>
 --> 
-          
+        <?php if ($arResult['product']['view3d'] == 1): ?>
+          <a href="https://www.rusavtomatika.com/weintek/cMT3106XM/3dmodel" class='button' target="_blank">
+              <span class="btn_text">3D модель</span>
+          </a>
+        <?php endif; ?>
         </div>
         <div class="component_catalog_detail__advantages">
           <?= $arResult['product']["text_features"] ?>
