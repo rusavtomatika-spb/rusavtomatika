@@ -449,14 +449,14 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
             $cleanModelName = preg_replace('/[\s\/]+/', '-', $modelName);
             $model3dPath = "models/{$cleanModelName}-model/";
           ?>
-          <a href="/<?= $model3dPath ?>" class='button 3d-link' target="_blank">
+          <button class='button button-3d-link' id="viewButton">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="16" height="16" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
               <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
                 <path d="M1450 4481 l-1105 -638 0 -1283 0 -1283 1106 -638 1106 -639 1106 638 1106 637 0 1285 0 1285 -1101 635 c-606 349 -1104 636 -1107 637 -3 2 -503 -285 -1111 -636z m1963 -203 c469 -270 865 -499 880 -508 l28 -17 -873 -504 c-479 -277 -879 -505 -888 -506 -16 -3 -1753 997 -1754 1010 -1 8 1730 1014 1747 1016 5 1 392 -220 860 -491z m-1887 -1296 l879 -507 3 -1018 c1 -559 -1 -1017 -5 -1017 -3 0 -402 228 -885 507 l-878 507 0 1018 c0 560 1 1018 3 1018 2 0 399 -228 883 -508z m2944 -511 l0 -1019 -872 -504 c-479 -276 -875 -505 -880 -506 -4 -2 -8 455 -8 1015 l0 1018 878 507 c482 279 878 507 880 508 1 0 2 -459 2 -1019z"/>
               </g>
             </svg>
             <span>3D просмотр</span>
-          </a>
+          </button>
         <?php endif; ?>
         </div>
         <div class="component_catalog_detail__advantages">
@@ -680,6 +680,43 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
   ?>
 </section>
 <? endif; ?>
+
+<?php if ($arResult['product']['view3d'] == 1): ?>
+  <?php
+    $modelName = $arResult['product']["model"];
+    $cleanModelName = preg_replace('/[\s\/]+/', '-', $modelName);
+    $model3dPath = "models/{$cleanModelName}-model/";
+  ?>
+  <iframe src="/<?= $model3dPath ?>" style="width: 100%; height: 0; visibility: hidden;" id="modelItem"></iframe>
+<?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const viewButton = document.getElementById('viewButton')
+  const modelItem = document.getElementById('modelItem')
+  
+  if (viewButton && modelItem) {
+    function scrollToModel() {
+            
+      const elementPosition = modelItem.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - 350
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      
+      setTimeout(() => {
+        modelItem.style.visibility = 'visible'
+        modelItem.style.height = '600px'
+      }, 300)
+    }
+    
+    viewButton.addEventListener('click', scrollToModel)
+  }
+})
+</script>
+
 <? if (count($arSelected_articles)>0) : ?>
 <section id="articles">
   <h2>Статьи о
