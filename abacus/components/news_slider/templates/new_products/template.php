@@ -12,6 +12,7 @@ function debug_to_console($data) {
 foreach ($arResultPrall as $k) {
 	array_push($models, $k["model"]);
 }
+
 //$arResulAll["items"] = array_intersect($arResult["items"],$arResultPrall["items"]);
 $count = count( $arResult[ "items" ] );
 if ( $count > 0 ):
