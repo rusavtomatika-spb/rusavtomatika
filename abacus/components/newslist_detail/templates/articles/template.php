@@ -135,7 +135,7 @@ $count = count( $arResult[ "items" ] );
     const swiper = new Swiper('.swiper', {
         direction: 'vertical',
         loop: true,
-        autoplay: false
+        autoplay: true
     });
 </script>
 
