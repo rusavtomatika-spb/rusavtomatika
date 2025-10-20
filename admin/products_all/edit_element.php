@@ -14,6 +14,40 @@ include_once $core_admin_path . 'template/header.php';
 include_once $core_admin_path . 'products_all/menu.php';
 require_once $core_admin_path . 'products_all/classes/functions.php';
 @header( "Content-Type: text/html; charset=utf-8" );
+
+if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+  $file = $_FILES['picture'];
+  $product_id = $_POST['product_id'];
+
+  $db_work = new DBWORK();
+  $current_element = $db_work->get_catalog_element_by_id($product_id);
+
+  $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!in_array($file['type'], $allowed_types)) {
+    echo "<div class='error_message'>Недопустимый тип файла. Разрешены только JPG, PNG и GIF.</div>";
+  }
+  elseif ($file['size'] > 5 * 1024 * 1024) {
+    echo "<div class='error_message'>Файл слишком большой. Максимальный размер - 5MB.</div>";
+  } else {
+    $base_path = $_SERVER['DOCUMENT_ROOT'] . '/images/catalog/';
+    $brand_path = $base_path . strtolower($current_element['brand']) . '/';
+    $model_path = $brand_path . $current_element['model'] . '/';
+    
+    if (!file_exists($brand_path)) mkdir($brand_path, 0755, true);
+    if (!file_exists($model_path)) mkdir($model_path, 0755, true);
+    
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $filename = uniqid() . '.' . $extension;
+    $file_path = $model_path . $filename;
+
+    if (move_uploaded_file($file['tmp_name'], $file_path)) {
+      echo "<div class='success_message'>Изображение успешно загружено</div>";
+    } else {
+      echo "<div class='error_message'>Ошибка при загрузке файла</div>";
+    }
+  }
+}
+
 $row = array();
 global $db_work;
 $db_work = new DBWORK();
@@ -310,8 +344,20 @@ $(\'.spoiler-zagolovok-' . $x . '\').click(function(){
 <div style="text-align: center;width: 100%;">Открыть товар на: [<a href="http://www.rusavto.moisait.net/<?= strtolower($current_element["brand"]) ?>/<?= $current_element["model"] ?>/" target="ms">moisait</a>]&nbsp;&nbsp;
   [<a href="http://www.test.rusavtomatika.com/<?= strtolower($current_element["brand"]) ?>/<?= $current_element["model"] ?>/" target="test">test</a>]&nbsp;&nbsp;
   [<a href="http://www.rusavtomatika.com/<?= strtolower($current_element["brand"]) ?>/<?= $current_element["model"] ?>/" target="proda">proda</a>] </div>
-<form action="/admin/products_all/edit_element.php?index=<?= $current_element["index"] ?>&action=edit_element"
-          method="post">
+
+  <div style="display: flex; flex-direction: column; align-items: flex-start; margin: 20px 0 50px; gap: 10px;">
+    <h2 style="margin: 0;">Добавление изображений</h2>
+    <? 
+    echo '
+      <form name="formUploadImage" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="product_id" value="'.$current_element['index'].'">
+        <input type="file" autocomplete="off" name="picture" multiple>
+        <input type="submit" value="Загрузить" style="margin: 0;">
+      </form>
+    ';
+    ?>
+  </div>
+  <form action="/admin/products_all/edit_element.php?index=<?= $current_element["index"] ?>&action=edit_element" method="post">
   <table class="show_all_fields_<?= $_COOKIE["show_all_fields"] ?>">
     <tr>
       <td colspan="3" class="td_buttons"><div class="sticky">
@@ -349,9 +395,7 @@ $(\'.spoiler-zagolovok-' . $x . '\').click(function(){
           }
           ?>
         </div>
-        <div>
-          <? //echo  '<form name="formUploadImage" method="post" enctype="multipart/form-data"><input type="hidden" name="product_id" value="'.$current_element['index'].'"><input type="file" autocomplete="off" name="picture"><br><input disabled="disabled" autocomplete="off" type="submit" value="Загрузить"></form>';?>
-        </div></td>
+      </td>
     </tr>
     <tr>
       <td colspan="3" class=""><table id="list">
