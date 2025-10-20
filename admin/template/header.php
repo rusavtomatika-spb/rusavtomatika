@@ -30,6 +30,10 @@ if (!defined('PRODUCTS_ALL') and !defined('CONTROLLERS')) {
         <script src="/admin/template/jquery.cookie.js"></script>
         <script src="/admin/template/scripts.js"></script>
         <link rel="stylesheet" type="text/css" href="/admin/template/reformator.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="/admin/template/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <div class="wrapper_all" <? if(isset($_COOKIE["template_theme"])){ echo 'id="template_theme_'.$_COOKIE["template_theme"].'"'; };?>>
