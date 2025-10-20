@@ -171,7 +171,7 @@ if (!empty($result)) {
             echo '<span class="list_of_images" id="product_id_' . $row['index'] . '">' . $imagesHtml . '    </span><span v-on:click="create_webp(' . $row['index'] . ')" class="button_create_webp" id="btn_product_id_' . $row['index'] . '">wbp</span>';
             echo "</td>";
             echo "<td>";
-            echo '<form name="formUploadImage" method="post" enctype="multipart/form-data"><input type="hidden" name="product_id" value="' . $row['index'] . '"><input type="file" autocomplete="off" name="picture"><br><input disabled="disabled" autocomplete="off" type="submit" value="Загрузить"></form>';
+            echo '<form name="formUploadImage" method="post" enctype="multipart/form-data"><input type="hidden" name="product_id" value="' . $row['index'] . '"><input type="file" autocomplete="off" name="picture" multiple><br><input disabled="disabled" autocomplete="off" type="submit" value="Загрузить"></form>';
             echo "</td>";
             echo "<td class='name'>";
             echo '<a class="" href="/admin/products_all/edit_element.php?index=' . $row['index'] . '">' . $row['model'] . '</a>';
