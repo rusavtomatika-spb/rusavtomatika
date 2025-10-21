@@ -228,7 +228,7 @@ if ( !empty( $result ) ) {
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
       echo '<td class="td_center actions-wrapper">';
       echo '<button type="submit" name="Submit" class="product__action-button">Применить</button>';
-      echo '<button type="submit" name="Submit" class="product__action-button">Копировать</button>';
+      echo '<a href="?action=copy_element&id=' . $row['index'] . '"><button type="button" class="product__action-button">Копировать</button></a>';
       //if (isset($_GET["section_code"])) {
       //                echo '<a class="check_delete" href="?action=delete_element&section_code=' . $_GET["section_code"] . '&id=' . $row['index'] . '"><button style="padding:3px 5px;;cursor: pointer;">Удалить</button></a>';
       //            } else {
@@ -291,6 +291,7 @@ if ( !empty( $result ) ) {
     width: 175px;
     gap: 10px;
   }
+  .actions-wrapper a { text-decoration: none !important; }
   .product__action-button {
     cursor: pointer;
     display: flex;

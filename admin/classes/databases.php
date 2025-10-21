@@ -1148,6 +1148,82 @@ class DBWORK {
         }
     }
 
+    public function copy_product_element($element_id) {
+        global $mysqli_db;
+        
+        $query = "SELECT * FROM `products_all` WHERE `index` = " . intval($element_id);
+        database_connect();
+        mysqli_query($mysqli_db,"SET NAMES utf8");
+        $result = mysqli_query($mysqli_db, $query);
+        
+        if (!$result || mysqli_num_rows($result) == 0) {
+            $out["message"] = "Элемент с ID $element_id не найден!";
+            $out["success"] = false;
+            return $out;
+        }
+        
+        $original_element = mysqli_fetch_assoc($result);
+        
+        $max_index_query = "SELECT MAX(`index`) as max_index FROM `products_all`";
+        $max_result = mysqli_query($mysqli_db, $max_index_query);
+        $max_row = mysqli_fetch_assoc($max_result);
+        $new_index = $max_row['max_index'] + 1;
+        
+        $fields = array();
+        $values = array();
+        
+        foreach ($original_element as $field => $value) {
+            if ($field == 'index') {
+                $fields[] = "`$field`";
+                $values[] = "'$new_index'";
+                continue;
+            }
+            
+            if ($field == 'model') {
+                $new_value = $value . '_copy';
+                $fields[] = "`$field`";
+                $values[] = "'" . addslashes($new_value) . "'";
+            } 
+            elseif ($field == 's_name') {
+                $new_value = $value . ' (копия)';
+                $fields[] = "`$field`";
+                $values[] = "'" . addslashes($new_value) . "'";
+            }
+            elseif ($field == 'h1') {
+                $new_value = $value . ' (копия)';
+                $fields[] = "`$field`";
+                $values[] = "'" . addslashes($new_value) . "'";
+            }
+            elseif ($field == 'title') {
+                $new_value = $value . ' (копия)';
+                $fields[] = "`$field`";
+                $values[] = "'" . addslashes($new_value) . "'";
+            }
+            else {
+                $fields[] = "`$field`";
+                $values[] = "'" . addslashes($value) . "'";
+            }
+        }
+        
+        $fields_str = implode(', ', $fields);
+        $values_str = implode(', ', $values);
+        
+        $this->query = "INSERT INTO `products_all` ($fields_str) VALUES ($values_str)";
+        
+        $insert_result = mysqli_query($mysqli_db, $this->query);
+        
+        if ($insert_result) {
+            $out["message"] = "Элемент успешно скопирован. Новый ID: $new_index";
+            $out["success"] = true;
+            $out["new_element_id"] = $new_index;
+            return $out;
+        } else {
+            $out["message"] = "Ошибка при копировании: " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+    }
+
     public function set_position_catalog_element($id, $position) {
 
 
