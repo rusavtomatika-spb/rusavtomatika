@@ -207,7 +207,7 @@ if ( !empty( $result ) ) {
       else :
         echo "<tr><form action='$link' method='post'>";
       endif;
-      echo "<td class='name'><a target='new' class='' href='/admin/products_all/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
+      echo "<td class='name'><a target='new' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
       //echo "<td class='code'><input type='text' name='field_status' value='" . $row['status'] . "'></td>";
       echo "<td class='code'><select name='field_status' id='status' class='status' style='font-size: 0.7em;min-width:70px;'><option value='0'";
       if ( $row[ 'status' ] == "0" )echo " selected class='status-off'";

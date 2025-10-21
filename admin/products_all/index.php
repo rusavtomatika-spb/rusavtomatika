@@ -165,7 +165,7 @@ if (!empty($result)) {
                 echo "<tr>";
             endif;
             echo "<td class='id td_center'>";
-            echo '<a class="" href="/admin/products_all/edit_element.php?index=' . $row['index'] . '">' . $row['index'] . '</a>';
+            echo '<a class="" href="/admin/edit_element.php?index=' . $row['index'] . '">' . $row['index'] . '</a>';
             echo "</td>";
             echo "<td class='td_right'>";
             echo '<span class="list_of_images" id="product_id_' . $row['index'] . '">' . $imagesHtml . '    </span><span v-on:click="create_webp(' . $row['index'] . ')" class="button_create_webp" id="btn_product_id_' . $row['index'] . '">wbp</span>';
@@ -174,7 +174,7 @@ if (!empty($result)) {
             echo '<form name="formUploadImage" method="post" enctype="multipart/form-data"><input type="hidden" name="product_id" value="' . $row['index'] . '"><input type="file" autocomplete="off" name="picture" multiple><br><input disabled="disabled" autocomplete="off" type="submit" value="Загрузить"></form>';
             echo "</td>";
             echo "<td class='name'>";
-            echo '<a class="" href="/admin/products_all/edit_element.php?index=' . $row['index'] . '">' . $row['model'] . '</a>';
+            echo '<a class="" href="/admin/edit_element.php?index=' . $row['index'] . '">' . $row['model'] . '</a>';
             echo "</td>";
             echo "<td class='code'>";
             echo $row['brand'];
