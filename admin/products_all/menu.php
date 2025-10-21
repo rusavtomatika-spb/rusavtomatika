@@ -151,6 +151,11 @@ $types = $db_work->get_types();
     margin-top: 10px;
     border-radius: 5px;
     text-decoration: none;
+    transition: .3s;
+}
+.add__element-link:hover {
+    transform: scale(1.02);
+    color: #fff;
 }
 .menu_wrapper {
     margin-bottom: 50px;

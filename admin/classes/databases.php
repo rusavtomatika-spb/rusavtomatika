@@ -10,7 +10,7 @@ class DBWORK {
 
 
 
-    // ���������� ��������
+    // объявление свойства
 
     private $query = '';
 
@@ -22,7 +22,7 @@ class DBWORK {
 
 
 
-    // ���������� ������
+    // объявление метода
 
     public function add_catalog_section($arguments) {
 
@@ -36,7 +36,7 @@ class DBWORK {
 
             $success = false;
 
-            $errors = " ��� ";
+            $errors = " Имя ";
 
         }
 
@@ -44,17 +44,17 @@ class DBWORK {
 
             $success = false;
 
-            $errors .= " ���";
+            $errors .= " Код";
 
         }
 
         if ($errors) {
 
-            return "������ �� ���������!<br>��������� ������������ ����:" . $errors;
+            return "Секция не добавлена!<br>Заполните обязательные поля:" . $errors;
 
         }
 
-        $ptn = "/[^a-zA-Z�-��-ߨ�0-9&\/ ]/w";
+        $ptn = "/[^a-zA-Zа-яА-ЯЁё0-9&\/ ]/w";
 
         $this->query = "INSERT INTO `$this->db`.`$this->ib_catalog_sections`" .
 
@@ -94,7 +94,7 @@ class DBWORK {
 
         if ($result) {
 
-            $out["message"] = "������ " . $arguments['name'] . " ���������.";
+            $out["message"] = "Секция " . $arguments['name'] . " добавлена.";
 
             $out["success"] = true;
 
@@ -102,7 +102,7 @@ class DBWORK {
 
         } else {
 
-            $out["message"] = "������! ������ " . $arguments['name'] . " �� ���������!<br>" . $this->query;
+            $out["message"] = "Ошибка! Секция " . $arguments['name'] . " не добавлена!<br>" . $this->query;
 
             $out["success"] = false;
 
@@ -130,7 +130,7 @@ class DBWORK {
 
             $out["success"] = false;
 
-            $out["errors"] = " ��� ";
+            $out["errors"] = " Имя ";
 
         }
 
@@ -138,7 +138,7 @@ class DBWORK {
 
             $out["success"] = false;
 
-            $out["errors"] .= " ��� ";
+            $out["errors"] .= " Код ";
 
         }
 
@@ -234,7 +234,7 @@ class DBWORK {
 
 
 
-        //���������� �������������� �����
+        //сохранение дополнительных полей
 
         if (isset($arguments["extra_fields"])) {
 
@@ -266,7 +266,7 @@ class DBWORK {
 
         if ($result) {
 
-            $out["message"] = "������� " . $arguments['name'] . "($element_id)" . " ��������.";
+            $out["message"] = "Элемент " . $arguments['name'] . "($element_id)" . " сохранен.";
 
             $out["element_id"] = $element_id;
 
@@ -276,7 +276,7 @@ class DBWORK {
 
         } else {
 
-            $out["message"] = "������! ������� " . $arguments['name'] . "($element_id)" . " �� ��������!<br>" . $this->query;
+            $out["message"] = "Ошибка! Элемент " . $arguments['name'] . "($element_id)" . " не сохранен!<br>" . $this->query;
 
             $out["success"] = false;
 
@@ -384,7 +384,7 @@ class DBWORK {
 
             $out["success"] = false;
 
-            $out["errors"] = " ��� ";
+            $out["errors"] = " Имя ";
 
         }
 
@@ -392,7 +392,7 @@ class DBWORK {
 
             $out["success"] = false;
 
-            $out["errors"] .= " ��� ";
+            $out["errors"] .= " Код ";
 
         }
 
@@ -500,7 +500,7 @@ class DBWORK {
 
         if ($result) {
 
-            $out["message"] = "������ " . $arguments['name'] . "($section_id)" . " ���������.";
+            $out["message"] = "Секция " . $arguments['name'] . "($section_id)" . " сохранена.";
 
             $out["success"] = true;
 
@@ -508,7 +508,7 @@ class DBWORK {
 
         } else {
 
-            $out["message"] = "������! ������ " . $arguments['name'] . "($section_id)" . " �� ���������!<br>" . $this->query;
+            $out["message"] = "Ошибка! Секция " . $arguments['name'] . "($section_id)" . " не сохранена!<br>" . $this->query;
 
             $out["success"] = false;
 
@@ -544,7 +544,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -578,7 +578,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -612,7 +612,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -676,7 +676,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -720,7 +720,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -770,7 +770,7 @@ class DBWORK {
 
         } else {
 
-            $out = '�����';
+            $out = 'пусто';
 
         };
 
@@ -808,7 +808,7 @@ class DBWORK {
 
         database_connect();
 
-        // ������ ������������ ������
+        // узнать родительскую секцию
 
         $query = "SELECT `section_code` FROM `ib_catalog_elements` WHERE `id`= " . $arguments["id"] . ";";
 
@@ -818,15 +818,15 @@ class DBWORK {
 
         if (!isset($row["section_code"]))
 
-            die("������ // ������ ������������ ������");
+            die("ошибка // узнать родительскую секцию");
 
         $section_code = $row["section_code"];
 
-        // �������� ��� �������� ������ � �����
+        // получить все привязки секции к полям
 
         $binds_section_to_fields = $this->get_list_section_element_fields_text_by_code($section_code);
 
-        // ����� ��������� �������� ��� ���� ����� ��� ��������
+        // найти имеющиеся значения для этих полей для элемента
 
         $query = "SELECT * FROM `ib_catalog_section_fields_text_values` WHERE `element_id`='" . $arguments["id"] . " ORDER BY `name`';";
 
@@ -848,7 +848,7 @@ class DBWORK {
 
         }
 
-        // ����������� �������� �� id ����
+        // сортировать значения по id поля
 
         $sorted_values = array();
 
@@ -866,7 +866,7 @@ class DBWORK {
 
             $arResult = array();
 
-            // ������ ���������� ������ ����� id ��������
+            // выдать информацию массив полей id значение
 
             foreach ($binds_section_to_fields as $value) {
 
@@ -948,7 +948,7 @@ class DBWORK {
 
             if ($result) {
 
-                $out["message"] = "������ " . $id . " �������.";
+                $out["message"] = "Секция " . $id . " удалена.";
 
                 $out["success"] = true;
 
@@ -956,7 +956,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "������! ������ " . id . " �� �������!";
+                $out["message"] = "Ошибка! Секция " . id . " не удалена!";
 
                 $out["success"] = false;
 
@@ -978,7 +978,7 @@ class DBWORK {
 
             $success = false;
 
-            $errors = " ��� ";
+            $errors = " Имя ";
 
         }
 
@@ -986,7 +986,7 @@ class DBWORK {
 
             $success = false;
 
-            $errors .= " ���";
+            $errors .= " Код";
 
         }
 
@@ -994,13 +994,13 @@ class DBWORK {
 
             $success = false;
 
-            $errors .= " ��� ������������� ������� ";
+            $errors .= " Код родительского раздела ";
 
         }
 
         if ($errors) {
 
-            $out["message"] = "������� �� ��������!<br>��������� ������������ ����:" . $errors;
+            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
 
             $out["success"] = false;
 
@@ -1010,7 +1010,7 @@ class DBWORK {
 
 
 
-        $ptn = "/[^a-zA-Z�-��-ߨ�0-9&\/ ]/w";
+        $ptn = "/[^a-zA-Zа-яА-ЯЁё0-9&\/ ]/w";
 
         $this->query = "INSERT INTO `$this->db`.`$this->ib_catalog_elements`" .
 
@@ -1054,7 +1054,7 @@ class DBWORK {
 
         if ($result) {
 
-            $out["message"] = "������� " . $arguments['name'] . " ��������.";
+            $out["message"] = "Элемент " . $arguments['name'] . " добавлен.";
 
             $out["success"] = true;
 
@@ -1062,7 +1062,7 @@ class DBWORK {
 
         } else {
 
-            $out["message"] = "������! ������� " . $arguments['name'] . " �� ��������!";
+            $out["message"] = "Ошибка! Элемент " . $arguments['name'] . " не добавлен!";
 
             $out["success"] = false;
 
@@ -1088,7 +1088,7 @@ class DBWORK {
 
             if ($result) {
 
-                $out["message"] = "������� " . $id . " ������.";
+                $out["message"] = "Элемент " . $id . " удален.";
 
                 $out["success"] = true;
 
@@ -1096,7 +1096,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "������! ������� " . id . " �� ������!";
+                $out["message"] = "Ошибка! Элемент " . id . " не удален!";
 
                 $out["success"] = false;
 
@@ -1108,7 +1108,45 @@ class DBWORK {
 
     }
 
+    public function add_product_element($arguments) {
+        $errors = "";
+        if ($arguments["name"] == "") {
+            $success = false;
+            $errors = " Имя ";
+        }
+        if ($errors) {
+            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
+            $out["success"] = false;
+            return $out;
+        }
 
+        $this->query = "INSERT INTO `products_all`" .
+                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`)" .
+                " VALUES ('" . strip_tags($arguments['name']) .
+                "', '" . strip_tags($arguments['name']) .
+                "', '" . strip_tags($arguments['h1']) .
+                "', '" . addslashes(strip_tags($arguments['title'])) .
+                "', '" . addslashes(strip_tags($arguments['description'])) .
+                "', '" . addslashes(strip_tags($arguments['keywords'])) .
+                "', '" . addslashes($arguments['text_preview']) .
+                "', '" . addslashes($arguments['text_detail']) .
+                "');";
+        
+        database_connect();
+        global $mysqli_db;
+        mysqli_query($mysqli_db,"SET NAMES utf8");
+        $result = mysqli_query($mysqli_db,$this->query);
+
+        if ($result) {
+            $out["message"] = "Элемент " . $arguments['name'] . " добавлен.";
+            $out["success"] = true;
+            return $out;
+        } else {
+            $out["message"] = "Ошибка! " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+    }
 
     public function set_position_catalog_element($id, $position) {
 
@@ -1126,7 +1164,7 @@ class DBWORK {
 
             if ($result) {
 
-                $out["message"] = "������� $position �������� " . $id . " �����������.";
+                $out["message"] = "Позиция $position элемента " . $id . " установлена.";
 
                 $out["success"] = true;
 
@@ -1134,7 +1172,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "������! ������� �������� " . id . " �� �����������!";
+                $out["message"] = "Ошибка! Позиция элемента " . id . " не установлена!";
 
                 $out["success"] = false;
 
@@ -1168,7 +1206,7 @@ class DBWORK {
 
                 }
 
-                $out["message"] = "������� " . $id . " ��������� �����.";
+                $out["message"] = "Элемент " . $id . " перемещен вверх.";
 
                 $out["success"] = true;
 
@@ -1176,7 +1214,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "������! ������� " . id . " �� ���������!";
+                $out["message"] = "Ошибка! Элемент " . id . " не перемещен!";
 
                 $out["success"] = false;
 
@@ -1210,7 +1248,7 @@ class DBWORK {
 
                 }
 
-                $out["message"] = "������� " . $id . " ��������� ����.";
+                $out["message"] = "Элемент " . $id . " перемещен вниз.";
 
                 $out["success"] = true;
 
@@ -1218,7 +1256,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "������! ������� " . id . " �� ���������!";
+                $out["message"] = "Ошибка! Элемент " . id . " не перемещен!";
 
                 $out["success"] = false;
 
@@ -1260,7 +1298,7 @@ class DBWORK {
 
             } else {
 
-                $out["message"] = "���-�� ����� �� ��� � recalculate_positions_catalog_element($section_code) ";
+                $out["message"] = "Что-то пошло не так в recalculate_positions_catalog_element($section_code) ";
 
                 $out["success"] = true;
 
@@ -1280,7 +1318,7 @@ class DBWORK {
 
             }
 
-            $out["message"] = "���������� �������� ������� � '$section_code'";
+            $out["message"] = "Произведен пересчет позиций в '$section_code'";
 
             $out["success"] = true;
 
