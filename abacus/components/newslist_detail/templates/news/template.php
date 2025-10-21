@@ -92,11 +92,10 @@ if (!empty($arResult["query_for_karusel_tovarov"])) {
 
 function getProductImage($product) {
     $brand = isset($product['brand']) ? strtolower($product['brand']) : '';
-    $type = isset($product['type']) ? $product['type'] : '';
+    $type = isset($product['type']) ? strtolower($product['type']) : '';
     $model = isset($product['model']) ? $product['model'] : '';
     
     $image_path = "/images/{$brand}/{$type}/{$model}/580/{$model}_1.webp";
-    
     return $image_path;
 }
 
