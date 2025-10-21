@@ -110,7 +110,6 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                 <div class="row">
                     <div class="col-md-12">
                         <div class="h1_wrapper"><h1><?=$arResult["name"]?></h1></div>
-                        <div class="date"><?=$arResult["date"]?></div>
                     </div>
                     <div class="col-md-12">
                         <div class="detail_text">
@@ -133,6 +132,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                     $pagePath = isset($item["page_path"]) ? $item["page_path"] : '';
                     $model_name = isset($item["model"]) ? $item["model"] : '';
                     $brand_name = isset($item["brand"]) ? $item["brand"] : '';
+                    $short_name = isset($item["short_name"]) ? $item["short_name"] : '';
                     $itemUrl = '/' . trim($pagePath, '/') . '/' . $model_name . '/';
                     
                     $itemImg = getProductImage($item);
@@ -145,6 +145,9 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                             </figure>
                         </div>
                         <div class="text-wrapper">
+                            <?php if ($short_name): ?>
+                                <p class="model" style="margin"><?= $short_name; ?></p>
+                            <?php endif; ?>
                             <p class="brand"><?= $brand_name; ?></p>
                             <p class="model" style="margin-bottom: 20px;"><?= $model_name; ?></p>
                             <span class="button_link">подробнее</span>
@@ -215,11 +218,14 @@ $count = $showRecommended ? count($recommendedItems) : 0;
     .text-wrapper .model {
         font-size: 15px;
         width: 100%;
+        margin: 0;
+        margin-bottom: 10px;
     }
     .text-wrapper .brand {
         font-size: 0.875rem;
         color: #888888;
         margin: 0;
+        margin-bottom: 10px;
     }
     .recommended__items-wrapper .button_link{
         position: absolute;
