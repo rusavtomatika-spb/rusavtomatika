@@ -205,7 +205,7 @@ if ( !empty( $result ) ) {
       if ( isset( $_GET[ "element_id" ] )and isset( $row[ "index" ] )and $_GET[ "element_id" ] == $row[ "id" ] ):
         echo "<tr class='tr_green'>";
       else :
-        echo "<tr><form action='$link' method='post'>";
+        echo "<tr style='border-bottom: 1px solid #000;'><form action='$link' method='post'>";
       endif;
       echo "<td class='name'><a target='new' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
       //echo "<td class='code'><input type='text' name='field_status' value='" . $row['status'] . "'></td>";
