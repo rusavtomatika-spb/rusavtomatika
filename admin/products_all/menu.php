@@ -51,14 +51,9 @@ $types = $db_work->get_types();
         </div>
     <div class="menu_wrapper_col2">
         <ul class="menu">
-            <li><a href="/admin/products_all/">Список элементов</a></li>
+            <li><a href="/admin/products_all/">Полный список элементов</a></li>
             <li class="separator"></li>
-            <!--<li><a href="/admin/products_all/add_element.php">+ элемент</a></li>>
-            <li><a href="/admin/">Главная</a></li>
-            <li class="separator"></li-->
             <li><a target="_blank" href="/">На сайт</a></li>
-            <li class="separator"></li>
-            <li><a href="/admin/products_all/mini.php">Мини-список</a></li>
         </ul>
     </div>
     <?
@@ -74,14 +69,7 @@ $types = $db_work->get_types();
             <option value="0" <?if($selected_theme_option == 0) echo 'selected'?>>Тема КРУПНАЯ</option>
             <option value="1" <?if($selected_theme_option == 1) echo 'selected'?>>Тема МЕЛКАЯ</option>
         </select>
-        <div class="menu-points-wrapper">
-            Поля:
-            <div>
-                <button id="button_hide_fields" class="<?if($selected_show_all_fields == 0) echo 'active'?>">Скрыть</button>
-                <button id="button_show_fields" class="<?if($selected_show_all_fields == 1) echo 'active'?>">Показать</button>
-            </div>
-            <a href="/admin/add_element.php" class="add__element-link">Добавить элемент</a>
-        </div>
+        <a href="/admin/add_element.php" class="add__element-link">Добавить элемент</a>
         <script>
             $(document).ready(function () {
                 console.log($.cookie("template_theme"));
@@ -152,12 +140,18 @@ $types = $db_work->get_types();
     border-radius: 5px;
     text-decoration: none;
     transition: .3s;
+    width: 100%;
 }
 .add__element-link:hover {
     transform: scale(1.02);
     color: #fff;
 }
+.menu_wrapper_col2 .menu { padding-left: 0; }
 .menu_wrapper {
     margin-bottom: 50px;
+}
+
+.menu_wrapper_col1 input[type="text"], .menu_wrapper_col1 select {
+    width: 100%;
 }
 </style>
