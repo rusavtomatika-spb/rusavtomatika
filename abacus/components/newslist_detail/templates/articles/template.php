@@ -29,17 +29,63 @@ $showRecommended = false;
 $recommendedItems = [];
 
 if (!empty($arResult["query_for_karusel_tovarov"])) {
-    $recommendedItems = CoreApplication::get_rows_from_table( 
-        "products_all", 
-        "`index`, model, page_path, brand, type", 
-        "status != '0'", 
-        "`index` DESC", 
-        5 
-    );
+    $custom_query = $arResult["query_for_karusel_tovarov"];
+    
+    $recommendedItems = array();
+    
+    if (isset($GLOBALS['db']) && is_object($GLOBALS['db'])) {
+        echo "<script>console.log('Trying db connection');</script>";
+        $result = $GLOBALS['db']->query($custom_query);
+        if ($result && method_exists($result, 'fetch_assoc')) {
+            while ($row = $result->fetch_assoc()) {
+                $recommendedItems[] = $row;
+            }
+        } else {
+            echo "<script>console.log('db query failed or no results');</script>";
+        }
+    } else {
+        echo "<script>console.log('db not available');</script>";
+    }
+    
+    if (empty($recommendedItems) && isset($GLOBALS['mysqli_db']) && is_object($GLOBALS['mysqli_db'])) {
+        $result = $GLOBALS['mysqli_db']->query($custom_query);
+        if ($result && method_exists($result, 'fetch_assoc')) {
+            while ($row = $result->fetch_assoc()) {
+                $recommendedItems[] = $row;
+            }
+            echo "<script>console.log('mysqli_db result count: " . count($recommendedItems) . "');</script>";
+        }
+    }
+    
+    if (empty($recommendedItems) && isset($GLOBALS['mysql_db']) && is_object($GLOBALS['mysql_db'])) {
+        $result = $GLOBALS['mysql_db']->query($custom_query);
+        if ($result && method_exists($result, 'fetch_assoc')) {
+            while ($row = $result->fetch_assoc()) {
+                $recommendedItems[] = $row;
+            }
+            echo "<script>console.log('mysql_db result count: " . count($recommendedItems) . "');</script>";
+        }
+    }
+    
+    if (empty($recommendedItems) && class_exists('DBWORK')) {
+        $db_work = new DBWORK();
+        if (method_exists($db_work, 'query')) {
+            $result = $db_work->query($custom_query);
+            if ($result) {
+                $recommendedItems = $result;
+                echo "<script>console.log('DBWORK result count: " . count($recommendedItems) . "');</script>";
+            }
+        }
+    }
+    
     
     if (!empty($recommendedItems)) {
         $showRecommended = true;
+    } else {
+        echo "<script>console.log('Show recommended: NO');</script>";
     }
+} else {
+    echo "<script>console.log('No query_for_karusel_tovarov found');</script>";
 }
 
 function getProductImage($product) {
@@ -47,15 +93,14 @@ function getProductImage($product) {
     $type = isset($product['type']) ? $product['type'] : '';
     $model = isset($product['model']) ? $product['model'] : '';
     
-    $image_path = "/images/{$brand}/{$type}/{$model}/130/{$model}_1.webp";
-    
-    echo "<script>console.log('Image path for " . $model . ": " . $image_path . "');</script>";
+    $image_path = "/images/{$brand}/{$type}/{$model}/580/{$model}_1.webp";
     
     return $image_path;
 }
 
 $count = $showRecommended ? count($recommendedItems) : 0;
 ?>
+
 <div id="vue_app_articles_detail">
     <div class="articles-page-wrapper">
         <div class="component_newslist_detail">
@@ -81,9 +126,9 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                 <a class="button_window_history_back" onclick="window.history.back();return false;" href="/<?=$arguments["root_folder_url"]?>/">Возврат к списку новостей</a>
             </div>
         </div>
-
         <?php if ($showRecommended && $count > 0): ?>
             <div class="recommended__items-wrapper">
+                <h2 class="recommended__title">Подходящие товары</h2>
                 <?php foreach ($recommendedItems as $item): ?>
                     <?php
                     $pagePath = isset($item["page_path"]) ? $item["page_path"] : '';
@@ -117,6 +162,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         display: flex;
         align-items: flex-start;
         width: 100%;
+        gap: 30px;
     }
 
     .recommended__items-wrapper {
@@ -127,6 +173,10 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         width: 400px;
         margin: 0;
         gap: 20px;
+    }
+    .recommended__items-wrapper .recommended__title {
+        margin: 0;
+        margin-bottom: 10px;
     }
 
     .recommended__items-wrapper .link__swiper-item {
@@ -153,7 +203,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        padding: 15px;
+        padding: 0 15px 15px;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -169,6 +219,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
     .text-wrapper .brand {
         font-size: 0.875rem;
         color: #888888;
+        margin: 0;
     }
     .recommended__items-wrapper .button_link{
         position: absolute;
