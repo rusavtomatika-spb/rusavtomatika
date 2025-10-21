@@ -1,16 +1,21 @@
 <?php
+
 define('admin', true);
+
 if (0) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
 }
+
 $core_admin_path = $_SERVER['DOCUMENT_ROOT'] . '/admin/';
 include_once $core_admin_path . 'template/header.php';
 include_once $core_admin_path . 'menu.php';
+
 $arguments = array();
 ?>
-<h1>Добавление элемента</h1>
+
+<h1>Р”РѕР±Р°РІР»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р°</h1>
 <div class="notes-area">
     <?
     if (isset($_GET["action"])) {
@@ -122,23 +127,7 @@ $arguments = array();
             $arguments["keywords"] = "";
         }
     }
-    $db_list_catalog_sections = new DBWORK();
-    $sections = $db_list_catalog_sections->get_list_catalog_sections();
-    ob_start();
-
-    echo '<select name="section_code">';
-    foreach ($sections as $value) {
-        if ($arguments["section_code"] == $value["code"])
-            $selected = "selected='selected'";
-        else
-            $selected = "";
-        echo "<option " . $selected . " value='" . $value["code"] . "'>";
-        echo $value["name"] . " (" . $value["id"] . ") (" . $value["code"] . ")";
-        echo "</option>";
-    }
-    echo "</select>";
-    $sections_html = ob_get_contents();
-    ob_end_clean();
+    $sections_html = '<input type="text" name="section_code" value="' . htmlspecialchars($arguments["section_code"]) . '">';
     ?>
 </div>
 <form action="/admin/add_element.php" method="get">
@@ -146,15 +135,15 @@ $arguments = array();
     <table>
         <tr>
             <td colspan="2" class="td_buttons">
-                <input type="reset" value="Сбросить поля">
-                <input type="submit" value="Добавить">
-                <input name="submit_and_close" value="Сохранить и закрыть" type="submit">
-                <input type="button" onclick="history.back();" value="Вернуться назад"/>
-                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php?section_code=<?= $arguments["section_code"] ?>';" value="Вернуться в раздел"/>
+                <input type="reset" value="РЎР±СЂРѕСЃРёС‚СЊ РїРѕР»СЏ">
+                <input type="submit" value="Р”РѕР±Р°РІРёС‚СЊ">
+                <input name="submit_and_close" value="РЎРѕС…СЂР°РЅРёС‚СЊ Рё Р·Р°РєСЂС‹С‚СЊ" type="submit">
+                <input type="button" onclick="history.back();" value="Р’РµСЂРЅСѓС‚СЊСЃСЏ РЅР°Р·Р°Рґ"/>
+                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php?section_code=<?= $arguments["section_code"] ?>';" value="Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ СЂР°Р·РґРµР»"/>
             </td>
         </tr>
         <tr>
-            <td class="col1">Наименование элемента (рус):</td>
+            <td class="col1">РќР°РёРјРµРЅРѕРІР°РЅРёРµ СЌР»РµРјРµРЅС‚Р° (СЂСѓСЃ):</td>
             <td><input type="text" name="name" value="<?= $arguments["name"] ?>"></td>
         </tr>
         <tr>
@@ -162,36 +151,36 @@ $arguments = array();
             <td><input type="text" name="h1" value="<?= $arguments["h1"] ?>"></td>
         </tr>
         <tr>
-            <td>Код элемента (eng):</td>
+            <td>РљРѕРґ СЌР»РµРјРµРЅС‚Р° (eng):</td>
             <td><a href="#" class="translit_code">+</a><input type="text" name="code"  value="<?= $arguments["code"] ?>"></td>
         </tr>
         <tr>
-            <td>Код родительского раздела:</td>
+            <td>РљРѕРґ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ СЂР°Р·РґРµР»Р°:</td>
             <td><?= $sections_html ?>
             </td>
         </tr>
         <tr>
-            <td>Цена:</td>
+            <td>Р¦РµРЅР°:</td>
             <td><input type="text" name="price"  value="<?= $arguments["price"] ?>"></td>
         </tr>
         <tr>
-            <td>Наличие:</td>
+            <td>РќР°Р»РёС‡РёРµ:</td>
             <td><input type="text" name="in_stock"  value="<?= $arguments["in_stock"] ?>"></td>
         </tr>
         <tr>
-            <td>Путь к изображению для анонса:</td>
+            <td>РџСѓС‚СЊ Рє РёР·РѕР±СЂР°Р¶РµРЅРёСЋ РґР»СЏ Р°РЅРѕРЅСЃР°:</td>
             <td><input type="text" name="picture_preview"  value="<?= $arguments["picture_preview"] ?>"></td>
         </tr>
         <tr>
-            <td>Путь к изображению для карточки:</td>
+            <td>РџСѓС‚СЊ Рє РёР·РѕР±СЂР°Р¶РµРЅРёСЋ РґР»СЏ РєР°СЂС‚РѕС‡РєРё:</td>
             <td><input type="text" name="picture_detail"  value="<?= $arguments["picture_detail"] ?>"></td>
         </tr>
         <tr>
-            <td>Текст анонса:</td>
+            <td>РўРµРєСЃС‚ Р°РЅРѕРЅСЃР°:</td>
             <td><textarea class="anons" name="text_preview"><?= $arguments["text_preview"] ?></textarea></td>
         </tr>
         <tr>
-            <td>Текст карточки:</td>
+            <td>РўРµРєСЃС‚ РєР°СЂС‚РѕС‡РєРё:</td>
             <td><textarea class="detail" name="text_detail"><?= $arguments["text_detail"] ?></textarea></td>
         </tr>
         <tr>
@@ -208,16 +197,14 @@ $arguments = array();
         </tr>
         <tr>
             <td colspan="2" class="td_buttons">
-                <input type="reset" value="Сбросить поля">
-                <input type="submit" value="Добавить">
-                <input name="submit_and_close" value="Сохранить и закрыть" type="submit">
-                <input type="button" onclick="history.back();" value="Вернуться назад"/>
-                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php?section_code=<?= $row["section_code"] ?>';" value="Вернуться в раздел"/>
+                <input type="reset" value="РЎР±СЂРѕСЃРёС‚СЊ РїРѕР»СЏ">
+                <input type="submit" value="Р”РѕР±Р°РІРёС‚СЊ">
+                <input name="submit_and_close" value="РЎРѕС…СЂР°РЅРёС‚СЊ Рё Р·Р°РєСЂС‹С‚СЊ" type="submit">
+                <input type="button" onclick="history.back();" value="Р’РµСЂРЅСѓС‚СЊСЃСЏ РЅР°Р·Р°Рґ"/>
+                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php?section_code=<?= $row["section_code"] ?>';" value="Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ СЂР°Р·РґРµР»"/>
             </td>
         </tr>
     </table>
 </form>
-
-
 
 <? include $core_admin_path . 'template/footer.php'; ?>

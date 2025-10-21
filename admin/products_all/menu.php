@@ -69,18 +69,19 @@ $types = $db_work->get_types();
         $selected_show_all_fields = $_COOKIE["show_all_fields"];
     } else $selected_show_all_fields = "";
     ?>
-    <div class="menu_wrapper_col3">
+    <div class="admin-menu-wrapper">
         <select class="choosing_template_theme" name="template_theme">
             <option value="0" <?if($selected_theme_option == 0) echo 'selected'?>>Тема КРУПНАЯ</option>
             <option value="1" <?if($selected_theme_option == 1) echo 'selected'?>>Тема МЕЛКАЯ</option>
         </select>
-<div>
-    Поля:
-    <button id="button_hide_fields" class="<?if($selected_show_all_fields == 0) echo 'active'?>">Скрыть</button>
-    <button id="button_show_fields" class="<?if($selected_show_all_fields == 1) echo 'active'?>">Показать</button>
-</div>
-
-
+        <div class="menu-points-wrapper">
+            Поля:
+            <div>
+                <button id="button_hide_fields" class="<?if($selected_show_all_fields == 0) echo 'active'?>">Скрыть</button>
+                <button id="button_show_fields" class="<?if($selected_show_all_fields == 1) echo 'active'?>">Показать</button>
+            </div>
+            <a href="/admin/add_element.php" class="add__element-link">Добавить элемент</a>
+        </div>
         <script>
             $(document).ready(function () {
                 console.log($.cookie("template_theme"));
@@ -114,7 +115,44 @@ $types = $db_work->get_types();
                 location.reload();
             });
         </script>
-
-
     </div>
 </div>
+
+<style>
+.admin-menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.menu-points-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width: 100%;
+}
+.menu-points-wrapper div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 10px;
+}
+.add__element-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #34AB5E;
+    font-size: 15px;
+    color: #fff;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.menu_wrapper {
+    margin-bottom: 50px;
+}
+</style>
