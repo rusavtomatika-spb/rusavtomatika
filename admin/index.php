@@ -226,11 +226,9 @@ if ( !empty( $result ) ) {
       echo "<td class='code'><input type='text' name='field_show_on_stock' value='" . $row[ 'show_on_stock' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_show_in_cat' value='" . $row[ 'show_in_cat' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
-      echo "<td class='td_center'>";
-      //echo '<a target="_new" class="" href="/admin/products_all/edit_element.php?index=' . $row['index'] . '"><button style="padding:3px 5px;;cursor: pointer;background:#44BB6E;color:white;border:solid 1px #44BB6E;">Редактировать</button></a>&nbsp;&nbsp;&nbsp;';            
-      //echo '<a class="" href="/admin/products_all/mini.php?index="'.$row["index"].'&action=edit_element"><button style="padding:3px 5px;;cursor: pointer;background:#004efe;color:white;border:solid 1px #44BB6E;">Применить</button></a>&nbsp;&nbsp;&nbsp;';
-      echo '<button type="submit" name="Submit" value="Применить" style="padding:3px 5px;;cursor: pointer;background:#34AB5E;color:white;border:solid 1px #34AB5E;" />Применить</button>&nbsp;&nbsp;&nbsp;';
-
+      echo '<td class="td_center actions-wrapper">';
+      echo '<button type="submit" name="Submit" class="product__action-button">Применить</button>';
+      echo '<button type="submit" name="Submit" class="product__action-button">Копировать</button>';
       //if (isset($_GET["section_code"])) {
       //                echo '<a class="check_delete" href="?action=delete_element&section_code=' . $_GET["section_code"] . '&id=' . $row['index'] . '"><button style="padding:3px 5px;;cursor: pointer;">Удалить</button></a>';
       //            } else {
@@ -285,7 +283,26 @@ if ( !empty( $result ) ) {
         background: #44bb6e;
         cursor: pointer;
     }
-
+  .actions-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 175px;
+    gap: 10px;
+  }
+  .product__action-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px;
+    background: #34AB5E;
+    border: solid 1px #34AB5E;
+    width: 100%;
+    color: #fff;
+    border-radius: 5px;
+  }
 </style>
 <script>
 $(window).load(function(){
