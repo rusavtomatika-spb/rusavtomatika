@@ -88,11 +88,12 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                     <?php
                     $pagePath = isset($item["page_path"]) ? $item["page_path"] : '';
                     $model_name = isset($item["model"]) ? $item["model"] : '';
+                    $brand_name = isset($item["brand"]) ? $item["brand"] : '';
                     $itemUrl = '/' . trim($pagePath, '/') . '/' . $model_name . '/';
                     
                     $itemImg = getProductImage($item);
                     ?>
-                    <a class="link__swiper-item" href="<?= $itemUrl ?>">
+                    <a class="card link__swiper-item" href="<?= $itemUrl ?>">
                         <div class="card-image">
                             <figure class="model_image" itemscope="" itemtype="https://schema.org/ImageObject">
                                 <img itemprop="contentUrl" src="<?= $itemImg; ?>" alt="<?= $model_name ?>" style="max-height: 150px; object-fit: contain;" onerror="this.src='/images/no-image.jpg'">
@@ -100,7 +101,8 @@ $count = $showRecommended ? count($recommendedItems) : 0;
                             </figure>
                         </div>
                         <div class="text-wrapper">
-                            <p class="model"><?= $model_name; ?></p>
+                            <p class="brand"><?= $brand_name; ?></p>
+                            <p class="model" style="margin-bottom: 20px;"><?= $model_name; ?></p>
                             <span class="button_link">подробнее</span>
                         </div>
                     </a>
@@ -124,6 +126,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         justify-content: flex-start;
         width: 400px;
         margin: 0;
+        gap: 20px;
     }
 
     .recommended__items-wrapper .link__swiper-item {
@@ -155,9 +158,17 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         height: 100%;
         box-sizing: border-box;
     }
+    .recommended__items-wrapper a {
+        text-decoration: none !important;
+        border-bottom: none !important;
+    }
     .text-wrapper .model {
         font-size: 15px;
         width: 100%;
+    }
+    .text-wrapper .brand {
+        font-size: 0.875rem;
+        color: #888888;
     }
     .recommended__items-wrapper .button_link{
         position: absolute;
