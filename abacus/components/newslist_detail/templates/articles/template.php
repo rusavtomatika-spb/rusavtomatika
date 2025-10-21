@@ -183,6 +183,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         width: 100%;
     }
     .recommended__items-wrapper .model_image{
+        padding: 10px 10px 0;
         height: 150px;
         width: max-content;
         overflow: hidden;
