@@ -21,7 +21,7 @@
 //                    }); 
 					//let allDots = await (fetch(window.location.search));
 					//alert(allDots);
-					window.location.href = 'https://www.rusavto.moisait.net/admin/products_all/mini.php?'+el_id+'='+value;
+					window.location.href = 'https://www.rusavto.moisait.net/admin?'+el_id+'='+value;
                 }); 
             }); 
 	  function clearSearch() {

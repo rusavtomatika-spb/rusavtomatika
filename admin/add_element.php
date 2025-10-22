@@ -8,9 +8,11 @@ if (0) {
     ini_set('display_startup_errors', 1);
 }
 
-$core_admin_path = $_SERVER['DOCUMENT_ROOT'] . '/admin/';
+$core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include_once $core_admin_path . 'template/header.php';
 include_once $core_admin_path . 'menu.php';
+require_once $core_admin_path . 'classes/functions.php';
+@header( "Content-Type: text/html; charset=utf-8" );
 
 $arguments = array();
 ?>
@@ -66,6 +68,11 @@ $arguments = array();
             $arguments["name"] = $_GET["name"];
         } else {
             $arguments["name"] = "";
+        }
+        if (isset($_GET["s_name"])) {
+            $arguments["s_name"] = $_GET["s_name"];
+        } else {
+            $arguments["s_name"] = "";
         }
         if (isset($_GET["h1"])) {
             $arguments["h1"] = $_GET["h1"];
@@ -140,7 +147,7 @@ $arguments = array();
                 <input type="submit" value="Добавить">
                 <input name="submit_and_close" value="Сохранить и закрыть" type="submit">
                 <input type="button" onclick="history.back();" value="Вернуться назад"/>
-                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php';" value="Вернуться в список"/>
+                <input type="button" onclick="javascript:document.location.href = '/admin'" value="Вернуться в список"/>
             </td>
         </tr>
         <tr>
@@ -153,7 +160,7 @@ $arguments = array();
         </tr>
         <tr>
             <td>Короткое название (s_name):</td>
-            <td><input type="text" name="s_name" value="<?= $arguments["name"] ?>"></td>
+            <td><input type="text" name="s_name" value="<?= $arguments["s_name"] ?>"></td>
         </tr>
         <tr>
             <td>Title:</td>
@@ -175,16 +182,6 @@ $arguments = array();
             <td>Текст детальный (text_detail):</td>
             <td><textarea class="detail" name="text_detail"><?= $arguments["text_detail"] ?></textarea></td>
         </tr>
-        <tr>
-            <td colspan="2" class="td_buttons">
-                <input type="reset" value="Сбросить поля">
-                <input type="submit" value="Добавить">
-                <input name="submit_and_close" value="Сохранить и закрыть" type="submit">
-                <input type="button" onclick="history.back();" value="Вернуться назад"/>
-                <input type="button" onclick="javascript:document.location.href = '/admin/list_elements.php';" value="Вернуться в список"/>
-            </td>
-        </tr>
     </table>
 </form>
-
 <? include $core_admin_path . 'template/footer.php'; ?>

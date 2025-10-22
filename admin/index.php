@@ -8,7 +8,6 @@ ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);*/
 define( 'admin', true );
-define( 'PRODUCTS_ALL', true );
 global $ftpConnectionID;
 global $db_work;
 file_put_contents( "error_log", "" );
@@ -18,7 +17,7 @@ include $core_admin_path . 'template/header.php';
 <h1>Административная панель</h1>
 <?
 include $core_admin_path . 'products_all/menu.php';
-include $core_admin_path . 'products_all/classes/functions.php';
+include $core_admin_path . 'classes/functions.php';
 /* * *************************************************************************** */
 /* $db_work = new DBWORK();
   $db_work->show_tables(); */
@@ -38,7 +37,7 @@ if ( isset( $_GET[ "index" ] )and $_GET[ "index" ] > 0 ) {
     if ( isset( $result )and $result[ "success" ] == true ) {
       echo "<div class='success_message'>" . $result[ "message" ] . "</div>";
       if ( isset( $_POST[ "submit_and_close" ] ) ) {
-        $url = 'https://www.rusavto.moisait.net/admin/products_all/mini.php?success=' . $result[ "success" ];
+        $url = 'https://www.rusavto.moisait.net/admin?success=' . $result[ "success" ];
         if ( isset( $result[ "element_id" ] ) )$url .= '&element_id=' . $result[ "element_id" ];
         if ( isset( $_POST[ "section_code" ] ) )$url .= '&section_code=' . $_POST[ "section_code" ];
         $url .= '&message=' . urlencode( $result[ "message" ] );
@@ -213,7 +212,7 @@ if ( !empty( $result ) ) {
         $sub_section = "";
         $mark = "";
       }
-      $link = "/admin/products_all/mini.php?index=" . $row[ 'index' ] . "&action=edit_element";
+      $link = "/admin?index=" . $row[ 'index' ] . "&action=edit_element";
 //      foreach ( $_GET as $key => $value ) {
 //        $link .= "&$key=$value";
 //      }
