@@ -12,7 +12,7 @@ ini_set( 'display_startup_errors', 1 );
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include_once $core_admin_path . 'template/header.php';
 include_once $core_admin_path . 'products_all/menu.php';
-require_once $core_admin_path . 'products_all/classes/functions.php';
+require_once $core_admin_path . 'classes/functions.php';
 @header( "Content-Type: text/html; charset=utf-8" );
 
 if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
@@ -60,7 +60,7 @@ if ( isset( $_GET[ "index" ] )and $_GET[ "index" ] > 0 ) {
       file_put_contents( 'tmp.txt', json_encode( $_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
       echo "<div class='success_message'>" . $result[ "message" ] . "</div>";
       if ( isset( $_POST[ "submit_and_close" ] ) ) {
-        $url = 'https://www.rusavto.moisait.net/admin/products_all/?success=' . $result[ "success" ];
+        $url = 'https://www.rusavto.moisait.net/admin?success=' . $result[ "success" ];
         if ( isset( $result[ "element_id" ] ) )$url .= '&element_id=' . $result[ "element_id" ];
         if ( isset( $_POST[ "section_code" ] ) )$url .= '&section_code=' . $_POST[ "section_code" ];
         $url .= '&message=' . urlencode( $result[ "message" ] );
@@ -357,14 +357,14 @@ $(\'.spoiler-zagolovok-' . $x . '\').click(function(){
     ';
     ?>
   </div>
-  <form action="/admin/products_all/edit_element.php?index=<?= $current_element["index"] ?>&action=edit_element" method="post">
+  <form action="/admin/edit_element.php?index=<?= $current_element["index"] ?>&action=edit_element" method="post">
   <table class="show_all_fields_<?= $_COOKIE["show_all_fields"] ?>">
     <tr>
       <td colspan="3" class="td_buttons"><div class="sticky">
           <input type="reset" value="Сбросить поля к исходным">
           <input type="submit" value="Применить">
           <input name="submit_and_close" type="submit" value="Сохранить и закрыть">
-          <a href="/admin/products_all/" style="color: black;">
+          <a href="/admin" style="color: black;">
           <div style="cursor: pointer;
     width: 270px;
     box-sizing: border-box;
@@ -414,7 +414,7 @@ $(\'.spoiler-zagolovok-' . $x . '\').click(function(){
       <td colspan="3" class="td_buttons"><input type="reset" value="Сбросить поля к исходным">
         <input type="submit" value="Применить">
         <input name="submit_and_close" type="submit" value="Сохранить и закрыть">
-        <a href="/admin/products_all/">
+        <a href="/admin">
         <button style="cursor: pointer;
     width: 270px;
     box-sizing: border-box;
@@ -428,5 +428,5 @@ $(\'.spoiler-zagolovok-' . $x . '\').click(function(){
   </table>
 </form>
 <div></div>
-<script src="/admin/products_all/edit_element_scripts.js"></script>
+<script src="/admin/edit_element_scripts.js"></script>
 <? include $core_admin_path . 'template/footer.php'; ?>

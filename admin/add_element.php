@@ -39,20 +39,31 @@ $arguments = array();
             $arguments["keywords"] = $_GET["keywords"];
             $result = $db_work->add_product_element($arguments);
             if ($result["success"] == true) {
-                foreach ($arguments as $value) {
-                    $value = "";
-                }
                 echo "<div class='success_message'>" . $result["message"] . "</div>";
+                
+                echo "<script>
+                    setTimeout(function() {
+                        window.location.href = '/admin';
+                    }, 2000);
+                </script>";
+                
+                foreach ($arguments as $key => $value) {
+                    $arguments[$key] = "";
+                }
+                
                 if (isset($_GET["submit_and_close"])) {
-                    header('Refresh:0; list_elements.php?success=' . $result["success"] . '&section_code=' . $arguments["section_code"] . '&message=' . urlencode($result["message"]));
+                    header('Location: /admin');
+                    exit;
                 }
             } else {
                 echo "<div class='error_message'>" . $result["message"] . "</div>";
             }
         }
     }
+    
     if (isset($result) and $result["success"] == true) {
         $arguments["name"] = "";
+        $arguments["s_name"] = "";
         $arguments["h1"] = "";
         $arguments["code"] = "";
         $arguments["price"] = "";
@@ -60,6 +71,7 @@ $arguments = array();
         $arguments["picture_preview"] = "";
         $arguments["picture_detail"] = "";
         $arguments["text_preview"] = "";
+        $arguments["text_detail"] = "";
         $arguments["title"] = "";
         $arguments["description"] = "";
         $arguments["keywords"] = "";
