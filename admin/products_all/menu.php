@@ -5,7 +5,6 @@ $db_work = new DBWORK();
 $series = $db_work->get_series();
 $db_work = new DBWORK();
 $types = $db_work->get_types();
-
 //echo "<pre>";
 //echo print_r($types);
 //echo "</pre>";
@@ -51,6 +50,8 @@ $types = $db_work->get_types();
         </div>
     <div class="menu_wrapper_col2">
         <ul class="menu">
+            <li><a href="/admin">Главная</a></li>
+            <li class="separator"></li>
             <li><a href="/admin/products_all/">Полный список элементов</a></li>
             <li class="separator"></li>
             <li><a target="_blank" href="/">На сайт</a></li>
@@ -112,6 +113,8 @@ $types = $db_work->get_types();
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
+    min-width: 243px;
+    max-width: 243px;
     gap: 10px;
 }
 .menu-points-wrapper {
@@ -150,7 +153,10 @@ $types = $db_work->get_types();
 .menu_wrapper {
     margin-bottom: 50px;
 }
-
+select.choosing_template_theme {
+    width: 100%;
+    display: inline;
+}
 .menu_wrapper_col1 input[type="text"], .menu_wrapper_col1 select {
     width: 100%;
 }

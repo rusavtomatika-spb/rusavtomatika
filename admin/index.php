@@ -8,6 +8,7 @@ ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);*/
 define( 'admin', true );
+define('PRODUCTS_ALL', true);
 global $ftpConnectionID;
 global $db_work;
 file_put_contents( "error_log", "" );
@@ -221,7 +222,7 @@ if ( !empty( $result ) ) {
       else :
         echo "<tr style='border-bottom: 1px solid #000;'><form action='$link' method='post'>";
       endif;
-      echo "<td class='name'><a target='new' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
+      echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
       //echo "<td class='code'><input type='text' name='field_status' value='" . $row['status'] . "'></td>";
       echo "<td class='code'><select name='field_status' id='status' class='status' style='font-size: 0.7em;min-width:70px;'><option value='0'";
       if ( $row[ 'status' ] == "0" )echo " selected class='status-off'";
