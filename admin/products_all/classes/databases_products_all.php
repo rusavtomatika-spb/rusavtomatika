@@ -909,4 +909,24 @@ class DBWORK {
             ];
         }
     }
+
+    public function delete_product_element($id) {
+        if ($id > 0) {
+            global $mysqli_db;
+            database_connect();
+            
+            $query = "DELETE FROM `products_all` WHERE `index` = " . intval($id);
+            $result = mysqli_query($mysqli_db, $query);
+            
+            if ($result) {
+                $out["message"] = "Элемент " . $id . " удален.";
+                $out["success"] = true;
+                return $out;
+            } else {
+                $out["message"] = "Ошибка! Элемент " . $id . " не удален! " . mysqli_error($mysqli_db);
+                $out["success"] = false;
+                return $out;
+            }
+        }
+    }
 }

@@ -18,7 +18,7 @@ include $core_admin_path . 'template/header.php';
 <h1>Административная панель</h1>
 <?
 include $core_admin_path . 'products_all/menu.php';
-include $core_admin_path . 'classes/functions.php';
+include $core_admin_path . 'products_all/classes/functions.php';
 /* * *************************************************************************** */
 /* $db_work = new DBWORK();
   $db_work->show_tables(); */
@@ -76,6 +76,15 @@ if ( isset( $_GET[ "action" ] )and isset( $_GET[ "id" ] ) ) {
       echo "<div class='error_message'>" . $result[ "message" ] . "</div>";
     }
     header( 'Refresh:0; list_elements.php?section_code=' . $_GET[ "section_code" ] . '&success=' . $result[ "success" ] . '&message=' . urlencode( $result[ "message" ] ) );
+  } elseif ( $_GET[ "action" ] == "delete_product_element" ) {
+    $db_work = new DBWORK();
+    $result = $db_work->delete_product_element( intval( $_GET[ "id" ] ) );
+    if ( $result[ "success" ] == true ) {
+      echo "<div class='success_message'>" . $result[ "message" ] . "</div>";
+    } else {
+      echo "<div class='error_message'>" . $result[ "message" ] . "</div>";
+    }
+    echo "<script>setTimeout(function(){ window.location.href = '/admin'; }, 1000);</script>";
   } elseif ( $_GET[ "action" ] == "move_up" ) {
     $db_work = new DBWORK();
     $result = $db_work->move_up_catalog_element( intval( $_GET[ "id" ] ), $_GET[ "section_code" ] );
@@ -234,18 +243,13 @@ if ( !empty( $result ) ) {
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
       echo '<td class="td_center actions-wrapper">';
       echo '<button type="submit" name="Submit" class="product__action-button green">Применить</button>';
-      echo '<a href="?action=copy_element&id=' . $row['index'] . '"><button type="button" class="product__action-button green">Копировать</button></a>';
-      if (isset($_GET["section_code"])) {
-        echo '<a href="?action=delete_element&section_code=' . $_GET["section_code"] . '&id=' . $row['index'] . '"><button class="product__action-button red">Удалить</button></a>';
-      } else {
-        echo '<a href="?action=delete_element&&id=' . $row['index'] . '"><button class="product__action-button red">Удалить</button></a>';
-      }
+      echo '<a href="?action=copy_element&id=' . $row['index'] . '" class="product__action-button green">Копировать</a>';
+      echo '<a href="?action=delete_product_element&id=' . $row['index'] . '" class="product__action-button red">Удалить</a>';
       echo "</td>";
       echo "</form></tr>";
     }
-
+    
     //disconnectFTP();
-
   } else {
     echo "<tr>";
     echo "<th colspan='8'> - пусто - </th>";
@@ -297,7 +301,10 @@ if ( !empty( $result ) ) {
     width: 175px;
     gap: 5px;
   }
-  .actions-wrapper a { text-decoration: none !important; width: 100%; }
+  .actions-wrapper a {
+    text-decoration: none;
+    width: 100%;
+  }
   .product__action-button {
     cursor: pointer;
     display: flex;
