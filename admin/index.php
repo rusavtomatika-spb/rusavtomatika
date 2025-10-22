@@ -18,7 +18,7 @@ include $core_admin_path . 'template/header.php';
 <h1>Административная панель</h1>
 <?
 include $core_admin_path . 'products_all/menu.php';
-include $core_admin_path . 'products_all/classes/functions.php';
+include $core_admin_path . 'classes/functions.php';
 /* * *************************************************************************** */
 /* $db_work = new DBWORK();
   $db_work->show_tables(); */
@@ -103,6 +103,12 @@ if ( isset( $_GET[ "action" ] )and isset( $_GET[ "id" ] ) ) {
       echo "<div class='error_message'>" . $result[ "message" ] . "</div>";
     }
     header( 'Refresh:0; list_elements.php?section_code=' . $_GET[ "section_code" ] . '&success=' . $result[ "success" ] . '&message=' . urlencode( $result[ "message" ] ) );
+  } elseif ( $_GET[ "action" ] == "copy_element" ) {
+    $db_work = new DBWORK();
+    $class_info = new ReflectionClass('DBWORK');
+    $class_file = $class_info->getFileName();
+    $methods = get_class_methods($db_work);
+    $result = $db_work->copy_product_element(intval($_GET["id"]));
   }
 }
 if ( isset( $_GET[ "action" ] )and $_GET[ "action" ] == "recalculate_positions"
@@ -227,13 +233,13 @@ if ( !empty( $result ) ) {
       echo "<td class='code'><input type='text' name='field_show_in_cat' value='" . $row[ 'show_in_cat' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
       echo '<td class="td_center actions-wrapper">';
-      echo '<button type="submit" name="Submit" class="product__action-button">Применить</button>';
-      echo '<a href="?action=copy_element&id=' . $row['index'] . '"><button type="button" class="product__action-button">Копировать</button></a>';
-      //if (isset($_GET["section_code"])) {
-      //                echo '<a class="check_delete" href="?action=delete_element&section_code=' . $_GET["section_code"] . '&id=' . $row['index'] . '"><button style="padding:3px 5px;;cursor: pointer;">Удалить</button></a>';
-      //            } else {
-      //                echo '<a class="check_delete" href="?action=delete_element&&id=' . $row['index'] . '"><button style="padding:3px 5px;;cursor: pointer;background:red;color:white;border:solid 1px red;">Удалить</button></a>';
-      //            }
+      echo '<button type="submit" name="Submit" class="product__action-button green">Применить</button>';
+      echo '<a href="?action=copy_element&id=' . $row['index'] . '"><button type="button" class="product__action-button green">Копировать</button></a>';
+      if (isset($_GET["section_code"])) {
+        echo '<a href="?action=delete_element&section_code=' . $_GET["section_code"] . '&id=' . $row['index'] . '"><button class="product__action-button red">Удалить</button></a>';
+      } else {
+        echo '<a href="?action=delete_element&&id=' . $row['index'] . '"><button class="product__action-button red">Удалить</button></a>';
+      }
       echo "</td>";
       echo "</form></tr>";
     }
@@ -289,20 +295,27 @@ if ( !empty( $result ) ) {
     align-items: center;
     justify-content: center;
     width: 175px;
-    gap: 10px;
+    gap: 5px;
   }
-  .actions-wrapper a { text-decoration: none !important; }
+  .actions-wrapper a { text-decoration: none !important; width: 100%; }
   .product__action-button {
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 15px;
-    background: #34AB5E;
-    border: solid 1px #34AB5E;
+    padding: 3px 5px;
     width: 100%;
     color: #fff;
     border-radius: 5px;
+    font-size: 12px;
+  }
+  .green {
+    background: #34AB5E;
+    border: solid 1px #34AB5E;
+  }
+  .red {
+    background: red;
+    border: solid 1px red;
   }
 </style>
 <script>

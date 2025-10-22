@@ -799,5 +799,114 @@ class DBWORK {
             return $out;
         }
     }
-
+    
+    public function copy_product_element($element_id) {
+        global $mysqli_db;
+        
+        $debug_info = [];
+        $debug_info[] = "Начало копирования элемента: " . $element_id;
+        
+        database_connect();
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $debug_info[] = "Подключение к БД установлено";
+        
+        $query = "SELECT * FROM `products_all` WHERE `index` = " . intval($element_id);
+        $debug_info[] = "Выполняем запрос: " . $query;
+        
+        $result = mysqli_query($mysqli_db, $query);
+        
+        if (!$result) {
+            $error = mysqli_error($mysqli_db);
+            $debug_info[] = "ОШИБКА запроса SELECT: " . $error;
+            return [
+                "success" => false,
+                "message" => "Ошибка базы данных: " . $error,
+                "debug" => $debug_info
+            ];
+        }
+        
+        if (mysqli_num_rows($result) == 0) {
+            $debug_info[] = "Элемент не найден";
+            return [
+                "success" => false,
+                "message" => "Элемент с ID $element_id не найден!",
+                "debug" => $debug_info
+            ];
+        }
+        
+        $original_element = mysqli_fetch_assoc($result);
+        $debug_info[] = "Элемент найден: " . $original_element['model'];
+        
+        $max_index_query = "SELECT MAX(`index`) as max_index FROM `products_all`";
+        $max_result = mysqli_query($mysqli_db, $max_index_query);
+        
+        if (!$max_result) {
+            $error = mysqli_error($mysqli_db);
+            $debug_info[] = "ОШИБКА запроса MAX: " . $error;
+            return [
+                "success" => false,
+                "message" => "Ошибка при получении максимального ID: " . $error,
+                "debug" => $debug_info
+            ];
+        }
+        
+        $max_row = mysqli_fetch_assoc($max_result);
+        $new_index = $max_row['max_index'] + 1;
+        $debug_info[] = "Новый index: " . $new_index;
+        
+        $fields = [];
+        $values = [];
+        
+        foreach ($original_element as $field => $value) {
+            if ($field == 'index') {
+                $fields[] = "`$field`";
+                $values[] = "'$new_index'";
+                continue;
+            }
+            
+            if ($field == 'model') {
+                $new_value = $value . '_copy';
+                $fields[] = "`$field`";
+                $values[] = "'" . mysqli_real_escape_string($mysqli_db, $new_value) . "'";
+                $debug_info[] = "Поле model изменено: " . $value . " -> " . $new_value;
+            }
+            elseif (in_array($field, ['s_name', 'h1', 'title'])) {
+                $new_value = $value . ' (копия)';
+                $fields[] = "`$field`";
+                $values[] = "'" . mysqli_real_escape_string($mysqli_db, $new_value) . "'";
+                $debug_info[] = "Поле $field изменено: " . $value . " -> " . $new_value;
+            }
+            else {
+                $fields[] = "`$field`";
+                $values[] = "'" . mysqli_real_escape_string($mysqli_db, $value) . "'";
+            }
+        }
+        
+        $fields_str = implode(', ', $fields);
+        $values_str = implode(', ', $values);
+        
+        $insert_query = "INSERT INTO `products_all` ($fields_str) VALUES ($values_str)";
+        $debug_info[] = "INSERT запрос подготовлен";
+        
+        $insert_result = mysqli_query($mysqli_db, $insert_query);
+        
+        if ($insert_result) {
+            $debug_info[] = "КОПИРОВАНИЕ УСПЕШНО! Новый элемент создан с ID: " . $new_index;
+            return [
+                "success" => true,
+                "message" => "Элемент успешно скопирован. Новый ID: $new_index",
+                "new_element_id" => $new_index,
+                "debug" => $debug_info
+            ];
+        } else {
+            $error = mysqli_error($mysqli_db);
+            $debug_info[] = "ОШИБКА INSERT: " . $error;
+            $debug_info[] = "Запрос: " . $insert_query;
+            return [
+                "success" => false,
+                "message" => "Ошибка при копировании в базу данных: " . $error,
+                "debug" => $debug_info
+            ];
+        }
+    }
 }
