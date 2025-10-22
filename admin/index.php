@@ -147,64 +147,50 @@ if ( isset( $_GET[ "sort_by" ] ) ) {
 }
 
 if ( !empty( $result ) ) {
-  echo "<div class='sticky' style='    max-width: 1920px;
-    box-sizing: border-box;
-    background: #f9f9f9;
-    '><table>";
+  echo "<div class='table-container'>";
+  echo "<div class='sticky-header'>";
+  echo "<table class='fixed-table'>";
+  echo "<thead>";
   echo "<tr>";
-  echo "<th style='width:18%'>Модель</th>";
-  echo "<th style='width:7%'>ВКЛ</th>";
-  echo "<th style='width:7%'>Фоток</th>";
-  echo "<th style='width:7%'>Старьё</th>";
-  echo "<th style='width:7%'>Цена</th>";
-  echo "<th style='width:7%'>Скрыть цену</th>";
-  echo "<th style='width:7%'>COM</th>";
-  echo "<th style='width:7%'>На складе</th>";
-  echo "<th style='width:7%'>На складе СПБ</th>";
-  echo "<th style='width:7%'>Показ На складе</th>";
-  echo "<th style='width:7%'>Показ в каталоге</th>";
-  echo "<th style='width:7%'>Сортировка</th>";
+  echo "<th style='width:17%'>Модель</th>";
+  echo "<th style='width:12%'>ВКЛ</th>";
+  echo "<th style='width:12%'>Фоток</th>";
+  echo "<th style='width:12%'>Старьё</th>";
+  echo "<th style='width:12%'>Цена</th>";
+  echo "<th style='width:12%'>Скрыть цену</th>";
+  echo "<th style='width:12%'>COM</th>";
+  echo "<th style='width:12%'>На складе</th>";
+  echo "<th style='width:12%'>На складе СПБ</th>";
+  echo "<th style='width:13%'>Показ На складе</th>";
+  echo "<th style='width:13%'>Показ в каталоге</th>";
+  echo "<th style='width:12%'>Сортировка</th>";
   echo "<th style='width:12%' class='td_center'>Действия</th>";
-  echo "</tr></table></div>";
-  echo "<table id='list'>";
+  echo "</tr>";
+  echo "</thead>";
+  echo "</table>";
+  echo "</div>";
+  echo "<div class='table-content'>";
+  echo "<table class='fixed-table'>";
   echo "<colgroup>";
-  echo "<col style='width:18%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
-  echo "<col style='width:7%'>";
+  echo "<col style='width:17%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:12%'>";
+  echo "<col style='width:13%'>";
+  echo "<col style='width:13%'>";
+  echo "<col style='width:12%'>";
   echo "<col style='width:12%'>";
   echo "</colgroup>";
-  echo "<!--tr>";
-  echo "<th style='width:18%'>Модель</th>";
-  echo "<th style='width:7%'>ВКЛ</th>";
-  echo "<th style='width:7%'>Фоток</th>";
-  echo "<th style='width:7%'>Старьё</th>";
-  echo "<th style='width:7%'>Цена</th>";
-  echo "<th style='width:7%'>Скрыть цену</th>";
-  echo "<th style='width:7%'>COM</th>";
-  echo "<th style='width:7%'>На складе</th>";
-  echo "<th style='width:7%'>На складе СПБ</th>";
-  echo "<th style='width:7%'>Показ На складе</th>";
-  echo "<th style='width:7%'>Показ в каталоге</th>";
-  echo "<th style='width:7%'>Сортировка</th>";
-  echo "<th style='width:12%' class='td_center'>Действия</th>";
-  echo "</tr-->";
+  echo "<tbody>";
+  
   $counter = 0;
   if ( is_array( $result ) ) {
-    //connectToFTP();
     foreach ( $result as $row ) {
-
-      //            $imagesHtml = getImagesHtml($row);
-      //$imagesHtml = getRemoteFTPImagesHtml( $row );
-
       $counter++;
       if ( isset( $row[ 'section_code' ] ) && $row[ 'section_code' ] ) {
         $sub_section = "sub_section";
@@ -214,16 +200,14 @@ if ( !empty( $result ) ) {
         $mark = "";
       }
       $link = "/admin?index=" . $row[ 'index' ] . "&action=edit_element";
-//      foreach ( $_GET as $key => $value ) {
-//        $link .= "&$key=$value";
-//      }
+      
       if ( isset( $_GET[ "element_id" ] )and isset( $row[ "index" ] )and $_GET[ "element_id" ] == $row[ "id" ] ):
         echo "<tr class='tr_green'>";
       else :
-        echo "<tr style='border-bottom: 1px solid #000;'><form action='$link' method='post'>";
+        echo "<tr><form action='$link' method='post'>";
       endif;
+      
       echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
-      //echo "<td class='code'><input type='text' name='field_status' value='" . $row['status'] . "'></td>";
       echo "<td class='code'><select name='field_status' id='status' class='status' style='font-size: 0.7em;min-width:70px;'><option value='0'";
       if ( $row[ 'status' ] == "0" )echo " selected class='status-off'";
       echo ">ВЫКЛ</option><option value='1'";
@@ -248,90 +232,194 @@ if ( !empty( $result ) ) {
       echo "</td>";
       echo "</form></tr>";
     }
-    
-    //disconnectFTP();
   } else {
     echo "<tr>";
-    echo "<th colspan='8'> - пусто - </th>";
+    echo "<td colspan='13'> - пусто - </td>";
     echo "</tr>";
   }
+  echo "</tbody>";
+  echo "</table>";
+  echo "</div>";
+  
+  echo "<div class='table-footer'>";
+  echo "<table class='fixed-table'>";
   echo "<tr>";
-  echo "<th colspan='8' class='td_center'> Всего $counter строк </th>";
+  echo "<td colspan='13' class='td_center'> Всего $counter строк </td>";
   echo "</tr>";
   echo "</table>";
+  echo "</div>";
+  echo "</div>";
 }
 ?>
 <style>
-    .btn_start_programm {
-        color: white;
-        background: #44bb6e;
-        padding: 10px 20px;
-        font-size: 17px;
-        display: inline-block;
-        line-height: 17px;
-        cursor: pointer;
-        margin: 0px 0px 17px 0px;
-    }
+.table-container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+}
 
-    .btn_start_programm__small {
-        margin-top: 20px;
-        color: white;
-        background: grey;
-        padding: 5px 10px;
-        font-size: 15px;
-        display: inline-block;
-        cursor: pointer;
-    }
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #293133 !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-    .document_container {
-        text-align: center;
-    }
+.table-content {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
 
-    .button_create_webp{display: inline-block;
-    padding: 3px 5px;
-        color: white;
-        background: #44bb6e;
-        cursor: pointer;
-    }
-  .actions-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 175px;
-    gap: 5px;
-  }
-  .actions-wrapper a {
-    text-decoration: none;
-    width: 100%;
-  }
-  .product__action-button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3px 5px;
-    width: 100%;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 12px;
-  }
-  .green {
-    background: #34AB5E;
-    border: solid 1px #34AB5E;
-  }
-  .red {
-    background: red;
-    border: solid 1px red;
-  }
+.table-footer {
+  background: #f5f5f5;
+  border-top: 1px solid #ddd;
+}
+
+.fixed-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.fixed-table th,
+.fixed-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.fixed-table th {
+  background: #f9f9f9;
+  font-weight: bold;
+  text-align: left;
+}
+
+.fixed-table .name {
+  width: 18%;
+}
+
+.fixed-table .code {
+  width: 8%;
+  text-align: center;
+}
+
+.fixed-table .code input,
+.fixed-table .code select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.fixed-table .td_center {
+  text-align: center;
+  width: 100%;
+}
+.fixed-table th {
+  background: #293133 !important;
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid #ccc;
+}
+.actions-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 60px;
+  width: max-content;
+}
+
+.actions-wrapper a {
+  text-decoration: none;
+  width: 100%;
+}
+
+.product__action-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 5px;
+  width: 100%;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.green {
+  background: #34AB5E;
+  border: solid 1px #34AB5E;
+}
+
+.red {
+  background: red;
+  border: solid 1px red;
+}
+
+.tr_green {
+  background-color: #e8f5e8 !important;
+}
+
+.btn_start_programm {
+  color: white;
+  background: #44bb6e;
+  padding: 10px 20px;
+  font-size: 17px;
+  display: inline-block;
+  line-height: 17px;
+  cursor: pointer;
+  margin: 0px 0px 17px 0px;
+}
+
+.btn_start_programm__small {
+  margin-top: 20px;
+  color: white;
+  background: grey;
+  padding: 5px 10px;
+  font-size: 15px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.document_container {
+  text-align: center;
+}
+
+.button_create_webp {
+  display: inline-block;
+  padding: 3px 5px;
+  color: white;
+  background: #44bb6e;
+  cursor: pointer;
+}
+
+.success_message, .error_message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.success_message {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error_message {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
 </style>
-<script>
-$(window).load(function(){
-$(".success_message").delay(3200).fadeOut(300);
-});
-</script>
 <?
-
-/* * *************************************************************************** */
 include $core_admin_path . 'template/footer.php';
 ?>
