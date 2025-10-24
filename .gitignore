@@ -65,6 +65,7 @@ sc/QRCode/*.jpeg
 /cache
 !/robots.txt
 /.vscode/settings.json
+/forum/cache
 
 # ========================
 # 📁 ПАПКИ С ИЗОБРАЖЕНИЯМИ

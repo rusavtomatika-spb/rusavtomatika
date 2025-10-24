@@ -1013,3 +1013,16 @@ a.nodecor:hover {
   opacity: 1;
   transition: 0.2s;
 }
+
+.component_newslist_detail .detail_text {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  width: 100% !important;
+}
+
+.component_newslist_detail .detail_text p {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+  line-height: 1.6;
+  width: 100% !important;
+}
