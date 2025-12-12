@@ -148,21 +148,6 @@ ini_set("display_errors", 1);
         pointer-events: none;
     }
 
-    @keyframes lineGlow {
-        0% {
-            box-shadow: 
-                0 0 10px gold,
-                0 0 20px rgba(255, 215, 0, 0.5),
-                0 0 30px rgba(255, 215, 0, 0.3);
-        }
-        100% {
-            box-shadow: 
-                0 0 15px gold,
-                0 0 25px rgba(255, 215, 0, 0.6),
-                0 0 35px rgba(255, 215, 0, 0.4);
-        }
-    }
-
     .bulb-wrapper {
         position: absolute;
         top: 10px;
@@ -239,13 +224,26 @@ ini_set("display_errors", 1);
         width: 25px;
         height: 35px;
         background: radial-gradient(
-            ellipse at 30% 40%,
+            ellipse at 50% 40%,
             rgba(255, 255, 255, 0.95) 0%,
             rgba(255, 255, 255, 0.8) 30%,
             rgba(255, 255, 255, 0.4) 70%,
             transparent 100%
         );
-        border-radius: 40% 40% 30% 30%;
+        clip-path: polygon(
+            50% 0%,
+            35% 10%,
+            25% 30%,
+            20% 60%,
+            30% 85%,
+            50% 100%,
+            70% 85%,
+            80% 60%,
+            75% 30%,
+            65% 10%,
+            50% 0%
+        );
+        border-radius: 50% 50% 40% 40%;
         box-shadow: 
             inset 0 0 15px rgba(255, 255, 255, 0.9),
             inset 0 -5px 20px rgba(0, 0, 0, 0.2),
@@ -254,25 +252,6 @@ ini_set("display_errors", 1);
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         animation: bulbGlow 2s infinite alternate;
         z-index: 1;
-    }
-
-    @keyframes bulbGlow {
-        0% {
-            box-shadow: 
-                inset 0 0 15px rgba(255, 255, 255, 0.9),
-                inset 0 -5px 20px rgba(0, 0, 0, 0.2),
-                0 0 20px currentColor,
-                0 0 40px rgba(var(--color-rgb), 0.4);
-            opacity: 0.9;
-        }
-        100% {
-            box-shadow: 
-                inset 0 0 20px rgba(255, 255, 255, 1),
-                inset 0 -5px 25px rgba(0, 0, 0, 0.3),
-                0 0 40px currentColor,
-                0 0 60px rgba(var(--color-rgb), 0.6);
-            opacity: 1;
-        }
     }
 
     .bulb .filament {
@@ -295,31 +274,6 @@ ini_set("display_errors", 1);
         transition: all 0.3s ease;
         filter: blur(1px);
         animation: filamentGlow 1.5s infinite alternate;
-    }
-
-    @keyframes filamentGlow {
-        0% {
-            opacity: 0.8;
-            background: linear-gradient(
-                to bottom,
-                #ffff00 0%,
-                #ffd700 30%,
-                #ff8c00 50%,
-                #ff4500 70%,
-                transparent 100%
-            );
-        }
-        100% {
-            opacity: 1;
-            background: linear-gradient(
-                to bottom,
-                #ffffcc 0%,
-                #ffff00 30%,
-                #ffd700 50%,
-                #ff8c00 70%,
-                transparent 100%
-            );
-        }
     }
 
     .explosion {
@@ -348,53 +302,6 @@ ini_set("display_errors", 1);
         );
         opacity: 0;
         filter: blur(1px);
-    }
-
-    .bulb:hover .glass {
-        opacity: 0;
-        transform: translateX(-50%) scale(2);
-        filter: blur(2px);
-    }
-
-    .bulb:hover .filament {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.5);
-    }
-
-    .bulb:hover .explosion {
-        opacity: 1;
-    }
-
-    .bulb:hover .particle {
-        animation: explode 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    @keyframes explode {
-        0% {
-            opacity: 0;
-            transform: translate(0, 0) scale(0.1) rotate(0deg);
-        }
-        20% {
-            opacity: 1;
-            transform: translate(
-                calc(cos(var(--angle)) * 20px),
-                calc(sin(var(--angle)) * 20px)
-            ) scale(1.2) rotate(180deg);
-        }
-        80% {
-            opacity: 0.8;
-            transform: translate(
-                calc(cos(var(--angle)) * 60px),
-                calc(sin(var(--angle)) * 60px)
-            ) scale(1) rotate(360deg);
-        }
-        100% {
-            opacity: 0;
-            transform: translate(
-                calc(cos(var(--angle)) * 80px),
-                calc(sin(var(--angle)) * 80px)
-            ) scale(0.5) rotate(540deg);
-        }
     }
 
     .particle:nth-child(1) { animation-delay: 0.05s; --angle: 0deg; }
