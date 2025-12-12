@@ -210,7 +210,7 @@ ini_set("display_errors", 1);
         transform: translateX(-50%);
         width: 1.5px;
         height: 15px;
-        background: linear-gradient(to bottom, #ffd700, #b8860b);
+        background: #000;
         border-radius: 1px;
         z-index: 1;
     }
@@ -223,7 +223,7 @@ ini_set("display_errors", 1);
         transform: translateX(-50%);
         width: 12px;
         height: 18px;
-        background: linear-gradient(45deg, #a0522d 0%, #cb5a0a 25%, #d07405 50%, #d2691e 75%, #8b4513 100%);
+        background: linear-gradient(45deg, #1d1c1b 0%, #1a1613 25%, #1d1d1d 50%, #24211f 75%, #22201e 100%);
         border-radius: 4px 4px 0 0;
         z-index: 2;
         box-shadow: 
@@ -407,64 +407,64 @@ ini_set("display_errors", 1);
     .particle:nth-child(8) { animation-delay: 0.4s; --angle: 315deg; }
 
     .bulb:nth-child(1) .glass { 
-        color: #ff5555; 
-        --color-rgb: 255, 85, 85;
+        color: #cc4444; 
+        --color-rgb: 204, 68, 68;
     }
     .bulb:nth-child(2) .glass { 
-        color: #55ff55; 
-        --color-rgb: 85, 255, 85;
+        color: #44cc44; 
+        --color-rgb: 68, 204, 68;
     }
     .bulb:nth-child(3) .glass { 
-        color: #5555ff; 
-        --color-rgb: 85, 85, 255;
+        color: #4444cc; 
+        --color-rgb: 68, 68, 204;
     }
     .bulb:nth-child(4) .glass { 
-        color: #ffff55; 
-        --color-rgb: 255, 255, 85;
+        color: #cccc44; 
+        --color-rgb: 204, 204, 68;
     }
     .bulb:nth-child(5) .glass { 
-        color: #ff55ff; 
-        --color-rgb: 255, 85, 255;
+        color: #cc44cc; 
+        --color-rgb: 204, 68, 204;
     }
     .bulb:nth-child(6) .glass { 
-        color: #55ffff; 
-        --color-rgb: 85, 255, 255;
+        color: #44cccc; 
+        --color-rgb: 68, 204, 204;
     }
     .bulb:nth-child(7) .glass { 
-        color: #ff8855; 
-        --color-rgb: 255, 136, 85;
+        color: #cc6644; 
+        --color-rgb: 204, 102, 68;
     }
     .bulb:nth-child(8) .glass { 
-        color: #88ff55; 
-        --color-rgb: 136, 255, 85;
+        color: #66cc44; 
+        --color-rgb: 102, 204, 68;
     }
     .bulb:nth-child(9) .glass { 
-        color: #5588ff; 
-        --color-rgb: 85, 136, 255;
+        color: #4466cc; 
+        --color-rgb: 68, 102, 204;
     }
     .bulb:nth-child(10) .glass { 
-        color: #ff55aa; 
-        --color-rgb: 255, 85, 170;
+        color: #cc4488; 
+        --color-rgb: 204, 68, 136;
     }
     .bulb:nth-child(11) .glass { 
-        color: #aa55ff; 
-        --color-rgb: 170, 85, 255;
+        color: #8844cc; 
+        --color-rgb: 136, 68, 204;
     }
     .bulb:nth-child(12) .glass { 
-        color: #55ffaa; 
-        --color-rgb: 85, 255, 170;
+        color: #44cc88; 
+        --color-rgb: 68, 204, 136;
     }
     .bulb:nth-child(13) .glass { 
-        color: #ffaa55; 
-        --color-rgb: 255, 170, 85;
+        color: #cc8844; 
+        --color-rgb: 204, 136, 68;
     }
     .bulb:nth-child(14) .glass { 
-        color: #aaff55; 
-        --color-rgb: 170, 255, 85;
+        color: #88cc44; 
+        --color-rgb: 136, 204, 68;
     }
     .bulb:nth-child(15) .glass { 
-        color: #55aaff; 
-        --color-rgb: 85, 170, 255;
+        color: #4488cc; 
+        --color-rgb: 68, 136, 204;
     }
 
     .header_top {
@@ -541,21 +541,21 @@ ini_set("display_errors", 1);
         const bulbCount = 15;
         
         const colors = [
-            {hex: '#ff5555', rgb: '255, 85, 85'},
-            {hex: '#55ff55', rgb: '85, 255, 85'},
-            {hex: '#5555ff', rgb: '85, 85, 255'},
-            {hex: '#ffff55', rgb: '255, 255, 85'},
-            {hex: '#ff55ff', rgb: '255, 85, 255'},
-            {hex: '#55ffff', rgb: '85, 255, 255'},
-            {hex: '#ff8855', rgb: '255, 136, 85'},
-            {hex: '#88ff55', rgb: '136, 255, 85'},
-            {hex: '#5588ff', rgb: '85, 136, 255'},
-            {hex: '#ff55aa', rgb: '255, 85, 170'},
-            {hex: '#aa55ff', rgb: '170, 85, 255'},
-            {hex: '#55ffaa', rgb: '85, 255, 170'},
-            {hex: '#ffaa55', rgb: '255, 170, 85'},
-            {hex: '#aaff55', rgb: '170, 255, 85'},
-            {hex: '#55aaff', rgb: '85, 170, 255'}
+            {hex: '#cc4444', rgb: '204, 68, 68'},
+            {hex: '#44cc44', rgb: '68, 204, 68'},
+            {hex: '#4444cc', rgb: '68, 68, 204'},
+            {hex: '#cccc44', rgb: '204, 204, 68'},
+            {hex: '#cc44cc', rgb: '204, 68, 204'},
+            {hex: '#44cccc', rgb: '68, 204, 204'},
+            {hex: '#cc6644', rgb: '204, 102, 68'},
+            {hex: '#66cc44', rgb: '102, 204, 68'},
+            {hex: '#4466cc', rgb: '68, 102, 204'},
+            {hex: '#cc4488', rgb: '204, 68, 136'},
+            {hex: '#8844cc', rgb: '136, 68, 204'},
+            {hex: '#44cc88', rgb: '68, 204, 136'},
+            {hex: '#cc8844', rgb: '204, 136, 68'},
+            {hex: '#88cc44', rgb: '136, 204, 68'},
+            {hex: '#4488cc', rgb: '68, 136, 204'}
         ];
         
         for (let i = 0; i < bulbCount; i++) {
