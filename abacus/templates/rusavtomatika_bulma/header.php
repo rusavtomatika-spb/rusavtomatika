@@ -430,7 +430,7 @@ ini_set("display_errors", 1);
                 <div class="header_top__item">
                     <? include "include/inc_short_contacts.php"; ?>
                     <div class="header_top__contacts is-hidden-touch">
-                        <button class="button is-success button_open_panel_contacts">Контакты</button>
+                        <button class="button is-success button_open_panel_contacts" style="z-index: 0;">Контакты</button>
                     </div>
                     <div class="header_top__contacts is-hidden-desktop">
                         <a href="#" class="header-link-contacts">
