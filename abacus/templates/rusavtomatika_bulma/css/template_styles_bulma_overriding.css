@@ -6,7 +6,11 @@ a:hover {
   color: #10cd61;
   text-decoration: underline;
 }
-
+@media (max-width: 767px) {
+	.has-background-light {
+		display: none !important;
+	}
+}
 .tabs li.is-active a {
   border-bottom-color: #485fc7;
   color: #257953;
