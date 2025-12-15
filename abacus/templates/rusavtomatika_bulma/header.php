@@ -223,13 +223,21 @@ ini_set("display_errors", 1);
         transform: translateX(-50%);
         width: 25px;
         height: 35px;
-        background: radial-gradient(
-            ellipse at 50% 40%,
-            rgba(255, 255, 255, 0.95) 0%,
-            rgba(255, 255, 255, 0.8) 30%,
-            rgba(255, 255, 255, 0.4) 70%,
-            transparent 100%
-        );
+        background: 
+            radial-gradient(
+                ellipse at 50% 40%,
+                rgba(var(--color-rgb), 0.7) 0%,
+                rgba(var(--color-rgb), 0.5) 30%,
+                rgba(var(--color-rgb), 0.2) 70%,
+                transparent 100%
+            ),
+            radial-gradient(
+                ellipse at 50% 30%,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.6) 25%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+            );
         clip-path: polygon(
             50% 0%,
             35% 10%,
@@ -245,13 +253,30 @@ ini_set("display_errors", 1);
         );
         border-radius: 50% 50% 40% 40%;
         box-shadow: 
-            inset 0 0 15px rgba(255, 255, 255, 0.9),
-            inset 0 -5px 20px rgba(0, 0, 0, 0.2),
-            0 0 30px currentColor,
-            0 0 50px rgba(var(--color-rgb), 0.5);
+            0 0 20px 5px rgba(var(--color-rgb), 0.7),
+            0 0 40px 10px rgba(var(--color-rgb), 0.3),
+            0 0 60px 15px rgba(var(--color-rgb), 0.1),
+            0 2px 5px rgba(0, 0, 0, 0.3);
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         animation: bulbGlow 2s infinite alternate;
         z-index: 1;
+    }
+
+    @keyframes bulbGlow {
+        0% {
+            box-shadow: 
+                0 0 15px 5px rgba(var(--color-rgb), 0.6),
+                0 0 30px 8px rgba(var(--color-rgb), 0.2),
+                0 0 45px 12px rgba(var(--color-rgb), 0.05),
+                0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        100% {
+            box-shadow: 
+                0 0 25px 8px rgba(var(--color-rgb), 0.8),
+                0 0 50px 15px rgba(var(--color-rgb), 0.4),
+                0 0 75px 20px rgba(var(--color-rgb), 0.15),
+                0 2px 5px rgba(0, 0, 0, 0.3);
+        }
     }
 
     .bulb .filament {
@@ -390,7 +415,7 @@ ini_set("display_errors", 1);
 </style>
 <div class="padding_wrapper">
     <header>
-	<div class="garland-container">
+	    <div class="garland-container">
             <div class="garland-line"></div>
         </div>
         <div class="container is-widescreen">
