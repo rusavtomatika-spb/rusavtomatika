@@ -20,7 +20,7 @@ CoreApplication::add_breadcrumbs_chain( "Статьи", "/articles/" );
 if ( isset( $_COOKIE[ "edit_mode" ] ) && $_COOKIE[ "edit_mode" ] == '1' )$edit_mode = true;
 else $edit_mode = false;
 ?>
-<script src="https://cdn.tiny.cloud/1/w8cl6p2vi1tgpc4lb41xflpvuhcozqwb4zoppibcs5l3gfsm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script async src="https://cdn.tiny.cloud/1/w8cl6p2vi1tgpc4lb41xflpvuhcozqwb4zoppibcs5l3gfsm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 <style>
 [v-cloak] {
