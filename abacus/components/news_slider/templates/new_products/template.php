@@ -12,6 +12,7 @@ function debug_to_console($data) {
 foreach ($arResultPrall as $k) {
 	array_push($models, $k["model"]);
 }
+
 //$arResulAll["items"] = array_intersect($arResult["items"],$arResultPrall["items"]);
 $count = count( $arResult[ "items" ] );
 if ( $count > 0 ):
@@ -24,11 +25,11 @@ if ( $count > 0 ):
 
       for ( $x = 0; $x < $count; $x++ ) {
         if ( isset( $arResult[ "items" ][ $x ] ) ) {
-          $item = $arResult[ "items" ][ $x ];
-          $iturl = $item[ "url_page_detail2" ];
-          $iturl = explode('/',$iturl);
-          $model = $iturl[2];
-          
+            $item = $arResult[ "items" ][ $x ];
+			$iturl = $item[ "url_page_detail2" ];
+			$iturl = explode('/',$iturl);
+			$model = $iturl[2];
+			debug_to_console($model);
           if (in_array($model, $models )) {
             $d = new DateTime( $item[ "date" ] );
             $item[ "date" ] = $d->format( 'd.m.Y' );
@@ -36,19 +37,12 @@ if ( $count > 0 ):
             $item[ "stext" ] = $item[ "text_preview" ];
             $item[ "img" ] = $item[ "picture_preview" ];
 
-            if ($model === 'cMT-XM-ESP') {
-              $text = "Штекер E-Bypass позволяет оборудованию продолжать работать без перебоев, замыкая контур безопасности при отсоединении панели";
-            } else {
-              $text = strip_tags( $item[ "stext" ] );
-              $text = substr( $text, 0, 150 );
-              $text = rtrim( $text, "!,.-" );
-              $last_space = strrpos( $text, ' ' );
-              if ($last_space !== false) {
-                  $text = substr( $text, 0, $last_space );
-              }
-              $text = $text . "… ";
-            }
-            
+
+            $text = strip_tags( $item[ "stext" ] );
+            $text = substr( $text, 0, 150 );
+            $text = rtrim( $text, "!,.-" );
+            $text = substr( $text, 0, strrpos( $text, ' ' ) );
+            $text = $text . "… ";
             include __DIR__ . "/template_common_item1.php";
           }
         }
