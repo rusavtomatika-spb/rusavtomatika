@@ -30,6 +30,71 @@ CoreApplication::add_breadcrumbs_chain($arResult["name"]);
 $showRecommended = false;
 $recommendedItems = [];
 
+$typeDictionary = [
+    'hmi' => 'Панель оператора',
+    'cloud_hmi' => 'Облачный интерфейс',
+    'web-panel' => 'Web-панель',
+    'plc' => 'ПЛК',
+    'coupler' => 'Коммуникационный модуль'
+];
+
+function getHumanReadableType($type, $dictionary) {
+    $type = strtolower(trim($type));
+    return isset($dictionary[$type]) ? $dictionary[$type] : $type;
+}
+
+function formatBrandName($brand) {
+    $brand = trim($brand);
+    
+    $specialCases = [
+        'weintek' => 'Weintek',
+        'ifc' => 'IFC',
+    ];
+    
+    $lowerBrand = strtolower($brand);
+    if (isset($specialCases[$lowerBrand])) {
+        return $specialCases[$lowerBrand];
+    }
+    
+    return ucfirst(strtolower($brand));
+}
+
+$keywordProducts = [];
+
+if (!empty($KEYWORDS)) {
+    $keywordElements = explode(' ', trim($KEYWORDS));
+    
+    foreach ($keywordElements as $keywordElement) {
+        $keywordElement = trim($keywordElement);
+        if (empty($keywordElement)) continue;
+        
+        $productParts = explode(',', $keywordElement);
+        if (count($productParts) >= 3) {
+            $productType = trim($productParts[0]);
+            $productBrand = trim($productParts[1]);
+            $productModel = trim($productParts[2]);
+            
+            $formattedBrand = formatBrandName($productBrand);
+            
+            $humanReadableType = getHumanReadableType($productType, $typeDictionary);
+            
+            $productUrl = '/' . strtolower($productBrand) . '/' . $productModel . '/';
+            $productImage = "/images/" . strtolower($productBrand) . "/" . $productType . "/" . $productModel . "/130/" . $productModel . "_1.webp";
+            
+            $keywordProducts[] = [
+                'type' => $productType,
+                'type_human' => $humanReadableType,
+                'brand' => $productBrand,
+                'brand_formatted' => $formattedBrand,
+                'model' => $productModel,
+                'url' => $productUrl,
+                'image' => $productImage,
+                'title' => $productModel . ' - ' . $humanReadableType . ' ' . $formattedBrand
+            ];
+        }
+    }
+}
+
 if (!empty($arResult["query_for_karusel_tovarov"])) {
     $custom_query = $arResult["query_for_karusel_tovarov"];
     
@@ -127,33 +192,20 @@ $count = $showRecommended ? count($recommendedItems) : 0;
             </div>
             <br>
             <br>
-            <div>
-                <a class="button_window_history_back" onclick="window.history.back();return false;" href="/<?= $arguments["root_folder_url"] ?>/">Возврат к списку новостей</a>
-                
-                <?php
-                $productUrl = "/{$arguments["root_folder_url"]}/";
-                
-                if (!empty($KEYWORDS)) {
-                    $keywordsArray = array_filter(array_map('trim', explode(',', $KEYWORDS)));
-                    
-                    if (count($keywordsArray) == 2) {
-                        $urlKeywords = [];
-                        foreach ($keywordsArray as $keyword) {
-                            if (count($urlKeywords) >= 3) break;
-                            
-                            $processed = preg_replace('/\s+/', '_', trim($keyword));
-                            $processed = urlencode($processed);
-                            $processed = str_replace(['%28', '%29'], ['(', ')'], $processed);
-                            $urlKeywords[] = $processed;
-                        }
-                        
-                        $productUrl = '/' . implode('/', $urlKeywords) . '/';
-                    }
-                }
-                ?>
-                
-                <a class="button_window_history_back" href="<?= $productUrl ?>">Перейти к товару</a>
-            </div>
+            <a class="button_window_history_back" onclick="window.history.back();return false;" href="/<?= $arguments["root_folder_url"] ?>/">Возврат к списку новостей</a>
+            <?php if (!empty($keywordProducts)): ?>
+                <div class="links-wrapper">
+                    <?php foreach ($keywordProducts as $product): ?>
+                        <div class="product__link">
+                            <img src="<?= $product['image'] ?>" alt="<?= htmlspecialchars($product['model']) ?>" />
+                            <div>
+                                <h3><?= htmlspecialchars($product['model']) ?> - <?= htmlspecialchars($product['type_human']) ?> <?= htmlspecialchars($product['brand_formatted']) ?></h3>
+                                <a class="button_window_history_back" href="<?= htmlspecialchars($product['url']) ?>">посмотреть и заказать</a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif ?>
         </div>
         <?php if ($showRecommended && $count > 0): ?>
             <div class="recommended__items-wrapper">
@@ -211,6 +263,7 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         margin: 0;
         margin-bottom: 10px;
     }
+
     .recommended__items-wrapper .link__swiper-item {
         width: 100%;
     }
@@ -273,5 +326,36 @@ $count = $showRecommended ? count($recommendedItems) : 0;
     .recommended__items-wrapper a:hover .button_link {
         opacity: 1;
         transition: 0.2s;
+    }
+
+    .links-wrapper {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 10px;
+        margin-top: 50px;
+    }
+    .product__link {
+        display: flex;
+        align-items: center;
+        display: flex;
+        padding: 20px;
+        min-height: 120px;
+        background-color: #fff;
+        border-radius: .25rem;
+        box-shadow: 0 .2em 0.7em -.125em rgba(10, 10, 10, .2), 0 0 0 1px rgba(10, 10, 10, .02);
+        width: 380px;
+        gap: 10px;
+    }
+    .product__link img {
+        width: 120px;
+        height: auto;
+        object-fit: cover;
+    }
+    .product__link h3 {
+        font-size: 14px !important;
+        font-weight: 400;
+        text-align: left !important;
     }
 </style>
