@@ -120,8 +120,32 @@ $count = $showRecommended ? count($recommendedItems) : 0;
             </div>
             <br>
             <br>
-            <div>
-                <a class="button_window_history_back" onclick="window.history.back();return false;" href="/<?=$arguments["root_folder_url"]?>/">Возврат к списку новостей</a>
+             <div>
+                <a class="button_window_history_back" onclick="window.history.back();return false;" href="/<?= $arguments["root_folder_url"] ?>/">Возврат к списку новостей</a>
+                
+                <?php
+                $productUrl = "/{$arguments["root_folder_url"]}/";
+                
+                if (!empty($KEYWORDS)) {
+                    $keywordsArray = array_filter(array_map('trim', explode(',', $KEYWORDS)));
+                    
+                    if (count($keywordsArray) == 2) {
+                        $urlKeywords = [];
+                        foreach ($keywordsArray as $keyword) {
+                            if (count($urlKeywords) >= 3) break;
+                            
+                            $processed = preg_replace('/\s+/', '_', trim($keyword));
+                            $processed = urlencode($processed);
+                            $processed = str_replace(['%28', '%29'], ['(', ')'], $processed);
+                            $urlKeywords[] = $processed;
+                        }
+                        
+                        $productUrl = '/' . implode('/', $urlKeywords) . '/';
+                    }
+                }
+                ?>
+                
+                <a class="button_window_history_back" href="<?= $productUrl ?>">Перейти к товару</a>
             </div>
         </div>
         <?php if ($showRecommended && $count > 0): ?>
