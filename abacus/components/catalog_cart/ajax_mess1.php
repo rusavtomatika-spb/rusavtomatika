@@ -99,15 +99,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTE
         /*$mail3 = "valovenko@mail.ru";*/
     //$mail5 = "dm@rusavtomatika.com";
 
+    $client_email = $_POST['email'];
+
         //send_message($mail4, $subj, $text_us);
     if ($status == "urlico") {
-        $m = send_message("dm@rusavtomatika.com", $subj,  $text_us1.$basket.$text_us2u);
-        $m = send_message($mail3, $subj,  $text_us1.$basket.$text_us2u);
-        $m = send_message($mail5, $subj,  $text_us1.$basket.$text_us2u);
+        $m = send_message("dm@rusavtomatika.com", $subj, $text_us1.$basket.$text_us2u, $client_email);
+        $m = send_message($mail3, $subj, $text_us1.$basket.$text_us2u, $client_email);
+        $m = send_message($mail5, $subj, $text_us1.$basket.$text_us2u, $client_email);
     } else {
-        $m = send_message("dm@rusavtomatika.com", $subj,  $text_us1.$basket.$text_us2f);
-        $m = send_message($mail3, $subj,  $text_us1.$basket.$text_us2f);
-        $m = send_message($mail5, $subj,  $text_us1.$basket.$text_us2f);
+        $m = send_message("dm@rusavtomatika.com", $subj, $text_us1.$basket.$text_us2f, $client_email);
+        $m = send_message($mail3, $subj, $text_us1.$basket.$text_us2f, $client_email);
+        $m = send_message($mail5, $subj, $text_us1.$basket.$text_us2f, $client_email);
     }
 	//add_rekvest2db();
 forwardPostRequest('https://zu19.tw1.ru/work/bdtest.php');
@@ -122,40 +124,41 @@ forwardPostRequest('https://zu19.tw1.ru/work/bdtest.php');
 } else
     echo "false";
 
-function send_message(
-
-    $email, // email получателя
-    $subj, // тема письма
-    $text // текст письма
-)
-{
+function send_message($email_to, $subj, $text, $reply_email = '') {
     $subj = '=?utf-8?B?' . base64_encode($subj) . '?=';
-    $name_from = "Rusavtomatika.com"; // имя отправителя
-    $email_from = "no-reply@rusavtomatika.com"; // email отправителя
-    $name_to = ""; // имя получателя
-    $data_charset = "UTF-8"; // кодировка переданных данных
-    $send_charset = "UTF-8"; // кодировка письма
-    $html = TRUE; // письмо в виде html или обычного текста
-    $reply_to = FALSE;
-    if ($email == "admin") {
-        $email = "sales@rusavtomatika.com";
+    $name_from = "Rusavtomatika.com";
+    $email_from = "no-reply@rusavtomatika.com";
+    $name_to = "";
+    $data_charset = "UTF-8";
+    $send_charset = "UTF-8";
+    $html = TRUE;
+    
+    // Используем переданный email для ответа
+    if (filter_var($reply_email, FILTER_VALIDATE_EMAIL)) {
+        $reply_to = $reply_email;
+    } else {
+        $reply_to = '';
     }
-    $to = $name_to . ' <' . $email . '>';
-
+    
+    if ($email_to == "admin") {
+        $email_to = "sales@rusavtomatika.com";
+    }
+    
+    $to = $name_to . ' <' . $email_to . '>';
     $subject = mime_header_encode($subj, $data_charset, $send_charset);
     $from = $name_from . ' <' . $email_from . '>';
 
     $headers = "From: $from\r\n";
+    
+    if ($reply_to) {
+        $headers .= "Reply-To: $reply_to\r\n";
+    }
+    
     $type = ($html) ? 'html' : 'plain';
     $headers .= "Content-type: text/$type; charset=$send_charset\r\n";
     $headers .= "Mime-Version: 1.0\r\n";
-    if ($reply_to) {
-        $headers .= "Reply-To: $reply_to";
-    }
-
 
     return mail($to, $subj, $text, $headers);
-//    return mail($to, $subject, $text, $headers);
 }
 
 function mime_header_encode($str, $data_charset, $send_charset)
