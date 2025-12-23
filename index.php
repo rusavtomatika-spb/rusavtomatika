@@ -29,7 +29,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
             </div>
         </div>
 
-        <div class="has-background-light pt-5 mb-5">
+        <div class="has-background-light pt-5 mb-5 cloud-main">
             <div class="container is-widescreen">
                 <div class="columns">
                     <div class="column is-12">

@@ -133,7 +133,6 @@ function send_message($email_to, $subj, $text, $reply_email = '') {
     $send_charset = "UTF-8";
     $html = TRUE;
     
-    // Используем переданный email для ответа
     if (filter_var($reply_email, FILTER_VALIDATE_EMAIL)) {
         $reply_to = $reply_email;
     } else {

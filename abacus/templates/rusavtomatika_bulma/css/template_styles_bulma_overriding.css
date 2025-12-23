@@ -7,7 +7,7 @@ a:hover {
   text-decoration: underline;
 }
 @media (max-width: 767px) {
-	.has-background-light {
+	.cloud-main {
 		display: none !important;
 	}
 }
