@@ -5,7 +5,7 @@ $DESCRIPTION = 'Документация и программное обеспе�
 $KEYWORDS = 'Скачать, бесплатно, без регистрации, инструкции по эксплуатации, бесплатное по, программное обеспечение, операторские панели, панели оператора, Weintek, Samkoon, IFC, Aplex, инструкции по установке, брошюры, мануалы, даташит';
 $CANONICAL = "https://www.rusavtomatika.com/download/";
 
-global $CONTENT_ON_WIDE_SCREEN;
+global $CONTENT_ON_WIDE_SCREEN,$recs;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/prolog.php";
 $docs_folder = $_SERVER[ 'DOCUMENT_ROOT' ] . '/download/';
@@ -26,6 +26,60 @@ $updates = array_values( json_decode( file_get_contents( $soft_updates ), true )
 }
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/download_styles.css?" . rand() );
 
+include_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/sc/dbcon.php";
+database_connect();
+$query = "SELECT * FROM `downloads`";
+$res = mysql_query( $query )or die( mysql_error() );
+//$res = mysql_fetch_assoc( $res );
+$recs = array();
+while ($row = mysql_fetch_assoc($res)) {
+    $recs[] = $row;
+}
+//var_dump($res);
+//exit();
+function findRecordBySoftware($records, $soft, $fld) {
+    foreach ($records as $record) {
+        if ($record['software'] === $soft) {
+            return $record[$fld];
+        }
+    }
+    return null;
+}
+
+
+function fetchTxtFileContents($url) {
+    // Проверяем наличие URL
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        return 'Ошибка: неверный URL.';
+    }
+
+    // Инициализация cURL сессии
+    $ch = curl_init();
+
+    // Настройка параметров
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,                // Адрес страницы
+        CURLOPT_RETURNTRANSFER => true,     // Возвращать данные в переменную
+        CURLOPT_FAILONERROR => true,        // Ошибка при статусе >= 400
+        CURLOPT_TIMEOUT => 10,              // Таймаут ожидания
+        CURLOPT_CONNECTTIMEOUT => 5,        // Таймаут подключения
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
+        CURLOPT_HEADER => false             // Не включать заголовки в ответ
+    ]);
+
+    // Выполняем запрос
+    $data = curl_exec($ch);
+
+    // Проверяем успешность выполнения
+    if ($data === false) {
+        return 'Ошибка загрузки файла: ' . curl_error($ch);
+    }
+
+    // Закрываем сессию
+    curl_close($ch);
+
+    return $data;
+}
 function filter_arr( $array, $key, $value, $out = 'download', $exclude1 = 'qqqqqqqq', $exclude2 = 'qqqqqqqq', $exclude3 = 'qqqqqqqq', $exclude4 = 'qqqqqqqq', $exclude5 = 'qqqqqqqq' ) {
   if ( is_array( $array ) ) {
     foreach ( $array as $element ) {
@@ -62,9 +116,15 @@ function filter_arr( $array, $key, $value, $out = 'download', $exclude1 = 'qqqqq
 		  } else {
 		  $new = '';
 		  }
-
+        if ( preg_match( '/Дистрибутив для PC/', $element[ 'title' ] ) ) {
+          preg_match( '/(\d+\.\d+\.\d+)/', $element[ 'fname' ], $matches );
+          $version = '[' . $matches[ 1 ] . '] ';
+		} else {
+          $version = '';
+		}
+		  
 if ($out=='download') {
-        echo '<p><a class="download_' . strtolower( $info[ 'extension' ] ) . '" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $element[ 'title' ] . '</a> <span class="small_gray_text">' . $mod_data . ' ' . $fsize . '</span> ' . $new . '</p>';
+        echo '<p><a class="download_' . strtolower( $element[ 'ftype' ] ) . '" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $element[ 'title' ] . '</a> <span class="small_gray_text">' . $version . $mod_data . ' ' . $fsize . '</span> ' . $new . '</p>';
 } else {
 echo '<tr><td><div><a download="" title="Скачать" target="_blank" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '">' . $element[ 'title' ] . '</a></div><div class="down_item_descr">' . $element[ 'description' ] . '</div></td><td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">' . $element[ 'ftype' ] . '</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">' . $mod_data . '</span></td> <td style="font-size: 0.8em;"><span class="size">' . $fsize . '</span></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Еng</span></td><td style="display: none;">' . $element[ 'sort' ] . '</td></tr>';	
 }
@@ -75,6 +135,7 @@ echo '<tr><td><div><a download="" title="Скачать" target="_blank" href="'
 }
 
 function arr_out( $array, $out = 'download' ) {
+	global $recs;
   if ( is_array( $array ) ) {
     foreach ( $array as $element ) {
       $info = pathinfo( $element[ 'url' ] );
@@ -84,7 +145,9 @@ function arr_out( $array, $out = 'download' ) {
       } else $fsize = '';
       $el_title = $element[ 'title' ];
       if ( $el_title = 'EasyBuilder Pro User Manual (All chapters)(English)' ) {
-        $el_title = 'Руководство по EasyBuilderPro ' . file_get_contents( 'https://www.rusavtomatika.com/soft/EBPro/Installer/version.txt' );
+		  		//$ebp_ver = fetchTxtFileContents('https://www.rusavtomatika.com/upload_files/soft/EBPro/Installer/version.txt');
+		  		$ebp_ver = findRecordBySoftware($recs, 'EBPro', 'version');
+        $el_title = 'Руководство по EasyBuilderPro ' . $ebp_ver;
       }
 		  $days_difference = floor(abs(time() - $element[ 'mod_data' ]) / 86400);
 		  if ($days_difference < 11) {
@@ -238,7 +301,11 @@ $arc = [
   }
 				$ebpro_files = $output;
               ?>
-              <p><a class="download_pdf" href="/soft/EBPro/release_notes/EBPro_ReleaseNotes_en.pdf" target="_blank">Примечания к выпуску версии <? echo file_get_contents('https://www.rusavtomatika.com/soft/EBPro/Installer/version.txt'); ?> (Eng)</a> <span class="small_gray_text">[<? echo date("d.m.Y",file_get_contents('https://www.rusavtomatika.com/soft/EBPro/Installer/date.txt')); ?>]</span></p>
+              <p><a class="download_pdf" href="/soft/EBPro/release_notes/EBPro_ReleaseNotes_en.pdf" target="_blank">Примечания к выпуску версии <?
+				  //$ebp_ver = fetchTxtFileContents('https://www.rusavtomatika.com/upload_files/soft/EBPro/Installer/version.txt');
+				  //$ebp_date = fetchTxtFileContents('https://www.rusavtomatika.com/upload_files/soft/EBPro/Installer/date.txt');
+				  echo findRecordBySoftware($recs, 'EBPro', 'version');
+				  ?> (Eng)</a> <span class="small_gray_text">[<? echo findRecordBySoftware($recs, 'EBPro', 'date'); ?>]</span></p>
               <?//$searchword = 'All chapters';
               $searchword = 'EasyBuilder Pro User Manual (All chapters)';
               //$searchword = 'DocumentEB';
@@ -265,13 +332,15 @@ $arc = [
 				$output = ob_get_contents(); //Grab output
 				ob_end_clean(); //Discard output buffer
 				$ebpro_files .= $output;
-				//$ebpro_files .= '<tr><td class="is-size-7 has-text-danger">On-line руководство пользователя Weintek EasyBuilder Pro (Eng) </td><td class="is-size-7 has-text-danger"><a href="/weintek-easybuilderpro-user-manual-en/">link</a></td><td class="is-size-7 has-text-danger">'. date("d.m.Y",file_get_contents("https://www.rusavtomatika.com/upload_files/manuals/weintek/UserManual_separate_chapter/update_date.txt")).'</td><td></td></tr>';
+				  $ebp_date = fetchTxtFileContents('https://www.rusavtomatika.com/upload_files/manuals/weintek/UserManual_separate_chapter/update_date.txt');
+
+				//$ebpro_files .= '<tr><td class="is-size-7 has-text-danger">On-line руководство пользователя Weintek EasyBuilder Pro (Eng) </td><td class="is-size-7 has-text-danger"><a href="/weintek-easybuilderpro-user-manual-en/">link</a></td><td class="is-size-7 has-text-danger">'. date("d.m.Y",$ebp_date).'</td><td></td></tr>';
 file_put_contents($ebpro_files_block_4wein, $ebpro_files );
-  				$ebpro_files .= '<tr><td><div><a title="Скачать" target="_blank" href="/weintek-easybuilderpro-user-manual-en/">On-line руководство пользователя Weintek EasyBuilder Pro (Eng)</a></div><div class="down_item_descr">Приложение EasyBuilderPro применяется для создания пользовательских проектов для операторских панелей Weintek</div></td> <td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">WEB</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">['. date("d.m.Y",file_get_contents("https://www.rusavtomatika.com/upload_files/manuals/weintek/UserManual_separate_chapter/update_date.txt")).']</span></td> <td style="font-size: 0.8em;"></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Eng</span></td><td style="display: none;">1550</td></tr>';	
+  				$ebpro_files .= '<tr><td><div><a title="Скачать" target="_blank" href="/weintek-easybuilderpro-user-manual-en/">On-line руководство пользователя Weintek EasyBuilder Pro (Eng)</a></div><div class="down_item_descr">Приложение EasyBuilderPro применяется для создания пользовательских проектов для операторских панелей Weintek</div></td> <td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">WEB</td> <td style="font-size: 0.8em; white-space: nowrap;"><!--span class="date">[]</span--></td> <td style="font-size: 0.8em;"></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Eng</span></td><td style="display: none;">1550</td></tr>';	
 file_put_contents($ebpro_files_block, $ebpro_files );
               ?>
               <p><a class="download_linkext_online" href="/weintek-easybuilderpro-user-manual-en/">On-line руководство пользователя<br>
-                Weintek EasyBuilder Pro (Eng) </a> <span style="margin-left:3px;" class="small_gray_text">[<? echo date("d.m.Y",file_get_contents('https://www.rusavtomatika.com/upload_files/manuals/weintek/UserManual_separate_chapter/update_date.txt')); ?>]</span></p>
+                Weintek EasyBuilder Pro (Eng) </a> <span style="margin-left:3px;" class="small_gray_text">[<? echo findRecordBySoftware($recs, 'EBPro', 'version'); ?>]</span></p>
               <?
               files_out( $arc, '/documents/weintek/EBPro/UserManual/eng/arc/' );
               ?>
@@ -339,12 +408,20 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-5">
             <div class="block_padding">
+			<p><strong>EasyAccess 2.0</strong></p>
+			<p>Версия для региона Россия:</p>
+              <p><a class="download_android" target="_blank" href="/soft/EasyAccess20/Installer/EasyAccess2-2.21.4-dl.apk">Дистрибутив для Android</a> <span class="small_gray_text">[2.21.4]</span></p>
+              <p><a class="download_linkext" target="_blank" href="/soft/EasyAccess20/Installer/setup-2.21.4.exe">Дистрибутив для PC</a> <span class="small_gray_text">[2.21.4]</span></p>
               <?
-              filter_arr( $progs, 'section', 'ea20' );
               filter_arr( $items, 'section', 'ea20' );
               ?>
-              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
               <p><a class="download_linkext" href="/accessories/license/easyaccess/" style="font-weight: 700;">Подробнее об EasyAccess 2.0</a></p>
+				<hr>
+              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
+              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/easyaccess-2-0/id977888884">Дистрибутив для iOS</a> <span class="small_gray_text">[App Store]</span></p>
+              <?
+              filter_arr( $progs, 'section', 'ea20' );
+              ?>
             </div>
           </div>
         </div>
@@ -369,7 +446,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               //filter_arr( $items, 'section', 'cmt', 'Datasheet', 'Installation', 'Certificate' );
               ?>
               <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek">Дистрибутив для Android</a> <span class="small_gray_text">[Google Play]</span></p>
-              <p><a class="download_ipad" href="https://itunes.apple.com/us/app/cloudhmi/id553431850">Дистрибутив для iPad</a> <span class="small_gray_text">[App Store]</span></p>
+              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/cmt-viewer/id553431850">Дистрибутив для iPad</a> <span class="small_gray_text">[App Store]</span></p>
               <p><a class="download_linkext" href="#Weintek">Дистрибутив для PC входит в комплект EasyBuilder&nbsp;Pro</a></p>
             </div>
           </div>
@@ -413,8 +490,6 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               <?
               filter_arr( $progs, 'put', 'EasyRemote' );
               filter_arr( $items, 'title', 'EasyRemoteIO' );
-              filter_arr( $items, 'title', 'cMT+CODESYS Datasheet' );
-              //				echo '<hr>';
               filter_arr( $progs, 'title', 'cMT+CODESYS' );
               ?>
                <p><a class="download_pdf" href="https://dl.weintek.com/public/cMT/CODESYS/Firmware/CODESYS-ReleaseNotes-eng.pdf" target="_blank">CODESYS Firmware ReleaseNotes</a> </p>
@@ -436,6 +511,21 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             </div>
           </div>
         </div>
+
+	      <div class="columns  is-multiline">
+          <div class="column is-7">
+            <div class="block_padding">
+              <p>Datasheet карты активации CODESYS</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <?
+              filter_arr( $items, 'title', 'cMT+CODESYS Datasheet' );
+              ?>
+           </div>
+        </div>
+
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">

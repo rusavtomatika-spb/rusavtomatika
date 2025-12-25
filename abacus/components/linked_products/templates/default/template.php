@@ -47,6 +47,3 @@ if(count($arr_linked_products) > 0):
 <?php
 
 endif;
-
-
-
