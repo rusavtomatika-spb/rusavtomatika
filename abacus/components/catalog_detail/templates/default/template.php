@@ -10,10 +10,34 @@ global $KEYWORDS;
 global $CANONICAL;
 global $H1;
 global $SEO_URL;
-global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $model;
+global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $model,$fi4i_out;
 //ini_set("error_reporting", E_ALL);
 //ini_set("display_errors", 1);
 //ini_set("display_startup_errors", 1);
+
+function fileExistsOnFtp($filePath) {
+	
+    global $ftp_server, $ftp_user, $ftp_password;
+
+    // Подключаемся к FTP-сереверу
+    $connection = ftp_connect($ftp_server);
+
+    if (!$connection) {
+        throw new Exception("Невозможно подключиться к FTP серверу.");
+    }
+
+    // Аутентификация пользователя
+    if (!ftp_login($connection, $ftp_user, $ftp_password)) {
+        throw new Exception("Ошибка авторизации на FTP сервере.");
+    }
+
+    // Проверяем размер файла
+    $size = ftp_size($connection, $filePath);
+
+    // Если size равен -1, значит файл не существует
+    return $size !== -1;
+}
+
 
 function startsWith( $haystack, $needle ) {
   return substr( $haystack, 0, strlen( $needle ) ) === $needle;
@@ -42,7 +66,7 @@ if ( ERROR_404 ) {
   CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
 
   CoreApplication::add_breadcrumbs_chain( $arResult[ 'section' ][ "name" ], "/catalog/" . $arResult[ 'section' ][ "code" ] . "/" );
-  CoreApplication::add_breadcrumbs_chain( $H1 );
+  CoreApplication::add_breadcrumbs_chain( $arResult[ 'product' ][ "model" ] );
   $schemes = get_schemes( $arResult[ 'product' ][ "model" ] );
   //$mod_viewed = transformString($arResult['product']["model"]);
 
@@ -339,7 +363,7 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
             <div class="item">
               <? if ($arResult['product']["discontinued"] == "1"): ?>
               <span class="info_button info_discontinued">снят с производства<br>
-              не доступен для заказа</span>
+              недоступен для заказа</span>
               <? if ($arResult['product']["analogs"] != ""): ?>
               <br>
               <span class="info_button info_analogs">Аналоги:
@@ -462,15 +486,14 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
         <div class="component_catalog_detail__advantages">
           <?= $arResult['product']["text_features"] ?>
           <?
+//          if ( $tech_out != '' ) {
+//            echo $tech_out; } 
           if ( $UPPER_SEO_TEXT ) {
             ?>
           <div class="UPPER_SEO_TEXT">
             <?=$UPPER_SEO_TEXT?>
           </div>
-          <?
-          }
-
-          ?>
+          <? } ?>
         </div>
         <div class="component_catalog_detail__buttons2">
           <div>
@@ -590,12 +613,12 @@ if ( $arResult[ 'product' ][ "replace_detail_text_with_file" ] == "" ):
   $model = str_replace( "/", "_", $product[ "model" ] );
 $model = str_replace( " ", "_", $model );
 $dim_picture_src = "/images/" . strtolower( $arResult[ 'product' ][ "brand" ] ) . "/dim/" . $model . ".png";
-if ( !CoreApplication::test_file_existing_by_url( "https://www.rusavtomatika.com/upload_files" . $dim_picture_src ) ) {
+if ( !CoreApplication::fileExistsOnFtp( $dim_picture_src ) ) {
   //echo $dim_picture_src;
   $dim_picture_src = "";
   if ( $arResult[ 'product' ][ "brand" ] == "Faraday" ) {
     $dim_picture_src = "/images/faraday/dim/" . $arResult[ 'product' ][ "s_name" ] . ".png";
-    if ( !CoreApplication::test_file_existing_by_url( "https://www.rusavtomatika.com/upload_files" . $dim_picture_src ) ) {
+    if ( !CoreApplication::fileExistsOnFtp( $dim_picture_src ) ) {
       $dim_picture_src = "";
     }
   }
@@ -660,7 +683,12 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
 </section>
 <? endif; ?>
 <? if (isset($arResult['product']['files']) and is_array($arResult['product']['files']) and count($arResult['product']['files']) > 0 and $arResult['product']["replace_detail_text_with_file"] == "") : ?>
-<section id="files">
+  <? if (in_array('cMT-X', $prod_series)): ?>
+    <section style="display: flex; justify-content: flex-start; margin-bottom: 30px;">
+      <h2 style="margin: 0;">[ВАЖНО]</h2>&nbsp;&nbsp;<a href="/articles/kak-prodlit-zhizn-flash-pamyati-paneli/" target="_blank"><h2 style="margin: 0;">Как продлить жизнь FLASH памяти панели ?</h2></a>
+    </section>
+    <? endif; ?>
+  <section id="files">
   <h2>Файлы для работы
     с
     <? if ($arResult['product']["brand"] != "IFC") echo $arResult['product']["brand"]; ?>
@@ -716,6 +744,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })
 </script>
+<?
+if ( isset( $arResult[ 'product' ][ "replace_detail_text_with_file" ] )and $arResult[ 'product' ][ "replace_detail_text_with_file" ] != "" ):
+  ?>
+<section id="replace_detail_text_with_file">
+  <?
+  if ( defined( 'ENCODING' )and ENCODING == "UTF-8" ) {
+    $path = $_SERVER[ "DOCUMENT_ROOT" ] . $arResult[ 'product' ][ "replace_detail_text_with_file" ];
+    $path = str_replace( "/include/", "/include_utf_8/", $path );
+    include $path;
+  } else {
+    include $_SERVER[ "DOCUMENT_ROOT" ] . $arResult[ 'product' ][ "replace_detail_text_with_file" ];
+  }
+  ?>
+</section>
+<?
+endif;
+
+?>
 
 <? if (count($arSelected_articles)>0) : ?>
 <section id="articles">
@@ -793,24 +839,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 <? endif; ?>
 </section>
-<?
-if ( isset( $arResult[ 'product' ][ "replace_detail_text_with_file" ] )and $arResult[ 'product' ][ "replace_detail_text_with_file" ] != "" ):
-  ?>
-<section id="replace_detail_text_with_file">
-  <?
-  if ( defined( 'ENCODING' )and ENCODING == "UTF-8" ) {
-    $path = $_SERVER[ "DOCUMENT_ROOT" ] . $arResult[ 'product' ][ "replace_detail_text_with_file" ];
-    $path = str_replace( "/include/", "/include_utf_8/", $path );
-    include $path;
-  } else {
-    include $_SERVER[ "DOCUMENT_ROOT" ] . $arResult[ 'product' ][ "replace_detail_text_with_file" ];
-  }
-  ?>
-</section>
-<?
-endif;
-
-?>
 </div>
 </div>
 <div class="component_catalog_detail_section_3">
