@@ -210,33 +210,35 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         <?php if ($showRecommended && $count > 0): ?>
             <div class="recommended__items-wrapper">
                 <h2 class="recommended__title">Подходящие товары</h2>
-                <?php foreach ($recommendedItems as $item): ?>
-                    <?php
-                    $pagePath = isset($item["page_path"]) ? $item["page_path"] : '';
-                    $model_name = isset($item["model"]) ? $item["model"] : '';
-                    $brand_name = isset($item["brand"]) ? $item["brand"] : '';
-                    $short_name = isset($item["short_name"]) ? $item["short_name"] : '';
-                    $itemUrl = '/' . trim($pagePath, '/') . '/' . $model_name . '/';
-                    
-                    $itemImg = getProductImage($item);
-                    ?>
-                    <a class="card link__swiper-item" href="<?= $itemUrl ?>">
-                        <div class="card-image">
-                            <figure class="model_image" itemscope="" itemtype="https://schema.org/ImageObject">
-                                <img itemprop="contentUrl" src="<?= $itemImg; ?>" alt="<?= $model_name ?>" style="max-height: 150px; object-fit: contain;" onerror="this.src='/images/no-image.jpg'">
-                                <meta itemprop="caption" content="<?= $model_name ?>">
-                            </figure>
-                        </div>
-                        <div class="text-wrapper">
-                            <?php if ($short_name): ?>
-                                <p class="model" style="margin"><?= $short_name; ?></p>
-                            <?php endif; ?>
-                            <p class="brand"><?= $brand_name; ?></p>
-                            <p class="model" style="margin-bottom: 20px;"><?= $model_name; ?></p>
-                            <span class="button_link">подробнее</span>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
+                <div class="recommended__items-row">
+                    <?php foreach ($recommendedItems as $item): ?>
+                        <?php
+                        $pagePath = isset($item["page_path"]) ? $item["page_path"] : '';
+                        $model_name = isset($item["model"]) ? $item["model"] : '';
+                        $brand_name = isset($item["brand"]) ? $item["brand"] : '';
+                        $short_name = isset($item["short_name"]) ? $item["short_name"] : '';
+                        $itemUrl = '/' . trim($pagePath, '/') . '/' . $model_name . '/';
+                        
+                        $itemImg = getProductImage($item);
+                        ?>
+                        <a class="card link__swiper-item" href="<?= $itemUrl ?>">
+                            <div class="card-image">
+                                <figure class="model_image" itemscope="" itemtype="https://schema.org/ImageObject">
+                                    <img itemprop="contentUrl" src="<?= $itemImg; ?>" alt="<?= $model_name ?>" style="max-height: 150px; object-fit: contain;" onerror="this.src='/images/no-image.jpg'">
+                                    <meta itemprop="caption" content="<?= $model_name ?>">
+                                </figure>
+                            </div>
+                            <div class="text-wrapper">
+                                <?php if ($short_name): ?>
+                                    <p class="model" style="margin"><?= $short_name; ?></p>
+                                <?php endif; ?>
+                                <p class="brand"><?= $brand_name; ?></p>
+                                <p class="model" style="margin-bottom: 20px;"><?= $model_name; ?></p>
+                                <span class="button_link">подробнее</span>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         <?php endif; ?>
     </div>
@@ -255,17 +257,26 @@ $count = $showRecommended ? count($recommendedItems) : 0;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        width: 400px;
         margin: 0;
         gap: 20px;
     }
     .recommended__items-wrapper .recommended__title {
         margin: 0;
         margin-bottom: 10px;
+        margin-top: 50px;
+    }
+    .recommended__items-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 20px;
     }
 
     .recommended__items-wrapper .link__swiper-item {
         width: 100%;
+        max-width: 300px;
     }
     .recommended__items-wrapper .model_image{
         padding: 10px 10px 0;
