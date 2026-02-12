@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/inc_data_preparator.php';
+//require_once __DIR__ . '/inc_functions_linked_products.php';
 //error_reporting( E_ALL ^ E_NOTICE );
 
 global $TITLE;
@@ -14,6 +15,43 @@ global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $model,$fi4i_out;
 //ini_set("error_reporting", E_ALL);
 //ini_set("display_errors", 1);
 //ini_set("display_startup_errors", 1);
+
+function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
+    if (strpos($fieldName, 'Flash') !== false || strpos($fieldName, 'flash') !== false) {
+        
+        $numericValue = floatval($fieldValue);
+        
+        $mbValue = $numericValue * 1024;
+        
+        if ($mbValue < 1024) {
+            $newUnit = 'Мб';
+            $displayValue = round($mbValue) . ' Мб';
+        } else {
+            $newUnit = 'Гб';
+            $gbValue = $numericValue;
+            if ($gbValue == intval($gbValue)) {
+                $displayValue = intval($gbValue) . ' Гб';
+            } else {
+                $displayValue = rtrim(rtrim(number_format($gbValue, 2, '.', ''), '0'), '.') . ' Гб';
+            }
+        }
+        
+        $fieldValue = $displayValue;
+        
+        if (strpos($fieldName, ',') !== false) {
+            $parts = explode(',', $fieldName);
+            array_pop($parts);
+            $fieldName = implode(',', $parts);
+        }
+        
+        $fieldName = rtrim($fieldName, ', ');
+        
+        $fieldName .= ', ' . $newUnit;
+        
+        return true;
+    }
+    return false;
+}
 
 function fileExistsOnFtp($filePath) {
 	
@@ -66,6 +104,8 @@ if ( ERROR_404 ) {
   CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
 
   CoreApplication::add_breadcrumbs_chain( $arResult[ 'section' ][ "name" ], "/catalog/" . $arResult[ 'section' ][ "code" ] . "/" );
+  //CoreApplication::add_section( $arResult[ 'section' ][ "name" ], "/catalog/" . $arResult[ 'section' ][ "code" ] . "/" );
+  //CoreApplication::add_section( "test", "/catalog/" . "proba" . "/" );
   CoreApplication::add_breadcrumbs_chain( $arResult[ 'product' ][ "model" ] );
   $schemes = get_schemes( $arResult[ 'product' ][ "model" ] );
   //$mod_viewed = transformString($arResult['product']["model"]);
@@ -119,7 +159,7 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                 <?= $H1; echo $arrChunks__; ?>
               </h1>
               <?
-              echo $var_dump;
+              //echo $var_dump;
               if ( $arResult[ 'product' ][ 'brand' ] == "eWON" ) {
                 include $_SERVER[ "DOCUMENT_ROOT" ] . "/include_utf_8/widgets/inc_no_ewon.php";
               }
@@ -183,7 +223,8 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                   </div>
                   <?
 
-                  if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ):
+                  if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ) {
+					  if ($arResult['product']['currency'] == 'USD') {
                     ?>
                   <div class="item price">
                     <div> <span class="price_usd_value">
@@ -218,14 +259,50 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                     ?>
                   </div>
                   <?
-                  else :
+				  } elseif ($arResult['product']['currency'] == 'RUR') {
+                    ?>
+                  <div class="item price">
+                    <?
+                    if ( intval( $arResult[ 'product' ][ "price_rub_value" ] ) > 0 ) {
+                      ?>
+                    <div> <span class="price_usd_value">
+                      <?= $arResult['product']['price_rub_value'] ?>
+                      </span> <span class="price_usd_currency">
+                      <?= $arResult['product']['price_rub_currency'] ?>
+                      </span>
+                      <? if ( intval( $arResult[ 'product' ][ "price_rub_act_value" ] ) > 0 ) { ?>
+                      <span class="price_act">
+                      <?= $arResult['product']['price_rub_act_value'] ?>
+                      <?= $arResult['product']['price_rub_currency'] ?>
+                      </span>
+                      <? } ?>
+                    </div>
+                    <div> <span class="price_rub_value">
+                      <?= $arResult['product']['price_usd_value'] ?>
+                      </span> <span class="price_rub_currency">
+                      <?= $arResult['product']['price_usd_currency'] ?>
+                      </span>
+                      <? if ( intval( $arResult[ 'product' ][ "price_usd_act_value" ] ) > 0 ) { ?>
+                      <span class="price_act">
+                      <?= $arResult['product']['price_usd_act_value'] ?>
+                      <?= $arResult['product']['price_usd_currency'] ?>
+                      </span>
+                      <? } ?>
+                    </div>
+                    <?
+                    }
+                    ?>
+                  </div>
+                  <?
+				  }
+				  } else {
                     ?>
                   <div class="button button_demand_price"
                                                          idm="<?= $arResult['product']["model"] ?>"
                                                          onclick="show_backup_call(6, &quot;<?= $arResult['product']["model"] ?>&quot;)"> Запросить&nbsp;цену </div>
                 </div>
                 <?
-                endif;
+				  }
                 ?>
                 <? if ($arResult['product']["discontinued"] != '1') { ?>
                 <div @click="add_too_box" class='button is-primary add_to_cart'
@@ -327,10 +404,11 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
             <div class="item">
               <?
               $prod_serie = $product[ "series" ];
+              $prod_warning_message = $product[ "warning_message" ];
               $prod_series = explode( ',', $product[ 'series' ] );
               $all_series = get_all_series();
 
-              if ( in_array( $arResult[ 'product' ][ 'brand' ], [ "Weintek", "IFC", "Aplex", "Samkoon", "eWON", "Faraday", "Cincoze" ] ) ) {
+              if ( in_array( $arResult[ 'product' ][ 'brand' ], [ "Weintek", "IFC", "Aplex", "Samkoon", "Spiktek", "eWON", "Faraday", "Cincoze" ] ) ) {
                 ?>
               <a href="/<? echo strtolower($arResult['product']['brand']); ?>/"> <span
                                                         class="info_tag info_brand">
@@ -431,7 +509,7 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
               ?>
             </div>
             <div class="item">
-              <div class="component_catalog_detail__price_extra_info"> Цена указана с учетом НДС </div>
+              <div class="component_catalog_detail__price_extra_info"> Цена указана с учетом НДС 22% </div>
             </div>
             <?
             else :
@@ -450,12 +528,22 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                                              data-model='<?= $arResult['product']["model"] ?>' data-box="cart"> <span class="btn_icon_order"></span> <span class="btn_icon_order_text">В заказ</span> </div>
           <? } ?>
           <div></div>
+              <? if ($arResult['product']["analogs"] != "") { ?>
           <div @click="add_too_box"
                                          class='button button_like_link add_to_compare'
                                          data-model='<?= $arResult['product']["model"] ?>' data-box="compare"> <span class="btn_icon"></span> <span class="btn_text">В сравнение</span> </div>
           <div @click="add_too_box"
                                          class='button button_like_link add_to_favorites'
                                          data-model='<?= $arResult['product']["model"] ?>' data-box="favorites"> <i class="fa-regular fa-heart"></i> <span class="btn_text">&nbsp;В избранное</span> </div>
+              <? } 
+	if (($arResult['product']["discontinued"] == "1") && ($arResult['product']['analogs'] == "")) { ?>
+          Мы готовы предложить<br>
+более новые модели: <a href="<? echo "/catalog/".$arResult['section']["code"]."/"; ?>"><div class='button is-primary'>  <span class="btn_text"><?= $arResult['section']["name"] ?></span> </div></a>
+              <? } 
+			//echo "<pre>";
+//var_dump($arResult);
+//			echo "</pre>";
+			?>
           
           <!--                                        <div class='button is-light order_one_click'
                                              data-model='<? /*= $arResult['product']["model"] */ ?>'>
@@ -528,7 +616,6 @@ if ( count( $product_field_descriptions ) > 0 and $arResult[ 'product' ][ "repla
     <?= $arResult['product']["model"] ?>
   </h2>
   <?
-  //var_dump_pre($product_field_descriptions);
   foreach ( $product_field_descriptions as $group ) {
     ob_start();
     ?>
@@ -540,50 +627,39 @@ if ( count( $product_field_descriptions ) > 0 and $arResult[ 'product' ][ "repla
       <tbody>
         <tr> </tr>
         
-        <!--  -->
         <?
         $groups_counter = 0;
         foreach ( $group[ 'items' ] as $field ) {
           if ( $arResult[ 'product' ][ $field[ "field_code" ] ] == '' || $arResult[ 'product' ][ $field[ "field_code" ] ] == '0' ) continue;
           $groups_counter++;
+          
+          $fieldName = $field["field_name"];
+          $fieldValue = $arResult['product'][$field["field_code"]];
+          $fieldUnits = $field["field_units"];
+          
           if ( $field[ "field_type" ] == 'text' ):
             ?>
         <tr>
-          <td colspan="2"><?= $arResult['product'][$field["field_code"]] ?></td>
+          <td colspan="2"><?= $fieldValue ?></td>
         </tr>
         <?
         else :
+          formatMemoryField($fieldName, $fieldValue, $fieldUnits);
           ?>
         <tr>
-          <td class="field_code__<?= $field["field_code"] ?>"><?= $field["field_name"] ?></td>
-          <td><?= $arResult['product'][$field["field_code"]] ?>
-            <?= $field["field_units"] ?></td>
+          <td class="field_code__<?= $field["field_code"] ?>"><?= $fieldName ?></td>
+          <td><?= $fieldValue ?></td>
         </tr>
         <?
         endif;
-
         }
-
         ?>
       </tbody>
     </table>
   </div>
   <?
   $group = ob_get_clean();
-  if ( $groups_counter > 0 )echo $group;
-  }
-
-  if ( isset( $arResult[ 'product' ][ "options" ] )and $arResult[ 'product' ][ "options" ] != "" ) {
-    ?>
-  <h3 class="table_characteristics_group_name">Дополнительные опции</h3>
-  <div class="table-container">
-    <table class="table_characteristics table is-striped is-fullwidth is-bordered">
-      <tr>
-        <td colspan="2"><?= $arResult['product']["options"] ?></td>
-      </tr>
-    </table>
-  </div>
-  <?
+  if ( $groups_counter > 0 ) echo $group;
   }
   ?>
 </section>
@@ -683,9 +759,9 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
 </section>
 <? endif; ?>
 <? if (isset($arResult['product']['files']) and is_array($arResult['product']['files']) and count($arResult['product']['files']) > 0 and $arResult['product']["replace_detail_text_with_file"] == "") : ?>
-  <? if (in_array('cMT-X', $prod_series)): ?>
+  <? if (!empty($prod_warning_message)): ?>
     <section style="display: flex; justify-content: flex-start; margin-bottom: 30px;">
-      <h2 style="margin: 0;">[ВАЖНО]</h2>&nbsp;&nbsp;<a href="/articles/kak-prodlit-zhizn-flash-pamyati-paneli/" target="_blank"><h2 style="margin: 0;">Как продлить жизнь FLASH памяти панели ?</h2></a>
+		<? echo $prod_warning_message; ?>
     </section>
     <? endif; ?>
   <section id="files">
@@ -847,10 +923,11 @@ endif;
     ?>
   </div>
 </div>
+
 <?
 CoreApplication::include_component( array( "component" => "linked_products", "model" => $arResult[ 'product' ][ "model" ] ) );
 ?>
-<?
+	<?
 if ( isset( $LOWER_SEO_TEXT )and $LOWER_SEO_TEXT != "" ) {
   ?>
 <div class="section_description p-5">
