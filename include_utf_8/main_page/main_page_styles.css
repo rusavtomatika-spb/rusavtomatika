@@ -20,10 +20,12 @@ section.cloud_tags {
 
 #main_page__block_big_slider {
   box-sizing: border-box;
-  background-color: #EEEEEE;
+  background-color: #EEE;
+  /*min-height: 420px;*/
   min-height: 60px;
   padding-top: 0px;
   display: block !important;
+  /*margin: -40px auto 0px;*/
   margin: 0px auto 0px;
   max-width: 1920px;
   width: 100%;
@@ -49,18 +51,23 @@ section.cloud_tags {
   padding: 0 12rem;
 }
 
+.anons_wrapper {
+  background: #1D5828;
+  padding: 0 12rem;
+}
+
 @media (max-width: 1800px) {
-  .glide_brands_gallery_tray_wrapper {
+  .glide_brands_gallery_tray_wrapper, .anons_wrapper {
     padding: 0 8rem;
   }
 }
 @media (max-width: 1400px) {
-  .glide_brands_gallery_tray_wrapper {
+  .glide_brands_gallery_tray_wrapper, .anons_wrapper {
     padding: 0 3rem;
   }
 }
 @media (max-width: 1300px) {
-  .glide_brands_gallery_tray_wrapper {
+  .glide_brands_gallery_tray_wrapper, .anons_wrapper {
     padding: 0 2rem;
   }
 }
@@ -134,7 +141,7 @@ section.cloud_tags {
 .company_pluses_item {
   display: block;
   text-decoration: none;
-  color: rgb(74, 74, 74);
+  color: #4a4a4a;
   text-align: center;
   padding: 24px;
   font-size: 14px;
@@ -144,7 +151,7 @@ section.cloud_tags {
 }
 
 .company_pluses_item:hover {
-  color: rgb(74, 74, 74);
+  color: #4a4a4a;
   text-decoration: none;
   transform: scale(1.05);
   transition: 0.2s;
@@ -183,7 +190,7 @@ ul.glide__slides li {
 
 .glide__slides a,
 .glide__slides div.card {
-  margin: 20px 10px;
+  margin: 0 10px;
   display: block;
   text-decoration: none;
   color: black;
@@ -230,13 +237,13 @@ ul.glide__slides li {
 }
 
 .glide__slide .link_to_all {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 353px;
-  font-weight: bold;
-  padding: 0 2rem;
-  text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 310px !important;
+    min-height: auto !important;
+    font-weight: bold;
+    text-align: center;
 }
 
 .glide__slide a.link_to_all:hover {
@@ -292,7 +299,9 @@ ul.glide__slides li {
 
 .gradient_hide_text {
   height: 100px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#00ffffff", endColorstr="#ffffff",GradientType=0 );
 }
 
@@ -369,6 +378,7 @@ a.bright_text:hover {
   width: 100%;
   overflow: hidden;
   -ms-filter: grayscale(0.7);
+  -webkit-filter: grayscale(0.7);
   -moz-filter: grayscale(0.7);
   -o-filter: grayscale(0.7);
   filter: grayscale(0.7);
@@ -388,10 +398,12 @@ a.bright_text:hover {
   .cert_gallery {
     max-width: 1024px;
   }
+
   #glide_brands_gallery_tray .glide__slides a {
     margin: 0;
     height: 60px;
   }
+
   .glide_brands_gallery_tray_wrapper {
     padding: 0 1rem;
   }
@@ -401,6 +413,7 @@ a.bright_text:hover {
     font-size: var(--font-size-sm);
     height: 33%;
   }
+
   .glide__arrows {
     top: auto;
     bottom: 0;
@@ -408,9 +421,11 @@ a.bright_text:hover {
     left: 50%;
     margin-left: -42px;
   }
+
   .glide--carousel {
     padding-bottom: 40px;
   }
+
   #glide_brands_gallery_tray {
     padding-bottom: 0px;
   }
@@ -419,4 +434,6 @@ a.bright_text:hover {
   #glide_brands_gallery_tray .glide__slides a {
     height: 50px;
   }
-}/*# sourceMappingURL=main_page_styles.css.map */
+}
+
+/*# sourceMappingURL=main_page_styles.css.map */

@@ -122,22 +122,25 @@ new Glide('#glide_new_products',
     {
         type: 'slider',
         bound: true,
-        rewind: false,
+        rewind: true,
         startAt: 0,
-        perView: 4,
-        gap: 10,
-        autoplay: false,
+        perView: 3,
+        gap: 5,
+        loop: true,
+        autoplay: 3000,
+        hoverpause: true,
+        animationDuration: 500,
         focusAt: 0,
         peek: {
             before: 0,
-            after: 200
+            after: 0
         },
         breakpoints: {
             1024: {
                 perView: 3,
                 peek: {
                     before: 0,
-                    after: 50
+                    after: 0
                 },
             },
             768: {
@@ -155,27 +158,31 @@ new Glide('#glide_new_products',
                 },
             }
         }
-    }).mount()
+}).mount()
 
 new Glide('#glide_now_in_stock_slider',
     {
-        type: 'carousel',
+        type: 'slider',
+        bound: true,
+        rewind: true,
         startAt: 0,
-        perView: 5,
-        gap: 10,
-        autoplay: 2000,
+        perView: 3,
+        gap: 5,
+        loop: true,
+        autoplay: 3000,
+        hoverpause: true,
+        animationDuration: 500,
         focusAt: 0,
         peek: {
             before: 0,
-            after: 100
+            after: 0
         },
-
         breakpoints: {
             1024: {
                 perView: 3,
                 peek: {
                     before: 0,
-                    after: 50
+                    after: 0
                 },
             },
             768: {
@@ -193,7 +200,7 @@ new Glide('#glide_now_in_stock_slider',
                 },
             }
         }
-    }).mount()
+}).mount()
 
 new Glide('#glide_sphere',
     {
@@ -207,7 +214,6 @@ new Glide('#glide_sphere',
             before: 0,
             after: 150
         },
-
         breakpoints: {
             1199: {
                 perView: 3,
@@ -239,13 +245,3 @@ new Glide('#glide_sphere',
             }
         }
     }).mount()
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,4 @@
 <?php
-ob_start();
-
 global $CONTENT_ON_WIDE_SCREEN;
 $CONTENT_ON_WIDE_SCREEN = true;
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
@@ -20,16 +18,17 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
         <div class="mb-5">
             <div class="container is-widescreen">
                 <div class="columns">
-                    <div class="column is-12">
+                    <div class="double-swiper-block">
                         <?
                         include "./include_utf_8/main_page/content/block_now_in_stock.php";
-                        ?>
+                        include "./include_utf_8/main_page/content/block_new_products.php";
+			?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="has-background-light pt-5 mb-5 cloud-main">
+        <div class="has-background-light pt-5 mb-5">
             <div class="container is-widescreen">
                 <div class="columns">
                     <div class="column is-12">
@@ -63,18 +62,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
                 </div>
             </div>
         </div>
-        <div class="py-5">
-            <div class="container is-widescreen">
-                <div class="columns">
-                    <div class="column is-12">
-                        <?
-                        include "./include_utf_8/main_page/content/block_new_products.php";
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="has-background-light">
+        <div class="has-background-light cloud-main">
             <div class="container is-widescreen">
                 <div class="columns">
                     <div class="column is-12">
@@ -149,6 +137,77 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
 
 
     </article>
+<style>
+.double-swiper-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    position: relative;
+}
+
+.double-swiper-block::before {
+    content: '';
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 400px;
+    background: linear-gradient(
+        to bottom,
+        #ccc 0%,
+        #ccc 90%,
+        transparent 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.double-swiper-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 400px;
+    background-color: #e0e0e0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.double-swiper-block .glide__slides {
+    height: max-content !important;
+}
+
+.double-swiper-block h2 {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.double-swiper-block .glide__track {
+    height: 420px;
+}
+
+.double-swiper-block .is-size-3 {
+    margin: 0;
+    margin-left: 10px;
+}
+
+.double-swiper-block .product-card,
+.double-swiper-block .item-card {
+    height: 100%;
+    min-height: 350px;
+}
+
+.double-swiper-block .glide,
+.double-swiper-block .hor_gallery_block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}</style>
 <?php
 
 

@@ -197,7 +197,6 @@ if ($count > 0):
         </div>
 
     </div>
-
 <?php
 
 endif;
