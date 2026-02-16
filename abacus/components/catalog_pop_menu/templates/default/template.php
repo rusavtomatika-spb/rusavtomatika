@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </ul>
             <div id="functional" style="display: none;">
               <?php
-              include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/main_page/content/block_cloud_tags.php";
+              include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/main_page/content/block_cloud_tags_popup.php";
               ?>
             </div>
             <div id="brands" style="display: none;" class="brands-wrapper">
