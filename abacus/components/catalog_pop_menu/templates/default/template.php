@@ -100,24 +100,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const brandsBlock = document.getElementById('brands');
     const functionalBlock = document.getElementById('functional');
     
-    // Функция переключения табов
     function switchTab(activeIndex) {
-        // Скрываем все блоки
         categoryBlock.style.display = 'none';
         brandsBlock.style.display = 'none';
         functionalBlock.style.display = 'none';
         
-        // Убираем активный класс у всех кнопок
         tabButtons.forEach(button => {
             button.classList.remove('is-active');
             button.classList.add('is-not-active');
         });
         
-        // Добавляем активный класс выбранной кнопке
         tabButtons[activeIndex].classList.add('is-active');
         tabButtons[activeIndex].classList.remove('is-not-active');
         
-        // Показываем соответствующий блок
         switch(activeIndex) {
             case 0:
                 categoryBlock.style.display = 'flex';
@@ -131,14 +126,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Назначаем обработчики кликов
     tabButtons.forEach((button, index) => {
         button.addEventListener('click', function() {
             switchTab(index);
         });
     });
     
-    // Инициализация - показываем первый таб
     switchTab(0);
 });
 </script>
@@ -155,219 +148,237 @@ document.addEventListener('DOMContentLoaded', function() {
               <button class="is-not-active">По производителям</button>
             </div>
             <ul class="cataloge-list" id="category">
-              <?php
-              foreach ($arrSections as $section) {
-                  if (isset($section['category_link']) && $section['category_link'] != '') {
-                      $link = $section['category_link'];
-                  } else {
-                      $link = "";
-                  }
+                <?php
+                foreach ($arrSections as $section) {
+                    if (empty($section['name']) || empty($section['category_link'])) {
+                        continue;
+                    }
+                    
+                    if (isset($section['category_link']) && $section['category_link'] != '') {
+                        $link = $section['category_link'];
+                    } else {
+                        $link = "";
+                    }
 
-                  if (isset($section['subsection_brands']) && $section['subsection_brands'] != '') {
-                      $sub0 = $section['subsection_brands'];
-                  } else {
-                      $sub0 = "";
-                  }
+                    if (isset($section['subsection_brands']) && $section['subsection_brands'] != '') {
+                        $sub0 = $section['subsection_brands'];
+                    } else {
+                        $sub0 = "";
+                    }
 
-                  if (isset($section['subsection_diagonals']) && $section['subsection_diagonals'] != '') {
-                      $sub1 = $section['subsection_diagonals'];
-                  } else {
-                      $sub1 = "";
-                  }
+                    if (isset($section['subsection_diagonals']) && $section['subsection_diagonals'] != '') {
+                        $sub1 = $section['subsection_diagonals'];
+                    } else {
+                        $sub1 = "";
+                    }
 
-                  if (isset($section['subsection_processors']) && $section['subsection_processors'] != '') {
-                      $sub2 = $section['subsection_processors'];
-                  } else {
-                      $sub2 = "";
-                  }
+                    if (isset($section['subsection_processors']) && $section['subsection_processors'] != '') {
+                        $sub2 = $section['subsection_processors'];
+                    } else {
+                        $sub2 = "";
+                    }
 
-                  if ($section["code"] != 'industrial-computers') {
-              ?>
-              <li class="cataloge_list_item_icon">
-                  <div class="cataloge_list_item__picture">
-                      <?php
-                      if (isset($section['preview_picture_small']) && $section['preview_picture_small'] != '')
-                          $preview_picture = $section['preview_picture_small'];
-                      else
-                          $preview_picture = $section['preview_picture'];
-                      ?>
-                      <img class="is-hidden-mobile" src="<?= $preview_picture ?>" alt="">
-                  </div>
-                  <ul>
-                      <li>
-                          <?php
-                          if ($section['is_direct_link'] == "1") {
-                          ?>
-                          <span class="cataloge_list-title button_show_items">
-                              <a href="<?= $section["category_link"] ?>" class="cataloge_list-title button_show_items">
-                                  <?= $section['name'] ?>
-                              </a>
-                          </span>
-                          <?php
-                          } else {
-                          ?>
-                          <a href="<?= $section["category_link"] ?>" class="cataloge_list-title button_show_items">
-                              <span @click="handle_button_show_items"
+                    if ($section["code"] != 'industrial-computers' && !empty($section['name'])) {
+                ?>
+                <li class="cataloge_list_item_icon">
+                    <div class="cataloge_list_item__picture">
+                        <?php
+                        $preview_picture = '';
+                        if (isset($section['preview_picture_small']) && $section['preview_picture_small'] != '') {
+                            $preview_picture = $section['preview_picture_small'];
+                        } elseif (isset($section['preview_picture']) && $section['preview_picture'] != '') {
+                            $preview_picture = $section['preview_picture'];
+                        }
+                        
+                        if (!empty($preview_picture)) {
+                            echo '<img class="is-hidden-mobile" src="' . $preview_picture . '" alt="' . htmlspecialchars($section['name']) . '">';
+                        }
+                        ?>
+                    </div>
+                    <ul>
+                        <li>
+                            <?php
+                            if ($section['is_direct_link'] == "1") {
+                            ?>
+                            <span class="cataloge_list-title button_show_items">
+                                <a href="<?= $section["category_link"] ?>" class="cataloge_list-title button_show_items">
+                                    <?= htmlspecialchars($section['name']) ?>
+                                </a>
+                            </span>
+                            <?php
+                            } else {
+                            ?>
+                            <a href="<?= $section["category_link"] ?>" class="cataloge_list-title button_show_items">
+                                <span @click="handle_button_show_items"
                                     data-section-id="<?= $section['id'] ?>"
                                     data-section-code="<?= $section['code'] ?>"
                                     data-action="show_section_by_categories"
                                     data-brand="all"
                                     class="cataloge_list-title button_show_items">
-                                  <?= $section['name'] ?>
-                              </span>
-                          </a>
-                          <?php
-                          }
+                                    <?= htmlspecialchars($section['name']) ?>
+                                </span>
+                            </a>
+                            <?php
+                            }
 
-                          if (preg_match('/(gateways|screenless|industrial_computers)/', $section['category_link'])) {
-                              echo '<span style="cursor: pointer; z-index: 9999;" id="' . $section['code'] . '"> <i class="fa-regular fa-circle-question" style="color:#d6d6d6;"></i></span>';
-                          }
-                          ?>
+                            if (preg_match('/(gateways|screenless|industrial_computers)/', $section['category_link'])) {
+                                echo '<span style="cursor: pointer; z-index: 9999;" id="' . $section['code'] . '"> <i class="fa-regular fa-circle-question" style="color:#d6d6d6;"></i></span>';
+                            }
+                            ?>
 
-                          <?php
-                          if (isset($sub0) && $sub0 != '') {
-                              $arr_section_sub = explode(",", $sub0);
-                              if (count($arr_section_sub) > 1) {
-                          ?>
-                          <ul class="subsection">
-                              <?php
-                              foreach ($arr_section_sub as $section_sub) {
-                              ?>
-                              <ul class="subsection">
-                                  <li class="cataloge_list_item_subitem">
-                                      <a title="Производитель <?= $section_sub ?>" href="<?= $section["category_link"] . '?&brand=' . $section_sub ?>">
-                                          <span @click="handle_button_show_items"
+                            <?php
+                            if (isset($sub0) && $sub0 != '') {
+                                $arr_section_sub = explode(",", $sub0);
+                                if (count($arr_section_sub) > 1) {
+                            ?>
+                            <ul class="subsection">
+                                <?php
+                                foreach ($arr_section_sub as $section_sub) {
+                                    if (empty($section_sub)) continue;
+                                ?>
+                                <ul class="subsection">
+                                    <li class="cataloge_list_item_subitem">
+                                        <a title="Производитель <?= htmlspecialchars($section_sub) ?>" href="<?= $section["category_link"] . '?&brand=' . urlencode($section_sub) ?>">
+                                            <span @click="handle_button_show_items"
                                                 class="section_list_tag_button"
                                                 data-action="show_section_by_categories_one_brand_only"
-                                                data-link="<?= $section["category_link"] . '&brand=' . $section_sub ?>"
+                                                data-link="<?= $section["category_link"] . '&brand=' . urlencode($section_sub) ?>"
                                                 data-section-code="<?= $section['code'] ?>"
                                                 data-section-id="<?= $section['id'] ?>"
-                                                data-section-sub="<?= $section_sub ?>"
-                                                data-brand="<?= $section_sub ?>">
-                                              <?= $section_sub ?>
-                                          </span>
-                                      </a>
-                                  </li>
-                                  <?php
-                                  foreach ($arrSer as $i => $serie) {
-                                      $pattern = '/' . $serie['type'] . '/i';
-                                      $pattern_code = '/' . $serie['menu_category_item_code'] . '/i';
-                                      if ($serie['brand'] == $section_sub && preg_match($pattern, $section['product_types']) && preg_match($pattern_code, $section['code'])) {
-                                  ?>
-                                  <li class="cataloge_list_item_subitem">
-                                      <a title="<?= $serie["name_russian"] ?>" href="/catalog/<?= $serie['menu_category_item_code'] ?>/?&series=<?= $serie['name'] ?>">
-                                          <span @click="handle_button_show_items"
+                                                data-section-sub="<?= htmlspecialchars($section_sub) ?>"
+                                                data-brand="<?= htmlspecialchars($section_sub) ?>">
+                                                <?= htmlspecialchars($section_sub) ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <?php
+                                    foreach ($arrSer as $i => $serie) {
+                                        if (empty($serie['brand']) || empty($serie['type'])) continue;
+                                        
+                                        $pattern = '/' . preg_quote($serie['type'], '/') . '/i';
+                                        $pattern_code = '/' . preg_quote($serie['menu_category_item_code'], '/') . '/i';
+                                        
+                                        if ($serie['brand'] == $section_sub && 
+                                            preg_match($pattern, $section['product_types']) && 
+                                            preg_match($pattern_code, $section['code'])) {
+                                    ?>
+                                    <li class="cataloge_list_item_subitem">
+                                        <a title="<?= htmlspecialchars($serie["name_russian"]) ?>" href="/catalog/<?= urlencode($serie['menu_category_item_code']) ?>/?&series=<?= urlencode($serie['name']) ?>">
+                                            <span @click="handle_button_show_items"
                                                 class="section_list_tag_button ser"
                                                 data-action="show_section_by_categories_one_brand_only">
-                                              <?= $serie["name"] ?>
-                                          </span>
-                                      </a>
-                                  </li>
-                                  <?php
-                                          $i++;
-                                      }
-                                  }
-                                  ?>
-                              </ul>
-                              <?php
-                              }
-                              ?>
-                          </ul>
-                          <?php
-                              };
-                          }
-                          ?>
+                                                <?= htmlspecialchars($serie["name"]) ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <?php
+                                            $i++;
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                            <?php
+                                };
+                            }
+                            ?>
 
-                          <?php
-                          if (isset($sub1) && $sub1 != '') {
-                              $arr_section_sub = explode(",", $sub1);
-                              $cur = 1;
-                              if (count($arr_section_sub) > 1) {
-                          ?>
-                          <ul class="subsection">
-                              <?php
-                              foreach ($arr_section_sub as $section_sub) {
-                                  $arr_diag_sub = explode("#", $section_sub);
-                                  $diag_label = $arr_diag_sub[0];
-                                  $diag_range = explode("-", $arr_diag_sub[1]);
-                                  
-                                  if ($diag_range[0] == '0') {
-                                      $diag_min = '';
-                                  } else {
-                                      $diag_min = '&range_diagonal_min=' . $diag_range[0];
-                                  }
-                                  
-                                  if ($diag_range[1] == '0') {
-                                      $diag_max = '';
-                                  } else {
-                                      $diag_max = '&range_diagonal_max=' . $diag_range[1];
-                                  }
-                              ?>
-                              <li class="cataloge_list_item_subitem">
-                                  <a title="Диагональ" href="<?php
-                                      echo $section["category_link"] . $diag_min;
-                                      if ($cur < count($arr_section_sub)) {
-                                          echo $diag_max;
-                                      }
-                                      echo '&sort=diagonal_small';
-                                  ?>">
-                                      <span @click="handle_button_show_items"
+                            <?php
+                            if (isset($sub1) && $sub1 != '') {
+                                $arr_section_sub = explode(",", $sub1);
+                                $cur = 1;
+                                if (count($arr_section_sub) > 1) {
+                            ?>
+                            <ul class="subsection">
+                                <?php
+                                foreach ($arr_section_sub as $section_sub) {
+                                    if (empty($section_sub)) continue;
+                                    
+                                    $arr_diag_sub = explode("#", $section_sub);
+                                    $diag_label = $arr_diag_sub[0];
+                                    $diag_range = explode("-", $arr_diag_sub[1]);
+                                    
+                                    if ($diag_range[0] == '0') {
+                                        $diag_min = '';
+                                    } else {
+                                        $diag_min = '&range_diagonal_min=' . $diag_range[0];
+                                    }
+                                    
+                                    if ($diag_range[1] == '0') {
+                                        $diag_max = '';
+                                    } else {
+                                        $diag_max = '&range_diagonal_max=' . $diag_range[1];
+                                    }
+                                ?>
+                                <li class="cataloge_list_item_subitem">
+                                    <a title="Диагональ" href="<?php
+                                        echo $section["category_link"] . $diag_min;
+                                        if ($cur < count($arr_section_sub)) {
+                                            echo $diag_max;
+                                        }
+                                        echo '&sort=diagonal_small';
+                                    ?>">
+                                        <span @click="handle_button_show_items"
                                             class="section_list_tag_button"
                                             data-action="show_section_by_categories_one_brand_only"
                                             data-section-code="<?= $section['code'] ?>"
                                             data-section-id="<?= $section['id'] ?>">
-                                          <?= $diag_label ?>"
-                                      </span>
-                                  </a>
-                              </li>
-                              <?php
-                                  $cur++;
-                              }
-                              ?>
-                          </ul>
-                          <?php
-                              };
-                          }
-                          ?>
+                                            <?= htmlspecialchars($diag_label) ?>"
+                                        </span>
+                                    </a>
+                                </li>
+                                <?php
+                                    $cur++;
+                                }
+                                ?>
+                            </ul>
+                            <?php
+                                };
+                            }
+                            ?>
 
-                          <?php
-                          if (isset($sub2) && $sub2 != '') {
-                              $arr_section_sub = explode(",", $sub2);
-                              if (count($arr_section_sub) > 1) {
-                          ?>
-                          <ul class="subsection">
-                              <?php
-                              foreach ($arr_section_sub as $section_sub) {
-                              ?>
-                              <li class="cataloge_list_item_subitem">
-                                  <a title="Процессор" href="<?= $section["category_link"] . '&processors=' . $section_sub ?>">
-                                      <span @click="handle_button_show_items"
+                            <?php
+                            if (isset($sub2) && $sub2 != '') {
+                                $arr_section_sub = explode(",", $sub2);
+                                if (count($arr_section_sub) > 1) {
+                            ?>
+                            <ul class="subsection">
+                                <?php
+                                foreach ($arr_section_sub as $section_sub) {
+                                    if (empty($section_sub)) continue;
+                                ?>
+                                <li class="cataloge_list_item_subitem">
+                                    <a title="Процессор" href="<?= $section["category_link"] . '&processors=' . urlencode($section_sub) ?>">
+                                        <span @click="handle_button_show_items"
                                             class="section_list_tag_button"
                                             data-action="show_section_by_categories_one_brand_only"
-                                            data-link="<?= $section["category_link"] . '&processors=' . $section_sub ?>"
+                                            data-link="<?= $section["category_link"] . '&processors=' . urlencode($section_sub) ?>"
                                             data-section-code="<?= $section['code'] ?>"
                                             data-section-id="<?= $section['id'] ?>"
-                                            data-section-sub="<?= $section_sub ?>"
-                                            data-brand="<?= $section_sub ?>">
-                                          <?= $section_sub ?>
-                                      </span>
-                                  </a>
-                              </li>
-                              <?php
-                              }
-                              ?>
-                          </ul>
-                          <?php
-                              };
-                          }
-                          ?>
-                      </li>
-                  </ul>
-              </li>
-              <?php
-                  }
-              }
-              ?>
+                                            data-section-sub="<?= htmlspecialchars($section_sub) ?>"
+                                            data-brand="<?= htmlspecialchars($section_sub) ?>">
+                                            <?= htmlspecialchars($section_sub) ?>
+                                        </span>
+                                    </a>
+                                </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                            <?php
+                                };
+                            }
+                            ?>
+                        </li>
+                    </ul>
+                </li>
+                <?php
+                    }
+                }
+                ?>
             </ul>
             <div id="functional" style="display: none;">
               <?php
@@ -387,7 +398,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     echo '<a href="' . $brandLink . '" class="brand-item">
                             <img src="' . $imageSrc . '" alt="' . htmlspecialchars($brand['name']) . '" loading="lazy">
-                            <span>' . htmlspecialchars($brand['name']) . '</span>
                           </a>';
                 }
                 ?>

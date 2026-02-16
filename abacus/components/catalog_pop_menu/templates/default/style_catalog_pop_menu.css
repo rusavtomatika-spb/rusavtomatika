@@ -551,7 +551,7 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 .brands-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     gap: 10px;
 }
@@ -563,7 +563,7 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
     padding: 5px 10px;
 }
 .brand-item img {
-    width: 100px;
+    width: 120px;
     height: 100px;
     object-fit: contain;
 }
