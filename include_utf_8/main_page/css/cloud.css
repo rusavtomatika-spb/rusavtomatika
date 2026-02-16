@@ -167,3 +167,14 @@
 
 }
 
+.cloud_item_functional {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	border-radius: 5px;
+	border: 1px solid #00AD61;
+	height: 53px;
+	transition: .3s;
+	color: #000;
+}

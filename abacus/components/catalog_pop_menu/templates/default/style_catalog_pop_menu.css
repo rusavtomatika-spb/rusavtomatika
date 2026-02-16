@@ -160,6 +160,7 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
     align-items: center;
     width: 100%;
     margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
     gap: 5px;
 }
 .tab-wrapper button {
@@ -169,19 +170,19 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
     justify-content: center;
     padding: 0.5em;
     border: none;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     line-height: 100%;
     font-size: 16px;
-    color: #000  !important;
     transition: .3s;
 }
 .is-active {
-    border: 1px solid #00AD61 !important;
-    background: #fff;
+    background: #00AD61;
+    color: #fff;
 }
 .is-not-active {
     background: var(--color-light-gray);
-    border: 1px solid var(--color-light-gray) !important;
+    color: #000;
 }
 
 #vue_catalog_pop_menu ul.cataloge-list {
