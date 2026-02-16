@@ -214,7 +214,7 @@ function database_connect()
 
         };
 
-        $mysqli_db = mysqli_connect($host, $user, $pass, $dbnm);
+        $mysqli_db = mysqli_connect($host . ':' . $port, $user, $pass, $dbnm);
 
         if (!$mysqli_db) {
 

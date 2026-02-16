@@ -147,12 +147,43 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 }
 
 #vue_catalog_pop_menu .box.cataloge {
+    display: flex;
+    flex-direction: column;
     padding-top: 1.25rem;
     padding-bottom: 1.25rem;
     padding-left: 1.25rem;
-    display: flex;
     height: auto;
 }
+
+.tab-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 5px;
+}
+.tab-wrapper button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    line-height: 100%;
+    font-size: 16px;
+    color: #000  !important;
+    transition: .3s;
+}
+.is-active {
+    border: 1px solid #00AD61 !important;
+    background: #fff;
+}
+.is-not-active {
+    background: var(--color-light-gray);
+    border: 1px solid var(--color-light-gray) !important;
+}
+
 #vue_catalog_pop_menu ul.cataloge-list {
 	padding-top: 3px;
   display: flex;
@@ -438,9 +469,11 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 }
 
 #vue_catalog_pop_menu ul.product_cloud_list.cloud_list {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 @media (max-width: 1407px) {
@@ -514,4 +547,29 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
     padding: 3px 0px;
     box-sizing: border-box;
 	margin-top: 3px;
+}
+.brands-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+.brand-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+.brand-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+#functional .cloud_tags__title {
+    display: none;
+}
+#functional .product_cloud_item a {
+    color: #000 !important;
 }
