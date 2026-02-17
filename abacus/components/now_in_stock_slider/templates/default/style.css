@@ -125,7 +125,6 @@
 #glide_now_in_stock_slider .glide__slides {
     padding: 20px 0;
 }
-
-#glide_now_in_stock_slider .glide__slide {
-    max-width: 232px;
+@media (max-width: 1280px) {
+  #glide_now_in_stock_slider .button_link { opacity: 1 !important; }
 }

@@ -7,6 +7,7 @@ section.cloud_tags {
 }
 
 .section_now_in_stock_slider, .section_news, .section_new_products, .section_video, .section_spheres {
+  position: relative;
   display: block !important;
 }
 
@@ -319,19 +320,10 @@ ul.glide__slides li {
 
 .glide__arrows {
   position: absolute;
-  top: -55px;
+  top: -45px;
   right: 0;
 }
 
-.section_now_in_stock_slider .glide__arrows {
-  top: -40px;
-}
-
-@media (max-width: 767px) {
-  .section_now_in_stock_slider .glide__arrows {
-    top: auto;
-  }
-}
 a.bright_text {
   text-decoration: none;
 }
@@ -437,3 +429,7 @@ a.bright_text:hover {
 }
 
 /*# sourceMappingURL=main_page_styles.css.map */
+
+@media (max-width: 1280px) {
+ 
+}
