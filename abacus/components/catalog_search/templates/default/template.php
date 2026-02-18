@@ -8,41 +8,51 @@ $arSettings[ 'path_to_product_images' ] = '/images/';
 require "inc_functions.php";
 /*!!!!!!!!!!!!!!!!!!!!!!*/
 $extra_h1 = '';
-if ( isset( $_GET[ 'search' ] )and $_GET[ 'search' ] != "" ) {
-  $search_text = $search_text_orig = strip_tags( $_GET[ 'search' ] );
-  $arr_sinonims = CoreApplication::get_rows_from_table( 'search_sinonim', "", "" );
-  $sinonims = $arr_sinonims[ 0 ][ 'sinonim' ];
-  //file_put_contents('syn.txt',$sinonims);
-  // Разбиваем строку на отдельные строки
-  $lines = explode( ",\n", trim( $sinonims ) );
-  // Инициализируем пустой массив для хранения синонимов
-  $synonyms = [];
-  foreach ( $lines as $line ) {
-    // Убираем лишние пробелы и разделители в строке
-    $parts = array_map( 'trim', explode( "=", $line ) );
+function myStrToLower($string) {
+    $upperCaseRu = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
+    $lowerCaseRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'];
 
-    // Добавляем пару ключ-значение в массив синонимов
-    $synonyms[ $parts[ 0 ] ] = $parts[ 1 ];
+    return str_replace($upperCaseRu, $lowerCaseRu, $string);
+}
+if (isset($_GET['search']) && $_GET['search'] != "") {
+  $search_text = strip_tags($_GET['search']);
+  $search_text = $search_text_orig = myStrToLower($search_text);
+  
+  $vesa_filter = false;
+  if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
+      $vesa_filter = true;
   }
-  // Преобразуем массив в JSON для наглядности
-  //echo json_encode($synonyms, JSON_PRETTY_PRINT);
-  // Функция замены запроса на синонимы
-  function replaceSynonyms( $query, $synonyms ) {
-    // Приводим строку к нижнему регистру для нечувствительности к регистру
-    $query = strtolower( $query );
 
-    // Проверяем, есть ли синоним для данного запроса
-    if ( isset( $synonyms[ $query ] ) ) {
-      return $synonyms[ $query ]; // Возвращаем значение синонима
+  $arr_sinonims = CoreApplication::get_rows_from_table('search_sinonim', '', '');
+  $sinonims = $arr_sinonims[0]['sinonim'];
+
+  $lines = explode(",\n", trim($sinonims));
+
+  $synonyms = [];
+
+  foreach ($lines as $line) {
+    $parts = array_map('trim', explode("=", $line));
+    
+    $key = strtolower($parts[0]);
+    $value = strtolower($parts[1]);
+
+    $synonyms[$key] = $value;
+  }
+
+  function replaceSynonyms($query, $synonyms) {
+    $query_lower = strtolower($query);
+
+    if (isset($synonyms[$query_lower])) {
+      return $synonyms[$query_lower];
     }
 
-    return $query; // Если синонима нет, возвращаем исходный запрос
+    return $query;
   }
-  // Пример использования
-  $search_text = replaceSynonyms( $search_text, $synonyms ); // Заменяем на синоним
 
-  $arr_search_words = search_string_to_array( $search_text );
-  $extra_h1 = ": &laquo;" . $search_text_orig . "&raquo;";
+  $search_text = replaceSynonyms($search_text, $synonyms);
+
+  $arr_search_words = search_string_to_array($search_text);
+  $extra_h1 = ": «" . $search_text_orig . "»";
 }
 if ( isset( $arr_search_words )and is_array( $arr_search_words )and count( $arr_search_words ) > 0 ) {
   global $arr_catalog_types;
@@ -52,7 +62,107 @@ if ( isset( $arr_search_words )and is_array( $arr_search_words )and count( $arr_
   foreach ( $arr_all_catalog_types as $type ) {
     $arr_catalog_types[ $type[ 'code' ] . $type[ 'series' ] ] = $type[ "template_h1" ];
   }
-  $arrResult = search_by_words( $arr_search_words );
+
+  $arrResult = search_by_words($arr_search_words, $vesa_filter);
+  
+  if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
+      global $mysqli_db;
+      
+      $sql = "SELECT * FROM products_all 
+              WHERE parent='' 
+              AND status!='0' 
+              AND (vesa75 IS NOT NULL AND vesa75 != '' 
+                   OR vesa100 IS NOT NULL AND vesa100 != '')";
+      
+      $result = mysqli_query($mysqli_db, $sql);
+      
+      if ($result) {
+          $existing_indices = array();
+          foreach ($arrResult as $item) {
+              $existing_indices[] = $item['index'];
+          }
+          
+          while ($row = mysqli_fetch_assoc($result)) {
+              if (!in_array($row['index'], $existing_indices)) {
+                  if (empty($row['model_fullname'])) {
+                      global $arr_catalog_types;
+                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
+                          $name = $arr_catalog_types[$row['type'] . $row['series']];
+                          $name = str_replace("#brand#", $row['brand'], $name);
+                          $name = str_replace("#model#", $row['model'], $name);
+                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
+                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
+                          } else {
+                              $name = str_replace("#diagonal#", '', $name);
+                          }
+                          $row['model_fullname'] = $name;
+                      }
+                  }
+                  $row['freqs'] = 500;
+                  $arrResult[] = $row;
+              }
+          }
+          mysqli_free_result($result);
+      }
+  }
+  
+  if (isset($_GET['interfaces']) && $_GET['interfaces'] == 'wifi') {
+      global $mysqli_db;
+      
+      $sql = "SELECT * FROM products_all 
+              WHERE parent='' 
+              AND status!='0' 
+              AND (wifi IS NOT NULL AND wifi != '' AND wifi != '0')";
+      
+      $result = mysqli_query($mysqli_db, $sql);
+      
+      if ($result) {
+          $existing_indices = array();
+          foreach ($arrResult as $item) {
+              $existing_indices[] = $item['index'];
+          }
+          
+          while ($row = mysqli_fetch_assoc($result)) {
+              if (!in_array($row['index'], $existing_indices)) {
+                  if (empty($row['model_fullname'])) {
+                      global $arr_catalog_types;
+                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
+                          $name = $arr_catalog_types[$row['type'] . $row['series']];
+                          $name = str_replace("#brand#", $row['brand'], $name);
+                          $name = str_replace("#model#", $row['model'], $name);
+                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
+                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
+                          } else {
+                              $name = str_replace("#diagonal#", '', $name);
+                          }
+                          $row['model_fullname'] = $name;
+                      }
+                  }
+                  $row['freqs'] = 500;
+                  $arrResult[] = $row;
+              }
+          }
+          mysqli_free_result($result);
+      }
+  }
+  
+  usort($arrResult, function($a, $b) {
+      $a_discontinued = isset($a['discontinued']) && $a['discontinued'] == 1 ? 1 : 0;
+      $b_discontinued = isset($b['discontinued']) && $b['discontinued'] == 1 ? 1 : 0;
+      
+      if ($a_discontinued != $b_discontinued) {
+          return $a_discontinued - $b_discontinued;
+      }
+      
+      $a_freqs = isset($a['freqs']) ? $a['freqs'] : 0;
+      $b_freqs = isset($b['freqs']) ? $b['freqs'] : 0;
+      
+      if ($a_freqs == $b_freqs) {
+          return 0;
+      }
+      return ($a_freqs > $b_freqs) ? -1 : 1;
+  });
+  
   $arrResult_texts = search_by_words_texts( $arr_search_words );
   if ( count( $arrResult ) == 0 ) {
     $extra_h1 = '';
@@ -64,7 +174,6 @@ if ( isset( $search_text )and $search_text != "" ) {
   $TITLE = "Поиск - &laquo;" . $search_text . "&raquo; - www.rusavtomatika.com";
 }
 CoreApplication::add_breadcrumbs_chain( $H1 );
-//$arrSections = CoreApplication::get_rows_from_table("catalog_sections", '', "active='1'", "position ASC");
 ?>
 <div class="component_catalog_search" id="vue_app_component_catalog_search">
   <div class="component_wrapper">
@@ -121,24 +230,20 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
                 <td colspan="2"></td>
               </tr>
               <?
-				//file_put_contents('arrResult_texts.txt', json_encode($arrResult_texts, JSON_PRETTY_PRINT));
-// Фильтруем и приводим даты к единому формату Y-m-d H:i:s
 foreach ($arrResult_texts as &$item) {
-    if (!isset($item['date'])) continue; // Пропускаем элементы без даты
-    $date = trim($item['date']); // Удаляем пробелы
+    if (!isset($item['date'])) continue;
+    $date = trim($item['date']);
     if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
-        unset($item['date']); // Удаляем неправильные даты
+        unset($item['date']);
         continue;
     }
-    // Добавляем недостающие части даты (если отсутствуют часы/минуты/секунды)
     if (strlen($date) <= 10) {
-        $date .= ' 00:00:00'; // Стандартизация формата даты
+        $date .= ' 00:00:00';
     }
     $item['date'] = $date;
 }
-unset($item); // Освобождаем ссылку
+unset($item);
 
-// Сортируем массив по дате в обратном порядке
 usort($arrResult_texts, function ($a, $b) {
     if (!isset($a['date']) || !isset($b['date'])) return 0;
     return strcmp($b['date'], $a['date']);

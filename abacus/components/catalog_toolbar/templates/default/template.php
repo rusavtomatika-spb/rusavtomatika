@@ -26,16 +26,33 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
                             <button></button>
                         </form>
                         <script>
-
-                            $('.catalog_toolbar__form_search').on( "submit", function (event) {
+                            $('.catalog_toolbar__form_search').on("submit", function (event) {
                                 event.preventDefault();
                                 let link = $(this).attr('action');
                                 let text = $('.catalog_toolbar__form_search input[type=text]').val();
+                                
                                 if(text != undefined && text != ''){
                                     text = text.replace(/[^a-zа-я\d\s\(\) -]+/gi, "");
-                                    //text = text.replace(/(<([^>]+)>)/ig,"");
-                                    link += "?search=" + text;
-                                    window.location.href = link;
+                                    
+                                    let params = [];
+                                    
+                                    if (/(wi-?fi|wifi)/i.test(text)) {
+                                        params.push('interfaces=wifi');
+                                        
+                                        text = text.replace(/wifi/ig, 'wi-fi');
+                                    }
+                                    
+                                    if (/(vesa)/i.test(text)) {
+                                        params.push('vesa=yes');
+                                    }
+                                    
+                                    let url = link + "?search=" + encodeURIComponent(text);
+                                    
+                                    if (params.length > 0) {
+                                        url += "&" + params.join('&');
+                                    }
+                                    
+                                    window.location.href = url;
                                 }
                             })
                         </script>
@@ -61,5 +78,3 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
     <div class="catalog_toolbar__dialog_wrapper"><div class="catalog_toolbar__dialog"><div class="title"></div><div class="question"></div><div class="buttons"><div class="button button_confirm"></div><div class="button button_cancel"></div></div></div></div>
     </div>
 </div>
-
-
