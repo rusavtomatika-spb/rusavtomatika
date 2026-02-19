@@ -565,11 +565,34 @@ button.flying_row {
     align-items: center;
     justify-content: left;
     gap: 5px;
-    height: 29px;
     text-align: right;
-    padding: 5px 0px;
+    padding: 5px 0px 0;
     box-sizing: border-box;
+    max-width: 310px;   
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 #f0f0f0;
 }
+
+.component_catalog_section .section_list__set_diagonal_span .elements::-webkit-scrollbar {
+    height: 4px;
+}
+.component_catalog_section .section_list__set_diagonal_span .elements::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+.component_catalog_section .section_list__set_diagonal_span .elements::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 10px;
+}
+.component_catalog_section .section_list__set_diagonal_span .elements::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+.component_catalog_section .section_list__set_diagonal_span .elements::-webkit-scrollbar-button {
+    display: none;
+}
+
 .component_catalog_section .section_list_currency_block .info{
     padding: 4px 0 0;
     font-weight: bold;
@@ -590,7 +613,8 @@ button.flying_row {
 .section_list__set_diagonal_span__button, .section_list__set_availablity__button {
     display: inline-block;
     height: auto;
-    min-width: 30px;
+    min-width: 40px;
+    width: max-content;
     text-align: center;
     padding: 5px 5px;
     border: 1px solid var(--color-gray);
@@ -773,6 +797,7 @@ button.flying_row {
     gap: 30px;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 @media(max-width: 768px){
     .section_list_view_mode_button_wrapper {

@@ -78,7 +78,7 @@ var app = new Vue({
     current_filter_options: "",
     urlGetVars: [],
     view_mode: 'list',
-    product_sort: 'recommended',
+    product_sort: 'popular',
     favorites: [],
     compare: [],
     cart: [],
@@ -435,7 +435,10 @@ var app = new Vue({
           this.filterSelectedRangeCOM_max = this.filterSelectedRangeCOM_max_start;
           this.filterChanged();
           break;
-
+        case 'filterSelectedDiagonals':
+          this.filterSelectedDiagonals = [];
+          this.filterChanged();
+          break;
 
 
         default:
@@ -1104,10 +1107,10 @@ var app = new Vue({
         this.filter_string = this.filter_string.replace(/,\s*$/, "");
       }
 
-      if (this.product_sort != "" && this.product_sort != "recommended") {
+      if (this.product_sort != "" && this.product_sort != "popular") {
         this.filter_string += '&sort=' + this.product_sort;
-      }
-
+        //alert (this.filter_string);
+      } 
       //
       const current_base_url = window.location.origin + window.location.pathname;
 
@@ -1319,6 +1322,7 @@ var app = new Vue({
     init_after_ajax() {
       var params = new URLSearchParams(document.location.search);
       var curbrand = params.get('brand'); // 'key' – это имя целевого параметра
+      var curserie = params.get('series'); // 'key' – это имя целевого параметра
       var cursection = document.querySelector(".vue-data .current_section").getAttribute("data-value");
       //alert (cursection);
       if ((cursection != 'screenless_operator_panels') || (cursection != 'operator_panels') || (curbrand != 'Weintek')) {
@@ -1326,6 +1330,20 @@ var app = new Vue({
       }
       if ((cursection == 'screenless_operator_panels') || ((cursection == 'operator_panels') && (curbrand == 'Weintek'))) {
         $('#inc_weintek_info').removeClass('is-hidden');
+      }
+      if ((cursection != 'screenless_operator_panels') || (cursection != 'operator_panels') || (curbrand == 'Weintek')) {
+        $('#inc_srav').addClass('is-hidden');
+      }
+      if ((cursection == 'screenless_operator_panels') || ((cursection == 'operator_panels') && (curbrand != 'Weintek') && (curbrand != 'Spiktek'))) {
+        $('#inc_srav').removeClass('is-hidden');
+      }
+      if ((cursection == 'operator_panels') && ((curbrand == 'Spiktek') || (curbrand == 'Samkoon') || (curserie == 'CTK') || (curserie == 'SK'))) {
+        $('#inc_srav_spik').removeClass('is-hidden');
+        $('#inc_srav').addClass('is-hidden');
+      }
+      if ((cursection == 'operator_panels') && ((curbrand == 'Samkoon') || (curserie == 'SK'))) {
+        $('#inc_srav_spik').addClass('is-hidden');
+        $('#inc_srav').addClass('is-hidden');
       }
 
       let el = this.$el;
@@ -1495,7 +1513,9 @@ var app = new Vue({
       $ = window.$;
       $(document).ready(
         function () {
-          this.init_after_ajax();
+          if (typeof vue_context !== 'undefined' && vue_context.init_after_ajax) {
+            vue_context.init_after_ajax();
+          }
           window.addEventListener('storage', function (event) {
             switch (event.key) {
               case 'compare':
@@ -1574,12 +1594,12 @@ var app = new Vue({
             }
           });
 
-          $(".button_open_filter, .button_close_mobile_filter").bind("click", function () {
-            $('.button_open_filter').toggleClass('is-active');
-            $('.column_filter').toggleClass('is-hidden-touch');
-            $('#float_filter_block').toggleClass('open_for_touch');
-            vue_context.filterChanged();
-          });
+//          $(".button_open_filter, .button_close_mobile_filter").bind("click", function () {
+//            $('.button_open_filter').toggleClass('is-active');
+//            $('.column_filter').toggleClass('is-hidden-touch');
+//            $('#float_filter_block').toggleClass('open_for_touch');
+//            vue_context.filterChanged();
+//          });
 
           $('.filter_field_block').each(
             function () {
@@ -1760,6 +1780,14 @@ var app = new Vue({
         }
       }
 
+      if (this.urlGetVars['diagonals'] != null) {
+        let urlDiagonals = this.urlGetVars['diagonals'].split(',');
+        if (urlDiagonals.length > 0) {
+          this.filterSelectedDiagonals = urlDiagonals.map(function(d) {
+            return parseFloat(d);
+          });
+        }
+      }
 
       this.current_section = document.querySelector(".vue-data .current_section").getAttribute("data-value");
       this.filterSelectedRangeDiagonal_min_start = parseFloat(document.querySelector(".vue-data .filter_diagonal_min").getAttribute("data-value"));
@@ -1843,7 +1871,12 @@ var app = new Vue({
       }
 
       const cookie_view_sort_section = this.getCookie('section_catalog_view_sort_' + this.current_section);
-      if (cookie_view_sort_section != undefined) {
+      if (this.current_section === 'industrial_computers_full_ip65') {
+        // Если секция соответствует заданному значению,
+        // устанавливаем сортировку вручную
+        this.product_sort_section = 'recommended';
+      } else if (cookie_view_sort_section !== undefined) {
+        // Иначе используем сохраненное значение куки
         this.product_sort_section = cookie_view_sort_section;
       }
 
@@ -2081,6 +2114,55 @@ var app = new Vue({
 
       return resultArray; // возвращаем результат
     },
+
+    toggleDiagonalFilter: function(diagonalValue, type, event) {
+      diagonalValue = parseFloat(diagonalValue);
+      const index = this.filterSelectedDiagonals.indexOf(diagonalValue);
+      
+      if (index === -1) {
+        this.filterSelectedDiagonals.push(diagonalValue);
+      } else {
+        this.filterSelectedDiagonals.splice(index, 1);
+      }
+      
+      this.filterSelectedDiagonals.sort(function(a, b) {
+        return a - b;
+      });
+      
+      this.filterChanged();
+    },
+
+    clearDiagonalFilters: function() {
+      this.filterSelectedDiagonals = [];
+      this.filterChanged();
+    },
   },
 
 });
+// Получаем элементы страницы
+const openFilterButton = document.querySelector('.button_open_filter');
+const closeMobileFilterButton = document.querySelector('.button_close_mobile_filter');
+const columnFilterElement = document.querySelector('.column_filter');
+const floatFilterBlock = document.getElementById('float_filter_block');
+
+// Функция изменения классов элементов
+function toggleClasses() {
+    openFilterButton.classList.toggle('is-active');
+    columnFilterElement.classList.toggle('is-hidden-touch');
+    floatFilterBlock.classList.toggle('open_for_touch');
+    
+    // Если vue_context доступен, вызываем метод filterChanged()
+    if (typeof vue_context !== 'undefined' && typeof vue_context.filterChanged === 'function') {
+        vue_context.filterChanged();
+    }
+}
+
+// Добавляем обработчики кликов
+if (openFilterButton) {
+    openFilterButton.addEventListener('click', toggleClasses);
+}
+
+if (closeMobileFilterButton) {
+    closeMobileFilterButton.addEventListener('click', toggleClasses);
+}
+//	alert(this.product_sort_section);

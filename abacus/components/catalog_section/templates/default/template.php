@@ -13,6 +13,44 @@ global $TITLE_original;
 global $SEO_URL;
 global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $pretext, $posttext;
 
+$currentSectionCode = $arguments["component_route_params"]["section"];
+
+$products = CoreApplication::get_rows_from_table(
+    "products_all", 
+    "", 
+    "`type` = 'monitor' AND `brand` IN ('IFC', 'Aplex')"
+);
+
+$uniqueDiagonals = array();
+
+if (!empty($products) && is_array($products)) {
+    foreach ($products as $product) {
+        if (isset($product['diagonal']) && $product['diagonal'] > 0) {
+            $diag = (float)$product['diagonal'];
+            $uniqueDiagonals[(string)$diag] = $diag;
+        }
+    }
+}
+
+if (empty($uniqueDiagonals)) {
+    $groupedDiagonals = array('normal' => array(), 'w' => array());
+} else {
+    $uniqueDiagonals = array_values($uniqueDiagonals);
+    sort($uniqueDiagonals, SORT_NUMERIC);
+    
+    $groupedDiagonals = array(
+        'normal' => array(),
+        'w' => array()
+    );
+    
+    foreach ($uniqueDiagonals as $value) {
+        $type = (floor($value) != $value) ? 'w' : 'normal';
+        $groupedDiagonals[$type][] = array(
+            'value' => $value,
+            'label' => $value
+        );
+    }
+}
 
 if ( isset( $TITLE_original )and $TITLE_original != "" ) {
   $TITLE = $TITLE_original;
@@ -281,7 +319,7 @@ if ( $HTTP_REFERER != "" ) {
                                         class="button_clear_filter"> </span></span></span> </div>
 				
 				<? if ($arrSection[ 'filter_brands' ] != 'NO_BRANDS' && $arrSection[ 'code' ] != 'industrial-computers') {?>
-              <div class="is-hidden-touch is-size-7" style="margin-left: 30px;line-height: 30px;">Серии:
+              <div class="is-hidden-touch is-size-12" style="margin-left: 30px;line-height: 45px;">Серии:
                 <?
                 //$all_series = get_all_series();
                 //print_r($all_series);
@@ -307,58 +345,46 @@ if ( $HTTP_REFERER != "" ) {
                 }
                 echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                 }
-                }
-              echo '</div>';
+                } ?>
+				<div id="inc_srav" class="is-hidden" style="display: inline-block"><a href="/weintek-stavnenie-seriy/"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения всех серий Weintek</span></a></div>
+				<div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
+              <? echo '</div>';
 }
-//echo "<pre>";
-//var_dump($all_series);
-//echo "</pre>";
                 ?>
 				
               <div class="section_list_view_mode_button_wrapper" v-cloak>
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>
                 <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show">
-                  <div class="is-size-7">Диагональ</div>
-                  <div class="elements">
-                    <?
-                    if ( isset( $arrSection[ 'subsection_diagonals' ] )and $arrSection[ 'subsection_diagonals' ] != '' ) {
-                      $sub1 = $arrSection[ 'subsection_diagonals' ];
-                    } else {
-                      $sub1 = "";
-                    }
-                    if ( isset( $sub1 )and $sub1 != '' ) {
-                      $arr_section_sub = explode( ",", $sub1 );
-                      $cur = 1;
-                      ?>
-                    <?
-                    if ( count( $arr_section_sub ) > 1 ) {
-
-                      foreach ( $arr_section_sub as $section_sub ) {
-                        $arr_diag_sub = explode( "#", $section_sub );
-                        $diag_label = $arr_diag_sub[ 0 ];
-                        $diag_range = explode( "-", $arr_diag_sub[ 1 ] );
-                        $diag_min = $diag_range[ 0 ];
-                        $diag_max = $diag_range[ 1 ];
-
-                        ?>
-                    <span 
-	  v-if="filterSelectedRangeDiagonal_min_start <= <? echo $diag_min; ?>" 
-	  v-bind:class="['section_list__set_diagonal_span__button' , {'active': (filterSelectedRangeDiagonal_min_start >= '<? echo $diag_min; ?>' && filterSelectedRangeDiagonal_max <= '<? echo $diag_max; ?>')} ]" 
-	  @click="set_diagonal_span(<? echo $diag_min; ?>, <? echo $diag_max; ?>, $event)"><? echo $diag_label; ?>&Prime; </span>
-                    <?
-                    $cur++;
-                    }
-                    ?>
-                    <span 
-	  v-bind:class="['section_list__set_diagonal_span__button clear_button' , {'active': (filterSelectedRangeDiagonal_min == '0' && filterSelectedRangeDiagonal_max == filterSelectedRangeDiagonal_max_start)} ]" 
-	  @click="set_diagonal_span(0, 31.5, $event)"> </span>
-                    <?
-                    }
-                    ?>
-                    <?
-                    }
-                    ?>
-                  </div>
+                    <div class="is-size-7">Диагональ</div>
+                    <div class="elements">
+                        <?php if (!empty($groupedDiagonals['normal'])): ?>
+                            <?php foreach ($groupedDiagonals['normal'] as $diag): ?>
+                                <span 
+                                    v-bind:class="['section_list__set_diagonal_span__button', 
+                                        {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
+                                    @click="toggleDiagonalFilter(<?= $diag['value'] ?>, 'normal', $event)">
+                                    <?= $diag['value'] ?>" 
+                                </span>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        
+                        <?php if (!empty($groupedDiagonals['w'])): ?>
+                            <?php foreach ($groupedDiagonals['w'] as $diag): ?>
+                                <span 
+                                    v-bind:class="['section_list__set_diagonal_span__button', 
+                                        {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
+                                    @click="toggleDiagonalFilter(<?= $diag['value'] ?>, 'w', $event)">
+                                    <?= $diag['value'] ?>" 
+                                </span>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        
+                        <span 
+                            v-bind:class="['section_list__set_diagonal_span__button clear_button', 
+                                {'active': filterSelectedDiagonals.length === 0}]" 
+                            @click="clearDiagonalFilters()">
+                        </span>
+                    </div>
                 </div>
                 <div class="is-hidden-touch section_list__set_availablity"
                              v-if="section_list__set_availability_show">
@@ -375,6 +401,7 @@ if ( $HTTP_REFERER != "" ) {
                       $arr_product_sort_names = [
                         "recommended" => 'рекомендуемые',
                         "new" => 'по новизне',
+                        "popular" => 'по популярности',
                         "series" => 'по сериям',
                         "diagonal_small" => 'меньше диагональ',
                         "diagonal_big" => 'больше диагональ',
@@ -418,9 +445,7 @@ if ( $HTTP_REFERER != "" ) {
                 <?
                 include "catalog_section_products.php";
                 ?>
-              </div><span style="color:white;"><?
-				echo $url;?>
-				</span>
+              </div>
             </div>
             <?
             if ( isset( $posttext )and $posttext != "" ) {
@@ -437,7 +462,7 @@ if ( $HTTP_REFERER != "" ) {
     </div>
     <div class="result" v-html="result"></div>
     <div class="component_catalog_section__bottom_of_list"></div>
-    <div style="display: none" class="vue-data"> <span class="current_section" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_min_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_max_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="filter_diagonal_min" data-value="<?= $arrSection["filter_diagonal_min"] ?>"></span> <span class="filter_diagonal_max" data-value="<?= $arrSection["filter_diagonal_max"] ?>"></span> <span class="filter_price_min" data-value="<?= $arrSection["filter_price_min"] ?>"></span> <span class="filter_price_max" data-value="<?= $arrSection["filter_price_max"] ?>"></span> <span class="filter_com_min" data-value="<?= $arrSection["filter_com_min"] ?>"></span> <span class="filter_com_max" data-value="<?= $arrSection["filter_com_max"] ?>"></span> <span class="filter_ethernets_min" data-value="<?= $arrSection["filter_ethernets_min"] ?>"></span> <span class="filter_ethernets_max" data-value="<?= $arrSection["filter_ethernets_max"] ?>"></span> <span class="filter_rammax_min" data-value="<?= $arrSection["filter_rammax_min"] ?>"></span> <span class="filter_rammax_max" data-value="<?= $arrSection["filter_rammax_max"] ?>"></span><span class="filter_USB_min" data-value="<?= $arrSection["filter_USB_min"] ?>"></span> <span class="filter_USB_max" data-value="<?= $arrSection["filter_USB_max"] ?>"></span> <span class="filter_processor" data-value="<?= $arrSection["filter_processor"] ?>"></span> </div>
+    <div style="display: none" class="vue-data"> <span class="current_section" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_min_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_max_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="filter_diagonal_min" data-value="<?= $arrSection["filter_diagonal_min"] ?>"></span> <span class="filter_diagonal_max" data-value="<?= $arrSection["filter_diagonal_max"] ?>"></span> <span class="filter_price_min" data-value="<?= $arrSection["filter_price_min"] ?>"></span> <span class="filter_price_max" data-value="<?= $arrSection["filter_price_max"] ?>"></span> <span class="filter_com_min" data-value="<?= $arrSection["filter_com_min"] ?>"></span> <span class="filter_com_max" data-value="<?= $arrSection["filter_com_max"] ?>"></span> <span class="filter_ethernets_min" data-value="<?= $arrSection["filter_ethernets_min"] ?>"></span> <span class="filter_ethernets_max" data-value="<?= $arrSection["filter_ethernets_max"] ?>"></span> <span class="filter_rammax_min" data-value="<?= $arrSection["filter_rammax_min"] ?>"></span> <span class="filter_rammax_max" data-value="<?= $arrSection["filter_rammax_max"] ?>"></span><span class="filter_USB_min" data-value="<?= $arrSection["filter_USB_min"] ?>"></span> <span class="filter_USB_max" data-value="<?= $arrSection["filter_USB_max"] ?>"></span> <span class="filter_processor" data-value="<?= $arrSection["filter_processors"] ?>"></span> </div>
   </div>
   <?
   CoreApplication::include_component( array( "component" => "form_require_price", "template" => "default", ) );
