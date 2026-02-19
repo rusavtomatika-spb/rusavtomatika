@@ -78,20 +78,6 @@ if ( isset( $_POST[ 'sort' ] )and $_POST[ 'sort' ] != "" ) {
 
 require_once "functions/inc_build_mysql_filter.php";
 
-if (isset($_GET['diagonals']) && $_GET['diagonals'] != '') {
-    $diagonals = explode(',', $_GET['diagonals']);
-    $diagonals_escaped = array();
-    foreach ($diagonals as $d) {
-        $d = trim($d);
-        if (is_numeric($d) && $d > 0) {
-            $diagonals_escaped[] = (float)$d;
-        }
-    }
-    if (!empty($diagonals_escaped)) {
-        $mysql_product_filter .= " AND `diagonal` IN (" . implode(',', $diagonals_escaped) . ")";
-    }
-}
-
 global $mysql_product_filter;
 $ajax_message .= $mysql_product_filter;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

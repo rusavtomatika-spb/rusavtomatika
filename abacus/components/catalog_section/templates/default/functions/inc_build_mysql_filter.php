@@ -392,21 +392,23 @@ if ($filter_exists) {
         $mysql_product_filter .= $filter_chunk;
     }
 
-
-    if ($range_diagonal_max != '') {
+    if (count($arDiagonals) > 0) {
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
-        } else $filter_chunk = ' and (';
-        $filter_chunk .= " `diagonal` <= '$range_diagonal_max') ";
+        } else {
+            $filter_chunk = ' and (';
+        }
+        $filter_chunk .= " `diagonal` IN (" . implode(',', $arDiagonals) . ")) ";
         $mysql_product_filter .= $filter_chunk;
     }
 
-    if ($range_diagonal_min != '') {
-        if ($filter_chunk == '') {
-            $filter_chunk = ' (';
-        } else $filter_chunk = ' and (';
-        $filter_chunk .= " `diagonal` >= '$range_diagonal_min') ";
-        $mysql_product_filter .= $filter_chunk;
+    if (count($arDiagonals) > 0) {
+        $diag_condition = " `diagonal` IN (" . implode(',', $arDiagonals) . ")";
+        if (empty($mysql_product_filter) || $mysql_product_filter == " and ") {
+            $mysql_product_filter .= " (" . $diag_condition . ")";
+        } else {
+            $mysql_product_filter .= " AND (" . $diag_condition . ")";
+        }
     }
 
     if ($range_price_max != '') {

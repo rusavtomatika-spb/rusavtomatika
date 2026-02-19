@@ -235,17 +235,6 @@ class C_DB_WORK_CATALOG
         
         $product_filter = trim($product_filter);
         
-        if (empty($product_filter) || $product_filter == "and" || $product_filter == "and ()") {
-            $product_filter = "";
-        } else {
-            if (substr($product_filter, 0, 4) == 'and ') {
-                $product_filter = substr($product_filter, 4);
-            }
-            if (substr($product_filter, 0, 5) == 'AND ') {
-                $product_filter = substr($product_filter, 5);
-            }
-        }
-        
         $query = "SELECT * FROM `products_all`  
                 WHERE FIND_IN_SET('$series',`series`) 
                 AND FIND_IN_SET(`type`,'$type') 
@@ -254,12 +243,21 @@ class C_DB_WORK_CATALOG
                 AND `show_in_cat` != '0'";
         
         if (!empty($product_filter)) {
-            $query .= " " . $product_filter;
+            if (substr($product_filter, 0, 4) == ' and') {
+                $query .= $product_filter;
+            } 
+            elseif (substr($product_filter, 0, 1) == '(') {
+                $query .= " AND " . $product_filter;
+            }
+            else {
+                $query .= " " . $product_filter;
+            }
         }
         
         $query .= " " . $products_order_by . ";";
-    
+
         $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
+    
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
             if(isset($row["link_detail2"]) and $row["link_detail2"] != ""){
@@ -271,8 +269,6 @@ class C_DB_WORK_CATALOG
             }else{
                 $row["link_detail_page"] = "/" . strtolower($row["brand"]) . EX."/" . $row["model"] . "/";
             }
-
-
 
             if(isset($arr_series['arr_preview_fields']) and count($arr_series['arr_preview_fields'])>0){
                 $preview_text = "";
