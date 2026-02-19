@@ -62,29 +62,50 @@ if ( isset( $_POST[ 'view_mode' ] )and $_POST[ 'view_mode' ] != "" ) {
   $view_mode = $_POST[ 'view_mode' ];
   //echo $view_mode;
 } else $view_mode = 'list';
-$sort_cookie_name = 'section_catalog_view_sort_' . $DB_WORK_CATALOG->get_section_by_code( $_GET[ "section" ] )[ 'code' ];
+$sec_current = $DB_WORK_CATALOG->get_section_by_code( $_GET[ "section" ] )[ 'code' ];
+$sort_cookie_name = 'section_catalog_view_sort_' . $sec_current;
+$sort_mode = "popular";
+if ($sec_current == "industrial_computers_full_ip65") {
+  $sort_mode = "recommended";
+}
 if ( isset( $_POST[ 'sort' ] )and $_POST[ 'sort' ] != "" ) {
   $sort_mode = $_POST[ 'sort' ];
 } elseif ( isset( $_COOKIE[ $sort_cookie_name ] ) ) {
   $sort_mode = $_COOKIE[ $sort_cookie_name ];
-} else {
-  $sort_mode = 'recommended';
-}
+} 
+//echo $sort_mode;
 
 
 require_once "functions/inc_build_mysql_filter.php";
+
+if (isset($_GET['diagonals']) && $_GET['diagonals'] != '') {
+    $diagonals = explode(',', $_GET['diagonals']);
+    $diagonals_escaped = array();
+    foreach ($diagonals as $d) {
+        $d = trim($d);
+        if (is_numeric($d) && $d > 0) {
+            $diagonals_escaped[] = (float)$d;
+        }
+    }
+    if (!empty($diagonals_escaped)) {
+        $mysql_product_filter .= " AND `diagonal` IN (" . implode(',', $diagonals_escaped) . ")";
+    }
+}
+
 global $mysql_product_filter;
 $ajax_message .= $mysql_product_filter;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-if ( isset( $_GET[ "section" ] )and $_GET[ "section" ] != "" ) {
+//echo $_GET[ "section" ];
+if ( isset( $_GET[ "section" ] ) and $_GET[ "section" ] !== '' ) {
   $arr_current_section = $DB_WORK_CATALOG->get_section_by_code( $_GET[ "section" ] );
   //echo '<pre>';
   //	var_dump($arr_current_section);
   //echo '</pre>';
-  if ( $arr_current_section[ "products_selected_by_query" ] != "" ) {
+  if ( $arr_current_section[ "products_selected_by_query" ] !== "" ) {
     $sort_mode = "products_selected_by_query";
     $query = $arr_current_section[ "products_selected_by_query" ];
+  //echo 1111111111111111111111111111;
+	//echo $query;
   }
 }
 
@@ -92,19 +113,26 @@ if ( isset( $_GET[ "section" ] )and $_GET[ "section" ] != "" ) {
 ///
 
 switch ( $sort_mode ) {
+//  case "products_selected_by_query":
+//    $arr_products_result = array();
+//    $arr_products = array();
+//    $arr_products = $DB_WORK_CATALOG->get_products_by_query( $query );
+//    foreach ( $arr_products as $product ) {
+//      if ( $product[ "currency" ] == "RUR"
+//        and $usd_currency > 0 ) {
+//        $product[ "retail_price_usd" ] = intval( $product[ "retail_price" ] / $usd_currency );
+//      }
+//      $arr_products_result[] = $product;
+//    }
+//
+//    print_product_list( $arr_products_result, $view_mode );
+//    break;
   case "products_selected_by_query":
     $arr_products_result = array();
     $arr_products = array();
     $arr_products = $DB_WORK_CATALOG->get_products_by_query( $query );
-    foreach ( $arr_products as $product ) {
-      if ( $product[ "currency" ] == "RUR"
-        and $usd_currency > 0 ) {
-        $product[ "retail_price_usd" ] = intval( $product[ "retail_price" ] / $usd_currency );
-      }
-      $arr_products_result[] = $product;
-    }
 
-    print_product_list( $arr_products_result, $view_mode );
+    print_product_list( $arr_products, $view_mode );
     break;
   case "price_small":
     $arr_products = array();
@@ -165,6 +193,21 @@ switch ( $sort_mode ) {
     }
     sort_array_by( $arr_products, [ "field_name" => "diagonal", "sort_direction" => "DESC" ] );
     print_product_list( $arr_products, $view_mode );
+    break;
+  case "popular":
+    $arr_products = array();
+    $arrSeries = $DB_WORK_CATALOG->get_series_with_views_by_section_code_grouped_by_brand( $_GET[ "section" ], $mysql_product_filter );
+    foreach ( $arrSeries as $key => $brand ) {
+      foreach ( $brand as $series ) {
+        foreach ( $series[ "products" ] as $product ) {
+          $arr_products[] = $product;
+        }
+      }
+    }
+	//file_put_contents('temp-b.txt',json_encode($arr_products, JSON_PRETTY_PRINT));
+    sort_array_by( $arr_products, [ "field_name" => "views", "sort_direction" => "DESC" ] );
+    print_product_list( $arr_products, $view_mode );
+	//file_put_contents('temp-a.txt',json_encode($arr_products, JSON_PRETTY_PRINT));
     break;
   case "new":
     $arr_products = array();

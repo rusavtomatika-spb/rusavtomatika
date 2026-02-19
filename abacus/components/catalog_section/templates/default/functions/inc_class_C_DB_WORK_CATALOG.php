@@ -22,6 +22,36 @@ class C_DB_WORK_CATALOG
         }
         return $rows;
     }
+	
+	function get_series_with_views_by_section_code_grouped_by_brand($section_code, $product_filter = '', $products_order_by = 'ORDER BY diagonal ASC') {
+        $series_data = $this->get_series_by_section_code_grouped_by_brand($section_code, $product_filter, $products_order_by);
+        
+        $final_result = [];
+
+        foreach ($series_data as $brand_code => $series_list) {
+            foreach ($series_list as &$series_row) {
+                foreach ($series_row['products'] as &$product) {
+                    $query = "
+                        SELECT views 
+                        FROM views 
+                        WHERE item_id = {$product['index']} AND razdel = 'products' 
+                        LIMIT 1";
+                    
+                    $result = mysqli_query($GLOBALS['mysqli_db'], $query) or die("Ошибка при получении просмотров");
+                    
+                    if ($view_data = mysqli_fetch_assoc($result)) {
+                        $product['views'] = intval($view_data['views']);
+                    } else {
+                        $product['views'] = 0;
+                    }
+                }
+            }
+            
+            $final_result[$brand_code] = $series_list;
+        }
+
+        return $final_result;
+    }
 
     function get_all_brands()
     {
@@ -91,7 +121,8 @@ class C_DB_WORK_CATALOG
         global $mysqli_db;
         $query = "SELECT * FROM `catalog_sections` WHERE `code` = '$code' ";
         $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
-        return mysqli_fetch_array($result, MYSQLI_ASSOC);;
+	//echo $query;
+        return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
     function get_section_id_by_name($name)
     {
@@ -160,6 +191,7 @@ class C_DB_WORK_CATALOG
         global $mysqli_db;
 
         $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
+	//echo $query;
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
 //            $row["link_detail_page"] = "/catalog/" . $this->current_section_code . "/" . $row["brand"] . "/" . $row["series"] . "/" . $row["model"] . "/";
@@ -200,22 +232,36 @@ class C_DB_WORK_CATALOG
         $type = $arr_series["type"];
         $out = [];
         global $mysqli_db;
-		//echo $series.',';
-		
-//echo '<pre>';
-//var_dump($arr_series);
-//echo '</pre>';
-		
-        if($product_filter == " and  () ") $product_filter = '';
-
-         //$query = "SELECT * FROM `products_all`  WHERE `series` = '$series' and `type` = '$type' and `parent` = '' and `discontinued` != '1' and `show_in_cat` != '0' {$product_filter} {$products_order_by} ; ";
-         $query = "SELECT * FROM `products_all`  WHERE FIND_IN_SET('$series',`series`) and FIND_IN_SET(`type`,'$type') and `parent` = '' and `discontinued` != '1' and `show_in_cat` != '0' {$product_filter} {$products_order_by} ; ";
-
-
+        
+        $product_filter = trim($product_filter);
+        
+        if (empty($product_filter) || $product_filter == "and" || $product_filter == "and ()") {
+            $product_filter = "";
+        } else {
+            if (substr($product_filter, 0, 4) == 'and ') {
+                $product_filter = substr($product_filter, 4);
+            }
+            if (substr($product_filter, 0, 5) == 'AND ') {
+                $product_filter = substr($product_filter, 5);
+            }
+        }
+        
+        $query = "SELECT * FROM `products_all`  
+                WHERE FIND_IN_SET('$series',`series`) 
+                AND FIND_IN_SET(`type`,'$type') 
+                AND `parent` = '' 
+                AND `discontinued` != '1' 
+                AND `show_in_cat` != '0'";
+        
+        if (!empty($product_filter)) {
+            $query .= " " . $product_filter;
+        }
+        
+        $query .= " " . $products_order_by . ";";
+    
         $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
-//            $row["link_detail_page"] = "/catalog/" . $this->current_section_code . "/" . $row["brand"] . "/" . $row["series"] . "/" . $row["model"] . "/";
             if(isset($row["link_detail2"]) and $row["link_detail2"] != ""){
                 $row["link_detail_page"] = $row["link_detail2"];
                 if(EX != '_'){
