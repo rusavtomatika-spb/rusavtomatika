@@ -33,19 +33,14 @@ if (!empty($products) && is_array($products)) {
 }
 
 if (empty($uniqueDiagonals)) {
-    $groupedDiagonals = array('normal' => array(), 'w' => array());
+    $groupedDiagonals = array();
 } else {
     $uniqueDiagonals = array_values($uniqueDiagonals);
     sort($uniqueDiagonals, SORT_NUMERIC);
     
-    $groupedDiagonals = array(
-        'normal' => array(),
-        'w' => array()
-    );
-    
+    $groupedDiagonals = array();
     foreach ($uniqueDiagonals as $value) {
-        $type = (floor($value) != $value) ? 'w' : 'normal';
-        $groupedDiagonals[$type][] = array(
+        $groupedDiagonals[] = array(
             'value' => $value,
             'label' => $value
         );
@@ -355,37 +350,26 @@ if ( $HTTP_REFERER != "" ) {
               <div class="section_list_view_mode_button_wrapper" v-cloak>
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>
                 <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show">
-                    <div class="is-size-7">Диагональ</div>
-                    <div class="elements">
-                        <?php if (!empty($groupedDiagonals['normal'])): ?>
-                            <?php foreach ($groupedDiagonals['normal'] as $diag): ?>
-                                <span 
-                                    v-bind:class="['section_list__set_diagonal_span__button', 
-                                        {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
-                                    @click="toggleDiagonalFilter(<?= $diag['value'] ?>, 'normal', $event)">
-                                    <?= $diag['value'] ?>" 
-                                </span>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                        
-                        <?php if (!empty($groupedDiagonals['w'])): ?>
-                            <?php foreach ($groupedDiagonals['w'] as $diag): ?>
-                                <span 
-                                    v-bind:class="['section_list__set_diagonal_span__button', 
-                                        {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
-                                    @click="toggleDiagonalFilter(<?= $diag['value'] ?>, 'w', $event)">
-                                    <?= $diag['value'] ?>" 
-                                </span>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                        
-                        <span 
-                            v-bind:class="['section_list__set_diagonal_span__button clear_button', 
-                                {'active': filterSelectedDiagonals.length === 0}]" 
-                            @click="clearDiagonalFilters()">
-                        </span>
-                    </div>
-                </div>
+                  <div class="is-size-7">Диагональ</div>
+                  <div class="elements">
+                      <?php if (!empty($groupedDiagonals)): ?>
+                          <?php foreach ($groupedDiagonals as $diag): ?>
+                              <span 
+                                  v-bind:class="['section_list__set_diagonal_span__button', 
+                                      {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
+                                  @click="toggleDiagonalFilter(<?= $diag['value'] ?>, '', $event)">
+                                  <?= $diag['value'] ?>" 
+                              </span>
+                          <?php endforeach; ?>
+                      <?php endif; ?>
+                      
+                      <span 
+                          v-bind:class="['section_list__set_diagonal_span__button clear_button', 
+                              {'active': filterSelectedDiagonals.length === 0}]" 
+                          @click="clearDiagonalFilters()">
+                      </span>
+                  </div>
+              </div>
                 <div class="is-hidden-touch section_list__set_availablity"
                              v-if="section_list__set_availability_show">
                   <div class="is-size-7">Наличие</div>
