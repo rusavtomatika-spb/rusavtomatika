@@ -27,6 +27,10 @@ $HddPCIE_only = "";
 $material_plast_only = "";
 $material_alum_only = "";
 $material_plastalum_only = "";
+$remote_control_phone_only = "";
+$personnel_access_control_only = "";
+$sending_by_email_only = "";
+$with_database_only = "";
 
 
 /*if(is_array($_GET) and count($_GET)>0){
@@ -137,6 +141,18 @@ if (isset($_GET["ethernets_fix"]) and $_GET["ethernets_fix"] != '') {
 if (isset($_GET["interfaces"]) and $_GET["interfaces"] != '') {
     $arInterfaces = explode(",", $_GET["interfaces"]);
     $filter_exists = true;
+}
+if (isset($_GET['interfaces']) && $_GET['interfaces'] != '') {
+    $interfaces_list = explode(',', $_GET['interfaces']);
+    $remote_control_phone_only = in_array('remote_control_phone', $interfaces_list) ? '1' : '';
+    $personnel_access_control_only = in_array('personnel_access_control', $interfaces_list) ? '1' : '';
+    $sending_by_email_only = in_array('sending_by_email', $interfaces_list) ? '1' : '';
+    $with_database_only = in_array('with_database', $interfaces_list) ? '1' : '';
+    
+    if ($remote_control_phone_only == '1' || $personnel_access_control_only == '1' || 
+        $sending_by_email_only == '1' || $with_database_only == '1') {
+        $filter_exists = true;
+    }
 }
 if (isset($_GET["os"]) and $_GET["os"] != '') {
     $arOss = explode(",", $_GET["os"]);
@@ -697,6 +713,47 @@ if ($filter_exists) {
         $filter_chunk .= " `sdcard` != '' and `sdcard` != 'Нет') ";
         $mysql_product_filter .= $filter_chunk;
     }
+    if ($remote_control_phone_only == '1') {}
+
+    if ($personnel_access_control_only == '1') {}
+
+    if ($sending_by_email_only == '1') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else {
+            $filter_chunk = ' and (';
+        }
+        $filter_chunk .= " `series` NOT LIKE '%iP%' AND `series` NOT LIKE '%IP%') ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+
+    if ($with_database_only == '1') {
+        $excluded_series = array('iP', 'iE', 'eMT', 'XE', 'mTV');
+        $excluded_models = array(
+            'cMT2166X', 'cMT3161X', 'cMT2058XH', 'cMT2078X', 'cMT2108X',
+            'cMT2108X2', 'cMT2108X2 (V2)', 'cMT2128X', 'cMT2158X', 'cMT2158X (V2)', 'cMT1106X'
+        );
+        
+        $exclude_conditions = array();
+        
+        foreach ($excluded_series as $series) {
+            $exclude_conditions[] = "`series` NOT LIKE '%$series%'";
+        }
+        
+        foreach ($excluded_models as $model) {
+            $exclude_conditions[] = "`model` != '$model'";
+        }
+        
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else {
+            $filter_chunk = ' and (';
+        }
+        
+        $filter_chunk .= implode(' AND ', $exclude_conditions) . ') ';
+        $mysql_product_filter .= $filter_chunk;
+    }
+    
     if ($availablity == 1) {
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
