@@ -172,4 +172,51 @@ $arr_cloud_tags_popup = [
 
     ],
 
+    [
+
+        'name' => 'Удаленное управление с телефона',
+
+        'url' => '/catalog/operator_panels/?&interfaces=remote_control_phone',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'hmi',
+
+    ],
+
+    [
+
+        'name' => 'Контроль доступа для персонала',
+
+        'url' => '/catalog/operator_panels/?&interfaces=personnel_access_control',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'hmi',
+
+    ],
+
+    [
+
+        'name' => 'Отправка сообщений на почту',
+
+        'url' => '/catalog/operator_panels/?&interfaces=sending_by_email',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'hmi',
+
+    ],
+
+    [
+
+        'name' => 'Панель с базой данных на SQL-сервере',
+
+        'url' => '/catalog/operator_panels/?&interfaces=with_database',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'hmi',
+
+    ],
 ];
