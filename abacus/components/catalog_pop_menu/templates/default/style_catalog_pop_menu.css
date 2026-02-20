@@ -565,7 +565,7 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 }
 .brand-item img {
     width: 120px;
-    height: 100px;
+    height: 50px;
     object-fit: contain;
 }
 #functional .cloud_tags__title {

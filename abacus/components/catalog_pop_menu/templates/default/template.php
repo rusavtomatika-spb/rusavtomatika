@@ -389,6 +389,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="brands" style="display: none;" class="brands-wrapper">
                 <?php
                 foreach ($arrBrands as $brand) {
+                    if (strtolower($brand['name']) == 'ewon') {
+                        continue;
+                    }
+                    
                     $imageSrc = isset($brand['preview_picture']) && !empty($brand['preview_picture']) 
                         ? $brand['preview_picture'] 
                         : '/images/no-image.png';
@@ -399,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     echo '<a href="' . $brandLink . '" class="brand-item">
                             <img src="' . $imageSrc . '" alt="' . htmlspecialchars($brand['name']) . '" loading="lazy">
-                          </a>';
+                        </a>';
                 }
                 ?>
             </div>
