@@ -15,10 +15,10 @@ global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $pretext, $posttext;
 
 $currentSectionCode = $arguments["component_route_params"]["section"];
 
-$products = CoreApplication::get_rows_from_table(
+CoreApplication::get_rows_from_table(
     "products_all", 
     "", 
-    "`type` = 'monitor'"
+    "`type` IN ('hmi', 'monitor', 'industrial_computer', 'panel_pc')"
 );
 
 $uniqueDiagonals = array();
