@@ -258,6 +258,7 @@ $arc = [
               <li><a href="#Samkoon">панелей оператора <span>Samkoon</span> &#8681;</a></li>
               <li><a href="#Weintek">панелей оператора <span>Weintek</span> &#8681;</a></li>
               <li><a href="#EasyRemote">модулей ввода/вывода <span>Weintek</span> &#8681;</a></li>
+              <li><a href="#Spiktek">панелей оператора <span>СПИКТЕК</span> &#8681;</a></li>
             </ul>
           </div>
           <div class="column is-2">
@@ -512,7 +513,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
         </div>
 
-	      <div class="columns  is-multiline">
+	<div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
               <p>Datasheet карты активации CODESYS</p>
@@ -523,8 +524,10 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               <?
               filter_arr( $items, 'title', 'cMT+CODESYS Datasheet' );
               ?>
-           </div>
+            </div>
+          </div>
         </div>
+
 
         <div class="columns  is-multiline">
           <div class="column is-7">
@@ -746,6 +749,25 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           <div class="column is-5">
             <div class="block_padding">
               <p><a class="download_zip" href="/soft/aplex/aplex_drivers.rar">Дистрибутив (рус)</a> <span class="small_gray_text">[08-06-2015] [196&nbsp;Мб]</span></p>
+            </div>
+          </div>
+        </div>
+		<a id="Spiktek"></a>
+        <div class="columns  is-multiline">
+          <div class="column is-12">
+            <h2 id="Aplex">Программное обеспечение для панелей оператора СПИКТЕК</h2>
+          </div>
+          <div class="column is-12 background-gray">
+            <div class="block_padding"> <span class="page_downloads_title3">ПО для создания пользовательских проектов для операторских панелей Спиктек.</span> </div>
+          </div>
+          <div class="column is-7">
+            <div class="block_padding">
+              <p>Spik Studio применяется для создания пользовательских проектов для <a href="/catalog/operator_panels/?&brand=Spiktek">операторских панелей Спиктек</a>.</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p><a class="download_zip" href="/soft/SpikStudio_v60902608.zip">Дистрибутив (рус)</a> <span class="small_gray_text">[10-02-2026] [302&nbsp;Мб]</span></p>
             </div>
           </div>
         </div>

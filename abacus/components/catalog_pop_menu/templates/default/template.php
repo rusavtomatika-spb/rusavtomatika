@@ -380,7 +380,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 ?>
             </ul>
-            <div id="functional" style="display: none;">
+            <div id="functional" style="display: none; flex-direction: column;">
+	          <h2 style="margin: 0 0 1rem;">Панели оператора</h2>
               <?php
               include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/main_page/content/block_cloud_tags_popup.php";
               ?>
