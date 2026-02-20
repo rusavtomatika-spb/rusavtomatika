@@ -18,7 +18,7 @@ $currentSectionCode = $arguments["component_route_params"]["section"];
 $products = CoreApplication::get_rows_from_table(
     "products_all", 
     "", 
-    "`type` = 'monitor' AND `brand` IN ('IFC', 'Aplex')"
+    "`type` = 'monitor'"
 );
 
 $uniqueDiagonals = array();
@@ -391,7 +391,7 @@ if ( $HTTP_REFERER != "" ) {
                           @click="clearDiagonalFilters()">
                       </span>
                   </div>
-              </div>
+                </div>
                 <div class="is-hidden-touch section_list__set_availablity"
                              v-if="section_list__set_availability_show">
                   <div class="is-size-7">Наличие</div>
