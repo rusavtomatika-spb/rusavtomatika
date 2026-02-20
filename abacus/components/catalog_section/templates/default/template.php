@@ -160,9 +160,31 @@ if ( $HTTP_REFERER != "" ) {
               }
             }
             ?>
-            <h1 class="title">
-              <?= $H1 ?> 
-
+            <h1 class="title" v-cloak>
+                <?php
+                $special_filters = [
+                    'remote_control_phone' => 'Панели оператора (Удаленное управление с телефона)',
+                    'personnel_access_control' => 'Панели оператора (Контроль доступа для персонала)',
+                    'sending_by_email' => 'Панели оператора (Отправка сообщений на почту)',
+                    'with_database' => 'Панели оператора (Панель с базой данных на SQL-сервере)'
+                ];
+                
+                $found = false;
+                if (isset($_GET['interfaces'])) {
+                    $interfaces = explode(',', $_GET['interfaces']);
+                    foreach ($interfaces as $interface) {
+                        if (isset($special_filters[$interface])) {
+                            echo $special_filters[$interface];
+                            $found = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (!$found) {
+                    echo $H1;
+                }
+                ?>
             </h1>
             <?
             if ( isset( $pretext )and $pretext != "" ) {

@@ -24,7 +24,7 @@ global $arr_cloud_tags_popup;
 
                             class="product_cloud_item cloud_item cloud_item_functional">
 
-                        <a itemprop="url" href="<?= $tag['url'] ?>" style="text-shadow: none;">
+                        <a itemprop="url" href="<?= $tag['url'] ?>" style="text-shadow: none; width: 100%; height: 100%;">
 
                             <?= $tag['name'] ?>
 

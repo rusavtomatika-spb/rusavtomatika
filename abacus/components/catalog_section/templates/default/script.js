@@ -871,12 +871,9 @@ var app = new Vue({
       this.filterChanged();
     },
     filterChanged(event) {
-
       const current_context = this;
 
       if (event != undefined) {
-        //// dealing with  checkbox_interface for COM
-        // unchecking other checkboxes
         let str = event.target.id;
         let checked_val = event.target.value;
         if (str.indexOf('checkbox_interface_') >= 0) {
@@ -895,9 +892,20 @@ var app = new Vue({
             });
           }
         }
-        //// end  dealing with  checkbox_interface for COM
       }
 
+      const specialFilters = ['remote_control_phone', 'personnel_access_control', 'sending_by_email', 'with_database'];
+      let hasSpecialFilter = false;
+      let originalInterfaces = [...this.filterSelectedInterfaces];
+      
+      if (this.filterSelectedInterfaces.length > 0) {
+        for (let i = 0; i < this.filterSelectedInterfaces.length; i++) {
+          if (specialFilters.includes(this.filterSelectedInterfaces[i])) {
+            hasSpecialFilter = true;
+            break;
+          }
+        }
+      }
       this.filter_string = '';
 
       if (this.filterSelectedRangeDiagonal_min > 0) {
@@ -1109,9 +1117,7 @@ var app = new Vue({
 
       if (this.product_sort != "" && this.product_sort != "popular") {
         this.filter_string += '&sort=' + this.product_sort;
-        //alert (this.filter_string);
       } 
-      //
       const current_base_url = window.location.origin + window.location.pathname;
 
       if (this.filter_string == '') {
@@ -1130,6 +1136,21 @@ var app = new Vue({
           if (item != '') {
             item_splitted = item.split('=');
           }
+          
+          if (item_splitted[0] === 'interfaces' && item_splitted[1]) {
+            const interfaceValues = item_splitted[1].split(',');
+            const hasSpecial = interfaceValues.some(val => specialFilters.includes(val));
+            if (hasSpecial && interfaceValues.length === 1) {
+              return;
+            } else if (hasSpecial) {
+              const normalValues = interfaceValues.filter(val => !specialFilters.includes(val));
+              if (normalValues.length === 0) {
+                return;
+              }
+              item_splitted[1] = normalValues.join(',');
+            }
+          }
+          
           if (vue_context.extra_h1_arr.length > i + 1) {
             separator = ', ';
           } else {
@@ -1181,7 +1202,9 @@ var app = new Vue({
               h1_chunk = ",количество COM до " + item_splitted[1] + "";
               break;
             case "interfaces":
-              h1_chunk = ",интерфейсы: " + item_splitted[1] + "";
+              if (item_splitted[1] && item_splitted[1] !== '') {
+                h1_chunk = ",интерфейсы: " + item_splitted[1] + "";
+              }
               break;
             case "screenless":
               h1_chunk = ",безэкранные";
