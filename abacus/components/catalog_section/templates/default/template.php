@@ -38,11 +38,36 @@ switch ($currentSectionCode) {
 $isScreenlessFilterActive = isset($_GET['screenless']) && $_GET['screenless'] === 'yes';
 
 if (!empty($productTypes)) {
-  $typesCondition = "`type` IN ('" . implode("','", $productTypes) . "')";
-  $products = CoreApplication::get_rows_from_table("products_all", "", $typesCondition);
+  $condition = "`type` IN ('" . implode("','", $productTypes) . "')";
 } else {
-  $products = CoreApplication::get_rows_from_table("products_all", "", "1");
+  $condition = "1";
 }
+
+if (isset($_GET['os']) && $_GET['os'] === 'Android') {
+    $condition .= " AND `os` LIKE '%Android%'";
+}
+
+if (isset($_GET['brand'])) {
+    $brands = explode(',', $_GET['brand']);
+    $brandCondition = "`brand` IN ('" . implode("','", array_map('addslashes', $brands)) . "')";
+    $condition .= " AND " . $brandCondition;
+}
+
+if (isset($_GET['series'])) {
+    $series = explode(',', $_GET['series']);
+    $seriesCondition = "`series` IN ('" . implode("','", array_map('addslashes', $series)) . "')";
+    $condition .= " AND " . $seriesCondition;
+}
+
+if (isset($_GET['availablity'])) {
+    $condition .= " AND `availablity` = '" . addslashes($_GET['availablity']) . "'";
+}
+
+if (isset($_GET['sensor_type'])) {
+    $condition .= " AND `sensor_type` = '" . addslashes($_GET['sensor_type']) . "'";
+}
+
+$products = CoreApplication::get_rows_from_table("products_all", "", $condition);
 
 $showDiagonalBlock = in_array($currentSectionCode, [
     'operator_panels', 
