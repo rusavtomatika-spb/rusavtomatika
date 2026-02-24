@@ -62,17 +62,6 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
                 </div>
             </div>
         </div>
-        <div class="has-background-light cloud-main">
-            <div class="container is-widescreen">
-                <div class="columns">
-                    <div class="column is-12">
-                        <?
-                        include "./include_utf_8/main_page/content/block_cloud_tags.php";
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="py-5">
             <div class="container is-widescreen">
                 <div class="columns">
@@ -149,7 +138,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
 .double-swiper-block::before {
     content: '';
     position: absolute;
-    top: 100px;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
     width: 1px;
@@ -188,7 +177,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
 }
 
 .double-swiper-block .glide__track {
-    height: 420px;
+    height: 380px;
 }
 
 .double-swiper-block .is-size-3 {
