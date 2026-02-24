@@ -67,7 +67,8 @@ if (isset($_GET['sensor_type'])) {
     $condition .= " AND `sensor_type` = '" . addslashes($_GET['sensor_type']) . "'";
 }
 
-$products = CoreApplication::get_rows_from_table("products_all", "", $condition);
+$full_condition = $condition . " AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'";
+$products = CoreApplication::get_rows_from_table("products_all", "", $full_condition);
 
 $showDiagonalBlock = in_array($currentSectionCode, [
     'operator_panels', 
