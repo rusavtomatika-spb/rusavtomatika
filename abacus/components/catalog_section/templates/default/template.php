@@ -15,11 +15,43 @@ global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $pretext, $posttext;
 
 $currentSectionCode = $arguments["component_route_params"]["section"];
 
-CoreApplication::get_rows_from_table(
-    "products_all", 
-    "", 
-    "`type` IN ('hmi', 'monitor', 'industrial_computer', 'panel_pc')"
-);
+$productTypes = [];
+
+switch ($currentSectionCode) {
+  case 'operator_panels':
+    $productTypes = ['hmi'];
+    break;
+  case 'panel_computers':
+    $productTypes = ['panel_pc'];
+    break;
+  case 'industrial_computers_full_ip65':
+    $productTypes = ['industrial_computer'];
+    break;
+  case 'industrial_monitors':
+    $productTypes = ['monitor'];
+    break;
+  default:
+    $productTypes = ['hmi', 'monitor', 'industrial_computer', 'panel_pc'];
+    break;
+}
+
+$isScreenlessFilterActive = isset($_GET['screenless']) && $_GET['screenless'] === 'yes';
+
+if (!empty($productTypes)) {
+  $typesCondition = "`type` IN ('" . implode("','", $productTypes) . "')";
+  $products = CoreApplication::get_rows_from_table("products_all", "", $typesCondition);
+} else {
+  $products = CoreApplication::get_rows_from_table("products_all", "", "1");
+}
+
+$showDiagonalBlock = in_array($currentSectionCode, [
+    'operator_panels', 
+    'panel_computers', 
+    'industrial_computers_full_ip65', 
+    'industrial_monitors'
+]);
+
+$showDiagonalSpan = $showDiagonalBlock ? 'true' : 'false';
 
 $uniqueDiagonals = array();
 
@@ -371,7 +403,7 @@ if ( $HTTP_REFERER != "" ) {
 				
               <div class="section_list_view_mode_button_wrapper" v-cloak>
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>
-                <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show">
+                <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show && <?= $showDiagonalSpan ? 'true' : 'false' ?> && !<?= $isScreenlessFilterActive ? 'true' : 'false' ?>">
                   <div class="is-size-7">Диагональ</div>
                   <div class="elements">
                       <?php if (!empty($groupedDiagonals)): ?>
@@ -443,7 +475,6 @@ if ( $HTTP_REFERER != "" ) {
                   </div>
                 </div>
                 <? endif; ?>
-                <!--div class="filter_string" v-html="filter_string"></div--> 
               </div>
             </noindex>
             <div class="component_catalog_section__panel_of_products_wrapper">
@@ -468,8 +499,26 @@ if ( $HTTP_REFERER != "" ) {
     </div>
     <div class="result" v-html="result"></div>
     <div class="component_catalog_section__bottom_of_list"></div>
-    <div style="display: none" class="vue-data"> <span class="current_section" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_min_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="current_max_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span> <span class="filter_diagonal_min" data-value="<?= $arrSection["filter_diagonal_min"] ?>"></span> <span class="filter_diagonal_max" data-value="<?= $arrSection["filter_diagonal_max"] ?>"></span> <span class="filter_price_min" data-value="<?= $arrSection["filter_price_min"] ?>"></span> <span class="filter_price_max" data-value="<?= $arrSection["filter_price_max"] ?>"></span> <span class="filter_com_min" data-value="<?= $arrSection["filter_com_min"] ?>"></span> <span class="filter_com_max" data-value="<?= $arrSection["filter_com_max"] ?>"></span> <span class="filter_ethernets_min" data-value="<?= $arrSection["filter_ethernets_min"] ?>"></span> <span class="filter_ethernets_max" data-value="<?= $arrSection["filter_ethernets_max"] ?>"></span> <span class="filter_rammax_min" data-value="<?= $arrSection["filter_rammax_min"] ?>"></span> <span class="filter_rammax_max" data-value="<?= $arrSection["filter_rammax_max"] ?>"></span><span class="filter_USB_min" data-value="<?= $arrSection["filter_USB_min"] ?>"></span> <span class="filter_USB_max" data-value="<?= $arrSection["filter_USB_max"] ?>"></span> <span class="filter_processor" data-value="<?= $arrSection["filter_processors"] ?>"></span> </div>
+    <div style="display: none" class="vue-data"> 
+      <span class="current_section" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span>
+      <span class="current_min_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span>
+      <span class="current_max_price" data-value="<?= $arguments["component_route_params"]["section"] ?>"></span>
+      <span class="filter_diagonal_min" data-value="<?= $arrSection["filter_diagonal_min"] ?>"></span>
+      <span class="filter_diagonal_max" data-value="<?= $arrSection["filter_diagonal_max"] ?>"></span>
+      <span class="filter_price_min" data-value="<?= $arrSection["filter_price_min"] ?>"></span>
+      <span class="filter_price_max" data-value="<?= $arrSection["filter_price_max"] ?>"></span>
+      <span class="filter_com_min" data-value="<?= $arrSection["filter_com_min"] ?>"></span>
+      <span class="filter_com_max" data-value="<?= $arrSection["filter_com_max"] ?>"></span>
+      <span class="filter_ethernets_min" data-value="<?= $arrSection["filter_ethernets_min"] ?>"></span>
+      <span class="filter_ethernets_max" data-value="<?= $arrSection["filter_ethernets_max"] ?>"></span>
+      <span class="filter_rammax_min" data-value="<?= $arrSection["filter_rammax_min"] ?>"></span>
+      <span class="filter_rammax_max" data-value="<?= $arrSection["filter_rammax_max"] ?>"></span>
+      <span class="filter_USB_min" data-value="<?= $arrSection["filter_USB_min"] ?>"></span>
+      <span class="filter_USB_max" data-value="<?= $arrSection["filter_USB_max"] ?>"></span>
+      <span class="filter_processor" data-value="<?= $arrSection["filter_processors"] ?>"></span>
+      <span class="show_diagonal_span" data-value="<?= $showDiagonalSpan ?>"></span>
+    </div>
   </div>
-  <?
-  CoreApplication::include_component( array( "component" => "form_require_price", "template" => "default", ) );
-  ?>
+<?
+CoreApplication::include_component( array( "component" => "form_require_price", "template" => "default", ) );
+?>

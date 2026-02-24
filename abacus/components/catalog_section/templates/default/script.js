@@ -2034,15 +2034,22 @@ var app = new Vue({
       });
 
 
-      if ($('div').is('.filter_code_diagonal')) {
-        this.section_list__set_diagonal_span_show = true;
+      if (this.current_section === 'industrial_computers_full_ip65' || 
+          this.current_section === 'operator_panels' || 
+          this.current_section === 'panel_computers' || 
+          this.current_section === 'industrial_monitors') {
+          this.section_list__set_diagonal_span_show = true;
+      } else if ($('div').is('.filter_code_diagonal')) {
+          this.section_list__set_diagonal_span_show = true;
       }
+
       if ($('div').is('.filter_code_availability')) {
-        this.section_list__set_availability_show = true;
+          this.section_list__set_availability_show = true;
       }
       if ($('div').is('.filter_code_management')) {
-        this.section_list__set_management_show = true;
+          this.section_list__set_management_show = true;
       }
+
       this.init_in_process = false;
 
       let favorites = this.getCookie('box2_favorites');
