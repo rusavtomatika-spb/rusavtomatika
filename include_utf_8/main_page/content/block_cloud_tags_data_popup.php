@@ -176,7 +176,7 @@ $arr_cloud_tags_popup = [
 
         'name' => 'Удаленное управление с телефона',
 
-        'url' => '/catalog/operator_panels/?&interfaces=remote_control_phone',
+        'url' => '/catalog/operator_panels/?&remote_control_phone=yes',
 
         'add_to_sitemap' => 1,
 
@@ -188,7 +188,7 @@ $arr_cloud_tags_popup = [
 
         'name' => 'Контроль доступа для персонала',
 
-        'url' => '/catalog/operator_panels/?&interfaces=personnel_access_control',
+        'url' => '/catalog/operator_panels/?&personnel_access_control=yes',
 
         'add_to_sitemap' => 1,
 
@@ -200,7 +200,7 @@ $arr_cloud_tags_popup = [
 
         'name' => 'Отправка сообщений на почту',
 
-        'url' => '/catalog/operator_panels/?&interfaces=sending_by_email',
+        'url' => '/catalog/operator_panels/?&sending_by_email=yes',
 
         'add_to_sitemap' => 1,
 
@@ -212,7 +212,7 @@ $arr_cloud_tags_popup = [
 
         'name' => 'Панель с базой данных на SQL-сервере',
 
-        'url' => '/catalog/operator_panels/?&interfaces=with_database',
+        'url' => '/catalog/operator_panels/?&with_database=yes',
 
         'add_to_sitemap' => 1,
 

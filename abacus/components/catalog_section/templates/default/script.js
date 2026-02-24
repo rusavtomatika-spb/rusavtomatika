@@ -85,7 +85,10 @@ var app = new Vue({
     viewed: [],
     extra_h1: "",
     extra_h1_arr: [],
-
+    filterSelectedRemoteControlPhone: false,
+    filterSelectedPersonnelAccessControl: false,
+    filterSelectedSendingByEmail: false,
+    filterSelectedWithDatabase: false,
   },
   watch: {
     extra_h1: function (newVal) {
@@ -439,7 +442,14 @@ var app = new Vue({
           this.filterSelectedDiagonals = [];
           this.filterChanged();
           break;
-
+        case 'filterSelectedSendingByEmail':
+          this.filterSelectedSendingByEmail = false;
+          this.filterChanged();
+          break;
+        case 'filterSelectedWithDatabase':
+          this.filterSelectedWithDatabase = false;
+          this.filterChanged();
+          break;
 
         default:
         case 'all':
@@ -484,6 +494,8 @@ var app = new Vue({
           this.filterSelectedRangeUSB_max = this.filterSelectedRangeUSB_max_start;
           this.filterSelectedRangeCOM_min = this.filterSelectedRangeCOM_min_start;
           this.filterSelectedRangeCOM_max = this.filterSelectedRangeCOM_max_start;
+          this.filterSelectedSendingByEmail = false;
+          this.filterSelectedWithDatabase = false;
           this.filterChanged();
 
           break;
@@ -908,6 +920,18 @@ var app = new Vue({
       }
       this.filter_string = '';
 
+      if (this.filterSelectedRemoteControlPhone) {
+        this.filter_string += '&remote_control_phone=yes';
+      }
+      if (this.filterSelectedPersonnelAccessControl) {
+        this.filter_string += '&personnel_access_control=yes';
+      }
+      if (this.filterSelectedSendingByEmail) {
+        this.filter_string += '&sending_by_email=yes';
+      }
+      if (this.filterSelectedWithDatabase) {
+        this.filter_string += '&with_database=yes';
+      }
       if (this.filterSelectedRangeDiagonal_min > 0) {
         this.filter_string += '&range_diagonal_min=' + this.filterSelectedRangeDiagonal_min;
       }
@@ -1299,6 +1323,18 @@ var app = new Vue({
                 }
                 h1_chunk = ",материал корпуса: " + tmp;
                 break;
+            case "remote_control_phone":
+              h1_chunk = ",Удаленное управление с телефона";
+              break;
+            case "personnel_access_control":
+              h1_chunk = ",Контроль доступа для персонала";
+              break;
+            case "sending_by_email":
+              h1_chunk = ",Отправка сообщений на почту";
+              break;
+            case "with_database":
+              h1_chunk = ",Панель с базой данных на SQL-сервере";
+              break;
             default:
               h1_chunk = "," + item_splitted[1];
               break;
@@ -1654,6 +1690,18 @@ var app = new Vue({
 
       this.urlGetVars = this.getUrlVar();
 
+      if (this.urlGetVars['remote_control_phone'] != null) {
+        this.filterSelectedRemoteControlPhone = true;
+      }
+      if (this.urlGetVars['personnel_access_control'] != null) {
+        this.filterSelectedPersonnelAccessControl = true;
+      }
+      if (this.urlGetVars['sending_by_email'] != null) {
+        this.filterSelectedSendingByEmail = true;
+      }
+      if (this.urlGetVars['with_database'] != null) {
+        this.filterSelectedWithDatabase = true;
+      }
       if (this.urlGetVars['series'] != null) {
         this.filterSelectedSeries = this.urlGetVars['series'];
       }

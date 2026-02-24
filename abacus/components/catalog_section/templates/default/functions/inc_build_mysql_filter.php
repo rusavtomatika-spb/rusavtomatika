@@ -141,17 +141,19 @@ if (isset($_GET["interfaces"]) and $_GET["interfaces"] != '') {
     $arInterfaces = explode(",", $_GET["interfaces"]);
     $filter_exists = true;
 }
-if (isset($_GET['interfaces']) && $_GET['interfaces'] != '') {
-    $interfaces_list = explode(',', $_GET['interfaces']);
-    $remote_control_phone_only = in_array('remote_control_phone', $interfaces_list) ? '1' : '';
-    $personnel_access_control_only = in_array('personnel_access_control', $interfaces_list) ? '1' : '';
-    $sending_by_email_only = in_array('sending_by_email', $interfaces_list) ? '1' : '';
-    $with_database_only = in_array('with_database', $interfaces_list) ? '1' : '';
-    
-    if ($remote_control_phone_only == '1' || $personnel_access_control_only == '1' || 
-        $sending_by_email_only == '1' || $with_database_only == '1') {
-        $filter_exists = true;
-    }
+if (isset($_GET["remote_control_phone"]) and $_GET["remote_control_phone"] == 'yes') {
+    $remote_control_phone_only = "1";
+}
+if (isset($_GET["personnel_access_control"]) and $_GET["personnel_access_control"] == 'yes') {
+    $personnel_access_control_only = "1";
+}
+if (isset($_GET["sending_by_email"]) and $_GET["sending_by_email"] == 'yes') {
+    $sending_by_email_only = "1";
+    $filter_exists = true;
+}
+if (isset($_GET["with_database"]) and $_GET["with_database"] == 'yes') {
+    $with_database_only = "1";
+    $filter_exists = true;
 }
 if (isset($_GET["os"]) and $_GET["os"] != '') {
     $arOss = explode(",", $_GET["os"]);
@@ -712,6 +714,7 @@ if ($filter_exists) {
         $filter_chunk .= " `sdcard` != '' and `sdcard` != 'Нет') ";
         $mysql_product_filter .= $filter_chunk;
     }
+    
     if ($remote_control_phone_only == '1') {}
 
     if ($personnel_access_control_only == '1') {}
