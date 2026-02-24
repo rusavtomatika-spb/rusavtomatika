@@ -25,13 +25,13 @@ switch ($currentSectionCode) {
     $productTypes = ['panel_pc'];
     break;
   case 'industrial_computers_full_ip65':
-    $productTypes = ['industrial_computer'];
+    $productTypes = ['panel_pc_ip65'];
     break;
   case 'industrial_monitors':
     $productTypes = ['monitor'];
     break;
   default:
-    $productTypes = ['hmi', 'monitor', 'industrial_computer', 'panel_pc'];
+    $productTypes = ['hmi', 'monitor', 'panel_pc', 'panel_pc_ip65'];
     break;
 }
 

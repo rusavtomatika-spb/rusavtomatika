@@ -32,7 +32,6 @@ $personnel_access_control_only = "";
 $sending_by_email_only = "";
 $with_database_only = "";
 
-
 /*if(is_array($_GET) and count($_GET)>0){
     $arr_all_available_filters_rows = $DB_WORK_CATALOG->get_rows_from_table("catalog_filters");
     foreach ($arr_all_available_filters_rows as $filter_item){
@@ -812,9 +811,19 @@ if ($filter_exists) {
         $mysql_product_filter .= $filter_chunk;
     }
 
+    if ($range_diagonal_min != '') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `diagonal` >= " . floatval($range_diagonal_min) . ") ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+    if ($range_diagonal_max != '') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `diagonal` <= " . floatval($range_diagonal_max) . ") ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+
 } else $mysql_product_filter = "";
-
-
-
-// end preparing filters
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
