@@ -25,10 +25,125 @@ endif;
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="/js/vue.js"></script>
-<script type="text/javascript" src="/js/axios.min.js"></script>
-<script type="text/javascript" src="/js/vue-router.js"></script>
-<script type="text/javascript" src="/js/vue-meta.min.js"></script>
+<script type="text/javascript" src="/js/vue.js?26022026"></script>
+<script type="text/javascript" src="/js/axios.min.js?26022026"></script>
+<script type="text/javascript" src="/js/vue-router.js?26022026"></script>
+<script type="text/javascript" src="/js/vue-meta.min.js?26022026"></script>
+<?php if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net'): ?>
+    <script defer src="https://185.106.94.36/weinbot-plugin-1.0.0.js"></script>
+
+    <script>
+    (function() {
+        function addStylesToShadow(shadowRoot) {
+            if (shadowRoot.querySelector('#custom-bot-styles')) return;
+            
+            const style = document.createElement('style');
+            style.id = 'custom-bot-styles';
+            style.textContent = `
+                .fab-style.custom-bot-button {
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 10px !important;
+                    width: 300px !important;
+                    height: auto !important;
+                    background: #424867 !important;
+                    border-radius: 50px !important;
+                    padding: 10px 20px !important;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                    transition: all 0.3s ease !important;
+                    border: none !important;
+                    cursor: pointer !important;
+                    outline: none !important;
+                    color: #fff !important;
+                    font-size: 16px !important;
+                    font-weight: bold !important;
+                    filter: none !important;
+                    line-height: normal !important;
+                    animation: none !important;
+                    margin-right: 10px;
+                }
+                .fab-style.custom-bot-button:hover {
+                    transform: scale(1.05) !important;
+                    box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
+                }
+                .fab-style.custom-bot-button img {
+                    width: 40px !important;
+                    height: 40px !important;
+                    border-radius: 50% !important;
+                    margin: 0 !important;
+                }
+                .fab-style.custom-bot-button span {
+                    font-size: 16px !important;
+                    color: #fff !important;
+                    font-weight: bold !important;
+                    font-family: sans-serif !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+            `;
+            shadowRoot.appendChild(style);
+        }
+
+        function customizeBotButton() {
+            document.querySelectorAll('[id^="weinbot-agent-container-"]').forEach(container => {
+                if (container.shadowRoot) {
+                    addStylesToShadow(container.shadowRoot);
+                    
+                    const button = container.shadowRoot.querySelector('.fab-style');
+                    
+                    if (button && !button.classList.contains('customized')) {
+                        console.log('Кастомизируем кнопку...');
+                        
+                        const originalImg = button.querySelector('img');
+                        
+                        if (originalImg) {
+                            const imgSrc = originalImg.src;
+                            
+                            button.innerHTML = '';
+                            
+                            const img = document.createElement('img');
+                            img.src = imgSrc;
+                            img.alt = 'Chat Agent';
+                            
+                            const span = document.createElement('span');
+                            span.textContent = 'Бот от Weintek Labs';
+                            
+                            button.appendChild(img);
+                            button.appendChild(span);
+                            
+                            button.classList.add('custom-bot-button', 'customized');
+                            
+                            button.style.cssText = '';
+                        }
+                    }
+                }
+            });
+        }
+
+        customizeBotButton();
+        
+        let attempts = 0;
+        const interval = setInterval(() => {
+            customizeBotButton();
+            attempts++;
+            
+            if (attempts > 20) {
+                clearInterval(interval);
+            }
+        }, 500);
+        
+        const observer = new MutationObserver(() => {
+            customizeBotButton();
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    })();
+    </script>
+<?php endif; ?>
 <!--script type="text/javascript" src="/sc/popup_catalog_menu/popup_catalog_menu.js?r=<?= rand() ?>"></script-->
 <?
 if ($current_page != ''):
