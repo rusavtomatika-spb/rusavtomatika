@@ -33,115 +33,165 @@ endif;
     <script defer src="https://185.106.94.36/weinbot-plugin-1.0.0.js"></script>
 
     <script>
-    (function() {
-        function addStylesToShadow(shadowRoot) {
-            if (shadowRoot.querySelector('#custom-bot-styles')) return;
+        (function() {
+            function isMobileEmulationMode() {
+                const hasMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                const hasCoarsePointer = window.matchMedia('(pointer:coarse)').matches;
+                const hasHighDPR = window.devicePixelRatio >= 2;
+                const hasMobilePlatform = /iPhone|iPad|iPod|Android/i.test(navigator.platform);
+                
+                let hasMobileUAData = false;
+                if (navigator.userAgentData) {
+                    hasMobileUAData = navigator.userAgentData.mobile;
+                }
+                
+                return hasMobileUA || hasMobileUAData || hasMobilePlatform || 
+                    (hasTouch && (hasCoarsePointer || hasHighDPR));
+            }
             
-            const style = document.createElement('style');
-            style.id = 'custom-bot-styles';
-            style.textContent = `
-                .fab-style.custom-bot-button {
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    gap: 10px !important;
-                    width: 300px !important;
-                    height: auto !important;
-                    background: #424867 !important;
-                    border-radius: 50px !important;
-                    padding: 10px 20px !important;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-                    transition: all 0.3s ease !important;
-                    border: none !important;
-                    cursor: pointer !important;
-                    outline: none !important;
-                    color: #fff !important;
-                    font-size: 16px !important;
-                    font-weight: bold !important;
-                    filter: none !important;
-                    line-height: normal !important;
-                    animation: none !important;
-                    margin-right: 10px;
-                }
-                .fab-style.custom-bot-button:hover {
-                    transform: scale(1.05) !important;
-                    box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
-                }
-                .fab-style.custom-bot-button img {
-                    width: 40px !important;
-                    height: 40px !important;
-                    border-radius: 50% !important;
-                    margin: 0 !important;
-                }
-                .fab-style.custom-bot-button span {
-                    font-size: 16px !important;
-                    color: #fff !important;
-                    font-weight: bold !important;
-                    font-family: sans-serif !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                }
-            `;
-            shadowRoot.appendChild(style);
-        }
-
-        function customizeBotButton() {
-            document.querySelectorAll('[id^="weinbot-agent-container-"]').forEach(container => {
-                if (container.shadowRoot) {
-                    addStylesToShadow(container.shadowRoot);
+            function addStylesToShadow(shadowRoot) {
+                if (shadowRoot.querySelector('#custom-bot-styles')) return;
+                
+                const style = document.createElement('style');
+                style.id = 'custom-bot-styles';
+                style.textContent = `
+                    .fab-style.custom-bot-button {
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 10px !important;
+                        width: 300px !important;
+                        height: auto !important;
+                        background: #424867 !important;
+                        border-radius: 50px !important;
+                        padding: 10px 20px !important;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                        transition: all 0.3s ease !important;
+                        border: none !important;
+                        cursor: pointer !important;
+                        outline: none !important;
+                        color: #fff !important;
+                        font-size: 16px !important;
+                        font-weight: bold !important;
+                        filter: none !important;
+                        line-height: normal !important;
+                        animation: none !important;
+                        margin-right: 10px;
+                    }
+                    .fab-style.custom-bot-button:hover {
+                        transform: scale(1.05) !important;
+                        box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
+                    }
+                    .fab-style.custom-bot-button img {
+                        width: 40px !important;
+                        height: 40px !important;
+                        border-radius: 50% !important;
+                        margin: 0 !important;
+                    }
+                    .fab-style.custom-bot-button span {
+                        font-size: 16px !important;
+                        color: #fff !important;
+                        font-weight: bold !important;
+                        font-family: sans-serif !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
                     
-                    const button = container.shadowRoot.querySelector('.fab-style');
+                    .fab-style.custom-bot-button.mobile-emulation {
+                        width: 65px !important;
+                        height: 65px !important;
+                        margin-right: 0 !important;
+                        margin-bottom: 30px !important;
+                        min-width: 65px !important;
+                        max-width: 65px !important;
+                        padding: 0 !important;
+                    }
                     
-                    if (button && !button.classList.contains('customized')) {
-                        console.log('Кастомизируем кнопку...');
-                        
-                        const originalImg = button.querySelector('img');
-                        
-                        if (originalImg) {
-                            const imgSrc = originalImg.src;
-                            
-                            button.innerHTML = '';
-                            
-                            const img = document.createElement('img');
-                            img.src = imgSrc;
-                            img.alt = 'Chat Agent';
-                            
-                            const span = document.createElement('span');
-                            span.textContent = 'Бот от Weintek Labs';
-                            
-                            button.appendChild(img);
-                            button.appendChild(span);
-                            
-                            button.classList.add('custom-bot-button', 'customized');
-                            
-                            button.style.cssText = '';
-                        }
+                    .fab-style.custom-bot-button.mobile-emulation span {
+                        display: none !important;
+                    }
+                    
+                    .fab-style.custom-bot-button.mobile-emulation img {
+                        width: 40px !important;
+                        height: 40px !important;
+                        margin: 0 auto !important;
+                    }
+                `;
+                shadowRoot.appendChild(style);
+                
+                updateButtonClass(shadowRoot);
+            }
+            
+            function updateButtonClass(shadowRoot) {
+                const isMobile = isMobileEmulationMode();
+                const button = shadowRoot.querySelector('.fab-style');
+                
+                if (button) {
+                    if (isMobile) {
+                        button.classList.add('mobile-emulation');
+                        button.classList.remove('desktop-emulation');
+                    } else {
+                        button.classList.add('desktop-emulation');
+                        button.classList.remove('mobile-emulation');
                     }
                 }
-            });
-        }
-
-        customizeBotButton();
-        
-        let attempts = 0;
-        const interval = setInterval(() => {
-            customizeBotButton();
-            attempts++;
-            
-            if (attempts > 20) {
-                clearInterval(interval);
             }
-        }, 500);
-        
-        const observer = new MutationObserver(() => {
+            
+            function customizeBotButton() {
+                document.querySelectorAll('[id^="weinbot-agent-container-"]').forEach(container => {
+                    if (container.shadowRoot) {
+                        addStylesToShadow(container.shadowRoot);
+                        
+                        const button = container.shadowRoot.querySelector('.fab-style');
+                        
+                        if (button && !button.classList.contains('customized')) {
+                            const originalImg = button.querySelector('img');
+                            
+                            if (originalImg) {
+                                const imgSrc = originalImg.src;
+                                
+                                button.innerHTML = '';
+                                
+                                const img = document.createElement('img');
+                                img.src = imgSrc;
+                                img.alt = 'Chat Agent';
+                                
+                                const span = document.createElement('span');
+                                span.textContent = 'Бот от Weintek Labs';
+                                
+                                button.appendChild(img);
+                                button.appendChild(span);
+                                
+                                button.classList.add('custom-bot-button', 'customized');
+                                
+                                updateButtonClass(container.shadowRoot);
+                            }
+                        }
+                    }
+                });
+            }
+            
             customizeBotButton();
-        });
-        
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    })();
+            
+            let lastIsMobile = isMobileEmulationMode();
+            setInterval(() => {
+                const currentIsMobile = isMobileEmulationMode();
+                if (currentIsMobile !== lastIsMobile) {
+                    lastIsMobile = currentIsMobile;
+                    customizeBotButton();
+                }
+            }, 500);
+            
+            const observer = new MutationObserver(() => {
+                customizeBotButton();
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        })();
     </script>
 <?php endif; ?>
 <!--script type="text/javascript" src="/sc/popup_catalog_menu/popup_catalog_menu.js?r=<?= rand() ?>"></script-->
