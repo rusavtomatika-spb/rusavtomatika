@@ -50,6 +50,22 @@ endif;
                     (hasTouch && (hasCoarsePointer || hasHighDPR));
             }
             
+            function updateBotContainers() {
+                const isMobile = isMobileEmulationMode();
+                
+                const containers = document.querySelectorAll('[id^="weinbot-agent-container-"]');
+                
+                containers.forEach(container => {
+                    if (isMobile) {
+                        container.classList.add('bot-container-mobile');
+                        container.style.right = '20px';
+                    } else {
+                        container.classList.remove('bot-container-mobile');
+                        container.style.right = '';
+                    }
+                });
+            }
+            
             function addStylesToShadow(shadowRoot) {
                 if (shadowRoot.querySelector('#custom-bot-styles')) return;
                 
@@ -172,7 +188,16 @@ endif;
                 });
             }
             
+            const containerStyles = document.createElement('style');
+            containerStyles.textContent = `
+                [id^="weinbot-agent-container-"].bot-container-mobile {
+                    right: 20px !important;
+                }
+            `;
+            document.head.appendChild(containerStyles);
+            
             customizeBotButton();
+            updateBotContainers();
             
             let lastIsMobile = isMobileEmulationMode();
             setInterval(() => {
@@ -180,11 +205,13 @@ endif;
                 if (currentIsMobile !== lastIsMobile) {
                     lastIsMobile = currentIsMobile;
                     customizeBotButton();
+                    updateBotContainers();
                 }
             }, 500);
             
-            const observer = new MutationObserver(() => {
+            const observer = new MutationObserver((mutations) => {
                 customizeBotButton();
+                updateBotContainers();
             });
             
             observer.observe(document.body, {
