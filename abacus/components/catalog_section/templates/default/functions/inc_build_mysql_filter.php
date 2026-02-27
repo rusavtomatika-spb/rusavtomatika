@@ -141,6 +141,7 @@ if (isset($_GET["interfaces"]) and $_GET["interfaces"] != '') {
     $arInterfaces = explode(",", $_GET["interfaces"]);
     $filter_exists = true;
 }
+
 if (isset($_GET["remote_control_phone"]) and $_GET["remote_control_phone"] == 'yes') {
     $remote_control_phone_only = "1";
 }
@@ -155,6 +156,7 @@ if (isset($_GET["with_database"]) and $_GET["with_database"] == 'yes') {
     $with_database_only = "1";
     $filter_exists = true;
 }
+
 if (isset($_GET["os"]) and $_GET["os"] != '') {
     $arOss = explode(",", $_GET["os"]);
 
@@ -725,7 +727,15 @@ if ($filter_exists) {
         } else {
             $filter_chunk = ' and (';
         }
-        $filter_chunk .= " `series` NOT LIKE '%iP%' AND `series` NOT LIKE '%IP%') ";
+        
+        $exclude_conditions = array("`series` NOT LIKE '%iP%' AND `series` NOT LIKE '%IP%'");
+        
+        $excluded_models = array('CTK107', 'CTK110');
+        foreach ($excluded_models as $model) {
+            $exclude_conditions[] = "`model` != '$model'";
+        }
+        
+        $filter_chunk .= implode(' AND ', $exclude_conditions) . ') ';
         $mysql_product_filter .= $filter_chunk;
     }
 
@@ -733,7 +743,8 @@ if ($filter_exists) {
         $excluded_series = array('iP', 'iE', 'eMT', 'XE', 'mTV');
         $excluded_models = array(
             'cMT2166X', 'cMT3161X', 'cMT2058XH', 'cMT2078X', 'cMT2108X',
-            'cMT2108X2', 'cMT2108X2 (V2)', 'cMT2128X', 'cMT2158X', 'cMT2158X (V2)', 'cMT1106X'
+            'cMT2108X2', 'cMT2108X2 (V2)', 'cMT2128X', 'cMT2158X', 'cMT2158X (V2)', 'cMT1106X',
+            'CTK107', 'CTK110'
         );
         
         $exclude_conditions = array();

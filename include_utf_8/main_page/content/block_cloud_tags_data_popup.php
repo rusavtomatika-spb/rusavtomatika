@@ -219,4 +219,40 @@ $arr_cloud_tags_popup = [
         'category' => 'hmi',
 
     ],
+
+    [
+
+        'name' => 'С резистивным экраном',
+
+        'url' => '/catalog/panel_computers/?&sensor_type=resistive',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'panel_computers',
+
+    ],
+
+    [
+
+        'name' => 'С ёмкостным экраном',
+
+        'url' => '/catalog/panel_computers/?&sensor_type=capacitive',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'panel_computers',
+
+    ],
+
+    [
+
+        'name' => 'С Full HD экраном',
+
+        'url' => '/catalog/panel_computers/?&resolutions=1920x1080',
+
+        'add_to_sitemap' => 1,
+
+        'category' => 'panel_computers',
+
+    ],
 ];

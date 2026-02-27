@@ -450,7 +450,6 @@ var app = new Vue({
           this.filterSelectedWithDatabase = false;
           this.filterChanged();
           break;
-
         default:
         case 'all':
           this.filterSelectedBrands = [];
@@ -1334,6 +1333,15 @@ var app = new Vue({
               break;
             case "with_database":
               h1_chunk = ",Панель с базой данных на SQL-сервере";
+              break;
+            case "resistive":
+              h1_chunk = ",С резистивным экраном";
+              break;
+            case "capacitive":
+              h1_chunk = ",С ёмкостным экраном";
+              break;
+            case "full_hd":
+              h1_chunk = ",С Full HD экраном";
               break;
             default:
               h1_chunk = "," + item_splitted[1];

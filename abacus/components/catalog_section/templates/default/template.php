@@ -64,7 +64,23 @@ if (isset($_GET['availablity'])) {
 }
 
 if (isset($_GET['sensor_type'])) {
-    $condition .= " AND `sensor_type` = '" . addslashes($_GET['sensor_type']) . "'";
+    $sensorValue = addslashes($_GET['sensor_type']);
+    if ($sensorValue == 'resistive') {
+        $condition .= " AND `touch_type` LIKE '%resistive%'";
+    } elseif ($sensorValue == 'capacitive') {
+        $condition .= " AND `touch_type` LIKE '%capacitive%'";
+    }
+}
+
+if (isset($_GET['resolutions'])) {
+    $resolutions = explode(',', $_GET['resolutions']);
+    $resolutionCondition = array();
+    foreach ($resolutions as $resolution) {
+        $resolutionCondition[] = "`resolution` = '" . addslashes($resolution) . "'";
+    }
+    if (!empty($resolutionCondition)) {
+        $condition .= " AND (" . implode(' OR ', $resolutionCondition) . ")";
+    }
 }
 
 $full_condition = $condition . " AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'";
