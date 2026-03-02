@@ -146,7 +146,7 @@ endif;
                         padding: 0 !important;
                     }
                     
-                    .fab-style.custom-bot-button.mobile-emulation span {
+                    .fab-style.custom-bot-button.mobile-emulation p, .fab-style.custom-bot-button.mobile-emulation span {
                         display: none !important;
                     }
                     
