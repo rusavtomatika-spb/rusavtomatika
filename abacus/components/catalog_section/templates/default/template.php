@@ -424,6 +424,8 @@ if ( $HTTP_REFERER != "" ) {
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>
                 <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show && <?= $showDiagonalSpan ? 'true' : 'false' ?> && !<?= $isScreenlessFilterActive ? 'true' : 'false' ?>">
                   <div class="is-size-7">Диагональ</div>
+                  <button class="scroll-btn left" onclick="scrollDiagonalSpan('left')"></button>
+                  <button class="scroll-btn right" onclick="scrollDiagonalSpan('right')"></button>
                   <div class="elements">
                       <?php if (!empty($groupedDiagonals)): ?>
                           <?php foreach ($groupedDiagonals as $diag): ?>
@@ -435,13 +437,13 @@ if ( $HTTP_REFERER != "" ) {
                               </span>
                           <?php endforeach; ?>
                       <?php endif; ?>
-                      
-                      <span 
-                          v-bind:class="['section_list__set_diagonal_span__button clear_button', 
-                              {'active': filterSelectedDiagonals.length === 0}]" 
-                          @click="clearDiagonalFilters()">
-                      </span>
                   </div>
+                  <span
+                    style="position: absolute; right: -65px; bottom: 0;"
+                    v-bind:class="['section_list__set_diagonal_span__button clear_button', {'active': filterSelectedDiagonals.length === 0}]" 
+                    @click="clearDiagonalFilters()"
+                  >
+                  </span>
                 </div>
                 <div class="is-hidden-touch section_list__set_availablity"
                              v-if="section_list__set_availability_show">
@@ -538,6 +540,18 @@ if ( $HTTP_REFERER != "" ) {
       <span class="show_diagonal_span" data-value="<?= $showDiagonalSpan ?>"></span>
     </div>
   </div>
+  <script>
+    function scrollDiagonalSpan(direction) {
+      const container = document.querySelector('.component_catalog_section .section_list__set_diagonal_span .elements');
+      const scrollAmount = 100;
+      
+      if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  </script>
 <?
 CoreApplication::include_component( array( "component" => "form_require_price", "template" => "default", ) );
 ?>
