@@ -402,4 +402,47 @@ function sendsf()
     });
 
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const banner = document.querySelector('.cookie-container');
+    
+    if(banner) {
+        if (!getCookie('acceptedCookies')) {
+                banner.style.display = 'grid';
+        }
 
+        banner.querySelector('.accept').addEventListener('click', () => {
+            setCookie('acceptedCookies', true, { expiresInDays: 1095 });
+            banner.style.display = 'none';
+        });
+
+        banner.querySelector('.close').addEventListener('click', () => {
+            banner.style.display = 'none';
+        });
+    }
+});
+
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}$$$$$$\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options={}) {
+    options = {
+        path: '/',
+        secure: true,
+        sameSite: 'strict',
+    };
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for(let optionKey in options){
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if(optionValue !== true)
+            updatedCookie += "=" + optionValue;
+    }
+
+    document.cookie = updatedCookie;
+}

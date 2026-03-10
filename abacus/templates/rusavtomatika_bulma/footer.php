@@ -29,7 +29,19 @@ endif;
 <script type="text/javascript" src="/js/axios.min.js?26022026"></script>
 <script type="text/javascript" src="/js/vue-router.js?26022026"></script>
 <script type="text/javascript" src="/js/vue-meta.min.js?26022026"></script>
-<script defer src="https://sss55.space/weinbot-plugin-1.0.0.js"></script>
+<? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
+    <script src="//code.jivosite.com/widget.js" data-jv-id="gno75izSm3" async></script>
+<? endif; ?>
+<script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            var script = document.createElement('script');
+            script.src = 'https://sss55.space/weinbot-plugin-1.0.0.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }, 3000);
+    });
+</script>
 <script>
     (function() {
         function isMobileEmulationMode() {
@@ -285,9 +297,6 @@ endif;
 ?>
 <script type="text/javascript" src="<?= $cms_template_url ?>template_scripts.js"></script>
 <!-- <script type="text/javascript" src="/documents/documents.js"></script> -->
-<? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
-    <script src="//code.jivosite.com/widget.js" data-jv-id="gno75izSm3" async></script>
-<? endif; ?>
 <!-- <?= "PHP_MAJOR_VERSION " . PHP_MAJOR_VERSION ?> -->
 <style>
     <?
