@@ -13,6 +13,7 @@
               <li> <a href="/catalog/operator_panels/"> Панели оператора </a>
                 <ul>
                   <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/operator_panels/?&brand=weintek" class="item-active">Weintek</a> </li>
+                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/operator_panels/?&brand=spiktek">Spiktek</a> </li>
                   <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/operator_panels/?&brand=samkoon">Samkoon</a> </li>
                 </ul>
               </li>
@@ -22,8 +23,8 @@
             <ul>
               <li> <a href="/catalog/panel_computers/"> Панельные компьютеры </a>
                 <ul>
-                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/panel_computers/?&brand=aplex">Aplex</a> </li>
                   <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/panel_computers/?&brand=ifc">IFC</a> </li>
+                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/panel_computers/?&brand=aplex">Aplex</a> </li>
                 </ul>
               </li>
             </ul>
@@ -41,6 +42,10 @@
           <li class="footer__cataloge_list_item">
             <ul>
               <li> <a href="/catalog/industrial-computers/"> Промышленные компьютеры </a> </li>
+                <ul>
+                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/industrial-computers/?&brand=ifc">IFC</a> </li>
+                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/industrial-computers/?&brand=aplex">Aplex</a> </li>
+                </ul>
             </ul>
           </li>
           <li class="footer__cataloge_list_item">
@@ -49,27 +54,33 @@
                 <ul>
                   <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/industrial_monitors/?&brand=ifc">IFC</a> </li>
                   <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/industrial_monitors/?&brand=aplex">Aplex</a> </li>
-                  <li class="footer__cataloge_list_item_subitem"> <a href="/catalog/industrial_monitors/?&brand=weintek">Weintek</a> </li>
                 </ul>
               </li>
             </ul>
           </li>
           <li class="footer__cataloge_list_item">
             <ul>
-              <li> <a href="/catalog/vpn_routers/"> VPN роутеры<br>
-                <b>eWON</b> </a> </li>
+              <li> <a href="/catalog/search/?search=(w)"> Web-панели</a> </li>
             </ul>
           </li>
           <li class="footer__cataloge_list_item">
             <ul>
-              <li> <a href="/catalog/modules_io/"> Модули ввода-вывода<br>
-                <b>Weintek</b> </a> </li>
+              <li> <a href="/catalog/industrial-communication-equipment/"> Промышленное коммуникационное оборудование</a> </li>
             </ul>
           </li>
           <li class="footer__cataloge_list_item">
             <ul>
-              <li> <a href="/catalog/power_supplies/"> Блоки питания<br>
-                <b>Faraday</b> </a> </li>
+              <li> <a href="/catalog/modules_io/"> Модули ввода-вывода <b>Weintek</b> </a> </li>
+            </ul>
+          </li>
+          <li class="footer__cataloge_list_item">
+            <ul>
+              <li> <a href="/catalog/gateways/"> Шлюзы данных <b>Weintek</b> </a> </li>
+            </ul>
+          </li>
+          <li class="footer__cataloge_list_item">
+            <ul>
+              <li> <a href="/catalog/power_supplies/"> Блоки питания <b>Faraday</b> </a> </li>
             </ul>
           </li>
           <li class="footer__cataloge_list_item">
@@ -91,6 +102,9 @@
           <li class="footer__cataloge_list_item"> <a href="/forum/">Форум</a> </li>
           <li class="footer__cataloge_list_item"> <a href="/contacts/">Контакты</a> </li>
           <li class="footer__cataloge_list_item"> <a href="/sitemap/">Карта сайта</a> </li>
+          <li class="footer__cataloge_list_item"> <a href="/about/privacy/">Политика конфиденциальности</a> </li>
+          <li class="footer__cataloge_list_item"> <a href="/about/privacy/cookies">Согласие на обработку данных</a> </li>
+          <!--li class="footer__cataloge_list_item"> <a href="/privacy/">Политика конфиденциальности</a> </li-->
 
         </ul>
       </div>
@@ -135,4 +149,9 @@
                     class="nowrap">публичной офертой.</span> </p>
     <p class="has-text-right"> &copy;&nbsp;ООО&nbsp;«Русавтоматика»&nbsp;2008-<?php echo date('Y'); ?> </p>
   </div>
-</div>
+</div><? if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net'): ?>
+<div class="cookie-container">
+<div id="cookie-banner">
+    Мы используем cookie для улучшения качества пользования сайтом. 
+    <span class="btn-cookie accept">Принимаю</span>  <span class="btn-cookie close"><i class="fa-solid fa-xmark fa-2xl"></i></span>
+</div></div>	<? endif;?>
