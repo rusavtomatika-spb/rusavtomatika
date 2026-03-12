@@ -1,6 +1,6 @@
 <?php
 $valid_username = 'admin';
-$valid_password = 'BqpUXC';
+$valid_password = '$EcV|vbuj|Xf';
 
 $search_bots = [
     'Googlebot',
