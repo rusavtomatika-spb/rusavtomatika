@@ -1,7 +1,16 @@
 <?php
+ob_start();
+
+session_start();
+
+$_SESSION['last_editor_ip'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+$_SESSION['last_editor_user'] = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'unknown';
+$_SESSION['last_editor_time'] = time();
+
 header( "Cache-Control: no-store, no-cache, must-revalidate" );
 header( "Expires: " . date( "r" ) );
 @header( "Content-Type: text/html; charset=utf-8" );
+
 define( 'admin', true );
 //if (1) {
 ini_set( 'error_reporting', E_ALL );

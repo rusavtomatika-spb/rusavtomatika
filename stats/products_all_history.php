@@ -35,31 +35,44 @@ class Core_database_products_all_history
         return mysqli_fetch_assoc($result);
     }
     
-    public static function get_detailed_changes($date, $limit = 100)
+    public static function get_detailed_changes($date, $limit = 50)
     {
         global $mysqli_db;
         
         $date = mysqli_real_escape_string($mysqli_db, $date);
         $limit = (int)$limit;
         
-        $query = "SELECT h.*, 
-                    p.brand, p.type, p.series, p.pic_small
-                  FROM `" . self::$history_table . "` h
-                  LEFT JOIN products_all p ON h.model = p.model
-                  WHERE DATE(h.changed_at) = '" . $date . "'
-                  ORDER BY h.changed_at DESC
-                  LIMIT " . $limit;
+        $query = "SELECT 
+                    h.id,
+                    h.model,
+                    h.changed_at,
+                    h.field_name,
+                    h.old_value,
+                    h.new_value,
+                    h.action_type,
+                    h.user_ip,
+                    h.admin_user,
+                    p.brand, 
+                    p.type, 
+                    p.series, 
+                    p.pic_small
+                FROM `" . self::$history_table . "` h
+                LEFT JOIN products_all p ON h.model = p.model
+                WHERE DATE(h.changed_at) = '" . $date . "'
+                ORDER BY h.changed_at DESC
+                LIMIT " . $limit;
         
         $result = mysqli_query($mysqli_db, $query);
         
+        if (!$result) {
+            return [];
+        }
+        
         $changes = [];
         while ($row = mysqli_fetch_assoc($result)) {
-            if (isset($row['old_value']) && strlen($row['old_value']) > 100) {
-                $row['old_value'] = substr($row['old_value'], 0, 100) . '...';
-            }
-            if (isset($row['new_value']) && strlen($row['new_value']) > 100) {
-                $row['new_value'] = substr($row['new_value'], 0, 100) . '...';
-            }
+            if (!isset($row['admin_user'])) $row['admin_user'] = '-';
+            if (!isset($row['user_ip'])) $row['user_ip'] = '-';
+            
             $changes[] = $row;
         }
         
