@@ -80,6 +80,7 @@ section.cloud_tags {
   justify-content: center;
 }
 #glide_brands_gallery_tray a.brand_slide img {
+  height: 34px;
   margin: 0 auto;
   transform: scale(0.9);
 }
@@ -423,8 +424,11 @@ a.bright_text:hover {
   }
 }
 @media (max-width: 480px) {
+  #main_page__block_big_slider {
+    min-height: auto;
+  }
   #glide_brands_gallery_tray .glide__slides a {
-    height: 50px;
+    height: 40px;
   }
 }
 
