@@ -65,7 +65,7 @@ class c_updater_destination
         $out = ["reply" => 'take_settings', "settings" => $content->settings];
         return json_encode($out);
     }
-
+	
     public function update_database()
     {
         ob_start();
@@ -86,14 +86,14 @@ class c_updater_destination
         $dtb = date('Y-m-d');
         $dump_file_short = $dump_file;
         //$dump_file = LOCAL_TEMPORARY_FOLDER . $dump_file;
-        $db = mysql_connect(LOCAL_DB_SERVER, LOCAL_DB_USER, LOCAL_DB_PASSWORD); // Соединяемся с сервером БД
+        $db = mysql_connect(LOCAL_DB_SERVER, LOCAL_DB_USER, LOCAL_DB_PASSWORD); // РЎРѕРµРґРёРЅСЏРµРјСЃСЏ СЃ СЃРµСЂРІРµСЂРѕРј Р‘Р”
         if (!$db) {
             print("Database connection failed.");
         } else {
-            if (!mysql_select_db(LOCAL_DB_DBNAME)) { // Если нет такой БД
+            if (!mysql_select_db(LOCAL_DB_DBNAME)) { // Р•СЃР»Рё РЅРµС‚ С‚Р°РєРѕР№ Р‘Р”
                 print("Database select failed.");
             } else {
-
+                print("Database connection good.");
                 mysql_query("SET NAMES 'cp1251'");
 
 
@@ -117,8 +117,8 @@ class c_updater_destination
                         };
                         $qk++;
                     };
-// Конец загрузки временных таблиц
-// Перенос в основные таблицы
+// РљРѕРЅРµС† Р·Р°РіСЂСѓР·РєРё РІСЂРµРјРµРЅРЅС‹С… С‚Р°Р±Р»РёС†
+// РџРµСЂРµРЅРѕСЃ РІ РѕСЃРЅРѕРІРЅС‹Рµ С‚Р°Р±Р»РёС†С‹
                     if (!mysql_error()) {
                         $query = "SHOW TABLES LIKE '%_temp';";
                         $r = mysql_query($query) or die("error 2");
@@ -153,7 +153,7 @@ class c_updater_destination
                                             $query = "SELECT  `index` ,  `model` ,  `onstock` ,  `show_on_stock`, `onstock_spb` ,  `onstock_msk` ,  `onstock_kiv` ,  `onstock_ptg` ,  `res_onstock_spb` , `res_onstock_msk` ,  `res_onstock_kiv` ,  `res_onstock_ptg`  FROM  `{$tableOriginal}`;";
                                             $query_result = mysql_query($query) or die("error 5");
                                             $j = mysql_num_rows($query_result);
-
+                                                    $ro111 = mysql_fetch_assoc($query_result);
 
                                             if (!mysql_error()) {
                                                 for ($i = 0; $i < $j; $i++) {
@@ -164,17 +164,16 @@ class c_updater_destination
                                                     $q = mysql_num_rows($query_re);
 
                                                     if ($q > 0) {
-//                                                    $qp = "UPDATE `{$tableOriginal}_temp` SET `onstock`='{$ro[onstock]}', `show_on_stock`='{$ro[show_on_stock]}', `onstock_spb` ='{$ro[onstock_spb]}',  `onstock_msk` ='{$ro[onstock_msk]}',  `onstock_kiv` ='{$ro[onstock_kiv]}',  `onstock_ptg` ='{$ro[onstock_ptg]}',  `res_onstock_spb` ='{$ro[res_onstock_spb]}', `res_onstock_msk` ='{$ro[res_onstock_msk]}',  `res_onstock_kiv` ='{$ro[res_onstock_kiv]}',  `res_onstock_ptg` ='{$ro[res_onstock_ptg]}',  `retail_price` ='{$ro[retail_price]}' WHERE `{$tableOriginal}_temp`.`model` = '{$ro[model]}';";
-                                                        $qp = "UPDATE `{$tableOriginal}_temp` SET `onstock`='{$ro[onstock]}', `show_on_stock`='{$ro[show_on_stock]}', `onstock_spb` ='{$ro[onstock_spb]}',  `onstock_msk` ='{$ro[onstock_msk]}',  `onstock_kiv` ='{$ro[onstock_kiv]}',  `onstock_ptg` ='{$ro[onstock_ptg]}',  `res_onstock_spb` ='{$ro[res_onstock_spb]}', `res_onstock_msk` ='{$ro[res_onstock_msk]}',  `res_onstock_kiv` ='{$ro[res_onstock_kiv]}',  `res_onstock_ptg` ='{$ro[res_onstock_ptg]}' WHERE `{$tableOriginal}_temp`.`model` = '{$ro[model]}';";
-
+                                                        $qp = "UPDATE `{$tableOriginal}_temp` SET `onstock`={$ro[onstock]}, `onstock_spb` ={$ro[onstock_spb]},  `onstock_msk` ={$ro[onstock_msk]},  `onstock_kiv` ={$ro[onstock_kiv]},  `onstock_ptg` ={$ro[onstock_ptg]},  `res_onstock_spb` ={$ro[res_onstock_spb]}, `res_onstock_msk` ={$ro[res_onstock_msk]},  `res_onstock_kiv` ={$ro[res_onstock_kiv]},  `res_onstock_ptg` ={$ro[res_onstock_ptg]} WHERE `{$tableOriginal}_temp`.`model` = '{$ro[model]}';";
+//
                                                         $queryp = mysql_query($qp) or die("error 7");
 
                                                         if ($q != 1) {
 
-                                                            $mess .= '<br />' . $ro[model] . ' - ' . $q . ' записей в новой базе данных<br />';
+                                                            $mess .= '<br />' . $ro[model] . ' - ' . $q . ' Р·Р°РїРёСЃРµР№ РІ РЅРѕРІРѕР№ Р±Р°Р·Рµ РґР°РЅРЅС‹С…<br />';
                                                         };
                                                     } else {
-                                                        $mess .= '<br />' . $ro[model] . ' - ' . $q . ' записей в новой базе данных<br />';
+                                                        $mess .= '<br />' . $ro[model] . ' - ' . $q . ' Р·Р°РїРёСЃРµР№ РІ РЅРѕРІРѕР№ Р±Р°Р·Рµ РґР°РЅРЅС‹С…<br />';
                                                     };
                                                 };
                                             };
@@ -206,15 +205,17 @@ class c_updater_destination
                                 $success = TRUE;
                                 //!!!!!!!!!!
                                 //get_current_versions_html();
+					$errors = file_get_contents(__DIR__ . '/../error_log');
+					echo 'Р›РѕРі РѕС€РёР±РѕРє: <br>'.$errors;
 
                             };
                         };
                     } else {
                         echo 'ended error 2';
                     };
-                    $mess .= '<br />Конец обновления базы данных<br />';
+                    $mess .= '<br />РљРѕРЅРµС† РѕР±РЅРѕРІР»РµРЅРёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…<br />';
                 } else {
-                    $mess .= 'Файл с выгрузкой базы данных ' . $dump_file . ' не найден! База данных обновляться не будет!<br />';
+                    $mess .= 'Р¤Р°Р№Р» СЃ РІС‹РіСЂСѓР·РєРѕР№ Р±Р°Р·С‹ РґР°РЅРЅС‹С… ' . $dump_file . ' РЅРµ РЅР°Р№РґРµРЅ! Р‘Р°Р·Р° РґР°РЅРЅС‹С… РѕР±РЅРѕРІР»СЏС‚СЊСЃСЏ РЅРµ Р±СѓРґРµС‚!<br />';
                 }
             };
         }
@@ -308,25 +309,25 @@ class c_updater_destination
         };
         /*       switch (json_last_error()) {
                    case JSON_ERROR_NONE:
-                       echo ' - Ошибок нет';
+                       echo ' - РћС€РёР±РѕРє РЅРµС‚';
                        break;
                    case JSON_ERROR_DEPTH:
-                       echo ' - Достигнута максимальная глубина стека';
+                       echo ' - Р”РѕСЃС‚РёРіРЅСѓС‚Р° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РіР»СѓР±РёРЅР° СЃС‚РµРєР°';
                        break;
                    case JSON_ERROR_STATE_MISMATCH:
-                       echo ' - Некорректные разряды или несоответствие режимов';
+                       echo ' - РќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ СЂР°Р·СЂСЏРґС‹ РёР»Рё РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂРµР¶РёРјРѕРІ';
                        break;
                    case JSON_ERROR_CTRL_CHAR:
-                       echo ' - Некорректный управляющий символ';
+                       echo ' - РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ СѓРїСЂР°РІР»СЏСЋС‰РёР№ СЃРёРјРІРѕР»';
                        break;
                    case JSON_ERROR_SYNTAX:
-                       echo ' - Синтаксическая ошибка, некорректный JSON';
+                       echo ' - РЎРёРЅС‚Р°РєСЃРёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°, РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ JSON';
                        break;
                    case JSON_ERROR_UTF8:
-                       echo ' - Некорректные символы UTF-8, возможно неверно закодирован';
+                       echo ' - РќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ СЃРёРјРІРѕР»С‹ UTF-8, РІРѕР·РјРѕР¶РЅРѕ РЅРµРІРµСЂРЅРѕ Р·Р°РєРѕРґРёСЂРѕРІР°РЅ';
                        break;
                    default:
-                       echo ' - Неизвестная ошибка';
+                       echo ' - РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°';
                        break;
                }*/
 
