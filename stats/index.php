@@ -5,7 +5,7 @@ ini_set('memory_limit', '256M');
 
 require_once(__DIR__ . '/auth.php');
 require_once(__DIR__ . '/direct_db.php');
-require_once(__DIR__ . '/products_all_history.php');
+require_once(__DIR__ . '/goods_changes_history.php');
 
 global $mysqli_db;
 if (!$mysqli_db) {
@@ -15,11 +15,11 @@ if (!$mysqli_db) {
 $period = isset($_GET['period']) ? (int)$_GET['period'] : 30;
 $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 
-$today_stats = Core_database_products_all_history::get_changes_count_by_date($date);
-$period_stats = Core_database_products_all_history::get_changes_by_period($period);
-$recent_products = Core_database_products_all_history::get_recently_changed_products(10);
-$top_fields = Core_database_products_all_history::get_top_changed_fields(10);
-$detailed = Core_database_products_all_history::get_detailed_changes($date, 50);
+$today_stats = Core_database_goods_changes_history::get_changes_count_by_date($date);
+$period_stats = Core_database_goods_changes_history::get_changes_by_period($period);
+$recent_products = Core_database_goods_changes_history::get_recently_changed_products(10);
+$top_fields = Core_database_goods_changes_history::get_top_changed_fields(10);
+$detailed = Core_database_goods_changes_history::get_detailed_changes($date, 50);
 ?>
 
 <?php if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net' || $_SERVER['SERVER_NAME'] == 'www.test.rusavtomatika.com') : ?>

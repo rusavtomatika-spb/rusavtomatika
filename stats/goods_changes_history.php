@@ -1,8 +1,8 @@
 <?php
 
-class Core_database_products_all_history
+class Core_database_goods_changes_history
 {
-    private static $history_table = 'products_all_history';
+    private static $history_table = 'goods_changes_history';
     
     public static function get_changes_count_by_date($date)
     {

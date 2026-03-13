@@ -310,39 +310,64 @@ class DBWORK {
         }
         
         if ($result) {
-            $new_data = $this->get_catalog_element_by_id($element_id);
+            $user_ip = 'unknown';
+            
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+                $user_ip = trim($ips[0]);
+            }
+            elseif (isset($_SERVER['HTTP_X_REAL_IP'])) {
+                $user_ip = $_SERVER['HTTP_X_REAL_IP'];
+            }
+            elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+                $user_ip = $_SERVER['HTTP_CLIENT_IP'];
+            }
+            elseif (isset($_SERVER['REMOTE_ADDR'])) {
+                $user_ip = $_SERVER['REMOTE_ADDR'];
+            }
             
             session_start();
-            $user_ip = isset($_SESSION['last_editor_ip']) ? $_SESSION['last_editor_ip'] : 
-                (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : 
-                (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown'));
             $admin_user = isset($_SESSION['last_editor_user']) ? $_SESSION['last_editor_user'] : 'unknown';
             
             $model_res = mysqli_query($mysqli_db, "SELECT model FROM products_all WHERE `index` = $element_id");
             if ($model_res && $model_row = mysqli_fetch_assoc($model_res)) {
                 $model = $model_row['model'];
                 
-                $fields_to_check = ['brand', 'type', 'series', 'price', 'name', 'description', 'keywords', 
-                                'title', 'h1', 'in_stock', 'show_on_stock', 'os_codes'];
+                $model_safe = mysqli_real_escape_string($mysqli_db, $model);
+                $ip_safe = mysqli_real_escape_string($mysqli_db, $user_ip);
+                $user_safe = mysqli_real_escape_string($mysqli_db, $admin_user);
                 
-                foreach ($fields_to_check as $field) {
+                $history_query = "INSERT INTO products_all_history 
+                    (model, field_name, action_type, user_ip, admin_user) 
+                    VALUES 
+                    ('$model_safe', 'product_edited', 'update', '$ip_safe', '$user_safe')";
+                
+                mysqli_query($mysqli_db, $history_query);
+                
+                $fields_to_track = ['brand', 'type', 'series', 'price', 'show_on_stock', 'os_codes', 
+                                    'name', 'description', 'keywords', 'title', 'h1', 'in_stock'];
+                
+                foreach ($fields_to_track as $field) {
                     $old_val = isset($old_data[$field]) ? $old_data[$field] : '';
-                    $new_val = isset($new_data[$field]) ? $new_data[$field] : '';
                     
-                    if ($old_val != $new_val) {
+                    $new_val = '';
+                    if (isset($arguments[$field])) {
+                        $new_val = $arguments[$field];
+                    } elseif (isset($arguments['field_' . $field])) {
+                        $new_val = $arguments['field_' . $field];
+                    }
+                    
+                    if ($old_val != $new_val && $new_val !== '') {
                         $field_safe = mysqli_real_escape_string($mysqli_db, $field);
                         $old_safe = mysqli_real_escape_string($mysqli_db, $old_val);
                         $new_safe = mysqli_real_escape_string($mysqli_db, $new_val);
-                        $ip_safe = mysqli_real_escape_string($mysqli_db, $user_ip);
-                        $user_safe = mysqli_real_escape_string($mysqli_db, $admin_user);
-                        $model_safe = mysqli_real_escape_string($mysqli_db, $model);
                         
-                        $history_query = "INSERT INTO products_all_history 
+                        $field_history = "INSERT INTO products_all_history 
                             (model, field_name, old_value, new_value, action_type, user_ip, admin_user) 
                             VALUES 
                             ('$model_safe', '$field_safe', '$old_safe', '$new_safe', 'update', '$ip_safe', '$user_safe')";
                         
-                        mysqli_query($mysqli_db, $history_query);
+                        mysqli_query($mysqli_db, $field_history);
                     }
                 }
             }
