@@ -310,39 +310,10 @@ class DBWORK {
         }
         
         if ($result) {
-            $user_ip = 'unknown';
-            
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-                $user_ip = trim($ips[0]);
-            }
-            elseif (isset($_SERVER['HTTP_X_REAL_IP'])) {
-                $user_ip = $_SERVER['HTTP_X_REAL_IP'];
-            }
-            elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
-                $user_ip = $_SERVER['HTTP_CLIENT_IP'];
-            }
-            elseif (isset($_SERVER['REMOTE_ADDR'])) {
-                $user_ip = $_SERVER['REMOTE_ADDR'];
-            }
-            
-            session_start();
-            $admin_user = isset($_SESSION['last_editor_user']) ? $_SESSION['last_editor_user'] : 'unknown';
-            
             $model_res = mysqli_query($mysqli_db, "SELECT model FROM products_all WHERE `index` = $element_id");
             if ($model_res && $model_row = mysqli_fetch_assoc($model_res)) {
                 $model = $model_row['model'];
-                
                 $model_safe = mysqli_real_escape_string($mysqli_db, $model);
-                $ip_safe = mysqli_real_escape_string($mysqli_db, $user_ip);
-                $user_safe = mysqli_real_escape_string($mysqli_db, $admin_user);
-                
-                $history_query = "INSERT INTO products_all_history 
-                    (model, field_name, action_type, user_ip, admin_user) 
-                    VALUES 
-                    ('$model_safe', 'product_edited', 'update', '$ip_safe', '$user_safe')";
-                
-                mysqli_query($mysqli_db, $history_query);
                 
                 $fields_to_track = ['brand', 'type', 'series', 'price', 'show_on_stock', 'os_codes', 
                                     'name', 'description', 'keywords', 'title', 'h1', 'in_stock'];
@@ -362,14 +333,18 @@ class DBWORK {
                         $old_safe = mysqli_real_escape_string($mysqli_db, $old_val);
                         $new_safe = mysqli_real_escape_string($mysqli_db, $new_val);
                         
-                        $field_history = "INSERT INTO products_all_history 
-                            (model, field_name, old_value, new_value, action_type, user_ip, admin_user) 
+                        $field_history = "INSERT INTO goods_changes_history 
+                            (model, field_name, old_value, new_value, action_type) 
                             VALUES 
-                            ('$model_safe', '$field_safe', '$old_safe', '$new_safe', 'update', '$ip_safe', '$user_safe')";
+                            ('$model_safe', '$field_safe', '$old_safe', '$new_safe', 'update')";
                         
                         mysqli_query($mysqli_db, $field_history);
                     }
                 }
+                
+                mysqli_query($mysqli_db, "INSERT INTO goods_changes_history 
+                    (model, field_name, action_type) 
+                    VALUES ('$model_safe', 'product_edited', 'update')");
             }
             
             $out["message"] = "Элемент " . $arguments['name'] . "($element_id)" . " сохранен.";

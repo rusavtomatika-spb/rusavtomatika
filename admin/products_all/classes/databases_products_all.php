@@ -121,9 +121,44 @@ class DBWORK {
         $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db) . "<br>" . $query);
 
         if ($result) {
+            $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = $element_id");
+            $old_data = mysqli_fetch_assoc($old_data_query);
+            
+            $model_res = mysqli_query($mysqli_db, "SELECT model FROM products_all WHERE `index` = $element_id");
+            if ($model_res && $model_row = mysqli_fetch_assoc($model_res)) {
+                $model = $model_row['model'];
+                $model_safe = mysqli_real_escape_string($mysqli_db, $model);
+                
+                foreach ($arguments as $key => $value) {
+                    if (strpos($key, "field_") === 0) {
+                        $field_name = substr($key, 6);
+                        $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
+                        $new_value = $value;
+                        
+                        if ($old_value != $new_value) {
+                            $field_safe = mysqli_real_escape_string($mysqli_db, $field_name);
+                            $old_safe = mysqli_real_escape_string($mysqli_db, $old_value);
+                            $new_safe = mysqli_real_escape_string($mysqli_db, $new_value);
+                            
+                            $insert = "INSERT INTO goods_changes_history 
+                                (model, field_name, old_value, new_value, action_type) 
+                                VALUES 
+                                ('$model_safe', '$field_safe', '$old_safe', '$new_safe', 'update')";
+                            
+                            mysqli_query($mysqli_db, $insert);
+                        }
+                    }
+                }
+                
+                mysqli_query($mysqli_db, "INSERT INTO goods_changes_history 
+                    (model, field_name, action_type) 
+                    VALUES ('$model_safe', 'product_edited', 'update')");
+            }
+            
             $out["message"] = "Элемент " . $arguments['field_model'] . " (ID: $element_id)" . " сохранен.";
             $out["element_id"] = $element_id;
             $out["success"] = true;
+            
             return $out;
         } else {
             $out["message"] = "Ошибка! Элемент " . $arguments['field_model'] . "($element_id)" . " не сохранен!<br>" . $this->query;
