@@ -4,9 +4,27 @@ class Core_database_goods_changes_history
 {
     private static $history_table = 'goods_changes_history';
     
+    private static function get_db_connection() {
+        $db_host = 'localhost';
+        $db_user = 'moisait_ilval';
+        $db_pass = 'ilval2398';
+        $db_name = 'moisait_weintek';
+        
+        $connection = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+        
+        if (!$connection) {
+            error_log("Test DB connection failed: " . mysqli_connect_error());
+            return false;
+        }
+        
+        mysqli_set_charset($connection, "utf8");
+        return $connection;
+    }
+    
     public static function get_changes_count_by_date($date)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return false;
         
         $date = mysqli_real_escape_string($mysqli_db, $date);
         
@@ -23,6 +41,7 @@ class Core_database_goods_changes_history
         
         $result = mysqli_query($mysqli_db, $query);
         if (!$result || mysqli_num_rows($result) == 0) {
+            mysqli_close($mysqli_db);
             return [
                 'total_changes' => 0, 
                 'affected_products' => 0,
@@ -32,12 +51,15 @@ class Core_database_goods_changes_history
             ];
         }
         
-        return mysqli_fetch_assoc($result);
+        $data = mysqli_fetch_assoc($result);
+        mysqli_close($mysqli_db);
+        return $data;
     }
     
     public static function get_detailed_changes($date, $limit = 50)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return [];
         
         $date = mysqli_real_escape_string($mysqli_db, $date);
         $limit = (int)$limit;
@@ -49,15 +71,8 @@ class Core_database_goods_changes_history
                     h.field_name,
                     h.old_value,
                     h.new_value,
-                    h.action_type,
-                    h.user_ip,
-                    h.admin_user,
-                    p.brand, 
-                    p.type, 
-                    p.series, 
-                    p.pic_small
+                    h.action_type
                 FROM `" . self::$history_table . "` h
-                LEFT JOIN products_all p ON h.model = p.model
                 WHERE DATE(h.changed_at) = '" . $date . "'
                 ORDER BY h.changed_at DESC
                 LIMIT " . $limit;
@@ -65,23 +80,23 @@ class Core_database_goods_changes_history
         $result = mysqli_query($mysqli_db, $query);
         
         if (!$result) {
+            mysqli_close($mysqli_db);
             return [];
         }
         
         $changes = [];
         while ($row = mysqli_fetch_assoc($result)) {
-            if (!isset($row['admin_user'])) $row['admin_user'] = '-';
-            if (!isset($row['user_ip'])) $row['user_ip'] = '-';
-            
             $changes[] = $row;
         }
         
+        mysqli_close($mysqli_db);
         return $changes;
     }
     
     public static function get_changes_by_period($days = 30)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return [];
         
         $days = (int)$days;
         
@@ -104,28 +119,25 @@ class Core_database_goods_changes_history
             $stats[] = $row;
         }
         
+        mysqli_close($mysqli_db);
         return $stats;
     }
     
     public static function get_recently_changed_products($limit = 20)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return [];
         
         $limit = (int)$limit;
         
         $query = "SELECT 
-                    h.model,
-                    p.brand,
-                    p.type,
-                    p.series,
-                    p.pic_small,
-                    MAX(h.changed_at) as last_change,
+                    model,
+                    MAX(changed_at) as last_change,
                     COUNT(*) as total_changes,
-                    GROUP_CONCAT(DISTINCT h.field_name SEPARATOR ', ') as changed_fields
-                  FROM `" . self::$history_table . "` h
-                  LEFT JOIN products_all p ON h.model = p.model
-                  WHERE h.field_name NOT IN ('NEW_PRODUCT', 'DELETE')
-                  GROUP BY h.model
+                    GROUP_CONCAT(DISTINCT field_name SEPARATOR ', ') as changed_fields
+                  FROM `" . self::$history_table . "` 
+                  WHERE field_name NOT IN ('NEW_PRODUCT', 'DELETE')
+                  GROUP BY model
                   ORDER BY last_change DESC
                   LIMIT " . $limit;
         
@@ -136,12 +148,14 @@ class Core_database_goods_changes_history
             $products[] = $row;
         }
         
+        mysqli_close($mysqli_db);
         return $products;
     }
     
     public static function get_product_history($model, $limit = 50)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return [];
         
         $model = mysqli_real_escape_string($mysqli_db, $model);
         $limit = (int)$limit;
@@ -158,12 +172,14 @@ class Core_database_goods_changes_history
             $history[] = $row;
         }
         
+        mysqli_close($mysqli_db);
         return $history;
     }
     
     public static function get_top_changed_fields($limit = 20)
     {
-        global $mysqli_db;
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return [];
         
         $limit = (int)$limit;
         
@@ -184,6 +200,29 @@ class Core_database_goods_changes_history
             $fields[] = $row;
         }
         
+        mysqli_close($mysqli_db);
         return $fields;
+    }
+    
+    public static function save_change($model, $field_name, $old_value, $new_value, $action_type = 'update')
+    {
+        $mysqli_db = self::get_db_connection();
+        if (!$mysqli_db) return false;
+        
+        $model = mysqli_real_escape_string($mysqli_db, $model);
+        $field_name = mysqli_real_escape_string($mysqli_db, $field_name);
+        $old_value = mysqli_real_escape_string($mysqli_db, $old_value);
+        $new_value = mysqli_real_escape_string($mysqli_db, $new_value);
+        $action_type = mysqli_real_escape_string($mysqli_db, $action_type);
+        
+        $query = "INSERT INTO `" . self::$history_table . "` 
+                  (model, field_name, old_value, new_value, action_type, changed_at) 
+                  VALUES 
+                  ('$model', '$field_name', '$old_value', '$new_value', '$action_type', NOW())";
+        
+        $result = mysqli_query($mysqli_db, $query);
+        
+        mysqli_close($mysqli_db);
+        return $result;
     }
 }

@@ -3,6 +3,8 @@
 if (!defined('admin'))
     exit;
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/stats/goods_changes_history.php');
+
 class DBWORK {
 
     // объявление свойства
@@ -93,75 +95,91 @@ class DBWORK {
 
 
     public function edit_catalog_element($element_id, $arguments) {
-
-
         global $db;
         $out["errors"] = "";
+        
         if (!isset($arguments["field_model"])) {
             $out["success"] = false;
             $out["errors"] = " Имя ";
-        }
-        if ($out["errors"] != "") {
             return $out;
         }
+        
+        database_connect();
+        global $mysqli_db;
+        
+        $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
+        if (!$old_data_query) {
+            $out["message"] = "Ошибка получения данных: " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+        
+        $old_data = mysqli_fetch_assoc($old_data_query);
+        $model = isset($old_data['model']) ? $old_data['model'] : '';
+        
         $query = "UPDATE `products_all` SET ";
+        $update_fields = array();
+        
         foreach ($arguments as $key => $value) {
             if (strpos($key, "field_") !== false) {
                 $real_field_name = substr($key, 6);
-//                $query .= "`" . $real_field_name . "` = '" . addslashes(html_entity_decode($arguments[$key])) . "',";
-                $query .= "`" . $real_field_name . "` = '" . addslashes(($arguments[$key])) . "',";
+                $update_fields[] = "`" . $real_field_name . "` = '" . addslashes($value) . "'";
             }
         }
-        $query = substr($query, 0, -1);
+        
+        $query .= implode(", ", $update_fields);
         $query .= " WHERE `index` = '$element_id';";
 
-        database_connect();
-        global $mysqli_db;
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db) . "<br>" . $query);
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $result = mysqli_query($mysqli_db, $query);
 
         if ($result) {
-            $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = $element_id");
-            $old_data = mysqli_fetch_assoc($old_data_query);
+            $changes_count = 0;
+            $changed_fields = array();
             
-            $model_res = mysqli_query($mysqli_db, "SELECT model FROM products_all WHERE `index` = $element_id");
-            if ($model_res && $model_row = mysqli_fetch_assoc($model_res)) {
-                $model = $model_row['model'];
-                $model_safe = mysqli_real_escape_string($mysqli_db, $model);
-                
-                foreach ($arguments as $key => $value) {
-                    if (strpos($key, "field_") === 0) {
-                        $field_name = substr($key, 6);
-                        $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
-                        $new_value = $value;
-                        
-                        if ($old_value != $new_value) {
-                            $field_safe = mysqli_real_escape_string($mysqli_db, $field_name);
-                            $old_safe = mysqli_real_escape_string($mysqli_db, $old_value);
-                            $new_safe = mysqli_real_escape_string($mysqli_db, $new_value);
-                            
-                            $insert = "INSERT INTO goods_changes_history 
-                                (model, field_name, old_value, new_value, action_type) 
-                                VALUES 
-                                ('$model_safe', '$field_safe', '$old_safe', '$new_safe', 'update')";
-                            
-                            mysqli_query($mysqli_db, $insert);
-                        }
-                    }
+            $new_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
+            $new_data = mysqli_fetch_assoc($new_data_query);
+            
+            $all_possible_fields = array();
+            foreach ($arguments as $key => $value) {
+                if (strpos($key, "field_") === 0) {
+                    $field_name = substr($key, 6);
+                    $all_possible_fields[$field_name] = true;
                 }
-                
-                mysqli_query($mysqli_db, "INSERT INTO goods_changes_history 
-                    (model, field_name, action_type) 
-                    VALUES ('$model_safe', 'product_edited', 'update')");
             }
             
-            $out["message"] = "Элемент " . $arguments['field_model'] . " (ID: $element_id)" . " сохранен.";
+            foreach ($all_possible_fields as $field_name => $dummy) {
+                if (isset($old_data[$field_name]) || isset($new_data[$field_name])) {
+                    $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
+                    $new_value = isset($new_data[$field_name]) ? $new_data[$field_name] : '';
+                    
+                    $old_str = (string)$old_value;
+                    $new_str = (string)$new_value;
+                    
+                    if ($old_str !== $new_str) {
+                        Core_database_goods_changes_history::save_change(
+                            $model,
+                            $field_name,
+                            $old_value,
+                            $new_value,
+                            'update'
+                        );
+                        
+                        $changes_count++;
+                        $changed_fields[] = $field_name;
+                    }
+                }
+            }
+            
+            $field_model = isset($arguments['field_model']) ? $arguments['field_model'] : '';
+            $out["message"] = "Элемент " . $field_model . " (ID: $element_id) сохранен. Изменений: $changes_count";
             $out["element_id"] = $element_id;
             $out["success"] = true;
+            $out["changes_count"] = $changes_count;
             
             return $out;
         } else {
-            $out["message"] = "Ошибка! Элемент " . $arguments['field_model'] . "($element_id)" . " не сохранен!<br>" . $this->query;
+            $out["message"] = "Ошибка! Элемент не сохранен! " . mysqli_error($mysqli_db);
             $out["success"] = false;
             return $out;
         }

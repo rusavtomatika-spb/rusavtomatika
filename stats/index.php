@@ -4,12 +4,10 @@ error_reporting(E_ALL);
 ini_set('memory_limit', '256M');
 
 require_once(__DIR__ . '/auth.php');
-require_once(__DIR__ . '/direct_db.php');
 require_once(__DIR__ . '/goods_changes_history.php');
 
-global $mysqli_db;
-if (!$mysqli_db) {
-    die('Database connection failed');
+if (!class_exists('Core_database_goods_changes_history')) {
+    die('Класс истории изменений не найден');
 }
 
 $period = isset($_GET['period']) ? (int)$_GET['period'] : 30;
@@ -22,7 +20,6 @@ $top_fields = Core_database_goods_changes_history::get_top_changed_fields(10);
 $detailed = Core_database_goods_changes_history::get_detailed_changes($date, 50);
 ?>
 
-<?php if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net' || $_SERVER['SERVER_NAME'] == 'www.test.rusavtomatika.com') : ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -166,8 +163,6 @@ $detailed = Core_database_goods_changes_history::get_detailed_changes($date, 50)
                     <th>Поле</th>
                     <th>Было</th>
                     <th>Стало</th>
-                    <th>Пользователь</th>
-                    <th>IP</th>
                 </tr>
             </thead>
             <tbody>
@@ -187,8 +182,6 @@ $detailed = Core_database_goods_changes_history::get_detailed_changes($date, 50)
                     <td><?= htmlspecialchars($change['field_name']) ?></td>
                     <td><?= htmlspecialchars(isset($change['old_value']) ? mb_substr($change['old_value'], 0, 30) : '-') ?></td>
                     <td><?= htmlspecialchars(isset($change['new_value']) ? mb_substr($change['new_value'], 0, 30) : '-') ?></td>
-                    <td><?= htmlspecialchars(isset($change['admin_user']) ? $change['admin_user'] : '-') ?></td>
-                    <td><?= htmlspecialchars(isset($change['user_ip']) ? $change['user_ip'] : '-') ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -196,4 +189,3 @@ $detailed = Core_database_goods_changes_history::get_detailed_changes($date, 50)
     </div>
 </body>
 </html>
-<?php endif; ?>

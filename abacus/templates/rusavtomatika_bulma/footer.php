@@ -37,7 +37,7 @@ endif;
         window.addEventListener('load', function() {
             setTimeout(function() {
                 var script = document.createElement('script');
-                script.src = 'https://sss55.space/weinbot-plugin-1.0.0.js';
+                script.src = 'https://chatbot.weincloud.net/weinbot-plugin.js';
                 script.async = true;
                 document.body.appendChild(script);
             }, 3000);
