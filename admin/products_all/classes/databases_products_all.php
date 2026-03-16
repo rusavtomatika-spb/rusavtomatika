@@ -24,7 +24,6 @@ class DBWORK {
         }
     }
 
-    // объявление метода
     public function add_catalog_section($arguments) {
         global $db;
         $errors = "";
@@ -91,98 +90,6 @@ class DBWORK {
         echo $query = "UPDATE `products_all` SET `pics_number` = `pics_number`+1 WHERE `index` = '$product_id';";
         $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db) . "<br>" . $query);
         
-    }
-
-
-    public function edit_catalog_element($element_id, $arguments) {
-        global $db;
-        $out["errors"] = "";
-        
-        if (!isset($arguments["field_model"])) {
-            $out["success"] = false;
-            $out["errors"] = " Имя ";
-            return $out;
-        }
-        
-        database_connect();
-        global $mysqli_db;
-        
-        $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
-        if (!$old_data_query) {
-            $out["message"] = "Ошибка получения данных: " . mysqli_error($mysqli_db);
-            $out["success"] = false;
-            return $out;
-        }
-        
-        $old_data = mysqli_fetch_assoc($old_data_query);
-        $model = isset($old_data['model']) ? $old_data['model'] : '';
-        
-        $query = "UPDATE `products_all` SET ";
-        $update_fields = array();
-        
-        foreach ($arguments as $key => $value) {
-            if (strpos($key, "field_") !== false) {
-                $real_field_name = substr($key, 6);
-                $update_fields[] = "`" . $real_field_name . "` = '" . addslashes($value) . "'";
-            }
-        }
-        
-        $query .= implode(", ", $update_fields);
-        $query .= " WHERE `index` = '$element_id';";
-
-        mysqli_query($mysqli_db, "SET NAMES utf8");
-        $result = mysqli_query($mysqli_db, $query);
-
-        if ($result) {
-            $changes_count = 0;
-            $changed_fields = array();
-            
-            $new_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
-            $new_data = mysqli_fetch_assoc($new_data_query);
-            
-            $all_possible_fields = array();
-            foreach ($arguments as $key => $value) {
-                if (strpos($key, "field_") === 0) {
-                    $field_name = substr($key, 6);
-                    $all_possible_fields[$field_name] = true;
-                }
-            }
-            
-            foreach ($all_possible_fields as $field_name => $dummy) {
-                if (isset($old_data[$field_name]) || isset($new_data[$field_name])) {
-                    $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
-                    $new_value = isset($new_data[$field_name]) ? $new_data[$field_name] : '';
-                    
-                    $old_str = (string)$old_value;
-                    $new_str = (string)$new_value;
-                    
-                    if ($old_str !== $new_str) {
-                        Core_database_goods_changes_history::save_change(
-                            $model,
-                            $field_name,
-                            $old_value,
-                            $new_value,
-                            'update'
-                        );
-                        
-                        $changes_count++;
-                        $changed_fields[] = $field_name;
-                    }
-                }
-            }
-            
-            $field_model = isset($arguments['field_model']) ? $arguments['field_model'] : '';
-            $out["message"] = "Элемент " . $field_model . " (ID: $element_id) сохранен. Изменений: $changes_count";
-            $out["element_id"] = $element_id;
-            $out["success"] = true;
-            $out["changes_count"] = $changes_count;
-            
-            return $out;
-        } else {
-            $out["message"] = "Ошибка! Элемент не сохранен! " . mysqli_error($mysqli_db);
-            $out["success"] = false;
-            return $out;
-        }
     }
 
     public function save_catalog_section_fields_text_value($element_id, $field_id, $value = "", $value_rus = "") {
@@ -686,59 +593,6 @@ class DBWORK {
         }
     }
 
-    public function add_catalog_element($arguments) {
-        $errors = "";
-        if ($arguments["name"] == "") {
-            $success = false;
-            $errors = " Имя ";
-        }
-        if ($arguments["code"] == "") {
-            $success = false;
-            $errors .= " Код";
-        }
-        if ($arguments["section_code"] == "") {
-            $success = false;
-            $errors .= " Код родительского раздела ";
-        }
-        if ($errors) {
-            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
-            $out["success"] = false;
-            return $out;
-        }
-
-        $ptn = "/[^a-zA-Zа-яА-ЯЁё0-9&\/ ]/w";
-        $this->query = "INSERT INTO `$this->ib_catalog_elements`" .
-                " (`id`, `name`, `h1`, `code`, `section_code`, `picture_preview`, `picture_detail`, `text_preview`, `text_detail`, `price`, `in_stock`, `title`, `description`, `keywords`)" .
-                " VALUES (NULL, '" . strip_tags($arguments['name']) .
-                "', '" . strip_tags($arguments['h1']) .
-                "', '" . strip_tags($arguments['code']) .
-                "', '" . strip_tags($arguments['section_code']) .
-                "', '" . addslashes($arguments['picture_preview']) .
-                "', '" . addslashes($arguments['picture_detail']) .
-                "', '" . addslashes($arguments['text_preview']) .
-                "', '" . addslashes($arguments['text_detail']) .
-                "', '" . addslashes($arguments['price']) .
-                "', '" . addslashes($arguments['in_stock']) .
-                "', '" . addslashes(strip_tags($arguments['title'])) .
-                "', '" . addslashes(strip_tags($arguments['description'])) .
-                "', '" . addslashes(strip_tags($arguments['keywords'])) .
-                "');";
-        database_connect();
-        global $mysqli_db;
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $result = mysqli_query($mysqli_db,$this->query) or die("Invalid query: " . mysqli_error($mysqli_db));
-
-        if ($result) {
-            $out["message"] = "Элемент " . $arguments['name'] . " добавлен.";
-            $out["success"] = true;
-            return $out;
-        } else {
-            $out["message"] = "Ошибка! Элемент " . $arguments['name'] . " не добавлен!";
-            $out["success"] = false;
-            return $out;
-        }
-    }
-
     public function delete_catalog_element($id) {
 
         if ($id > 0) {
@@ -963,15 +817,142 @@ class DBWORK {
         }
     }
 
+    
+    // Используемые в админке методы
+
+    public function edit_catalog_element($element_id, $arguments) {
+        global $db;
+        $out["errors"] = "";
+        
+        if (!isset($arguments["field_model"])) {
+            $out["success"] = false;
+            $out["errors"] = " Имя ";
+            return $out;
+        }
+        
+        database_connect();
+        global $mysqli_db;
+        
+        $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
+        if (!$old_data_query) {
+            $out["message"] = "Ошибка получения данных: " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+        
+        $old_data = mysqli_fetch_assoc($old_data_query);
+        $model = isset($old_data['model']) ? $old_data['model'] : '';
+        
+        $query = "UPDATE `products_all` SET ";
+        $update_fields = array();
+        
+        foreach ($arguments as $key => $value) {
+            if (strpos($key, "field_") !== false) {
+                $real_field_name = substr($key, 6);
+                $update_fields[] = "`" . $real_field_name . "` = '" . addslashes($value) . "'";
+            }
+        }
+        
+        $query .= implode(", ", $update_fields);
+        $query .= " WHERE `index` = '$element_id';";
+
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $result = mysqli_query($mysqli_db, $query);
+
+        if ($result) {
+            $changes_count = 0;
+            $changed_fields = array();
+            
+            $new_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($element_id));
+            $new_data = mysqli_fetch_assoc($new_data_query);
+            
+            $all_possible_fields = array();
+            foreach ($arguments as $key => $value) {
+                if (strpos($key, "field_") === 0) {
+                    $field_name = substr($key, 6);
+                    $all_possible_fields[$field_name] = true;
+                }
+            }
+            
+            foreach ($all_possible_fields as $field_name => $dummy) {
+                if (isset($old_data[$field_name]) || isset($new_data[$field_name])) {
+                    $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
+                    $new_value = isset($new_data[$field_name]) ? $new_data[$field_name] : '';
+                    
+                    $old_str = (string)$old_value;
+                    $new_str = (string)$new_value;
+                    
+                    if ($old_str !== $new_str) {
+                        Core_database_goods_changes_history::save_change(
+                            $model,
+                            $field_name,
+                            $old_value,
+                            $new_value,
+                            'update'
+                        );
+                        
+                        $changes_count++;
+                        $changed_fields[] = $field_name;
+                    }
+                }
+            }
+            
+            $field_model = isset($arguments['field_model']) ? $arguments['field_model'] : '';
+            $out["message"] = "Элемент " . $field_model . " (ID: $element_id) сохранен. Изменений: $changes_count";
+            $out["element_id"] = $element_id;
+            $out["success"] = true;
+            $out["changes_count"] = $changes_count;
+            
+            return $out;
+        } else {
+            $out["message"] = "Ошибка! Элемент не сохранен! " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+    }
+
     public function delete_product_element($id) {
         if ($id > 0) {
             global $mysqli_db;
             database_connect();
             
+            $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($id));
+            if (!$old_data_query) {
+                $out["message"] = "Ошибка получения данных: " . mysqli_error($mysqli_db);
+                $out["success"] = false;
+                return $out;
+            }
+            
+            $old_data = mysqli_fetch_assoc($old_data_query);
+            
+            if (!$old_data) {
+                $out["message"] = "Элемент с ID " . $id . " не найден!";
+                $out["success"] = false;
+                return $out;
+            }
+            
+            $model = isset($old_data['model']) ? $old_data['model'] : '';
+            $h1 = isset($old_data['h1']) ? $old_data['h1'] : '';
+            
             $query = "DELETE FROM `products_all` WHERE `index` = " . intval($id);
             $result = mysqli_query($mysqli_db, $query);
             
             if ($result) {
+                if (!empty($model)) {
+                    $description = 'Товар удален';
+                    if (!empty($h1)) {
+                        $description .= ': ' . $h1;
+                    }
+                    
+                    Core_database_goods_changes_history::save_change(
+                        $model,
+                        'DELETE',
+                        $description,
+                        '',
+                        'delete'
+                    );
+                }
+                
                 $out["message"] = "Элемент " . $id . " удален.";
                 $out["success"] = true;
                 return $out;

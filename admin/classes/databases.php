@@ -1,6 +1,6 @@
 <?php
 
-
+require_once($_SERVER['DOCUMENT_ROOT'] . '/stats/goods_changes_history.php');
 
 if (!defined('admin'))
 
@@ -1647,83 +1647,42 @@ class DBWORK {
 
     }
 
-
-
-
-
-
-
     public function delete_catalog_section($id) {
-
-
-
         if ($id > 0) {
-
-
-
             global $mysqli_db;
-
-
-
             database_connect();
-
-
-
-            $query = "DELETE FROM `$this->db`.`$this->ib_catalog_sections` WHERE `$this->ib_catalog_sections`.`id` = $id;";
-
-
-
-            $result = mysqli_query($mysqli_db, $query) or die("Invalid query: " . mysqli_error($mysqli_db));
-
-
-
-            if ($result) {
-
-
-
-                $out["message"] = "Секция " . $id . " удалена.";
-
-
-
-                $out["success"] = true;
-
-
-
-                return $out;
-
-
-
-            } else {
-
-
-
-                $out["message"] = "Ошибка! Секция " . id . " не удалена!";
-
-
-
-                $out["success"] = false;
-
-
-
-                return $out;
-
-
-
+            
+            $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `id` = " . intval($id));
+            if ($old_data_query) {
+                $old_data = mysqli_fetch_assoc($old_data_query);
+                $name = isset($old_data['name']) ? $old_data['name'] : '';
+                $code = isset($old_data['code']) ? $old_data['code'] : '';
+                
+                if (!empty($name)) {
+                    Core_database_goods_changes_history::save_change(
+                        $name,
+                        'DELETE_SECTION',
+                        'Раздел удален: ' . $name . ' (code: ' . $code . ')',
+                        '',
+                        'delete'
+                    );
+                }
             }
-
-
-
+            
+            $query = "DELETE FROM `$this->ib_catalog_sections` WHERE `id` = $id;";
+            $result = mysqli_query($mysqli_db, $query) or die("Invalid query: " . mysqli_error($mysqli_db));
+            
+            if ($result) {
+                $out["message"] = "Секция " . $id . " удалена.";
+                $out["success"] = true;
+                return $out;
+            } else {
+                $out["message"] = "Ошибка! Секция " . $id . " не удалена!";
+                $out["success"] = false;
+                return $out;
+            }
         }
-
-
-
     }
-
-
-
-
-
-
 
     public function add_catalog_element($arguments) {
 
@@ -1927,159 +1886,46 @@ class DBWORK {
 
     }
 
-
-
-
-
-
-
     public function delete_catalog_element($id) {
-
-
-
-
-
-
-
         if ($id > 0) {
-
-
-
             database_connect();
-
-
-
-            $query = "DELETE FROM `$this->db`.`$this->ib_catalog_elements` WHERE `$this->ib_catalog_elements`.`id` = $id;";
-
-
-
-            $result = mysqli_query($mysqli_db, $query) or die("Invalid query: " . mysqli_error($mysqli_db));
-
-
-
-            if ($result) {
-
-
-
-                $out["message"] = "Элемент " . $id . " удален.";
-
-
-
-                $out["success"] = true;
-
-
-
-                return $out;
-
-
-
-            } else {
-
-
-
-                $out["message"] = "Ошибка! Элемент " . id . " не удален!";
-
-
-
+            global $mysqli_db;
+            
+            $old_data_query = mysqli_query($mysqli_db, "SELECT * FROM products_all WHERE `index` = " . intval($id));
+            if (!$old_data_query) {
+                $out["message"] = "Ошибка получения данных: " . mysqli_error($mysqli_db);
                 $out["success"] = false;
-
-
-
                 return $out;
-
-
-
             }
-
-
-
+            
+            $old_data = mysqli_fetch_assoc($old_data_query);
+            $model = isset($old_data['model']) ? $old_data['model'] : '';
+            $h1 = isset($old_data['h1']) ? $old_data['h1'] : '';
+            
+            $query = "DELETE FROM `$this->ib_catalog_elements` WHERE `id` = $id;";
+            $result = mysqli_query($mysqli_db, $query) or die("Invalid query: " . mysqli_error($mysqli_db));
+            
+            if ($result) {
+                if (!empty($model)) {
+                    Core_database_goods_changes_history::save_change(
+                        $model,
+                        'DELETE',
+                        'Товар удален' . (!empty($h1) ? ': ' . $h1 : ''),
+                        '',
+                        'delete'
+                    );
+                }
+                
+                $out["message"] = "Элемент " . $id . " удален.";
+                $out["success"] = true;
+                return $out;
+            } else {
+                $out["message"] = "Ошибка! Элемент " . $id . " не удален!";
+                $out["success"] = false;
+                return $out;
+            }
         }
-
-
-
     }
-
-
-
-    public function add_product_element($arguments) {
-
-        $errors = "";
-
-        if ($arguments["name"] == "") {
-
-            $success = false;
-
-            $errors = " Имя ";
-
-        }
-
-        if ($errors) {
-
-            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
-
-            $out["success"] = false;
-
-            return $out;
-
-        }
-
-
-
-        $this->query = "INSERT INTO `products_all`" .
-
-                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`)" .
-
-                " VALUES ('" . strip_tags($arguments['name']) .
-
-                "', '" . strip_tags($arguments['name']) .
-
-                "', '" . strip_tags($arguments['h1']) .
-
-                "', '" . addslashes(strip_tags($arguments['title'])) .
-
-                "', '" . addslashes(strip_tags($arguments['description'])) .
-
-                "', '" . addslashes(strip_tags($arguments['keywords'])) .
-
-                "', '" . addslashes($arguments['text_preview']) .
-
-                "', '" . addslashes($arguments['text_detail']) .
-
-                "');";
-
-        
-
-        database_connect();
-
-        global $mysqli_db;
-
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-
-        $result = mysqli_query($mysqli_db,$this->query);
-
-
-
-        if ($result) {
-
-            $out["message"] = "Элемент " . $arguments['name'] . " добавлен.";
-
-            $out["success"] = true;
-
-            return $out;
-
-        } else {
-
-            $out["message"] = "Ошибка! " . mysqli_error($mysqli_db);
-
-            $out["success"] = false;
-
-            return $out;
-
-        }
-
-    }
-
-
 
     public function copy_product_element($element_id) {
 
@@ -2586,18 +2432,62 @@ class DBWORK {
 
 
         }
-
-
-
     }
 
 
+    //Используемые в админке методы
 
+    public function add_product_element($arguments) {
+        $errors = "";
+        if ($arguments["name"] == "") {
+            $success = false;
+            $errors = " Имя ";
+        }
 
+        if ($errors) {
+            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
+            $out["success"] = false;
+            return $out;
+        }
 
+        $this->query = "INSERT INTO `products_all`" .
+                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`)" .
+                " VALUES ('" . strip_tags($arguments['name']) .
+                "', '" . strip_tags($arguments['name']) .
+                "', '" . strip_tags($arguments['h1']) .
+                "', '" . addslashes(strip_tags($arguments['title'])) .
+                "', '" . addslashes(strip_tags($arguments['description'])) .
+                "', '" . addslashes(strip_tags($arguments['keywords'])) .
+                "', '" . addslashes($arguments['text_preview']) .
+                "', '" . addslashes($arguments['text_detail']) .
+                "');";
 
+        database_connect();
+        global $mysqli_db;
+        mysqli_query($mysqli_db,"SET NAMES utf8");
+        $result = mysqli_query($mysqli_db,$this->query);
 
+        if ($result) {
+            $new_id = mysqli_insert_id($mysqli_db);
+            $model = strip_tags($arguments['name']);
+            
+            $h1_text = !empty($arguments['h1']) ? strip_tags($arguments['h1']) : $model;
+            
+            Core_database_goods_changes_history::save_change(
+                $model,
+                'PRODUCT_CREATED',
+                '',
+                'Создан новый товар: ' . $h1_text,
+                'insert'
+            );
+            
+            $out["message"] = "Элемент " . $arguments['name'] . " добавлен. ID: " . $new_id;
+            $out["success"] = true;
+            return $out;
+        } else {
+            $out["message"] = "Ошибка! " . mysqli_error($mysqli_db);
+            $out["success"] = false;
+            return $out;
+        }
+    }
 }
-
-
-

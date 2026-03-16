@@ -115,7 +115,7 @@ function show_com_connector_temp($panel)
     {
         global $mysqli_db;
 		$rows = array();
-        $query = "SELECT * FROM `catalog_series`WHERE `name`='$product' and `active`= '1'";
+        $query = "SELECT * FROM `catalog_series` WHERE `name`='$product' and `active`= '1'";
         $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
             $rows[] = $row;
@@ -297,4 +297,28 @@ function get_list_of_files_from_json($arguments)
     } );
 	//$out = array_map("unserialize", array_unique(array_map("serialize", $docs)));
     return $docs;
+}
+
+function getCountryFromIPInfo( $ipAddress, $token ) {
+    $url = "http://freegeoip.app/json/$ipAddress"; // Здесь вставляете свой токен
+
+    // Выполняем запрос к API
+    $ch = curl_init();
+    curl_setopt( $ch, CURLOPT_URL, $url );
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    $response = curl_exec( $ch );
+    curl_close( $ch );
+
+    if ( !$response ) {
+        return false; // Ошибка отправки запроса
+    }
+
+    // Преобразуем JSON в ассоциативный массив
+    $result = json_decode( $response, true );
+
+    if ( isset( $result[ 'country' ] ) ) {
+        return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+    }
+
+    return false; // Страна неизвестна
 }

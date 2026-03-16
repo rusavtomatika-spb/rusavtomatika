@@ -16,10 +16,10 @@ $current_page = str_replace("index.php", "", $_SERVER['REQUEST_URI']);
 $current_page = str_replace("index2.php", "", $current_page);
 $current_page = trim($current_page, "/ ");
 $current_page = str_replace("/", "_", $current_page);
-ini_set('display_errors', 'On');
-ini_set('error_reporting', E_ALL);
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//ini_set('display_errors', 'On');
+//ini_set('error_reporting', E_ALL);
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -110,10 +110,11 @@ ini_set("display_errors", 1);
 <link rel="shortcut icon" href="/images/favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Rusavtomatika" />
-<link rel="manifest" href="/images/site.webmanifest" />
+<link rel="manifest" href="/site.webmanifest" />
 </head>
 <body class="template_rusavtomatika_bulma current_page_<?= $current_page ?>" style="opacity: 0;">
 <div class="popup_background"></div>
+
 <noscript>
     This page needs JavaScript activated to work.<br>
     Пожалуйста, включите Javascript чтобы просмотреть эту страницу
@@ -142,9 +143,8 @@ ini_set("display_errors", 1);
             <div class="header_top">
                 <div class="header_top__item">
                     <div class="header_top__logo">
-                        <a href="/">
-                            <img width="249" height="50" alt="Русавтоматика" src="/abacus/templates/rusavtomatika_bulma/images/logo.svg"/>
-                        </a>
+                        <a href="/"><img width="249" height="50" alt="Русавтоматика"
+                                         src="/abacus/templates/rusavtomatika_bulma/images/logo.svg"/></a>
                     </div>
                 </div>
                 <div class="header_top__item">
@@ -158,7 +158,8 @@ ini_set("display_errors", 1);
                                         class="icon_hamburger no_text"></span></button>
                         </a>
                     </div>
-                    <div class="pop_panel_contacts is-hidden-touch">
+                    <div class="pop_panel_contacts is-hidden-touch" id="pop_panel_contacts">
+		    <span class="close_">×</span>
                         <? include "include/inc_pop_panel_contacts.php"; ?>
                     </div>
                     <div class="panel_background"></div>
@@ -199,11 +200,10 @@ CoreApplication::include_component($arguments);
 ?>
 <?
 if ($current_page == '') {
-    include "./include_utf_8/main_page/content/block_big_banner3.php";
-    //include "./include_utf_8/main_page/content/block_big_banner_apm25.php";
+    include "./include_utf_8/main_page/content/block_big_banner4.php";
+    //include "./abacus/components/big_slider/templates/big_slide_banner/template.php";
 }
 ?>
-
 <div class="padding_wrapper">
     <main>
         <?
