@@ -17,7 +17,7 @@ include $core_admin_path . 'template/header.php';
 ?>
 <h1>Административная панель</h1>
 <?
-include $core_admin_path . 'products_all/menu.php';
+include $core_admin_path . 'menu.php';
 include $core_admin_path . 'classes/functions.php';
 /* * *************************************************************************** */
 /* $db_work = new DBWORK();

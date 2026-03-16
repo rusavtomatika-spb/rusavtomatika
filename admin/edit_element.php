@@ -1,17 +1,9 @@
 <?php
-ob_start();
-
-session_start();
-
-$_SESSION['last_editor_ip'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
-$_SESSION['last_editor_user'] = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'unknown';
-$_SESSION['last_editor_time'] = time();
-
 header( "Cache-Control: no-store, no-cache, must-revalidate" );
 header( "Expires: " . date( "r" ) );
 @header( "Content-Type: text/html; charset=utf-8" );
-
 define( 'admin', true );
+define( 'PRODUCTS_ALL', true );
 //if (1) {
 ini_set( 'error_reporting', E_ALL );
 ini_set( 'display_errors', 1 );
@@ -19,7 +11,7 @@ ini_set( 'display_startup_errors', 1 );
 //}
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include_once $core_admin_path . 'template/header.php';
-include_once $core_admin_path . 'products_all/menu.php';
+include_once $core_admin_path . 'menu.php';
 require_once $core_admin_path . 'classes/functions.php';
 @header( "Content-Type: text/html; charset=utf-8" );
 
