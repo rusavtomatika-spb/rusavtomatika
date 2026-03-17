@@ -1,6 +1,12 @@
 <?php
 require_once 'admin_auth.php';
 
+if ($_SERVER['SERVER_NAME'] != 'www.rusavto.moisait.net') {
+    header('HTTP/1.0 403 Forbidden');
+    echo 'Доступ запрещен. Неизвестный маршрут.';
+    exit;
+}
+
 $current_admin = check_admin_auth();
 if (!$current_admin) {
     header('Location: /admin/_right.php');
@@ -9,29 +15,58 @@ if (!$current_admin) {
 
 header( "Cache-Control: no-store, no-cache, must-revalidate" );
 header( "Expires: " . date( "r" ) );
-//echo "PHP_MAJOR_VERSION " . PHP_MAJOR_VERSION;
-//ini_set('error_reporting', E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
-/*
-ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);*/
+
 define( 'admin', true );
 define('PRODUCTS_ALL', true);
+
 global $ftpConnectionID;
 global $db_work;
+
 file_put_contents( "error_log", "" );
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include $core_admin_path . 'template/header.php';
 ?>
-<h1>Административная панель</h1>
+<header class="admin__header">
+  <h1>Административная панель</h1>
+
+  <div class="header__user-info">
+    <p><?= htmlspecialchars($current_admin['username']) ?></p>
+    <a href="/admin/logout.php" class="logout-button">
+      Выход
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: none;
+              stroke: #fff;
+              stroke-linecap: round;
+              stroke-linejoin: round;
+              stroke-width: 2px;
+            }
+            path {
+              fill: #fff;
+              stroke: none;
+            }
+          </style>
+        </defs>
+        <title/>
+        <g id="logout">
+          <line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/>
+          <path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z"/>
+          <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/>
+          <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/>
+          <line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/>
+          <line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/>
+        </g>
+      </svg>
+    </a>
+  </div>
+</header>
 <?
 include $core_admin_path . 'menu.php';
 include $core_admin_path . 'classes/functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/classes/databases.php';
 
-/* * *************************************************************************** */
-/* $db_work = new DBWORK();
-  $db_work->show_tables(); */
 $db_work = new DBWORK();
 $result = $db_work->get_list_catalog_elements();
 
@@ -139,7 +174,6 @@ if ( isset( $_GET[ "action" ] )and $_GET[ "action" ] == "recalculate_positions"
   } else {
     echo "<div class='error_message'>" . $result[ "message" ] . "</div>";
   }
-  //header('Refresh:0; list_elements.php?section_code=' . $_GET["section_code"] . '&success=' . $result["success"] . '&message=' . urlencode($result["message"]));
 }
 
 
@@ -156,7 +190,7 @@ if ( isset( $_GET[ "sort_by" ] ) ) {
   $result = $db_work->get_list_catalog_elements();
 }
 
-if ( !empty( $result ) ) {
+if (!empty($result) && $_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net') {
   echo "<div class='table-container'>";
   echo "<div class='sticky-header'>";
   echo "<table class='fixed-table'>";
@@ -261,6 +295,7 @@ if ( !empty( $result ) ) {
   echo "</div>";
 }
 ?>
+
 <style>
 .table-container {
   width: 100%;
@@ -428,6 +463,55 @@ if ( !empty( $result ) ) {
   background: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+.admin__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.header__user-info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: max-content;
+  top: 0;
+  right: 0;
+}
+
+.header__user-info p {
+  font-size: 20px;
+  color: #000;
+  font-weight: 600;
+  line-height: 150%;
+  margin: 0;
+}
+
+.header__user-info a {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4CAF50;
+  background: #4CAF50;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 17px;
+  width: 100px;
+  text-decoration: none;
+  gap: 5px;
+}
+
+.header__user-info a svg {
+  height: 20px;
+  width: auto;
+  color: #fff;
 }
 </style>
 <?
