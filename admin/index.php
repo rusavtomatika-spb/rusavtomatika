@@ -1,4 +1,12 @@
 <?php
+require_once 'admin_auth.php';
+
+$current_admin = check_admin_auth();
+if (!$current_admin) {
+    header('Location: /admin/_right.php');
+    exit;
+}
+
 header( "Cache-Control: no-store, no-cache, must-revalidate" );
 header( "Expires: " . date( "r" ) );
 //echo "PHP_MAJOR_VERSION " . PHP_MAJOR_VERSION;
@@ -19,6 +27,8 @@ include $core_admin_path . 'template/header.php';
 <?
 include $core_admin_path . 'menu.php';
 include $core_admin_path . 'classes/functions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/classes/databases.php';
+
 /* * *************************************************************************** */
 /* $db_work = new DBWORK();
   $db_work->show_tables(); */

@@ -1,63 +1,60 @@
-<?php
+<?
 if (!defined('admin'))
     exit;
 global $db;
 global $mysqli_db;
-if (empty($_COOKIE['a']))
-    exit;
 
 ini_set("error_reporting", E_ALL & ~E_DEPRECATED); 
+
 
 function database_connect()
 {
     global $db;
     global $mysqli_db;
 
-    $host = "localhost";
-    $port = "3307";
-    
-    $user = "";
-    $pass = "";
-    $dbnm = "";
-    
+    $host = "localhost"; // Имя хоста
+//echo gethostbyname($host);
+    $port = "3306";      // Номер порта, 3306 - по умолчанию
     if (preg_match("/moisait/i", $_SERVER['DOCUMENT_ROOT'])) {
-        $user = "root";
-        $pass = '123456';
-        $dbnm = "rusavtomatika_db";
-    } else {
-        $user = "root";
-        $pass = '123456';
-        $dbnm = "rusavtomatika_db";
+        $user = "moisait_olga";      // Имя пользователя
+        $pass = 'olgaglr';  // Пароль
+        $dbnm = "moisait_ra";      // Имя БД
     }
+
 
     if (PHP_MAJOR_VERSION < 7) {
         if (!isset($db) or is_null($db)) {
-            $h = empty($port) ? $host : $host . ":" . $port;
-            $db = mysql_connect($h, $user, $pass);
 
-            if (!$db) {
+            $h = empty($port) ? $host : $host . ":" . $port;
+            $db = mysql_connect($h, $user, $pass); // Соединяемся с сервером БД
+            //$db = mysqli_connect($h, $user, $pass); // Соединяемся с сервером БД
+
+			if (!$db) { // Если соединиться не удалось
                 print("Datebase connection failed.");
+                // Пишем ошибку и завершаем выполнение скрипта
                 exit();
             }
-            
-            if (!mysql_select_db($dbnm)) {
+// Иначе выбираем базу данных для работы
+            if (!mysql_select_db($dbnm)) { // Если нет такой БД
                 print("Datebase select failed.");
+                // Пишем ошибку и завершаем выполнение скрипта
                 exit();
             } else {
-                mysql_query("SET NAMES utf8");
+                mysql_query("SET NAMES uft8");
             }
         }
+
     }
 
-    $mysqli_db = mysqli_connect($host, $user, $pass, $dbnm, $port);
+    $mysqli_db = mysqli_connect($host, $user, $pass, $dbnm);
     if (!$mysqli_db) {
         echo "[inc_database_credentials.php]" . PHP_EOL;
         echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
         echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
         echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
         exit();
-    } else {
-        mysqli_query($mysqli_db, "SET NAMES utf8");
-    }
+    } else mysqli_query($mysqli_db, "SET NAMES utf8");
+
 }
+
 ?>

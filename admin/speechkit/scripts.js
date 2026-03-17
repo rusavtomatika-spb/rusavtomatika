@@ -37,7 +37,7 @@ $(function () {
     $("form[name=form_text_to_speech]").submit(function (e) {
         var form = $(this);
         $(this).children('input[type=submit]').attr('disabled', 'disabled');
-        $('#responce').html('<img style="height: 280px;" class="loading" src="/admin/products_all/loading.gif" />');
+        $('#responce').html('<img style="height: 280px;" class="loading" src="/admin/loading.gif" />');
         var text = $("textarea#textarea_text_to_speech").val();
         var token = $("textarea#token").val();
         var fd = new FormData;

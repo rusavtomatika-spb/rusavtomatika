@@ -31,7 +31,7 @@ $(document).ready(
 
       $.ajax({
         type: "POST",
-        url: "/admin/products_all/ajax_delete_image.php",
+        url: "/admin/ajax_delete_image.php",
         contentType: false,
         processData: false,
         data: fd,
