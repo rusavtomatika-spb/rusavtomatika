@@ -46,6 +46,39 @@ function findRecordBySoftware($records, $soft, $fld) {
     return null;
 }
 
+	      // Подставьте своё значение API ключа
+      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
+
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+	
+      function getCountryFromIPInfo( $ipAddress, $token ) {
+        $url = "https://ipinfo.io/$ipAddress?token=$token"; // Здесь вставляете свой токен
+
+        // Выполняем запрос к API
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+
+        if ( !$response ) {
+          return false; // Ошибка отправки запроса
+        }
+
+        // Преобразуем JSON в ассоциативный массив
+        $result = json_decode( $response, true );
+
+        if ( isset( $result[ 'country' ] ) ) {
+          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+        }
+
+        return false; // Страна неизвестна
+      }
+
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
+  
 
 function fetchTxtFileContents($url) {
     // Проверяем наличие URL
@@ -253,12 +286,12 @@ $arc = [
           </div>
           <div class="column is-10">
             <ul id="table_of_contents">
-              <li><a href="#Aplex">промышленных компьютеров <span>Aplex</span> &#8681;</a></li>
-              <li><a href="#IFC">промышленных компьютеров и мониторов <span>IFC</span> &#8681;</a></li>
-              <li><a href="#Samkoon">панелей оператора <span>Samkoon</span> &#8681;</a></li>
               <li><a href="#Weintek">панелей оператора <span>Weintek</span> &#8681;</a></li>
               <li><a href="#EasyRemote">модулей ввода/вывода <span>Weintek</span> &#8681;</a></li>
               <li><a href="#Spiktek">панелей оператора <span>СПИКТЕК</span> &#8681;</a></li>
+              <li><a href="#Samkoon">панелей оператора <span>Samkoon</span> &#8681;</a></li>
+              <li><a href="#IFC">промышленных компьютеров и мониторов <span>IFC</span> &#8681;</a></li>
+              <li><a href="#Aplex">промышленных компьютеров <span>Aplex</span> &#8681;</a></li>
             </ul>
           </div>
           <div class="column is-2">
@@ -411,14 +444,15 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <div class="block_padding">
 			<p><strong>EasyAccess 2.0</strong></p>
 			<p>Версия для региона Россия:</p>
-              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
-              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/easyaccess-2-0/id977888884">Дистрибутив для iOS</a> <span class="small_gray_text">[App Store]</span></p>
-              <p><a class="download_linkext" target="_blank" href="/soft/EasyAccess20/Installer/setup-2.21.4.exe">Дистрибутив для PC</a> <span class="small_gray_text">[2.21.4]</span></p>
+              <p><a class="download_android" target="_blank" href="/soft/EasyAccess20/Installer/EasyAccess2-2.21.4-dl.apk">Дистрибутив для Android</a> <span class="small_gray_text">[2.21.4]</span></p>
+              <p><a class="download_linkext" target="_blank" href="/soft/EasyAccess20/Installer/setup-2.23.3.exe">Дистрибутив для PC</a> <span class="small_gray_text">[2.23.3]</span></p>
               <?
               filter_arr( $items, 'section', 'ea20' );
               ?>
               <p><a class="download_linkext" href="/accessories/license/easyaccess/" style="font-weight: 700;">Подробнее об EasyAccess 2.0</a></p>
 				<hr>
+              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
+              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/easyaccess-2-0/id977888884">Дистрибутив для iOS</a> <span class="small_gray_text">[App Store]</span></p>
               <?
               filter_arr( $progs, 'section', 'ea20' );
               ?>
@@ -490,12 +524,14 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               <?
               filter_arr( $progs, 'put', 'EasyRemote' );
               filter_arr( $items, 'title', 'EasyRemoteIO' );
-              filter_arr( $progs, 'title', 'cMT+CODESYS' );
+              if ( $userCountry === 'RU' ) { 
+				  filter_arr( $progs, 'title', 'cMT+CODESYS' );
               ?>
-               <p><a class="download_pdf" href="https://dl.weintek.com/public/cMT/CODESYS/Firmware/CODESYS-ReleaseNotes-eng.pdf" target="_blank">CODESYS Firmware ReleaseNotes</a> </p>
+               <p><a class="download_pdf" href="https://dl.weintek.com/public/cMT/CODESYS/Firmware/CODESYS-ReleaseNotes-eng.pdf" target="_blank">CODESYS Firmware ReleaseNotes</a> </p><? } ?>
            </div>
           </div>
         </div>
+		          <?      if ( $userCountry === 'RU' ) { ?>
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
@@ -555,6 +591,18 @@ file_put_contents($ebpro_files_block, $ebpro_files );
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
+              <p>Таргет-файл</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p><a class="download_zip" href="/upload_files/soft/cMT/CODESYS/Weintek_CODESYS_and_RemoteIO_package/Weintek_CODESYS_and_RemoteIO_1.5.3.527.package">Weintek_CODESYS_and_RemoteIO_1.5.3.527.package</a> <span class="small_gray_text">[15 МБ]</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="columns  is-multiline">
+          <div class="column is-7">
+            <div class="block_padding">
               <p>Инструкция по использованию панели cMT3090 с программным обеспечением CODESYS совместно с модулем Remote I/O.</p>
             </div>
           </div>
@@ -566,6 +614,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             </div>
           </div>
         </div>
+		  <? } ?>
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
