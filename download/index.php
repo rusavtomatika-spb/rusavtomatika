@@ -411,15 +411,14 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <div class="block_padding">
 			<p><strong>EasyAccess 2.0</strong></p>
 			<p>Версия для региона Россия:</p>
-              <p><a class="download_android" target="_blank" href="/soft/EasyAccess20/Installer/EasyAccess2-2.21.4-dl.apk">Дистрибутив для Android</a> <span class="small_gray_text">[2.21.4]</span></p>
+              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
+              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/easyaccess-2-0/id977888884">Дистрибутив для iOS</a> <span class="small_gray_text">[App Store]</span></p>
               <p><a class="download_linkext" target="_blank" href="/soft/EasyAccess20/Installer/setup-2.21.4.exe">Дистрибутив для PC</a> <span class="small_gray_text">[2.21.4]</span></p>
               <?
               filter_arr( $items, 'section', 'ea20' );
               ?>
               <p><a class="download_linkext" href="/accessories/license/easyaccess/" style="font-weight: 700;">Подробнее об EasyAccess 2.0</a></p>
 				<hr>
-              <p><a class="download_android" target="_blank" href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">Дистрибутив для Android</a> <span class="small_gray_text">[последняя версия]</span></p>
-              <p><a class="download_ipad" href="https://apps.apple.com/ru/app/easyaccess-2-0/id977888884">Дистрибутив для iOS</a> <span class="small_gray_text">[App Store]</span></p>
               <?
               filter_arr( $progs, 'section', 'ea20' );
               ?>
