@@ -117,7 +117,7 @@ $CANONICAL = "https://www.rusavtomatika.com".$arResult[ 'brand_page_link' ];
                                                      style="background-image: url('<?= $row["preview_picture"] ?>')"></div>
                   <div class="component_catalog__title">
                     <?= $row["name"] ?>
-                    ---</div>
+                    </div>
                   </a> </div>
                 <?
 
@@ -137,6 +137,11 @@ $CANONICAL = "https://www.rusavtomatika.com".$arResult[ 'brand_page_link' ];
             <? else: ?>
             <li><a href="/weintek/">Weintek</a></li>
             <? endif; ?>
+            <? if ($_SERVER['REQUEST_URI'] == '/spiktek/'): ?>
+            <li><span>СПИКТЕК</span></li>
+            <? else: ?>
+            <li><a href="/spiktek/">СПИКТЕК</a></li>
+            <? endif; ?>
             <? if ($_SERVER['REQUEST_URI'] == '/ifc/'): ?>
             <li><span>IFC</span></li>
             <? else: ?>
@@ -151,11 +156,6 @@ $CANONICAL = "https://www.rusavtomatika.com".$arResult[ 'brand_page_link' ];
             <li><span>Samkoon</span></li>
             <? else: ?>
             <li><a href="/samkoon/">Samkoon</a></li>
-            <? endif; ?>
-            <? if ($_SERVER['REQUEST_URI'] == '/ewon/'): ?>
-            <li><span>eWON</span></li>
-            <? else: ?>
-            <li><a href="/ewon/">eWON</a></li>
             <? endif; ?>
             <? if ($_SERVER['REQUEST_URI'] == '/faraday/'): ?>
             <li><span>Faraday</span></li>

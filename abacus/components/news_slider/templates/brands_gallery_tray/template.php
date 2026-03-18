@@ -6,16 +6,21 @@ $arResult["items"] = [
         'img' => '/include/main_page/images/brands/weintek.webp'
     ],
     1 => [
+        'url' => '/spiktek' . EX . '/',
+        'name' => 'Spiktek',
+        'img' => '/include/main_page/images/brands/spiktek.png'
+    ],
+    2 => [
         'url' => '/samkoon' . EX . '/',
         'name' => 'Samkoon',
         'img' => '/include/main_page/images/brands/samkoon.webp'
     ],
-    2 => [
+    3 => [
         'url' => '/ifc' . EX . '/',
         'name' => 'IFC',
         'img' => '/include/main_page/images/brands/ifc.webp'
     ],
-    3 => [
+    4 => [
         'url' => '/aplex' . EX . '/',
         'name' => 'Aplex',
         'img' => '/include/main_page/images/brands/aplex.webp'

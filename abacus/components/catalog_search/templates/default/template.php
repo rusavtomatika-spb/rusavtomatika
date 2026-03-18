@@ -1,12 +1,17 @@
 <?php
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
-global $H1, $TITLE;
+global $H1, $TITLE,$userCountry;
 global $arSettings;
 $arSettings[ 'path_to_product_images' ] = '/images/';
 /*!!!!!!!!!!!!!!!!!!!!!!*/
 require "inc_functions.php";
 /*!!!!!!!!!!!!!!!!!!!!!!*/
+      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
 $extra_h1 = '';
 function myStrToLower($string) {
     $upperCaseRu = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
@@ -209,7 +214,9 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
               <?
               global $product;
               foreach ( $arrResult as $product ) {
-                include "inc_template_result_item.php";
+if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {	
+	continue;
+} else {                include "inc_template_result_item.php";}
               }
               ?>
             </table>

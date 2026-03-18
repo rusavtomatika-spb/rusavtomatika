@@ -4,48 +4,38 @@
 } else $usd_currency = 0;*/
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
-// Получаем IP пользователя
-$userIp = $_SERVER[ 'REMOTE_ADDR' ];
-// Определяем страну пользователя
-$userCountry = getCountryFromIPInfo( $userIp );
+		$api_key = 'ipb_live_7zPixBjHSd7GfiLr0Rh81rch6kVVpXJtZqPBwSio';
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+	
+
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $api_key);
+
 ?>
-<table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products">
+<table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products <?= $userCountry ?>">
   <?
     if (isset($series["products"]) and is_array($series["products"])) {
-		//file_put_contents('products.txt', json_encode($series["products"], JSON_PRETTY_PRINT));
-if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
-usort($series["products"], function ($a, $b) {
-    $valueA = intval($a['sort']); // Приводим строку к числу
-    $valueB = intval($b['sort']); // Приводим строку к числу
+//        if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
+//        usort($series["products"], function ($a, $b) {
+//            $valueA = intval($a['sort']); // Приводим строку к числу
+//            $valueB = intval($b['sort']); // Приводим строку к числу
+//
+//            // Проверяем условие сортировки по возрастанию
+//            if ($valueA === $valueB) {
+//                return 0; // Элементы равны
+//            } elseif ($valueA < $valueB) {
+//                return -1; // Первый элемент меньше, значит идет раньше
+//            } else {
+//                return 1; // Первый элемент больше, значит идет позже
+//            }
+//        });
+//        }
 
-    // Проверяем условие сортировки по возрастанию
-    if ($valueA === $valueB) {
-        return 0; // Элементы равны
-    } elseif ($valueA < $valueB) {
-        return -1; // Первый элемент меньше, значит идет раньше
-    } else {
-        return 1; // Первый элемент больше, значит идет позже
-    }
-});
-}
 		foreach ($series["products"] as $product) {
-			//if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && preg_match('/(series=cMT-X)/i',$_SERVER[ "QUERY_STRING" ]) && preg_match('/cMT/i',$product["series"]) ) continue;
+					if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
 			if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
-			if (preg_match('/(Codesys)/i',$product["model"]) && $userCountry != 'RU' ) continue;
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
-                /*            if(count($arDiagonals) > 0 and !in_array($product["diagonal"], $arDiagonals)){
-                                continue;
-                            }
-                            if(count($arDiagonals) > 0 and !in_array($product["diagonal"], $arDiagonals)){
-                                continue;
-                            }
-
-                            if (isset($range_diagonal_min) and $range_diagonal_min != '' and floatval($product["diagonal"]) < floatval($range_diagonal_min)) {
-                                continue;
-                            }
-                            if (isset($range_diagonal_max) and $range_diagonal_max != '' and floatval($product["diagonal"]) > floatval($range_diagonal_max)) {
-                                continue;
-                            }*/
                 $product["diagonal"] = str_replace(".0", "", $product["diagonal"]);
                 $diagonal = '<b>' . $product["diagonal"] . '&Prime;&nbsp;</b>';
             } else $diagonal = '';
@@ -64,16 +54,7 @@ usort($series["products"], function ($a, $b) {
 			$all_series = get_all_series();
             ?>
   <tr class="tr_product_<?= $product["model"]; ?>" data-type="<?=$product['type']?>" data-series="<?=$product['series']?>">
-    <td class="td_preview_image"><?
-                    /*
-                    <a href="<?= $product["link_detail_page"]; ?>">
-                        <div class="preview_image"
-                             style="background-image:url('<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/md/<?= $product["model"] ?>_1.png');">                    </div>
-                    </a>
-
-                    */
-
-                    ?>
+    <td class="td_preview_image">
       <?
 
                         if($product["brand"] == "Faraday"):
@@ -132,7 +113,7 @@ echo '<a class="tag mr-1" href="/catalog/'.$all_serie['menu_category_item_code']
         </span></div>
       <div class="series_products__panel_buttons">
         <?
-                        if(in_array($brand,["Weintek","IFC","Aplex","Samkoon","eWON","Faraday"])){
+                        if(in_array($brand,["Weintek","IFC","Aplex","Spiktek","Samkoon","eWON","Faraday"])){
                         ?>
         <a class="brand" href="/<? echo strtolower($brand); ?>/"><? echo $brand; ?></a>
         <?
@@ -148,7 +129,7 @@ echo '<a class="tag mr-1" href="/catalog/'.$all_serie['menu_category_item_code']
                               data-model="<?= $product["model"]; ?>" data-box="favorites"><i class="fa-regular fa-heart"></i> В избранное </span> </span> </div></td>
     <td class="td_buttons"><div class="indicator_availability">
         <?
-                        if ($product['onstock_spb'] > 0 or $product['onstock_msk'] > 0) {
+                        if (intval($product['onstock_spb']) > 0) {
                             echo '<span class="green">В&nbsp;наличии</span>';
                         } else echo '<span class="red">Под&nbsp;заказ</span>';
                         ?>

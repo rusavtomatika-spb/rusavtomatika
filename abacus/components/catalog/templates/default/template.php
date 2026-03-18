@@ -34,6 +34,9 @@ if(isset($H1) and $H1 != "")
 <?php
 
 if (count($rows) > 0) {
+
+
+
     ?>
 
         <div class="component_wrapper">
@@ -45,9 +48,9 @@ if (count($rows) > 0) {
                 <?php
 
                 foreach ($rows as $row) {
-                    if (empty($row['name'])) {
-                        continue;
-                    }
+                if (empty($row['name'])) {
+                    continue;
+                }
 
                     if(isset($row['category_link']) and $row['category_link'] != ''){
 
@@ -102,3 +105,6 @@ if (count($rows) > 0) {
 
 
 }
+
+
+

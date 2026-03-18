@@ -1,10 +1,10 @@
-<div class="box ">
+<div class="box_ " id="boxxx">
     <div class="box is-clearfix is-shadowless">
         <div class="header_top__phone" itemscope itemtype="https://schema.org/Organization">
 			  <meta itemprop="name" content="ООО Русавтоматика">
-
+<h2 style="margin-top:-14px;">Контакты</h1>
             <a rel="nofollow" href="tel:+88006003347" itemprop="telephone" content="tel:+88006003347" class="nowrap header_phone">8 (800) 600-33-47</a><br>
-            <a rel="nofollow" href="tel:+78127650160" itemprop="telephone" content="tel:+78127650160" class="nowrap header_phone">7 (812) 765-01-60</a>
+            <a rel="nofollow" href="tel:+78127650160" itemprop="telephone" content="tel:+78127650160" class="nowrap header_phone">+7 (812) 765-01-60</a>
             <p>
                 <a rel="nofollow" class="header_email" href="mailto:sales@rusavtomatika.com" itemprop="email">sales@rusavtomatika.com</a>
             </p>

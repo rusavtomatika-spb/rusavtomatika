@@ -198,6 +198,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
     flex-direction: column;
 }
 
+
 @media (max-width: 1280px) {
     .double-swiper-block {
         display: flex;

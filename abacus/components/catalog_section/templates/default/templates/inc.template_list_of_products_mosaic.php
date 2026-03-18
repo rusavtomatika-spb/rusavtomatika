@@ -4,12 +4,23 @@
 } else $usd_currency = 0;*/
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
+	      // Подставьте своё значение API ключа
+      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
+
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+	
+
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
 
 ?>
 <table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products">
     <?
     if (isset($series["products"]) and is_array($series["products"])) {
         foreach ($series["products"] as $product) {
+					if ($product["model"]=='codesys_license' && $userCountry != 'RU' ) {continue;}
+
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
                 /*            if(count($arDiagonals) > 0 and !in_array($product["diagonal"], $arDiagonals)){
                                 continue;

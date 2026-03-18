@@ -41,7 +41,7 @@ if ($arguments["table"] != '') {
                                     <div class="new_products__item box has-background-light is-shadowless">
                                         <div class="new_products_item__preview_image_wrapper">
                                             <div class="new_products_item__preview_image"
-                                                 style="background-image: url('<?= $element["picture_preview"] ?>');"></div>
+                                                 style="background-image: url('<?= $element["picture_preview"] ?>');            background-size: cover;            background-position: center;            background-repeat: no-repeat;width:260px;height:180px;"></div>
                                         </div>
                                         <div class="new_products_item__text_wrapper">
                                             <div class="new_products_item__title">

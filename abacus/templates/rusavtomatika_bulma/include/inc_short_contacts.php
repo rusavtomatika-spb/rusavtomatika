@@ -1,6 +1,6 @@
 <div class="header_top__email">
     <a rel="nofollow" class="header_email is-hidden-touch" href="mailto:sales@rusavtomatika.com"
-       title="Отправьте нам сообщение по электронной почте">
+       title="Отправьте нам сообщение по электронной почте" style="font-size:20.2px;">
         sales@rusavtomatika.com
     </a>
 </div>

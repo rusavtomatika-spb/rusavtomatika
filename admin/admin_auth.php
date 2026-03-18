@@ -69,7 +69,6 @@ function login_admin($username, $password) {
             mysqli_query($mysqli_db, $update);
             
             setcookie("admin_token", $token, time() + 60 * 60 * 24 * 365, "/", $_SERVER['SERVER_NAME'], 0);
-            error_log("ADMIN AUTH: Кука установлена. Token: $token, Path: /, Domain: " . $_SERVER['SERVER_NAME']);
             
             mysqli_close($mysqli_db);
             return $admin;

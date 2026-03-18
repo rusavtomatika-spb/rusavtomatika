@@ -36,12 +36,12 @@ class C_LinkedProducts
 
         self::$_current_model = $model;
         $arrLinkedModels = self::getLinkedModels();
-
+//file_put_contents('temp.txt',json_encode($arrLinkedModels, JSON_PRETTY_PRINT));
         if (is_array($arrLinkedModels)) {
             ?>
-            <!-- nosearch -->
+            <!-- nosearch ЭТОТ ВЫВОД НЕ РАБОТАЕТ -->
             <div class="panelLinkedModels">
-                        <h2>С этим товаром часто покупают:</h2>
+                        <h2>С этим товаром часто покупают:***</h2>
                         <div class="horizontal_slider_default">
 
                             <div id="carouselhAuto">
@@ -240,6 +240,7 @@ class C_LinkedProducts
     public static function getLinkedModels()
     {
         $arrLinkedProducts = self::getElementLinkedProducts();
+//file_put_contents('temp.txt',json_encode($arrLinkedProducts, JSON_PRETTY_PRINT));
 
         if (is_array($arrLinkedProducts)) {
             foreach ($arrLinkedProducts as $model) {
@@ -251,6 +252,7 @@ class C_LinkedProducts
                     }
                 }
             }
+		//file_put_contents('temp.txt',json_encode($out, JSON_PRETTY_PRINT));
             return $out;
         }
     }
@@ -270,6 +272,26 @@ class C_LinkedProducts
             $out['title'] = $element['h1'];
             $out['preview_image'] = $element['preview_image'];
             $out['url'] = $element['url_original'];
+        }
+
+        return $out;
+    }
+
+    private static function getElementInfoByModel($product_identifier)
+    {
+        $query = "SELECT `model`,`h1`,`brand`,`type`,`model_fullname`,`link_detail2` "
+            . "FROM `products_all` where `model` = '$product_identifier';";
+        $result = mysqli_query(self::$_db, $query) or die("Invalid query: " . $query . " error: " . mysqli_error(self::$_db));
+        if (mysqli_num_rows($result) == 0) {
+            return array();
+        }
+        $element = mysqli_fetch_array($result);
+        if ($element) {
+            $out['product_identifier'] = $element['model'];
+            $out['title'] = $element['model_fullname'];
+            $out['preview_image'] = '/images/'.$element['brand'].'/'.$element['type'].'/130/'.$element['model'].'/'.$element['model'].'_1.webp';
+            //$out['url'] = '/'.$element['brand'].'/'.$element['model'].'/';
+            $out['url'] = $element['link_detail2'];
         }
 
         return $out;
@@ -299,8 +321,7 @@ class C_LinkedProducts
     public static function getElementLinkedProducts()
     {
 
-        $query = "SELECT `index`,`model`,`linked_products` FROM `products_all` "
-            . "where `model` = '" . self::$_current_model . "' and `linked_products` != '';";
+        $query = "SELECT `index`,`model`,`linked_products` FROM `products_all` where `model` = '" . self::$_current_model . "' and `linked_products` != '';";
         $result = mysqli_query(self::$_db, $query) or die("Invalid query: " . $query . " error: " . mysqli_error(self::$_db));
         if (mysqli_num_rows($result) == 0) {
             return FALSE;

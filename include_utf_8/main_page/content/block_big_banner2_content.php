@@ -49,7 +49,7 @@ exit();*/
                         gap: 2,
                     },
                     480: {
-                        perView: 3,
+                        perView: 2,
                         gap: 1,
                     }
                 }

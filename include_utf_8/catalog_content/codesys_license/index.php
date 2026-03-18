@@ -84,22 +84,19 @@ CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) .
 
         <h2>Видеоинструкция</h2>
         <div style="text-align: center">
-            <iframe width="100%" height="465" src="https://www.youtube.com/embed/sfU06h9fwWQ" frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+<iframe width="720" height="405" src="https://rutube.ru/play/embed/e70a391074697f794ca55f37aa3d654d/" style="border: none;" allow="clipboard-write; autoplay" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
         </div>
         <p>Ссылки, которые упоминаются в видео:</p>
         <ul class="spisok">
-            <li>Актуальная версия среды разработки CODESYS <a href="https://store.codesys.com/codesys.html" target="_blank">ссылка</a>
-            </li>
-            <li>Руководство пользователя CODESYS на русском языке <a
-                        href="https://drive.google.com/file/d/1ZrSg_PvOR9aBcZIouwgMUeZxFUOHJnkN/view">ссылка</a></li>
-            <li>Раздел для скачивания актуальных файлов FilesForCODESYS.zip и EasyRemoteIO_V12013.zip <a
-                        href="//www.rusavtomatika.com/download/" target="_blank">ссылка</a></li>
-            <li>Таргет-файл для работы модулем Weintek в среде CODESYS <a
-                        href="//www.rusavtomatika.com/soft/EBPro/FilesForCODESYS.zip">ссылка</a></li>
-            <li>Приложение EasyRemoteIO для настройки IP-адреса каплера Weintek <a
-                        href="//www.rusavtomatika.com/soft/EBPro/EasyRemoteIO_V12013.zip">ссылка</a></li>
+            <li>Спецификация CODESYS <a href="/upload_files/documents/weintek/cMT/eng/Datasheet/cMT_CODESYS_Datasheet_ENG_20250310.pdf">ссылка</a></li>
+            <li>Брошюра CODESYS <a href="/upload_files/documents/weintek/cMT/eng/Brochure/Codesys_Brochure_ENG_20250915.pdf">ссылка</a></li>
+            <li>Актуальная версия среды разработки CODESYS <a href="/upload_files/soft/codesys/CODESYS_64_3.5.15.50.zip">64 bit</a>, <a href="/upload_files/soft/codesys/CODESYS_3.5.15.50.zip">32 bit</a></li>
+            <li><a
+                        href="/upload_files/documents/weintek/Document/UM0/EasyRemoteIO-UserManual-eng.pdf">Руководство пользователя CODESYS</a></li>
+            <li><a
+                        href="/download/#EasyRemote">Раздел для скачивания актуальных файлов</a></li>
+            <li><a
+                        href="/upload_files/soft/iR/EasyRemoteIO/EasyRemoteIO-1.5.11.0.zip">Приложение EasyRemoteIO для настройки IP-адреса каплера Weintek </a></li>
 
         </ul>
 

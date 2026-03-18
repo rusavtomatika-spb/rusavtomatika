@@ -771,14 +771,14 @@ if ($filter_exists) {
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
         } else $filter_chunk = ' and (';
-        $filter_chunk .= " `onstock_spb` > '0' or `onstock_msk` > '0') ";
+        $filter_chunk .= " `onstock_spb` > '0') ";
         $mysql_product_filter .= $filter_chunk;
     }
     if ($availablity == 2) {
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
         } else $filter_chunk = ' and (';
-        $filter_chunk .= " `onstock_spb` = '0' and `onstock_msk` = '0') ";
+        $filter_chunk .= " `onstock_spb` = '0') ";
         $mysql_product_filter .= $filter_chunk;
     }
 

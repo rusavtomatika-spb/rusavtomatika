@@ -15,7 +15,7 @@ function sort_array_by(&$array, $extra_params)
                 $a1 = $a[$field_name];
                 $b1 = $b[$field_name];
             }
-            if ($a1 === $b1) return 0;
+            if ($a1 == $b1) return 0;
             if ($sort_direction == "DESC") return $a1 < $b1 ? 1 : -1;
             else  return $a1 > $b1 ? 1 : -1;
         }
@@ -69,8 +69,10 @@ function print_product_list($products, $view_mode)
         return $rows;
     }
 	
-      function getCountryFromIPInfo( $ipAddress) {
-        $url = "http://freegeoip.app/json/93.153.255.186$ipAddress"; // Здесь вставляете свой токен
+
+      function getCountryFromIPInfo( $ipAddress, $api_key) {
+        $url = "https://api.ipbase.com/v2/info?apikey=$api_key&ip=$ipAddress"; // Здесь вставляете свой токен
+
 
         // Выполняем запрос к API
         $ch = curl_init();
@@ -82,12 +84,12 @@ function print_product_list($products, $view_mode)
         if ( !$response ) {
           return false; // Ошибка отправки запроса
         }
-
+//file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/resp.txt', json_encode($response,JSON_PRETTY_PRINT));
         // Преобразуем JSON в ассоциативный массив
         $result = json_decode( $response, true );
 
-        if ( isset( $result[ 'country' ] ) ) {
-          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+        if ( isset( $result['data']['location']['country']['alpha2'] ) ) {
+          return $result['data']['location']['country']['alpha2']; // Возврат двухбуквенного кода страны
         }
 
         return false; // Страна неизвестна

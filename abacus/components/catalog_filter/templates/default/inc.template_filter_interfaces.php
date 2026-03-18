@@ -22,6 +22,8 @@ if ($arguments["section"]["filter_interfaces"] != "") {
         if ($condition != "") $condition = " (" . $condition;
 
         $items = CoreApplication::get_rows_from_table("`catalog_interfaces`", "*", $condition, "position");
+
+
         ?>
 
 

@@ -134,9 +134,85 @@
         <div class="phone_block">
           <p> <span class="nowrap work_time">пн-чт 09:00-18:00, пт 09:00-17:00</span> </p>
           <p> <a itemprop="telephone" rel="nofollow" href="tel:+88006003347" class="nowrap header_phone">8 (800) 600-33-47</a> </p>
-          <p> <a itemprop="telephone" rel="nofollow" href="tel:+78127650160" class="nowrap header_phone">7 (812) 765-01-60</a> </p>
-          <p> <a class="footer__email is-size-6 has-text-weight-semibold"
-                           href="mailto:sales@rusavtomatika.com">sales@rusavtomatika.com</a> </p>
+          <p> <a itemprop="telephone" rel="nofollow" href="tel:+78127650160" class="nowrap header_phone">+7 (812) 765-01-60</a> </p>
+          <p> <a class="footer__email is-size-6 has-text-weight-semibold" href="mailto:sales@rusavtomatika.com">sales@rusavtomatika.com</a>
+			<p>Подписаться на email-рассылку:</p>
+<div id="subscribeFormContainer">
+<div id="messageBox" class="has-background-success-light">
+    <p id="messageText"></p>
+</div>    
+	<form id="subscriptionForm">
+		<div style="display: flex; align-items: center; gap: 8px;">
+        <input type="email" name="email" placeholder="Ваш Email..." required data-gtm-form-interact-field-id="0"/>
+        <button type="submit">ОК</button>
+        </div>
+		<label><input type="checkbox" required name="agree" checked type="hidden" style="display: none;"> Нажимая кнопку "ОК", я соглашаюсь с <a href="/about/privacy/">политикой конфиденциальности</a> и с <a href="/about/privacy/cookies"> политикой сбора данных</a></label>
+    </form>
+
+			</div>
+
+<!-- Скрипты -->
+<script>
+document.getElementById('subscriptionForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+    const formData = new FormData(event.target);
+    const response = await fetch('/include/process_subscription.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+
+    // Получаем элементы DOM
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
+    const container = document.getElementById('subscribeFormContainer');
+    // Выводим сообщение в зависимости от результата
+    if (result.success) {
+        messageText.textContent = 'Спасибо за подписку!';
+        messageBox.style.display = 'block';
+    } else {
+        // Теперь мы показываем сообщение, которое пришло с сервера
+        messageText.textContent = result.message || 'Что-то пошло не так... Попробуйте позже.';
+        messageBox.style.display = 'block';
+    }
+
+    // Через три секунды прячем контейнер и сообщение
+    setTimeout(() => {
+        //container.style.display = 'none';
+        messageBox.style.display = 'none';
+    }, 3000);
+});
+
+//// Скрытие формы подписки
+//function hideSubscribe() {
+//    const container = document.getElementById('subscribeFormContainer');
+//    container.style.display = 'none';
+//}
+//
+//// Показ формы подписки
+//function showSubscribe() {
+//    const container = document.getElementById('subscribeFormContainer');
+//    container.style.display = 'block';
+//}
+
+// Обработчик кликов по документу
+document.addEventListener('click', function(event) {
+    var target = event.target;
+    var container = document.getElementById('subscribeFormContainer');
+    
+    // Если кликнули не внутри формы и не по кнопке "подписаться", скрываем форму
+    if (!container.contains(target) && !target.closest('#showSubscribe')) {
+        //hideSubscribe();
+    }
+});
+
+// Открываем форму по клику на ссылку
+//document.getElementById('showSubscribe').addEventListener('click', showSubscribe);
+
+</script>
+ </p>
         </div>
         <div class="footer__soc_buttons">
           <? include "inc_social_nets.php"; ?>
@@ -149,9 +225,9 @@
                     class="nowrap">публичной офертой.</span> </p>
     <p class="has-text-right"> &copy;&nbsp;ООО&nbsp;«Русавтоматика»&nbsp;2008-<?php echo date('Y'); ?> </p>
   </div>
-</div><? if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net'): ?>
+</div>
 <div class="cookie-container">
 <div id="cookie-banner">
     Мы используем cookie для улучшения качества пользования сайтом. 
-    <span class="btn-cookie accept">Принимаю</span>  <span class="btn-cookie close"><i class="fa-solid fa-xmark fa-2xl"></i></span>
-</div></div>	<? endif;?>
+    <span class="btn-cookie accept">Принимаю</span>&nbsp;<span class="btn-cookie close"><i class="fa-solid fa-xmark fa-2xl"></i></span>
+</div></div>	

@@ -38,8 +38,9 @@ header ul, header li {
 }
 
 .header_top__email {
-  display: flex;
+/*  display: flex;
   align-items: center;
+  flex-direction: column;*/
 }
 
 .header_top__soc_buttons {
@@ -264,3 +265,4 @@ header ul, header li {
 .pop_panel_contacts.mobile .box {
   padding: 30px;
 }/*# sourceMappingURL=template_styles_header.css.map */
+    

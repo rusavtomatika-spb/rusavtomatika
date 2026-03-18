@@ -9,7 +9,7 @@
                    @change="filterChanged" 
                    v-model="filterSelectedInterfaces"
                    class="wifi"/>&nbsp;
-            <label for="checkbox_wifi">Wi-Fi</label>
+            <label for="checkbox_wifi">Поддержка Wi-Fi</label>
         </div>
     </div>
 </div>

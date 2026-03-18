@@ -5,7 +5,7 @@
 .page_downloads .block_padding p{margin: 5px 0;}
 .background-gray{background: #f0f0f0;}
 .page_downloads_title3{font-size:17px;font-weight: 700;}
-.download_chm,.download_zip,.download_pdf,.download_pkg,.download_package,.download_htm,.download_apk,.download_bin,.download_linkext,.download_android,
+.download_chm,.download_zip,.download_pdf,.download_pkg,.download_package,.download_htm,.download_apk,.download_bin,.download_exe,.download_linkext,.download_android,
 .download_ipad,.download_rar,.download_linkext_big,.download_linkext_online {
 	display: inline-block;
 	color: #009b1e;
@@ -14,7 +14,7 @@
         padding: 3px 0 3px 27px;
 	margin: 2px;
 }
-.download_pkg,.download_package,.download_bin {background: url('/images/pkg-small.png') left center no-repeat;}
+.download_pkg,.download_package,.download_bin,.download_exe {background: url('/images/pkg-small.png') left center no-repeat;}
 .download_pdf {background: url('/images/pdf.png') left center no-repeat;}
 .download_chm {background: url('/images/chm.png') left center no-repeat;}
 .download_zip {background: url('/images/zip-small.png') left center no-repeat;}

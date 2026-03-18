@@ -37,10 +37,7 @@ if ( isset( $arResult[ 'product' ][ 'files' ] )and is_array( $arResult[ 'product
       <tr>
         <td><?
         if ( isset( $file[ "name" ] )and $file[ "name" ] != "" ): ?>
-          <div class=""><a <?if($file["type"] != 'pdf' && $file["type"] != 'online'){?>download<?}?> title="Скачать" target="_blank"
-                                             href="<?= printDefiningLink($file["path"], $site) ?>">
-            <?= $file["name"] ?>
-            </a> </div>
+          <div class=""><a <?if($file["type"] != 'pdf' && $file["type"] != 'online'){?>download<?}?> title="Скачать" target="_blank" <?if( preg_match('/Спецификация/',$file['name']) != FALSE ){?>doc="spec"<?}?> href="<?= printDefiningLink($file["path"], $site) ?>"><?= $file["name"] ?></a></div>
           <? endif; ?>
           <?
           if ( isset( $file[ "annotation" ] )and $file[ "annotation" ] != "" ): ?>
@@ -97,10 +94,7 @@ if ( isset( $arResult[ 'product' ][ 'files' ] )and is_array( $arResult[ 'product
       <tr>
         <td><?
         if ( isset( $file[ "title" ] )and $file[ "title" ] != "" ): ?>
-          <div class=""><a <?if($file["ftype"] != 'pdf' && $file["ftype"] != 'online'){?>download<?}?> title="Скачать" target="_blank"
-                                             href="https://www.rusavtomatika.com/upload_files/documents/weintek/<?= $file["path"] . "/" . ( $file[ 'fname' ] ) ?>">
-            <?= $file["title"] ?>
-            </a> </div>
+          <div class=""><a <?if($file["ftype"] != 'pdf' && $file["ftype"] != 'online'){?>download<?}?> title="Скачать" target="_blank" <?if( preg_match('/Спецификация/',$file['title']) != FALSE ){?>doc="spec"<?}?> href="https://www.rusavtomatika.com/upload_files/documents/weintek/<?= $file["path"] . "/" . ( $file[ 'fname' ] ) ?>"><?= $file["title"] ?></a></div>
           <? endif; ?>
           <?
           if ( isset( $file[ "description" ] )and $file[ "description" ] != "" ): ?>

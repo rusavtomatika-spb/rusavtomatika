@@ -31,13 +31,13 @@ require_once CORE_PATH . '/application/CoreApplication.php';
             {
                 type: 'carousel',
                 startAt: 0,
-                perView: 4,
-                gap: 15,
+                perView: 5,
+                gap: 10,
                 autoplay: false,
                 focusAt: 0,
                 breakpoints: {
                     1199: {
-                        perView: 4,
+                        perView: 5,
                     },
                     768: {
                         autoplay: 3000,

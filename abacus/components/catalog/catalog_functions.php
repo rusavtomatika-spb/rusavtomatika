@@ -30,7 +30,7 @@ class CoreComponentsCatalog{
                 }
                 break;
             default:
-                $arr_brands = ['weintek'.EX,'samkoon'.EX,'ifc'.EX,'aplex'.EX,'ewon'.EX,'faraday'.EX];
+                $arr_brands = ['weintek'.EX,'samkoon'.EX,'ifc'.EX,'spiktek'.EX,'aplex'.EX,'ewon'.EX,'faraday'.EX];
                 $URL = trim(explode('?',$_SERVER['REQUEST_URI'])[0], "/");
                 if($URL != 'catalog' and in_array($URL,$arr_brands)){
                     $component_name = "catalog_brand";

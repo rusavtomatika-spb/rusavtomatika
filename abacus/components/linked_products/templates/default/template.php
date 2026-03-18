@@ -10,9 +10,12 @@ CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) .
 C_LinkedProducts::set_model($arguments["model"]);
 
 
-$arr_linked_products = C_LinkedProducts::getLinkedModels();
+$arr_linked_products = C_LinkedProducts::getLinkedModels($arguments["model"]);
+//file_put_contents('temp.txt',json_encode($arr_linked_products, JSON_PRETTY_PRINT));
+//file_put_contents('temp.txt',$arguments["model"]);
+//var_dump_pre($arr_linked_products);
 
-if(count($arr_linked_products) > 0):
+if (count($arr_linked_products[1]) != 0) {
 ?>
 <div class="linked_products_wrapper">
     <div class="linked_products">
@@ -22,7 +25,7 @@ if(count($arr_linked_products) > 0):
             <div id="linked_products_slider">
                 <?
                 foreach ($arr_linked_products as $model) {
-                    //var_dump_pre($model["product_identifier"]);
+                    
 
                     $url_for_link = str_replace("www.rusavtomatika.com", $_SERVER["HTTP_HOST"], $model["url"]);
                     if (!(isset($model["url"]) and $model["url"] != "")) continue;
@@ -46,4 +49,7 @@ if(count($arr_linked_products) > 0):
 </div>
 <?php
 
-endif;
+}
+
+
+

@@ -46,7 +46,7 @@ if ($count > 0):
 
         <div class="glide__track" data-glide-el="track">
 
-            <ul class="glide__slides">
+            <ul class="glide__slides" style="padding: 20px 0;">
 
                 <?
 
@@ -197,6 +197,7 @@ if ($count > 0):
         </div>
 
     </div>
+
 <?php
 
 endif;

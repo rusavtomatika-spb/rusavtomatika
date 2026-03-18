@@ -29,7 +29,7 @@ if (strpos($arResult["model"], "faraday") === false) {
     $arResult_product = CoreApplication::get_rows_from_table("`products_all`", "*", "s_name = '{$arResult["model"]}'", "", 1);
 }
 
-//$var_dump = var_dump($arResult_product);
+//var_dump($arResult_product);
 if (count($arResult_product) == 0) {
     header("HTTP/1.0 404 Not Found");
     define('ERROR_404', true);
@@ -65,7 +65,7 @@ if (count($arResult_product) == 0) {
     $template_title = $product_type["template_title"];
     $product_type_genitive_case = $product_type["genitive_case"];
 
-    global $TITLE;
+    global $TITLE,$tech_out;
     global $DESCRIPTION;
     global $DESCRIPTION_micro;
     global $KEYWORDS;
@@ -92,6 +92,15 @@ if (count($arResult_product) == 0) {
 			array_push($arSelected_articles,$article);
 		}
 	}
+// Сортируем массив arSelected_articles по убыванию поля 'pos'
+usort($arSelected_articles, function($a, $b) {
+    if ($a['por'] == $b['por']) {   // Если равны, возвращаем 0
+        return 0;
+    }
+    return ($a['por'] > $b['por']) ? -1 : 1; // Большее значение вперед
+});
+	$arSelected_articles = array_slice($arSelected_articles, 0, 5);
+
 
     $arResult_videos = CoreApplication::get_rows_from_table("`videos`", "*", "`show` = 1","");
 	$arSelected_videos = array();
@@ -129,8 +138,11 @@ if (count($arResult_product) == 0) {
 
     $KEYWORDS = $product_type["short_name"] . ", " . $arResult['product']["model"] . ", " . $arResult['product']["brand"];
 
+	if ($arResult['product']["section"]=='accessories') {
+    $CANONICAL = "https://www.rusavtomatika.com/" . mb_strtolower($arResult['product']['section']) . "/" . $arResult['product']['model'] . "/";
+	} else {
     $CANONICAL = "https://www.rusavtomatika.com/" . mb_strtolower($arResult['product']['brand']) . "/" . $arResult['product']['model'] . "/";
-
+	}
 
     if (isset($arResult['product']["title"]) and $arResult['product']["title"] != '') {
         $TITLE = $arResult['product']["title"];
@@ -153,17 +165,92 @@ if (count($arResult_product) == 0) {
 
 
     $template_h1 = str_replace('#model#', $arResult['product']["model"], $template_h1);
+    $template_h1 = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $template_h1);
+	
     if ($arResult['product']["brand"] == 'IFC') {
         $template_h1 = str_replace('#brand#', '', $template_h1);
     } else {
         $template_h1 = str_replace('#brand#', $arResult['product']["brand"], $template_h1);
     }
     if ($arResult['product']["diagonal"] != '') {
-
-
         $template_h1 = str_replace('#diagonal#', str_replace(".0", "", $arResult['product']["diagonal"]) . "&quot;", $template_h1);
     }
 
+	$tech = $tech_h1 = $fi4i = array();
+	if ($arResult['product']["brand"] == 'Weintek') {
+		if ($arResult['product']["mqtt"] == 1) {
+        $tech[] = "<a href='/articles/mqtt/' target='_new'>MQTT</a>: есть";
+		}
+		if ($arResult['product']["easy_access"] == 'optional') {
+        $tech[] = "<a href='/accessories/easyaccess/' target='_new'>EasyAccess 2.0</a>: опционально";
+		}
+		if ($arResult['product']["easy_access"] == 'build_in') {
+        $tech[] = "<a href='/accessories/easyaccess/' target='_new'>EasyAccess 2.0</a>: с лицензией";
+		}
+		if ($arResult['product']["opc_ua"] == 1) {
+        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new' qqq='222'>OPC UA</a>: клиент";
+		}
+		if ($arResult['product']["opc_ua"] == 2) {
+        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new'>OPC UA</a>: клиент/сервер";
+		}
+		if ($arResult['product']["opc_ua"] == 3) {
+        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new'>OPC UA</a>: клиент-есть/сервер-опционально";
+		}
+		if ($arResult['product']["codesys"] == 'build_in') {
+        $tech[] = "<a href='/articles/codesys-ot-weintek-bystryy-start/' target='_new'>Codesys</a>: c лицензией";
+		}
+		if ($arResult['product']["codesys"] == 'optional') {
+        $tech[] = "<a href='/articles/codesys-ot-weintek-bystryy-start/' target='_new'>Codesys</a>: опционально";
+		}
+		if ($arResult['product']["dashboard"] == 1) {
+        $tech[] = "<a href='/articles/vse-o-weincloud-dashboard/' target='_new'>Dashboard</a>: есть";
+		}
+    }
+		if ($arResult['product']["matrix"] != '') {
+        $tech[] = "Матрица: ".$arResult['product']["matrix"];
+		}
+		if ($arResult['product']["wifi_support"] == 1) {
+        $tech[] = "Wi-Fi: есть";
+		}
+		if ($arResult['product']["wifi_support"] == 2) {
+        $tech[] = "Wi-Fi: опционально";
+		}
+	if ($arResult['product']["brand"] == 'Weintek') {
+		if ($arResult['product']["mqtt"] == 1) {
+        $tech_h1[] = "MQTT";
+		}
+		if ($arResult['product']["easy_access"] != 'N') {
+        $tech_h1[] = "EasyAccess 2.0";
+		}
+		if ($arResult['product']["opc_ua"] != 0) {
+        $tech_h1[] = "OPC UA";
+		}
+		if ($arResult['product']["codesys"] == 'build_in' || $arResult['product']["codesys"] == 'optional') {
+        $tech_h1[] = "Codesys";
+		}
+		if ($arResult['product']["dashboard"] == 1) {
+        $tech_h1[] = "Dashboard";
+		}
+    }
+//		if ($arResult['product']["matrix"] != '') {
+//        $tech_h1[] = $arResult['product']["matrix"];
+//		}
+		if ($arResult['product']["wifi_support"] >= 1) {
+        $tech_h1[] = "Wi-Fi";
+		}
+
+	if (count($tech)>0) {
+		$tech_out = '<ul style="margin-top: 0"><li>' . implode('</li><li>', $tech) . '</li></ul>';
+	} else { $tech_out = ''; }
+	
+	if (count($tech_h1)>0) {
+		$tech_h1_out = '(' . implode(', ', $tech_h1) . ')';
+	} else { $tech_h1_out = ''; }
+    
+	if ($tech_out != '') {
+        $template_h1 .= '<span style="color:#6d6d6d;">' .$tech_h1_out.'</span>';
+    }
+	
     if ($arResult['product']["model_fullname"] != '') {
         $template_h1 = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $template_h1);
     }
@@ -181,6 +268,14 @@ if (count($arResult_product) == 0) {
 
     if (isset($arResult['product']["camera_usb"]) and $arResult['product']["camera_usb"] == 1) {
         $arResult['product']["camera_usb"] = "Есть";
+    }
+
+//    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
+//        $arResult['product']["hdd_size_gb"] = "Отсутствует";
+//    }
+
+    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
+        $arResult['product']["hdd_size_gb"] = $arResult['product']["hdd_size_gb"];
     }
 
     if (isset($arResult['product']["codesys"]) and $arResult['product']["codesys"] == 'optional') {
@@ -220,10 +315,8 @@ if (count($arResult_product) == 0) {
             $arResult['product']['price_rub_act_value'] = $arResult['product']["action_price"];
             $arResult['product']["price_usd_value"] = intval($arResult['product']["retail_price"] / $usd_currency);
         } else {
-
             $arResult['product']["price_usd_value"] = $arResult['product']["retail_price"];
             $arResult['product']['price_usd_act_value'] = $arResult['product']["action_price"];
-
             if ($usd_currency > 0) {
                 $arResult['product']['price_rub_value'] = intval($arResult['product']["retail_price"] * $usd_currency);
             } else $arResult['product']['price_rub_value'] = 0;
@@ -232,10 +325,9 @@ if (count($arResult_product) == 0) {
         $arResult['product']["price_usd_value"] = 0;
     }
 
-
     $H1 = $template_h1;
     if (isset($arResult['product']["h1"]) and $arResult['product']["h1"] != '') {
-        $H1 = $arResult['product']["h1"];
+        $H1 = $arResult['product']["h1"].$tech_h1_out;
     }
 
 
@@ -322,3 +414,4 @@ if (count($arResult_product) == 0) {
 
 
 
+//

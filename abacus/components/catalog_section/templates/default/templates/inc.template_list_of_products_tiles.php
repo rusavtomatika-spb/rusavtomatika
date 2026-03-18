@@ -39,7 +39,7 @@ global $usd_currency, $arSettings;
             } else $short_description = "";
             ?>
   <div class="tr_product_<?= $product["model"]; ?> tile" data-type="<?=$product['type']?>" data-series="<?=$product['series']?>">
-    <div class="preview">
+    <div class="preview 222">
       <?
                     /*
                     <a href="<?= $product["link_detail_page"]; ?>">
@@ -78,7 +78,7 @@ global $usd_currency, $arSettings;
                             }
                             ?>
         <?
-                        if(in_array($brand,["Weintek","IFC","Aplex","Samkoon","eWON","Faraday"])){
+                        if(in_array($brand,["Weintek","IFC","Aplex","Spiktek","Samkoon","eWON","Faraday"])){
                         ?>
         <a class="brand_plate" href="/<? echo strtolower($brand); ?>/"><? echo $brand; ?></a>
         <?

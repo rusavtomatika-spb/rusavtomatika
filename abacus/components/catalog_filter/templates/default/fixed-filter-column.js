@@ -116,6 +116,8 @@ getCheckedBoxes();
 getCheckedBoxes();
   }, 1000);
 
+
+
 });
 function getCheckedBoxes() {
    var brand_checks = $(".checkbox_brand:checked").length;
@@ -125,4 +127,9 @@ function getCheckedBoxes() {
     } else {
         $(".filter_series").addClass("is-hidden");
       }
+}
+function validateDecimal(inputElement) {
+  if (!/^\d*\.?\d*$/.test(inputElement.value)) {
+    inputElement.value = inputElement.value.replace(/[^0-9.]+/g, '.');
+  }
 }

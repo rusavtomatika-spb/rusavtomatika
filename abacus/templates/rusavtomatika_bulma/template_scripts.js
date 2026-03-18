@@ -1,15 +1,56 @@
-$(function () {
-    $('.button_open_panel_contacts').on('click',function () {
-        if($('.button_open_panel_contacts').hasClass('is-active')){
-            $('.button_open_panel_contacts').removeClass('is-active');
-            $('.pop_panel_contacts').removeClass('is-active');
-            $('.pop_panel_contacts').fadeOut(300);
-        }else {
-            $('.button_open_panel_contacts').addClass('is-active');
-            $('.pop_panel_contacts').addClass('is-active');
-            $('.pop_panel_contacts').fadeIn(300);
+//$(function () {
+//    $('.button_open_panel_contacts').on('click',function () {
+//        if($('.button_open_panel_contacts').hasClass('is-active')){
+//            $('.button_open_panel_contacts').removeClass('is-active');
+//            $('.pop_panel_contacts').removeClass('is-active');
+//            $('.pop_panel_contacts').fadeOut(300);
+//        }else {
+//            $('.button_open_panel_contacts').addClass('is-active');
+//            $('.pop_panel_contacts').addClass('is-active');
+//            $('.pop_panel_contacts').fadeIn(300);
+//        }
+//    });
+//});
+
+$(function() {
+    // Обработчик открытия панели контактов
+    $('.button_open_panel_contacts').on('click', function() {
+        if ($('.button_open_panel_contacts').hasClass('is-active')) {
+            closePanel();
+        } else {
+            openPanel();
         }
     });
+    
+    // Обработчик закрытия панели по клику на крестик
+    $('.close_').on('click', function(e) {
+        e.stopPropagation(); // Остановим всплытие события вверх
+        closePanel();
+    });
+    
+    // Обработчик кликов вне панели
+    $(document).on('click', function(event) {
+        var target = event.target;
+        
+        // Если кликнули внутри панели или на кнопке открытия, ничего не делаем
+        if (!$(target).closest('.header_top__contacts').length && !$(target).is('.button_open_panel_contacts')) {
+            closePanel();
+        }
+    });
+    
+    // Функция открытия панели
+    function openPanel() {
+        $('.button_open_panel_contacts').addClass('is-active');
+        $('.pop_panel_contacts').addClass('is-active');
+        $('.pop_panel_contacts').fadeIn(300);
+    }
+    
+    // Функция закрытия панели
+    function closePanel() {
+        $('.button_open_panel_contacts').removeClass('is-active');
+        $('.pop_panel_contacts').removeClass('is-active');
+        $('.pop_panel_contacts').fadeOut(300);
+    }
 });
 
 $(function () {
@@ -406,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const banner = document.querySelector('.cookie-container');
     
     if(banner) {
-        if (!getCookie('acceptedCookies')) {
+        if (!getCookie2('acceptedCookies')) {
                 banner.style.display = 'grid';
         }
 
@@ -421,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function getCookie(name) {
+function getCookie2(name) {
     let matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}$$$$$$\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));

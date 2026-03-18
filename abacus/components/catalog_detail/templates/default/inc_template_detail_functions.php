@@ -299,26 +299,26 @@ function get_list_of_files_from_json($arguments)
     return $docs;
 }
 
-function getCountryFromIPInfo( $ipAddress, $token ) {
-    $url = "http://freegeoip.app/json/$ipAddress"; // Здесь вставляете свой токен
+      function getCountryFromIPInfo( $ipAddress, $token ) {
+        $url = "http://freegeoip.app/json/$ipAddress"; // Здесь вставляете свой токен
 
-    // Выполняем запрос к API
-    $ch = curl_init();
-    curl_setopt( $ch, CURLOPT_URL, $url );
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-    $response = curl_exec( $ch );
-    curl_close( $ch );
+        // Выполняем запрос к API
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
 
-    if ( !$response ) {
-        return false; // Ошибка отправки запроса
-    }
+        if ( !$response ) {
+          return false; // Ошибка отправки запроса
+        }
 
-    // Преобразуем JSON в ассоциативный массив
-    $result = json_decode( $response, true );
+        // Преобразуем JSON в ассоциативный массив
+        $result = json_decode( $response, true );
 
-    if ( isset( $result[ 'country' ] ) ) {
-        return $result[ 'country' ]; // Возврат двухбуквенного кода страны
-    }
+        if ( isset( $result[ 'country' ] ) ) {
+          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+        }
 
-    return false; // Страна неизвестна
-}
+        return false; // Страна неизвестна
+      }

@@ -2,6 +2,7 @@
 $current_folder_url = str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ );
 CoreApplication::add_style( $current_folder_url . "/style.css" );
 CoreApplication::add_script( $current_folder_url . "/newslist_articles_scripts.js" );
+//CoreApplication::direct_sql_query( 'SELECT * FROM `articles`' );
 
 global $TITLE, $CANONICAL, $DESCRIPTION;
 if ( isset( $_GET[ 'page' ] ))  {
@@ -181,11 +182,11 @@ else $edit_mode = false;
               <div class="text_wrapper">
                 <div class="title"> <a :href="product_item.link">
                   <? if($edit_mode){ echo '[{{product_item.id}}] ';} ?>
-                  <span class="date">{{product_item.date}}</span> {{product_item.name}}</a> </div>
+                  {{product_item.name}}</a> </div>
                 <div></div>
                 <div class="text"> <a :href="product_item.link">
                   <? if($edit_mode){ echo '[{{product_item.id}}] ';} ?>
-                  <span v-html="product_item.stext"></span> <span class="component_newslist__link_word">Читать</span> </a> </div>
+                  <span v-html="product_item.stext"></span> <!--span class="component_newslist__link_word">Читать</span--> </a> </div>
               </div>
               <?
               if ( $edit_mode ) {

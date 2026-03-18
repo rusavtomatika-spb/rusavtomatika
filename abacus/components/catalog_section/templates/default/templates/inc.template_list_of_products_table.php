@@ -3,11 +3,22 @@
     $usd_currency = floatval(file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/usdrate.txt"));
 } else $usd_currency = 0;*/
 global $usd_currency;
+	      // Подставьте своё значение API ключа
+      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
+
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+	
+
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
 
 ?>
 <table class="series_products">
     <?
     foreach ($series["products"] as $product) {
+		if ($product["model"]=='codesys_license' ) {continue;}
+
 
         if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
             $product["diagonal"] = str_replace(".0", "", $product["diagonal"]);
@@ -34,7 +45,7 @@ global $usd_currency;
                         ?>
 
                         <img alt="<?= $product["model"]; ?>" loading="lazy"
-                             src="<?= $arSettings['../../default - Копия/templates/path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/67/<?= $product["model"] ?>_1.webp">
+                             src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/67/<?= $product["model"] ?>_1.webp">
                     </div>
                 </a>
             </td>

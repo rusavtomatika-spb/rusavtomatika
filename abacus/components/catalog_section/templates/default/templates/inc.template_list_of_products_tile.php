@@ -10,46 +10,47 @@ global $usd_currency, $arSettings;
 
 //echo $_SERVER['SCRIPT_NAME'];
 
-// Получаем IP пользователя
-$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+		$api_key = 'ipb_live_7zPixBjHSd7GfiLr0Rh81rch6kVVpXJtZqPBwSio';
+      // Получаем IP пользователя
+      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
+	
 
-
-// Определяем страну пользователя
-$userCountry = getCountryFromIPInfo( $userIp );
+      // Определяем страну пользователя
+      $userCountry = getCountryFromIPInfo( $userIp, $api_key);
+		//var_dump($series["products"]);
 
 ?>
 
-<div class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products_tiles fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop">
+<div class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products_tiles fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop <?= $userCountry ?>">
 
   <div class="grid">
 
   <?
 
     if (isset($series["products"]) and is_array($series["products"])) {
-if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
-usort($series["products"], function ($a, $b) {
-    $valueA = intval($a['sort']); // Приводим строку к числу
-    $valueB = intval($b['sort']); // Приводим строку к числу
-
-    // Проверяем условие сортировки по возрастанию
-    if ($valueA === $valueB) {
-        return 0; // Элементы равны
-    } elseif ($valueA < $valueB) {
-        return -1; // Первый элемент меньше, значит идет раньше
-    } else {
-        return 1; // Первый элемент больше, значит идет позже
-    }
-});
-}
-
+//        if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
+//        usort($series["products"], function ($a, $b) {
+//            $valueA = intval($a['sort']); // Приводим строку к числу
+//            $valueB = intval($b['sort']); // Приводим строку к числу
+//
+//            // Проверяем условие сортировки по возрастанию
+//            if ($valueA === $valueB) {
+//                return 0; // Элементы равны
+//            } elseif ($valueA < $valueB) {
+//                return -1; // Первый элемент меньше, значит идет раньше
+//            } else {
+//                return 1; // Первый элемент больше, значит идет позже
+//            }
+//        });
+//        }
+		//file_put_contents('sec.txt',json_encode($series["products"],JSON_PRETTY_PRINT));
         foreach ($series["products"] as $product) {
 
 			//if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && preg_match('/(series=cMT-X)/i',$_SERVER[ "QUERY_STRING" ]) && preg_match('/cMT/i',$product["series"]) ) continue;
 
 			if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
-
+			
 			if (preg_match('/(Codesys)/i',$product["model"]) && $userCountry != 'RU' ) continue;
-
 
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
 
@@ -193,7 +194,7 @@ usort($series["products"], function ($a, $b) {
 
         <?
 
-                        if(in_array($brand,["Weintek","IFC","Aplex","Samkoon","eWON","Faraday"])){
+                        if(in_array($brand,["Weintek","IFC","Aplex","Spiktek","Samkoon","eWON","Faraday"])){
 
                         ?>
 
@@ -338,7 +339,6 @@ usort($series["products"], function ($a, $b) {
 										<? if ($product['action_price'] > 0) {
 
 										echo '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>';
-
                                         echo '&nbsp;<span class="usd">&#8381;</span></span>';
 
 										} ?>
@@ -385,12 +385,17 @@ usort($series["products"], function ($a, $b) {
 
             <?
 
-                        if ($product['onstock_spb'] > 0 or $product['onstock_msk'] > 0) {
+                        if (($product['onstock_spb']) > 0) {
 
-                            echo '<span style="color:#00ad61"><i class="fa-solid fa-check"></i>&nbsp;В&nbsp;наличии</span>';
+                            echo '<span style="color:#00ad61"><i class="fa-solid fa-check"></i>&nbsp;В&nbsp;наличии</span> ';
+							if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net' || $_SERVER['SERVER_NAME'] == 'www.test.rusavtomatika.com') {
+								echo ($product['onstock_spb']);
+							}
 
-                        } else echo '<span class="red"><i class="fa-solid fa-clipboard-check"></i>&nbsp;Под&nbsp;заказ</span>';
-
+                        } else {
+							echo '<span class="red"><i class="fa-solid fa-clipboard-check"></i>&nbsp;Под&nbsp;заказ </span>';
+							if ($_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net' || $_SERVER['SERVER_NAME'] == 'www.test.rusavtomatika.com') echo ($product['onstock_spb']);
+						}
                         ?>
 
           </div>

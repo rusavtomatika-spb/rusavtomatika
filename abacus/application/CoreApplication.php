@@ -13,6 +13,32 @@ class CoreApplication
         self::$arrBreadcrumbs = array();
     }
 
+	public static function fileExistsOnFtp($filePath) {
+	
+$ftp_server = '82.202.162.16';
+$ftp_user = 'upload_olga@weblector.ru';
+$ftp_password = 'olgaglr';
+
+
+    // Подключаемся к FTP-сереверу
+    $connection = ftp_connect($ftp_server);
+
+    if (!$connection) {
+        throw new Exception("Невозможно подключиться к FTP серверу.");
+    }
+
+    // Аутентификация пользователя
+    if (!ftp_login($connection, $ftp_user, $ftp_password)) {
+        throw new Exception("Ошибка авторизации на FTP сервере.");
+    }
+
+    // Проверяем размер файла
+    $size = ftp_size($connection, $filePath);
+
+    // Если size равен -1, значит файл не существует
+    return $size !== -1;
+}
+
 
     public static function test_file_existing_by_url($url)
     {

@@ -15,12 +15,10 @@
                 if ($item["anchor"] != "") {
 
                     if (isset($item["link"]) and $item["link"] != "") {
-
                         ?><li><a href="<?= $item["link"] ?>"><?= $item["anchor"] ?></a></li><?
 
                     } else {
-
-                        ?><li><span style="width: 100%; white-space: normal;"><?= $item["anchor"] ?></span></li><?
+                        ?><li><span><?= $item["anchor"] ?></span></li><?
 
                     }
 

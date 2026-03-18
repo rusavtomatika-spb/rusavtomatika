@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/config/admin_dbcon.php';
 //putenv('TMPDIR=/test/');
 global $ftpConnectionID,$FTP_SERVER,$FTP_USER_NAME,$FTP_USERPASS;
 

@@ -7,9 +7,9 @@
             <div class="column is-12">
             <div class="filter_field_block__input_range_wrapper">
                 <input class="filter_field_block__input_range"
-                       v-model="filterSelectedRangerammax_min" type="text" id="rammax_min">
+                       v-model="filterSelectedRangerammax_min" type="text" id="rammax_min" oninput="validateDecimal(this)">
                 <input class="filter_field_block__input_range right"
-                       v-model="filterSelectedRangerammax_max" type="text" id="rammax_max">
+                       v-model="filterSelectedRangerammax_max" type="text" id="rammax_max" oninput="validateDecimal(this)">
                 <div style="clear: both;height: 1px"></div>
                 <div class="range-slider" id="rammax-slider"
                      data-min="0"

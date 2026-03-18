@@ -175,6 +175,7 @@ $extra_openGraph = array(
   .policy-container {
       width: 100%;
       border-radius: 24px;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
       padding: 48px 56px;
       transition: all 0.2s;
   }

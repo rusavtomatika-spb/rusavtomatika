@@ -5,58 +5,9 @@ function search_by_words($arr_search_words)
 {
     $arrResult = array();
     $arrIDs = array();
-    
-    $vesa_filter = isset($_GET['vesa']) && $_GET['vesa'] == 'yes';
-    
-    if ($vesa_filter && (empty($arr_search_words) || (count($arr_search_words) == 1 && $arr_search_words[0] == 'VESA'))) {
-        return get_products_by_vesa_filter($arrIDs);
-    }
-    
     $arrResult1 = search_in_products_all_by_model($arr_search_words, $arrIDs);
     $arrResult2 = search_in_products_all_by_text_features($arr_search_words, $arrIDs);
     $arrResult = array_merge($arrResult1, $arrResult2);
-    
-    if ($vesa_filter) {
-        $vesa_products = get_products_by_vesa_filter($arrIDs);
-        $arrResult = array_merge($arrResult, $vesa_products);
-    }
-    
-    usort($arrResult, "cmp_by_freqs");
-    
-    return $arrResult;
-}
-
-function get_products_by_vesa_filter(&$arrIDs)
-{
-    global $arr_catalog_types;
-    $arrResult = array();
-    
-    $rows = CoreApplication::get_rows_from_table('products_all', "", "parent='' and status!='0' and brand!='Cincoze' and vesa='yes'");
-    
-    foreach ($rows as $product) {
-        if (!(isset($arrIDs[$product['index']]) && $arrIDs[$product['index']] == true)) {
-            
-            if(isset($product["model_fullname"]) && $product["model_fullname"]!=""){
-                $product['model_fullname'] = $product["model_fullname"];
-            } elseif (isset($arr_catalog_types[$product['type'] . $product['series']])) {
-                $name = $arr_catalog_types[$product['type'] . $product['series']];
-                $name = str_replace("#brand#", $product['brand'], $name);
-                $name = str_replace("#model#", $product['model'], $name);
-                if (isset($product['diagonal']) && $product['diagonal'] > 0 && $product['diagonal_hide'] != '1') {
-                    $name = str_replace("#diagonal#", $product['diagonal'], $name);
-                } else {
-                    $name = str_replace("#diagonal#", '', $name);
-                }
-                $product['model_fullname'] = $name;
-            }
-            
-            $product['freqs'] = 500;
-            
-            $arrResult[] = $product;
-            $arrIDs[$product['index']] = true;
-        }
-    }
-    
     return $arrResult;
 }
 
@@ -263,7 +214,7 @@ function search_in_products_all_by_text_features($arr_search_words, &$arrIDs)
                 continue;
             }
             $word = mysqli_real_escape_string($mysqli_db, $word);
-            $rows = CoreApplication::get_rows_from_table('products_all', "", "parent='' and status!='0' and brand!='Cincoze' and (`text_features` like '%$word%') order by `discontinued` asc");
+            $rows = CoreApplication::get_rows_from_table('products_all', "", "parent='' and status!='0' and brand!='Cincoze' and (`text_features` like '%$word%') ");
             foreach ($rows as $product) {
                 if (!(isset($arrIDs[$product['index']]) and $arrIDs[$product['index']] == true)) {
                     if (isset($arr_catalog_types[$product['type']])) {
@@ -436,4 +387,26 @@ function switcher($text, $arrow = 0)
     $result = strtr($text, $result);
     return $result;
 }
+      function getCountryFromIPInfo( $ipAddress, $token ) {
+        $url = "https://ipinfo.io/$ipAddress?token=$token"; // Здесь вставляете свой токен
 
+        // Выполняем запрос к API
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+
+        if ( !$response ) {
+          return false; // Ошибка отправки запроса
+        }
+
+        // Преобразуем JSON в ассоциативный массив
+        $result = json_decode( $response, true );
+
+        if ( isset( $result[ 'country' ] ) ) {
+          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+        }
+
+        return false; // Страна неизвестна
+      }
