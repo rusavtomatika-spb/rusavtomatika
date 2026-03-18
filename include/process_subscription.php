@@ -1,5 +1,5 @@
 <?php
-// session_start();
+/// session_start();
 define( "bullshit", 1 );
 header('Content-Type: text/html; charset=utf-8');
 include_once $_SERVER["DOCUMENT_ROOT"] . "/sc/dbcon.php";
