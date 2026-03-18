@@ -4,7 +4,10 @@
 } else $usd_currency = 0;*/
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
-
+// Получаем IP пользователя
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+// Определяем страну пользователя
+$userCountry = getCountryFromIPInfo( $userIp );
 ?>
 <table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products">
   <?
@@ -28,6 +31,7 @@ usort($series["products"], function ($a, $b) {
 		foreach ($series["products"] as $product) {
 			//if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && preg_match('/(series=cMT-X)/i',$_SERVER[ "QUERY_STRING" ]) && preg_match('/cMT/i',$product["series"]) ) continue;
 			if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
+			if (preg_match('/(Codesys)/i',$product["model"]) && $userCountry != 'RU' ) continue;
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
                 /*            if(count($arDiagonals) > 0 and !in_array($product["diagonal"], $arDiagonals)){
                                 continue;

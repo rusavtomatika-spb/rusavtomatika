@@ -69,3 +69,26 @@ function print_product_list($products, $view_mode)
         return $rows;
     }
 	
+      function getCountryFromIPInfo( $ipAddress) {
+        $url = "http://freegeoip.app/json/93.153.255.186$ipAddress"; // Здесь вставляете свой токен
+
+        // Выполняем запрос к API
+        $ch = curl_init();
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+
+        if ( !$response ) {
+          return false; // Ошибка отправки запроса
+        }
+
+        // Преобразуем JSON в ассоциативный массив
+        $result = json_decode( $response, true );
+
+        if ( isset( $result[ 'country' ] ) ) {
+          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
+        }
+
+        return false; // Страна неизвестна
+      }
