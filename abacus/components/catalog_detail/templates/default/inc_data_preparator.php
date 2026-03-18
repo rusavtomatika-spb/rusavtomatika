@@ -279,9 +279,9 @@ usort($arSelected_articles, function($a, $b) {
         $arResult['product']["mqtt"] = "Есть";
     }
     if (isset($arResult['product']["usb_host"]) and $arResult['product']["usb_host"] == "1") {
-        $arResult['product']["usb_host"] = "Есть";
+        $arResult['product']["usb_host"] = "Есть"; 
     }
-//    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
+////    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
 //        $arResult['product']["hdd_size_gb"] = "Отсутствует";
 //    }
 
