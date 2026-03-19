@@ -12,7 +12,8 @@ while ($row = mysql_fetch_assoc($res)) {
 	$recs .= $row['email'].PHP_EOL;
 }
 $file_path = '/path/to/your/file.txt';
-$to_email = 'km@fam-drive.ru';
+// $to_email = 'km@fam-drive.ru';
+$to_email = 'reikhkanceller2@gmail.com';
 $subject = 'Список подписчиков';
 $message_body = $recs;
 $file_content = $recs;
