@@ -1,14 +1,13 @@
 <?php
+
 global $TITLE, $DESCRIPTION, $KEYWORDS;
 $TITLE = 'Скачать EasyBuilder Pro, EasyBuilder 8000, EBPro, EB8000, SKWorkshop, драйвера Aplex, драйвера IFC, документация, гайд, руководство, инструкция, мануал';
 $DESCRIPTION = 'Документация и программное обеспечение для работы с оборудованием Weintek, Samkoon, IFC, Aplex — описания, мануалы и брошюры, инструкции по установке и эксплуатации, руководства по работе с программым обеспечением и примеры проектов для операторских панелей';
 $KEYWORDS = 'Скачать, бесплатно, без регистрации, инструкции по эксплуатации, бесплатное по, программное обеспечение, операторские панели, панели оператора, Weintek, Samkoon, IFC, Aplex, инструкции по установке, брошюры, мануалы, даташит';
 $CANONICAL = "https://www.rusavtomatika.com/download/";
-
 global $CONTENT_ON_WIDE_SCREEN,$recs;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/prolog.php";
-require_once $_SERVER[ 'DOCUMENT_ROOT' ] . '/utils/geoip_functions.php';
 $docs_folder = $_SERVER[ 'DOCUMENT_ROOT' ] . '/download/';
 file_put_contents( $docs_folder . "error_log", "" );
 $docs_result = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/docs_result.txt';
@@ -21,23 +20,27 @@ $um_arc = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/um_arc.txt';
 $items = array_values( json_decode( file_get_contents( $docs_result ), true ) ); // JSON с документами weintek
 $progs = array_values( json_decode( file_get_contents( $soft_result ), true ) ); // JSON с документами weintek
 if (file_get_contents( $soft_updates ) != '') {
-$updates = array_values( json_decode( file_get_contents( $soft_updates ), true ) ); // JSON с документами weintek
+  $updates = array_values( json_decode( file_get_contents( $soft_updates ), true ) ); // JSON с документами weintek
 } else {
 	$updates = '';
 }
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/download_styles.css?" . rand() );
-
 include_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/sc/dbcon.php";
 database_connect();
 $query = "SELECT * FROM `downloads`";
 $res = mysql_query( $query )or die( mysql_error() );
 //$res = mysql_fetch_assoc( $res );
+
 $recs = array();
+
 while ($row = mysql_fetch_assoc($res)) {
     $recs[] = $row;
 }
+
 //var_dump($res);
+
 //exit();
+
 function findRecordBySoftware($records, $soft, $fld) {
     foreach ($records as $record) {
         if ($record['software'] === $soft) {
@@ -46,6 +49,47 @@ function findRecordBySoftware($records, $soft, $fld) {
     }
     return null;
 }
+
+function getCountryFromDaData($ipAddress, $apiKey) {
+    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Accept: application/json',
+        'Authorization: Token ' . $apiKey
+    ]);
+
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+
+    $response = curl_exec($ch);
+
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return false;
+    }
+
+    curl_close($ch);
+
+    if (!$response) {
+        return false;
+    }
+
+    $result = json_decode($response, true);
+
+    if (isset($result['location']['data']['country_iso_code'])) {
+        return $result['location']['data']['country_iso_code'];
+    }
+
+    return false;
+}
+
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
+
 
 function fetchTxtFileContents($url) {
     if (!filter_var($url, FILTER_VALIDATE_URL)) {

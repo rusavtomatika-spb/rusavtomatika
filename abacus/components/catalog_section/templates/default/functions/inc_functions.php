@@ -70,27 +70,38 @@ function print_product_list($products, $view_mode)
     }
 	
 
-      function getCountryFromIPInfo( $ipAddress, $api_key) {
-        $url = "https://api.ipbase.com/v2/info?apikey=$api_key&ip=$ipAddress"; // Здесь вставляете свой токен
+function getCountryFromDaData($ipAddress, $apiKey) {
+    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Accept: application/json',
+        'Authorization: Token ' . $apiKey
+    ]);
 
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-        // Выполняем запрос к API
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $response = curl_exec( $ch );
-        curl_close( $ch );
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 
-        if ( !$response ) {
-          return false; // Ошибка отправки запроса
-        }
-//file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/resp.txt', json_encode($response,JSON_PRETTY_PRINT));
-        // Преобразуем JSON в ассоциативный массив
-        $result = json_decode( $response, true );
+    $response = curl_exec($ch);
 
-        if ( isset( $result['data']['location']['country']['alpha2'] ) ) {
-          return $result['data']['location']['country']['alpha2']; // Возврат двухбуквенного кода страны
-        }
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return false;
+    }
 
-        return false; // Страна неизвестна
-      }
+    curl_close($ch);
+
+    if (!$response) {
+        return false;
+    }
+
+    $result = json_decode($response, true);
+
+    if (isset($result['location']['data']['country_iso_code'])) {
+        return $result['location']['data']['country_iso_code'];
+    }
+
+    return false;
+}

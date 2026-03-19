@@ -387,26 +387,39 @@ function switcher($text, $arrow = 0)
     $result = strtr($text, $result);
     return $result;
 }
-      function getCountryFromIPInfo( $ipAddress, $token ) {
-        $url = "https://ipinfo.io/$ipAddress?token=$token"; // Здесь вставляете свой токен
 
-        // Выполняем запрос к API
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $response = curl_exec( $ch );
-        curl_close( $ch );
+function getCountryFromDaData($ipAddress, $apiKey) {
+    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Accept: application/json',
+        'Authorization: Token ' . $apiKey
+    ]);
 
-        if ( !$response ) {
-          return false; // Ошибка отправки запроса
-        }
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
-        // Преобразуем JSON в ассоциативный массив
-        $result = json_decode( $response, true );
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 
-        if ( isset( $result[ 'country' ] ) ) {
-          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
-        }
+    $response = curl_exec($ch);
 
-        return false; // Страна неизвестна
-      }
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return false;
+    }
+
+    curl_close($ch);
+
+    if (!$response) {
+        return false;
+    }
+
+    $result = json_decode($response, true);
+
+    if (isset($result['location']['data']['country_iso_code'])) {
+        return $result['location']['data']['country_iso_code'];
+    }
+
+    return false;
+}

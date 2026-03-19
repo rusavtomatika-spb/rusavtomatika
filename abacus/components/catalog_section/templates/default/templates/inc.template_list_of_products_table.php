@@ -3,15 +3,9 @@
     $usd_currency = floatval(file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/usdrate.txt"));
 } else $usd_currency = 0;*/
 global $usd_currency;
-	      // Подставьте своё значение API ключа
-      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
-
-      // Получаем IP пользователя
-      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-	
-
-      // Определяем страну пользователя
-      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
 
 ?>
 <table class="series_products">

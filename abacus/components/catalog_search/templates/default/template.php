@@ -7,11 +7,10 @@ $arSettings[ 'path_to_product_images' ] = '/images/';
 /*!!!!!!!!!!!!!!!!!!!!!!*/
 require "inc_functions.php";
 /*!!!!!!!!!!!!!!!!!!!!!!*/
-      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
-      // Получаем IP пользователя
-      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-      // Определяем страну пользователя
-      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
+
 $extra_h1 = '';
 function myStrToLower($string) {
     $upperCaseRu = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];

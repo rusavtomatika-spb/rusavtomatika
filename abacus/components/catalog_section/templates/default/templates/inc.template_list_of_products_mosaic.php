@@ -5,14 +5,9 @@
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
 	      // Подставьте своё значение API ключа
-      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
-
-      // Получаем IP пользователя
-      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-	
-
-      // Определяем страну пользователя
-      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
 
 ?>
 <table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products">

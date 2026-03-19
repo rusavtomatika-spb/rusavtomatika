@@ -4,13 +4,10 @@
 } else $usd_currency = 0;*/
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
-		$api_key = 'ipb_live_7zPixBjHSd7GfiLr0Rh81rch6kVVpXJtZqPBwSio';
-      // Получаем IP пользователя
-      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-	
 
-      // Определяем страну пользователя
-      $userCountry = getCountryFromIPInfo( $userIp, $api_key);
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
 
 ?>
 <table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products <?= $userCountry ?>">
