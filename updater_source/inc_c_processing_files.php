@@ -13,7 +13,7 @@ class c_processing_files {
     $regexp_folders_exclude = "/^\/\/(backup|test|updater_source|admin|service|images|export|import|_.*)\/*.*/i";
     //$regexp_folders_exclude = "/^\/\/(backup|updater_source|admin|service|images|export|import|_.*)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(weintek_projects)\/*.*/i";
-    $regexp_folders_include = "/^\/\/(documents|download|weintek_drivers|weintek_libraries|weintek_projects|easybuilder-pro)\/*.*/i";
+    //$regexp_folders_include = "/^\/\/(documents|download|weintek_drivers|weintek_libraries|weintek_projects|easybuilder-pro)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(documents|download|weintek_drivers|weintek_libraries|weintek_projects|upload_files)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(documents|download|weintek_drivers|weintek_libraries|weintek_projects|abacus)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(abacus)\/*.*/i";
