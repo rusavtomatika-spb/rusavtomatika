@@ -214,7 +214,7 @@ if (!empty($result) && $_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net') {
   echo "</table>";
   echo "</div>";
   echo "<div class='table-content'>";
-  echo "<table class='fixed-table' id='list'>";
+  echo "<table class='fixed-table' id='list' >";
   echo "<colgroup>";
   echo "<col style='width:17%'>";
   echo "<col style='width:12%'>";
