@@ -8,6 +8,7 @@ $CANONICAL = "https://www.rusavtomatika.com/download/";
 global $CONTENT_ON_WIDE_SCREEN,$recs;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/prolog.php";
+require_once $_SERVER[ 'DOCUMENT_ROOT' ] . '/utils/geoip_functions.php';
 $docs_folder = $_SERVER[ 'DOCUMENT_ROOT' ] . '/download/';
 file_put_contents( $docs_folder . "error_log", "" );
 $docs_result = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/docs_result.txt';
@@ -46,69 +47,29 @@ function findRecordBySoftware($records, $soft, $fld) {
     return null;
 }
 
-	      // Подставьте своё значение API ключа
-      $apiToken = '43790424b5f130'; // Замените YOUR_IPINFO_IO_TOKEN вашим токеном
-
-      // Получаем IP пользователя
-      $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-	
-      function getCountryFromIPInfo( $ipAddress, $token ) {
-        $url = "https://ipinfo.io/$ipAddress?token=$token"; // Здесь вставляете свой токен
-
-        // Выполняем запрос к API
-        $ch = curl_init();
-        curl_setopt( $ch, CURLOPT_URL, $url );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $response = curl_exec( $ch );
-        curl_close( $ch );
-
-        if ( !$response ) {
-          return false; // Ошибка отправки запроса
-        }
-
-        // Преобразуем JSON в ассоциативный массив
-        $result = json_decode( $response, true );
-
-        if ( isset( $result[ 'country' ] ) ) {
-          return $result[ 'country' ]; // Возврат двухбуквенного кода страны
-        }
-
-        return false; // Страна неизвестна
-      }
-
-      // Определяем страну пользователя
-      $userCountry = getCountryFromIPInfo( $userIp, $apiToken );
-  
-
 function fetchTxtFileContents($url) {
-    // Проверяем наличие URL
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
         return 'Ошибка: неверный URL.';
     }
 
-    // Инициализация cURL сессии
     $ch = curl_init();
 
-    // Настройка параметров
     curl_setopt_array($ch, [
-        CURLOPT_URL => $url,                // Адрес страницы
-        CURLOPT_RETURNTRANSFER => true,     // Возвращать данные в переменную
-        CURLOPT_FAILONERROR => true,        // Ошибка при статусе >= 400
-        CURLOPT_TIMEOUT => 10,              // Таймаут ожидания
-        CURLOPT_CONNECTTIMEOUT => 5,        // Таймаут подключения
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FAILONERROR => true,
+        CURLOPT_TIMEOUT => 10,
+        CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
-        CURLOPT_HEADER => false             // Не включать заголовки в ответ
+        CURLOPT_HEADER => false
     ]);
 
-    // Выполняем запрос
     $data = curl_exec($ch);
 
-    // Проверяем успешность выполнения
     if ($data === false) {
         return 'Ошибка загрузки файла: ' . curl_error($ch);
     }
 
-    // Закрываем сессию
     curl_close($ch);
 
     return $data;
@@ -231,7 +192,19 @@ function formatSizeUnits( $bytes ) {
   }
   return $bytes;
 }
-//////////////////// мануалы к старым версиям EBPro
+
+function getCountryFromIPGeobase($ip) {
+    $url = "http://ipgeobase.ru:7020/geo?ip=" . $ip;
+    $xml = @simplexml_load_file($url);
+    
+    if ($xml && isset($xml->ip)) {
+        return (string)$xml->ip->country;
+    }
+    return false;
+}
+
+$userCountry = getCountryFromIPGeobase(getUserIP());
+
 $arc = [
   [
     "url" => "/upload_files/documents/weintek/EBPro/UserManual/eng/arc/60801.pdf",
@@ -270,6 +243,9 @@ $arc = [
   ]
 ];
 
+$userIp = getUserIP();
+$countryFromGeobase = getCountryFromIPGeobase($userIp);
+$isRussian = ($countryFromGeobase === 'RU') ? 'ДА' : 'НЕТ';
 
 ?>
 <!--p><a class="download_zip" href="/soft/EBPro/EBproV60901322.zip">Дистрибутив 6.09.01.322</a> <span class="small_gray_text">[13-11-2023 850&nbsp;Мб]</span></p-->
@@ -523,14 +499,14 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               <?
               filter_arr( $progs, 'put', 'EasyRemote' );
               filter_arr( $items, 'title', 'EasyRemoteIO' );
-              if ( $userCountry === 'RU' ) { 
+              if ( isRussianUserCached() ) { 
 				  filter_arr( $progs, 'title', 'cMT+CODESYS' );
               ?>
                <p><a class="download_pdf" href="https://dl.weintek.com/public/cMT/CODESYS/Firmware/CODESYS-ReleaseNotes-eng.pdf" target="_blank">CODESYS Firmware ReleaseNotes</a> </p><? } ?>
            </div>
           </div>
         </div>
-		          <?      if ( $userCountry === 'RU' ) { ?>
+		          <? if ( isRussianUserCached() ) { ?>
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
