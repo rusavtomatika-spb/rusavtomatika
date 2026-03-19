@@ -1,11 +1,23 @@
 <?php
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/stats/goods_changes_history.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/admin/admin_auth.php');
 
 if (!defined('admin'))
     exit;
 
 class DBWORK {
+    
+    private function getCurrentUser() {
+        $admin = check_admin_auth();
+        if ($admin) {
+            return [
+                'id' => $admin['id'],
+                'username' => $admin['username']
+            ];
+        }
+        return null;
+    }
+    
     public function add_product_element($arguments) {
         $errors = "";
         if ($arguments["name"] == "") {
@@ -42,12 +54,16 @@ class DBWORK {
             
             $h1_text = !empty($arguments['h1']) ? strip_tags($arguments['h1']) : $model;
             
+            $user = $this->getCurrentUser();
+            
             Core_database_goods_changes_history::save_change(
                 $model,
                 'PRODUCT_CREATED',
                 '',
                 'Создан новый товар: ' . $h1_text,
-                'insert'
+                'insert',
+                $user ? $user['id'] : null,
+                $user ? $user['username'] : null
             );
             
             $out["message"] = "Элемент " . $arguments['name'] . " добавлен. ID: " . $new_id;
@@ -114,6 +130,8 @@ class DBWORK {
                 }
             }
             
+            $user = $this->getCurrentUser();
+            
             foreach ($all_possible_fields as $field_name => $dummy) {
                 if (isset($old_data[$field_name]) || isset($new_data[$field_name])) {
                     $old_value = isset($old_data[$field_name]) ? $old_data[$field_name] : '';
@@ -128,7 +146,9 @@ class DBWORK {
                             $field_name,
                             $old_value,
                             $new_value,
-                            'update'
+                            'update',
+                            $user ? $user['id'] : null,
+                            $user ? $user['username'] : null
                         );
                         
                         $changes_count++;
@@ -184,12 +204,16 @@ class DBWORK {
                         $description .= ': ' . $h1;
                     }
                     
+                    $user = $this->getCurrentUser();
+                    
                     Core_database_goods_changes_history::save_change(
                         $model,
                         'DELETE',
                         $description,
                         '',
-                        'delete'
+                        'delete',
+                        $user ? $user['id'] : null,
+                        $user ? $user['username'] : null
                     );
                 }
                 
