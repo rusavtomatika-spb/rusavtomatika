@@ -74,3 +74,4 @@ sc/QRCode/*.jpeg
 *.png
 *.webp
 *.htm
+.vscode/sftp.json

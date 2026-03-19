@@ -5,17 +5,17 @@ CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR_
 <div id="vue_app_easyaccess">
   <div class="columns is-multiline">
     <div class="column is-3-desktop is-12-mobile">
-      <div id="notification-container">
+      <!--div id="notification-container">
         <article class="message is-danger">
           <div class="message-header">
             <p><i class="fas fa-exclamation-triangle  fa-2xl"></i></p>
-            <!--button class="delete delete__" aria-label="delete"></button-->
+            <!--button class="delete delete__" aria-label="delete"></button>
           </div>
           <div class="message-body"> В данный момент наблюдаются технические неполадки при подключении к сервисам <strong>EasyAccess 2.0</strong> в России.<br>
             <br>
             Ведётся работа по устранению неполадок. </div>
         </article>
-      </div>
+      </div-->
       <ul class="tabs__guide__caption">
         <li class="button is-fullwidth" @click="change_section(1)"
                     :class="{ 'is-success': current_section==1 }">Обзор и особенности </li>
