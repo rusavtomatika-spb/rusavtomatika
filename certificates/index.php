@@ -13,6 +13,46 @@ $extra_openGraph = array(
     "openGraph_title" => "О компании Русавтоматика",
     "openGraph_siteName" => "Русавтоматика"
 );
+
+function getCountryFromDaData($ipAddress, $apiKey) {
+    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Accept: application/json',
+        'Authorization: Token ' . $apiKey
+    ]);
+
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+
+    $response = curl_exec($ch);
+
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return false;
+    }
+
+    curl_close($ch);
+
+    if (!$response) {
+        return false;
+    }
+
+    $result = json_decode($response, true);
+
+    if (isset($result['location']['data']['country_iso_code'])) {
+        return $result['location']['data']['country_iso_code'];
+    }
+
+    return false;
+}
+
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
 ?>
     <article>
         <h1>Сертификаты дистрибьютора</h1>
@@ -27,6 +67,7 @@ $extra_openGraph = array(
 
         <div class="block_sertificates" >
             <div class="columns">
+                <? if ( $userCountry === 'RU' ) { ?>
                 <div class="column  is-12-mobile has-text-centered">
                     <a data-fancybox="gallery"
                        class="block_sertificates__link"
@@ -40,6 +81,7 @@ $extra_openGraph = array(
                     <a target="_blank" href="/images/certificates/distributor_certificate_rusavtomatika.png">Скачать сертификат Weintek</a>
                     <a class="button is-success my-5" href="/weintek/">Перейти к Weintek</a>
                 </div>
+                <? } ?>
                 <div class="column  is-12-mobile has-text-centered">
                     <a data-fancybox="gallery"
                        class="block_sertificates__link"

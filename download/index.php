@@ -237,18 +237,6 @@ function formatSizeUnits( $bytes ) {
   return $bytes;
 }
 
-function getCountryFromIPGeobase($ip) {
-    $url = "http://ipgeobase.ru:7020/geo?ip=" . $ip;
-    $xml = @simplexml_load_file($url);
-    
-    if ($xml && isset($xml->ip)) {
-        return (string)$xml->ip->country;
-    }
-    return false;
-}
-
-$userCountry = getCountryFromIPGeobase(getUserIP());
-
 $arc = [
   [
     "url" => "/upload_files/documents/weintek/EBPro/UserManual/eng/arc/60801.pdf",
@@ -286,10 +274,6 @@ $arc = [
     "version" => "5.07.01"
   ]
 ];
-
-$userIp = getUserIP();
-$countryFromGeobase = getCountryFromIPGeobase($userIp);
-$isRussian = ($countryFromGeobase === 'RU') ? 'ДА' : 'НЕТ';
 
 ?>
 <!--p><a class="download_zip" href="/soft/EBPro/EBproV60901322.zip">Дистрибутив 6.09.01.322</a> <span class="small_gray_text">[13-11-2023 850&nbsp;Мб]</span></p-->
@@ -543,14 +527,14 @@ file_put_contents($ebpro_files_block, $ebpro_files );
               <?
               filter_arr( $progs, 'put', 'EasyRemote' );
               filter_arr( $items, 'title', 'EasyRemoteIO' );
-              if ( isRussianUserCached() ) { 
+              if ( $userCountry === 'RU' ) { 
 				  filter_arr( $progs, 'title', 'cMT+CODESYS' );
               ?>
                <p><a class="download_pdf" href="https://dl.weintek.com/public/cMT/CODESYS/Firmware/CODESYS-ReleaseNotes-eng.pdf" target="_blank">CODESYS Firmware ReleaseNotes</a> </p><? } ?>
            </div>
           </div>
         </div>
-		          <? if ( isRussianUserCached() ) { ?>
+		          <? if ( $userCountry === 'RU' ) { ?>
         <div class="columns  is-multiline">
           <div class="column is-7">
             <div class="block_padding">
