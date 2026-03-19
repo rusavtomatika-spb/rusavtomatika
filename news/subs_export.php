@@ -25,7 +25,7 @@ $headers = [
 $body = '--' . $boundary . "\n";
 $body .= 'Content-Type: text/plain; charset="UTF-8"' . "\n\n";
 $body .= $message_body . "\n\n";
-// $body .= '--' . $boundary . "\n";
+// $body .= '--' . $boundary . "\n"; 
 // $body .= 'Content-Type: application/octet-stream; name="' . basename($file_path) . '"' . "\n";
 // $body .= 'Content-Transfer-Encoding: base64' . "\n";
 // $body .= 'Content-Disposition: attachment; filename="' . basename($file_path) . '"' . "\n\n";
