@@ -168,7 +168,7 @@ function database_connect()
 
         $host = "localhost";
 
-        $port = "3307";
+        $port = "3306";
 
         if ($_SERVER['DOCUMENT_ROOT'] == '/') {
 
