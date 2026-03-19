@@ -413,7 +413,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
                 через бесплатный облачный сервис Weintek с операторскими панелями серий: <a href="/catalog/operator_panels/?&series=MT8000iE">MT8000iE</a>, <a href="/catalog/operator_panels/?&series=eMT3000">eMT3000</a>, <a href="/catalog/operator_panels/?&series=MT8000XE">MT8000XE</a>, <a href="/weintek/mTV-100/">mTV</a>, <a href="/catalog/operator_panels/?&series=cMT">cMT</a>, <a href="/catalog/operator_panels/?&series=cMT-X">cMT X</a> без выделенного IP с персонального компьютера, iPad или Android-планшета. </p>
               <p> Использование ПО <a href="/accessories/license/easyaccess/">EasyAccess 2.0</a> полностью бесплатно,
                 вы можете скачивать ПО и пользоваться им без каких-либо ограничений. </p>
-              <p> <span style="color: #ea0000;">Для включения функции удаленного доступа в операторской панели необходимо получить ключ активации у менеджера.</span> </p>
+              <p> <span style="color: #ea0000;">необходимо приобрести лицензию.</span> </p>
             </div>
           </div>
           <div class="column is-5">

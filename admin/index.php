@@ -22,7 +22,7 @@ define('PRODUCTS_ALL', true);
 global $ftpConnectionID;
 global $db_work;
 
-file_put_contents( "error_log", "" );
+//file_put_contents( "error_log", "" );
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include $core_admin_path . 'template/header.php';
 ?>
