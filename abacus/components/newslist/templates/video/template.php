@@ -66,7 +66,7 @@ require_once "result_modifier.php";
                                     ?>
                 </a></p>
               <p class="is-6 is-size-7">
-                <?= date("m.d.Y", strtotime($value['date']))?>
+                <?= date("d.m.Y", strtotime($value['date']))?>
               </p>
             </div>
             <div class="content is-size-7">

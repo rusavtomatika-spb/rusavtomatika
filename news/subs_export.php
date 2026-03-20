@@ -19,7 +19,7 @@ $message_body = $recs;
 $file_content = $recs;
 $boundary = md5(uniqid(time()));
 $headers = [
-    'From' => 'sales@rusavtomatika.com',
+    'From' => 'no-reply@rusavtomatika.com',
     'Reply-To' => 'sales@rusavtomatika.com',
     'Content-Type' => 'multipart/mixed; boundary="' . $boundary . '"'
 ];
