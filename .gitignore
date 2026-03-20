@@ -75,3 +75,4 @@ sc/QRCode/*.jpeg
 *.webp
 *.htm
 .vscode/sftp.json
+sc/dbcon.php
