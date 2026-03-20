@@ -158,27 +158,23 @@ h3 {
 
 $host = "localhost"; // Имя хоста
 $port = "3306"; // Номер порта, 3306 - по умолчанию
-if ( $_SERVER[ 'DOCUMENT_ROOT' ] == '/home/weblec/public_html/rusavtomatika.com' ) {
-  $user = "root"; // Имя пользователя
-  $pass = '123456'; // Пароль
-  $dbnm = "rusavtomatika_db"; // Имя БД
-} elseif ( preg_match( "/www.test.rusavtomatika.com/i", $_SERVER[ 'HTTP_HOST' ] ) ) {
-  $user = "root"; // Имя пользователя
-  $pass = '123456'; // Пароль
-  $dbnm = "rusavtomatika_db";
-} elseif ( preg_match( "/moisait/i", $_SERVER[ 'DOCUMENT_ROOT' ] ) ) {
-  $user = "root"; // Имя пользователя
-  $pass = '123456'; // Пароль
-  $dbnm = "rusavtomatika_db";
-} elseif ( preg_match( "/olgaglr/i", $_SERVER[ 'DOCUMENT_ROOT' ] ) ) {
-  $port = "3306"; // Номер порта, 3306 - по умолчанию
-  $user = "root"; // Имя пользователя
-  $pass = '123456'; // Пароль
-  $dbnm = "rusavtomatika_db";
-} else {
-  $user = "root"; // Имя пользователя
-  $pass = '123456'; // Пароль
-  $dbnm = "rusavtomatika_db";
+if ($_SERVER['DOCUMENT_ROOT'] == '/home/weblec/public_html/rusavtomatika.com') {
+    $user = "weblec_den";
+    $pass = '646111';
+    $dbnm = "weblec_weintek";
+} elseif (preg_match("/www.test.rusavtomatika.com/i", $_SERVER['HTTP_HOST'])) {
+    $dbnm = "weblec_weintek_test";
+    $user = 'weblec_testuser';
+    $pass = '243344';
+} elseif (preg_match("/moisait/i", $_SERVER['DOCUMENT_ROOT'])) {
+    $user = "moisait_olga";
+    $pass = 'olgaglr';
+    $dbnm = "moisait_ra";
+} elseif (preg_match("/olgaglr/i", $_SERVER['DOCUMENT_ROOT'])) {
+    $port = "";
+    $user = "olgaglr_rusavto";
+    $pass = 'pGrk5V2S';
+    $dbnm = "olgaglr_rusavto";
 }
 
 
