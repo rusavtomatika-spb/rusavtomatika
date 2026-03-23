@@ -29,7 +29,7 @@ if (count($arr_linked_products[1]) != 0) {
                 <?
                 foreach ($arr_linked_products as $model) {
                     
-			if (preg_match('/(Codesys)/i',$model["model"]) && $userCountry != 'RU' ) continue;
+			    if (preg_match('/Codesys/i',$model["product_identifier"]) && $userCountry != 'RU' ) continue;
 
                     $url_for_link = str_replace("www.rusavtomatika.com", $_SERVER["HTTP_HOST"], $model["url"]);
                     if (!(isset($model["url"]) and $model["url"] != "")) continue;

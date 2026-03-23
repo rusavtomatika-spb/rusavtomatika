@@ -316,7 +316,7 @@ class C_LinkedProducts
 
     private static function getElementInfoByModel($product_identifier)
     {
-        $query = "SELECT `model`,`h1`,`brand`,`type`,`model_fullname`,`link_detail2` "
+        $query = "SELECT `model`,`h1`,`brand`,`type`,`model_fullname`,`link_detail2`,`section` "
             . "FROM `products_all` where `model` = '$product_identifier';";
         $result = mysqli_query(self::$_db, $query) or die("Invalid query: " . $query . " error: " . mysqli_error(self::$_db));
         if (mysqli_num_rows($result) == 0) {
@@ -327,8 +327,11 @@ class C_LinkedProducts
             $out['product_identifier'] = $element['model'];
             $out['title'] = $element['model_fullname'];
             $out['preview_image'] = '/images/'.$element['brand'].'/'.$element['type'].'/130/'.$element['model'].'/'.$element['model'].'_1.webp';
-            //$out['url'] = '/'.$element['brand'].'/'.$element['model'].'/';
+            if ($element['brand'] != 'accessories') {
+            $out['url'] = '/'.$element['brand'].'/'.$element['model'].'/';
+            }else {
             $out['url'] = $element['link_detail2'];
+            }
         }
 
         return $out;
