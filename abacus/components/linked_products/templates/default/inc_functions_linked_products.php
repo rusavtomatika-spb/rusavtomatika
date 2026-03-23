@@ -237,7 +237,7 @@ class C_LinkedProducts
         }
     }
 
-    function getCountryFromDaData($ipAddress, $apiKey) {
+    public static function getCountryFromDaData($ipAddress, $apiKey) {
     $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
