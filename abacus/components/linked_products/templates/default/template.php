@@ -9,6 +9,9 @@ CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) .
 //
 C_LinkedProducts::set_model($arguments["model"]);
 
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$userCountry = getCountryFromDaData($userIp, $apiKey);
 
 $arr_linked_products = C_LinkedProducts::getLinkedModels($arguments["model"]);
 //file_put_contents('temp.txt',json_encode($arr_linked_products, JSON_PRETTY_PRINT));
@@ -26,6 +29,7 @@ if (count($arr_linked_products[1]) != 0) {
                 <?
                 foreach ($arr_linked_products as $model) {
                     
+			if (preg_match('/(Codesys)/i',$model["model"]) && $userCountry != 'RU' ) continue;
 
                     $url_for_link = str_replace("www.rusavtomatika.com", $_SERVER["HTTP_HOST"], $model["url"]);
                     if (!(isset($model["url"]) and $model["url"] != "")) continue;

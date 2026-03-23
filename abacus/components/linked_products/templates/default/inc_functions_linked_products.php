@@ -237,6 +237,43 @@ class C_LinkedProducts
         }
     }
 
+    function getCountryFromDaData($ipAddress, $apiKey) {
+    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Accept: application/json',
+        'Authorization: Token ' . $apiKey
+    ]);
+
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+
+    $response = curl_exec($ch);
+
+    if (curl_error($ch)) {
+        curl_close($ch);
+        return false;
+    }
+
+    curl_close($ch);
+
+    if (!$response) {
+        return false;
+    }
+
+    $result = json_decode($response, true);
+
+    if (isset($result['location']['data']['country_iso_code'])) {
+        return $result['location']['data']['country_iso_code'];
+    }
+
+    return false;
+}
+
+
     public static function getLinkedModels()
     {
         $arrLinkedProducts = self::getElementLinkedProducts();
@@ -246,7 +283,7 @@ class C_LinkedProducts
             foreach ($arrLinkedProducts as $model) {
 
                 if ($model != "") {
-                    $modelInfo = self::getElementInfoByProductIdentifier($model);
+                    $modelInfo = self::getElementInfoByModel($model);
                     if (is_array($modelInfo)) {
                         $out[] = $modelInfo;
                     }
