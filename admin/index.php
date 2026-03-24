@@ -75,23 +75,22 @@ foreach ( $result as $row ) {
 }
 $comma_separated = implode( ",", $arrIndexProdut );
 
-if ( isset( $_GET[ "index" ] )and $_GET[ "index" ] > 0 ) {
-  $element_id = intval( $_GET[ "index" ] );
-  if ( isset( $_GET[ "action" ] )and $_GET[ "action" ] == "edit_element" ) {
-
-    $result = $db_work->edit_catalog_element( $element_id, $_POST );
-    if ( isset( $result )and $result[ "success" ] == true ) {
-      echo "<div class='success_message'>" . $result[ "message" ] . "</div>";
-      if ( isset( $_POST[ "submit_and_close" ] ) ) {
-        $url = 'https://www.rusavto.moisait.net/admin?success=' . $result[ "success" ];
-        if ( isset( $result[ "element_id" ] ) )$url .= '&element_id=' . $result[ "element_id" ];
-        if ( isset( $_POST[ "section_code" ] ) )$url .= '&section_code=' . $_POST[ "section_code" ];
-        $url .= '&message=' . urlencode( $result[ "message" ] );
-        header( 'Location: ' . $url );
-        echo "<script>window.location.replace('" . $url . "');</script>";
-      }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
+    if (isset($_POST['id']) && $_POST['id'] > 0) {
+        $element_id = intval($_POST['id']);
+        
+        $result = $db_work->edit_catalog_element($element_id, $_POST);
+        
+        if (isset($result) && $result["success"] == true) {
+            $url = '/admin?success=' . $result["success"];
+            if (isset($result["element_id"])) $url .= '&element_id=' . $result["element_id"];
+            if (isset($_POST["section_code"])) $url .= '§ion_code=' . $_POST["section_code"];
+            $url .= '&message=' . urlencode($result["message"]);
+            
+            echo "<div class='success_message'>" . $result["message"] . "</div>";
+            echo "<script>setTimeout(function(){ window.location.href = '" . $url . "'; }, 1500);</script>";
+        }
     }
-  }
 }
 
 if ( isset( $_GET[ "brands" ] )and $_GET[ "brands" ] > 0 ) {
@@ -243,7 +242,7 @@ if (!empty($result) && $_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net') {
         $sub_section = "";
         $mark = "";
       }
-      $link = "/admin?index=" . $row[ 'index' ] . "&action=edit_element";
+      $link = "/admin/?index=" . $row[ 'index' ] . "&action=edit_element";
       
       if ( isset( $_GET[ "element_id" ] )and isset( $row[ "index" ] )and $_GET[ "element_id" ] == $row[ "id" ] ):
         echo "<tr class='tr_green'>";
@@ -270,6 +269,7 @@ if (!empty($result) && $_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net') {
       echo "<td class='code'><input type='text' name='field_show_in_cat' value='" . $row[ 'show_in_cat' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
       echo '<td class="td_center actions-wrapper">';
+	  echo "<input type='hidden' name='id' value='" . $row['index'] . "'>";
       echo '<button type="submit" name="Submit" class="product__action-button green">Применить</button>';
       echo '<a href="?action=copy_element&id=' . $row['index'] . '" class="product__action-button green">Копировать</a>';
       echo '<a href="?action=delete_product_element&id=' . $row['index'] . '" class="product__action-button red">Удалить</a>';
