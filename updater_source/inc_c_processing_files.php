@@ -10,7 +10,7 @@ class c_processing_files {
 
   function find( $in_dir ) {
 
-    $regexp_folders_exclude = "/^\/\/(backup|test|updater_source|admin|service|images|export|import|_.*)\/*.*/i";
+    $regexp_folders_exclude = "/^\/\/(backup|test|updater_source|admin|service|images|export|upl|import|_.*)\/*.*/i";
     //$regexp_folders_exclude = "/^\/\/(backup|updater_source|admin|service|images|export|import|_.*)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(weintek_projects)\/*.*/i";
     //$regexp_folders_include = "/^\/\/(documents|download|weintek_drivers|weintek_libraries|weintek_projects|easybuilder-pro)\/*.*/i";
