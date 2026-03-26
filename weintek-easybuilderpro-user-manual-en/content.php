@@ -8,7 +8,7 @@
 
                 <? if (isset($change_title_and_h1_on_page) and $change_title_and_h1_on_page): ?>
 
-                    <? echo '<h1>EasyBuilder Pro руководство пользователя (' . $update_version . ', на английском языке) - онлайн или скачать</h1>'; ?>
+                    <? $h1 = '<h1>EasyBuilder Pro руководство пользователя (на английском языке) - онлайн или скачать</h1>'; ?>
 
                     <div class="title" style="margin-top: -7px;"><?= $h1 ?></div>
 
@@ -20,7 +20,7 @@
 
                     </div>
 
-                    <? echo '<h1>' . $h1 . "</h1>"; ?>
+                    <? //echo '<h1>' . $h1 . "</h1>"; ?>
 
                 <? endif; ?>
 
