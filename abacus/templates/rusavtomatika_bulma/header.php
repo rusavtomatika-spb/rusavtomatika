@@ -111,9 +111,6 @@ $current_page = str_replace("/", "_", $current_page);
 <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Rusavtomatika" />
 <link rel="manifest" href="/site.webmanifest" />
-<?php if ($_SERVER['SERVER_NAME'] == 'www.rusavtomatika.com' || $_SERVER['SERVER_NAME'] == 'www.test.rusavtomatika.com') : ?>
-    <meta name="google-site-verification" content="d4UVeSzuROL0oEVq6EFOkGPq9CyWnlr-ZNlEYiDJ_9A" />
-<?php endif; ?>
 </head>
 <body class="template_rusavtomatika_bulma current_page_<?= $current_page ?>" style="opacity: 0;">
 <div class="popup_background"></div>

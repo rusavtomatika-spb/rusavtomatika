@@ -32,57 +32,6 @@ endif;
 <? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
     <script src="//code.jivosite.com/widget.js" data-jv-id="gno75izSm3" async></script>
 <? endif; ?>
-<script src="https://www.google.com/recaptcha/api.js?render=6LdZ250sAAAAAL1B3qP4oYMCZdwEeWWZ06Li58Mn"></script>
-<script>
-    window.getRecaptchaToken = function(action) {
-        return new Promise((resolve, reject) => {
-            if (typeof grecaptcha !== 'undefined') {
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('6LdZ250sAAAAAL1B3qP4oYMCZdwEeWWZ06Li58Mn', {action: action})
-                        .then(function(token) {
-                            resolve(token);
-                        })
-                        .catch(function(error) {
-                            console.error('reCAPTCHA error:', error);
-                            reject(error);
-                        });
-                });
-            } else {
-                reject('reCAPTCHA not loaded');
-            }
-        });
-    };
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        const forms = document.querySelectorAll('form');
-        forms.forEach(form => {
-            form.addEventListener('submit', async function(e) {
-                if (form.hasAttribute('data-recaptcha-processed')) return;
-                
-                const formAction = form.getAttribute('action') || 'form_submit';
-                const action = formAction.replace(/[^a-z0-9_]/gi, '_').substring(0, 100);
-                
-                try {
-                    const token = await window.getRecaptchaToken(action);
-                    
-                    let tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
-                    if (!tokenInput) {
-                        tokenInput = document.createElement('input');
-                        tokenInput.type = 'hidden';
-                        tokenInput.name = 'g-recaptcha-response';
-                        form.appendChild(tokenInput);
-                    }
-                    tokenInput.value = token;
-                    
-                    form.setAttribute('data-recaptcha-processed', 'true');
-                } catch (error) {
-                    console.error('Failed to get reCAPTCHA token:', error);
-                    e.preventDefault();
-                }
-            });
-        });
-    });
-</script>
 <!--script type="text/javascript" src="/sc/popup_catalog_menu/popup_catalog_menu.js?r=<?= rand() ?>"></script-->
 <?
 if ($current_page != ''):
@@ -102,7 +51,6 @@ endif;
     include  $_SERVER["DOCUMENT_ROOT"]."/abacus/templates/rusavtomatika_bulma/css/template_styles_footer.css";
     //include  $_SERVER["DOCUMENT_ROOT"]."/abacus/templates/rusavtomatika_bulma/css/template_styles_header.css";
     ?>
-    .grecaptcha-badge { display: none !important; }
 </style>
 <link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>tiny-slider/tiny-slider.css"/>
 <script type="text/javascript" src="<?= $cms_template_url ?>tiny-slider/tiny-slider.js"></script>
