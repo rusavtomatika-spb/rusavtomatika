@@ -149,68 +149,79 @@
 		<label><input type="checkbox" required name="agree" checked type="hidden" style="display: none;"> Нажимая кнопку "ОК", я соглашаюсь с <a href="/about/privacy/">политикой конфиденциальности</a> и с <a href="/about/privacy/cookies"> политикой сбора данных</a></label>
     </form>
 
-			</div>
+		</div>
 
-<!-- Скрипты -->
 <script>
-document.getElementById('subscriptionForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Предотвращаем стандартную отправку формы
-
+  document.getElementById('subscriptionForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Проверка...';
+    
     const formData = new FormData(event.target);
-    const response = await fetch('/include/process_subscription.php', {
+    
+    try {
+      if (typeof grecaptcha === 'undefined') {
+        throw new Error('reCAPTCHA not loaded');
+      }
+      
+      const token = await window.getRecaptchaToken('subscription_form');
+      
+      formData.append('g-recaptcha-response', token);
+      
+      const response = await fetch('/include/process_subscription.php', {
         method: 'POST',
         body: formData
-    });
-
-    const result = await response.json();
-
-    // Получаем элементы DOM
-    const messageBox = document.getElementById('messageBox');
-    const messageText = document.getElementById('messageText');
-    const container = document.getElementById('subscribeFormContainer');
-    // Выводим сообщение в зависимости от результата
-    if (result.success) {
+      });
+      
+      const result = await response.json();
+      
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      
+      if (result.success) {
         messageText.textContent = 'Спасибо за подписку!';
+        messageBox.className = 'has-background-success-light';
         messageBox.style.display = 'block';
-    } else {
-        // Теперь мы показываем сообщение, которое пришло с сервера
+        event.target.reset();
+      } else {
         messageText.textContent = result.message || 'Что-то пошло не так... Попробуйте позже.';
+        messageBox.className = 'has-background-danger-light';
         messageBox.style.display = 'block';
-    }
-
-    // Через три секунды прячем контейнер и сообщение
-    setTimeout(() => {
-        //container.style.display = 'none';
+      }
+      
+      setTimeout(() => {
         messageBox.style.display = 'none';
-    }, 3000);
-});
+      }, 3000);
+        
+    } catch (error) {
+      console.error('Ошибка:', error);
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      messageText.textContent = 'Ошибка проверки безопасности. Пожалуйста, обновите страницу и попробуйте снова.';
+      messageBox.className = 'has-background-danger-light';
+      messageBox.style.display = 'block';
+      
+      setTimeout(() => {
+        messageBox.style.display = 'none';
+      }, 3000);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+  });
 
-//// Скрытие формы подписки
-//function hideSubscribe() {
-//    const container = document.getElementById('subscribeFormContainer');
-//    container.style.display = 'none';
-//}
-//
-//// Показ формы подписки
-//function showSubscribe() {
-//    const container = document.getElementById('subscribeFormContainer');
-//    container.style.display = 'block';
-//}
-
-// Обработчик кликов по документу
-document.addEventListener('click', function(event) {
+  document.addEventListener('click', function(event) {
     var target = event.target;
     var container = document.getElementById('subscribeFormContainer');
     
-    // Если кликнули не внутри формы и не по кнопке "подписаться", скрываем форму
     if (!container.contains(target) && !target.closest('#showSubscribe')) {
-        //hideSubscribe();
+      //hideSubscribe();
     }
-});
-
-// Открываем форму по клику на ссылку
-//document.getElementById('showSubscribe').addEventListener('click', showSubscribe);
-
+  });
 </script>
  </p>
         </div>
