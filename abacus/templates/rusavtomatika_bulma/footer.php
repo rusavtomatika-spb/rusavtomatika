@@ -65,7 +65,6 @@ endif;
                 try {
                     const token = await window.getRecaptchaToken(action);
                     
-                    // Добавляем токен в форму
                     let tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
                     if (!tokenInput) {
                         tokenInput = document.createElement('input');
@@ -103,6 +102,7 @@ endif;
     include  $_SERVER["DOCUMENT_ROOT"]."/abacus/templates/rusavtomatika_bulma/css/template_styles_footer.css";
     //include  $_SERVER["DOCUMENT_ROOT"]."/abacus/templates/rusavtomatika_bulma/css/template_styles_header.css";
     ?>
+    .grecaptcha-badge { display: none !important; }
 </style>
 <link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>tiny-slider/tiny-slider.css"/>
 <script type="text/javascript" src="<?= $cms_template_url ?>tiny-slider/tiny-slider.js"></script>
