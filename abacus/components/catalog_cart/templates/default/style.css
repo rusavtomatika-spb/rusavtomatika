@@ -743,3 +743,35 @@ legend {
 	text-transform: uppercase;
 	color: #34AB5E;
 }
+
+#cart-legal-entity { position: relative; }
+#cart-legal-entity .suggestions-suggestions {
+    top: 35px !important;
+    left: 0 !important;
+    background: #fff;
+    border-radius: 5px;
+}
+#cart-legal-entity .suggestions-hint:first-child {
+    padding: 5px;
+    color: #9c9c9c;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+#cart-legal-entity .suggestions-suggestion {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #9c9c9c;
+    transition: .3s;
+}
+#cart-legal-entity .suggestions-suggestion:hover {
+    background: #ededed;
+}
+#cart-legal-entity .suggestions-value {
+    color: #000;
+    font-size: 15px;
+}
+#cart-legal-entity .suggestions-subtext,
+#cart-legal-entity .suggestions-nowrap {
+    color: #616161;
+    font-size: 15px;
+}

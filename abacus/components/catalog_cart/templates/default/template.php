@@ -382,7 +382,7 @@ $series[ "products" ] = $arResult[ "ITEMS" ];
                     <legend>Реквизиты юридического лица</legend>
                     <div class="form-group">
                       <div class="form-label" id="org_leg">Название <span style="color:red">*</span></div>
-                      <div class="form-input">
+                      <div class="form-input" id="cart-legal-entity">
                         <input type="text" id="formcompany" name="dd" class="phoneNumber" value="<?
                 if ( isset( $company) ) {
                   echo 'value="'.$company.'"';
