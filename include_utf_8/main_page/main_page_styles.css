@@ -229,6 +229,7 @@ ul.glide__slides li {
   height: 100%;
   margin: 0 auto;
   border-radius: 0;
+  object-fit: cover;
 }
 
 .cutted_text {
