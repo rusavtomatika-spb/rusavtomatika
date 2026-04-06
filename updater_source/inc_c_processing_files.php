@@ -33,7 +33,7 @@ class c_processing_files {
       $file = iconv( 'UTF-8', 'UTF-8//IGNORE', utf8_encode( $file ) );
       if ( $file != ".." && $file != "." && is_dir( $_SERVER[ 'DOCUMENT_ROOT' ] . '/' . $in_dir . "/" . $file ) ) {
         if ( preg_match( $regexp_folders_exclude, $in_dir ) ) {
-          file_put_contents( "exclude_folders.txt", $in_dir . "\n", FILE_APPEND | LOCK_EX );
+          //file_put_contents( "exclude_folders.txt", $in_dir . "\n", FILE_APPEND | LOCK_EX );
         } else {
           $this->find( $in_dir . "/" . $file );
         }

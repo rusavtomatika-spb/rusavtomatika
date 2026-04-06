@@ -148,9 +148,12 @@ function search_in_products_all_by_model($arr_search_words, &$arrIDs)
         foreach ($arr_search_words as $word) {
             if (strlen($word) < 2) continue;
 
-            //echo "<br>model word: ".$word.": ";
+            if (preg_match('/стк/i', $word)) {
+            $word = str_replace("стк", "ctk", $word);
+            }                            
             $word = mysqli_real_escape_string($mysqli_db, $word);
             $rows = CoreApplication::get_rows_from_table('products_all', "", " parent='' and status!='0' and brand!='Cincoze' and (model like '%$word%' or `model_fullname` like '%$word%')");
+			//var_dump($rows);
             if (count($rows) > 0) {
                 foreach ($rows as $product) {
                     if (!(isset($arrIDs[$product['index']]) and $arrIDs[$product['index']] == true)) {
@@ -162,7 +165,7 @@ function search_in_products_all_by_model($arr_search_words, &$arrIDs)
 
                             $name = str_replace("#brand#", $product['brand'], $name);
                             $name = str_replace("#model#", $product['model'], $name);
-                            if (isset($product['diagonal']) and $product['diagonal'] > 0 and $product['diagonal_hide'] != '1') {
+							if (isset($product['diagonal']) and $product['diagonal'] > 0 and $product['diagonal_hide'] != '1') {
                                 $name = str_replace("#diagonal#", $product['diagonal'], $name);
                             } else {
                                 $name = str_replace("#diagonal#", '', $name);
@@ -172,12 +175,11 @@ function search_in_products_all_by_model($arr_search_words, &$arrIDs)
 
                         $product['freqs'] = 0;
 
-                        if (strtoupper($product['model']) == $word) {
+                        if (strtoupper($product['model'] == $word)) {
                             $product['freqs'] += 1000;
-                        } else
-                            $product['freqs'] += 1;
+                        } else {$product['freqs'] += 1;}
 
-                        if (strpos($product['model'], $word) !== false) {
+                        if (strpos($product["model"], $word) !== false) {
                             $product['freqs'] += 50;
                         }
                         $arrResult[] = $product;
