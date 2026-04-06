@@ -214,6 +214,36 @@ ul.glide__slides li {
   border-top-right-radius: 0;
 }
 
+#glide_video .glide__slides .card-image:first-child img {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  height: 8.8vw;
+}
+
+@media (max-width: 1024px) {
+  #glide_video .glide__slides .card-image:first-child img {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 12vw;
+  }
+}
+
+@media (max-width: 769px) {
+  #glide_video .glide__slides .card-image:first-child img {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 15vw;
+  }
+}
+
+@media (max-width: 480px) {
+  #glide_video .glide__slides .card-image:first-child img {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 32vw;
+  }
+}
+
 .card-image img {
   width: 100%;
 }
