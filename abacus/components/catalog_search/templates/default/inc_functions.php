@@ -175,7 +175,7 @@ function search_in_products_all_by_model($arr_search_words, &$arrIDs)
 
                         $product['freqs'] = 0;
 
-                        if (strtoupper($product['model'] == $word)) {
+                        if (strtoupper($product['model']) == strtoupper($word)) {
                             $product['freqs'] += 1000;
                         } else {$product['freqs'] += 1;}
 
