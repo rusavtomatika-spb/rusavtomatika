@@ -1,7 +1,7 @@
 <?php
 
 global $TITLE, $DESCRIPTION, $KEYWORDS;
-$TITLE = 'Скачать EasyBuilder Pro, EasyBuilder 8000, EBPro, EB8000, SKWorkshop, драйвера Aplex, драйвера IFC, документация, гайд, руководство, инструкция, мануал';
+$TITLE = 'Скачать EasyBuilder Pro, EasyBuilder 8000, EBPro, EB8000, SKWorkshop, драйверы Aplex, драйверы IFC, документация, гайд, руководство, инструкция, мануал';
 $DESCRIPTION = 'Документация и программное обеспечение для работы с оборудованием Weintek, Samkoon, IFC, Aplex — описания, мануалы и брошюры, инструкции по установке и эксплуатации, руководства по работе с программым обеспечением и примеры проектов для операторских панелей';
 $KEYWORDS = 'Скачать, бесплатно, без регистрации, инструкции по эксплуатации, бесплатное по, программное обеспечение, операторские панели, панели оператора, Weintek, Samkoon, IFC, Aplex, инструкции по установке, брошюры, мануалы, даташит';
 $CANONICAL = "https://www.rusavtomatika.com/download/";
@@ -283,7 +283,7 @@ $arc = [
       <div class="column is-12">
         <div class="columns is-multiline">
           <div class="column is-12">
-            <h1>Программное обеспечение и документация по EasyBuilder Pro, EasyBuilder 8000, SK Workshop, AK Workshop, SKTOOL, EasyAccess, cMT Viewer, EasyLauncher, EasyRemote I/O, драйвера.</h1>
+            <h1>Программное обеспечение и документация по EasyBuilder Pro, EasyBuilder 8000, SK Workshop, AK Workshop, SKTOOL, EasyAccess, cMT Viewer, EasyLauncher, EasyRemote I/O, драйверы.</h1>
           </div>
           <div class="column is-2">
             <div class="table_of_contents_menu_title">Программное обеспечение для:</div>
@@ -321,7 +321,7 @@ $arc = [
             <div class="block_padding">
               <p> EasyBuilder Pro применяется для создания пользовательских проектов для операторских панелей Weintek следующих серий: <a href="/catalog/operator_panels/?&series=MT8000iE">MT8000iE</a>, <a href="/catalog/operator_panels/?&series=eMT3000">eMT3000</a>, <a href="/catalog/operator_panels/?&series=MT8000XE">MT8000XE</a>, <a href="/weintek/mTV-100/">mTV</a>, <a href="/catalog/operator_panels/?&series=cMT">cMT</a>, <a href="/catalog/operator_panels/?&series=cMT-X">cMT X</a> </p>
               <p>Использование ПО EasyBuilder Pro полностью бесплатно, вы можете скачивать ПО и пользоваться им без каких-либо ограничений.</p>
-              <p>Драйвера USB для подключения панелей к ПК устанавливаются автоматически при установке EasyBuilder Pro.</p>
+              <p>Драйверы USB для подключения панелей к ПК устанавливаются автоматически при установке EasyBuilder Pro.</p>
               <p><b>В состав пакета EasyBuilder Pro входят утилиты:</b> Administrator Tools, cMT Viewer, EasyAccess, EasyConverter, EasyDiagnoser,
                 EasyPrinter, EasySimulator, EasySystemSetting, EasyWatch, RecipeEditor, Utility Manager.</p>
             </div>
@@ -330,13 +330,15 @@ $arc = [
             <div class="block_padding">
               <?
               filter_arr( $progs, 'section', 'ebpro' );
+				echo 111;
 				ob_start(); //Start output buffer
               filter_arr( $progs, 'section', 'ebpro', 'ebb' );
+				echo 222;
 				$output = ob_get_contents(); //Grab output
 				ob_end_clean(); //Discard output buffer
-  if ( is_array( $updates ) ) {
-              filter_arr( $updates, 'section', 'ebpro' );
-  }
+                if ( is_array( $updates ) ) {
+                            filter_arr( $updates, 'section', 'ebpro' );
+                }
 				$ebpro_files = $output;
               ?>
               <p><a class="download_pdf" href="/soft/EBPro/release_notes/EBPro_ReleaseNotes_en.pdf" target="_blank">Примечания к выпуску версии <?
@@ -365,6 +367,7 @@ $arc = [
               //              var_dump( $ebpro_docs );
               //              echo "</pre>";
               arr_out( $ebpro_docs );
+				echo 333;
 				ob_start(); //Start output buffer
 				$ebpro_files .= arr_out( $ebpro_docs, 'ebb' );
 				$output = ob_get_contents(); //Grab output
@@ -399,7 +402,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
                 применяется для создания пользовательских проектов для операторских панелей Weintek следующих серий:
                 MT6000i, MT8000i, кроме панелей MT8104XH, MT8150X, MT8121X, для которых последний совместимый дистрибутив — 4.65.12. </p>
               <p>Использование ПО EasyBuilder 8000 полностью бесплатно, вы можете скачивать ПО и пользоваться им без каких-либо ограничений.</p>
-              <p>Драйвера USB для подключения панелей к ПК устанавливаются автоматически при установке EasyBuilder 8000.</p>
+              <p>Драйверы USB для подключения панелей к ПК устанавливаются автоматически при установке EasyBuilder 8000.</p>
             </div>
           </div>
           <div class="column is-5">
@@ -419,7 +422,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <div class="block_padding">
               <p>В руководстве описано подключение к более, чем 100 PLC различных производителей,
                 даны схемы распайки кабелей для подключения панели оператора к этим PLC, описаны регистры, к которым дают доступ
-                драйвера данных PLC.</p>
+                драйверы данных PLC.</p>
               <p>Все драйверы для всех PLC, упомянутых в данном руководстве, уже установлены в <a href="/weintek/">операторских панелях Weintek</a>.</p>
               <p>При подключении панели  оператора к конкретному PLC настоятельно рекомендуется ознакомиться с соответсвующим разделом данного руководства.</p>
             </div>
@@ -642,7 +645,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <div class="block_padding">
               <p> ПО SK Workshop  - программное обеспечение для создания проектов для <a href="/samkoon/">операторских панелей Samkoon серии SK</a>.
                 ПО полностью бесплатно, его можно скачивать и пользоваться без каких-либо ограничений.
-                После установки ПО необходимо установиь драйвера USB для загрузки проекта в операторскую панель по USB. </p>
+                После установки ПО необходимо установиь драйверы USB для загрузки проекта в операторскую панель по USB. </p>
             </div>
           </div>
           <div class="column is-5">
@@ -658,7 +661,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <div class="block_padding">
               <p> ПО AK Workshop - программное обеспечение для создания проектов для <a target="_blank" href="/samkoon/#series-AK">операторских панелей Samkoon серии AK</a>.
                 ПО полностью бесплатно, его можно скачивать и пользоваться без каких-либо ограничений.
-                После установки ПО необходимо установиь драйвера USB для загрузки проекта в операторскую панель по USB. </p>
+                После установки ПО необходимо установиь драйверы USB для загрузки проекта в операторскую панель по USB. </p>
             </div>
           </div>
           <div class="column is-5">
@@ -688,11 +691,11 @@ file_put_contents($ebpro_files_block, $ebpro_files );
         </div>
         <div class="columns  is-multiline">
           <div class="column is-12 background-gray">
-            <div class="block_padding"> <span class="page_downloads_title3">USB-драйвера</span> </div>
+            <div class="block_padding"> <span class="page_downloads_title3">USB-драйверы</span> </div>
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p>Драйвера USB для загрузки проекта с ПК в <a href="/samkoon/">операторские панели Samkoon</a></p>
+              <p>Драйверы USB для загрузки проекта с ПК в <a href="/samkoon/">операторские панели Samkoon</a></p>
             </div>
           </div>
           <div class="column is-5">
@@ -707,11 +710,11 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <h2 id="IFC">Программное обеспечение для промышленных компьютеров и мониторов IFC</h2>
           </div>
           <div class="column is-12 background-gray">
-            <div class="block_padding"> <span class="page_downloads_title3">Драйвера для панельных компьютеров серии&nbsp;RF</span> </div>
+            <div class="block_padding"> <span class="page_downloads_title3">Драйверы для панельных компьютеров серии&nbsp;RF</span> </div>
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p> Драйвера для <a href="/catalog/panel_computers/?&series=RF">панельных компьютеров IFC серии&nbsp;RF</a> предназначены для операционных систем Windows®&nbsp;7, Windows®&nbsp;XP. </p>
+              <p> Драйверы для <a href="/catalog/panel_computers/?&series=RF">панельных компьютеров IFC серии&nbsp;RF</a> предназначены для операционных систем Windows®&nbsp;7, Windows®&nbsp;XP. </p>
             </div>
           </div>
           <div class="column is-5">
@@ -723,11 +726,11 @@ file_put_contents($ebpro_files_block, $ebpro_files );
         <a id="WIFI_Driver"></a>
         <div class="columns  is-multiline">
           <div class="column is-12 background-gray">
-            <div class="block_padding"> <span class="page_downloads_title3">Драйвера для модуля Wi-Fi</span> </div>
+            <div class="block_padding"> <span class="page_downloads_title3">Драйверы для модуля Wi-Fi</span> </div>
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p> Драйвера для модуля Wi-Fi подходят для всех компьютеров IFC с miniPCIe ( <a href="/catalog/embedded_computers/?&brand=IFC">IFC серия BOX</a> ). </p>
+              <p> Драйверы для модуля Wi-Fi подходят для всех компьютеров IFC с miniPCIe ( <a href="/catalog/embedded_computers/?&brand=IFC">IFC серия BOX</a> ). </p>
             </div>
           </div>
           <div class="column is-5">
@@ -739,11 +742,11 @@ file_put_contents($ebpro_files_block, $ebpro_files );
         <a id="Huawei_WinDriver"></a>
         <div class="columns  is-multiline">
           <div class="column is-12 background-gray">
-            <div class="block_padding"> <span class="page_downloads_title3">Драйвера для модуля 3G</span> </div>
+            <div class="block_padding"> <span class="page_downloads_title3">Драйверы для модуля 3G</span> </div>
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p> Драйвера для модуля 3G предназначены для компьютеров <a href="/ifc/IFC-BOX2600/">IFC-BOX2600</a>, <a href="/ifc/IFC-BOX2800/">IFC-BOX2800</a>, <a href="/ifc/IFC-BOX4000/">IFC-BOX4000</a> и <a href="/ifc/IFC-BOX2800/">IFC-MBOX2800</a>. </p>
+              <p> Драйверы для модуля 3G предназначены для компьютеров <a href="/ifc/IFC-BOX2600/">IFC-BOX2600</a>, <a href="/ifc/IFC-BOX2800/">IFC-BOX2800</a>, <a href="/ifc/IFC-BOX4000/">IFC-BOX4000</a> и <a href="/ifc/IFC-BOX2800/">IFC-MBOX2800</a>. </p>
             </div>
           </div>
           <div class="column is-5">
@@ -780,7 +783,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           <div class="column is-5">
             <div class="block_padding">
               <p><a class="download_zip" href="/soft/IFC_drivers/eGalaxTouch.zip">Дистрибутив (рус)</a> <span class="small_gray_text">[03-04-2015] [10.33&nbsp;Мб]</span></p>
-              <p><span id="eeti"><a class="download_linkext" rel="nofollow" href="https://www.eeti.com/drivers.html">Драйвера для других операционных систем</a></span></p>
+              <p><span id="eeti"><a class="download_linkext" rel="nofollow" href="https://www.eeti.com/drivers.html">Драйверы для других операционных систем</a></span></p>
             </div>
           </div>
         </div>
@@ -790,11 +793,11 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <h2 id="Aplex">Программное обеспечение для панельных компьютеров Aplex</h2>
           </div>
           <div class="column is-12 background-gray">
-            <div class="block_padding"> <span class="page_downloads_title3">Драйвера для панельных компьютеров Aplex </span> </div>
+            <div class="block_padding"> <span class="page_downloads_title3">Драйверы для панельных компьютеров Aplex </span> </div>
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p> Драйвера для <a href="/panelnie-computery/aplex/">панельных компьютеров Aplex</a> предназначены для операционных систем Windows®&nbsp;7, Windows®&nbsp;XP. </p>
+              <p> Драйверы для <a href="/panelnie-computery/aplex/">панельных компьютеров Aplex</a> предназначены для операционных систем Windows®&nbsp;7, Windows®&nbsp;XP. </p>
             </div>
           </div>
           <div class="column is-5">
