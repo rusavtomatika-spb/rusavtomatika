@@ -710,6 +710,22 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             <h2 id="IFC">Программное обеспечение для промышленных компьютеров и мониторов IFC</h2>
           </div>
           <div class="column is-12 background-gray">
+            <div class="block_padding"> <span class="page_downloads_title3">Драйверы для панельных компьютеров серии&nbsp;800</span> </div>
+          </div>
+          <div class="column is-7">
+            <div class="block_padding">
+              <p> Драйверы для <a href="/catalog/panel_computers/?&series=RF">панельных компьютеров IFC серии&nbsp;800</a> предназначены для операционных систем Windows®&nbsp;10, Windows®&nbsp;11. </p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815WC-1255U.7z">Дистрибутив IFC-815WC-1255U (рус)</a> <span class="small_gray_text">[09-04-2026] [890&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1255U.7z">Дистрибутив IFC-815R-1255U (рус)</a> <span class="small_gray_text">[09-04-2026] [895&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1135G7.7z">Дистрибутив IFC-815R-1135G7 (рус)</a> <span class="small_gray_text">[09-04-2026] [908&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-N100.7z">Дистрибутив IFC-815R-N100 (рус)</a> <span class="small_gray_text">[09-04-2026] [1.26&nbsp;Гб]</span></p>
+            </div>
+          </div>
+          <div class="column is-12 background-gray">
             <div class="block_padding"> <span class="page_downloads_title3">Драйверы для панельных компьютеров серии&nbsp;RF</span> </div>
           </div>
           <div class="column is-7">
