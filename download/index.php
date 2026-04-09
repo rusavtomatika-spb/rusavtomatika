@@ -714,7 +714,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-7">
             <div class="block_padding">
-              <p> Драйверы для <a href="/catalog/panel_computers/?&series=RF">панельных компьютеров IFC серии&nbsp;800</a> предназначены для операционных систем Windows®&nbsp;10, Windows®&nbsp;11. </p>
+              <p> Драйверы для <a href="/catalog/panel_computers/?&series=IFC-800">панельных компьютеров IFC серии&nbsp;800</a> предназначены для операционных систем Windows®&nbsp;10, Windows®&nbsp;11. </p>
             </div>
           </div>
           <div class="column is-5">
