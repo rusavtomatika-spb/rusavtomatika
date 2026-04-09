@@ -89,6 +89,8 @@ var app = new Vue({
     filterSelectedPersonnelAccessControl: false,
     filterSelectedSendingByEmail: false,
     filterSelectedWithDatabase: false,
+    filterSelectedWeb: false,
+    filterSelectedTerminalCmt: false
   },
   watch: {
     extra_h1: function (newVal) {
@@ -450,6 +452,14 @@ var app = new Vue({
           this.filterSelectedWithDatabase = false;
           this.filterChanged();
           break;
+        case 'filterSelectedWeb':
+          this.filterSelectedWeb = false;
+          this.filterChanged();
+          break;
+        case 'filterSelectedTerminalCmt':
+          this.filterSelectedTerminalCmt = false;
+          this.filterChanged();
+          break;
         default:
         case 'all':
           this.filterSelectedBrands = [];
@@ -495,6 +505,8 @@ var app = new Vue({
           this.filterSelectedRangeCOM_max = this.filterSelectedRangeCOM_max_start;
           this.filterSelectedSendingByEmail = false;
           this.filterSelectedWithDatabase = false;
+          this.filterSelectedWeb = false;
+          this.filterSelectedTerminalCmt = false;
           this.filterChanged();
 
           break;
@@ -931,6 +943,12 @@ var app = new Vue({
       if (this.filterSelectedWithDatabase) {
         this.filter_string += '&with_database=yes';
       }
+      if (this.filterSelectedWeb) {
+        this.filter_string += '&web=yes';
+      }
+      if (this.filterSelectedTerminalCmt) {
+        this.filter_string += '&terminal_cmt=yes';
+      }
       if (this.filterSelectedRangeDiagonal_min > 0) {
         this.filter_string += '&range_diagonal_min=' + this.filterSelectedRangeDiagonal_min;
       }
@@ -1334,6 +1352,12 @@ var app = new Vue({
             case "with_database":
               h1_chunk = ",Панель с базой данных на SQL-сервере";
               break;
+            case "web":
+              h1_chunk = ",Web";
+              break;
+            case "terminal_cmt":
+              h1_chunk = ",Терминал cMT";
+              break;
             case "resistive":
               h1_chunk = ",С резистивным экраном";
               break;
@@ -1709,6 +1733,12 @@ var app = new Vue({
       }
       if (this.urlGetVars['with_database'] != null) {
         this.filterSelectedWithDatabase = true;
+      }
+      if (this.urlGetVars['web'] != null) {
+        this.filterSelectedWeb = true;
+      }
+      if (this.urlGetVars['terminal'] != null) {
+        this.filterSelectedTerminalCmt = true;
       }
       if (this.urlGetVars['series'] != null) {
         this.filterSelectedSeries = this.urlGetVars['series'];

@@ -31,6 +31,8 @@ $remote_control_phone_only = "";
 $personnel_access_control_only = "";
 $sending_by_email_only = "";
 $with_database_only = "";
+$web_only = "";
+$terminal_cmt_only = "";
 
 /*if(is_array($_GET) and count($_GET)>0){
     $arr_all_available_filters_rows = $DB_WORK_CATALOG->get_rows_from_table("catalog_filters");
@@ -154,6 +156,14 @@ if (isset($_GET["sending_by_email"]) and $_GET["sending_by_email"] == 'yes') {
 }
 if (isset($_GET["with_database"]) and $_GET["with_database"] == 'yes') {
     $with_database_only = "1";
+    $filter_exists = true;
+}
+if (isset($_GET["web"]) and $_GET["web"] == 'yes') {
+    $web_only = "1";
+    $filter_exists = true;
+}
+if (isset($_GET["terminal_cmt"]) and $_GET["terminal_cmt"] == 'yes') {
+    $terminal_cmt_only = "1";
     $filter_exists = true;
 }
 
@@ -764,6 +774,26 @@ if ($filter_exists) {
         }
         
         $filter_chunk .= implode(' AND ', $exclude_conditions) . ') ';
+        $mysql_product_filter .= $filter_chunk;
+    }
+
+    if ($web_only == '1') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else {
+            $filter_chunk = ' and (';
+        }
+        $filter_chunk .= " `type` = 'web-panel') ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+
+    if ($terminal_cmt_only == '1') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else {
+            $filter_chunk = ' and (';
+        }
+        $filter_chunk .= " `type` = 'panel-terminal') ";
         $mysql_product_filter .= $filter_chunk;
     }
     
