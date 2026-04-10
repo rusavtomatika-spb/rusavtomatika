@@ -87,8 +87,9 @@ if (count($arResult_product) == 0) {
 	$linked_model = explode(",",str_replace(" ","",$article['linked_products']));
 	$linked_brands = explode(",",str_replace(" ","",$article['linked_brands']));
 	$linked_types = explode(",",str_replace(" ","",$article['linked_types']));
+	$linked_exc_types = explode(",",str_replace(" ","",$article['exclude_linked_types']));
 	$linked_series = explode(",",str_replace(" ","",$article['linked_series']));
-		if (in_array($pr_model,$linked_model)||in_array($pr_brand,$linked_brands)||in_array($pr_serie,$linked_series)||in_array($pr_type,$linked_types)) {
+		if ((in_array($pr_model,$linked_model)||in_array($pr_brand,$linked_brands)||in_array($pr_serie,$linked_series)||in_array($pr_type,$linked_types))&&!in_array($pr_type,$linked_exc_types)) {
 			array_push($arSelected_articles,$article);
 		}
 	}
@@ -116,8 +117,9 @@ usort($arSelected_articles, function($a, $b) {
 	$linked_model = explode(",",str_replace(" ","",$video['linked_products']));
 	$linked_brands = explode(",",str_replace(" ","",$video['linked_brands']));
 	$linked_types = explode(",",str_replace(" ","",$video['linked_types']));
+	$linked_exc_types = explode(",",str_replace(" ","",$video['exclude_linked_types']));
 	$linked_series = explode(",",str_replace(" ","",$video['linked_series']));
-		if (in_array($pr_model,$linked_model)||in_array($pr_brand,$linked_brands)||in_array($pr_serie,$linked_series)||in_array($pr_type,$linked_types)) {
+		if ((in_array($pr_model,$linked_model)||in_array($pr_brand,$linked_brands)||in_array($pr_serie,$linked_series)||in_array($pr_type,$linked_types))&&!in_array($pr_type,$linked_exc_types)) {
 			array_push($arSelected_videos,$video);
 		}
 	}
