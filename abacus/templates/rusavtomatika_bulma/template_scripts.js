@@ -445,14 +445,16 @@ function sendsf()
 }
 document.addEventListener('DOMContentLoaded', function() {
     const banner = document.querySelector('.cookie-container');
-    
+    let date = new Date();
+    date.setDate(date.getDate() + 400);
+
     if(banner) {
         if (!getCookie2('acceptedCookies')) {
                 banner.style.display = 'grid';
         }
 
         banner.querySelector('.accept').addEventListener('click', () => {
-            setCookie('acceptedCookies', true, { expiresInDays: 1095 });
+            setCookie('acceptedCookies', true, { expires: date.toUTCString() });
             banner.style.display = 'none';
         });
 
@@ -469,19 +471,20 @@ function getCookie2(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function setCookie(name, value, options={}) {
+function setCookie(name, value, options = {}) {
     options = {
         path: '/',
         secure: true,
         sameSite: 'strict',
+        ...options
     };
 
     let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
 
-    for(let optionKey in options){
+    for (let optionKey in options) {
         updatedCookie += "; " + optionKey;
         let optionValue = options[optionKey];
-        if(optionValue !== true)
+        if (optionValue !== true)
             updatedCookie += "=" + optionValue;
     }
 
