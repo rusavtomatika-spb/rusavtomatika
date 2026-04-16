@@ -89,8 +89,8 @@ $(document).ready(function() {
         maxWidth: '400px',
         overlay: true,
         closeButton: 'title',
-        title: '<b>Промышленный компьютер FULL IP65</b>',
-        content: 'Компьютер адаптированый к использованию в промышленности. Имеет защиту от неблагоприятных условий эксплуатации. Промышленные компьютеры full IP65 имеют усиленную пылевлагозащиту всего корпуса, а не только фронтальной панели.'
+        title: '<b>Промышленный компьютер IP69K</b>',
+        content: 'Компьютер адаптированый к использованию в промышленности. Имеет защиту от неблагоприятных условий эксплуатации. Промышленные компьютеры IP69K имеют усиленную пылевлагозащиту всего корпуса, а не только фронтальной панели.'
     });
 });
 
@@ -217,12 +217,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                     class="cataloge_list-title button_show_items">
                                     <?= htmlspecialchars($section['name']) ?>
                                 </span>
-                            </a>
-                            <?php
+                            </a><?php
                             }
 
                             if (preg_match('/(gateways|screenless|industrial_computers)/', $section['category_link'])) {
-                                echo '<span style="cursor: pointer; z-index: 9999;" id="' . $section['code'] . '"> <i class="fa-regular fa-circle-question" style="color:#d6d6d6;"></i></span>';
+                                echo '&nbsp;<span style="cursor: pointer; z-index: 9999;" id="' . $section['code'] . '"><i class="fa-regular fa-circle-question" style="color:#d6d6d6;"></i></span>';
                             }
                             ?>
 
