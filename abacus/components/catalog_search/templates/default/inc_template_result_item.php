@@ -112,7 +112,7 @@ if (!(isset($product["link_detail2"]) and $product["link_detail2"] != "")) {
 
                 elseif (isset($product["model_fullname"]) and $product["model_fullname"] != "") $s_h1 =  $product["model_fullname"];
 
-                else $s_h1 =  $product["model"] . " - ". $product["diagonal"] ."&Prime; " . $product["short_name"] . " " . $product["brand"];
+                else $s_h1 =  $product["model"] . " - ". str_replace(".0", "", $product["diagonal"]) ."&Prime; " . $product["short_name"] . " " . $product["brand"];
 			
 	$tech = array();
 	if ($product["brand"] == 'Weintek') {
