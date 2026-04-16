@@ -779,7 +779,7 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
 <? endif; ?>
 <? if (isset($arResult['product']['text_seo'])&&$arResult['product']['text_seo']!='') : ?>
 <section id="text">
-  <?
+  <h2>Информация о продукте</h2>  <?
   echo $arResult[ 'product' ][ 'text_seo' ];
   ?>
 </section>
