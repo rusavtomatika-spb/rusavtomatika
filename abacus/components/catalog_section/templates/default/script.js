@@ -1737,7 +1737,7 @@ var app = new Vue({
       if (this.urlGetVars['web'] != null) {
         this.filterSelectedWeb = true;
       }
-      if (this.urlGetVars['terminal'] != null) {
+      if (this.urlGetVars['terminal_cmt'] != null) {
         this.filterSelectedTerminalCmt = true;
       }
       if (this.urlGetVars['series'] != null) {

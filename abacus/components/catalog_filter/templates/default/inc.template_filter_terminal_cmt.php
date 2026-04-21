@@ -2,12 +2,12 @@
     <div class="columns is-gapless is-multiline">
         <div class="column is-12-widescreen is-12-desktop is-12-tablet">
             <input type="checkbox" 
-                   id="checkbox_terminal" 
-                   value="terminal"
+                   id="checkbox_terminal_cmt" 
+                   value="terminal_cmt"
                    @change="filterChanged" 
                    v-model="filterSelectedTerminalCmt"
                    class="terminal_cmt"/>&nbsp;
-            <label for="checkbox_terminal">Терминал cMT (iV)</label>
+            <label for="checkbox_terminal_cmt">Терминал cMT (iV)</label>
         </div>
     </div>
 </div>
