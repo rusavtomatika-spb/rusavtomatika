@@ -1,13 +1,12 @@
 <?
-CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/inc_codesys_suitable_models.css");
 $rows1=CoreApplication::get_rows_from_table("products_all","model, type","(`series`='cMT-X') and ((`codesys` like 'build_in') or (`codesys` like 'optional'))","`diagonal` ASC");
 //var_dump_pre($rows1);
 //$rows2=CoreApplication::get_rows_from_table("products_all","model, type","(`series`='cMT') and ((`codesys` like 'build_in') or (`codesys` like 'optional'))","`diagonal` ASC");
 $rows2=CoreApplication::get_rows_from_table("products_all","model, type","(`model`='cMT3072')","`diagonal` ASC");
 //var_dump_pre($rows2);
 ?>
-<h2>Панели оператора с поддержкой Codesys</h2>
-<h3>Серия cMT-X</h3>
+<h2>РџР°РЅРµР»Рё РѕРїРµСЂР°С‚РѕСЂР° СЃ РїРѕРґРґРµСЂР¶РєРѕР№ Codesys</h2>
+<h3>РЎРµСЂРёСЏ cMT-X</h3>
 <div class="codesys_suitable_models">
     <div class="columns is-multiline">
         <?
@@ -27,7 +26,7 @@ $rows2=CoreApplication::get_rows_from_table("products_all","model, type","(`mode
     </div>
 </div>
 
-<h3>Серия cMT</h3>
+<h3>РЎРµСЂРёСЏ cMT</h3>
 <div class="codesys_suitable_models">
     <div class="columns is-multiline">
         <?
@@ -48,3 +47,13 @@ $rows2=CoreApplication::get_rows_from_table("products_all","model, type","(`mode
 </div>
 </div>
 
+<style>
+.codesys_suitable_models a {
+    display: block;
+    width: 100%;
+}
+
+.codesys_suitable_models img {
+    margin: 0 auto;
+}
+</style>

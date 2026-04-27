@@ -330,10 +330,10 @@ $arc = [
             <div class="block_padding">
               <?
               filter_arr( $progs, 'section', 'ebpro' );
-				echo 111;
+//				echo 111;
 				ob_start(); //Start output buffer
               filter_arr( $progs, 'section', 'ebpro', 'ebb' );
-				echo 222;
+//				echo 222;
 				$output = ob_get_contents(); //Grab output
 				ob_end_clean(); //Discard output buffer
                 if ( is_array( $updates ) ) {
@@ -367,7 +367,7 @@ $arc = [
               //              var_dump( $ebpro_docs );
               //              echo "</pre>";
               arr_out( $ebpro_docs );
-				echo 333;
+//				echo 333;
 				ob_start(); //Start output buffer
 				$ebpro_files .= arr_out( $ebpro_docs, 'ebb' );
 				$output = ob_get_contents(); //Grab output

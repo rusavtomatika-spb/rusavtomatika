@@ -104,7 +104,6 @@ CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) .
 <?//include "inc_codesys_suitable_models.php"?>
 
     <?
-    CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/inc_codesys_suitable_models.css");
     $rows1=CoreApplication::get_rows_from_table("products_all","model, type","(`series`='cMT-X') and ((`codesys` like 'build_in') or (`codesys` like 'optional'))","`diagonal` ASC");
     //var_dump_pre($rows1);
     $rows2=CoreApplication::get_rows_from_table("products_all","model, type","(`series`='cMT') and ((`codesys` like 'build_in') or (`codesys` like 'optional'))","`diagonal` ASC");

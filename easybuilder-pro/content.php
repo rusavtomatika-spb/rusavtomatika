@@ -72,7 +72,7 @@
           <p><a class="download_linkext_online" href="/weintek-easybuilder-instrukciya-na-russkom/">On-line
             руководство пользователя <b>на русском языке</b><br>
             EasyBuilder Pro (Rus) </a></p>
-          <p><a class="download_pdf" href='/manuals/EBPro/EasyBuilderPro_UserManual_eng.pdf'>Руководство для
+          <p><a class="download_pdf" href='/manuals/EBPro/EasyBuilder-Pro-V61001-UserManual-eng.pdf'>Руководство для
             EasyBuilder Pro <? echo file_get_contents('https://www.rusavtomatika.com/upload_files/soft/EBPro/Installer/version.txt'); ?> (Eng)</a></p>
           <p> <a class="link_video_page" href='/video/'>Видео канал на русском о программировании панелей
             Weintek в EasyBuilder Pro</a> </p>
