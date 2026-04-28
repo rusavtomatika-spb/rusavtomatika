@@ -54,7 +54,6 @@ var app = new Vue({
     methods: {
         linkpag(e) {
             e.preventDefault()
-            console.log(e.currentTarget.href)
         },
         alert(message) {
             alert(message);
@@ -97,9 +96,7 @@ var app = new Vue({
             document.body.style.overflow = "hidden";
             this.current_edit_item = item;
             this.current_original_edit_item = {...item};
-            //console.log(tinymce);
             setTimeout(() => {
-                    //console.log(tinymce);
                     tinymce.init({
                         selector: '#mytextarea',
                         convert_urls : false,
@@ -113,10 +110,10 @@ var app = new Vue({
                         toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent | table | link | paste pastetext | image | fullscreen | code',
                         content_css: "/css/wisywig.css",
                         image_class_list: [
-                            {title: 'Нет', value: ''},
-                            {title: 'Выровнять по центру', value: 'image-align-center'},
-                            {title: 'Выровнять влево', value: 'image-align-left'},
-                            {title: 'Выровнять вправо', value: 'image-align-right'}
+                            {title: 'РќРµС‚', value: ''},
+                            {title: 'Р’С‹СЂРѕРІРЅСЏС‚СЊ РїРѕ С†РµРЅС‚СЂСѓ', value: 'image-align-center'},
+                            {title: 'Р’С‹СЂРѕРІРЅСЏС‚СЊ РІР»РµРІРѕ', value: 'image-align-left'},
+                            {title: 'Р’С‹СЂРѕРІРЅСЏС‚СЊ РІРїСЂР°РІРѕ', value: 'image-align-right'}
                         ],
                         textcolor_map: [
                             "000000", "Black",
@@ -162,10 +159,6 @@ var app = new Vue({
 
                         setup:(ed)=> {
                             ed.on('change', function(e) {
-                                //console.log('the event object ', e);
-                                //console.log('the editor object ', ed);
-                                //console.log('the content ', ed.getContent());
-                                //console.log(context);
                                 //textarea = document.querySelector('#mytextarea');
                                 context.current_edit_item.btext = ed.getContent();
                             });
@@ -246,9 +239,7 @@ var app = new Vue({
                     this.current_edit_item.images.push(response.data.result.uploaded_file);
                 }
                 this.files = '';
-            }).catch(function (response) {
-                console.log(response);
-            });
+            }).catch(function (response) {});
         },
         crud($action) {
             axios({
@@ -272,13 +263,12 @@ var app = new Vue({
                         this.arr_filtered_items.unshift(Object.assign({}, this.current_edit_item));
                     }
                     if ($action == "delete_image_file") {
-                        //console.log(this.current_edit_item);
                         this.current_edit_item.images = this.current_edit_item.images.filter((item)=> {
                             return item !== this.crud_arr_extra_params.file
                         });
                     }
-                    this.show_popup_message('Готово!', 1000);
-                } else this.show_popup_message('Что-то пошло не так!', 4000);
+                    this.show_popup_message('Р“РѕС‚РѕРІРѕ!', 1000);
+                } else this.show_popup_message('Р§С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє!', 4000);
             });
 
         },
@@ -342,13 +332,13 @@ var app = new Vue({
         },
         show_popup_delete_confirm_message(item) {
             this.current_edit_item = item;
-            this.text_delete_confirm = 'Удалить статью <div>ID ' + item.id + ': &laquo;' + item.name + '&raquo;</div> ???';
+            this.text_delete_confirm = 'РЈРґР°Р»РёС‚СЊ СЃС‚Р°С‚СЊСЋ <div>ID ' + item.id + ': &laquo;' + item.name + '&raquo;</div> ???';
             this.showing_delete_confirm_message = true;
             //setTimeout(()=>{this.showing_popup_message = false},time);
 
         },
         show_popup_delete_confirm_file(item) {
-            this.text_delete_confirm = 'Удалить файл? <div>&laquo; ' + item + ' &raquo;</div>';
+            this.text_delete_confirm = 'РЈРґР°Р»РёС‚СЊ С„Р°Р№Р»? <div>&laquo; ' + item + ' &raquo;</div>';
             this.deleting_image_file = item;
             this.showing_confirm_message_delete_file = true;
         },
@@ -379,7 +369,7 @@ var app = new Vue({
         select_brand(selected_brand) {
             this.clear_filter_arr_brands();
             /*
-                        if(selected_brand.name == "Все"){
+                        if(selected_brand.name == "Р’СЃРµ"){
                             this.clear_filter_arr_brands();
                         }else{
                             this.arr_brands[0].active = false;
@@ -393,7 +383,7 @@ var app = new Vue({
         select_category(selected_category) {
             this.clear_filter_arr_categories();
             /*
-                        if(selected_category.name == "Все"){
+                        if(selected_category.name == "Р’СЃРµ"){
                             this.clear_filter_arr_categories();
                         }else{
                             this.arr_categories[0].active = false;
@@ -439,24 +429,24 @@ var app = new Vue({
 
         cyr2lat(str) {
 
-            let cyr2latChars = new Array(['а', 'a'], ['б', 'b'], ['в', 'v'], ['г', 'g'],
-                ['д', 'd'], ['е', 'e'], ['ё', 'yo'], ['ж', 'zh'], ['з', 'z'],
-                ['и', 'i'], ['й', 'y'], ['к', 'k'], ['л', 'l'],
-                ['м', 'm'], ['н', 'n'], ['о', 'o'], ['п', 'p'], ['р', 'r'],
-                ['с', 's'], ['т', 't'], ['у', 'u'], ['ф', 'f'],
-                ['х', 'h'], ['ц', 'c'], ['ч', 'ch'], ['ш', 'sh'], ['щ', 'shch'],
-                ['ъ', ''], ['ы', 'y'], ['ь', ''], ['э', 'e'], ['ю', 'yu'], ['я', 'ya'],
-                ['А', 'A'], ['Б', 'B'], ['В', 'V'], ['Г', 'G'],
-                ['Д', 'D'], ['Е', 'E'], ['Ё', 'YO'], ['Ж', 'ZH'], ['З', 'Z'],
-                ['И', 'I'], ['Й', 'Y'], ['К', 'K'], ['Л', 'L'],
-                ['М', 'M'], ['Н', 'N'], ['О', 'O'], ['П', 'P'], ['Р', 'R'],
-                ['С', 'S'], ['Т', 'T'], ['У', 'U'], ['Ф', 'F'],
-                ['Х', 'H'], ['Ц', 'C'], ['Ч', 'CH'], ['Ш', 'SH'], ['Щ', 'SHCH'],
-                ['Ъ', ''], ['Ы', 'Y'],
-                ['Ь', ''],
-                ['Э', 'E'],
-                ['Ю', 'YU'],
-                ['Я', 'YA'],
+            let cyr2latChars = new Array(['Р°', 'a'], ['Р±', 'b'], ['РІ', 'v'], ['Рі', 'g'],
+                ['Рґ', 'd'], ['Рµ', 'e'], ['С‘', 'yo'], ['Р¶', 'zh'], ['Р·', 'z'],
+                ['Рё', 'i'], ['Р№', 'y'], ['Рє', 'k'], ['Р»', 'l'],
+                ['Рј', 'm'], ['РЅ', 'n'], ['Рѕ', 'o'], ['Рї', 'p'], ['СЂ', 'r'],
+                ['СЃ', 's'], ['С‚', 't'], ['Сѓ', 'u'], ['С„', 'f'],
+                ['С…', 'h'], ['С†', 'c'], ['С‡', 'ch'], ['С€', 'sh'], ['С‰', 'shch'],
+                ['СЉ', ''], ['С‹', 'y'], ['СЊ', ''], ['СЌ', 'e'], ['СЋ', 'yu'], ['СЏ', 'ya'],
+                ['Рђ', 'A'], ['Р‘', 'B'], ['Р’', 'V'], ['Р“', 'G'],
+                ['Р”', 'D'], ['Р•', 'E'], ['РЃ', 'YO'], ['Р–', 'ZH'], ['Р—', 'Z'],
+                ['Р', 'I'], ['Р™', 'Y'], ['Рљ', 'K'], ['Р›', 'L'],
+                ['Рњ', 'M'], ['Рќ', 'N'], ['Рћ', 'O'], ['Рџ', 'P'], ['Р ', 'R'],
+                ['РЎ', 'S'], ['Рў', 'T'], ['РЈ', 'U'], ['Р¤', 'F'],
+                ['РҐ', 'H'], ['Р¦', 'C'], ['Р§', 'CH'], ['РЁ', 'SH'], ['Р©', 'SHCH'],
+                ['РЄ', ''], ['Р«', 'Y'],
+                ['Р¬', ''],
+                ['Р­', 'E'],
+                ['Р®', 'YU'],
+                ['РЇ', 'YA'],
                 ['a', 'a'], ['b', 'b'], ['c', 'c'], ['d', 'd'], ['e', 'e'],
                 ['f', 'f'], ['g', 'g'], ['h', 'h'], ['i', 'i'], ['j', 'j'],
                 ['k', 'k'], ['l', 'l'], ['m', 'm'], ['n', 'n'], ['o', 'o'],
@@ -482,12 +472,12 @@ var app = new Vue({
                         newCh = cyr2latChars[j][1];
                     }
                 }
-                // Если найдено совпадение, то добавляется соответствие, если нет - пустая строка
+                // Р•СЃР»Рё РЅР°Р№РґРµРЅРѕ СЃРѕРІРїР°РґРµРЅРёРµ, С‚Рѕ РґРѕР±Р°РІР»СЏРµС‚СЃСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ, РµСЃР»Рё РЅРµС‚ - РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°
                 newStr += newCh;
             }
 
-            // Удаляем повторяющие знаки - Именно на них заменяются пробелы.
-            // Так же удаляем символы перевода строки.
+            // РЈРґР°Р»СЏРµРј РїРѕРІС‚РѕСЂСЏСЋС‰РёРµ Р·РЅР°РєРё - РРјРµРЅРЅРѕ РЅР° РЅРёС… Р·Р°РјРµРЅСЏСЋС‚СЃСЏ РїСЂРѕР±РµР»С‹.
+            // РўР°Рє Р¶Рµ СѓРґР°Р»СЏРµРј СЃРёРјРІРѕР»С‹ РїРµСЂРµРІРѕРґР° СЃС‚СЂРѕРєРё.
             return newStr.replace(/[-]{2,}/gim, '-').replace(/\n/gim, '');
         },
         ///////////////////////////////////////////////////Cookie///////////////////////////////////////////////////////
@@ -502,11 +492,11 @@ var app = new Vue({
         },
         setCookie(name, value, options = {}) {
 
-            // Пример использования:
+            // РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ:
             //setCookie('user', 'John', {secure: true, 'max-age': 3600});
             options = {
                 path: '/',
-                // при необходимости добавьте другие значения по умолчанию
+                // РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РґРѕР±Р°РІСЊС‚Рµ РґСЂСѓРіРёРµ Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
                 //...options
             };
 

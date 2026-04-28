@@ -93,9 +93,7 @@ var app = new Vue({
             document.body.style.overflow = "hidden";
             this.current_edit_item = item;
             this.current_original_edit_item = {...item};
-            //console.log(tinymce);
             setTimeout(() => {
-                    //console.log(tinymce);
                     tinymce.init({
                         selector: '#mytextarea',
                         convert_urls : false,
@@ -158,10 +156,6 @@ var app = new Vue({
 
                         setup:(ed)=> {
                             ed.on('change', function(e) {
-                                //console.log('the event object ', e);
-                                //console.log('the editor object ', ed);
-                                //console.log('the content ', ed.getContent());
-                                //console.log(context);
                                 //textarea = document.querySelector('#mytextarea');
                                 context.current_edit_item.btext = ed.getContent();
                             });
@@ -242,9 +236,7 @@ var app = new Vue({
                     this.current_edit_item.images.push(response.data.result.uploaded_file);
                 }
                 this.files = '';
-            }).catch(function (response) {
-                console.log(response);
-            });
+            }).catch(function (response) {});
         },
         crud($action) {
             axios({
@@ -259,7 +251,6 @@ var app = new Vue({
                     "Content-type": "application/x-www-form-urlencoded"
                 }
             }).then((response) => {
-                console.log(response);
                 if (response.data.result.success !== undefined && response.data.result.success == '1') {
                     if ($action == "delete") {
                         this.arr_filtered_items.splice(this.deleting_element_index, 1);
@@ -270,7 +261,6 @@ var app = new Vue({
                         document.location.reload();
                     }
                     if ($action == "delete_image_file") {
-                        //console.log(this.current_edit_item);
                         this.current_edit_item.images = this.current_edit_item.images.filter((item)=> {
                             return item !== this.crud_arr_extra_params.file
                         });
@@ -278,7 +268,6 @@ var app = new Vue({
                     this.show_popup_message('Готово!', 1000);
                 } else {
                     this.show_popup_message('Что-то пошло не так!', 4000);
-                    console.log(response);
                 }
             });
 
