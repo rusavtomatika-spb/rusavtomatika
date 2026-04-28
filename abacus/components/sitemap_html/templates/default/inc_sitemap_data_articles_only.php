@@ -46,7 +46,7 @@ $ar_main_static_links = [
             ["link" => "mailto:sales@rusavtomatika.com", "anchor" => "sales@rusavtomatika.com"],
             ["link" => "https://t.me/rusavtomatika", "anchor" => "Телеграм-канал Русавтоматика"],
             ["link" => "https://vk.com/weintek_official", "anchor" => "Группа Русавтоматика в VK"],
-            ["link" => "https://www.youtube.com/c/rusavtomatikacom", "anchor" => "Youtube канал Русавтоматика"],
+            ["link" => "https://rutube.ru/channel/23487925", "anchor" => "Rutube канал Русавтоматика"],
             ["link" => "skype:artemfam?chat", "anchor" => "Скайп - аккаунт artemfam"],
         ],
     ],
