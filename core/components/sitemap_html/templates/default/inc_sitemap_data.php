@@ -1,175 +1,349 @@
-<?php
-global $ar_main_static_links, $ar_dynamic_links, $ar_catalog_links;
-$ar_xml_links = [];
-
-$ar_main_static_links = [
-    [
-        "title" => "Êîìïàíèÿ",
-        "items" => [
-            ["link" => "/about/", "anchor" => "Î êîìïàíèè"],
-            ["link" => "/sertificates/", "anchor" => "Ñåðòèôèêàòû äèñòðèáüþòîðà"],
-            ["link" => "/support/", "anchor" => "Òåõïîääåðæêà"],
-            ["link" => "/payment-shipping/", "anchor" => "Îïëàòà è äîñòàâêà"],
-            ["link" => "/forum/", "anchor" => "Ôîðóì"],
-            ["link" => "/contacts/", "anchor" => "Êîíòàêòû"],
-        ],
-    ],
-    [
-        "title" => "Áðåíäû",
-        "items" => [
-            ["link" => "/weintek" . EX . "/", "anchor" => "Weintek"],
-            ["link" => "/samkoon" . EX . "/", "anchor" => "Samkoon"],
-            ["link" => "/ifc" . EX . "/", "anchor" => "IFC"],
-            ["link" => "/aplex" . EX . "/", "anchor" => "Aplex"],
-            ["link" => "/ewon" . EX . "/", "anchor" => "Ewon"],
-            ["link" => "/faraday" . EX . "/", "anchor" => "Faraday"],
-        ],
-    ],
-    [
-        "title" => "Áèáëèîòåêà",
-        "items" => [
-            ["link" => "/download/", "anchor" => "Ïðèëîæåíèÿ è äðàéâåðû"],
-            ["link" => "/documents" . EX . "/", "anchor" => "Äîêóìåíòû"],
-            ["link" => "/weintek_projects" . EX . "/", "anchor" => "Äåìî-ïðîåêòû Weintek"],
-            ["link" => "/weintek_projects" . EX . "/?find_projects=Macro Sample/", "anchor" => "Äåìî-ìàêðîñû Weintek"],
-            ["link" => "/weintek_libraries" . EX . "/", "anchor" => "Áèáëèîòåêè äëÿ Easy Builder"],
-            ["link" => "/weintek_drivers" . EX . "/", "anchor" => "Weintek äðàéâåðû êîíòðîëëåðîâ ÏËÊ"],
-            ["link" => "/new-products" . EX . "/", "anchor" => "Íîâèíêè ïðîäóêöèè"],
-        ],
-    ],
-    ["title" => "Êîíòàêòû",
-        "items" => [
-            ["link" => "/contacts/", "anchor" => "Êàðòà ïðîåçäà"],
-            ["link" => "tel:+78126480347", "anchor" => "+7 (812) 648-03-47"],
-            ["link" => "tel:+74951081275", "anchor" => "+7 (495) 108-12-75"],
-            ["link" => "mailto:sales@rusavtomatika.com", "anchor" => "sales@rusavtomatika.com"],
-            ["link" => "https://t.me/rusavtomatika", "anchor" => "Òåëåãðàì-êàíàë Ðóñàâòîìàòèêà"],
-            ["link" => "https://vk.com/weintek_official", "anchor" => "Ãðóïïà Ðóñàâòîìàòèêà â VK"],
-            ["link" => "https://www.youtube.com/c/rusavtomatikacom", "anchor" => "Youtube êàíàë Ðóñàâòîìàòèêà"],
-            ["link" => "skype:artemfam?chat", "anchor" => "Ñêàéï - àêêàóíò artemfam"],
-        ],
-    ],
-];
-
-
-$ar_dynamic_links = [];
-
-// ÍÎÂÎÑÒÈ
-$rows = CoreApplication::get_rows_from_table("news", "name,sys_name", "active='1'", "date desc");
-$ar_dynamic_links_items = [];
-foreach ($rows as $row) {
-    $ar_dynamic_links_items[] = ["link" => "/news" . EX . "/" . $row["sys_name"] . "/", "anchor" => $row["name"],];
-}
-
-$ar_dynamic_links[0] = [
-    "link" => "/news" . EX . "/",
-    "anchor" => "Íîâîñòè",
-    "items" => $ar_dynamic_links_items,
-];
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$rows = CoreApplication::get_rows_from_table("articles", "name,sys_name", "`show`='1'", "date desc");
-$ar_dynamic_links_items = [];
-foreach ($rows as $row) {
-    $ar_dynamic_links_items[] = ["link" => "/articles" . EX . "/" . $row["sys_name"] . "/", "anchor" => $row["name"],];
-}
-$ar_dynamic_links[1] = [
-    "link" => "/articles" . EX . "/",
-    "anchor" => "Ñòàòüè",
-    "items" => $ar_dynamic_links_items,
-];
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$rows = CoreApplication::get_rows_from_table("videos", "name,code", "`show`='1'", "id desc");
-$ar_dynamic_links_items = [];
-foreach ($rows as $row) {
-    $ar_dynamic_links_items[] = ["link" => "/video" . EX . "/" . $row["code"] . "/", "anchor" => $row["name"],];
-}
-$ar_dynamic_links[2] = [
-    "link" => "/video" . EX . "/",
-    "anchor" => "Âèäåîêàíàë rusavtomatika.com",
-    "items" => $ar_dynamic_links_items,
-];
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ÊÀÒÀËÎÃ
-
-$ar_brands = CoreApplication::get_rows_from_table("catalog_brands", "name", "`active`='1'", "position asc");
-$ar_sections = CoreApplication::get_rows_from_table("catalog_sections", "name,code,category_link,products_selected_by_query", "`active`='1'", "position asc");
-$ar_section_links = [];
-foreach ($ar_sections as $ar_section) {
-
-    $extra_condition = '';
-    if ($ar_section["products_selected_by_query"] != "") {
-        $ar_products = CoreApplication::direct_sql_query($ar_section["products_selected_by_query"]);
-        $items = [];
-        foreach ($ar_products as $item) {
-            $items[] = ["model" => $item["model"], "brand" => $item["brand"], "section" => $item["section"],];
-        }
-        $ar_series_links[] = [
-            'brand' => "",
-            'series_name' => "",
-            'items' => $items,
-        ];
-        $items = [];
-        $ar_section_links[$ar_section["name"]] = ["link" => $link, "anchor" => $ar_section["name"], "series" => $ar_series_links];
-        $ar_series_links = [];
-
-    } else {
-        $ar_products = [];
-        if ($ar_section["category_link"] != '') {
-            $link = $ar_section["category_link"];
-            $tmp = explode("?&", $link);
-            if (isset($tmp[1])) {
-                $tmp2 = explode("=", $tmp[1]);
-                if (isset($tmp2[1]) and $tmp2[1] != '') {
-                    if ($tmp2[0] == 'os') {
-                        $tmp2[0] = 'os_codes';
-                        $extra_condition = " and `{$tmp2[0]}` like '%{$tmp2[1]}%' ";
-                    } else {
-                        $extra_condition = " and `{$tmp2[0]}` = '{$tmp2[1]}' ";
-                    }
-                } else {
-                    $extra_condition = '';
-                }
-            }
-
-        } else {
-            $link = "/catalog/" . $ar_section["code"] . "/";
-        }
-        // ñåðèè
-        $ar_series = [];
-        foreach ($ar_brands as $brand) {
-
-            $ar_series = CoreApplication::get_rows_from_table("catalog_series", "name,type", " `menu_category_item_code`='{$ar_section["code"]}' and `brand`='{$brand["name"]}' and `active`='1'", "position asc");
-
-            foreach ($ar_series as $series) {
-
-
-                $items = CoreApplication::get_rows_from_table("products_all", "model,brand,s_name", " `type`='{$series["type"]}' and `series`='{$series["name"]}' and `brand`='{$brand["name"]}' and `show_in_cat`!='0' and `discontinued` != '1'" . $extra_condition, " `index` desc");
-
-                if (count($items) > 0) {
-                    $ar_series_links[] = [
-                        'brand' => $brand["name"],
-                        'series_name' => $series["name"],
-                        'items' => $items,
-                    ];
-                } else {
-                    //echo " `type`='{$series["type"]}' and `series`='{$series["name"]}' and `brand`='{$brand["name"]}' and `show_in_cat`!='0' and `discontinued` != '1'".$extra_condition."<br><br>";
-                }
-
-
-            }
-
-        }
-        //
-        $ar_section_links[$ar_section["name"]] = ["link" => $link, "anchor" => $ar_section["name"], "series" => $ar_series_links];
-        $ar_series_links = [];
-    }
-}
-
-$ar_catalog_links = [
-    "link" => "/catalog/",
-    "anchor" => "Êàòàëîã ïðîäóêöèè",
-    "items" => $ar_section_links,
-];
-
-
+<?php
+
+global $ar_main_static_links, $ar_dynamic_links, $ar_catalog_links;
+
+$ar_xml_links = [];
+
+
+
+$ar_main_static_links = [
+
+    [
+
+        "title" => "ÐšÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ñ",
+
+        "items" => [
+
+            ["link" => "/about/", "anchor" => "Ðž ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ð¸"],
+
+            ["link" => "/sertificates/", "anchor" => "Ð¡ÐµÑ€Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ñ‹ Ð´Ð¸ÑÑ‚Ñ€Ð¸Ð±ÑŒÑŽÑ‚Ð¾Ñ€Ð°"],
+
+            ["link" => "/support/", "anchor" => "Ð¢ÐµÑ…Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶ÐºÐ°"],
+
+            ["link" => "/payment-shipping/", "anchor" => "ÐžÐ¿Ð»Ð°Ñ‚Ð° Ð¸ Ð´Ð¾ÑÑ‚Ð°Ð²ÐºÐ°"],
+
+            ["link" => "/forum/", "anchor" => "Ð¤Ð¾Ñ€ÑƒÐ¼"],
+
+            ["link" => "/contacts/", "anchor" => "ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ñ‹"],
+
+        ],
+
+    ],
+
+    [
+
+        "title" => "Ð‘Ñ€ÐµÐ½Ð´Ñ‹",
+
+        "items" => [
+
+            ["link" => "/weintek" . EX . "/", "anchor" => "Weintek"],
+
+            ["link" => "/samkoon" . EX . "/", "anchor" => "Samkoon"],
+
+            ["link" => "/ifc" . EX . "/", "anchor" => "IFC"],
+
+            ["link" => "/aplex" . EX . "/", "anchor" => "Aplex"],
+
+            ["link" => "/ewon" . EX . "/", "anchor" => "Ewon"],
+
+            ["link" => "/faraday" . EX . "/", "anchor" => "Faraday"],
+
+        ],
+
+    ],
+
+    [
+
+        "title" => "Ð‘Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ°",
+
+        "items" => [
+
+            ["link" => "/download/", "anchor" => "ÐŸÑ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð¸ Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€Ñ‹"],
+
+            ["link" => "/documents" . EX . "/", "anchor" => "Ð”Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ‹"],
+
+            ["link" => "/weintek_projects" . EX . "/", "anchor" => "Ð”ÐµÐ¼Ð¾-Ð¿Ñ€Ð¾ÐµÐºÑ‚Ñ‹ Weintek"],
+
+            ["link" => "/weintek_projects" . EX . "/?find_projects=Macro Sample/", "anchor" => "Ð”ÐµÐ¼Ð¾-Ð¼Ð°ÐºÑ€Ð¾ÑÑ‹ Weintek"],
+
+            ["link" => "/weintek_libraries" . EX . "/", "anchor" => "Ð‘Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ¸ Ð´Ð»Ñ Easy Builder"],
+
+            ["link" => "/weintek_drivers" . EX . "/", "anchor" => "Weintek Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€Ñ‹ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€Ð¾Ð² ÐŸÐ›Ðš"],
+
+            ["link" => "/new-products" . EX . "/", "anchor" => "ÐÐ¾Ð²Ð¸Ð½ÐºÐ¸ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ†Ð¸Ð¸"],
+
+        ],
+
+    ],
+
+    ["title" => "ÐšÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ñ‹",
+
+        "items" => [
+
+            ["link" => "/contacts/", "anchor" => "ÐšÐ°Ñ€Ñ‚Ð° Ð¿Ñ€Ð¾ÐµÐ·Ð´Ð°"],
+
+            ["link" => "tel:+78126480347", "anchor" => "+7 (812) 648-03-47"],
+
+            ["link" => "tel:+74951081275", "anchor" => "+7 (495) 108-12-75"],
+
+            ["link" => "mailto:sales@rusavtomatika.com", "anchor" => "sales@rusavtomatika.com"],
+
+            ["link" => "https://t.me/rusavtomatika", "anchor" => "Ð¢ÐµÐ»ÐµÐ³Ñ€Ð°Ð¼-ÐºÐ°Ð½Ð°Ð» Ð ÑƒÑÐ°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸ÐºÐ°"],
+
+            ["link" => "https://vk.com/weintek_official", "anchor" => "Ð“Ñ€ÑƒÐ¿Ð¿Ð° Ð ÑƒÑÐ°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸ÐºÐ° Ð² VK"],
+
+            ["link" => "https://rutube.ru/channel/23487925", "anchor" => "Rutube ÐºÐ°Ð½Ð°Ð» Ð ÑƒÑÐ°Ð²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸ÐºÐ°"],
+
+            ["link" => "skype:artemfam?chat", "anchor" => "Ð¡ÐºÐ°Ð¹Ð¿ - Ð°ÐºÐºÐ°ÑƒÐ½Ñ‚ artemfam"],
+
+        ],
+
+    ],
+
+];
+
+
+
+
+
+$ar_dynamic_links = [];
+
+
+
+// ÐÐžÐ’ÐžÐ¡Ð¢Ð˜
+
+$rows = CoreApplication::get_rows_from_table("news", "name,sys_name", "active='1'", "date desc");
+
+$ar_dynamic_links_items = [];
+
+foreach ($rows as $row) {
+
+    $ar_dynamic_links_items[] = ["link" => "/news" . EX . "/" . $row["sys_name"] . "/", "anchor" => $row["name"],];
+
+}
+
+
+
+$ar_dynamic_links[0] = [
+
+    "link" => "/news" . EX . "/",
+
+    "anchor" => "ÐÐ¾Ð²Ð¾ÑÑ‚Ð¸",
+
+    "items" => $ar_dynamic_links_items,
+
+];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$rows = CoreApplication::get_rows_from_table("articles", "name,sys_name", "`show`='1'", "date desc");
+
+$ar_dynamic_links_items = [];
+
+foreach ($rows as $row) {
+
+    $ar_dynamic_links_items[] = ["link" => "/articles" . EX . "/" . $row["sys_name"] . "/", "anchor" => $row["name"],];
+
+}
+
+$ar_dynamic_links[1] = [
+
+    "link" => "/articles" . EX . "/",
+
+    "anchor" => "Ð¡Ñ‚Ð°Ñ‚ÑŒÐ¸",
+
+    "items" => $ar_dynamic_links_items,
+
+];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$rows = CoreApplication::get_rows_from_table("videos", "name,code", "`show`='1'", "id desc");
+
+$ar_dynamic_links_items = [];
+
+foreach ($rows as $row) {
+
+    $ar_dynamic_links_items[] = ["link" => "/video" . EX . "/" . $row["code"] . "/", "anchor" => $row["name"],];
+
+}
+
+$ar_dynamic_links[2] = [
+
+    "link" => "/video" . EX . "/",
+
+    "anchor" => "Ð’Ð¸Ð´ÐµÐ¾ÐºÐ°Ð½Ð°Ð» rusavtomatika.com",
+
+    "items" => $ar_dynamic_links_items,
+
+];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ÐšÐÐ¢ÐÐ›ÐžÐ“
+
+
+
+$ar_brands = CoreApplication::get_rows_from_table("catalog_brands", "name", "`active`='1'", "position asc");
+
+$ar_sections = CoreApplication::get_rows_from_table("catalog_sections", "name,code,category_link,products_selected_by_query", "`active`='1'", "position asc");
+
+$ar_section_links = [];
+
+foreach ($ar_sections as $ar_section) {
+
+
+
+    $extra_condition = '';
+
+    if ($ar_section["products_selected_by_query"] != "") {
+
+        $ar_products = CoreApplication::direct_sql_query($ar_section["products_selected_by_query"]);
+
+        $items = [];
+
+        foreach ($ar_products as $item) {
+
+            $items[] = ["model" => $item["model"], "brand" => $item["brand"], "section" => $item["section"],];
+
+        }
+
+        $ar_series_links[] = [
+
+            'brand' => "",
+
+            'series_name' => "",
+
+            'items' => $items,
+
+        ];
+
+        $items = [];
+
+        $ar_section_links[$ar_section["name"]] = ["link" => $link, "anchor" => $ar_section["name"], "series" => $ar_series_links];
+
+        $ar_series_links = [];
+
+
+
+    } else {
+
+        $ar_products = [];
+
+        if ($ar_section["category_link"] != '') {
+
+            $link = $ar_section["category_link"];
+
+            $tmp = explode("?&", $link);
+
+            if (isset($tmp[1])) {
+
+                $tmp2 = explode("=", $tmp[1]);
+
+                if (isset($tmp2[1]) and $tmp2[1] != '') {
+
+                    if ($tmp2[0] == 'os') {
+
+                        $tmp2[0] = 'os_codes';
+
+                        $extra_condition = " and `{$tmp2[0]}` like '%{$tmp2[1]}%' ";
+
+                    } else {
+
+                        $extra_condition = " and `{$tmp2[0]}` = '{$tmp2[1]}' ";
+
+                    }
+
+                } else {
+
+                    $extra_condition = '';
+
+                }
+
+            }
+
+
+
+        } else {
+
+            $link = "/catalog/" . $ar_section["code"] . "/";
+
+        }
+
+        // ÑÐµÑ€Ð¸Ð¸
+
+        $ar_series = [];
+
+        foreach ($ar_brands as $brand) {
+
+
+
+            $ar_series = CoreApplication::get_rows_from_table("catalog_series", "name,type", " `menu_category_item_code`='{$ar_section["code"]}' and `brand`='{$brand["name"]}' and `active`='1'", "position asc");
+
+
+
+            foreach ($ar_series as $series) {
+
+
+
+
+
+                $items = CoreApplication::get_rows_from_table("products_all", "model,brand,s_name", " `type`='{$series["type"]}' and `series`='{$series["name"]}' and `brand`='{$brand["name"]}' and `show_in_cat`!='0' and `discontinued` != '1'" . $extra_condition, " `index` desc");
+
+
+
+                if (count($items) > 0) {
+
+                    $ar_series_links[] = [
+
+                        'brand' => $brand["name"],
+
+                        'series_name' => $series["name"],
+
+                        'items' => $items,
+
+                    ];
+
+                } else {
+
+                    //echo " `type`='{$series["type"]}' and `series`='{$series["name"]}' and `brand`='{$brand["name"]}' and `show_in_cat`!='0' and `discontinued` != '1'".$extra_condition."<br><br>";
+
+                }
+
+
+
+
+
+            }
+
+
+
+        }
+
+        //
+
+        $ar_section_links[$ar_section["name"]] = ["link" => $link, "anchor" => $ar_section["name"], "series" => $ar_series_links];
+
+        $ar_series_links = [];
+
+    }
+
+}
+
+
+
+$ar_catalog_links = [
+
+    "link" => "/catalog/",
+
+    "anchor" => "ÐšÐ°Ñ‚Ð°Ð»Ð¾Ð³ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ†Ð¸Ð¸",
+
+    "items" => $ar_section_links,
+
+];
+
+
+
+
+
 ?>
