@@ -369,9 +369,17 @@ function backup_call_position()
 
     $("#mes_backgr").css('width', w);
     $("#mes_backgr").css('height', d);
-    $("#backup_call").css('top', top - 50);
-    $("#backup_call").css('left', left);
-
+    if(window.location.pathname.indexOf('/discounted/') !== -1) {
+        $("#backup_call").css({
+            'top': top + 'px',
+            'left': left + 'px'
+        });
+    } else {
+        $("#backup_call").css({
+            'top': top - 50,
+            'left': left
+        });
+    }
 }
 function backup_call_go()
 {

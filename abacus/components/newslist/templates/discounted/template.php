@@ -14,7 +14,22 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
         display: none;
     }
 </style>
-<div id="vue_app_discounted">
+<div id="vue_app_discounted" class="discounted-wrapper">
+    <div id="backup_call" style="display: none;">
+        <button onclick="backup_call_hide()" class="close__btn">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
+                <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+            </svg>
+        </button>
+        <div class="backup_call_block_phoneNumber">
+            <h3 id="backup_call_h"></h3>
+            <div class="discounted__form-actions">
+                <input type="text" name="phone" placeholder="Номер телефона (например, 79123456789)" class="phone__form-input">
+                <button class="btn_send" onclick="backup_call_go()">Отправить</button>
+            </div>
+        </div>
+        <div id="backup_call_message"></div>
+    </div>
     <div style="display: none" id="prerendered_content">
         <?
         include 'functions.php';
@@ -113,9 +128,13 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                             <div class="text">{{product_item.name}}</div>
                             <div class="item_buttons">
                                 <a target="_blank" class="detail_link" :href="product_item.link">Описание товара</a>
-                                <span class="button_order"
-                                      :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
-                                      @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">Заказать</span>
+                                <span
+                                    class="button_order"
+                                    :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
+                                    @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)"
+                                >
+                                    Заказать
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -123,8 +142,6 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
             </div>
         </div>
     </div>
-
-
 </div>
 <?
 CoreApplication::include_component(array("component" => "form_require_price", "template" => "default",));
