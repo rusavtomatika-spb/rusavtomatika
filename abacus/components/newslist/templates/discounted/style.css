@@ -34,16 +34,6 @@
 
 }
 
-.component_newslist .all_buttons{
-
-    min-height: 200px;
-
-    opacity: 0;
-
-}
-
-
-
 .component_newslist .discount_brand_item, .component_newslist .discount_categories_item {
 
     flex-grow: 2;
@@ -288,7 +278,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    max-width: 700px;
+    max-width: 770px;
 }
 
 .discounted-wrapper #backup_call .close__btn {
@@ -304,6 +294,11 @@
     margin-left: auto;
 }
 
+.discounted-wrapper #backup_call #backup_call_h {
+    font-weight: 400;
+    font-size: 20px;
+}
+
 .discounted-wrapper #backup_call .discounted__form-actions {
     display: flex;
     align-items: center;
@@ -314,7 +309,7 @@
 
 .discounted-wrapper #backup_call .phone__form-input {
     border: 1px solid #000;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 5px 15px;
     font-size: 14px;
     color: #000;

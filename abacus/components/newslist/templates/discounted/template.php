@@ -59,7 +59,7 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                                     <hr>
                                     <div class="text"><?= $product_item["name"] ?></div>
                                     <div class="item_buttons">
-                                        <a target="_blank" class="detail_link" href="<?= $product_item["link"] ?>">Описание
+                                        <a class="detail_link" href="<?= $product_item["link"] ?>">Описание
                                             товара</a>
                                         <span class="button_order"
                                               idm="Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>"
@@ -76,11 +76,11 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
 
 
     </div>
-    <div class="component_newslist" v-cloak>
+    <div class="component_newslist">
         <?
         CoreApplication::include_component(array("component"=> "breadcrumbs"));
         ?>
-        <div class="component_wrapper" v-cloak>
+        <div class="component_wrapper">
             <div class="row">
                 <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа
                         неликвидов, АКЦИЯ!</h1></div>
@@ -127,7 +127,7 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                             <hr>
                             <div class="text">{{product_item.name}}</div>
                             <div class="item_buttons">
-                                <a target="_blank" class="detail_link" :href="product_item.link">Описание товара</a>
+                                <a class="detail_link" :href="product_item.link">Описание товара</a>
                                 <span
                                     class="button_order"
                                     :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
