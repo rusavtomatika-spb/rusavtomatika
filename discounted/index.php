@@ -26,19 +26,7 @@ if (!empty($route_string)) {
     }
     
     if ($product) {
-        $product['arr_pics'] = array();
-        if (!empty($product['preview_picture'])) {
-            $product['arr_pics'][] = basename($product['preview_picture']);
-        }
-        
-        $img_dir = dirname($product['preview_picture']);
-        $product['imgRemoteDir'] = $img_dir . '/';
-        
         $arResult['product'] = $product;
-        $arResult['section'] = array(
-            'name' => 'Уцененные товары',
-            'code' => 'discounted'
-        );
         
         global $TITLE, $DESCRIPTION, $CANONICAL, $H1;
         $TITLE = $product['name'] . " | Уцененный товар | Купить со скидкой | Русавтоматика";
@@ -46,14 +34,11 @@ if (!empty($route_string)) {
         $CANONICAL = "https://www.rusavtomatika.com/discounted/" . $product['seo_url'] . "/";
         $H1 = $product['name'];
         
-        CoreApplication::include_component(array(
-            "component" => "newslist_detail",
-            "template" => "discounted"
-        ));
+        include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist_detail/templates/discounted/template.php";
     } else {
         http_response_code(404);
         echo "<h1>404 - Товар не найден</h1>";
-        echo "<p>Товар по ссылке '{$route_string}' не найден.</p>";
+        echo "<p>Товар по ссылке не найден.</p>";
         echo "<a href='/discounted/'>Вернуться к списку</a>";
     }
 } else {
