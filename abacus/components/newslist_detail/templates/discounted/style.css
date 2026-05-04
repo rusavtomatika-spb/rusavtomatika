@@ -249,3 +249,64 @@
     max-height: 400px;
     margin: 0 auto;
 }
+
+.component_wrapper #backup_call {
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: #fff;
+    z-index: 1000;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    max-width: 770px;
+}
+
+.component_wrapper #backup_call .close__btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+}
+
+.component_wrapper #backup_call #backup_call_h {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.component_wrapper #backup_call .discounted__form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.component_wrapper #backup_call .phone__form-input {
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 5px 15px;
+    font-size: 14px;
+    color: #000;
+    width: 350px;
+    outline: none;
+}
+
+.component_wrapper #backup_call .btn_send {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px;
+    border: none;
+    background: #44bb6e;
+    color: #fff;
+    font-size: 14px;
+}

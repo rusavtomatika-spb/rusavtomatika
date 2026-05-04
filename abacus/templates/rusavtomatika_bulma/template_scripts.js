@@ -383,34 +383,40 @@ function backup_call_position()
 }
 function backup_call_go()
 {
-
     $("#backup_call_message").html("");
     var phone = $('input[name="phone"]').val(),
         intRegex = /[0-9-()+]+$/;
     if ((phone.length < 11) || (!intRegex.test(phone)))
     {
-        //alert('Please enter a valid phone number.');
-        $("#backup_call_message").html("неправильный номер");
+        $("#backup_call_message").html('<span style="color:red;">неправильный номер</span>');
         return false;
     }
     $.ajax({
-        url: "https://www.rusavtomatika.com/service/callback.php",
+        url: "/service/callback.php",
         type: "POST",
-        dataType: "html", //"json",
+        dataType: "html",
         data: {ph: phone},
         success: function (msg) {
-            //  alert(msg);
             if (msg == "OK") {
-                $("#backup_call_message").html("Ожидайте звонка...");
+                $("#backup_call_message").html('<span style="color:green;">Ожидайте звонка...</span>');
                 $("#backup_call .backup_call_block_phoneNumber").hide();
                 $("#backup_call .btn_send").hide();
-            } else
-                $("#backup_call_message").html("Ошибка, попробуйте еще раз...<br>" + msg);
+                
+                setTimeout(function() {
+                    backup_call_hide();
+                    $("#backup_call .backup_call_block_phoneNumber").show();
+                    $("#backup_call .btn_send").show();
+                    $("#backup_call_message").html("");
+                    $('input[name="phone"]').val('');
+                }, 3000);
+            } else {
+                $("#backup_call_message").html('<span style="color:red;">Ошибка, попробуйте еще раз...<br>' + msg + '</span>');
+            }
         },
-
+        error: function() {
+            $("#backup_call_message").html('<span style="color:red;">Ошибка отправки. Попробуйте позже.</span>');
+        }
     });
-
-
 }
 function backup_call_hide()
 {
