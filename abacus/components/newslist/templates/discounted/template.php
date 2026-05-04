@@ -45,7 +45,7 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                         <div class="col-md-6 discount_item">
                             <div class="item">
                                 <div class="preview_image_wrapper">
-                                    <a href="<?= $product_item["link"] ?>">
+                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/">
                                         <div class="preview_image"
                                              style="background-image: url('<?= $product_item["preview_picture"] ?>'"></div>
                                         <span class="price"><?= $product_item["price"] ?><span
@@ -54,12 +54,12 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                                 </div>
                                 <div>
                                     <div class="title">
-                                        <a href="<?= $product_item["link"] ?>"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
+                                        <a href="/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
                                     </div>
                                     <hr>
                                     <div class="text"><?= $product_item["name"] ?></div>
                                     <div class="item_buttons">
-                                        <a class="detail_link" href="<?= $product_item["link"] ?>">Описание
+                                        <a href="/discounted/<?= $product_item["seo_url"] ?>/">Описание
                                             товара</a>
                                         <span class="button_order"
                                               idm="Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>"
@@ -106,33 +106,32 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
                         </div>
                     </div>
                 </div>
-                <div :key="product_index"
-                     :class="['col-md-6 discount_item', {'active': product_item.active}]"
-                     v-for="(product_item, product_index) in arr_filtered_items">
+                <div 
+                    :key="product_index"
+                    :class="['col-md-6 discount_item', {'active': product_item.active}]"
+                    v-for="(product_item, product_index) in arr_filtered_items"
+                >
                     <div class="item">
                         <div class="preview_image_wrapper">
-                            <a :href="product_item.link">
+                            <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">
                                 <div class="preview_image"
-                                     :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
+                                    :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
                                 <span class="price">{{product_item.price}} <span class="rub">Р</span></span>
                             </a>
                         </div>
                         <div>
                             <div class="title">
-                                <a :href="product_item.link">{{product_item.section}} {{product_item.brand}}
+                                <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}}
                                     {{product_item.model}}
-
                                 </a>
                             </div>
                             <hr>
                             <div class="text">{{product_item.name}}</div>
                             <div class="item_buttons">
-                                <a class="detail_link" :href="product_item.link">Описание товара</a>
-                                <span
-                                    class="button_order"
+                                <a class="detail_link" :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">Описание товара</a>
+                                <span class="button_order"
                                     :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
-                                    @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)"
-                                >
+                                    @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">
                                     Заказать
                                 </span>
                             </div>
