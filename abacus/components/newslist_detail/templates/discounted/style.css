@@ -1,0 +1,251 @@
+.price_act {
+    color: red !important;
+    text-decoration: line-through !important;
+}
+.sticky_block {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+.sticky_block_wrapper {
+    min-height: 150px;
+}
+.sticky_block.fixed {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 1001;
+    border-bottom: none;
+    padding-top: 20px;
+    min-height: 129px;
+}
+.sticky_block nav ul {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+}
+.sticky_block nav ul li {
+    margin: 0 1px;
+}
+.sticky_block nav ul li a {
+    display: inline-flex;
+    padding: 5px 15px;
+    text-decoration: none;
+    font-weight: normal;
+    transition: all 0.3s ease;
+    border: 1px solid #dbdbdb;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    background: #eee;
+    color: #000;
+}
+.sticky_block nav ul li a:hover,
+.sticky_block nav ul li a.active {
+    background: #00ad61;
+    color: #FFF;
+}
+.component_catalog_detail section {
+    padding: 0;
+    margin-bottom: 30px;
+}
+.component_catalog_detail section h1 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 0 auto 20px;
+    color: #000;
+}
+.component_catalog_detail__info1 {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+.component_catalog_detail .info_tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.component_catalog_detail .info_brand {
+    background: url("/abacus/templates/rusavtomatika_bulma/images/cogwheel.png") left center no-repeat;
+    padding-left: 18px;
+    color: black;
+}
+.component_catalog_detail .info_available {
+    color: #00ad61;
+}
+.component_catalog_detail .info_not_available {
+    color: #e00;
+}
+.component_catalog_detail .price_usd_value,
+.component_catalog_detail .price_usd_currency {
+    font-weight: bold;
+    font-size: 32px;
+    color: #00ad61;
+}
+.component_catalog_detail .price_rub_value,
+.component_catalog_detail .price_rub_currency {
+    font-weight: normal;
+    font-size: 17px;
+}
+.component_catalog_detail__buttons1 {
+    display: flex;
+    justify-content: left;
+    gap: 30px;
+    margin: 15px 0;
+}
+.sticky_block_inner_wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.sticky_block_inner_wrapper .right {
+    display: flex;
+    align-items: end;
+}
+.component_catalog_detail__small_info_block {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.component_catalog_detail__small_info_block__image {
+    display: flex;
+    align-items: center;
+    height: 90px;
+}
+.component_catalog_detail__small_info_block__image img {
+    max-height: 80px;
+    min-width: 100px;
+    width: auto;
+}
+.component_catalog_detail__price {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 30px;
+    margin: 15px 0;
+}
+.component_catalog_detail__price_extra_info {
+    font-size: 17px;
+}
+.btn_icon_order {
+    background: url("/abacus/templates/rusavtomatika_bulma/images/basket_white.svg") center no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: -0.3em;
+    margin-right: 0.3em;
+}
+.component_catalog_detail__images-mini {
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    width: 71px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.component_catalog_detail__images-mini.active {
+    border-bottom: 2px solid #00ad61;
+}
+.component_catalog_detail__images-mini__inner {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 0 3rem;
+}
+.component_catalog_detail__images_wrapper {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.component_catalog_detail__image-main_link {
+    display: block;
+    min-height: 300px;
+    width: 100%;
+}
+.component_catalog_detail__image-main_link .img_product-inner {
+    margin-top: 10px;
+}
+.button_open_this_menu {
+    height: 33px;
+}
+.button_open_menu__icon {
+    background: #00ad61 url("/abacus/templates/rusavtomatika_bulma/images/3-dotted.svg") center/40% no-repeat;
+    border: 1px solid #00ad61;
+    display: inline-block;
+    width: 50px;
+    height: 38px;
+    margin-top: -1px;
+    margin-bottom: -10px;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+    .component_catalog_detail section h1 { font-size: 1.25rem; }
+    .button_like_link.add_to_compare .btn_text,
+    .button_like_link.add_to_favorites .btn_text { display: none; }
+    .button.add_to_cart .btn_icon_order_text { display: none; }
+    .button.add_to_cart .btn_icon_order { margin: 0; }
+}
+
+.component_catalog_detail__images-mini {
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+    width: 71px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.component_catalog_detail__images-mini.active {
+    border-bottom: 2px solid #00ad61;
+}
+
+.component_catalog_detail__images-mini img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.component_catalog_detail__images-mini__wrapper {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.component_catalog_detail__images-mini__wrapper.num_pics_1 {
+    display: none;
+}
+
+.component_catalog_detail__images-mini__inner {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 0 3rem;
+}
+
+.component_catalog_detail__image-main_link {
+    display: block;
+    text-align: center;
+    min-height: 300px;
+}
+
+.component_catalog_detail__image-main_link .img_product-inner {
+    max-width: 100%;
+    max-height: 400px;
+    margin: 0 auto;
+}
