@@ -80,7 +80,21 @@ $H1 = $product['name'];
 
 <div class="component_wrapper">
 <? CoreApplication::include_component(array("component" => "breadcrumbs")); ?>
-
+<div id="backup_call" style="display: none;">
+  <button onclick="backup_call_hide()" class="close__btn">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
+      <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+    </svg>
+  </button>
+  <div class="backup_call_block_phoneNumber">
+    <h3 id="backup_call_h"></h3>
+    <div class="discounted__form-actions">
+      <input type="text" name="phone" placeholder="Номер телефона (например, 79123456789)" class="phone__form-input">
+      <button class="btn_send" onclick="backup_call_go()">Отправить</button>
+    </div>
+  </div>
+  <div id="backup_call_message"></div>
+</div>
 <section id="start" class="active">
   <div class="sticky_block_wrapper">
     <div class="sticky_block">
@@ -141,6 +155,12 @@ $H1 = $product['name'];
             <? endif; ?>
           </div>
         </div>
+
+        <? if (!empty($product['description'])): ?>
+          <div class="component_catalog_detail__description">
+            <?= nl2br(htmlspecialchars($product['description'])) ?>
+          </div>
+        <? endif; ?>
         
         <div class="component_catalog_detail__price">
           <div class="item price">
@@ -196,12 +216,17 @@ $(function() {
     $(".component_catalog_detail__images-mini__inner .component_catalog_detail__images-mini:first").click();
   }
 });
-
-function show_backup_call(type, text) {
-  if (typeof window.show_backup_call === 'function') {
-    window.show_backup_call(type, text);
-  }
-}
+$(function() {
+  $(".add_to_cart").on("click", function() {
+    var model = $(this).data("model");
+    var productName = "<?= addslashes($product['name']) ?>";
+    var productPrice = "<?= $product['price'] ?>";
+    
+    if (typeof show_backup_call === 'function') {
+      show_backup_call(2, model);
+    }
+  });
+});
 </script>
 <?
 CoreApplication::include_component(array("component" => "form_require_price", "template" => "default",));
