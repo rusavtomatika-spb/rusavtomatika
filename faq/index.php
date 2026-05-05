@@ -9,22 +9,41 @@ if (!function_exists('database_connect')) {
     mysqli_set_charset($mysqli_db, "utf8");
 }
 
-$sections_sql = "SELECT DISTINCT section FROM faq_global ORDER BY section";
-$sections_result = mysqli_query($mysqli_db, $sections_sql);
-$sections = array();
-while ($row = mysqli_fetch_assoc($sections_result)) {
-    $sections[] = $row['section'];
+$route_string = isset($_REQUEST["q"]) ? trim($_REQUEST["q"], '/') : "";
+$route_string = preg_replace('/[^a-zA-Z0-9\-_\/]/', '', $route_string);
+
+$route_parts = !empty($route_string) ? explode('/', $route_string) : array();
+$action = isset($route_parts[0]) ? $route_parts[0] : '';
+
+$section_url = '';
+if ($action === 'section' && isset($route_parts[1])) {
+    $section_url = $route_parts[1];
 }
 
-$current_section = isset($_GET['section']) ? mysqli_real_escape_string($mysqli_db, $_GET['section']) : '';
+$sections_sql = "SELECT DISTINCT section, section_url, section_order 
+                 FROM faq_global 
+                 ORDER BY section_order ASC, section ASC";
+$sections_result = mysqli_query($mysqli_db, $sections_sql);
+$sections = array();
+$sections_map = array();
+while ($row = mysqli_fetch_assoc($sections_result)) {
+    $sections[] = $row;
+    $sections_map[$row['section_url']] = $row['section'];
+}
+
+$current_section = '';
+if ($section_url && isset($sections_map[$section_url])) {
+    $current_section = $sections_map[$section_url];
+}
 
 $where_conditions = array();
 if ($current_section) {
-    $where_conditions[] = "section = '$current_section'";
+    $current_section_escaped = mysqli_real_escape_string($mysqli_db, $current_section);
+    $where_conditions[] = "section = '$current_section_escaped'";
 }
 $where_sql = !empty($where_conditions) ? 'WHERE ' . implode(' AND ', $where_conditions) : '';
 
-$sql = "SELECT * FROM faq_global $where_sql ORDER BY section, id ASC";
+$sql = "SELECT * FROM faq_global $where_sql ORDER BY section_order ASC, section ASC, id ASC";
 $result = mysqli_query($mysqli_db, $sql);
 
 $faq_items = array();
@@ -34,11 +53,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $grouped_items = array();
 foreach ($faq_items as $item) {
-    $section = $item['section'];
-    if (!isset($grouped_items[$section])) {
-        $grouped_items[$section] = array();
+    $section_key = $item['section'];
+    if (!isset($grouped_items[$section_key])) {
+        $grouped_items[$section_key] = array(
+            'section_url' => $item['section_url'],
+            'section_order' => $item['section_order'],
+            'items' => array()
+        );
     }
-    $grouped_items[$section][] = $item;
+    $grouped_items[$section_key]['items'][] = $item;
 }
 
 include 'template.php';

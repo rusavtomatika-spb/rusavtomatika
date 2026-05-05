@@ -84,11 +84,11 @@
 
     <?php if (count($sections) > 1): ?>
         <div class="section-filter text-center">
-            <a href="?" class="btn btn-outline-secondary <?= empty($current_section) ? 'active' : '' ?>">Все разделы</a>
+            <a href="/faq/" class="btn btn-outline-secondary <?= empty($section_url) ? 'active' : '' ?>">Все разделы</a>
             <?php foreach ($sections as $section): ?>
-                <a href="?section=<?= urlencode($section) ?>" 
-                   class="btn btn-outline-primary <?= $current_section == $section ? 'active' : '' ?>">
-                    <?= htmlspecialchars($section) ?>
+                <a href="/faq/section/<?= urlencode($section['section_url']) ?>" 
+                   class="btn btn-outline-primary <?= $section_url == $section['section_url'] ? 'active' : '' ?>">
+                    <?= htmlspecialchars($section['section']) ?>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -103,29 +103,32 @@
             <?php else: ?>
                 <?php 
                 $section_index = 0;
-                foreach ($grouped_items as $section_name => $items): 
+                foreach ($grouped_items as $section_name => $section_data): 
                     $section_index++;
                     $accordion_id = 'accordion_' . $section_index;
+                    $section_url_slug = $section_data['section_url'];
                 ?>
-                    <h3 class="section-title"><?= htmlspecialchars($section_name) ?></h3>
+                    <h3 class="section-title" id="<?= htmlspecialchars($section_url_slug) ?>">
+                        <?= htmlspecialchars($section_name) ?>
+                    </h3>
                     <div class="accordion" id="<?= $accordion_id ?>">
                         <?php 
                         $item_index = 0;
-                        foreach ($items as $item): 
+                        foreach ($section_data['items'] as $item): 
                             $item_index++;
                             $collapse_id = 'collapse_' . $section_index . '_' . $item_index;
                             $heading_id = 'heading_' . $section_index . '_' . $item_index;
                         ?>
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="<?= $heading_id ?>">
-                                  <button class="accordion-button <?= $item_index !== 1 ? 'collapsed' : '' ?>" 
-                                          type="button" 
-                                          data-bs-toggle="collapse" 
-                                          data-bs-target="#<?= $collapse_id ?>" 
-                                          aria-expanded="<?= $item_index === 1 ? 'true' : 'false' ?>" 
-                                          aria-controls="<?= $collapse_id ?>">
-                                      <?= htmlspecialchars($item['question']) ?>
-                                  </button>
+                                    <button class="accordion-button <?= $item_index !== 1 ? 'collapsed' : '' ?>" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#<?= $collapse_id ?>" 
+                                            aria-expanded="<?= $item_index === 1 ? 'true' : 'false' ?>" 
+                                            aria-controls="<?= $collapse_id ?>">
+                                        <?= htmlspecialchars($item['question']) ?>
+                                    </button>
                                 </h2>
                                 <div id="<?= $collapse_id ?>" 
                                      class="accordion-collapse collapse <?= $item_index === 1 ? 'show' : '' ?>" 
