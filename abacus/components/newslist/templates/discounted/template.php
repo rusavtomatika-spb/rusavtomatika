@@ -8,12 +8,49 @@ $TITLE = "Неликвиды, уцененные товары, распрода�
 $CANONICAL = "https://www.rusavtomatika.com/discounted/";
 $DESCRIPTION = "Каталог уценённых товаров, цены, фотографии, описание уценки. Покупайте со скидкой уценённые товары в интернет-магазине rusavtomatika.com";
 CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/discounted/");
+
+include 'functions.php';
+$rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
 ?>
 <style>
     [v-cloak] {
         display: none;
     }
 </style>
+
+<noscript>
+    <div class="component_newslist">
+        <div class="component_wrapper">
+            <div class="row">
+                <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1></div>
+                <? foreach ($rows as $product_item): ?>
+                    <div class="col-md-6 discount_item">
+                        <div class="item">
+                            <div class="preview_image_wrapper">
+                                <a href="/discounted/<?= $product_item["seo_url"] ?>/">
+                                    <div class="preview_image" style="background-image: url('<?= $product_item["preview_picture"] ?>')"></div>
+                                    <span class="price"><?= $product_item["price"] ?> <span class="rub">Р</span></span>
+                                </a>
+                            </div>
+                            <div>
+                                <div class="title">
+                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
+                                </div>
+                                <hr>
+                                <div class="text"><?= $product_item["name"] ?></div>
+                                <div class="item_buttons">
+                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/">Описание товара</a>
+                                    <span class="button_order" onclick="show_backup_call(2,'Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>')">Заказать</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <? endforeach; ?>
+            </div>
+        </div>
+    </div>
+</noscript>
+
 <div id="vue_app_discounted" class="discounted-wrapper">
     <div id="backup_call" style="display: none;">
         <button onclick="backup_call_hide()" class="close__btn">
@@ -30,108 +67,55 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
         </div>
         <div id="backup_call_message"></div>
     </div>
-    <div style="display: none" id="prerendered_content">
-        <?
-        include 'functions.php';
-        $rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
-        ?>
-        <div class="component_newslist">
-            <div class="component_wrapper">
-                <div class="row">
-                    <div class="all_buttons"></div>
-                    <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары,
-                            распродажа неликвидов, АКЦИЯ!</h1></div>
-                    <? foreach ($rows as $product_item): ?>
-                        <div class="col-md-6 discount_item">
-                            <div class="item">
-                                <div class="preview_image_wrapper">
-                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/">
-                                        <div class="preview_image"
-                                             style="background-image: url('<?= $product_item["preview_picture"] ?>'"></div>
-                                        <span class="price"><?= $product_item["price"] ?><span
-                                                    class="rub">Р</span></span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <div class="title">
-                                        <a href="/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
-                                    </div>
-                                    <hr>
-                                    <div class="text"><?= $product_item["name"] ?></div>
-                                    <div class="item_buttons">
-                                        <a href="/discounted/<?= $product_item["seo_url"] ?>/">Описание
-                                            товара</a>
-                                        <span class="button_order"
-                                              idm="Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>"
-                                              onclick="show_backup_call(2,'Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>')">Заказать</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    <? endforeach; ?>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
+    
     <div class="component_newslist">
-        <?
-        CoreApplication::include_component(array("component"=> "breadcrumbs"));
-        ?>
+        <? CoreApplication::include_component(array("component"=> "breadcrumbs")); ?>
         <div class="component_wrapper">
             <div class="row">
-                <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа
-                        неликвидов, АКЦИЯ!</h1></div>
+                <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1></div>
                 <div class="all_buttons">
                     <div class="col-md-12">
                         <div class="component_newslist_buttons_panel">
-                        <span @click="select_brand(brand_item)"
-                              :key="brand_index"
-                              :class="['discount_brand_item', {'active': brand_item.active}]"
-                              v-for="(brand_item, brand_index) in arr_brands">
-                            {{brand_item.name}}
-                        </span>
+                            <span @click="select_brand(brand_item)"
+                                  :key="brand_index"
+                                  :class="['discount_brand_item', {'active': brand_item.active}]"
+                                  v-for="(brand_item, brand_index) in arr_brands">
+                                {{brand_item.name}}
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="component_newslist_buttons_panel">
-                    <span @click="select_category(categories_item)"
-                          :key="categories_index"
-                          :class="['discount_categories_item', {'active': categories_item.active}]"
-                          v-for="(categories_item, categories_index) in arr_categories">
-                        {{categories_item.name}}
-                    </span>
+                            <span @click="select_category(categories_item)"
+                                  :key="categories_index"
+                                  :class="['discount_categories_item', {'active': categories_item.active}]"
+                                  v-for="(categories_item, categories_index) in arr_categories">
+                                {{categories_item.name}}
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div 
-                    :key="product_index"
-                    :class="['col-md-6 discount_item', {'active': product_item.active}]"
-                    v-for="(product_item, product_index) in arr_filtered_items"
-                >
+                <div :key="product_index"
+                     :class="['col-md-6 discount_item', {'active': product_item.active}]"
+                     v-for="(product_item, product_index) in arr_filtered_items">
                     <div class="item">
                         <div class="preview_image_wrapper">
                             <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">
-                                <div class="preview_image"
-                                    :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
+                                <div class="preview_image" :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
                                 <span class="price">{{product_item.price}} <span class="rub">Р</span></span>
                             </a>
                         </div>
                         <div>
                             <div class="title">
-                                <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}}
-                                    {{product_item.model}}
-                                </a>
+                                <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}} {{product_item.model}}</a>
                             </div>
                             <hr>
                             <div class="text">{{product_item.name}}</div>
                             <div class="item_buttons">
                                 <a class="detail_link" :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">Описание товара</a>
                                 <span class="button_order"
-                                    :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
-                                    @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">
+                                      :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
+                                      @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">
                                     Заказать
                                 </span>
                             </div>
@@ -142,6 +126,7 @@ CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/disc
         </div>
     </div>
 </div>
+
 <?
 CoreApplication::include_component(array("component" => "form_require_price", "template" => "default",));
 ?>
