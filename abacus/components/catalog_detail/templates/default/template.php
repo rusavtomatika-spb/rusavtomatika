@@ -850,7 +850,7 @@ endif;
       foreach ( $arSelected_articles as $article ) {
         ?>
       <div class="cell">
-        <div class="card">
+        <div class="card product__item-card">
           <div class="card-image" style="padding: 30px;"><a href="/articles/<?= $article['sys_name']?>" target="_art">
             <figure class="image is-3by2"> <img
         src="<?= $article['img']?>"
@@ -888,7 +888,7 @@ endif;
       foreach ( $arSelected_videos as $video ) {
         ?>
       <div class="cell">
-        <div class="card">
+        <div class="card product__item-card">
           <div class="card-image"><a href="/video/<?= $video['code']?>" target="_art">
             <figure class="image is-3by2"><img
         src="<?= $video['picture_preview']?>"

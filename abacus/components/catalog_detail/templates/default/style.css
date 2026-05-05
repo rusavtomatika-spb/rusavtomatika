@@ -732,3 +732,7 @@ font-weight: 300;
 
 #vue_component_catalog_detail .tags:last-child {
   margin-bottom: 1rem; }
+
+.product__item-card {
+  height: 100%;
+}
