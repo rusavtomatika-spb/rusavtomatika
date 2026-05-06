@@ -181,6 +181,7 @@ $current_page = str_replace("/", "_", $current_page);
                 </div>
                 <div class="header_top__item">
                     <div class="header_top__soc_buttons">
+                        <a href="/faq" style="font-size: 14px;">Часто Задаваемые Вопросы/FAQ</a>
                         <? include "include/inc_social_nets.php"; ?>
                     </div>
                 </div>
