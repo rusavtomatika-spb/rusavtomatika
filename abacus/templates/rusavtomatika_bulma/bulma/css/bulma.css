@@ -24,7 +24,6 @@
   vertical-align: top;
 }
 
-
 .button:focus, .input:focus, .textarea:focus, .select select:focus, .file-cta:focus,
 .file-name:focus, .pagination-previous:focus,
 .pagination-next:focus,
@@ -14744,4 +14743,9 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
+.faq-header-link { display: none; }
+@media (max-width: 1023px) {
+  .faq-header-link { display: flex; }
+}
+
 /*# sourceMappingURL=bulma.css.map */

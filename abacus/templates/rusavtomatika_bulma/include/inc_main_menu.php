@@ -54,7 +54,7 @@
 
     </li>
 
-    <li class="top-menu-item">
+    <li class="top-menu-item faq-header-link">
 
         <a href="/faq" style="font-size: 14px;">Часто задаваемые вопросы/FAQ</a>
 
