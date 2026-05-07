@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Часто задаваемые вопросы</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <style>
+    <style scoped>
+        * {
+          margin: 0;
+          padding: 0;
+        }
+        .column { padding: 0 !important; }
         .faq-section {
-          padding: 40px 0;
+          padding: 40px 0.75rem;
+        }
+        @media (max-width: 1023px) {
+          .faq-section { padding: 40px 0;}
         }
         .faq-header {
           margin-bottom: 30px;
@@ -77,7 +82,7 @@
 </head>
 <body>
 
-<div class="container faq-section">
+<div class="faq-section">
     <div class="faq-header">
         <h1>Часто задаваемые вопросы</h1>
     </div>
@@ -94,8 +99,8 @@
         </div>
     <?php endif; ?>
 
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
+    <div class="justify-content-center w-100">
+        <div class="col-lg-12 px-0">
             <?php if (empty($grouped_items)): ?>
                 <div class="alert alert-info" role="alert">
                     <i class="bi bi-info-circle"></i> Вопросы в этом разделе пока отсутствуют.
