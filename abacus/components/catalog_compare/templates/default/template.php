@@ -53,7 +53,7 @@ $arr_fields = [
     ["name" => "diagonal", "rus_name" => "Диагональ", "type" => "text", "units" => "&Prime;"],
     ["name" => "resolution", "rus_name" => "Разрешение", "type" => "text"],
     ["name" => "colors", "rus_name" => "Цветность", "type" => "text"],
-    ["name" => "brightness", "rus_name" => "Яркость", "type" => "text", "units" => "кд/м2"],
+    ["name" => "brightness", "rus_name" => "Яркость", "type" => "text"],
     ["name" => "contrast", "rus_name" => "Контраст", "type" => "text"],
     ["name" => "view_angle", "rus_name" => "Угол обзора", "type" => "text"],
     ["name" => "backlight", "rus_name" => "Подсветка", "type" => "text"],
