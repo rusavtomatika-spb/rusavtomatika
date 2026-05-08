@@ -118,12 +118,10 @@ $arr_fields = [
     ["name" => "power_switch", "rus_name" => "Выключатель питания", "type" => "text"],
     ["name" => "power_adapter", "rus_name" => "Внешний блок питания", "type" => "text"],
     ["name" => "set", "rus_name" => "Комплект поставки", "type" => "text"],
-    ["name" => "dimentions", "rus_name" => "Размеры, мм", "type" => "text", "units" => "мм"],
-    ["name" => "cutout", "rus_name" => "Вырез под посадку, мм", "type" => "text", "units" => "мм"],
-    ["name" => "netto", "rus_name" => "Вес, кг", "type" => "text", "units" => "кг."],
+    ["name" => "dimentions", "rus_name" => "Размеры, мм", "type" => "text"],
+    ["name" => "cutout", "rus_name" => "Вырез под посадку, мм", "type" => "text"],
+    ["name" => "netto", "rus_name" => "Вес, кг", "type" => "text", "units" => "кг"],
     ["name" => "temp_operating", "rus_name" => "Рабочая темп-ра, &degC\"", "type" => "text"],
-
-
 ];
 
 $extra_h1 = ' ';
@@ -619,19 +617,3 @@ if ($num_columns >= 0) {
     });
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
