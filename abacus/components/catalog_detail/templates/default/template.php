@@ -784,6 +784,13 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
   ?>
 </section>
 <? endif; ?>
+<? if (isset($arResult['product']['questions_about_model'])&&$arResult['product']['questions_about_model']!='') : ?>
+<section id="text">
+  <h2>Часто задаваемые вопросы</h2>  <?
+  echo $arResult[ 'product' ][ 'questions_about_model' ];
+  ?>
+</section>
+<? endif; ?>
 
 <?php if ($arResult['product']['view3d'] == 1): ?>
   <?php
