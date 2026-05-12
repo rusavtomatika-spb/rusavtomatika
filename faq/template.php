@@ -68,6 +68,7 @@
         .faq-answer a {
           color: #0d6efd;
           text-decoration: none;
+          word-wrap: break-word;
         }
         .faq-answer a:hover {
           text-decoration: underline;
