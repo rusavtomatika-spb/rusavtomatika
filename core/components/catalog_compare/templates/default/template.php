@@ -5,7 +5,7 @@ $arSettings['path_to_product_images'] = '/images/';
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
-CoreApplication::add_style("/core/components/catalog_section/templates/default/style.css");
+CoreApplication::add_style("/abacus/components/catalog_section/templates/default/style.css");
 
 
 //CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
@@ -15,24 +15,26 @@ global $H1;
 global $DESCRIPTION;
 global $arr_model_collection;
 
-$TITLE = "Сравнение товаров";
-$H1 = "Сравнение товаров";
+$TITLE = "РЎСЂР°РІРЅРµРЅРёРµ С‚РѕРІР°СЂРѕРІ";
+$H1 = "РЎСЂР°РІРЅРµРЅРёРµ С‚РѕРІР°СЂРѕРІ";
 
-//CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
-CoreApplication::add_breadcrumbs_chain("Сравнение товаров");
+//CoreApplication::add_breadcrumbs_chain("РљР°С‚Р°Р»РѕРі РѕР±РѕСЂСѓРґРѕРІР°РЅРёСЏ", "/catalog/");
+CoreApplication::add_breadcrumbs_chain("РЎСЂР°РІРЅРµРЅРёРµ С‚РѕРІР°СЂРѕРІ");
 $series["products"] = $arResult["ITEMS"];
 
 
 $num_columns = count($series["products"]);
 $arr_types = [
-    "hmi" => "Панель оператора",
-    "panel_pc" => "Панельный компьютер",
+    "hmi" => "РџР°РЅРµР»СЊ РѕРїРµСЂР°С‚РѕСЂР°",
+    "panel_pc" => "РџР°РЅРµР»СЊРЅС‹Р№ РєРѕРјРїСЊСЋС‚РµСЂ",
     "open_hmi" => "Open HMI",
-    "machine-tv-interface" => "Интерфейс Machine-TV",
-    "cloud_hmi" => "Интерфейс",
-    "box-pc" => "Встраиваемый компьютер",
-    "monitor" => "Монитор",
-    "module" => "Модуль ввода-вывода",
+    "machine-tv-interface" => "РРЅС‚РµСЂС„РµР№СЃ Machine-TV",
+    "cloud_hmi" => "РРЅС‚РµСЂС„РµР№СЃ",
+    "box-pc" => "Р’СЃС‚СЂР°РёРІР°РµРјС‹Р№ РєРѕРјРїСЊСЋС‚РµСЂ",
+    "web-panel" => "Web-РїР°РЅРµР»СЊ",
+    "panel-terminal" => "РџР°РЅРµР»СЊ С‚РµСЂРјРёРЅР°Р»",
+    "monitor" => "РњРѕРЅРёС‚РѕСЂ",
+    "module" => "РњРѕРґСѓР»СЊ РІРІРѕРґР°-РІС‹РІРѕРґР°",
 
     "" => "",
 ];
@@ -40,88 +42,86 @@ $arr_types = [
 $arr_fields = [
 
     ["name" => "image", "rus_name" => "", "type" => ""],
-    ["name" => "model", "rus_name" => "Модель", "type" => "title"],
-    ["name" => "brand", "rus_name" => "Бренд", "type" => "text"],
-    ["name" => "retail_price", "rus_name" => "Цена", "type" => ""],
-    ["name" => "onstock_spb", "rus_name" => "Наличие", "type" => ""],
-    ["name" => "series", "rus_name" => "Серия", "type" => ""],
-    ["name" => "type", "rus_name" => "Тип", "type" => ""],
+    ["name" => "model", "rus_name" => "РњРѕРґРµР»СЊ", "type" => "title"],
+    ["name" => "brand", "rus_name" => "Р‘СЂРµРЅРґ", "type" => "text"],
+    ["name" => "retail_price", "rus_name" => "Р¦РµРЅР°", "type" => ""],
+    ["name" => "onstock_spb", "rus_name" => "РќР°Р»РёС‡РёРµ", "type" => ""],
+    ["name" => "series", "rus_name" => "РЎРµСЂРёСЏ", "type" => ""],
+    ["name" => "type", "rus_name" => "РўРёРї", "type" => ""],
 
-    ["name" => "separator", "rus_name" => "Дисплей", "type" => "separator"],
-    ["name" => "diagonal", "rus_name" => "Диагональ", "type" => "text", "units" => "&Prime;"],
-    ["name" => "resolution", "rus_name" => "Разрешение", "type" => "text"],
-    ["name" => "colors", "rus_name" => "Цветность", "type" => "text"],
-    ["name" => "brightness", "rus_name" => "Яркость", "type" => "text", "units" => "кд/м2"],
-    ["name" => "contrast", "rus_name" => "Контраст", "type" => "text"],
-    ["name" => "view_angle", "rus_name" => "Угол обзора", "type" => "text"],
-    ["name" => "backlight", "rus_name" => "Подсветка", "type" => "text"],
-    ["name" => "backlight_life", "rus_name" => "Время жизни подсветки", "type" => "text", "units" => "час."],
-    ["name" => "touch", "rus_name" => "Тип сенсора", "type" => "text"],
+    ["name" => "separator", "rus_name" => "Р”РёСЃРїР»РµР№", "type" => "separator"],
+    ["name" => "diagonal", "rus_name" => "Р”РёР°РіРѕРЅР°Р»СЊ", "type" => "text", "units" => "&Prime;"],
+    ["name" => "resolution", "rus_name" => "Р Р°Р·СЂРµС€РµРЅРёРµ", "type" => "text"],
+    ["name" => "colors", "rus_name" => "Р¦РІРµС‚РЅРѕСЃС‚СЊ", "type" => "text"],
+    ["name" => "brightness", "rus_name" => "РЇСЂРєРѕСЃС‚СЊ", "type" => "text"],
+    ["name" => "contrast", "rus_name" => "РљРѕРЅС‚СЂР°СЃС‚", "type" => "text"],
+    ["name" => "view_angle", "rus_name" => "РЈРіРѕР» РѕР±Р·РѕСЂР°", "type" => "text"],
+    ["name" => "backlight", "rus_name" => "РџРѕРґСЃРІРµС‚РєР°", "type" => "text"],
+    ["name" => "backlight_life", "rus_name" => "Р’СЂРµРјСЏ Р¶РёР·РЅРё РїРѕРґСЃРІРµС‚РєРё", "type" => "text", "units" => "С‡Р°СЃ."],
+    ["name" => "touch", "rus_name" => "РўРёРї СЃРµРЅСЃРѕСЂР°", "type" => "text"],
 
-    ["name" => "separator", "rus_name" => "Параметры", "type" => "separator"],
+    ["name" => "separator", "rus_name" => "РџР°СЂР°РјРµС‚СЂС‹", "type" => "separator"],
 
-    ["name" => "module_ai", "rus_name" => "Аналоговые входы", "type" => "text"],
-    ["name" => "module_ao", "rus_name" => "Аналоговые выходы", "type" => "text"],
-    ["name" => "module_di", "rus_name" => "Цифровые входы", "type" => "text"],
-    ["name" => "module_do", "rus_name" => "Цифровые выходы", "type" => "text"],
-    ["name" => "response_time", "rus_name" => "Время преобразования", "type" => "text"],
-    ["name" => "conversion_time", "rus_name" => "Время переключения", "type" => "text"],
+    ["name" => "module_ai", "rus_name" => "РђРЅР°Р»РѕРіРѕРІС‹Рµ РІС…РѕРґС‹", "type" => "text"],
+    ["name" => "module_ao", "rus_name" => "РђРЅР°Р»РѕРіРѕРІС‹Рµ РІС‹С…РѕРґС‹", "type" => "text"],
+    ["name" => "module_di", "rus_name" => "Р¦РёС„СЂРѕРІС‹Рµ РІС…РѕРґС‹", "type" => "text"],
+    ["name" => "module_do", "rus_name" => "Р¦РёС„СЂРѕРІС‹Рµ РІС‹С…РѕРґС‹", "type" => "text"],
+    ["name" => "response_time", "rus_name" => "Р’СЂРµРјСЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ", "type" => "text"],
+    ["name" => "conversion_time", "rus_name" => "Р’СЂРµРјСЏ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ", "type" => "text"],
 
-    ["name" => "cpu_type", "rus_name" => "Процессор", "type" => "text"],
-    ["name" => "cpu_speed", "rus_name" => "Частота", "type" => "text", "units" => "МГц"],
-    ["name" => "chipset", "rus_name" => "Чипсет", "type" => "text"],
-    ["name" => "graphics", "rus_name" => "Графика", "type" => "text"],
-    ["name" => "audio", "rus_name" => "Аудио", "type" => "text"],
-    ["name" => "ram", "rus_name" => "ОЗУ", "type" => "text", "units" => "Мб"],
-    ["name" => "ram_type", "rus_name" => "Тип ОЗУ", "type" => "text"],
-    ["name" => "ram_slots", "rus_name" => "Кол-во слотов ОЗУ", "type" => "text"],
-    ["name" => "ram_max", "rus_name" => "Макс. объем ОЗУ", "type" => "text", "units" => "Мб"],
-    ["name" => "flash", "rus_name" => "Flash", "type" => "text", "units" => "Гб"],
-    ["name" => "hdd_size_gb", "rus_name" => "Жесткий диск", "type" => "text", "units" => "Гб"],
-    ["name" => "hdd_type", "rus_name" => "Тип жесткого диска", "type" => "text"],
-    ["name" => "rtc", "rus_name" => "Часы реального времени", "type" => "text"],
-    ["name" => "power", "rus_name" => "Мощность", "type" => "text", "units" => "Вт"],
-    ["name" => "current", "rus_name" => "Потребляемый ток", "type" => "text", "units" => "А"],
-    ["name" => "voltage", "rus_name" => "Напряжение", "type" => "text"],
-    ["name" => "battery", "rus_name" => "Аккумулятор", "type" => "text"],
+    ["name" => "cpu_type", "rus_name" => "РџСЂРѕС†РµСЃСЃРѕСЂ", "type" => "text"],
+    ["name" => "cpu_speed", "rus_name" => "Р§Р°СЃС‚РѕС‚Р°", "type" => "text", "units" => "РњР“С†"],
+    ["name" => "chipset", "rus_name" => "Р§РёРїСЃРµС‚", "type" => "text"],
+    ["name" => "graphics", "rus_name" => "Р“СЂР°С„РёРєР°", "type" => "text"],
+    ["name" => "audio", "rus_name" => "РђСѓРґРёРѕ", "type" => "text"],
+    ["name" => "ram", "rus_name" => "РћР—РЈ", "type" => "text", "units" => "РњР±"],
+    ["name" => "ram_type", "rus_name" => "РўРёРї РћР—РЈ", "type" => "text"],
+    ["name" => "ram_slots", "rus_name" => "РљРѕР»-РІРѕ СЃР»РѕС‚РѕРІ РћР—РЈ", "type" => "text"],
+    ["name" => "ram_max", "rus_name" => "РњР°РєСЃ. РѕР±СЉРµРј РћР—РЈ", "type" => "text", "units" => "РњР±"],
+    ["name" => "flash", "rus_name" => "Flash", "type" => "text", "units" => "Р“Р±"],
+    ["name" => "hdd_size_gb", "rus_name" => "РќР°РєРѕРїРёС‚РµР»СЊ", "type" => "text", "units" => "Р“Р±"],
+    ["name" => "hdd_type", "rus_name" => "РўРёРї РЅР°РєРѕРїРёС‚РµР»СЏ", "type" => "text"],
+    ["name" => "rtc", "rus_name" => "Р§Р°СЃС‹ СЂРµР°Р»СЊРЅРѕРіРѕ РІСЂРµРјРµРЅРё", "type" => "text"],
+    ["name" => "power", "rus_name" => "РњРѕС‰РЅРѕСЃС‚СЊ", "type" => "text", "units" => "Р’С‚"],
+    ["name" => "current", "rus_name" => "РџРѕС‚СЂРµР±Р»СЏРµРјС‹Р№ С‚РѕРє", "type" => "text", "units" => "Рђ"],
+    ["name" => "voltage", "rus_name" => "РќР°РїСЂСЏР¶РµРЅРёРµ", "type" => "text"],
+    ["name" => "battery", "rus_name" => "РђРєРєСѓРјСѓР»СЏС‚РѕСЂ", "type" => "text"],
 
-    ["name" => "separator", "rus_name" => "Интерфейсы", "type" => "separator"],
+    ["name" => "separator", "rus_name" => "РРЅС‚РµСЂС„РµР№СЃС‹", "type" => "separator"],
 
-    ["name" => "serial_full", "rus_name" => "СОМ порты", "type" => "text"],
-    ["name" => "lpt", "rus_name" => "Параллельный порт", "type" => "text"],
-    ["name" => "ps2_klava", "rus_name" => "PS/2 клавиатура", "type" => "text"],
-    ["name" => "ps2_mouse", "rus_name" => "PS/2 мышь", "type" => "text"],
+    ["name" => "serial_full", "rus_name" => "РЎРћРњ РїРѕСЂС‚С‹", "type" => "text"],
+    ["name" => "lpt", "rus_name" => "РџР°СЂР°Р»Р»РµР»СЊРЅС‹Р№ РїРѕСЂС‚", "type" => "text"],
+    ["name" => "ps2_klava", "rus_name" => "PS/2 РєР»Р°РІРёР°С‚СѓСЂР°", "type" => "text"],
+    ["name" => "ps2_mouse", "rus_name" => "PS/2 РјС‹С€СЊ", "type" => "text"],
     ["name" => "usb_host", "rus_name" => "USB host", "type" => "text"],
     ["name" => "usb_client", "rus_name" => "USB client", "type" => "text"],
     ["name" => "ethernet", "rus_name" => "Ethernet", "type" => "text"],
     ["name" => "can_bus", "rus_name" => "CAN", "type" => "text"],
-    ["name" => "sdcard", "rus_name" => "SD карта", "type" => "text"],
-    ["name" => "speakers", "rus_name" => "Встроенные динамики", "type" => "text"],
-    ["name" => "linear_out", "rus_name" => "Линейный аудиовыход", "type" => "text"],
-    ["name" => "mic_in", "rus_name" => "Микрофонный вход", "type" => "text"],
-    ["name" => "video_input", "rus_name" => "Видео вход", "type" => "text"],
+    ["name" => "sdcard", "rus_name" => "SD РєР°СЂС‚Р°", "type" => "text"],
+    ["name" => "speakers", "rus_name" => "Р’СЃС‚СЂРѕРµРЅРЅС‹Рµ РґРёРЅР°РјРёРєРё", "type" => "text"],
+    ["name" => "linear_out", "rus_name" => "Р›РёРЅРµР№РЅС‹Р№ Р°СѓРґРёРѕРІС‹С…РѕРґ", "type" => "text"],
+    ["name" => "mic_in", "rus_name" => "РњРёРєСЂРѕС„РѕРЅРЅС‹Р№ РІС…РѕРґ", "type" => "text"],
+    ["name" => "video_input", "rus_name" => "Р’РёРґРµРѕ РІС…РѕРґ", "type" => "text"],
     ["name" => "pci_slot", "rus_name" => "PCI", "type" => "text"],
-    ["name" => "vga_port", "rus_name" => "Порт VGA", "type" => "text"],
-    ["name" => "dvi_port", "rus_name" => "Порт DVI", "type" => "text"],
-    ["name" => "displayport", "rus_name" => "Порт DisplayPort", "type" => "text"],
-    ["name" => "hdmi", "rus_name" => "Порт HDMI", "type" => "text"],
-    ["name" => "dio", "rus_name" => "Дискретные входы / выходы", "type" => "text"],
-    ["name" => "sim", "rus_name" => "Слот для SIM-карты", "type" => "text"],
+    ["name" => "vga_port", "rus_name" => "РџРѕСЂС‚ VGA", "type" => "text"],
+    ["name" => "dvi_port", "rus_name" => "РџРѕСЂС‚ DVI", "type" => "text"],
+    ["name" => "displayport", "rus_name" => "РџРѕСЂС‚ DisplayPort", "type" => "text"],
+    ["name" => "hdmi", "rus_name" => "РџРѕСЂС‚ HDMI", "type" => "text"],
+    ["name" => "dio", "rus_name" => "Р”РёСЃРєСЂРµС‚РЅС‹Рµ РІС…РѕРґС‹ / РІС‹С…РѕРґС‹", "type" => "text"],
+    ["name" => "sim", "rus_name" => "РЎР»РѕС‚ РґР»СЏ SIM-РєР°СЂС‚С‹", "type" => "text"],
 
-    ["name" => "separator", "rus_name" => "Конструкция", "type" => "separator"],
+    ["name" => "separator", "rus_name" => "РљРѕРЅСЃС‚СЂСѓРєС†РёСЏ", "type" => "separator"],
 
-    ["name" => "case_material", "rus_name" => "Материал корпуса", "type" => "text"],
-    ["name" => "cpu_fan", "rus_name" => "Тип охлаждения", "type" => "text"],
-    ["name" => "mount", "rus_name" => "Варианты установки", "type" => "text"],
-    ["name" => "power_switch", "rus_name" => "Выключатель питания", "type" => "text"],
-    ["name" => "power_adapter", "rus_name" => "Внешний блок питания", "type" => "text"],
-    ["name" => "set", "rus_name" => "Комплект поставки", "type" => "text"],
-    ["name" => "dimentions", "rus_name" => "Размеры, мм", "type" => "text", "units" => "мм"],
-    ["name" => "cutout", "rus_name" => "Вырез под посадку, мм", "type" => "text", "units" => "мм"],
-    ["name" => "netto", "rus_name" => "Вес, кг", "type" => "text", "units" => "кг."],
-    ["name" => "temp_operating", "rus_name" => "Рабочая темп-ра, &degC\"", "type" => "text"],
-
-
+    ["name" => "case_material", "rus_name" => "РњР°С‚РµСЂРёР°Р» РєРѕСЂРїСѓСЃР°", "type" => "text"],
+    ["name" => "cpu_fan", "rus_name" => "РўРёРї РѕС…Р»Р°Р¶РґРµРЅРёСЏ", "type" => "text"],
+    ["name" => "mount", "rus_name" => "Р’Р°СЂРёР°РЅС‚С‹ СѓСЃС‚Р°РЅРѕРІРєРё", "type" => "text"],
+    ["name" => "power_switch", "rus_name" => "Р’С‹РєР»СЋС‡Р°С‚РµР»СЊ РїРёС‚Р°РЅРёСЏ", "type" => "text"],
+    ["name" => "power_adapter", "rus_name" => "Р’РЅРµС€РЅРёР№ Р±Р»РѕРє РїРёС‚Р°РЅРёСЏ", "type" => "text"],
+    ["name" => "set", "rus_name" => "РљРѕРјРїР»РµРєС‚ РїРѕСЃС‚Р°РІРєРё", "type" => "text"],
+    ["name" => "dimentions", "rus_name" => "Р Р°Р·РјРµСЂС‹, РјРј", "type" => "text"],
+    ["name" => "cutout", "rus_name" => "Р’С‹СЂРµР· РїРѕРґ РїРѕСЃР°РґРєСѓ, РјРј", "type" => "text"],
+    ["name" => "netto", "rus_name" => "Р’РµСЃ, РєРі", "type" => "text", "units"],
+    ["name" => "temp_operating", "rus_name" => "Р Р°Р±РѕС‡Р°СЏ С‚РµРјРї-СЂР°, &degC\"", "type" => "text"],
 ];
 
 $extra_h1 = ' ';
@@ -186,7 +186,7 @@ if ($num_columns >= 0) {
                                                     <td class="noborder first_column">
                                                         <div class="table_compare__choice_features_block">
                                                             <div class="table_compare__choice_features_block__title">
-                                                                Показать
+                                                                РџРѕРєР°Р·Р°С‚СЊ
                                                             </div>
                                                             <ul>
                                                                 <li>
@@ -197,8 +197,8 @@ if ($num_columns >= 0) {
                                                                            name="choice_features"
                                                                            v-model="view_mode"
                                                                            value="0">
-                                                                    <label for="choice_features_0"> Все
-                                                                        характеристики</label>
+                                                                    <label for="choice_features_0"> Р’СЃРµ
+                                                                        С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё</label>
                                                                 </li>
                                                                 <li>
 
@@ -209,7 +209,7 @@ if ($num_columns >= 0) {
                                                                             v-model="view_mode"
                                                                             value="1">
                                                                     <label for="choice_features_1">
-                                                                        Только различия
+                                                                        РўРѕР»СЊРєРѕ СЂР°Р·Р»РёС‡РёСЏ
                                                                     </label>
                                                                 </li>
                                                                 <li>
@@ -218,8 +218,8 @@ if ($num_columns >= 0) {
                                                                            type="radio" name="choice_features"
                                                                            v-model="view_mode"
                                                                            value="2">
-                                                                    <label for="choice_features_2">Только
-                                                                        совпадения</label>
+                                                                    <label for="choice_features_2">РўРѕР»СЊРєРѕ
+                                                                        СЃРѕРІРїР°РґРµРЅРёСЏ</label>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -241,12 +241,12 @@ if ($num_columns >= 0) {
                                                         <div class="table_compare_tools">
                                                         <span class="table_compare__button favorites"
                                                               @click="add_too_box" data-box="favorites"
-                                                              data-model="<?= $product["model"] ?>">В избранное</span>
-                                                            <button title="Добавить в заказ"
+                                                              data-model="<?= $product["model"] ?>"><i class="fa-regular fa-heart"></i> Р’ РР—Р‘Р РђРќРќРћР•</span>
+                                                            <button title="Р”РѕР±Р°РІРёС‚СЊ РІ Р·Р°РєР°Р·"
                                                                     class="table_compare__button table_compare__button_cart"
                                                                     @click="add_too_box"
                                                                     data-model="<?= $product["model"] ?>"
-                                                                    data-box="cart"><span></span>В заказ
+                                                                    data-box="cart"><i class="fa-solid fa-cart-shopping"></i> Р’ Р—РђРљРђР—
                                                             </button>
                                                             <span class="delete_item active" @click="add_too_box"
                                                                   data-box="compare"
@@ -304,11 +304,11 @@ if ($num_columns >= 0) {
                                                 <td>
                                                     <?
                                                     if ($product["onstock_spb"] > 0) {
-                                                        echo "в наличии";
+                                                        echo "РІ РЅР°Р»РёС‡РёРё";
                                                     } elseif ($product['discontinued'] == '1') {
-                                                        echo '<span class="has-text-danger">снято&nbsp;с&nbsp;производства</span>';
+                                                        echo '<span class="has-text-danger">СЃРЅСЏС‚Рѕ&nbsp;СЃ&nbsp;РїСЂРѕРёР·РІРѕРґСЃС‚РІР°</span>';
                                                     } else {
-                                                        echo "под заказ";
+                                                        echo "РїРѕРґ Р·Р°РєР°Р·";
                                                     }
                                                     ?>
                                                 </td>
@@ -337,10 +337,10 @@ if ($num_columns >= 0) {
                                                             echo " $";
                                                         }
                                                         if ($product["currency"] == 'RUB') {
-                                                            echo ' руб.';
+                                                            echo ' СЂСѓР±.';
                                                         }
                                                     } else {
-                                                        echo "по запросу";
+                                                        echo "РїРѕ Р·Р°РїСЂРѕСЃСѓ";
                                                     }
                                                     ?>
                                                 </td>
@@ -402,7 +402,7 @@ if ($num_columns >= 0) {
     <?php
     $html_result = ob_get_clean();
 } else {
-    $html_result = 'Товары для сравнения не выбраны';
+    $html_result = 'РўРѕРІР°СЂС‹ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ РЅРµ РІС‹Р±СЂР°РЅС‹';
 }
 
 ?>
@@ -442,7 +442,7 @@ if ($num_columns >= 0) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="catalog_compare__button_clearall_wrapper">
-                    <div class="catalog_compare__button_clearall">Очистить список товаров</div>
+                    <div class="catalog_compare__button_clearall">РћС‡РёСЃС‚РёС‚СЊ СЃРїРёСЃРѕРє С‚РѕРІР°СЂРѕРІ</div>
                 </div>
             </div>
         </div>
@@ -450,10 +450,10 @@ if ($num_columns >= 0) {
 </div>
 
 <div id="link_to_this_page">
-    <b>Ссылка на текущую страницу:</b> <input class="copy_link_input js-copytextarea input" type="text"
+    <b>РЎСЃС‹Р»РєР° РЅР° С‚РµРєСѓС‰СѓСЋ СЃС‚СЂР°РЅРёС†Сѓ:</b> <input class="copy_link_input js-copytextarea input" type="text"
                                               value="<?= $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"; ?>">
     <div id="message_copy_link" class="has-text-weight-bold py-2"></div>
-    <button class="button is-success is-small js-textareacopybtn">Копировать ссылку</button>
+    <button class="button is-success is-small js-textareacopybtn">РљРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєСѓ</button>
 
 </div>
 <div id="vue_data" data-models="<?= implode(',', $arr_model_collection) ?>"></div>
@@ -471,11 +471,11 @@ if ($num_columns >= 0) {
             $('.catalog_toolbar__item.compare .number').html('');
             localStorage.setItem('compare',Date.now());
             location.href = '/catalog/compare/';
-            $('.component_catalog_section__panel_of_products .view-mode-list').html('<hr>Нет товаров...<hr>');
+            $('.component_catalog_section__panel_of_products .view-mode-list').html('<hr>РќРµС‚ С‚РѕРІР°СЂРѕРІ...<hr>');
         });
 
         function setCookie(name, value, options = {}) {
-            // Пример использования:
+            // РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ:
             //setCookie('user', 'John', {secure: true, 'max-age': 3600});
             let date = new Date;
             date.setDate(date.getDate() + 365);
@@ -610,26 +610,10 @@ if ($num_columns >= 0) {
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
-            $('#message_copy_link').html('Ссылка скопирована в буффер');
+            $('#message_copy_link').html('РЎСЃС‹Р»РєР° СЃРєРѕРїРёСЂРѕРІР°РЅР° РІ Р±СѓС„С„РµСЂ');
         } catch (err) {
-            $('#message_copy_link').html('Ваш браузер не поддерживает копирование. Используйте комбинацию клавиш "Ctrl+C"');
+            $('#message_copy_link').html('Р’Р°С€ Р±СЂР°СѓР·РµСЂ РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РєРѕРїРёСЂРѕРІР°РЅРёРµ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ РєРѕРјР±РёРЅР°С†РёСЋ РєР»Р°РІРёС€ "Ctrl+C"');
         }
     });
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
