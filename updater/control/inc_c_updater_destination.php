@@ -193,6 +193,14 @@ class c_updater_destination
                                             };*/
                                             $query = "RENAME TABLE `{$tableOriginal}_temp` TO `{$tableOriginal}`;";
                                             $query_result = mysql_query($query) or die("Error 9");
+
+                                            if ($tableOriginal == 'products_all') {
+                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp_storage` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp_operating` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                                                mysql_query("ALTER TABLE `products_all` MODIFY `brightness` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                                                mysql_query("ALTER TABLE `products_all` MODIFY `current` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                                            }
                                         } else {
                                             echo 'ended error 4';
                                         };
