@@ -5,9 +5,9 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
 
 global $TITLE, $CANONICAL, $DESCRIPTION;
 $TITLE = "Неликвиды, уцененные товары, распродажа неликвидов, АКЦИЯ, Панели оператора, Панельные компьютеры, Промышленные компьютеры full IP65, Встраиваемые компьютеры, Промышленные мониторы, VPN-роутеры, Контроллеры (PLC), Модули ввода-вывода, Блоки питания";
-$CANONICAL = "https://www.rusavtomatika.com/discounted/";
+$CANONICAL = "https://www.rusavtomatika.com/sale/discounted/";
 $DESCRIPTION = "Каталог уценённых товаров, цены, фотографии, описание уценки. Покупайте со скидкой уценённые товары в интернет-магазине rusavtomatika.com";
-CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/discounted/");
+CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/sale/discounted/");
 
 include 'functions.php';
 $rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
@@ -27,19 +27,19 @@ $rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
                     <div class="col-md-6 discount_item">
                         <div class="item">
                             <div class="preview_image_wrapper">
-                                <a href="/discounted/<?= $product_item["seo_url"] ?>/">
+                                <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/">
                                     <div class="preview_image" style="background-image: url('<?= $product_item["preview_picture"] ?>')"></div>
                                     <span class="price"><?= $product_item["price"] ?> <span class="rub">Р</span></span>
                                 </a>
                             </div>
                             <div>
                                 <div class="title">
-                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
+                                    <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
                                 </div>
                                 <hr>
                                 <div class="text"><?= $product_item["name"] ?></div>
                                 <div class="item_buttons">
-                                    <a href="/discounted/<?= $product_item["seo_url"] ?>/">Описание товара</a>
+                                    <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/">Описание товара</a>
                                     <span class="button_order" onclick="show_backup_call(2,'Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>')">Заказать</span>
                                 </div>
                             </div>
@@ -100,19 +100,19 @@ $rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
                      v-for="(product_item, product_index) in arr_filtered_items">
                     <div class="item">
                         <div class="preview_image_wrapper">
-                            <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">
+                            <a :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">
                                 <div class="preview_image" :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
                                 <span class="price">{{product_item.price}} <span class="rub">Р</span></span>
                             </a>
                         </div>
                         <div>
                             <div class="title">
-                                <a :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}} {{product_item.model}}</a>
+                                <a :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}} {{product_item.model}}</a>
                             </div>
                             <hr>
                             <div class="text">{{product_item.name}}</div>
                             <div class="item_buttons">
-                                <a class="detail_link" :href="'/discounted/' + (product_item.seo_url || product_item.model) + '/'">Описание товара</a>
+                                <a class="detail_link" :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">Описание товара</a>
                                 <span class="button_order"
                                       :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
                                       @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">

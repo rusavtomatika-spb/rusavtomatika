@@ -31,7 +31,7 @@ if (!empty($route_string)) {
         global $TITLE, $DESCRIPTION, $CANONICAL, $H1;
         $TITLE = $product['name'] . " | Уцененный товар | Купить со скидкой | Русавтоматика";
         $DESCRIPTION = "Уцененный товар " . $product['name'] . " по цене " . $product['price'] . " руб.";
-        $CANONICAL = "https://www.rusavtomatika.com/discounted/" . $product['seo_url'] . "/";
+        $CANONICAL = "https://www.rusavtomatika.com/sale/discounted/" . $product['seo_url'] . "/";
         $H1 = $product['name'];
         
         include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist_detail/templates/discounted/template.php";
@@ -39,7 +39,7 @@ if (!empty($route_string)) {
         http_response_code(404);
         echo "<h1>404 - Товар не найден</h1>";
         echo "<p>Товар по ссылке не найден.</p>";
-        echo "<a href='/discounted/'>Вернуться к списку</a>";
+        echo "<a href='/sale/discounted/'>Вернуться к списку</a>";
     }
 } else {
     $arguments = array();

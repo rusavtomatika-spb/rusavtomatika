@@ -18,7 +18,7 @@ $file = "https://docs.google.com/feeds/download/spreadsheets/Export?key=1ZUHidY6
 echo "fIle " . $file;
 //echo "fIle " . __DIR__ . "/table_products.csv";
 echo "<br>";
-echo "<a target='_blank' href='/discounted/'>https://www.rusavto.moisait.net/discounted/</a>";
+echo "<a target='_blank' href='/sale/discounted/'>https://www.rusavto.moisait.net/sale/discounted/</a>";
 echo "<br>";
 echo "<a href='/discounted/parser.php?action=update'>Обновить базу</a>";
 echo "<br>";
@@ -28,10 +28,6 @@ echo $_GET["action"];
 ?>
     </div>
 <?php
-
-
-
-
 
 $fields = array("section","type","brand","model","name","link","price","quantity","position","detail_type","reason_of_markdown","preview_picture","images");
 ?>

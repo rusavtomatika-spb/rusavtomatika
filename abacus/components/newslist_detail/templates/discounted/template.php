@@ -32,7 +32,7 @@ if (!isset($arResult['product']) || empty($arResult['product'])) {
 
 if (!isset($arResult['product']) || empty($arResult['product'])) {
     echo "<h1>404 - Товар не найден</h1>";
-    echo "<a href='/discounted/'>Вернуться к списку</a>";
+    echo "<a href='/sale/discounted/'>Вернуться к списку</a>";
     return;
 }
 
