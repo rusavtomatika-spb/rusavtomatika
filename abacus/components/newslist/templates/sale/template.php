@@ -87,10 +87,11 @@ usort($rows, function($a, $b) {
 <div class="component_newslist">
     <? CoreApplication::include_component(array("component"=> "breadcrumbs")); ?>
     <div class="component_wrapper">
-        <div class="row">
+        <div class="row" style="position: relative;">
             <div class="col-md-12">
-                <h1 style="margin:0 auto 30px; text-align: center">Распродажа, акции и скидки!</h1>
+                <h1 style="margin:0 auto 70px; text-align: center">Распродажа, акции и скидки!</h1>
             </div>
+            <a href="/sale/discounted" class="discounted__link">Уцененные товары</a>
             
             <div class="sale__items-wrapper">
                 <? foreach ($rows as $product_item): ?>
@@ -173,8 +174,8 @@ usort($rows, function($a, $b) {
                                     <div class="actual__price-wrapper">
                                         <? if ($product_item["currency"] == 'USD'): ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                             </div>
                                             <? if(isset($usd_currency) && $usd_currency > 0): ?>
                                                 <span class="price_rub_value">
@@ -183,8 +184,8 @@ usort($rows, function($a, $b) {
                                             <? endif; ?>
                                         <? else: ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                             </div>
                                         <? endif; ?>
                                     </div>
