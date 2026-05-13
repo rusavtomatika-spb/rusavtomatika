@@ -11,6 +11,31 @@ CoreApplication::add_breadcrumbs_chain("Распродажа", "/sale/");
 include 'functions.php';
 $rows = get_rows_from_table("products_all", "", "`action_price` IS NOT NULL AND `action_price` != '' AND `action_price` > 0", "");
 
+$typeDictionary = [
+    'hmi' => 'Панель оператора',
+    'cloud_hmi' => 'Облачная панель',
+    'panel-terminal' => 'Панель-терминал',
+    'web-panel' => 'Web-панель',
+    'panel_pc' => 'Панельный компьютер',
+    'panel_pc_wce' => 'Панельный компьютер Windows CE',
+    'panel_pc_ip65' => 'Панельный компьютер IP65',
+    'monitor' => 'Промышленный монитор',
+    'monitors' => 'Промышленный монитор',
+    'box-pc' => 'Встраиваемый компьютер',
+    'pc_module' => 'PC-модуль',
+    'vpn-router' => 'VPN-роутер',
+    'serial-server' => 'Serial-сервер',
+    'ethernet-switch' => 'Ethernet-коммутатор',
+    'controllers' => 'Контроллер ПЛК',
+    'module' => 'Модуль ввода-вывода',
+    'bloki-pitaniya' => 'Блок питания',
+    'ps' => 'Блок питания',
+    'Gateway' => 'Шлюз данных',
+    'frame' => 'Рамка',
+    'accessories' => 'Аксессуар',
+    'antenna' => 'Антенна'
+];
+
 $filteredRows = array();
 $ifcMProducts = array();
 $hasIfcMProducts = false;
@@ -101,6 +126,8 @@ usort($rows, function($a, $b) {
                     $model = $product_item["model"];
                     $size = "580";
                     
+                    $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
+                    
                     if (isset($product_item["preview_picture_override"])) {
                         $preview_picture = $product_item["preview_picture_override"];
                     } else {
@@ -118,25 +145,37 @@ usort($rows, function($a, $b) {
                         $detail_link = "/{$brand}/{$model}/";
                     }
                     
-                    $display_model = ($product_item["model"] == "IFC-M-Series") ? "M-Series (промышленные мониторы)" : $product_item["model"];
+                    $display_model = $product_item["model"];
+                    if ($display_model == "IFC-M-Series") {
+                        $display_model = "M-Series";
+                    } elseif (strtoupper($brand) === 'IFC' && strtoupper(substr($display_model, 0, 4)) === 'IFC-') {
+                        $display_model = substr($display_model, 4);
+                    }
                     
                     $hidePrice = ($product_item["model"] == "IFC-M-Series");
+                    $isMSeries = ($product_item["model"] == "IFC-M-Series");
                     
                     $discountPercent = 0;
                     if (!$hidePrice && isset($product_item["action_price"]) && $product_item["action_price"] > 0 && isset($product_item["retail_price"]) && $product_item["retail_price"] > 0) {
-                        $oldPrice = floatval($product_item["action_price"]); // старая цена (больше)
-                        $newPrice = floatval($product_item["retail_price"]);  // новая цена (меньше)
+                        $oldPrice = floatval($product_item["action_price"]);
+                        $newPrice = floatval($product_item["retail_price"]);
                         if ($oldPrice > $newPrice && $newPrice > 0) {
                             $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
                         }
                     }
+                    
+                    $series = isset($product_item["series"]) ? $product_item["series"] : "";
                     ?>
                     <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
                         <div class="preview_image_wrapper">
                             <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
                         </div>
 
-                        <?php if ($discountPercent > 0 && !$hidePrice): ?>
+                        <?php if ($isMSeries): ?>
+                        <div class="item__percent-wrapper">
+                            <p>-5%</p>
+                        </div>
+                        <?php elseif ($discountPercent > 0 && !$hidePrice): ?>
                         <div class="item__percent-wrapper">
                             <p>-<?= $discountPercent ?>%</p>
                         </div>
@@ -144,10 +183,13 @@ usort($rows, function($a, $b) {
                         
                         <div class="item__description">
                             <div class="item__text-wrapper">
-                                <p class="item__title">
-                                    <?= $product_item["brand"] ?> <?= $display_model ?>
-                                </p>
-
+                                <div class="item__categories">
+                                    <p class="item__title"><?= $product_item["brand"] ?> <?= $display_model ?></p>
+                                    <p class="category__item"><?= $typeTranslated ?></p>
+                                    <?php if (!empty($series)): ?>
+                                    <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
+                                    <?php endif; ?>
+                                </div>
                                 <? if (!empty($preview_text)): ?>
                                     <div class="preview_text">
                                         <?= $preview_text ?>
@@ -156,8 +198,6 @@ usort($rows, function($a, $b) {
                                         <? endif; ?>
                                     </div>
                                 <? endif; ?>
-                                
-                                <p style="margin: 0;">Серия: <span class="tag mr-1">IFC-200</span></p>
                             </div>
                             
                             <div class="item__info-wrapper">

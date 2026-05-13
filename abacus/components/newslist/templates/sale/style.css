@@ -187,7 +187,6 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    height: 233px;
     gap: 20px;
     border: 1px solid #eee;
     padding: 15px;
@@ -216,15 +215,30 @@
     display: block;
     text-align: left;
     width: 100%;
+    margin-bottom: 10px;
+}
+
+.category__item {
+    color: #000;
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
 }
 
 .discounted__link {
+    cursor: pointer;
     position: absolute;
     right: 0;
     top: 50px;
-    color: #00ad61 !important;
-    text-decoration: underline !important;
+    color: #fff !important;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #00ad61;
+    border-radius: 5px;
+    padding: 5px 15px;
 }
 
 .item__percent-wrapper {
@@ -239,6 +253,14 @@
     justify-content: center;
     width: 50px;
     height: auto;
+}
+
+.item__categories {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .item__percent-wrapper p {
