@@ -19,7 +19,7 @@ foreach ($rows as $product_item) {
     $brand = $product_item["brand"];
     $model = $product_item["model"];
     
-    if ($brand == 'IFC' && strpos($model, 'IFC-M2') === 0) {
+    if ($brand == 'IFC' && strpos($model, 'IFC-M') === 0) {
         $ifcMProducts[] = $product_item;
         $hasIfcMProducts = true;
         continue;
@@ -120,15 +120,30 @@ usort($rows, function($a, $b) {
                     $display_model = ($product_item["model"] == "IFC-M-Series") ? "M-Series (промышленные мониторы)" : $product_item["model"];
                     
                     $hidePrice = ($product_item["model"] == "IFC-M-Series");
+                    
+                    $discountPercent = 0;
+                    if (!$hidePrice && isset($product_item["action_price"]) && $product_item["action_price"] > 0 && isset($product_item["retail_price"]) && $product_item["retail_price"] > 0) {
+                        $oldPrice = floatval($product_item["action_price"]); // старая цена (больше)
+                        $newPrice = floatval($product_item["retail_price"]);  // новая цена (меньше)
+                        if ($oldPrice > $newPrice && $newPrice > 0) {
+                            $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
+                        }
+                    }
                     ?>
                     <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
                         <div class="preview_image_wrapper">
                             <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
                         </div>
+
+                        <?php if ($discountPercent > 0 && !$hidePrice): ?>
+                        <div class="item__percent-wrapper">
+                            <p>-<?= $discountPercent ?>%</p>
+                        </div>
+                        <?php endif; ?>
                         
                         <div class="item__description">
                             <div class="item__text-wrapper">
-                                <p href="<?= $detail_link ?>" class="item__title">
+                                <p class="item__title">
                                     <?= $product_item["brand"] ?> <?= $display_model ?>
                                 </p>
 
@@ -163,7 +178,7 @@ usort($rows, function($a, $b) {
                                             </div>
                                             <? if(isset($usd_currency) && $usd_currency > 0): ?>
                                                 <span class="price_rub_value">
-                                                    <?= number_format($product_item["action_price"] * $usd_currency, 0, '', ' ') ?> ₽
+                                                    <?= number_format($product_item["retail_price"] * $usd_currency, 0, '', ' ') ?> ₽
                                                 </span>
                                             <? endif; ?>
                                         <? else: ?>

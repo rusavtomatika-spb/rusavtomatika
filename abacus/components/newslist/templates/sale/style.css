@@ -173,6 +173,7 @@
 }
 
 .sale__items-wrapper .item {
+    position: relative;
     padding: 20px;
     display: flex;
     justify-content: flex-start;
@@ -213,6 +214,27 @@
     text-align: left;
     margin: 10px 0;
     display: block;
+}
+
+.item__percent-wrapper {
+    position: absolute;
+    top: -15px;
+    right: -5px;
+    background: #00ad61;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: auto;
+}
+
+.item__percent-wrapper p {
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .item__info-wrapper, .item__text-wrapper {
