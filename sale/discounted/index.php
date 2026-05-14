@@ -42,6 +42,7 @@ if (!empty($route_string)) {
         echo "<a href='/sale/discounted/'>Вернуться к списку</a>";
     }
 } else {
+    CoreApplication::add_breadcrumbs_chain("Распродажа", "/sale/");
     $arguments = array();
     $arguments["route_string"] = "";
     $arguments["template"] = "discounted";

@@ -214,8 +214,8 @@ usort($rows, function($a, $b) {
                                     <div class="actual__price-wrapper">
                                         <? if ($product_item["currency"] == 'USD'): ?>
                                             <div class="current__price-wrapper">
-                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
                                                 <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
+                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
                                             </div>
                                             <? if(isset($usd_currency) && $usd_currency > 0): ?>
                                                 <span class="price_rub_value">
@@ -224,8 +224,8 @@ usort($rows, function($a, $b) {
                                             <? endif; ?>
                                         <? else: ?>
                                             <div class="current__price-wrapper">
-                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
                                                 <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
+                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
                                             </div>
                                         <? endif; ?>
                                     </div>
