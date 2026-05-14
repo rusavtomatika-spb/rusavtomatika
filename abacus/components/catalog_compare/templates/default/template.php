@@ -2,6 +2,51 @@
 global $arSettings;
 $arSettings['path_to_product_images'] = '/images/';
 
+function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
+    $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
+    
+    $isMemoryField = false;
+    foreach ($memoryFieldNames as $memField) {
+        if ($fieldName === $memField) {
+            $isMemoryField = true;
+            break;
+        }
+    }
+    
+    if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
+        return false;
+    }
+    
+    $numericValue = floatval($fieldValue);
+    
+    if (stripos($fieldValue, 'Гб') !== false || stripos($fieldValue, 'GB') !== false) {
+        $valueInGB = $numericValue;
+    } elseif (stripos($fieldValue, 'Мб') !== false || stripos($fieldValue, 'MB') !== false) {
+        $valueInGB = $numericValue / 1024;
+    } else {
+        $valueInGB = $numericValue / 1024;
+    }
+    
+    if ($valueInGB >= 1) {
+        $newUnit = 'Гб';
+        if ($valueInGB == intval($valueInGB)) {
+            $displayValue = intval($valueInGB) . ' Гб';
+        } else {
+            $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
+        }
+    } elseif ($valueInGB > 0) {
+        $newUnit = 'Мб';
+        $mbValue = $valueInGB * 1024;
+        $displayValue = round($mbValue) . ' Мб';
+    } else {
+        return false;
+    }
+    
+    $fieldValue = $displayValue;
+    
+    return true;
+}
+
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
@@ -74,12 +119,12 @@ $arr_fields = [
     ["name" => "chipset", "rus_name" => "Чипсет", "type" => "text"],
     ["name" => "graphics", "rus_name" => "Графика", "type" => "text"],
     ["name" => "audio", "rus_name" => "Аудио", "type" => "text"],
-    ["name" => "ram", "rus_name" => "ОЗУ", "type" => "text", "units" => "Мб"],
+    ["name" => "ram", "rus_name" => "ОЗУ", "type" => "text"],
     ["name" => "ram_type", "rus_name" => "Тип ОЗУ", "type" => "text"],
     ["name" => "ram_slots", "rus_name" => "Кол-во слотов ОЗУ", "type" => "text"],
-    ["name" => "ram_max", "rus_name" => "Макс. объем ОЗУ", "type" => "text", "units" => "Мб"],
-    ["name" => "flash", "rus_name" => "Flash", "type" => "text", "units" => "Гб"],
-    ["name" => "hdd_size_gb", "rus_name" => "Накопитель", "type" => "text", "units" => "Гб"],
+    ["name" => "ram_max", "rus_name" => "Макс. объем ОЗУ", "type" => "text"],
+    ["name" => "flash", "rus_name" => "Flash", "type" => "text"],
+    ["name" => "hdd_size_gb", "rus_name" => "Накопитель", "type" => "text"],
     ["name" => "hdd_type", "rus_name" => "Тип накопителя", "type" => "text"],
     ["name" => "rtc", "rus_name" => "Часы реального времени", "type" => "text"],
     ["name" => "power", "rus_name" => "Мощность", "type" => "text", "units" => "Вт"],
@@ -120,7 +165,7 @@ $arr_fields = [
     ["name" => "set", "rus_name" => "Комплект поставки", "type" => "text"],
     ["name" => "dimentions", "rus_name" => "Размеры, мм", "type" => "text"],
     ["name" => "cutout", "rus_name" => "Вырез под посадку, мм", "type" => "text"],
-    ["name" => "netto", "rus_name" => "Вес, кг", "type" => "text", "units" => "кг"],
+    ["name" => "netto", "rus_name" => "Вес, кг", "type" => "text"],
     ["name" => "temp_operating", "rus_name" => "Рабочая темп-ра, &degC\"", "type" => "text"],
 ];
 
@@ -364,15 +409,22 @@ if ($num_columns >= 0) {
                                                     if ($field["type"] == 'title') {
                                                         echo "<h4>" . $product[$field["name"]] . "</h4>";
                                                     } else {
-
                                                         if ($product[$field["name"]] != '' and $product[$field["name"]] != '0') {
-
-                                                            echo $product[$field["name"]];
-                                                            if (isset($field["units"]) and $field["units"] != '') {
-                                                                if ($field["name"] == 'current' and $product['type'] == 'module') {
-
-                                                                } else {
-                                                                    echo " " . $field["units"];
+                                                            $fieldValue = $product[$field["name"]];
+                                                            $fieldName = $field["name"];
+                                                            $fieldUnits = isset($field["units"]) ? $field["units"] : '';
+                                                            
+                                                            $memoryConverted = formatMemoryField($fieldName, $fieldValue, $fieldUnits);
+                                                            
+                                                            if ($memoryConverted) {
+                                                                echo $fieldValue;
+                                                            } else {
+                                                                echo $product[$field["name"]];
+                                                                if (isset($field["units"]) and $field["units"] != '') {
+                                                                    if ($field["name"] == 'current' and $product['type'] == 'module') {
+                                                                    } else {
+                                                                        echo " " . $field["units"];
+                                                                    }
                                                                 }
                                                             }
                                                         }
