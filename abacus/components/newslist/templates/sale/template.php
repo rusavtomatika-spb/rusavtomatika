@@ -33,7 +33,8 @@ $typeDictionary = [
     'Gateway' => 'Шлюз данных',
     'frame' => 'Рамка',
     'accessories' => 'Аксессуар',
-    'antenna' => 'Антенна'
+    'antenna' => 'Антенна',
+    'monitor_m_series' => 'Промышленные мониторы 10" - 23.8"'
 ];
 
 $filteredRows = array();
@@ -72,7 +73,7 @@ if ($hasIfcMProducts) {
         "model" => "IFC-M-Series",
         "name" => "IFC M-Series",
         "s_name" => "Промышленные мониторы IFC серии M",
-        "type" => "monitor",
+        "type" => "monitor_m_series",
         "currency" => "USD",
         "retail_price" => $minPrice,
         "action_price" => $maxPrice,
@@ -223,7 +224,7 @@ function getFirstLiElements($html, $count = 3) {
                                     <?php endif; ?>
                                 </div>
                                 <? if (!empty($text_features)): ?>
-                                    <?= getFirstLiElements($text_features, 3) ?>
+                                    <?= getFirstLiElements($text_features, strpos($model, 'iR') !== false ? 1 : 3) ?>
                                 <? endif; ?>
                             </div>
                             

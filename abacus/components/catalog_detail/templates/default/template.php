@@ -711,13 +711,13 @@ if ( !CoreApplication::fileExistsOnFtp( $dim_picture_src ) ) {
   <? if ($arResult['product']["dimentions"] != '') { ?>
   <div class="component_catalog_detail__dimentions"> Габариты:
     <?= $arResult['product']["dimentions"] ?>
-    мм</div>
+  </div>
   <? } ?>
   <? if ($arResult['product']["cutout"] != '') { ?>
   <div class="component_catalog_detail__dimentions">Посадочное
     отверстие:
     <?= $arResult['product']["cutout"] ?>
-    мм</div>
+  </div>
   <? } ?>
   <?
 
