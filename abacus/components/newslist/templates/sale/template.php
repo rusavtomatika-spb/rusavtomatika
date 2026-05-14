@@ -66,6 +66,7 @@ if ($hasIfcMProducts) {
         if (($item["onstock_spb"] > 0 || $item["onstock_msk"] > 0)) $hasStock = true;
     }
     
+    $firstMProductTextFeatures = !empty($firstProduct["text_features"]) ? $firstProduct["text_features"] : "";
     $mergedProduct = array(
         "brand" => "IFC",
         "model" => "IFC-M-Series",
@@ -79,6 +80,7 @@ if ($hasIfcMProducts) {
         "onstock_msk" => $hasStock ? 1 : 0,
         "preview_text" => "Промышленные мониторы IFC серии M. Диагонали от 10.1 до 21.5 дюймов",
         "preview_text_extra" => "Сенсорный экран (емкостный/резистивный), интерфейсы: VGA, DVI, HDMI",
+        "text_features" => $firstMProductTextFeatures,
         "link_detail_page" => "/catalog/industrial_monitors/?&series=IFC-200",
         "preview_picture_override" => "/images/ifc/monitor/IFC-M210C/580/IFC-M210C_1.webp",
         "price_range" => true,
