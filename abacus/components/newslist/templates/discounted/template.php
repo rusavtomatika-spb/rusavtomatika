@@ -138,7 +138,10 @@ $rows = array_merge($productsFromAll, $productsFromDiscounted);
                     <?php
                     $brand = strtolower($product_item["brand"]);
                     $type = isset($product_item["type"]) ? $product_item["type"] : "monitor";
-                    $model = $product_item["model"];
+                    $display_model = $product_item["model"];
+                    if (strtoupper($brand) === 'IFC' && strtoupper(substr($display_model, 0, 4)) === 'IFC-') {
+                        $display_model = substr($display_model, 4);
+                    }
                     
                     $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
                     
@@ -171,7 +174,7 @@ $rows = array_merge($productsFromAll, $productsFromDiscounted);
                         <div class="item__description">
                             <div class="item__text-wrapper">
                                 <div class="item__categories">
-                                    <p class="item__title"><?= $product_item["brand"] ?> <?= $product_item["model"] ?></p>
+                                    <p class="item__title"><?= $product_item["brand"] ?> <?= $display_model ?></p>
                                     <p class="category__item"><?= $typeTranslated ?></p>
                                     <?php if (!empty($series)): ?>
                                     <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
