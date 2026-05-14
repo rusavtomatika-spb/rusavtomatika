@@ -107,6 +107,35 @@ usort($rows, function($a, $b) {
     return strcmp($a['brand'], $b['brand']);
 });
 
+function getFirstLiElements($html, $count = 3) {
+    if (empty($html)) return '';
+    
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+    libxml_clear_errors();
+    
+    $liElements = $dom->getElementsByTagName('li');
+    
+    if ($liElements->length == 0) return '';
+    
+    $newUl = $dom->createElement('ul');
+    
+    $limit = min($liElements->length, $count);
+    for ($i = 0; $i < $limit; $i++) {
+        $li = $liElements->item($i);
+        $newLi = $dom->createElement('li');
+        
+        foreach ($li->childNodes as $child) {
+            $newLi->appendChild($dom->importNode($child, true));
+        }
+        
+        $newUl->appendChild($newLi);
+    }
+    
+    return $dom->saveHTML($newUl);
+}
+
 ?>
 
 <div class="component_newslist">
@@ -138,6 +167,7 @@ usort($rows, function($a, $b) {
                     $onstock = ($product_item["onstock_spb"] > 0 || $product_item["onstock_msk"] > 0);
                     $preview_text = !empty($product_item["preview_text"]) ? $product_item["preview_text"] : "";
                     $preview_text_extra = !empty($product_item["preview_text_extra"]) ? $product_item["preview_text_extra"] : "";
+                    $text_features = !empty($product_item["text_features"]) ? $product_item["text_features"] : "";
                     
                     if (isset($product_item["link_detail_page"])) {
                         $detail_link = $product_item["link_detail_page"];
@@ -190,13 +220,8 @@ usort($rows, function($a, $b) {
                                     <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
                                     <?php endif; ?>
                                 </div>
-                                <? if (!empty($preview_text)): ?>
-                                    <div class="preview_text">
-                                        <?= $preview_text ?>
-                                        <? if (!empty($preview_text_extra)): ?>
-                                            <span class="preview_text_extra"><?= $preview_text_extra ?></span>
-                                        <? endif; ?>
-                                    </div>
+                                <? if (!empty($text_features)): ?>
+                                    <?= getFirstLiElements($text_features, 3) ?>
                                 <? endif; ?>
                             </div>
                             

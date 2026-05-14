@@ -174,17 +174,14 @@
 
 .sale__items-wrapper .item {
     position: relative;
-    padding: 20px;
     display: flex;
     justify-content: flex-start;
     color: #000;
     text-decoration: none;
     font-size: 16px;
-    position: relative;
     min-height: 200px;
     transition: 0.2s;
     background: #EEEEEE;
-    position: relative;
     z-index: 1;
     width: 100%;
     gap: 20px;
@@ -192,7 +189,7 @@
     padding: 15px;
     border-radius: 8px;
     transition: box-shadow 0.3s;
-    position: relative;
+    min-height: 211px;
 }
 
 .preview_image_wrapper {
@@ -280,7 +277,7 @@
 .item__description {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 100%;
     gap: 10px;
 }
@@ -406,6 +403,20 @@
     color: #e00;
     font-size: 13px;
     font-weight: 500;
+}
+
+.sale__items-wrapper ul {
+    margin: 0;
+    list-style: none;
+    max-height: 78px;
+    overflow: hidden;
+}
+
+.sale__items-wrapper ul li {
+    padding: 0px 0px 0px 25px;
+    margin: 2px 0px 0px 0px;
+    background: url(/abacus/templates/rusavtomatika_bulma/images/check_mark_green.png) -1px 6px no-repeat;
+    list-style: none;
 }
 
 @media (max-width: 1420px) {
