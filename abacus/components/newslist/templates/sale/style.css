@@ -391,6 +391,7 @@
 
 .sale__items-wrapper .td_onstock {
     margin: 5px 0;
+    white-space: nowrap;
 }
 
 .sale__items-wrapper .green {

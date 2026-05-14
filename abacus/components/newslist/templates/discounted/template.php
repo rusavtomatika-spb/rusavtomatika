@@ -1,127 +1,219 @@
 <?php
 
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
-CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/newslist_discounted_scripts.js");
 
-global $TITLE, $CANONICAL, $DESCRIPTION;
+global $TITLE, $CANONICAL, $DESCRIPTION, $usd_currency;
 $TITLE = "Неликвиды, уцененные товары, распродажа неликвидов, АКЦИЯ, Панели оператора, Панельные компьютеры, Промышленные компьютеры full IP65, Встраиваемые компьютеры, Промышленные мониторы, VPN-роутеры, Контроллеры (PLC), Модули ввода-вывода, Блоки питания";
 $CANONICAL = "https://www.rusavtomatika.com/sale/discounted/";
 $DESCRIPTION = "Каталог уценённых товаров, цены, фотографии, описание уценки. Покупайте со скидкой уценённые товары в интернет-магазине rusavtomatika.com";
 CoreApplication::add_breadcrumbs_chain("Уцененные товары", "/sale/discounted/");
 
 include 'functions.php';
-$rows = get_rows_from_table("discounted", "", "`show` = '1'", "position");
-?>
-<style>
-    [v-cloak] {
-        display: none;
-    }
-</style>
 
-<noscript>
-    <div class="component_newslist">
-        <div class="component_wrapper">
-            <div class="row">
-                <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1></div>
-                <? foreach ($rows as $product_item): ?>
-                    <div class="col-md-6 discount_item">
-                        <div class="item">
-                            <div class="preview_image_wrapper">
-                                <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/">
-                                    <div class="preview_image" style="background-image: url('<?= $product_item["preview_picture"] ?>')"></div>
-                                    <span class="price"><?= $product_item["price"] ?> <span class="rub">Р</span></span>
-                                </a>
-                            </div>
-                            <div>
-                                <div class="title">
-                                    <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/"><?= $product_item["section"] ?> <?= $product_item["brand"] ?> <?= $product_item["model"] ?></a>
-                                </div>
-                                <hr>
-                                <div class="text"><?= $product_item["name"] ?></div>
-                                <div class="item_buttons">
-                                    <a href="/sale/discounted/<?= $product_item["seo_url"] ?>/">Описание товара</a>
-                                    <span class="button_order" onclick="show_backup_call(2,'Уцененный товар <?= $product_item["brand"] ?> <?= $product_item["model"] ?>')">Заказать</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <? endforeach; ?>
-            </div>
-        </div>
-    </div>
-</noscript>
+$rows_from_products = get_rows_from_table("products_all", "", "`discounted` = '1'", "");
 
-<div id="vue_app_discounted" class="discounted-wrapper">
-    <div id="backup_call" style="display: none;">
-        <button onclick="backup_call_hide()" class="close__btn">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
-                <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
-            </svg>
-        </button>
-        <div class="backup_call_block_phoneNumber">
-            <h3 id="backup_call_h"></h3>
-            <div class="discounted__form-actions">
-                <input type="text" name="phone" placeholder="Номер телефона (например, 79123456789)" class="phone__form-input">
-                <button class="btn_send" onclick="backup_call_go()">Отправить</button>
-            </div>
-        </div>
-        <div id="backup_call_message"></div>
-    </div>
+$rows_from_discounted = get_rows_from_table("discounted", "", "`show` = '1'", "position");
+
+$typeDictionary = [
+    'hmi' => 'Панель оператора',
+    'cloud_hmi' => 'Облачная панель',
+    'panel-terminal' => 'Панель-терминал',
+    'web-panel' => 'Web-панель',
+    'panel_pc' => 'Панельный компьютер',
+    'panel_pc_wce' => 'Панельный компьютер Windows CE',
+    'panel_pc_ip65' => 'Панельный компьютер IP65',
+    'monitor' => 'Промышленный монитор',
+    'monitors' => 'Промышленный монитор',
+    'box-pc' => 'Встраиваемый компьютер',
+    'pc_module' => 'PC-модуль',
+    'vpn-router' => 'VPN-роутер',
+    'serial-server' => 'Serial-сервер',
+    'ethernet-switch' => 'Ethernet-коммутатор',
+    'controllers' => 'Контроллер ПЛК',
+    'module' => 'Модуль ввода-вывода',
+    'bloki-pitaniya' => 'Блок питания',
+    'ps' => 'Блок питания',
+    'Gateway' => 'Шлюз данных',
+    'frame' => 'Рамка',
+    'accessories' => 'Аксессуар',
+    'antenna' => 'Антенна'
+];
+
+function getFirstLiElements($html, $count = 3) {
+    if (empty($html)) return '';
     
-    <div class="component_newslist">
-        <? CoreApplication::include_component(array("component"=> "breadcrumbs")); ?>
-        <div class="component_wrapper">
-            <div class="row">
-                <div class="col-md-12"><h1 style="margin:0 auto 30px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1></div>
-                <div class="all_buttons">
-                    <div class="col-md-12">
-                        <div class="component_newslist_buttons_panel">
-                            <span @click="select_brand(brand_item)"
-                                  :key="brand_index"
-                                  :class="['discount_brand_item', {'active': brand_item.active}]"
-                                  v-for="(brand_item, brand_index) in arr_brands">
-                                {{brand_item.name}}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="component_newslist_buttons_panel">
-                            <span @click="select_category(categories_item)"
-                                  :key="categories_index"
-                                  :class="['discount_categories_item', {'active': categories_item.active}]"
-                                  v-for="(categories_item, categories_index) in arr_categories">
-                                {{categories_item.name}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div :key="product_index"
-                     :class="['col-md-6 discount_item', {'active': product_item.active}]"
-                     v-for="(product_item, product_index) in arr_filtered_items">
-                    <div class="item">
+    $html = str_replace('</ li>', '</li>', $html);
+    $html = preg_replace('/(\S)\s+li>/', '$1</li>', $html);
+    
+    if (preg_match('/<ul[^>]*>(.*?)<\/ul>/s', $html, $ulMatch)) {
+        $ulContent = $ulMatch[1];
+    } else {
+        $ulContent = $html;
+    }
+    
+    preg_match_all('/<li[^>]*>(.*?)<\/li>/s', $ulContent, $matches);
+    
+    if (empty($matches[1])) return '';
+    
+    $filteredItems = [];
+    foreach ($matches[1] as $item) {
+        $cleanItem = strip_tags($item);
+        $cleanItem = trim($cleanItem);
+        if (!empty($cleanItem) && mb_strlen($cleanItem) <= 60) {
+            $filteredItems[] = $cleanItem;
+        }
+    }
+    
+    if (empty($filteredItems)) return '';
+    
+    $items = array_slice($filteredItems, 0, $count);
+    
+    $output = '<ul>';
+    foreach ($items as $item) {
+        $output .= '<li>' . $item . '</li>';
+    }
+    $output .= '</ul>';
+    
+    return $output;
+}
+
+$productsFromAll = [];
+foreach ($rows_from_products as $item) {
+    $brand = strtolower($item["brand"]);
+    $type = isset($item["type"]) ? $item["type"] : "monitor";
+    $model = $item["model"];
+    
+    $productsFromAll[] = [
+        "brand" => $item["brand"],
+        "model" => $model,
+        "type" => $type,
+        "series" => isset($item["series"]) ? $item["series"] : "",
+        "s_name" => !empty($item["s_name"]) ? $item["s_name"] : $model,
+        "text_features" => !empty($item["text_features"]) ? $item["text_features"] : "",
+        "retail_price" => $item["retail_price"],
+        "action_price" => isset($item["action_price"]) ? $item["action_price"] : 0,
+        "currency" => isset($item["currency"]) ? $item["currency"] : "RUB",
+        "onstock_spb" => $item["onstock_spb"],
+        "onstock_msk" => $item["onstock_msk"],
+        "preview_picture" => "/images/{$brand}/{$type}/{$model}/580/{$model}_1.webp",
+        "link_detail_page" => "/{$brand}/{$model}/",
+        "source" => "products_all"
+    ];
+}
+
+$productsFromDiscounted = [];
+foreach ($rows_from_discounted as $item) {
+    $productsFromDiscounted[] = [
+        "brand" => $item["brand"],
+        "model" => $item["model"],
+        "type" => isset($item["type"]) ? $item["type"] : "",
+        "series" => "",
+        "s_name" => $item["name"],
+        "text_features" => !empty($item["text_features"]) ? $item["text_features"] : "",
+        "retail_price" => $item["price"],
+        "action_price" => 0,
+        "currency" => "RUB",
+        "onstock_spb" => isset($item["quantity"]) && $item["quantity"] > 0 ? 1 : 0,
+        "onstock_msk" => 0,
+        "preview_picture" => $item["preview_picture"],
+        "link_detail_page" => "/sale/discounted/" . $item["seo_url"] . "/",
+        "source" => "discounted"
+    ];
+}
+
+$rows = array_merge($productsFromAll, $productsFromDiscounted);
+
+?>
+
+<div class="component_newslist">
+    <? CoreApplication::include_component(array("component"=> "breadcrumbs")); ?>
+    <div class="component_wrapper">
+        <div class="row" style="position: relative;">
+            <div class="col-md-12">
+                <h1 style="margin:0 auto 70px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1>
+            </div>
+            
+            <div class="sale__items-wrapper">
+                <? foreach ($rows as $product_item): ?>
+                    <?php
+                    $brand = strtolower($product_item["brand"]);
+                    $type = isset($product_item["type"]) ? $product_item["type"] : "monitor";
+                    $model = $product_item["model"];
+                    
+                    $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
+                    
+                    $preview_picture = $product_item["preview_picture"];
+                    $onstock = ($product_item["onstock_spb"] > 0 || $product_item["onstock_msk"] > 0);
+                    $text_features = $product_item["text_features"];
+                    $detail_link = $product_item["link_detail_page"];
+                    $series = $product_item["series"];
+                    
+                    $discountPercent = 0;
+                    if (isset($product_item["action_price"]) && $product_item["action_price"] > 0 && $product_item["retail_price"] > 0) {
+                        $oldPrice = floatval($product_item["action_price"]);
+                        $newPrice = floatval($product_item["retail_price"]);
+                        if ($oldPrice > $newPrice && $newPrice > 0) {
+                            $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
+                        }
+                    }
+                    ?>
+                    <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
                         <div class="preview_image_wrapper">
-                            <a :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">
-                                <div class="preview_image" :style="{ backgroundImage: 'url(' + product_item.preview_picture + ')' }"></div>
-                                <span class="price">{{product_item.price}} <span class="rub">Р</span></span>
-                            </a>
+                            <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
                         </div>
-                        <div>
-                            <div class="title">
-                                <a :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">{{product_item.section}} {{product_item.brand}} {{product_item.model}}</a>
+
+                        <?php if ($discountPercent > 0): ?>
+                        <div class="item__percent-wrapper">
+                            <p>-<?= $discountPercent ?>%</p>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <div class="item__description">
+                            <div class="item__text-wrapper">
+                                <div class="item__categories">
+                                    <p class="item__title"><?= $product_item["brand"] ?> <?= $product_item["model"] ?></p>
+                                    <p class="category__item"><?= $typeTranslated ?></p>
+                                    <?php if (!empty($series)): ?>
+                                    <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
+                                    <?php endif; ?>
+                                </div>
+                                <? if (!empty($text_features)): ?>
+                                    <?= getFirstLiElements($text_features, strpos($model, 'iR') !== false ? 1 : 3) ?>
+                                <? endif; ?>
                             </div>
-                            <hr>
-                            <div class="text">{{product_item.name}}</div>
-                            <div class="item_buttons">
-                                <a class="detail_link" :href="'/sale/discounted/' + (product_item.seo_url || product_item.model) + '/'">Описание товара</a>
-                                <span class="button_order"
-                                      :idm="'Уцененный товар ' + product_item.brand + ' ' + product_item.model"
-                                      @click="show_backup_call('Уцененный товар ' + product_item.brand + ' ' + product_item.model)">
-                                    Заказать
-                                </span>
+                            
+                            <div class="item__info-wrapper">
+                                <div class="td_onstock" style="margin: 0;">
+                                    <? if ($onstock): ?>
+                                        <span class="green" style="white-space: nowrap;">В наличии</span>
+                                    <? else: ?>
+                                        <span class="red">Под заказ</span>
+                                    <? endif; ?>
+                                </div>
+
+                                <div class="price-wrapper">
+                                    <div class="actual__price-wrapper">
+                                        <? if ($product_item["currency"] == 'USD'): ?>
+                                            <div class="current__price-wrapper">
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
+                                                <? if ($product_item["action_price"] > 0): ?>
+                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
+                                                <? endif; ?>
+                                            </div>
+                                        <? else: ?>
+                                            <div class="current__price-wrapper">
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
+                                                <? if ($product_item["action_price"] > 0): ?>
+                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
+                                                <? endif; ?>
+                                            </div>
+                                        <? endif; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </a>
+                <? endforeach; ?>
             </div>
         </div>
     </div>
