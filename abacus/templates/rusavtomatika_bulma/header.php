@@ -192,7 +192,7 @@ $current_page = str_replace("/", "_", $current_page);
     </header>
 </div>
 <style>
-    .faq__header-link { font-size: 14px; }
+    .faq__header-link { font-size: 14px; text-decoration: none; }
     @media (max-width: 1408px) {
         .faq__header-link .pre-span { display: none; }
     }

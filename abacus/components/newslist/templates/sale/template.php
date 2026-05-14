@@ -157,7 +157,10 @@ function getFirstLiElements($html, $count = 3) {
             <div class="col-md-12">
                 <h1 style="margin:0 auto 70px; text-align: center">Распродажа, акции и скидки!</h1>
             </div>
-            <a href="/sale/discounted" class="discounted__link">Уцененные товары</a>
+            <div class="discounted__link-wrapper">
+                <p>Посмотрите также</p>
+                <a href="/sale/discounted" class="discounted__link">Уцененные товары</a>
+            </div>
             
             <div class="sale__items-wrapper">
                 <? foreach ($rows as $product_item): ?>
@@ -251,8 +254,8 @@ function getFirstLiElements($html, $count = 3) {
                                     <div class="actual__price-wrapper">
                                         <? if ($product_item["currency"] == 'USD'): ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                             </div>
                                             <? if(isset($usd_currency) && $usd_currency > 0): ?>
                                                 <span class="price_rub_value">
@@ -261,8 +264,8 @@ function getFirstLiElements($html, $count = 3) {
                                             <? endif; ?>
                                         <? else: ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                             </div>
                                         <? endif; ?>
                                     </div>

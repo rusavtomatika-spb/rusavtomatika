@@ -130,7 +130,7 @@ $rows = array_merge($productsFromAll, $productsFromDiscounted);
     <div class="component_wrapper">
         <div class="row" style="position: relative;">
             <div class="col-md-12">
-                <h1 style="margin:0 auto 70px; text-align: center">Уцененные товары, распродажа неликвидов, АКЦИЯ!</h1>
+                <h1 style="margin:0 auto 70px; text-align: center">Уцененные товары, распродажа неликвидов</h1>
             </div>
             
             <div class="sale__items-wrapper">
@@ -198,17 +198,17 @@ $rows = array_merge($productsFromAll, $productsFromDiscounted);
                                     <div class="actual__price-wrapper">
                                         <? if ($product_item["currency"] == 'USD'): ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                                 <? if ($product_item["action_price"] > 0): ?>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
                                                 <? endif; ?>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
                                             </div>
                                         <? else: ?>
                                             <div class="current__price-wrapper">
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                                 <? if ($product_item["action_price"] > 0): ?>
                                                 <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
                                                 <? endif; ?>
+                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
                                             </div>
                                         <? endif; ?>
                                     </div>

@@ -222,11 +222,16 @@
     margin: 0;
 }
 
-.discounted__link {
-    cursor: pointer;
+.discounted__link-wrapper {
+    display: flex;
     position: absolute;
     right: 0;
     top: 50px;
+    gap: 10px;
+}
+
+.discounted__link {
+    cursor: pointer;
     color: #fff !important;
     font-size: 16px;
     display: flex;
@@ -298,8 +303,7 @@
 
 .current__price-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 10px;
 }
 
@@ -370,6 +374,8 @@
     font-size: 14px;
     color: #666;
     display: block;
+    width: 100%;
+    text-align: right;
 }
 
 .sale__items-wrapper .preview_text {
