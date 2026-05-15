@@ -55,22 +55,37 @@ function getFirstLiElements($html, $count = 3) {
     
     if (empty($matches[1])) return '';
     
-    $filteredItems = [];
-    foreach ($matches[1] as $item) {
-        $cleanItem = strip_tags($item);
+    $shortItems = [];
+    $longItems = [];
+    
+    foreach ($matches[1] as $index => $item) {
+        $cleanItem = $item;
+        $cleanItem = preg_replace('/<a[^>]*>(.*?)<\/a>/s', '$1', $cleanItem);
+        $cleanItem = strip_tags($cleanItem);
         $cleanItem = trim($cleanItem);
-        if (!empty($cleanItem) && mb_strlen($cleanItem) <= 60) {
-            $filteredItems[] = $cleanItem;
+        
+        $cleanLi = '<li>' . $cleanItem . '</li>';
+        
+        if (!empty($cleanItem)) {
+            if (mb_strlen($cleanItem) <= 45) {
+                $shortItems[] = $cleanLi;
+            } else {
+                $longItems[] = $cleanLi;
+            }
         }
     }
     
-    if (empty($filteredItems)) return '';
+    if (!empty($shortItems)) {
+        $items = array_slice($shortItems, 0, $count);
+    } else {
+        $items = array_slice($longItems, 0, 1);
+    }
     
-    $items = array_slice($filteredItems, 0, $count);
+    if (empty($items)) return '';
     
     $output = '<ul>';
     foreach ($items as $item) {
-        $output .= '<li>' . $item . '</li>';
+        $output .= $item;
     }
     $output .= '</ul>';
     
