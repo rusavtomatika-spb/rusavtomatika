@@ -164,6 +164,18 @@
 
 }
 
+.sale__section-wrapper, .sale__page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.sale__page-wrapper {
+    gap: 100px;   
+}
+
 .sale__items-wrapper {
     display: grid;
     grid-template-columns: repeat(2, auto);
@@ -227,7 +239,7 @@
     position: absolute;
     right: 0;
     top: 50px;
-    gap: 10px;
+    gap: 10px;    
 }
 
 .discounted__link {

@@ -3,13 +3,14 @@
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
 
 global $TITLE, $CANONICAL, $DESCRIPTION, $usd_currency;
-$TITLE = "Распродажа | Акции и скидки | Русавтоматика";
+$TITLE = "Распродажа | Акции и скидки | Уцененные товары | Русавтоматика";
 $CANONICAL = "https://www.rusavtomatika.com/sale/";
-$DESCRIPTION = "Акционные товары, распродажа, товары со скидкой. Покупайте со скидкой в интернет-магазине rusavtomatika.com";
+$DESCRIPTION = "Акционные товары, распродажа, товары со скидкой, уцененные товары, неликвиды. Покупайте со скидкой в интернет-магазине rusavtomatika.com";
 CoreApplication::add_breadcrumbs_chain("Распродажа", "/sale/");
 
 include 'functions.php';
-$rows = get_rows_from_table("products_all", "", "`action_price` IS NOT NULL AND `action_price` != '' AND `action_price` > 0 AND `discounted` = 0", "");
+
+$rows_sale = get_rows_from_table("products_all", "", "`action_price` IS NOT NULL AND `action_price` != '' AND `action_price` > 0 AND `discounted` = 0", "");
 
 $typeDictionary = [
     'hmi' => 'Панель оператора',
@@ -37,11 +38,11 @@ $typeDictionary = [
     'monitor_m_series' => 'Промышленные мониторы 10" - 23.8"'
 ];
 
-$filteredRows = array();
+$filteredRowsSale = array();
 $ifcMProducts = array();
 $hasIfcMProducts = false;
 
-foreach ($rows as $product_item) {
+foreach ($rows_sale as $product_item) {
     $brand = $product_item["brand"];
     $model = $product_item["model"];
     
@@ -51,7 +52,7 @@ foreach ($rows as $product_item) {
         continue;
     }
     
-    $filteredRows[] = $product_item;
+    $filteredRowsSale[] = $product_item;
 }
 
 if ($hasIfcMProducts) {
@@ -89,12 +90,12 @@ if ($hasIfcMProducts) {
         "max_price" => $maxPrice
     );
     
-    array_unshift($filteredRows, $mergedProduct);
+    array_unshift($filteredRowsSale, $mergedProduct);
 }
 
-$rows = $filteredRows;
+$rowsSale = $filteredRowsSale;
 
-usort($rows, function($a, $b) {
+usort($rowsSale, function($a, $b) {
     if ($a['brand'] == 'Weintek' && $b['brand'] != 'Weintek') {
         return -1;
     }
@@ -109,6 +110,57 @@ usort($rows, function($a, $b) {
     }
     return strcmp($a['brand'], $b['brand']);
 });
+
+$rows_from_products_discounted = get_rows_from_table("products_all", "", "`discounted` = '1'", "");
+$rows_from_discounted_table = get_rows_from_table("discounted", "", "`show` = '1'", "position");
+
+$productsFromAll = [];
+foreach ($rows_from_products_discounted as $item) {
+    $brand = strtolower($item["brand"]);
+    $type = isset($item["type"]) ? $item["type"] : "monitor";
+    $model = $item["model"];
+    
+    $productsFromAll[] = [
+        "brand" => $item["brand"],
+        "model" => $model,
+        "type" => $type,
+        "series" => isset($item["series"]) ? $item["series"] : "",
+        "s_name" => !empty($item["s_name"]) ? $item["s_name"] : $model,
+        "text_features" => !empty($item["text_features"]) ? $item["text_features"] : "",
+        "retail_price" => $item["retail_price"],
+        "action_price" => isset($item["action_price"]) ? $item["action_price"] : 0,
+        "currency" => isset($item["currency"]) ? $item["currency"] : "RUB",
+        "onstock_spb" => $item["onstock_spb"],
+        "onstock_msk" => $item["onstock_msk"],
+        "preview_picture" => "/images/{$brand}/{$type}/{$model}/580/{$model}_1.webp",
+        "link_detail_page" => "/{$brand}/{$model}/",
+        "source" => "products_all",
+        "is_discounted" => true
+    ];
+}
+
+$productsFromDiscounted = [];
+foreach ($rows_from_discounted_table as $item) {
+    $productsFromDiscounted[] = [
+        "brand" => $item["brand"],
+        "model" => $item["model"],
+        "type" => isset($item["type"]) ? $item["type"] : "",
+        "series" => "",
+        "s_name" => $item["name"],
+        "text_features" => !empty($item["text_features"]) ? $item["text_features"] : "",
+        "retail_price" => $item["price"],
+        "action_price" => 0,
+        "currency" => "RUB",
+        "onstock_spb" => isset($item["quantity"]) && $item["quantity"] > 0 ? 1 : 0,
+        "onstock_msk" => 0,
+        "preview_picture" => $item["preview_picture"],
+        "link_detail_page" => "/sale/discounted/" . $item["seo_url"] . "/",
+        "source" => "discounted",
+        "is_discounted" => true
+    ];
+}
+
+$rowsDiscounted = array_merge($productsFromAll, $productsFromDiscounted);
 
 function getFirstLiElements($html, $count = 3) {
     if (empty($html)) return '';
@@ -174,126 +226,239 @@ function getFirstLiElements($html, $count = 3) {
             </div>
             <div class="discounted__link-wrapper">
                 <p>Посмотрите также</p>
-                <a href="/sale/discounted" class="discounted__link">Уцененные товары</a>
+                <button class="discounted__link" id="discounted-link">Уцененные товары</button>
             </div>
-            
-            <div class="sale__items-wrapper">
-                <? foreach ($rows as $product_item): ?>
-                    <?php
-                    $brand = strtolower($product_item["brand"]);
-                    $type = isset($product_item["type"]) ? $product_item["type"] : "monitor";
-                    $model = $product_item["model"];
-                    $size = "580";
-                    
-                    $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
-                    
-                    if (isset($product_item["preview_picture_override"])) {
-                        $preview_picture = $product_item["preview_picture_override"];
-                    } else {
-                        $preview_picture = "/images/{$brand}/{$type}/{$model}/{$size}/{$model}_1.webp";
-                    }
-                    
-                    $product_name = !empty($product_item["s_name"]) ? $product_item["s_name"] : $product_item["model"];
-                    $onstock = ($product_item["onstock_spb"] > 0 || $product_item["onstock_msk"] > 0);
-                    $preview_text = !empty($product_item["preview_text"]) ? $product_item["preview_text"] : "";
-                    $preview_text_extra = !empty($product_item["preview_text_extra"]) ? $product_item["preview_text_extra"] : "";
-                    $text_features = !empty($product_item["text_features"]) ? $product_item["text_features"] : "";
-                    
-                    if (isset($product_item["link_detail_page"])) {
-                        $detail_link = $product_item["link_detail_page"];
-                    } else {
-                        $detail_link = "/{$brand}/{$model}/";
-                    }
-                    
-                    $display_model = $product_item["model"];
-                    if ($display_model == "IFC-M-Series") {
-                        $display_model = "M-Series";
-                    } elseif (strtoupper($brand) === 'IFC' && strtoupper(substr($display_model, 0, 4)) === 'IFC-') {
-                        $display_model = substr($display_model, 4);
-                    }
-                    
-                    $hidePrice = ($product_item["model"] == "IFC-M-Series");
-                    $isMSeries = ($product_item["model"] == "IFC-M-Series");
-                    
-                    $discountPercent = 0;
-                    if (!$hidePrice && isset($product_item["action_price"]) && $product_item["action_price"] > 0 && isset($product_item["retail_price"]) && $product_item["retail_price"] > 0) {
-                        $oldPrice = floatval($product_item["action_price"]);
-                        $newPrice = floatval($product_item["retail_price"]);
-                        if ($oldPrice > $newPrice && $newPrice > 0) {
-                            $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
-                        }
-                    }
-                    
-                    $series = isset($product_item["series"]) ? $product_item["series"] : "";
-                    ?>
-                    <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
-                        <div class="preview_image_wrapper">
-                            <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
-                        </div>
-
-                        <?php if ($isMSeries): ?>
-                        <div class="item__percent-wrapper">
-                            <p>-5%</p>
-                        </div>
-                        <?php elseif ($discountPercent > 0 && !$hidePrice): ?>
-                        <div class="item__percent-wrapper">
-                            <p>-<?= $discountPercent ?>%</p>
-                        </div>
-                        <?php endif; ?>
-                        
-                        <div class="item__description">
-                            <div class="item__text-wrapper">
-                                <div class="item__categories">
-                                    <p class="item__title"><?= $product_item["brand"] ?> <?= $display_model ?></p>
-                                    <p class="category__item"><?= $typeTranslated ?></p>
-                                    <?php if (!empty($series)): ?>
-                                    <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
-                                    <?php endif; ?>
-                                </div>
-                                <? if (!empty($text_features)): ?>
-                                    <?= getFirstLiElements($text_features, strpos($model, 'iR') !== false ? 1 : 3) ?>
-                                <? endif; ?>
-                            </div>
+            <div class="sale__page-wrapper">
+                <section class="sale__section-wrapper">
+                    <h2 style="margin: 20px 0 30px; font-size: 24px;">Акционные товары со скидкой</h2>
+                    <div class="sale__items-wrapper">
+                        <? foreach ($rowsSale as $product_item): ?>
+                            <?php
+                            $brand = strtolower($product_item["brand"]);
+                            $type = isset($product_item["type"]) ? $product_item["type"] : "monitor";
+                            $model = $product_item["model"];
+                            $size = "580";
                             
-                            <div class="item__info-wrapper">
-                                <div class="td_onstock" style="margin: 0;">
-                                    <? if ($onstock): ?>
-                                        <span class="green" style="white-space: nowrap;">В наличии</span>
-                                    <? else: ?>
-                                        <span class="red">Под заказ</span>
-                                    <? endif; ?>
+                            $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
+                            
+                            if (isset($product_item["preview_picture_override"])) {
+                                $preview_picture = $product_item["preview_picture_override"];
+                            } else {
+                                $preview_picture = "/images/{$brand}/{$type}/{$model}/{$size}/{$model}_1.webp";
+                            }
+                            
+                            $product_name = !empty($product_item["s_name"]) ? $product_item["s_name"] : $product_item["model"];
+                            $onstock = ($product_item["onstock_spb"] > 0 || $product_item["onstock_msk"] > 0);
+                            $preview_text = !empty($product_item["preview_text"]) ? $product_item["preview_text"] : "";
+                            $preview_text_extra = !empty($product_item["preview_text_extra"]) ? $product_item["preview_text_extra"] : "";
+                            $text_features = !empty($product_item["text_features"]) ? $product_item["text_features"] : "";
+                            
+                            if (isset($product_item["link_detail_page"])) {
+                                $detail_link = $product_item["link_detail_page"];
+                            } else {
+                                $detail_link = "/{$brand}/{$model}/";
+                            }
+                            
+                            $display_model = $product_item["model"];
+                            if ($display_model == "IFC-M-Series") {
+                                $display_model = "M-Series";
+                            } elseif (strtoupper($brand) === 'IFC' && strtoupper(substr($display_model, 0, 4)) === 'IFC-') {
+                                $display_model = substr($display_model, 4);
+                            }
+                            
+                            $hidePrice = ($product_item["model"] == "IFC-M-Series");
+                            $isMSeries = ($product_item["model"] == "IFC-M-Series");
+                            
+                            $discountPercent = 0;
+                            if (!$hidePrice && isset($product_item["action_price"]) && $product_item["action_price"] > 0 && isset($product_item["retail_price"]) && $product_item["retail_price"] > 0) {
+                                $oldPrice = floatval($product_item["action_price"]);
+                                $newPrice = floatval($product_item["retail_price"]);
+                                if ($oldPrice > $newPrice && $newPrice > 0) {
+                                    $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
+                                }
+                            }
+                            
+                            $series = isset($product_item["series"]) ? $product_item["series"] : "";
+                            ?>
+                            <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
+                                <div class="preview_image_wrapper">
+                                    <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
                                 </div>
 
-                                <? if (!$hidePrice): ?>
-                                <div class="price-wrapper">
-                                    <div class="actual__price-wrapper">
-                                        <? if ($product_item["currency"] == 'USD'): ?>
-                                            <div class="current__price-wrapper">
-                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
-                                            </div>
-                                            <? if(isset($usd_currency) && $usd_currency > 0): ?>
-                                                <span class="price_rub_value">
-                                                    <?= number_format($product_item["retail_price"] * $usd_currency, 0, '', ' ') ?> ₽
-                                                </span>
+                                <?php if ($isMSeries): ?>
+                                <div class="item__percent-wrapper">
+                                    <p>-5%</p>
+                                </div>
+                                <?php elseif ($discountPercent > 0 && !$hidePrice): ?>
+                                <div class="item__percent-wrapper">
+                                    <p>-<?= $discountPercent ?>%</p>
+                                </div>
+                                <?php endif; ?>
+                                
+                                <div class="item__description">
+                                    <div class="item__text-wrapper">
+                                        <div class="item__categories">
+                                            <p class="item__title"><?= $product_item["brand"] ?> <?= $display_model ?></p>
+                                            <p class="category__item"><?= $typeTranslated ?></p>
+                                            <?php if (!empty($series)): ?>
+                                            <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <? if (!empty($text_features)): ?>
+                                            <?= getFirstLiElements($text_features, strpos($model, 'iR') !== false ? 1 : 3) ?>
+                                        <? endif; ?>
+                                    </div>
+                                    
+                                    <div class="item__info-wrapper">
+                                        <div class="td_onstock" style="margin: 0;">
+                                            <? if ($onstock): ?>
+                                                <span class="green" style="white-space: nowrap;">В наличии</span>
+                                            <? else: ?>
+                                                <span class="red">Под заказ</span>
                                             <? endif; ?>
-                                        <? else: ?>
-                                            <div class="current__price-wrapper">
-                                                <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
-                                                <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
+                                        </div>
+
+                                        <? if (!$hidePrice): ?>
+                                        <div class="price-wrapper">
+                                            <div class="actual__price-wrapper">
+                                                <? if ($product_item["currency"] == 'USD'): ?>
+                                                    <div class="current__price-wrapper">
+                                                        <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
+                                                        <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
+                                                    </div>
+                                                    <? if(isset($usd_currency) && $usd_currency > 0): ?>
+                                                        <span class="price_rub_value">
+                                                            <?= number_format($product_item["retail_price"] * $usd_currency, 0, '', ' ') ?> ₽
+                                                        </span>
+                                                    <? endif; ?>
+                                                <? else: ?>
+                                                    <div class="current__price-wrapper">
+                                                        <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
+                                                        <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
+                                                    </div>
+                                                <? endif; ?>
                                             </div>
+                                        </div>
                                         <? endif; ?>
                                     </div>
                                 </div>
-                                <? endif; ?>
-                            </div>
-                        </div>
-                    </a>
-                <? endforeach; ?>
+                            </a>
+                        <? endforeach; ?>
+                    </div>
+                </section>
+
+                <?php if (!empty($rowsDiscounted)): ?>
+                <section class="sale__section-wrapper" id="discounted-wrapper">
+                    <h2 style="margin: 20px 0 30px; font-size: 24px;">Уцененные товары, распродажа неликвидов</h2>
+                    <div class="sale__items-wrapper">
+                        <? foreach ($rowsDiscounted as $product_item): ?>
+                            <?php
+                            $brand = strtolower($product_item["brand"]);
+                            $type = isset($product_item["type"]) ? $product_item["type"] : "monitor";
+                            $display_model = $product_item["model"];
+                            if (strtoupper($brand) === 'IFC' && strtoupper(substr($display_model, 0, 4)) === 'IFC-') {
+                                $display_model = substr($display_model, 4);
+                            }
+                            
+                            $typeTranslated = isset($typeDictionary[$type]) ? $typeDictionary[$type] : $type;
+                            
+                            $preview_picture = $product_item["preview_picture"];
+                            $onstock = ($product_item["onstock_spb"] > 0 || $product_item["onstock_msk"] > 0);
+                            $text_features = $product_item["text_features"];
+                            $detail_link = $product_item["link_detail_page"];
+                            $series = $product_item["series"];
+                            
+                            $discountPercent = 0;
+                            if (isset($product_item["action_price"]) && $product_item["action_price"] > 0 && $product_item["retail_price"] > 0) {
+                                $oldPrice = floatval($product_item["action_price"]);
+                                $newPrice = floatval($product_item["retail_price"]);
+                                if ($oldPrice > $newPrice && $newPrice > 0) {
+                                    $discountPercent = round(100 - ($newPrice / $oldPrice * 100));
+                                }
+                            }
+                            ?>
+                            <a href="<?= $detail_link ?>" class="item" data-model="<?= $product_item["model"] ?>">
+                                <div class="preview_image_wrapper">
+                                    <img src="<?= $preview_picture ?>" alt="<?= $product_item["model"] ?>">
+                                </div>
+
+                                <?php if ($discountPercent > 0): ?>
+                                <div class="item__percent-wrapper">
+                                    <p>-<?= $discountPercent ?>%</p>
+                                </div>
+                                <?php endif; ?>
+                                
+                                <div class="item__description">
+                                    <div class="item__text-wrapper">
+                                        <div class="item__categories">
+                                            <p class="item__title"><?= $product_item["brand"] ?> <?= $display_model ?></p>
+                                            <p class="category__item"><?= $typeTranslated ?></p>
+                                            <?php if (!empty($series)): ?>
+                                            <p class="category__item">Серия: <span class="tag mr-1"><?= htmlspecialchars($series) ?></span></p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <? if (!empty($text_features)): ?>
+                                            <?= getFirstLiElements($text_features, strpos($model, 'iR') !== false ? 1 : 3) ?>
+                                        <? endif; ?>
+                                    </div>
+                                    
+                                    <div class="item__info-wrapper">
+                                        <div class="td_onstock" style="margin: 0;">
+                                            <? if ($onstock): ?>
+                                                <span class="green" style="white-space: nowrap;">В наличии</span>
+                                            <? else: ?>
+                                                <span class="red">Под заказ</span>
+                                            <? endif; ?>
+                                        </div>
+
+                                        <div class="price-wrapper">
+                                            <div class="actual__price-wrapper">
+                                                <? if ($product_item["currency"] == 'USD'): ?>
+                                                    <div class="current__price-wrapper">
+                                                        <? if ($product_item["action_price"] > 0): ?>
+                                                        <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> $</span>
+                                                        <? endif; ?>
+                                                        <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> $</span>
+                                                    </div>
+                                                <? else: ?>
+                                                    <div class="current__price-wrapper">
+                                                        <? if ($product_item["action_price"] > 0): ?>
+                                                        <span class="old_price"><?= number_format($product_item["action_price"], 0, '', ' ') ?> ₽</span>
+                                                        <? endif; ?>
+                                                        <span class="price_usd_value"><?= number_format($product_item["retail_price"], 0, '', ' ') ?> ₽</span>
+                                                    </div>
+                                                <? endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <? endforeach; ?>
+                    </div>
+                </section>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+const link = document.getElementById('discounted-link')
+const discountedWrapper = document.getElementById('discounted-wrapper')
+
+link.addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    const offset = 150;
+    const elementPosition = discountedWrapper.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    
+    window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+    });
+});
+</script>
 
 <?
 CoreApplication::include_component(array("component" => "form_require_price", "template" => "default",));
