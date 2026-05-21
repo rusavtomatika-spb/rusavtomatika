@@ -328,43 +328,45 @@ function database_connect()
 
         $host = "localhost"; // ��� �����
 
-        $port = "3307";      // ����� �����, 3306 - �� ���������
+        $port = "3306";      // ����� �����, 3306 - �� ���������
 
         if ($_SERVER['DOCUMENT_ROOT'] == '/home/weblec/public_html/rusavtomatika.com') {
 
 
 
-            $user = "root";
+            $user = "weblec_den";      // ��� ������������
 
-            $pass = '123456';
+            $pass = '646111';  // ������
 
-            $dbnm = "rusavtomatika_db";
+            $dbnm = "weblec_weintek";      // ��� ��
 
         } elseif (preg_match("/www.test.rusavtomatika.com/i", $_SERVER['HTTP_HOST'])) {
 
-            $user = "root";
+            $dbnm = "weblec_weintek_test";
 
-            $pass = '123456';
+            $user = 'weblec_testuser';
 
-            $dbnm = "rusavtomatika_db";
+            $pass = '243344';
 
         } elseif (preg_match("/moisait/i", $_SERVER['DOCUMENT_ROOT'])) {
 
-            $user = "root";
+            $user = "moisait_olga";      // ��� ������������
 
-            $pass = '123456';
+            $pass = 'olgaglr';  // ������
 
-            $dbnm = "rusavtomatika_db";
+            $dbnm = "moisait_ra";      // ��� ��
 
         } elseif (preg_match("/olgaglr/i", $_SERVER['DOCUMENT_ROOT'])) {
 
 
 
-            $user = "root";
+            $port = "";      // ����� �����, 3306 - �� ���������
 
-            $pass = '123456';
+            $user = "olgaglr_rusavto";      // ��� ������������
 
-            $dbnm = "rusavtomatika_db";
+            $pass = 'pGrk5V2S';  // ������
+
+            $dbnm = "olgaglr_rusavto";      // ��� ��
 
         } else {
 
@@ -376,11 +378,11 @@ function database_connect()
 
 
 
-            $user = "root";
+            $user = "valovenko_rusavt";      // ��� ������������
 
-            $pass = '123456';
+            $pass = 'wyZM836401WL7x99';  // ������
 
-            $dbnm = "rusavtomatika_db";
+            $dbnm = "valovenko_rusavt";      // ��� ��
 
         };
 
