@@ -1,0 +1,53 @@
+DefaultLanguage ru
+AddDefaultCharset windows-1251
+php_value default_charset "cp1251"
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+RewriteCond %{HTTP_HOST} !^www.
+RewriteCond %{REQUEST_URI} (.*)
+RewriteRule (.*) https://www.%{HTTP_HOST}%1 [R=301,L]
+
+RewriteCond %{QUERY_STRING} (tel|submit)=(.*)$
+RewriteRule ^ https://%{HTTP_HOST} [R=404,L]
+
+RewriteCond %{REQUEST_URI} (ifc|aplex|samkoon|ewon|faraday|spiktek|smatipc)/(ifc|aplex|samkoon|spiktek|ewon|faraday|smatipc)/(.*)/ [NC]
+RewriteRule ^ https://%{HTTP_HOST} [R=404,L]
+
+RewriteCond %{QUERY_STRING} "utm" [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSD]
+
+############# Убираем //////////// в любом месте УРЛ #########################
+RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)/([\w\d-_]*?)[/?]{2,}[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)[/?]{2,}([\w\d-_]*?)/[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)/([\w\d-_]*?)/[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)[/?]{2,}([\w\d-_]*?)[/?]{2,}[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)[/?]{2,}([\w\d-_]*?)/[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)/([\w\d-_]*?)[/?]{2,}[\s?] [NC,OR]
+RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)[/?]{2,}([\w\d-_]*?)[/?]{2,}[\s?] [NC]
+RewriteRule (.*) https://%{HTTP_HOST}/%1/%2/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/([\w\d-_]*?)/([\w\d-_]*?)/\?(.*)[^=]\s [NC]
+RewriteCond %{QUERY_STRING} != [NC]
+RewriteRule (.*) https://%{HTTP_HOST}/%1/%2/? [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/([\w\d-_]*?)/\?(.*?)\s [NC]
+RewriteCond %{QUERY_STRING} != [NC]
+RewriteRule (.*) https://%{HTTP_HOST}/%1/? [R=301,L]
+
+RewriteCond %{REQUEST_URI} (.*)/$
+RewriteCond %{QUERY_STRING} !component\=catalog_detail($|&)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /catalog/index.php?component=catalog_detail&q=$1 [QSA]
+#RewriteRule ^(.*)/(.*)/(.*)/$ $1/$3? [R=301]
+
+
+RewriteBase /catalog
+RewriteCond %{REQUEST_URI} !(/$|\.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) /catalog/index.php?component=catalog_detail&q=$1 [QSA,C]
+RewriteRule (.*) %{REQUEST_URI}/? [R=301]
+

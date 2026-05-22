@@ -1,0 +1,31 @@
+DefaultLanguage ru
+AddDefaultCharset windows-1251
+php_value default_charset "cp1251"
+
+RewriteEngine On
+
+RewriteCond %{HTTPS} =off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{QUERY_STRING} (tel|submit)=(.*)$
+RewriteRule ^ https://%{HTTP_HOST} [R=404,L]
+
+RewriteCond %{REQUEST_URI} (ifc|aplex|samkoon|ewon|faraday|smatipc)/(ifc|aplex|samkoon|ewon|faraday|smatipc)/(.*)/ [NC]
+RewriteRule ^ https://%{HTTP_HOST} [R=404,L]
+
+RewriteCond %{QUERY_STRING} "utm" [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSD]
+
+RewriteCond %{THE_REQUEST} \s/+(.*?)/{2,}([^\s]*)
+RewriteRule ^ /%1/%2 [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/[^?]*\?\s
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}? [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /catalog/index.php?component=catalog_detail&q=$1 [QSA,L]
