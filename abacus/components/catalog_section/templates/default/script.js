@@ -2252,7 +2252,40 @@ var app = new Vue({
       this.filterSelectedDiagonals = [];
       this.filterChanged();
     },
-  },
+
+    toggleGroupedDiagonalFilter: function(groupValues, event) {
+      const groupValuesNum = groupValues.map(v => parseFloat(v));
+      
+      let isSelected = false;
+      for (let i = 0; i < groupValuesNum.length; i++) {
+        if (this.filterSelectedDiagonals.includes(groupValuesNum[i])) {
+          isSelected = true;
+          break;
+        }
+      }
+      
+      if (isSelected) {
+        for (let i = 0; i < groupValuesNum.length; i++) {
+          const index = this.filterSelectedDiagonals.indexOf(groupValuesNum[i]);
+          if (index !== -1) {
+            this.filterSelectedDiagonals.splice(index, 1);
+          }
+        }
+      } else {
+        for (let i = 0; i < groupValuesNum.length; i++) {
+          if (!this.filterSelectedDiagonals.includes(groupValuesNum[i])) {
+            this.filterSelectedDiagonals.push(groupValuesNum[i]);
+          }
+        }
+      }
+      
+      this.filterSelectedDiagonals.sort(function(a, b) {
+        return a - b;
+      });
+      
+      this.filterChanged();
+    },
+  }
 
 });
 // Получаем элементы страницы

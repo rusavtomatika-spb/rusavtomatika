@@ -427,24 +427,74 @@ if ( $HTTP_REFERER != "" ) {
                   <button class="scroll-btn left" onclick="scrollDiagonalSpan('left')"></button>
                   <button class="scroll-btn right" onclick="scrollDiagonalSpan('right')"></button>
                   <div class="elements">
+                      <?php 
+                      $groupedDiagonals = array();
+                      $processedValues = array();
+
+                      if (!empty($uniqueDiagonals)) {
+                          $uniqueDiagonals = array_values($uniqueDiagonals);
+                          sort($uniqueDiagonals, SORT_NUMERIC);
+                          
+                          foreach ($uniqueDiagonals as $value) {
+                              if (($value == 10.1 || $value == 10.2) && !in_array($value, $processedValues)) {
+                                  $groupValues = array();
+                                  if (in_array(10.1, $uniqueDiagonals)) {
+                                      $groupValues[] = 10.1;
+                                      $processedValues[] = 10.1;
+                                  }
+                                  if (in_array(10.2, $uniqueDiagonals)) {
+                                      $groupValues[] = 10.2;
+                                      $processedValues[] = 10.2;
+                                  }
+                                  if (!empty($groupValues)) {
+                                      $groupedDiagonals[] = array(
+                                          'value' => '10.1',
+                                          'values' => $groupValues
+                                      );
+                                  }
+                              } elseif (!in_array($value, $processedValues) && $value != 10.1 && $value != 10.2) {
+                                  $groupedDiagonals[] = array(
+                                      'value' => $value,
+                                      'values' => array($value)
+                                  );
+                                  $processedValues[] = $value;
+                              }
+                          }
+                          
+                          usort($groupedDiagonals, function($a, $b) {
+                              if ($a['values'][0] == $b['values'][0]) return 0;
+                              return ($a['values'][0] < $b['values'][0]) ? -1 : 1;
+                          });
+                      }
+                      ?>
+
                       <?php if (!empty($groupedDiagonals)): ?>
-                          <?php foreach ($groupedDiagonals as $diag): ?>
-                              <span 
-                                  v-bind:class="['section_list__set_diagonal_span__button', 
-                                      {'active': filterSelectedDiagonals.indexOf(<?= $diag['value'] ?>) !== -1}]" 
-                                  @click="toggleDiagonalFilter(<?= $diag['value'] ?>, '', $event)">
-                                  <?= $diag['value'] ?>" 
-                              </span>
+                          <?php foreach ($groupedDiagonals as $diagGroup): ?>
+                              <?php if (count($diagGroup['values']) > 1): ?>
+                                  <span 
+                                      v-bind:class="['section_list__set_diagonal_span__button', 
+                                          {'active': filterSelectedDiagonals.some(val => <?= json_encode($diagGroup['values']) ?>.includes(parseFloat(val)))}]" 
+                                      @click="toggleGroupedDiagonalFilter(<?= htmlspecialchars(json_encode($diagGroup['values'])) ?>, $event)">
+                                      <?= $diagGroup['value'] ?>" 
+                                  </span>
+                              <?php else: ?>
+                                  <span 
+                                      v-bind:class="['section_list__set_diagonal_span__button', 
+                                          {'active': filterSelectedDiagonals.indexOf(<?= $diagGroup['value'] ?>) !== -1}]" 
+                                      @click="toggleDiagonalFilter(<?= $diagGroup['value'] ?>, '', $event)">
+                                      <?= $diagGroup['value'] ?>" 
+                                  </span>
+                              <?php endif; ?>
                           <?php endforeach; ?>
                       <?php endif; ?>
                   </div>
                   <span
-                    style="position: absolute; right: -65px; bottom: 0;"
-                    v-bind:class="['section_list__set_diagonal_span__button clear_button', {'active': filterSelectedDiagonals.length === 0}]" 
-                    @click="clearDiagonalFilters()"
+                      style="position: absolute; right: -65px; bottom: 0;"
+                      v-bind:class="['section_list__set_diagonal_span__button clear_button', {'active': filterSelectedDiagonals.length === 0}]" 
+                      @click="clearDiagonalFilters()"
                   >
                   </span>
-                </div>
+              </div>
                 <div class="is-hidden-touch section_list__set_availablity"
                              v-if="section_list__set_availability_show">
                   <div class="is-size-7">Наличие</div>
