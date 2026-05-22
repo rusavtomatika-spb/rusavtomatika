@@ -786,9 +786,9 @@ if ( $arResult[ 'product' ][ "set_tab_html" ] != '' ):
 <? endif; ?>
 <? if (isset($arResult['product']['questions_about_model'])&&$arResult['product']['questions_about_model']!='') : ?>
 <section id="text">
-  <h2>Часто задаваемые вопросы</h2>  <?
-  echo $arResult[ 'product' ][ 'questions_about_model' ];
-  ?>
+  <h2>Часто задаваемые вопросы</h2>
+  <?echo $arResult[ 'product' ][ 'questions_about_model' ];?>
+  <p>У нас разобраны и более комплексные вопросы на странице <a href="/faq">Часто Задаваемых Вопросов</a></p>
 </section>
 <? endif; ?>
 
