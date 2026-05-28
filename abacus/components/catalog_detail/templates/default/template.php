@@ -309,14 +309,26 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                                                          data-model='<?= $arResult['product']["model"] ?>'
                                                          data-box="cart"> <span class="btn_icon_order"></span> <span class="btn_icon_order_text">В заказ</span> </div>
                 <? } ?>
-                <div @click="add_too_box"
-                                                     class='button button_like_link add_to_compare'
-                                                     data-model='<?= $arResult['product']["model"] ?>'
-                                                     data-box="compare"> <span class="btn_icon"></span> <span class="btn_text">В сравнение</span> </div>
-                <div @click="add_too_box"
-                                                     class='button button_like_link add_to_favorites'
-                                                     data-model='<?= $arResult['product']["model"] ?>'
-                                                     data-box="favorites"> <span class="btn_icon"></span> <span class="btn_text">В избранное</span> </div>
+                <div
+                  @click="add_too_box"
+                  class='button button_like_link add_to_compare'
+                  data-model='<?= $arResult['product']["model"] ?>'
+                  data-box="compare"
+                  style="background: #fff;"
+                >
+                    <span class="btn_icon"></span>
+                    <span class="btn_text">В сравнение</span>
+                </div>
+                <div
+                  @click="add_too_box"
+                  class='button button_like_link add_to_favorites'
+                  data-model='<?= $arResult['product']["model"] ?>'
+                  data-box="favorites"
+                  style="background: #fff;"
+                >
+                    <i class="fa-regular fa-heart"></i>&nbsp;
+                    <span class="btn_text">В избранное</span>
+                </div>
               </div>
             </div>
           </div>
@@ -527,14 +539,25 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
           <div @click="add_too_box" class='button is-primary add_to_cart'
                                              data-model='<?= $arResult['product']["model"] ?>' data-box="cart"> <span class="btn_icon_order"></span> <span class="btn_icon_order_text">В заказ</span> </div>
           <? } ?>
-          <div></div>
               <? if ($arResult['product']["analogs"] != "") { ?>
-          <div @click="add_too_box"
-                                         class='button button_like_link add_to_compare'
-                                         data-model='<?= $arResult['product']["model"] ?>' data-box="compare"> <span class="btn_icon"></span> <span class="btn_text">В сравнение</span> </div>
-          <div @click="add_too_box"
-                                         class='button button_like_link add_to_favorites'
-                                         data-model='<?= $arResult['product']["model"] ?>' data-box="favorites"> <i class="fa-regular fa-heart"></i> <span class="btn_text">&nbsp;В избранное</span> </div>
+          <div
+            style="background: #fff;"
+            @click="add_too_box"
+            class='button button_like_link add_to_compare'
+            data-model='<?= $arResult['product']["model"] ?>' data-box="compare"
+          >
+            <span class="btn_icon"></span>
+            <span class="btn_text">В сравнение</span>
+          </div>
+          <div
+            style="background: #fff;"
+            @click="add_too_box"
+            class='button button_like_link add_to_favorites'
+            data-model='<?= $arResult['product']["model"] ?>' data-box="favorites"
+          >
+            <i class="fa-regular fa-heart"></i>
+            <span class="btn_text">&nbsp;В избранное</span>
+          </div>
               <? } 
 	if (($arResult['product']["discontinued"] == "1") && ($arResult['product']['analogs'] == "")) { ?>
           Мы готовы предложить<br>
@@ -555,6 +578,26 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                                             Получить скидку
                                         </div>
 --> 
+        <div
+          @click="add_too_box"
+          class='button button_like_link add_to_compare'
+          data-model='<?= $arResult['product']["model"] ?>'
+          data-box="compare"
+          style="background: #fff;"
+        >
+          <span class="btn_icon"></span>
+          <span class="btn_text">В сравнение</span>
+        </div>
+        <div
+          @click="add_too_box"
+          class='button button_like_link add_to_favorites'
+          data-model='<?= $arResult['product']["model"] ?>'
+          data-box="favorites"
+          style="background: #fff;"
+        >
+          <i class="fa-regular fa-heart"></i>&nbsp;
+          <span class="btn_text">В избранное</span>
+        </div>
         <?php if ($arResult['product']['view3d'] == 1): ?>
           <?php
             $modelName = $arResult['product']["model"];

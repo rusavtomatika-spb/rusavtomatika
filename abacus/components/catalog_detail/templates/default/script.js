@@ -40,7 +40,6 @@ var app = new Vue({
       }
     },
     cart: function (newVal) {
-
       if (newVal.length > 0) {
         $('.catalog_toolbar .catalog_toolbar__item.cart .catalog_toolbar__item_number').html(newVal.length);
         this.save_param_to_cookie('box2_cart', newVal.join(','));
@@ -49,35 +48,52 @@ var app = new Vue({
         this.save_param_to_cookie('box2_cart', '');
       }
     },
-
   },
   methods: {
-    init() {
-
+    findButtons: function(selector) {
+      return $(this.$el).find(selector);
+    },
+    
+    updateHeartIcon: function(button, isActive) {
+      const heartIcon = $(button).find('i.fa-heart, i.fa-regular.fa-heart, i.fa-solid.fa-heart');
+      if (heartIcon.length > 0) {
+        if (isActive) {
+          heartIcon.removeClass('fa-regular').addClass('fa-solid');
+        } else {
+          heartIcon.removeClass('fa-solid').addClass('fa-regular');
+        }
+      }
+    },
+    
+    updateAllHeartIcons: function(isActive) {
       const context = this;
-
+      this.findButtons('.button.add_to_favorites').each(function() {
+        context.updateHeartIcon(this, isActive);
+      });
+    },
+    
+    init() {
+      const context = this;
+      const vueElement = this.$el;
 
       window.addEventListener('storage', function (event) {
-
         switch (event.key) {
           case 'compare':
             setTimeout(function () {
               let compare = context.getCookie('box2_compare');
               if (compare !== undefined) {
                 compare = compare.replace(/^[\, ]|[\, ]$/g, '');
-
                 if (compare != "") {
                   context.compare = compare.split(",");
-                  let model = $('#vue_component_catalog_detail').attr('data-model');
+                  let model = $(vueElement).attr('data-model');
                   if (context.compare.indexOf(model) >= 0) {
-                    $('.button.add_to_compare').addClass('is-active');
+                    context.findButtons('.button.add_to_compare').addClass('is-active');
                   } else {
-                    $('.button.add_to_compare').removeClass('is-active');
+                    context.findButtons('.button.add_to_compare').removeClass('is-active');
                   }
                 } else {
                   context.compare = [];
-                  $('.button.add_to_compare').removeClass('is-active');
-
+                  context.findButtons('.button.add_to_compare').removeClass('is-active');
                 }
               }
             }, 1000);
@@ -89,22 +105,24 @@ var app = new Vue({
                 favorites = favorites.replace(/^[\, ]|[\, ]$/g, '');
                 if (favorites != "") {
                   context.favorites = favorites.split(",");
-                  let model = $('#vue_component_catalog_detail').attr('data-model');
+                  let model = $(vueElement).attr('data-model');
                   if (context.favorites.indexOf(model) >= 0) {
-                    $('.button.add_to_favorites').addClass('is-active');
+                    context.findButtons('.button.add_to_favorites').addClass('is-active');
+                    context.updateAllHeartIcons(true);
                   } else {
-                    $('.button.add_to_favorites').removeClass('is-active');
+                    context.findButtons('.button.add_to_favorites').removeClass('is-active');
+                    context.updateAllHeartIcons(false);
                   }
                 } else {
                   context.favorites = [];
-                  $('.button.add_to_favorites').removeClass('is-active');
+                  context.findButtons('.button.add_to_favorites').removeClass('is-active');
+                  context.updateAllHeartIcons(false);
                 }
               }
             }, 1000);
             break;
         }
       });
-
 
       const model = $('#vue_component_catalog_detail').attr('data-model');
       /***********************************************************************************************************/
@@ -114,7 +132,8 @@ var app = new Vue({
         if (favorites != "") this.favorites = favorites.split(",");
       }
       if (this.favorites.indexOf(model) >= 0) {
-        $('.button.add_to_favorites').addClass('is-active');
+        this.findButtons('.button.add_to_favorites').addClass('is-active');
+        this.updateAllHeartIcons(true);
       }
       /***********************************************************************************************************/
       let compare = this.getCookie('box2_compare');
@@ -123,7 +142,7 @@ var app = new Vue({
         if (compare != "") this.compare = compare.split(",");
       }
       if (this.compare.indexOf(model) >= 0) {
-        $('.button.add_to_compare').addClass('is-active');
+        this.findButtons('.button.add_to_compare').addClass('is-active');
       }
       /***********************************************************************************************************/
       let cart = this.getCookie('box2_cart');
@@ -133,8 +152,8 @@ var app = new Vue({
       }
 
       if (this.cart.indexOf(model) >= 0) {
-        $('.button.add_to_cart').addClass('is-active');
-        $('.button.add_to_cart .btn_icon_order_text').html('в заказе');
+        this.findButtons('.button.add_to_cart').addClass('is-active');
+        this.findButtons('.button.add_to_cart .btn_icon_order_text').html('в заказе');
       }
     },
     add_too_box(e) {
@@ -145,6 +164,8 @@ var app = new Vue({
       if ($(button).attr('data-model') != '') {
         const model = $(button).attr('data-model');
         const box = $(button).attr('data-box');
+        const context = this;
+        
         switch (box) {
           case 'favorites':
             let favorites = this.getCookie('box2_favorites');
@@ -153,14 +174,16 @@ var app = new Vue({
               if (favorites != "") this.favorites = favorites.split(",");
             }
             if (this.favorites.indexOf(model) === -1) {
-              $(button).addClass('is-active');
+              context.findButtons('.button.add_to_favorites').addClass('is-active');
+              context.updateAllHeartIcons(true);
               this.favorites.push(model);
               const source_element = $(button);
               const destination_element = $(".catalog_toolbar__item." + box);
               this.do_flying_row(source_element, destination_element);
             } else {
               this.favorites.splice(this.favorites.indexOf(model), 1);
-              $(button).removeClass('is-active');
+              context.findButtons('.button.add_to_favorites').removeClass('is-active');
+              context.updateAllHeartIcons(false);
               this.do_flying_row($(button));
             }
             localStorage.setItem('favorites', Date.now());
@@ -172,31 +195,30 @@ var app = new Vue({
               if (compare != "") this.compare = compare.split(",");
             }
             if (this.compare.indexOf(model) === -1) {
-              $(button).addClass('is-active');
+              context.findButtons('.button.add_to_compare').addClass('is-active');
               this.compare.push(model);
               const source_element = $(button);
               const destination_element = $(".catalog_toolbar__item." + box);
               this.do_flying_row(source_element, destination_element);
             } else {
               this.compare.splice(this.compare.indexOf(model), 1);
-              $(button).removeClass('is-active');
+              context.findButtons('.button.add_to_compare').removeClass('is-active');
               this.do_flying_row($(button));
             }
             localStorage.setItem('compare', Date.now());
             break;
           case 'cart':
             if (this.cart.indexOf(model) == -1) {
-              $('.button.add_to_cart').addClass('is-active');
-              $('.button.add_to_cart .btn_icon_order_text').html('в заказе');
+              context.findButtons('.button.add_to_cart').addClass('is-active');
+              context.findButtons('.button.add_to_cart .btn_icon_order_text').html('в заказе');
               this.cart.push(model);
               const source_element = $(button);
               const destination_element = $(".catalog_toolbar__item." + box);
               this.do_flying_row(source_element, destination_element);
             } else {
               this.cart.splice(this.cart.indexOf(model), 1);
-
-              $('.button.add_to_cart').removeClass('is-active');
-              $('.button.add_to_cart .btn_icon_order_text').html('в заказ');
+              context.findButtons('.button.add_to_cart').removeClass('is-active');
+              context.findButtons('.button.add_to_cart .btn_icon_order_text').html('в заказ');
               this.do_flying_row($(button));
             }
             localStorage.setItem('cart', Date.now());
@@ -204,7 +226,6 @@ var app = new Vue({
           default:
             return false;
         }
-
       }
     },
     do_flying_row(source_element, destination_element = null) {
@@ -217,7 +238,6 @@ var app = new Vue({
         destination_element_offset_left = $(destination_element).offset()['left'];
         destination_element_offset_top = $(destination_element).offset()['top'] - window.innerHeight / 10;
       }
-
 
       const w = source_element.width();
       source_element.clone().addClass('flying_row')
@@ -236,8 +256,8 @@ var app = new Vue({
           width: 20
         }, 1000, function () {
           $(this).remove();
-
         });
+        
       setTimeout(function () {
         $('.catalog_toolbar__item.favorite').css({
           "background": "rgba(38,117,60,0.97)"
@@ -249,7 +269,6 @@ var app = new Vue({
           });
         }, 800);
       }, 800);
-
     },
 
     change_section(num) {
@@ -267,7 +286,6 @@ var app = new Vue({
       }, 800);
     },
 
-
     save_param_to_cookie(param, value) {
       let date = new Date;
       date.setDate(date.getDate() + 365);
@@ -276,20 +294,15 @@ var app = new Vue({
         'expires': date
       });
     },
-    ///////////////////////////////////////////////////Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////Cookie///////////////////////////////////////////////////////
+    
     getCookie(name) {
       let matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
       ));
       return matches ? decodeURIComponent(matches[1]) : undefined;
     },
+    
     setCookie(name, value, options = {}) {
-
-      // Пример использования:
-      //setCookie('user', 'John', {secure: true, 'max-age': 3600});
       let date = new Date;
       date.setDate(date.getDate() + 365);
       date = date.toUTCString();
@@ -314,25 +327,16 @@ var app = new Vue({
       }
 
       updatedCookie += ';SameSite=Strict;Secure';
-
-      //console.log("detail_cookie: " + updatedCookie);
       document.cookie = updatedCookie;
-      //console.log("detail_cookie: " + updatedCookie);
     },
+    
     deleteCookie(name) {
       setCookie(name, "", {
         'max-age': -1
       })
     },
-    ///////////////////////////////////////////////End Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////End Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////End Cookie///////////////////////////////////////////////////////
-    ///////////////////////////////////////////////End Cookie///////////////////////////////////////////////////////
-
-
   },
 });
-
 
 /*******************************************************************************************************************/
 
