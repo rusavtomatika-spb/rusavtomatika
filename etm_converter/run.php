@@ -20,7 +20,11 @@ echo "Сервер: " . $_SERVER['SERVER_NAME'] . "\n";
 echo "Директория скрипта: " . __DIR__ . "\n\n";
 
 $converter = new ETMConverter(array(
-    'base_path' => '/home/moisait/public_html/rusavto'
+    'base_path' => '/home/moisait/public_html/rusavto',
+    'db_host' => 'localhost',
+    'db_user' => 'moisait_olga',
+    'db_pass' => 'olgaglr',
+    'db_name' => 'moisait_ra'
 ));
 
 try {
