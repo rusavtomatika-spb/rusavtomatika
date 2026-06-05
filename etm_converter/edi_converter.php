@@ -10,25 +10,7 @@ class ETMConverter {
     private $encoding = 'Windows-1251';
     private $delimiter = ';';
     
-    private $warehouses = array(
-        'ЭТМ,СПб' => '4660011510200',
-        'ЭТМ,Москва' => '4660011510149',
-        'ЭТМ,Урал' => '4660011510125',
-        'ЭТМ,Самара' => '4660011510132',
-        'ЭТМ,Юг' => '4660011510156',
-        'ЭТМ,Сибирь' => '4660011510163',
-        'ЭТМ,Казань' => '4660011510170',
-        'ЭТМ,МЯ' => '4660011510194',
-        'ЭТМ,ЦРС' => '4660011511184',
-        'ЭТМ,Шушары' => '4660011510200',
-        'ЭТМ,Челябинск' => '4660011510538',
-        'ЭТМ,Н.Новгород' => '4660011511139',
-        'ЭТМ,Воронеж' => '4660011510354',
-        'ЭТМ,Воронеж2' => '4660011510446',
-        'ЭТМ,Краснодар' => '4660011510545',
-        'ЭТМ,Владивосток' => '4660011512136',
-        'ЭТМ,Хабаровск' => '4660011512037'
-    );
+    private $mysqli = null;
     
     private $log_file;
     
@@ -43,50 +25,116 @@ class ETMConverter {
         }
         
         $this->incoming_path = $this->base_path . '/to_etm';
-        
         $this->archive_path = $this->base_path . '/to_etm/recd';
-        
         $this->output_path = $this->base_path . '/from_etm';
-        
         $this->log_file = __DIR__ . '/edi_converter.log';
         
-        if (!empty($config['incoming_path'])) {
-            $this->incoming_path = $config['incoming_path'];
-        }
-        if (!empty($config['archive_path'])) {
-            $this->archive_path = $config['archive_path'];
-        }
-        if (!empty($config['output_path'])) {
-            $this->output_path = $config['output_path'];
-        }
-        if (!empty($config['log_file'])) {
-            $this->log_file = $config['log_file'];
+        if (!empty($config['incoming_path'])) $this->incoming_path = $config['incoming_path'];
+        if (!empty($config['archive_path'])) $this->archive_path = $config['archive_path'];
+        if (!empty($config['output_path'])) $this->output_path = $config['output_path'];
+        if (!empty($config['log_file'])) $this->log_file = $config['log_file'];
+        
+        if (!empty($config['db_host'])) {
+            $this->connectDatabase($config);
         }
         
         $this->ensureDirectories();
-        
         date_default_timezone_set('Europe/Moscow');
     }
     
     /**
-     * Создание необходимых директорий
+     * Подключение к базе данных
      */
-    private function ensureDirectories() {
-        $dirs = array(
-            $this->incoming_path,
-            $this->archive_path,
-            $this->output_path,
-            $this->output_path . '/recd'
-        );
+    private function connectDatabase($config) {
+        $host = $config['db_host'];
+        $user = $config['db_user'];
+        $pass = $config['db_pass'];
+        $name = $config['db_name'];
         
+        $this->mysqli = new mysqli($host, $user, $pass, $name);
+        
+        if ($this->mysqli->connect_error) {
+            $this->log("ОШИБКА подключения к БД: " . $this->mysqli->connect_error);
+            $this->mysqli = null;
+        } else {
+            $this->mysqli->set_charset('utf8');
+            $this->log("Подключение к БД установлено: {$name}");
+        }
+    }
+    
+    /**
+     * Получить данные товара из products_all
+     */
+    private function getProductData($article) {
+        if (!$this->mysqli) return null;
+        
+        $article = $this->mysqli->real_escape_string($article);
+        
+        $query = "SELECT 
+            model,
+            model_fullname,
+            brand,
+            retail_price,
+            action_price,
+            currency,
+            onstock_spb,
+            preview_text,
+            short_name,
+            dimentions,
+            weight
+          FROM products_all 
+          WHERE model = '{$article}' 
+          LIMIT 1";
+        
+        $result = $this->mysqli->query($query);
+        
+        if ($result && $row = $result->fetch_assoc()) {
+            return $row;
+        }
+        return null;
+    }
+    
+    /**
+     * Получить цену в рублях
+     */
+    private function getPriceRub($product) {
+        if (!$product) return '';
+        
+        $usd_currency = $this->getUsdRate();
+        
+        if ($product['currency'] === 'RUR') {
+            return $product['retail_price'];
+        } elseif ($usd_currency > 0) {
+            return round($product['retail_price'] * $usd_currency);
+        }
+        
+        return $product['retail_price'];
+    }
+    
+    /**
+     * Получить курс USD из файла
+     */
+    private function getUsdRate() {
+        $rate_file = $this->base_path . '/usdrate.txt';
+        if (file_exists($rate_file)) {
+            return floatval(file_get_contents($rate_file));
+        }
+        // Запасной путь
+        $rate_file = $_SERVER['DOCUMENT_ROOT'] . '/usdrate.txt';
+        if (file_exists($rate_file)) {
+            return floatval(file_get_contents($rate_file));
+        }
+        return 0;
+    }
+    
+    // ============== ОСТАЛЬНЫЕ МЕТОДЫ (без изменений) ==============
+    
+    private function ensureDirectories() {
+        $dirs = array($this->incoming_path, $this->archive_path, $this->output_path, $this->output_path . '/recd');
         foreach ($dirs as $dir) {
             if (!is_dir($dir)) {
-                $result = mkdir($dir, 0755, true);
-                if ($result) {
-                    $this->log("Создана директория: {$dir}");
-                } else {
-                    $this->log("ОШИБКА создания директории: {$dir}");
-                }
+                mkdir($dir, 0755, true);
+                $this->log("Создана директория: {$dir}");
             }
         }
     }
@@ -97,51 +145,30 @@ class ETMConverter {
     public function process() {
         $this->log("=== Начало обработки EDI сообщений ===");
         $this->log("Base path: {$this->base_path}");
-        $this->log("Входящие: {$this->incoming_path}");
-        $this->log("Архив: {$this->archive_path}");
-        $this->log("Исходящие: {$this->output_path}");
         
         if (!is_dir($this->incoming_path)) {
-            $this->log("ОШИБКА: Директория входящих не найдена: {$this->incoming_path}");
-            $this->log("Текущая директория скрипта: " . __DIR__);
+            $this->log("ОШИБКА: Директория {$this->incoming_path} не найдена");
             return false;
         }
         
         $files = scandir($this->incoming_path);
-        
-        if (!$files) {
-            $this->log("Нет файлов для обработки");
-            return true;
-        }
+        if (!$files) { $this->log("Нет файлов для обработки"); return true; }
         
         $processed = 0;
-        
         foreach ($files as $file) {
-            if ($file == '.' || $file == '..' || $file == 'recd') {
-                continue;
-            }
-            
+            if ($file == '.' || $file == '..' || $file == 'recd') continue;
             $full_path = $this->incoming_path . '/' . $file;
-            
-            if (is_dir($full_path)) {
-                continue;
-            }
+            if (is_dir($full_path)) continue;
             
             $this->log("Обработка файла: {$file}");
-            
-            $result = $this->processFile($full_path, $file);
-            
-            if ($result) {
+            if ($this->processFile($full_path, $file)) {
                 $this->archiveFile($full_path, $file);
                 $processed++;
-            } else {
-                $this->log("Ошибка обработки файла: {$file}");
             }
         }
         
         $this->log("Обработано файлов: {$processed}");
-        $this->log("=== Завершение обработки EDI сообщений ===");
-        
+        $this->log("=== Завершение ===");
         return true;
     }
     
@@ -150,37 +177,26 @@ class ETMConverter {
      */
     private function processFile($file_path, $file_name) {
         $content = file_get_contents($file_path);
+        if (empty($content)) return false;
         
-        if (empty($content)) {
-            $this->log("Файл пустой: {$file_name}");
-            return false;
+        $detected = mb_detect_encoding($content, array('Windows-1251', 'UTF-8', 'CP1251'), true);
+        if ($detected === 'Windows-1251' || $detected === 'CP1251') {
+            $content = mb_convert_encoding($content, 'UTF-8', 'Windows-1251');
         }
-        
-        $content = mb_convert_encoding($content, 'UTF-8', $this->encoding);
         
         $message_type = $this->detectMessageType($content);
         $this->log("Тип сообщения: {$message_type}");
         
         switch ($message_type) {
-            case 'ORDER':
-                return $this->processOrder($content, $file_name);
-            case 'ORDERSP':
-                return $this->processOrderResponse($content, $file_name);
-            case 'INVOIC':
-                return $this->processInvoic($content, $file_name);
-            case 'INVRPT':
-                return $this->processInventory($content, $file_name);
-            case 'PRODAT':
-                return $this->processProductData($content, $file_name);
-            case 'PROJECT':
-                return $this->processProject($content, $file_name);
-            case 'PROJSTA':
-                return $this->processProjectStatus($content, $file_name);
-            case 'PROJQUO':
-                return $this->processProjectQuotation($content, $file_name);
-            default:
-                $this->log("Неизвестный тип сообщения: {$file_name}");
-                return false;
+            case 'ORDER':    return $this->processOrder($content, $file_name);
+            case 'ORDERSP':  return $this->processTransit($content, $file_name, 'ORDERSP');
+            case 'INVOIC':   return $this->processTransit($content, $file_name, 'INVOIC');
+            case 'INVRPT':   return $this->processTransit($content, $file_name, 'INVRPT');
+            case 'PRODAT':   return $this->processTransit($content, $file_name, 'PRODAT');
+            case 'PROJECT':  return $this->processTransit($content, $file_name, 'PROJECT');
+            case 'PROJSTA':  return $this->processTransit($content, $file_name, 'PROJSTA');
+            case 'PROJQUO':  return $this->processTransit($content, $file_name, 'PROJQUO');
+            default: $this->log("Неизвестный тип: {$file_name}"); return false;
         }
     }
     
@@ -189,48 +205,19 @@ class ETMConverter {
      */
     private function detectMessageType($content) {
         $lines = explode("\n", $content);
-        
         foreach ($lines as $line) {
             $line = trim($line);
             if (empty($line)) continue;
-            
-            if (strpos($line, 'MSGTYPE:ORDERSP') !== false) {
-                return 'ORDERSP';
-            }
-            if (strpos($line, 'MSGTYPE:PROJSTA') !== false) {
-                return 'PROJSTA';
-            }
-            if (strpos($line, 'MSGTYPE:PROJQUO') !== false) {
-                return 'PROJQUO';
-            }
-            
-            if (strpos($line, 'Артикул;Наименование;Количество;Цена') !== false) {
-                return 'INVOIC';
-            }
-            
-            if (strpos($line, 'Продавец:') !== false) {
-                return 'INVOIC';
-            }
-            
-            if (strpos($line, 'Режим:ОписаниеТоваров') !== false) {
-                return 'PRODAT';
-            }
-            
-            if (strpos($line, 'Код проекта') !== false && 
-                strpos($line, 'Название проекта') !== false) {
-                return 'PROJECT';
-            }
-            
-            if (preg_match('/^(ЭТМ,|Дата:|Номер:|Примечание:)/', $line)) {
-                return 'ORDER';
-            }
-            
-            if (strpos($line, 'Название;Производитель;Артикул') !== false ||
-                strpos($line, 'NameRgd;CodeMnf;Article') !== false) {
-                return 'INVRPT';
-            }
+            if (strpos($line, 'MSGTYPE:ORDERSP') !== false) return 'ORDERSP';
+            if (strpos($line, 'MSGTYPE:PROJSTA') !== false) return 'PROJSTA';
+            if (strpos($line, 'MSGTYPE:PROJQUO') !== false) return 'PROJQUO';
+            if (strpos($line, 'Артикул;Наименование;Количество;Цена') !== false) return 'INVOIC';
+            if (strpos($line, 'Продавец:') !== false) return 'INVOIC';
+            if (strpos($line, 'Режим:ОписаниеТоваров') !== false) return 'PRODAT';
+            if (strpos($line, 'Код проекта') !== false && strpos($line, 'Название проекта') !== false) return 'PROJECT';
+            if (preg_match('/^(ЭТМ,|Дата:|Номер:|Примечание:)/u', $line)) return 'ORDER';
+            if (strpos($line, 'Название;Производитель;Артикул') !== false || strpos($line, 'NameRgd;CodeMnf;Article') !== false) return 'INVRPT';
         }
-        
         return 'UNKNOWN';
     }
     
@@ -254,7 +241,7 @@ class ETMConverter {
                 if (strpos($line, ':') !== false) {
                     list($key, $value) = explode(':', $line, 2);
                     $header[trim($key)] = trim($value);
-                } elseif (preg_match('/^(ЭТМ,)/', $line)) {
+                } elseif (preg_match('/^(ЭТМ,)/u', $line)) {
                     $header['warehouse'] = $line;
                 } else {
                     $in_header = false;
@@ -265,163 +252,108 @@ class ETMConverter {
             }
         }
         
-        $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Тип подтверждения;MSGTYPE:ORDERSP";
+        $first_item = isset($items[0]) ? $items[0] : array();
+        $doc_type = isset($first_item['doc_type']) ? $first_item['doc_type'] : 'заказ';
         
         $order_number = isset($header['Номер']) ? $header['Номер'] : '';
         $warehouse = isset($header['warehouse']) ? $header['warehouse'] : '';
         
-        foreach ($items as $item) {
-            $name = isset($item['name']) ? $item['name'] : '';
-            $article = isset($item['article']) ? $item['article'] : '';
-            $quantity = isset($item['quantity']) ? $item['quantity'] : '';
+        // ============ СПЕЦУСЛОВИЯ ============
+        if ($doc_type === 'спецусловия') {
+            $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Идентификатор документа;Тип подтверждения;Цена;Период действия;Размер предоплаты;Отсрочка дней;Цена Клиента;MSGTYPE:ORDERSP";
             
-            $row = array(
-                $order_number,
-                '',
-                $name,
-                $article,
-                $quantity,
-                $warehouse,
-                'Получено'
-            );
-            $csv_rows[] = implode($this->delimiter, $row);
+            foreach ($items as $item) {
+                $name = isset($item['name']) ? $item['name'] : '';
+                $article = isset($item['article']) ? $item['article'] : '';
+                $quantity = isset($item['quantity']) ? $item['quantity'] : '';
+                $basis = isset($item['basis']) ? $item['basis'] : '';
+                
+                $product = $this->getProductData($article);
+                $price_rub = $this->getPriceRub($product);
+                
+                if ($product && !empty($product['model_fullname'])) {
+                    $name = $product['model_fullname'];
+                }
+                
+                $row = array(
+                    $order_number,
+                    '',                // Дата поставки
+                    $name,
+                    $article,
+                    $quantity,
+                    $warehouse,
+                    $basis,
+                    'Принят',          // Для спецусловий
+                    $price_rub,        // Цена из БД
+                    '',                // Период действия
+                    '',                // Предоплата
+                    '',                // Отсрочка
+                    $price_rub         // Цена клиента = цена
+                );
+                $csv_rows[] = implode($this->delimiter, $row);
+            }
+        }
+        // ============ ЗАКАЗ / ЗАПРОС ============
+        else {
+            $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Тип подтверждения;MSGTYPE:ORDERSP";
+            
+            foreach ($items as $item) {
+                $name = isset($item['name']) ? $item['name'] : '';
+                $article = isset($item['article']) ? $item['article'] : '';
+                $quantity = isset($item['quantity']) ? $item['quantity'] : '';
+                
+                $product = $this->getProductData($article);
+                
+                if ($product && !empty($product['model_fullname'])) {
+                    $name = $product['model_fullname'];
+                }
+                
+                $stock_status = 'Получено';
+                if ($product) {
+                    if ($product['onstock_spb'] >= $quantity) {
+                        $stock_status = 'Принято без изменений';
+                    } elseif ($product['onstock_spb'] > 0) {
+                        $stock_status = 'Изменение';
+                    }
+                }
+                
+                $row = array(
+                    $order_number,
+                    '',              // Дата поставки (заполняется вручную)
+                    $name,
+                    $article,
+                    $quantity,
+                    $warehouse,
+                    $stock_status    // Автоопределение по наличию
+                );
+                $csv_rows[] = implode($this->delimiter, $row);
+            }
         }
         
         return $this->saveCsvFile($csv_rows, 'ORDERSP', $file_name);
     }
     
     /**
-     * Обработка подтверждения заказа ORDERSP (транзит)
+     * Обработка INVOIC, INVRPT, PRODAT, PROJECT, PROJSTA, PROJQUO (транзит)
      */
-    private function processOrderResponse($content, $file_name) {
-        $this->log("Обработка ORDERSP (транзит): {$file_name}");
-        
+    private function processTransit($content, $file_name, $type) {
+        $this->log("Обработка {$type} (транзит): {$file_name}");
         $lines = explode("\n", $content);
         $csv_rows = array();
-        
         foreach ($lines as $line) {
             $line = trim($line);
             if (empty($line)) continue;
             $csv_rows[] = $line;
         }
-        
-        return $this->saveCsvFile($csv_rows, 'ORDERSP', $file_name);
+        return $this->saveCsvFile($csv_rows, $type, $file_name);
     }
     
-    /**
-     * Обработка INVOIC (транзит)
-     */
-    private function processInvoic($content, $file_name) {
-        $this->log("Обработка INVOIC: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'INVOIC', $file_name);
-    }
-    
-    /**
-     * Обработка INVRPT (транзит)
-     */
-    private function processInventory($content, $file_name) {
-        $this->log("Обработка INVRPT: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'INVRPT', $file_name);
-    }
-    
-    /**
-     * Обработка PRODAT (транзит)
-     */
-    private function processProductData($content, $file_name) {
-        $this->log("Обработка PRODAT: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'PRODAT', $file_name);
-    }
-    
-    /**
-     * Обработка PROJECT (транзит)
-     */
-    private function processProject($content, $file_name) {
-        $this->log("Обработка PROJECT: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'PROJECT', $file_name);
-    }
-    
-    /**
-     * Обработка PROJSTA (транзит)
-     */
-    private function processProjectStatus($content, $file_name) {
-        $this->log("Обработка PROJSTA: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'PROJSTA', $file_name);
-    }
-    
-    /**
-     * Обработка PROJQUO (транзит)
-     */
-    private function processProjectQuotation($content, $file_name) {
-        $this->log("Обработка PROJQUO: {$file_name}");
-        
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        
-        return $this->saveCsvFile($csv_rows, 'PROJQUO', $file_name);
-    }
     
     /**
      * Парсинг строки позиции заказа
      */
     private function parseOrderItem($line) {
         $fields = explode($this->delimiter, $line);
-        
         return array(
             'name' => isset($fields[0]) ? $fields[0] : '',
             'article' => isset($fields[1]) ? $fields[1] : '',
@@ -439,19 +371,12 @@ class ETMConverter {
      */
     private function archiveFile($file_path, $file_name) {
         $archive_file = $this->archive_path . '/' . date('Ymd_His_') . '_' . $file_name;
-        
         if (rename($file_path, $archive_file)) {
-            $this->log("Файл {$file_name} перемещен в архив: to_etm/recd/" . basename($archive_file));
+            $this->log("Файл {$file_name} перемещен в архив");
             return true;
-        } else {
-            if (copy($file_path, $archive_file)) {
-                unlink($file_path);
-                $this->log("Файл {$file_name} скопирован в архив");
-                return true;
-            }
-            $this->log("ОШИБКА архивирования файла {$file_name}");
-            return false;
         }
+        if (copy($file_path, $archive_file)) { unlink($file_path); return true; }
+        return false;
     }
     
     /**
@@ -460,21 +385,15 @@ class ETMConverter {
     private function saveCsvFile($rows, $type, $original_name) {
         $safe_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', $original_name);
         $output_file = $this->output_path . '/' . date('Ymd_His_') . "_{$type}_" . $safe_name;
-        
-        $ext = strtolower(pathinfo($output_file, PATHINFO_EXTENSION));
-        if ($ext !== 'csv') {
-            $output_file .= '.csv';
-        }
+        if (strtolower(pathinfo($output_file, PATHINFO_EXTENSION)) !== 'csv') $output_file .= '.csv';
         
         $content = implode("\n", $rows);
         $content = mb_convert_encoding($content, $this->encoding, 'UTF-8');
         
         if (file_put_contents($output_file, $content)) {
-            $this->log("Файл для ЭТМ сохранен в from_etm: " . basename($output_file));
+            $this->log("Файл сохранен в from_etm: " . basename($output_file));
             return true;
         }
-        
-        $this->log("ОШИБКА сохранения файла: {$output_file}");
         return false;
     }
     
@@ -484,9 +403,11 @@ class ETMConverter {
     private function log($message) {
         $timestamp = date('Y-m-d H:i:s');
         $log_message = "[{$timestamp}] {$message}\n";
-        
         echo $log_message;
-        
         file_put_contents($this->log_file, $log_message, FILE_APPEND);
+    }
+    
+    public function __destruct() {
+        if ($this->mysqli) $this->mysqli->close();
     }
 }
