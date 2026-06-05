@@ -258,7 +258,6 @@ class ETMConverter {
         $order_number = isset($header['Номер']) ? $header['Номер'] : '';
         $warehouse = isset($header['warehouse']) ? $header['warehouse'] : '';
         
-        // ============ СПЕЦУСЛОВИЯ ============
         if ($doc_type === 'спецусловия') {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Идентификатор документа;Тип подтверждения;Цена;Период действия;Размер предоплаты;Отсрочка дней;Цена Клиента;MSGTYPE:ORDERSP";
             
@@ -270,10 +269,6 @@ class ETMConverter {
                 
                 $product = $this->getProductData($article);
                 $price_rub = $this->getPriceRub($product);
-                
-                if ($product && !empty($product['model_fullname'])) {
-                    $name = $product['model_fullname'];
-                }
                 
                 $row = array(
                     $order_number,
@@ -292,9 +287,7 @@ class ETMConverter {
                 );
                 $csv_rows[] = implode($this->delimiter, $row);
             }
-        }
-        // ============ ЗАКАЗ / ЗАПРОС ============
-        else {
+        } else {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Тип подтверждения;MSGTYPE:ORDERSP";
             
             foreach ($items as $item) {
@@ -303,10 +296,6 @@ class ETMConverter {
                 $quantity = isset($item['quantity']) ? $item['quantity'] : '';
                 
                 $product = $this->getProductData($article);
-                
-                if ($product && !empty($product['model_fullname'])) {
-                    $name = $product['model_fullname'];
-                }
                 
                 $stock_status = 'Получено';
                 if ($product) {
