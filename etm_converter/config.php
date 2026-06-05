@@ -2,11 +2,11 @@
 
 return [
     'paths' => [
-        'base' => '/rusavto',
-        'incoming' => '/rusavto/to_etm',
-        'archive' => '/rusavto/to_etm/recd',
-        'output' => '/rusavto/etm_converter/converted',
-        'log' => '/rusavto/etm_converter/edi_converter.log'
+        'base' => '/',
+        'incoming' => '/to_etm',
+        'archive' => '/to_etm/recd',
+        'output' => '/etm_converter/converted',
+        'log' => '/etm_converter/edi_converter.log'
     ],
     
     'processing' => [

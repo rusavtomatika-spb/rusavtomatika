@@ -4,16 +4,13 @@ define('SCRIPT_DIR', __DIR__);
 
 require_once SCRIPT_DIR . '/edi_converter.php';
 
-$converter = new ETMConverter([
-    'base_path' => '/rusavto'
-]);
+$converter = new ETMConverter(array(
+    'base_path' => '/home/moisait/public_html/rusavto'
+));
 
 try {
     echo "=== Запуск ETM Converter ===\n";
-    echo "Время: " . date('Y-m-d H:i:s') . "\n";
-    echo "Путь к входящим: /rusavto/to_etm\n";
-    echo "Путь к архиву: /rusavto/to_etm/recd\n";
-    echo "Путь к результатам: " . SCRIPT_DIR . "/converted\n\n";
+    echo "Время: " . date('Y-m-d H:i:s') . "\n\n";
     
     $result = $converter->process();
     
@@ -29,3 +26,4 @@ try {
 }
 
 echo "\n=== Завершение ===\n";
+?>
