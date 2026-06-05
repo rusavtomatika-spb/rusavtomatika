@@ -241,9 +241,7 @@ class ETMConverter {
         $this->log("Обработка заявки ORDER: {$file_name}");
         
         $lines = explode("\n", $content);
-        
         $csv_rows = array();
-        
         $in_header = true;
         $header = array();
         $items = array();
@@ -284,8 +282,7 @@ class ETMConverter {
                 $article,
                 $quantity,
                 $warehouse,
-                'Получено',
-                ''
+                'Получено'
             );
             $csv_rows[] = implode($this->delimiter, $row);
         }
