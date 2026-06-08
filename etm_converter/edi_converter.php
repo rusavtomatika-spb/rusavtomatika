@@ -482,7 +482,7 @@ class ETMConverter {
      * Сохранение в архив для ЭТМ
      */
     private function archiveFile($file_path, $file_name) {
-        $archive_file = $this->archive_path . '/' . date('Ymd_His_') . '_' . $file_name;
+        $archive_file = $this->archive_path . '/' . date('d-m-Y__H-i-s_') . '_' . $file_name;
         if (rename($file_path, $archive_file)) {
             $this->log("Файл {$file_name} перемещен в архив");
             return true;
@@ -497,7 +497,7 @@ class ETMConverter {
     private function saveCsvFile($rows, $type, $original_name) {
         $safe_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', $original_name);
         $safe_name = preg_replace('/\.(csv|xml|txt)$/i', '', $safe_name);
-        $output_file = $this->output_path . '/' . date('Ymd_His_') . "_{$type}_" . $safe_name . '.csv';
+        $output_file = $this->output_path . '/' . date('d-m-Y__H-i-s_') . "_{$type}_" . $safe_name . '.csv';
         
         $content = implode("\n", $rows);
         $content = mb_convert_encoding($content, $this->encoding, 'UTF-8');
@@ -513,7 +513,7 @@ class ETMConverter {
      * Логирование
      */
     private function log($message) {
-        $timestamp = date('Y-m-d H:i:s');
+        $timestamp = date('d-m-Y H:i:s');
         $log_message = "[{$timestamp}] {$message}\n";
         echo $log_message;
         file_put_contents($this->log_file, $log_message, FILE_APPEND);
