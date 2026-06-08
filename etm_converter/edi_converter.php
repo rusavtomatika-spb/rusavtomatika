@@ -316,7 +316,30 @@ class ETMConverter {
         $doc_type = $parsed['doc_type'];
         
         $order_number = isset($header['Номер']) ? $header['Номер'] : '';
-        $warehouse = isset($header['warehouse']) ? $header['warehouse'] : '';
+        $warehouse_raw = isset($header['warehouse']) ? $header['warehouse'] : '';
+        $warehouse = rtrim(trim($warehouse_raw), ';');
+        
+        $valid_warehouses = array(
+            'ЭТМ,СПб', 'ЭТМ,Москва', 'ЭТМ,Урал', 'ЭТМ,Самара', 'ЭТМ,Юг',
+            'ЭТМ,Сибирь', 'ЭТМ,Казань', 'ЭТМ,МЯ', 'ЭТМ,ЦРС', 'ЭТМ,Шушары',
+            'ЭТМ,Челябинск', 'ЭТМ,Н.Новгород', 'ЭТМ,Воронеж', 'ЭТМ,Воронеж2',
+            'ЭТМ,Краснодар', 'ЭТМ,Владивосток', 'ЭТМ,Хабаровск'
+        );
+        
+        if (!empty($warehouse) && !in_array($warehouse, $valid_warehouses)) {
+            $gln_valid = false;
+            foreach ($valid_warehouses as $w) {
+                if (strpos($warehouse, '466001151') !== false && strlen($warehouse) >= 13) {
+                    $gln_valid = true;
+                    break;
+                }
+            }
+            if (!$gln_valid) {
+                $this->log("ПРЕДУПРЕЖДЕНИЕ: Склад '{$warehouse}' не найден в справочнике");
+            }
+        }
+        
+        $order_number = str_replace(';', ',', $order_number);
         
         $csv_rows = array();
         
@@ -328,6 +351,11 @@ class ETMConverter {
                 $article = isset($item['article']) ? $item['article'] : '';
                 $quantity = isset($item['quantity']) ? $item['quantity'] : '';
                 $basis = isset($item['basis']) ? $item['basis'] : '';
+                
+                $name = str_replace(';', ',', $name);
+                $article = str_replace(';', '', $article);
+                $quantity = str_replace(';', '', $quantity);
+                $basis = str_replace(';', '', $basis);
                 
                 $product = $this->getProductData($article);
                 $price_rub = $this->getPriceRub($product);
@@ -347,6 +375,10 @@ class ETMConverter {
                 $name = isset($item['name']) ? $item['name'] : '';
                 $article = isset($item['article']) ? $item['article'] : '';
                 $quantity = isset($item['quantity']) ? $item['quantity'] : '';
+                
+                $name = str_replace(';', ',', $name);
+                $article = str_replace(';', '', $article);
+                $quantity = str_replace(';', '', $quantity);
                 
                 $product = $this->getProductData($article);
                 
