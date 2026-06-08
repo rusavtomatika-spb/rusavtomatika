@@ -67,30 +67,13 @@ class ETMConverter {
      */
     private function getProductData($article) {
         if (!$this->mysqli) return null;
-        
         $article = $this->mysqli->real_escape_string($article);
         
-        $query = "SELECT 
-            model,
-            model_fullname,
-            brand,
-            retail_price,
-            action_price,
-            currency,
-            onstock_spb,
-            preview_text,
-            short_name,
-            dimentions,
-            weight
-          FROM products_all 
-          WHERE model = '{$article}' 
-          LIMIT 1";
+        $query = "SELECT model, model_fullname, brand, retail_price, action_price, currency, onstock_spb, preview_text, short_name, dimentions, weight
+                  FROM products_all WHERE model = '{$article}' LIMIT 1";
         
         $result = $this->mysqli->query($query);
-        
-        if ($result && $row = $result->fetch_assoc()) {
-            return $row;
-        }
+        if ($result && $row = $result->fetch_assoc()) return $row;
         return null;
     }
     
@@ -99,15 +82,9 @@ class ETMConverter {
      */
     private function getPriceRub($product) {
         if (!$product) return '';
-        
         $usd_currency = $this->getUsdRate();
-        
-        if ($product['currency'] === 'RUR') {
-            return $product['retail_price'];
-        } elseif ($usd_currency > 0) {
-            return round($product['retail_price'] * $usd_currency);
-        }
-        
+        if ($product['currency'] === 'RUR') return $product['retail_price'];
+        if ($usd_currency > 0) return round($product['retail_price'] * $usd_currency);
         return $product['retail_price'];
     }
     
@@ -116,26 +93,19 @@ class ETMConverter {
      */
     private function getUsdRate() {
         $rate_file = $this->base_path . '/usdrate.txt';
-        if (file_exists($rate_file)) {
-            return floatval(file_get_contents($rate_file));
-        }
-        // Запасной путь
+        if (file_exists($rate_file)) return floatval(file_get_contents($rate_file));
         $rate_file = $_SERVER['DOCUMENT_ROOT'] . '/usdrate.txt';
-        if (file_exists($rate_file)) {
-            return floatval(file_get_contents($rate_file));
-        }
+        if (file_exists($rate_file)) return floatval(file_get_contents($rate_file));
         return 0;
     }
     
-    // ============== ОСТАЛЬНЫЕ МЕТОДЫ (без изменений) ==============
-    
+    /**
+     * Директории
+     */
     private function ensureDirectories() {
         $dirs = array($this->incoming_path, $this->archive_path, $this->output_path, $this->output_path . '/recd');
         foreach ($dirs as $dir) {
-            if (!is_dir($dir)) {
-                mkdir($dir, 0755, true);
-                $this->log("Создана директория: {$dir}");
-            }
+            if (!is_dir($dir)) { mkdir($dir, 0755, true); $this->log("Создана директория: {$dir}"); }
         }
     }
     
@@ -173,11 +143,16 @@ class ETMConverter {
     }
     
     /**
-     * Обработка файла в зависимости от типа сообщения
+     * Определение типа файла
      */
     private function processFile($file_path, $file_name) {
         $content = file_get_contents($file_path);
         if (empty($content)) return false;
+        
+        if (strpos($content, '<?xml') !== false || strpos($content, '<КоммерческаяИнформация>') !== false) {
+            $this->log("Обнаружен XML-файл");
+            return $this->processInvoicXml($content, $file_name);
+        }
         
         $detected = mb_detect_encoding($content, array('Windows-1251', 'UTF-8', 'CP1251'), true);
         if ($detected === 'Windows-1251' || $detected === 'CP1251') {
@@ -188,14 +163,15 @@ class ETMConverter {
         $this->log("Тип сообщения: {$message_type}");
         
         switch ($message_type) {
-            case 'ORDER':    return $this->processOrder($content, $file_name);
-            case 'ORDERSP':  return $this->processTransit($content, $file_name, 'ORDERSP');
-            case 'INVOIC':   return $this->processTransit($content, $file_name, 'INVOIC');
-            case 'INVRPT':   return $this->processTransit($content, $file_name, 'INVRPT');
-            case 'PRODAT':   return $this->processTransit($content, $file_name, 'PRODAT');
-            case 'PROJECT':  return $this->processTransit($content, $file_name, 'PROJECT');
-            case 'PROJSTA':  return $this->processTransit($content, $file_name, 'PROJSTA');
-            case 'PROJQUO':  return $this->processTransit($content, $file_name, 'PROJQUO');
+            case 'ORDER_SPEC_PROJECT': return $this->processOrderSpecProject($content, $file_name);
+            case 'ORDER':              return $this->processOrder($content, $file_name);
+            case 'ORDERSP':            return $this->processTransit($content, $file_name, 'ORDERSP');
+            case 'INVOIC':             return $this->processTransit($content, $file_name, 'INVOIC');
+            case 'INVRPT':             return $this->processTransit($content, $file_name, 'INVRPT');
+            case 'PRODAT':             return $this->processTransit($content, $file_name, 'PRODAT');
+            case 'PROJECT':            return $this->processTransit($content, $file_name, 'PROJECT');
+            case 'PROJSTA':            return $this->processTransit($content, $file_name, 'PROJSTA');
+            case 'PROJQUO':            return $this->processTransit($content, $file_name, 'PROJQUO');
             default: $this->log("Неизвестный тип: {$file_name}"); return false;
         }
     }
@@ -205,19 +181,47 @@ class ETMConverter {
      */
     private function detectMessageType($content) {
         $lines = explode("\n", $content);
+        $hasProjectHeader = false;
+        $hasOrderHeader = false;
+        
         foreach ($lines as $line) {
-            $line = trim($line);
+            $line = rtrim(trim($line), ';');
+            
             if (empty($line)) continue;
+            
+            // MSGTYPE
             if (strpos($line, 'MSGTYPE:ORDERSP') !== false) return 'ORDERSP';
             if (strpos($line, 'MSGTYPE:PROJSTA') !== false) return 'PROJSTA';
             if (strpos($line, 'MSGTYPE:PROJQUO') !== false) return 'PROJQUO';
+            
+            // INVOIC
             if (strpos($line, 'Артикул;Наименование;Количество;Цена') !== false) return 'INVOIC';
             if (strpos($line, 'Продавец:') !== false) return 'INVOIC';
+            
+            // PRODAT
             if (strpos($line, 'Режим:ОписаниеТоваров') !== false) return 'PRODAT';
-            if (strpos($line, 'Код проекта') !== false && strpos($line, 'Название проекта') !== false) return 'PROJECT';
-            if (preg_match('/^(ЭТМ,|Дата:|Номер:|Примечание:)/u', $line)) return 'ORDER';
-            if (strpos($line, 'Название;Производитель;Артикул') !== false || strpos($line, 'NameRgd;CodeMnf;Article') !== false) return 'INVRPT';
+            
+            // PROJECT
+            if (strpos($line, 'Код проекта') !== false && strpos($line, 'Название проекта') !== false) {
+                $hasProjectHeader = true;
+            }
+            
+            // ORDER
+            if (preg_match('/^(ЭТМ,|Дата:|Номер:|Примечание:)/u', $line)) {
+                $hasOrderHeader = true;
+            }
+            
+            // INVRPT
+            if (strpos($line, 'Название;Производитель;Артикул') !== false || strpos($line, 'NameRgd;CodeMnf;Article') !== false) {
+                return 'INVRPT';
+            }
         }
+        
+        // Если есть и проект, и ORDER — это спецусловия с проектом
+        if ($hasProjectHeader && $hasOrderHeader) return 'ORDER_SPEC_PROJECT';
+        if ($hasOrderHeader) return 'ORDER';
+        if ($hasProjectHeader) return 'PROJECT';
+        
         return 'UNKNOWN';
     }
     
@@ -227,14 +231,55 @@ class ETMConverter {
     private function processOrder($content, $file_name) {
         $this->log("Обработка заявки ORDER: {$file_name}");
         
+        $parsed = $this->parseOrderContent($content);
+        return $this->buildOrdersp($parsed, $file_name);
+    }
+    
+    /**
+     * Обработка заявки ORDER спецусловия + проект
+     */
+    private function processOrderSpecProject($content, $file_name) {
+        $this->log("Обработка ORDER (спецусловия + проект): {$file_name}");
+        
         $lines = explode("\n", $content);
-        $csv_rows = array();
-        $in_header = true;
-        $header = array();
-        $items = array();
+        
+        $project_lines = array();
+        $order_lines = array();
+        $found_order = false;
         
         foreach ($lines as $line) {
-            $line = trim($line);
+            $line_clean = rtrim(trim($line), ';');
+            
+            if (!$found_order && preg_match('/^(ЭТМ,)/u', $line_clean)) {
+                $found_order = true;
+            }
+            
+            if ($found_order) {
+                $order_lines[] = $line;
+            } else {
+                $project_lines[] = $line;
+            }
+        }
+        
+        $order_content = implode("\n", $order_lines);
+        $parsed = $this->parseOrderContent($order_content);
+        
+        $parsed['has_project'] = true;
+        
+        return $this->buildOrdersp($parsed, $file_name);
+    }
+    
+    /**
+     * Парсинг содержимого ORDER
+     */
+    private function parseOrderContent($content) {
+        $lines = explode("\n", $content);
+        $header = array();
+        $items = array();
+        $in_header = true;
+        
+        foreach ($lines as $line) {
+            $line = rtrim(trim($line), ';');
             if (empty($line)) continue;
             
             if ($in_header) {
@@ -242,7 +287,7 @@ class ETMConverter {
                     list($key, $value) = explode(':', $line, 2);
                     $header[trim($key)] = trim($value);
                 } elseif (preg_match('/^(ЭТМ,)/u', $line)) {
-                    $header['warehouse'] = $line;
+                    $header['warehouse'] = rtrim($line, ',');
                 } else {
                     $in_header = false;
                     $items[] = $this->parseOrderItem($line);
@@ -255,8 +300,25 @@ class ETMConverter {
         $first_item = isset($items[0]) ? $items[0] : array();
         $doc_type = isset($first_item['doc_type']) ? $first_item['doc_type'] : 'заказ';
         
+        return array(
+            'header' => $header,
+            'items' => $items,
+            'doc_type' => $doc_type
+        );
+    }
+    
+    /**
+     * Построение ORDERSP ответа
+     */
+    private function buildOrdersp($parsed, $file_name) {
+        $header = $parsed['header'];
+        $items = $parsed['items'];
+        $doc_type = $parsed['doc_type'];
+        
         $order_number = isset($header['Номер']) ? $header['Номер'] : '';
         $warehouse = isset($header['warehouse']) ? $header['warehouse'] : '';
+        
+        $csv_rows = array();
         
         if ($doc_type === 'спецусловия') {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Идентификатор документа;Тип подтверждения;Цена;Период действия;Размер предоплаты;Отсрочка дней;Цена Клиента;MSGTYPE:ORDERSP";
@@ -271,23 +333,14 @@ class ETMConverter {
                 $price_rub = $this->getPriceRub($product);
                 
                 $row = array(
-                    $order_number,
-                    '',                // Дата поставки
-                    $name,
-                    $article,
-                    $quantity,
-                    $warehouse,
-                    $basis,
-                    'Принят',          // Для спецусловий
-                    $price_rub,        // Цена из БД
-                    '',                // Период действия
-                    '',                // Предоплата
-                    '',                // Отсрочка
-                    $price_rub         // Цена клиента = цена
+                    $order_number, '', $name, $article, $quantity,
+                    $warehouse, $basis, 'Принят', $price_rub,
+                    '', '', '', $price_rub
                 );
                 $csv_rows[] = implode($this->delimiter, $row);
             }
-        } else {
+        }
+        else {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Тип подтверждения;MSGTYPE:ORDERSP";
             
             foreach ($items as $item) {
@@ -306,15 +359,7 @@ class ETMConverter {
                     }
                 }
                 
-                $row = array(
-                    $order_number,
-                    '',              // Дата поставки (заполняется вручную)
-                    $name,
-                    $article,
-                    $quantity,
-                    $warehouse,
-                    $stock_status    // Автоопределение по наличию
-                );
+                $row = array($order_number, '', $name, $article, $quantity, $warehouse, $stock_status);
                 $csv_rows[] = implode($this->delimiter, $row);
             }
         }
@@ -323,26 +368,12 @@ class ETMConverter {
     }
     
     /**
-     * Обработка INVOIC, INVRPT, PRODAT, PROJECT, PROJSTA, PROJQUO (транзит)
-     */
-    private function processTransit($content, $file_name, $type) {
-        $this->log("Обработка {$type} (транзит): {$file_name}");
-        $lines = explode("\n", $content);
-        $csv_rows = array();
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            $csv_rows[] = $line;
-        }
-        return $this->saveCsvFile($csv_rows, $type, $file_name);
-    }
-    
-    
-    /**
      * Парсинг строки позиции заказа
      */
     private function parseOrderItem($line) {
+        $line = rtrim($line, ';');
         $fields = explode($this->delimiter, $line);
+        
         return array(
             'name' => isset($fields[0]) ? $fields[0] : '',
             'article' => isset($fields[1]) ? $fields[1] : '',
@@ -356,7 +387,67 @@ class ETMConverter {
     }
     
     /**
-     * Архивирование обработанного входящего файла
+     * Обработка XML INVOIC
+     */
+    private function processInvoicXml($content, $file_name) {
+        $this->log("Обработка INVOIC XML: {$file_name}");
+        
+        $xml = simplexml_load_string($content);
+        if (!$xml) {
+            $this->log("ОШИБКА парсинга XML");
+            return false;
+        }
+        
+        $csv_rows = array();
+        
+        $doc = $xml->Документ;
+        $number = (string)$doc->Номер;
+        $date = (string)$doc->Дата;
+        $recipient = (string)$doc->Грузополучатель;
+        
+        $seller = '';
+        foreach ($doc->Контрагенты->Контрагент as $kontr) {
+            if ((string)$kontr->Роль === 'Продавец') {
+                $seller = (string)$kontr->Наименование;
+            }
+        }
+        
+        $csv_rows[] = "Артикул;Наименование;Количество;Цена за ед.;Номер;Дата;Грузополучатель;Продавец";
+        
+        foreach ($doc->Товары->Товар as $tovar) {
+            $row = array(
+                (string)$tovar->Артикул,
+                (string)$tovar->Наименование,
+                (string)$tovar->Количество,
+                (string)$tovar->ЦенаЗаЕдиницу,
+                $number,
+                date('d.m.Y', strtotime($date)),
+                $recipient,
+                $seller
+            );
+            $csv_rows[] = implode($this->delimiter, $row);
+        }
+        
+        return $this->saveCsvFile($csv_rows, 'INVOIC', $file_name);
+    }
+    
+    /**
+     * Транзит
+     */
+    private function processTransit($content, $file_name, $type) {
+        $this->log("Обработка {$type} (транзит): {$file_name}");
+        $lines = explode("\n", $content);
+        $csv_rows = array();
+        foreach ($lines as $line) {
+            $line = rtrim(trim($line), ';');
+            if (empty($line)) continue;
+            $csv_rows[] = $line;
+        }
+        return $this->saveCsvFile($csv_rows, $type, $file_name);
+    }
+    
+    /**
+     * Сохранение в архив для ЭТМ
      */
     private function archiveFile($file_path, $file_name) {
         $archive_file = $this->archive_path . '/' . date('Ymd_His_') . '_' . $file_name;
@@ -373,8 +464,8 @@ class ETMConverter {
      */
     private function saveCsvFile($rows, $type, $original_name) {
         $safe_name = preg_replace('/[^a-zA-Z0-9._-]/', '_', $original_name);
-        $output_file = $this->output_path . '/' . date('Ymd_His_') . "_{$type}_" . $safe_name;
-        if (strtolower(pathinfo($output_file, PATHINFO_EXTENSION)) !== 'csv') $output_file .= '.csv';
+        $safe_name = preg_replace('/\.(csv|xml|txt)$/i', '', $safe_name);
+        $output_file = $this->output_path . '/' . date('Ymd_His_') . "_{$type}_" . $safe_name . '.csv';
         
         $content = implode("\n", $rows);
         $content = mb_convert_encoding($content, $this->encoding, 'UTF-8');
