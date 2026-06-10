@@ -77,3 +77,5 @@ sc/QRCode/*.jpeg
 .vscode/sftp.json
 sc/dbcon.php
 admin/edit_element2.php
+.osp
+sc/dbcon.php
