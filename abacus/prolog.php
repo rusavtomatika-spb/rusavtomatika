@@ -7,11 +7,6 @@ if (!defined('bullshit')) {
     define('bullshit', 1);
 }
 
-if (1) {
-    ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-}
 require_once $_SERVER["DOCUMENT_ROOT"] . '/abacus/init.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/abacus/config.php';
 

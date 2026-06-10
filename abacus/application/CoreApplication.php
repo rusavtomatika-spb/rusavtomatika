@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set('display_errors', 0);
+
 define("refresh_styles_and_scripts","4".date("dmYH"));
 class CoreApplication
 {
