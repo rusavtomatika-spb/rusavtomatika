@@ -1,0 +1,9 @@
+Options -Indexes
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+RewriteRule ^images/(.*)$ https://www.rusavtomatika.com/upload_files/images/$1 [L,R=301]
+RewriteRule ^upload_files/(.*)$ https://www.rusavtomatika.com/upload_files/$1 [L,R=301]

@@ -1,0 +1,88 @@
+Options -Indexes
+RewriteEngine on
+
+# Для раздела news
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^news/(.*)$ news/index.php?q=$1 [L,QSA]
+
+# Для раздела articles
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^articles/(.*)$ articles/index.php?q=$1 [L,QSA]
+
+# Для раздела ifc
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ifc/(.*)$ ifc/index.php?q=$1 [L,QSA]
+
+# Для раздела catalog
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^catalog/(.*)$ catalog/index.php?q=$1 [L,QSA]
+
+# Убираем двойной слеш
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^?\ ]*)
+RewriteCond %1 ^(.*)//(.*)$
+RewriteRule ^ /%1/%2 [L,R=301]
+
+# Убираем повторяющиеся слеши в любом месте
+RewriteCond %{THE_REQUEST} \s/+(.*?)/{2,}([^\s]*)
+RewriteRule ^ %1/%2 [R=301,L]
+
+# Основные типы файлов
+AddType application/octet-stream .step .dwg .wmf .package
+AddType application/vnd.android.package-archive .package
+AddType application/vnd.android.package-archive .apk
+
+# Страницы ошибок
+ErrorDocument 404 /404.php
+ErrorDocument 503 /503.php
+
+# Защита .htaccess
+RewriteRule ^.htaccess$ - [F]
+
+# Редиректы картинок и файлов
+RewriteRule ^images/(.*)$ https://www.rusavtomatika.com/upload_files/images/$1 [L,R=301]
+RewriteRule ^manuals/(.*)$ https://www.rusavtomatika.com/upload_files/manuals/$1 [L,R=301]
+RewriteRule ^soft/(.*)$ https://www.rusavtomatika.com/upload_files/soft/$1 [L,R=301]
+RewriteRule ^install/(.*)$ https://www.rusavtomatika.com/upload_files/install/$1 [L,R=301]
+RewriteRule ^drawing/(.*)$ https://www.rusavtomatika.com/upload_files/drawing/$1 [L,R=301]
+
+# Редиректы для старых URL
+RewriteRule ^plc/$ /plc/yottacontrol/ [L,R=301]
+RewriteRule ^plc$ /plc/yottacontrol/ [L,R=301]
+RewriteRule ^bloki-pitaniya/$ /bloki-pitaniya/faraday/ [L,R=301]
+RewriteRule ^bloki-pitaniya$ /bloki-pitaniya/faraday/ [L,R=301]
+RewriteRule ^weintek\/cMT_iPC15.php$ /weintek/cMT-iPC15.php [L,R=301]
+RewriteRule ^weintek\/faq.php$ /weintek-stavnenie-seriy.php [L,R=301]
+RewriteRule ^vpn-routers/(.*)$ /ewon/$1 [L,R=301]
+RewriteRule ^box-pc/(.*)$ /promyshlennye-kompyutery-box-pc/$1 [L,R=301]
+RewriteRule ^vpn-routers$ /ewon/ [L,R=301]
+RewriteRule ^main.php$ / [L,R=301]
+
+# Редиректы для Cincoze
+RewriteRule cincoze/DA-1000-R10.php(.*)$ /cincoze/DA-1000.php$1 [L,R=301]
+RewriteRule cincoze/DC-1100-R10.php(.*)$ /cincoze/DC-1100.php$1 [L,R=301]
+RewriteRule cincoze/DS-1000-R11.php(.*)$ /cincoze/DS-1000.php$1 [L,R=301]
+RewriteRule cincoze/DS-1002-EE-R11.php(.*)$ /cincoze/DS-1002.php$1 [L,R=301]
+
+# Экспирация кэша
+<ifModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 days"
+ExpiresByType image/x-icon "access plus 1 days"
+ExpiresByType image/jpeg "access plus 1 days"
+ExpiresByType image/png "access plus 1 days"
+ExpiresByType image/gif "access plus 1 days"
+ExpiresByType application/x-shockwave-flash "access plus 1 days"
+</ifModule>
+
+# Дополнительные редиректы
+RewriteRule ^M02\.html/?$ /accessories/M02/ [L,R=301]
+RewriteRule ^new_products(.+)$ new-products$1 [R=301,L]
+
+# Удаляем index.php в конце URL
+RewriteCond %{REQUEST_URI} index.php$
+RewriteCond %{REQUEST_URI} !(?:forum) [NC]
+RewriteRule (.*)/index.php$ $1/ [R=301]

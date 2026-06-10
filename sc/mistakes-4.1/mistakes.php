@@ -305,12 +305,12 @@
 
 function database_connect() {
 
-    $host = "localhost"; // ��� �����
+    $host = "127.0.1.29"; // ��� �����
     $port = "3306";      // ����� �����, 3306 - �� ���������
     if (preg_match("/moisait/i", $_SERVER['DOCUMENT_ROOT'])) {
         $user = "root";      // ��� ������������
-        $pass = '123456';  // ������
-        $dbnm = "rusavtomatika_db";      // ��� ��
+        $pass = '';  // ������
+        $dbnm = "rusavtomatika";      // ��� ��
     }
 
     $h = empty($port) ? $host : $host . ":" . $port;

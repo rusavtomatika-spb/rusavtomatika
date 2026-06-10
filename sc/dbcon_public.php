@@ -294,9 +294,9 @@ function database_connect()
 
 {
 
-$host = "localhost"; // ��� �����
+$host = "127.0.1.29"; // ��� �����
 
-$port = "3307";      // ����� �����, 3306 - �� ���������
+$port = "3306";      // ����� �����, 3306 - �� ���������
 
 //if ($_SERVER['DOCUMENT_ROOT'] != '/home/weblec/public_html/test_ra') {
 
@@ -304,9 +304,9 @@ $port = "3307";      // ����� �����, 3306 - �� ���
 
 $user = "root";      // ��� ������������
 
-$pass = '123456';  // ������
+$pass = '';  // ������
 
-$dbnm = "rusavtomatika_db";      // ��� ��
+$dbnm = "rusavtomatika";      // ��� ��
 
 ///} 
 
