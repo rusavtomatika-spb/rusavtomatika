@@ -108,6 +108,18 @@ usort($rowsSale, function($a, $b) {
     if ($b['brand'] == 'IFC' && isset($b['model']) && $b['model'] == 'IFC-M-Series') {
         return 1;
     }
+    if ($a['brand'] == 'IFC' && isset($a['model']) && $a['model'] == 'MES-305-DIP') {
+        return -1;
+    }
+    if ($b['brand'] == 'IFC' && isset($b['model']) && $b['model'] == 'MES-305-DIP') {
+        return 1;
+    }
+    if ($a['brand'] == 'Rusavtomatika' && $b['brand'] != 'Rusavtomatika') {
+        return -1;
+    }
+    if ($a['brand'] != 'Rusavtomatika' && $b['brand'] == 'Rusavtomatika') {
+        return 1;
+    }
     return strcmp($a['brand'], $b['brand']);
 });
 

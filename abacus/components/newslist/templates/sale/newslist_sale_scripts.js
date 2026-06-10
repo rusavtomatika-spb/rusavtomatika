@@ -54,6 +54,11 @@ var app = new Vue({
             });
             this.send();
         },
+
+        add(e) {
+            alert('aaa')
+            window.add_too_box(e)
+        },
         
         init() {
             this.selectedBrandValue = 'Все';
