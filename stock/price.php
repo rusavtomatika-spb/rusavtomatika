@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $db_host = 'localhost';
 $db_user = 'moisait_olga';
 $db_pass = 'olgaglr';
@@ -23,21 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ? $_POST['description'] : '');
         
         if (empty($articul)) {
-            $message = 'Артикул обязателен';
-            $message_type = 'error';
+            $_SESSION['flash'] = array('message' => 'Артикул обязателен', 'type' => 'error');
         } else {
             $stmt = $mysqli->prepare("INSERT INTO products_price (articul, price_usd, price_rub, description) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE price_usd = VALUES(price_usd), price_rub = VALUES(price_rub), description = VALUES(description)");
             $stmt->bind_param('sdds', $articul, $price_usd, $price_rub, $description);
             
             if ($stmt->execute()) {
-                $message = 'Товар "' . htmlspecialchars($articul) . '" сохранён';
-                $message_type = 'ok';
+                $_SESSION['flash'] = array('message' => 'Товар "' . htmlspecialchars($articul) . '" сохранён', 'type' => 'ok');
             } else {
-                $message = 'Ошибка: ' . $stmt->error;
-                $message_type = 'error';
+                $_SESSION['flash'] = array('message' => 'Ошибка: ' . $stmt->error, 'type' => 'error');
             }
             $stmt->close();
         }
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
     }
     
     if (isset($_POST['action']) && $_POST['action'] === 'edit') {
@@ -48,21 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ? $_POST['description'] : '');
         
         if ($id <= 0 || empty($articul)) {
-            $message = 'Артикул обязателен';
-            $message_type = 'error';
+            $_SESSION['flash'] = array('message' => 'Артикул обязателен', 'type' => 'error');
         } else {
             $stmt = $mysqli->prepare("UPDATE products_price SET articul = ?, price_usd = ?, price_rub = ?, description = ? WHERE id = ?");
             $stmt->bind_param('sddsi', $articul, $price_usd, $price_rub, $description, $id);
             
             if ($stmt->execute()) {
-                $message = 'Товар "' . htmlspecialchars($articul) . '" обновлён';
-                $message_type = 'ok';
+                $_SESSION['flash'] = array('message' => 'Товар "' . htmlspecialchars($articul) . '" обновлён', 'type' => 'ok');
             } else {
-                $message = 'Ошибка: ' . $stmt->error;
-                $message_type = 'error';
+                $_SESSION['flash'] = array('message' => 'Ошибка: ' . $stmt->error, 'type' => 'error');
             }
             $stmt->close();
         }
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
     }
     
     if (isset($_POST['action']) && $_POST['action'] === 'delete') {
@@ -73,15 +73,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param('i', $id);
             
             if ($stmt->execute()) {
-                $message = 'Товар удалён';
-                $message_type = 'ok';
+                $_SESSION['flash'] = array('message' => 'Товар удалён', 'type' => 'ok');
             } else {
-                $message = 'Ошибка: ' . $stmt->error;
-                $message_type = 'error';
+                $_SESSION['flash'] = array('message' => 'Ошибка: ' . $stmt->error, 'type' => 'error');
             }
             $stmt->close();
         }
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
     }
+}
+
+if (isset($_SESSION['flash'])) {
+    $message = $_SESSION['flash']['message'];
+    $message_type = $_SESSION['flash']['type'];
+    unset($_SESSION['flash']);
 }
 
 $result = $mysqli->query("SELECT id, articul, price_usd, price_rub, description FROM products_price ORDER BY articul");

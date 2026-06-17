@@ -6,75 +6,101 @@
     <title>Цены</title>
     <link rel="stylesheet" href="/stock/style.css">
     <style>
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: #fff;
-            border-radius: 8px;
-            padding: 25px;
-            width: 500px;
-            max-width: 90%;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-        .modal h3 { margin-bottom: 20px; color: #1a1a2e; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
-            outline: none;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: #00bcd4;
-            box-shadow: 0 0 0 3px rgba(0,188,212,0.1);
-        }
-        .form-group textarea { resize: vertical; min-height: 60px; }
-        .form-row { display: flex; gap: 15px; }
-        .form-row .form-group { flex: 1; }
-        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
-        .btn { padding: 10px 24px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500; }
-        .btn-save { background: #00bcd4; color: #fff; }
-        .btn-save:hover { background: #00acc1; }
-        .btn-cancel { background: #eee; color: #333; }
-        .btn-cancel:hover { background: #ddd; }
-        .btn-delete { background: #ef5350; color: #fff; }
-        .btn-delete:hover { background: #e53935; }
-        .btn-add { background: #4caf50; color: #fff; text-decoration: none; display: inline-block; }
-        .btn-add:hover { background: #43a047; }
-        .btn-edit, .btn-del {
-            padding: 5px 12px;
-            font-size: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            border: none;
-            font-weight: 500;
-        }
-        .btn-edit { background: #fff3e0; color: #e65100; }
-        .btn-edit:hover { background: #ffe0b2; }
-        .btn-del { background: #ffebee; color: #c62828; }
-        .btn-del:hover { background: #ffcdd2; }
-        .actions { display: flex; gap: 5px; }
-        .message { padding: 12px 16px; border-radius: 6px; margin-bottom: 15px; font-weight: 500; }
-        .message.ok { background: #e8f5e9; color: #2e7d32; }
-        .message.error { background: #ffebee; color: #c62828; }
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-overlay.active { display: flex; }
+      .modal {
+        background: #fff;
+        border-radius: 8px;
+        padding: 25px;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      }
+      .modal h3 { margin-bottom: 20px; color: #1a1a2e; }
+      .form-group { margin-bottom: 15px; }
+      .form-group label {
+        display: block;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+      .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+      }
+      .form-group input:focus, .form-group textarea:focus {
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 3px rgba(0,188,212,0.1);
+      }
+      .form-group textarea { resize: vertical; min-height: 60px; }
+      .form-row { display: flex; gap: 15px; }
+      .form-row .form-group { flex: 1; }
+      .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+      .btn { padding: 10px 24px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 500; }
+      .btn-save { background: #00bcd4; color: #fff; }
+      .btn-save:hover { background: #00acc1; }
+      .btn-cancel { background: #eee; color: #333; }
+      .btn-cancel:hover { background: #ddd; }
+      .btn-delete { background: #ef5350; color: #fff; }
+      .btn-delete:hover { background: #e53935; }
+      .btn-add { background: #00ad61; color: #fff; text-decoration: none; display: inline-block; }
+      .btn-add:hover { background: #00be6c; }
+      .btn-edit, .btn-del {
+        padding: 5px 12px;
+        font-size: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+      }
+      .btn-edit { background: #fff3e0; color: #e65100; }
+      .btn-edit:hover { background: #ffe0b2; }
+      .btn-del { background: #ffebee; color: #c62828; }
+      .btn-del:hover { background: #ffcdd2; }
+      .actions { display: flex; gap: 5px; }
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 14px 24px;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        pointer-events: none;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .toast.ok {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #4caf50;
+      }
+      .toast.error {
+        background: #ffebee;
+        color: #c62828;
+        border-left: 4px solid #ef5350;
+      }
     </style>
 </head>
 <body>
@@ -87,12 +113,10 @@
           <a href="/stock" class="btn-back">Склад</a>
         </div>
       </div>
-      <?php if ($message): ?>
-        <div class="message <?= $message_type ?>"><?= htmlspecialchars($message) ?></div>
-      <?php endif; ?>
+      <div class="toast <?= $message_type ?>" id="toast"><?= htmlspecialchars($message) ?></div>
       <div class="filters" style="display: flex; gap: 10px; align-items: center;">
         <input type="text" id="search" placeholder="🔍 Поиск по артикулу или описанию..." autofocus style="flex: 1;">
-        <button class="btn btn-add" onclick="openAddModal()">+ Добавить</button>
+        <button class="btn btn-add" onclick="openAddModal()">Добавить товар</button>
       </div>
       <div class="table-wrap">
         <table id="price-table">
@@ -175,6 +199,15 @@
       <input type="hidden" name="id" id="delete-id" value="">
     </form>
     <script>
+    <?php if ($message): ?>
+    (function() {
+        var toast = document.getElementById('toast');
+        setTimeout(function() { toast.classList.add('show'); }, 100);
+        setTimeout(function() { 
+            toast.classList.remove('show');
+        }, 5000);
+    })();
+    <?php endif; ?>
     document.getElementById('search').addEventListener('input', function() {
       var query = this.value.toLowerCase();
       var rows = document.querySelectorAll('#price-table tbody tr');
