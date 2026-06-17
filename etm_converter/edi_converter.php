@@ -10,15 +10,17 @@ class ETMConverter {
     private $encoding = 'Windows-1251';
     private $delimiter = ';';
     
-    private $mysqli = null;
-    
     private $log_file;
     
     private $stock_data = null;
+    private $price_data = null;
     
     private $api_url = 'https://public.ark-sol.ru/upp_kf/hs/OtherStructures/ExtStructure/RA_Ostatkii';
     private $api_login = 'HTTPSite';
     private $api_password = 'Ms8dVyxgdRcts7rBt7s';
+    
+    // Файл с ценами
+    private $price_file = null;
     
     /**
      * Конструктор
@@ -35,41 +37,170 @@ class ETMConverter {
         $this->output_path = $this->base_path . '/from_etm';
         $this->log_file = __DIR__ . '/edi_converter.log';
         
+        // Файл с ценами по умолчанию
+        $this->price_file = __DIR__ . '/docs/prices.xlsx';
+        
         if (!empty($config['incoming_path'])) $this->incoming_path = $config['incoming_path'];
         if (!empty($config['archive_path'])) $this->archive_path = $config['archive_path'];
         if (!empty($config['output_path'])) $this->output_path = $config['output_path'];
         if (!empty($config['log_file'])) $this->log_file = $config['log_file'];
+        if (!empty($config['price_file'])) $this->price_file = $config['price_file'];
         
         if (!empty($config['api_url'])) $this->api_url = $config['api_url'];
         if (!empty($config['api_login'])) $this->api_login = $config['api_login'];
         if (!empty($config['api_password'])) $this->api_password = $config['api_password'];
-        
-        if (!empty($config['db_host'])) {
-            $this->connectDatabase($config);
-        }
         
         $this->ensureDirectories();
         date_default_timezone_set('Europe/Moscow');
     }
     
     /**
-     * Подключение к базе данных
+     * Загрузка цен из XLSX
      */
-    private function connectDatabase($config) {
-        $host = $config['db_host'];
-        $user = $config['db_user'];
-        $pass = $config['db_pass'];
-        $name = $config['db_name'];
-        
-        $this->mysqli = new mysqli($host, $user, $pass, $name);
-        
-        if ($this->mysqli->connect_error) {
-            $this->log("ОШИБКА подключения к БД: " . $this->mysqli->connect_error);
-            $this->mysqli = null;
-        } else {
-            $this->mysqli->set_charset('utf8');
-            $this->log("Подключение к БД установлено: {$name}");
+    private function loadPriceData() {
+        if ($this->price_data !== null) {
+            return $this->price_data;
         }
+        
+        if (!file_exists($this->price_file)) {
+            $this->log("ПРЕДУПРЕЖДЕНИЕ: Файл цен не найден: {$this->price_file}");
+            $this->price_data = array();
+            return $this->price_data;
+        }
+        
+        $this->log("Загрузка цен из XLSX: {$this->price_file}");
+        
+        $rows = $this->parseXlsxFile($this->price_file);
+        
+        if ($rows === false) {
+            $this->log("ОШИБКА: Не удалось прочитать файл цен");
+            $this->price_data = array();
+            return $this->price_data;
+        }
+        
+        $prices = array();
+        $usd_rate = $this->getUsdRate();
+        
+        $started = false;
+        foreach ($rows as $row) {
+            if (!$started) {
+                if (isset($row[0]) && mb_strtolower(trim($row[0])) === 'артикул') {
+                    $started = true;
+                }
+                continue;
+            }
+            
+            $article = isset($row[0]) ? trim($row[0]) : '';
+            $price_usd = isset($row[1]) ? trim($row[1]) : '';
+            $price_rub = isset($row[2]) ? trim($row[2]) : '';
+            
+            if (empty($article)) continue;
+            
+            $article_key = mb_strtolower($article, 'UTF-8');
+            
+            $final_price_rub = 0;
+            
+            if (!empty($price_rub) && is_numeric(str_replace(',', '.', $price_rub))) {
+                $final_price_rub = floatval(str_replace(',', '.', $price_rub));
+            } elseif (!empty($price_usd) && is_numeric(str_replace(',', '.', $price_usd)) && $usd_rate > 0) {
+                $final_price_rub = round(floatval(str_replace(',', '.', $price_usd)) * $usd_rate, 2);
+            } elseif (!empty($price_usd) && is_numeric(str_replace(',', '.', $price_usd))) {
+                $this->log("ПРЕДУПРЕЖДЕНИЕ: Курс USD не загружен, цена {$article} не конвертирована");
+                $final_price_rub = 0;
+            }
+            
+            $prices[$article_key] = array(
+                'article' => $article,
+                'price_rub' => $final_price_rub,
+                'price_usd' => !empty($price_usd) ? floatval(str_replace(',', '.', $price_usd)) : 0
+            );
+        }
+        
+        $this->log("Загружено цен из XLSX: " . count($prices));
+        $this->price_data = $prices;
+        
+        return $this->price_data;
+    }
+    
+    /**
+     * Парсинг XLSX файла
+     */
+    private function parseXlsxFile($file_path) {
+        if (file_exists(__DIR__ . '/SimpleXLSX.php')) {
+            require_once __DIR__ . '/SimpleXLSX.php';
+            
+            if ($xlsx = SimpleXLSX::parse($file_path)) {
+                return $xlsx->rows();
+            } else {
+                $this->log("ОШИБКА SimpleXLSX: " . SimpleXLSX::parseError());
+                return false;
+            }
+        }
+        
+        if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+            require_once __DIR__ . '/vendor/autoload.php';
+            
+            try {
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file_path);
+                $worksheet = $spreadsheet->getActiveSheet();
+                return $worksheet->toArray();
+            } catch (Exception $e) {
+                $this->log("ОШИБКА PhpSpreadsheet: " . $e->getMessage());
+                return false;
+            }
+        }
+        
+        // Fallback: пробуем читать как CSV/TSV (если файл на самом деле текстовый)
+        $content = file_get_contents($file_path);
+        if ($content !== false) {
+            $lines = explode("\n", $content);
+            $rows = array();
+            foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line)) continue;
+                // Определяем разделитель: табуляция или запятая
+                $delim = (strpos($line, "\t") !== false) ? "\t" : ",";
+                $rows[] = str_getcsv($line, $delim);
+            }
+            return $rows;
+        }
+        
+        $this->log("ОШИБКА: Нет доступной библиотеки для чтения XLSX");
+        return false;
+    }
+    
+    /**
+     * Получить цену товара из XLSX
+     */
+    private function getPriceFromFile($article) {
+        $prices = $this->loadPriceData();
+        
+        if (empty($prices)) return null;
+        
+        $article_lower = mb_strtolower(trim($article), 'UTF-8');
+        
+        if (isset($prices[$article_lower])) {
+            return $prices[$article_lower]['price_rub'];
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Получить курс USD из файла
+     */
+    private function getUsdRate() {
+        $rate_file = $this->base_path . '/usdrate.txt';
+        if (file_exists($rate_file)) {
+            $rate = floatval(file_get_contents($rate_file));
+            if ($rate > 0) return $rate;
+        }
+        $rate_file = __DIR__ . '/docs/usdrate.txt';
+        if (file_exists($rate_file)) {
+            $rate = floatval(file_get_contents($rate_file));
+            if ($rate > 0) return $rate;
+        }
+        return 0;
     }
     
     /**
@@ -85,93 +216,59 @@ class ETMConverter {
         $json = $this->fetchFromApi();
         
         if ($json === false) {
-            $this->log("ОШИБКА: Не удалось загрузить данные из API 1С");
+            $this->log("ОШИБКА: Не удалось загрузить данные из API");
             $this->stock_data = array();
             return $this->stock_data;
         }
-        
-        $this->log("ДИАГНОСТИКА: Первые 500 байт ответа API:");
-        $this->log(substr($json, 0, 500));
         
         $data = json_decode($json, true);
         
         if (!is_array($data)) {
-            $this->log("ОШИБКА: Некорректный JSON от API 1С");
-            $this->log("ОШИБКА json_decode: " . json_last_error_msg());
+            $this->log("ОШИБКА: Некорректный JSON от API");
             $this->stock_data = array();
             return $this->stock_data;
         }
         
-        $this->log("Получено записей из API: " . count($data));
-        
-        if (count($data) > 0) {
-            $this->log("ДИАГНОСТИКА: Ключи первого элемента: " . implode(', ', array_keys($data[0])));
-            $this->log("ДИАГНОСТИКА: Первый элемент: " . json_encode($data[0], JSON_UNESCAPED_UNICODE));
-        }
+        $this->log("Получено записей: " . count($data));
         
         $stock = array();
+        $skipped = 0;
         
-        foreach ($data as $index => $item) {
-            $article_raw = '';
-            if (isset($item['Артикул'])) {
-                $article_raw = trim($item['Артикул']);
-            } elseif (isset($item['артикул'])) {
-                $article_raw = trim($item['артикул']);
-            } elseif (isset($item['Articul'])) {
-                $article_raw = trim($item['Articul']);
-            } elseif (isset($item['articul'])) {
-                $article_raw = trim($item['articul']);
-            }
-            
-            if ($index < 5) {
-                $this->log("ДИАГНОСТИКА запись #{$index}: ключи=" . implode(',', array_keys($item)) . " | article_raw='{$article_raw}'");
-            }
+        foreach ($data as $item) {
+            $article_raw = isset($item['Артикул']) ? trim($item['Артикул']) : '';
             
             if (empty($article_raw)) {
-                $nomenclature = isset($item['Номенклатура']) ? $item['Номенклатура'] : (isset($item['Nomenklatura']) ? $item['Nomenklatura'] : 'неизвестно');
-                $this->log("ПРОПУЩЕНО (пустой Артикул): {$nomenclature}");
+                $skipped++;
                 continue;
             }
             
             $article_key = mb_strtolower($article_raw, 'UTF-8');
-            
-            $quantity = floatval(isset($item['Остаток']) ? $item['Остаток'] : (isset($item['остаток']) ? $item['остаток'] : 0));
-            $price = floatval(isset($item['Цена']) ? $item['Цена'] : (isset($item['цена']) ? $item['цена'] : 0));
-            $gtd = '';
-            if (isset($item['НомерГТД'])) $gtd = trim($item['НомерГТД']);
-            elseif (isset($item['номерГТД'])) $gtd = trim($item['номерГТД']);
-            
-            $name = '';
-            if (isset($item['НаименованиеПолное'])) $name = trim($item['НаименованиеПолное']);
-            elseif (isset($item['наименованиеПолное'])) $name = trim($item['наименованиеПолное']);
-            
-            $nomenclature = '';
-            if (isset($item['Номенклатура'])) $nomenclature = trim($item['Номенклатура']);
-            elseif (isset($item['номенклатура'])) $nomenclature = trim($item['номенклатура']);
+            $quantity = floatval(isset($item['Остаток']) ? $item['Остаток'] : 0);
+            $gtd = isset($item['НомерГТД']) ? trim($item['НомерГТД']) : '';
+            $name = isset($item['НаименованиеПолное']) ? trim($item['НаименованиеПолное']) : '';
+            $nomenclature = isset($item['Номенклатура']) ? trim($item['Номенклатура']) : '';
             
             if (isset($stock[$article_key])) {
                 $stock[$article_key]['quantity'] += $quantity;
                 if (!empty($gtd)) {
                     $stock[$article_key]['gtd'] = $gtd;
                 }
-                if ($price > 0) {
-                    $stock[$article_key]['price'] = $price;
-                }
-                $this->log("Суммирование: {$article_raw} +{$quantity}, всего: {$stock[$article_key]['quantity']}");
             } else {
                 $stock[$article_key] = array(
                     'article_original' => $article_raw,
                     'article_key' => $article_key,
                     'name' => !empty($name) ? $name : $nomenclature,
-                    'nomenclature' => $nomenclature,
                     'quantity' => $quantity,
-                    'gtd' => $gtd,
-                    'price' => $price
+                    'gtd' => $gtd
                 );
             }
         }
         
-        $this->log("Уникальных товаров после группировки: " . count($stock));
+        if ($skipped > 0) {
+            $this->log("Пропущено позиций без артикула: {$skipped}");
+        }
+        
+        $this->log("Уникальных товаров: " . count($stock));
         $this->stock_data = $stock;
         
         return $this->stock_data;
@@ -211,11 +308,8 @@ class ETMConverter {
         
         if ($http_code !== 200) {
             $this->log("ОШИБКА HTTP: код {$http_code}");
-            $this->log("Ответ: " . substr($response, 0, 500));
             return false;
         }
-        
-        $this->log("API ответил успешно, код 200, длина ответа: " . strlen($response) . " байт");
         
         return $response;
     }
@@ -243,9 +337,15 @@ class ETMConverter {
      * Директории
      */
     private function ensureDirectories() {
-        $dirs = array($this->incoming_path, $this->archive_path, $this->output_path, $this->output_path . '/recd');
+        $dirs = array(
+            $this->incoming_path, 
+            $this->archive_path, 
+            $this->output_path, 
+            $this->output_path . '/recd',
+            __DIR__ . '/docs'
+        );
         foreach ($dirs as $dir) {
-            if (!is_dir($dir)) { mkdir($dir, 0755, true); $this->log("Создана директория: {$dir}"); }
+            if (!is_dir($dir)) { mkdir($dir, 0755, true); }
         }
     }
     
@@ -253,10 +353,10 @@ class ETMConverter {
      * Основной метод обработки
      */
     public function process() {
-        $this->log("=== Начало обработки EDI сообщений ===");
-        $this->log("Base path: {$this->base_path}");
+        $this->log("=== Старт ===");
         
         $this->loadStockData();
+        $this->loadPriceData();
         
         if (!is_dir($this->incoming_path)) {
             $this->log("ОШИБКА: Директория {$this->incoming_path} не найдена");
@@ -292,7 +392,6 @@ class ETMConverter {
         if (empty($content)) return false;
         
         if (strpos($content, '<?xml') !== false || strpos($content, '<КоммерческаяИнформация>') !== false) {
-            $this->log("Обнаружен XML-файл");
             return $this->processInvoicXml($content, $file_name);
         }
         
@@ -314,7 +413,9 @@ class ETMConverter {
             case 'PROJECT':            return $this->processTransit($content, $file_name, 'PROJECT');
             case 'PROJSTA':            return $this->processTransit($content, $file_name, 'PROJSTA');
             case 'PROJQUO':            return $this->processTransit($content, $file_name, 'PROJQUO');
-            default: $this->log("Неизвестный тип: {$file_name}"); return false;
+            default: 
+                $this->log("ОШИБКА: неизвестный формат {$file_name}");
+                return false;
         }
     }
     
@@ -328,7 +429,6 @@ class ETMConverter {
         
         foreach ($lines as $line) {
             $line = rtrim(trim($line), ';');
-            
             if (empty($line)) continue;
 
             if (strpos($line, 'MSGTYPE:ORDERSP') !== false) return 'ORDERSP';
@@ -360,45 +460,31 @@ class ETMConverter {
         return 'UNKNOWN';
     }
     
-    /**
-     * Обработка заявки ORDER
-     */
     private function processOrder($content, $file_name) {
-        $this->log("Обработка заявки ORDER: {$file_name}");
-        
+        $this->log("ORDER: {$file_name}");
         $parsed = $this->parseOrderContent($content);
         return $this->buildOrdersp($parsed, $file_name);
     }
     
-    /**
-     * Обработка заявки ORDER спецусловия + проект
-     */
     private function processOrderSpecProject($content, $file_name) {
-        $this->log("Обработка ORDER (спецусловия + проект): {$file_name}");
+        $this->log("ORDER+PROJECT: {$file_name}");
         
         $lines = explode("\n", $content);
-        
-        $project_lines = array();
         $order_lines = array();
         $found_order = false;
         
         foreach ($lines as $line) {
             $line_clean = rtrim(trim($line), ';');
-            
             if (!$found_order && preg_match('/^(ЭТМ,)/u', $line_clean)) {
                 $found_order = true;
             }
-            
             if ($found_order) {
                 $order_lines[] = $line;
-            } else {
-                $project_lines[] = $line;
             }
         }
         
         $order_content = implode("\n", $order_lines);
         $parsed = $this->parseOrderContent($order_content);
-        
         $parsed['has_project'] = true;
         
         return $this->buildOrdersp($parsed, $file_name);
@@ -454,20 +540,11 @@ class ETMConverter {
         $warehouse_raw = isset($header['warehouse']) ? $header['warehouse'] : '';
         $warehouse = rtrim(trim($warehouse_raw), ';');
         
-        $valid_warehouses = array(
-            'ЭТМ,СПб', 'ЭТМ,Москва', 'ЭТМ,Урал', 'ЭТМ,Самара', 'ЭТМ,Юг',
-            'ЭТМ,Сибирь', 'ЭТМ,Казань', 'ЭТМ,МЯ', 'ЭТМ,ЦРС', 'ЭТМ,Шушары',
-            'ЭТМ,Челябинск', 'ЭТМ,Н.Новгород', 'ЭТМ,Воронеж', 'ЭТМ,Воронеж2',
-            'ЭТМ,Краснодар', 'ЭТМ,Владивосток', 'ЭТМ,Хабаровск'
-        );
-        
-        if (!empty($warehouse) && !in_array($warehouse, $valid_warehouses)) {
-            $this->log("ПРЕДУПРЕЖДЕНИЕ: Склад '{$warehouse}' не найден в справочнике");
-        }
-        
         $order_number = str_replace(';', ',', $order_number);
         
         $csv_rows = array();
+        $found_count = 0;
+        $not_found_count = 0;
         
         if ($doc_type === 'спецусловия') {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Идентификатор документа;Тип подтверждения;Цена;Период действия;Размер предоплаты;Отсрочка дней;Цена Клиента;MSGTYPE:ORDERSP";
@@ -483,16 +560,21 @@ class ETMConverter {
                 $quantity = str_replace(';', '', $quantity);
                 $basis = str_replace(';', '', $basis);
                 
+                $price_rub = $this->getPriceFromFile($article);
                 $stock_item = $this->getStockItem($article);
                 
+                if ($price_rub === null && $stock_item) {
+                    $price_rub = '';
+                }
+                
                 if ($stock_item) {
-                    $price_rub = $stock_item['price'];
                     if (empty($name) && !empty($stock_item['name'])) {
                         $name = $stock_item['name'];
                     }
+                    $found_count++;
                 } else {
-                    $this->log("Товар {$article} отсутствует в API 1С — цена не определена");
-                    $price_rub = '';
+                    $this->log("НЕ НАЙДЕН в API: {$article}");
+                    $not_found_count++;
                 }
                 
                 $row = array(
@@ -532,17 +614,19 @@ class ETMConverter {
                     } else {
                         $stock_status = 'Получено';
                     }
-                    
-                    $this->log("Товар {$article}: запрошено={$requested_qty}, остаток={$available_qty}, статус={$stock_status}");
+                    $found_count++;
                 } else {
-                    $this->log("Товар {$article} отсутствует в API 1С — статус: Не принят");
+                    $this->log("  НЕ НАЙДЕН в API: {$article}");
                     $stock_status = 'Не принят';
+                    $not_found_count++;
                 }
                 
                 $row = array($order_number, '', $name, $article, $quantity, $warehouse, $stock_status);
                 $csv_rows[] = implode($this->delimiter, $row);
             }
         }
+        
+        $this->log("  Найдено в API: {$found_count}, не найдено: {$not_found_count}");
         
         return $this->saveCsvFile($csv_rows, 'ORDERSP', $file_name);
     }
@@ -570,7 +654,7 @@ class ETMConverter {
      * Обработка XML INVOIC
      */
     private function processInvoicXml($content, $file_name) {
-        $this->log("Обработка INVOIC XML: {$file_name}");
+        $this->log("INVOIC XML: {$file_name}");
         
         $xml = simplexml_load_string($content);
         if (!$xml) {
@@ -615,7 +699,7 @@ class ETMConverter {
      * Транзит
      */
     private function processTransit($content, $file_name, $type) {
-        $this->log("Обработка {$type} (транзит): {$file_name}");
+        $this->log("{$type} (транзит): {$file_name}");
         $lines = explode("\n", $content);
         $csv_rows = array();
         foreach ($lines as $line) {
@@ -631,10 +715,7 @@ class ETMConverter {
      */
     private function archiveFile($file_path, $file_name) {
         $archive_file = $this->archive_path . '/' . date('d-m-Y__H-i-s_') . '_' . $file_name;
-        if (rename($file_path, $archive_file)) {
-            $this->log("Файл {$file_name} перемещен в архив");
-            return true;
-        }
+        if (rename($file_path, $archive_file)) return true;
         if (copy($file_path, $archive_file)) { unlink($file_path); return true; }
         return false;
     }
@@ -651,7 +732,6 @@ class ETMConverter {
         $content = mb_convert_encoding($content, $this->encoding, 'UTF-8');
         
         if (file_put_contents($output_file, $content)) {
-            $this->log("Файл сохранен в from_etm: " . basename($output_file));
             return true;
         }
         return false;
@@ -665,9 +745,5 @@ class ETMConverter {
         $log_message = "[{$timestamp}] {$message}\n";
         echo $log_message;
         file_put_contents($this->log_file, $log_message, FILE_APPEND);
-    }
-    
-    public function __destruct() {
-        if ($this->mysqli) $this->mysqli->close();
     }
 }
