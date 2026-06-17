@@ -12,7 +12,7 @@
         <h1>📦 Склад</h1>
         <div class="header-info">
           <span>Всего позиций: <?= count($stock_data) ?></span>
-          <a href="../etm_converter/run.php" class="btn-back">ETM Конвертер</a>
+          <a href="/stock/price.php" class="btn-back">Указать цены</a>
         </div>
       </div>
       <div class="filters">

@@ -23,6 +23,14 @@ if (!in_array($_SERVER['SERVER_NAME'], $allowed_servers)) {
     die('Доступ запрещён. Сервер: ' . $_SERVER['SERVER_NAME']);
 }
 
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = rtrim($uri, '/');
+
+if ($uri === '/stock/price' || $uri === '/stock/price/') {
+    require_once __DIR__ . '/price.php';
+    exit;
+}
+
 require_once __DIR__ . '/../etm_converter/edi_converter.php';
 $config = require __DIR__ . '/../etm_converter/config.php';
 
