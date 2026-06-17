@@ -19,7 +19,6 @@ class ETMConverter {
     private $api_login = 'HTTPSite';
     private $api_password = 'Ms8dVyxgdRcts7rBt7s';
     
-    // Файл с ценами
     private $price_file = null;
     
     /**
@@ -32,9 +31,9 @@ class ETMConverter {
             $this->base_path = dirname(__DIR__);
         }
         
-        $this->incoming_path = $this->base_path . '/to_etm';
-        $this->archive_path = $this->base_path . '/to_etm/recd';
-        $this->output_path = $this->base_path . '/from_etm';
+        $this->incoming_path = $this->base_path . '/etm/from_etm';
+        $this->archive_path = $this->base_path . '/etm/from_etm/recd';
+        $this->output_path = $this->base_path . '/etm/to_etm';
         $this->log_file = __DIR__ . '/edi_converter.log';
         
         $this->price_file = __DIR__ . '/docs/price.csv';
@@ -317,9 +316,9 @@ class ETMConverter {
      */
     private function ensureDirectories() {
         $dirs = array(
-            $this->incoming_path, 
-            $this->archive_path, 
-            $this->output_path, 
+            $this->incoming_path,
+            $this->archive_path,
+            $this->output_path,
             $this->output_path . '/recd',
             __DIR__ . '/docs'
         );
