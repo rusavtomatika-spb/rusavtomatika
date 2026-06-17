@@ -85,18 +85,30 @@ class ETMConverter {
         
         $prices = array();
         $usd_rate = $this->getUsdRate();
-        $started = false;
+        $header_found = false;
         
         foreach ($lines as $line) {
             $line = trim($line);
             if (empty($line)) continue;
             
-            $delim = (strpos($line, "\t") !== false) ? "\t" : ";";
+            if (substr($line, 0, 1) === '"' && substr($line, -1) === '"') {
+                $line = substr($line, 1, -1);
+                $line = str_replace('""', '"', $line);
+            }
+            
+            if (strpos($line, "\t") !== false) {
+                $delim = "\t";
+            } elseif (strpos($line, ";") !== false && substr_count($line, ';') >= 2) {
+                $delim = ";";
+            } else {
+                $delim = ",";
+            }
+            
             $row = str_getcsv($line, $delim);
             
-            if (!$started) {
+            if (!$header_found) {
                 if (isset($row[0]) && mb_strtolower(trim($row[0])) === 'артикул') {
-                    $started = true;
+                    $header_found = true;
                 }
                 continue;
             }
@@ -110,6 +122,9 @@ class ETMConverter {
             $article_key = mb_strtolower($article, 'UTF-8');
             
             $final_price_rub = 0;
+            
+            $price_usd = trim($price_usd, '"\' ');
+            $price_rub = trim($price_rub, '"\' ');
             
             if (!empty($price_rub) && is_numeric(str_replace(',', '.', $price_rub))) {
                 $final_price_rub = floatval(str_replace(',', '.', $price_rub));
@@ -507,8 +522,6 @@ class ETMConverter {
         $order_number = str_replace(';', ',', $order_number);
         
         $csv_rows = array();
-        $found_count = 0;
-        $not_found_count = 0;
         
         if ($doc_type === 'спецусловия') {
             $csv_rows[] = "Номер заявки;Дата поставки;Название;Артикул;Количество товара;Идентификатор покупателя;Идентификатор документа;Тип подтверждения;Цена;Период действия;Размер предоплаты;Отсрочка дней;Цена Клиента;MSGTYPE:ORDERSP";
@@ -527,23 +540,25 @@ class ETMConverter {
                 $price_rub = $this->getPriceFromFile($article);
                 $stock_item = $this->getStockItem($article);
                 
-                if ($price_rub === null && $stock_item) {
-                    $price_rub = '';
-                }
-                
-                if ($stock_item) {
+                if ($price_rub === null && $stock_item === null) {
+                    $status = 'Error:не найден артикул';
+                    $this->log("  Error:не найден артикул: {$article}");
+                } elseif ($price_rub === null) {
+                    $status = 'Error:нет цены';
+                    $this->log("  Error:нет цены: {$article}");
+                } elseif ($stock_item === null) {
+                    $status = 'Error:не найден в API';
+                    $this->log("  Error:не найден в API: {$article}");
+                } else {
+                    $status = 'Принят';
                     if (empty($name) && !empty($stock_item['name'])) {
                         $name = $stock_item['name'];
                     }
-                    $found_count++;
-                } else {
-                    $this->log("НЕ НАЙДЕН в API: {$article}");
-                    $not_found_count++;
                 }
                 
                 $row = array(
                     $order_number, '', $name, $article, $quantity,
-                    $warehouse, $basis, 'Принят', $price_rub,
+                    $warehouse, $basis, $status, $price_rub,
                     '', '', '', $price_rub
                 );
                 $csv_rows[] = implode($this->delimiter, $row);
@@ -563,7 +578,10 @@ class ETMConverter {
                 
                 $stock_item = $this->getStockItem($article);
                 
-                if ($stock_item) {
+                if ($stock_item === null) {
+                    $stock_status = 'Error:не найден артикул';
+                    $this->log("  Error:не найден артикул: {$article}");
+                } else {
                     if (empty($name) && !empty($stock_item['name'])) {
                         $name = $stock_item['name'];
                     }
@@ -578,19 +596,12 @@ class ETMConverter {
                     } else {
                         $stock_status = 'Получено';
                     }
-                    $found_count++;
-                } else {
-                    $this->log("  НЕ НАЙДЕН в API: {$article}");
-                    $stock_status = 'Не принят';
-                    $not_found_count++;
                 }
                 
                 $row = array($order_number, '', $name, $article, $quantity, $warehouse, $stock_status);
                 $csv_rows[] = implode($this->delimiter, $row);
             }
         }
-        
-        $this->log("  Найдено в API: {$found_count}, не найдено: {$not_found_count}");
         
         return $this->saveCsvFile($csv_rows, 'ORDERSP', $file_name);
     }
