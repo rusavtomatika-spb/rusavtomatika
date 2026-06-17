@@ -717,7 +717,15 @@ class ETMConverter {
     private function log($message) {
         $timestamp = date('d-m-Y H:i:s');
         $log_message = "[{$timestamp}] {$message}\n";
-        echo $log_message;
+        
+        if (php_sapi_name() === 'cli' || (isset($_SERVER['SCRIPT_FILENAME']) && basename($_SERVER['SCRIPT_FILENAME']) === 'run.php')) {
+            echo $log_message;
+        }
+        
         file_put_contents($this->log_file, $log_message, FILE_APPEND);
+    }
+
+    public function getStockData() {
+        return $this->loadStockData();
     }
 }

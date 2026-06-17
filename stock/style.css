@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.header h1 {
+  font-size: 24px;
+  color: #1a1a2e;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #00bcd4;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-back:hover {
+  background: #00acc1;
+}
+
+.filters {
+  margin-bottom: 15px;
+}
+
+#search {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 16px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#search:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+}
+
+.table-wrap {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background: #f8f9ff;
+}
+
+.article {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.name-full {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #555;
+}
+
+.qty-ok {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.qty-low {
+  color: #e65100;
+  font-weight: 600;
+}
+
+.qty-zero {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.price {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.gtd {
+  font-size: 12px;
+  color: #888;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 16px;
+}
