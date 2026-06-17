@@ -14,6 +14,12 @@ class ETMConverter {
     
     private $log_file;
     
+    private $stock_data = null;
+    
+    private $api_url = 'https://public.ark-sol.ru/upp_kf/hs/OtherStructures/ExtStructure/RA_Ostatkii';
+    private $api_login = 'HTTPSite';
+    private $api_password = 'Ms8dVyxgdRcts7rBt7s';
+    
     /**
      * Конструктор
      */
@@ -33,6 +39,10 @@ class ETMConverter {
         if (!empty($config['archive_path'])) $this->archive_path = $config['archive_path'];
         if (!empty($config['output_path'])) $this->output_path = $config['output_path'];
         if (!empty($config['log_file'])) $this->log_file = $config['log_file'];
+        
+        if (!empty($config['api_url'])) $this->api_url = $config['api_url'];
+        if (!empty($config['api_login'])) $this->api_login = $config['api_login'];
+        if (!empty($config['api_password'])) $this->api_password = $config['api_password'];
         
         if (!empty($config['db_host'])) {
             $this->connectDatabase($config);
@@ -63,40 +73,170 @@ class ETMConverter {
     }
     
     /**
-     * Получить данные товара из products_all
+     * Загрузка данных из API 1С
      */
-    private function getProductData($article) {
-        if (!$this->mysqli) return null;
-        $article = $this->mysqli->real_escape_string($article);
+    private function loadStockData() {
+        if ($this->stock_data !== null) {
+            return $this->stock_data;
+        }
         
-        $query = "SELECT model, model_fullname, brand, retail_price, action_price, currency, onstock_spb, preview_text, short_name, dimentions, weight
-                  FROM products_all WHERE model = '{$article}' LIMIT 1";
+        $this->log("Загрузка данных из API 1С: {$this->api_url}");
         
-        $result = $this->mysqli->query($query);
-        if ($result && $row = $result->fetch_assoc()) return $row;
+        $json = $this->fetchFromApi();
+        
+        if ($json === false) {
+            $this->log("ОШИБКА: Не удалось загрузить данные из API 1С");
+            $this->stock_data = array();
+            return $this->stock_data;
+        }
+        
+        $this->log("ДИАГНОСТИКА: Первые 500 байт ответа API:");
+        $this->log(substr($json, 0, 500));
+        
+        $data = json_decode($json, true);
+        
+        if (!is_array($data)) {
+            $this->log("ОШИБКА: Некорректный JSON от API 1С");
+            $this->log("ОШИБКА json_decode: " . json_last_error_msg());
+            $this->stock_data = array();
+            return $this->stock_data;
+        }
+        
+        $this->log("Получено записей из API: " . count($data));
+        
+        if (count($data) > 0) {
+            $this->log("ДИАГНОСТИКА: Ключи первого элемента: " . implode(', ', array_keys($data[0])));
+            $this->log("ДИАГНОСТИКА: Первый элемент: " . json_encode($data[0], JSON_UNESCAPED_UNICODE));
+        }
+        
+        $stock = array();
+        
+        foreach ($data as $index => $item) {
+            $article_raw = '';
+            if (isset($item['Артикул'])) {
+                $article_raw = trim($item['Артикул']);
+            } elseif (isset($item['артикул'])) {
+                $article_raw = trim($item['артикул']);
+            } elseif (isset($item['Articul'])) {
+                $article_raw = trim($item['Articul']);
+            } elseif (isset($item['articul'])) {
+                $article_raw = trim($item['articul']);
+            }
+            
+            if ($index < 5) {
+                $this->log("ДИАГНОСТИКА запись #{$index}: ключи=" . implode(',', array_keys($item)) . " | article_raw='{$article_raw}'");
+            }
+            
+            if (empty($article_raw)) {
+                $nomenclature = isset($item['Номенклатура']) ? $item['Номенклатура'] : (isset($item['Nomenklatura']) ? $item['Nomenklatura'] : 'неизвестно');
+                $this->log("ПРОПУЩЕНО (пустой Артикул): {$nomenclature}");
+                continue;
+            }
+            
+            $article_key = mb_strtolower($article_raw, 'UTF-8');
+            
+            $quantity = floatval(isset($item['Остаток']) ? $item['Остаток'] : (isset($item['остаток']) ? $item['остаток'] : 0));
+            $price = floatval(isset($item['Цена']) ? $item['Цена'] : (isset($item['цена']) ? $item['цена'] : 0));
+            $gtd = '';
+            if (isset($item['НомерГТД'])) $gtd = trim($item['НомерГТД']);
+            elseif (isset($item['номерГТД'])) $gtd = trim($item['номерГТД']);
+            
+            $name = '';
+            if (isset($item['НаименованиеПолное'])) $name = trim($item['НаименованиеПолное']);
+            elseif (isset($item['наименованиеПолное'])) $name = trim($item['наименованиеПолное']);
+            
+            $nomenclature = '';
+            if (isset($item['Номенклатура'])) $nomenclature = trim($item['Номенклатура']);
+            elseif (isset($item['номенклатура'])) $nomenclature = trim($item['номенклатура']);
+            
+            if (isset($stock[$article_key])) {
+                $stock[$article_key]['quantity'] += $quantity;
+                if (!empty($gtd)) {
+                    $stock[$article_key]['gtd'] = $gtd;
+                }
+                if ($price > 0) {
+                    $stock[$article_key]['price'] = $price;
+                }
+                $this->log("Суммирование: {$article_raw} +{$quantity}, всего: {$stock[$article_key]['quantity']}");
+            } else {
+                $stock[$article_key] = array(
+                    'article_original' => $article_raw,
+                    'article_key' => $article_key,
+                    'name' => !empty($name) ? $name : $nomenclature,
+                    'nomenclature' => $nomenclature,
+                    'quantity' => $quantity,
+                    'gtd' => $gtd,
+                    'price' => $price
+                );
+            }
+        }
+        
+        $this->log("Уникальных товаров после группировки: " . count($stock));
+        $this->stock_data = $stock;
+        
+        return $this->stock_data;
+    }
+    
+    /**
+     * HTTP-запрос к API 1С
+     */
+    private function fetchFromApi() {
+        $ch = curl_init();
+        
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => $this->api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT => 60,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+            CURLOPT_USERPWD => $this->api_login . ':' . $this->api_password,
+            CURLOPT_HTTPHEADER => array(
+                'Accept: application/json',
+                'Content-Type: application/json; charset=utf-8'
+            )
+        ));
+        
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        
+        curl_close($ch);
+        
+        if ($error) {
+            $this->log("ОШИБКА curl: {$error}");
+            return false;
+        }
+        
+        if ($http_code !== 200) {
+            $this->log("ОШИБКА HTTP: код {$http_code}");
+            $this->log("Ответ: " . substr($response, 0, 500));
+            return false;
+        }
+        
+        $this->log("API ответил успешно, код 200, длина ответа: " . strlen($response) . " байт");
+        
+        return $response;
+    }
+    
+    /**
+     * Получить данные товара из кэша API по артикулу
+     */
+    private function getStockItem($article) {
+        $stock = $this->loadStockData();
+        
+        if (empty($stock)) return null;
+        
+        $article_lower = mb_strtolower(trim($article), 'UTF-8');
+        
+        if (isset($stock[$article_lower])) {
+            $this->log("Товар найден в API: {$article} (остаток: {$stock[$article_lower]['quantity']}, цена: {$stock[$article_lower]['price']})");
+            return $stock[$article_lower];
+        }
+        
+        $this->log("Товар НЕ найден в API: {$article} (искали: '{$article_lower}')");
         return null;
-    }
-    
-    /**
-     * Получить цену в рублях
-     */
-    private function getPriceRub($product) {
-        if (!$product) return '';
-        $usd_currency = $this->getUsdRate();
-        if ($product['currency'] === 'RUR') return $product['retail_price'];
-        if ($usd_currency > 0) return round($product['retail_price'] * $usd_currency);
-        return $product['retail_price'];
-    }
-    
-    /**
-     * Получить курс USD из файла
-     */
-    private function getUsdRate() {
-        $rate_file = $this->base_path . '/usdrate.txt';
-        if (file_exists($rate_file)) return floatval(file_get_contents($rate_file));
-        $rate_file = $_SERVER['DOCUMENT_ROOT'] . '/usdrate.txt';
-        if (file_exists($rate_file)) return floatval(file_get_contents($rate_file));
-        return 0;
     }
     
     /**
@@ -115,6 +255,8 @@ class ETMConverter {
     public function process() {
         $this->log("=== Начало обработки EDI сообщений ===");
         $this->log("Base path: {$this->base_path}");
+        
+        $this->loadStockData();
         
         if (!is_dir($this->incoming_path)) {
             $this->log("ОШИБКА: Директория {$this->incoming_path} не найдена");
@@ -188,36 +330,29 @@ class ETMConverter {
             $line = rtrim(trim($line), ';');
             
             if (empty($line)) continue;
-            
-            // MSGTYPE
+
             if (strpos($line, 'MSGTYPE:ORDERSP') !== false) return 'ORDERSP';
             if (strpos($line, 'MSGTYPE:PROJSTA') !== false) return 'PROJSTA';
             if (strpos($line, 'MSGTYPE:PROJQUO') !== false) return 'PROJQUO';
             
-            // INVOIC
             if (strpos($line, 'Артикул;Наименование;Количество;Цена') !== false) return 'INVOIC';
             if (strpos($line, 'Продавец:') !== false) return 'INVOIC';
             
-            // PRODAT
             if (strpos($line, 'Режим:ОписаниеТоваров') !== false) return 'PRODAT';
             
-            // PROJECT
             if (strpos($line, 'Код проекта') !== false && strpos($line, 'Название проекта') !== false) {
                 $hasProjectHeader = true;
             }
             
-            // ORDER
             if (preg_match('/^(ЭТМ,|Дата:|Номер:|Примечание:)/u', $line)) {
                 $hasOrderHeader = true;
             }
             
-            // INVRPT
             if (strpos($line, 'Название;Производитель;Артикул') !== false || strpos($line, 'NameRgd;CodeMnf;Article') !== false) {
                 return 'INVRPT';
             }
         }
         
-        // Если есть и проект, и ORDER — это спецусловия с проектом
         if ($hasProjectHeader && $hasOrderHeader) return 'ORDER_SPEC_PROJECT';
         if ($hasOrderHeader) return 'ORDER';
         if ($hasProjectHeader) return 'PROJECT';
@@ -327,16 +462,7 @@ class ETMConverter {
         );
         
         if (!empty($warehouse) && !in_array($warehouse, $valid_warehouses)) {
-            $gln_valid = false;
-            foreach ($valid_warehouses as $w) {
-                if (strpos($warehouse, '466001151') !== false && strlen($warehouse) >= 13) {
-                    $gln_valid = true;
-                    break;
-                }
-            }
-            if (!$gln_valid) {
-                $this->log("ПРЕДУПРЕЖДЕНИЕ: Склад '{$warehouse}' не найден в справочнике");
-            }
+            $this->log("ПРЕДУПРЕЖДЕНИЕ: Склад '{$warehouse}' не найден в справочнике");
         }
         
         $order_number = str_replace(';', ',', $order_number);
@@ -357,8 +483,17 @@ class ETMConverter {
                 $quantity = str_replace(';', '', $quantity);
                 $basis = str_replace(';', '', $basis);
                 
-                $product = $this->getProductData($article);
-                $price_rub = $this->getPriceRub($product);
+                $stock_item = $this->getStockItem($article);
+                
+                if ($stock_item) {
+                    $price_rub = $stock_item['price'];
+                    if (empty($name) && !empty($stock_item['name'])) {
+                        $name = $stock_item['name'];
+                    }
+                } else {
+                    $this->log("Товар {$article} отсутствует в API 1С — цена не определена");
+                    $price_rub = '';
+                }
                 
                 $row = array(
                     $order_number, '', $name, $article, $quantity,
@@ -380,15 +515,28 @@ class ETMConverter {
                 $article = str_replace(';', '', $article);
                 $quantity = str_replace(';', '', $quantity);
                 
-                $product = $this->getProductData($article);
+                $stock_item = $this->getStockItem($article);
                 
-                $stock_status = 'Получено';
-                if ($product) {
-                    if ($product['onstock_spb'] >= $quantity) {
-                        $stock_status = 'Принято без изменений';
-                    } elseif ($product['onstock_spb'] > 0) {
-                        $stock_status = 'Изменение';
+                if ($stock_item) {
+                    if (empty($name) && !empty($stock_item['name'])) {
+                        $name = $stock_item['name'];
                     }
+                    
+                    $requested_qty = floatval($quantity);
+                    $available_qty = $stock_item['quantity'];
+                    
+                    if ($available_qty >= $requested_qty) {
+                        $stock_status = 'Принято без изменений';
+                    } elseif ($available_qty > 0) {
+                        $stock_status = 'Изменение';
+                    } else {
+                        $stock_status = 'Получено';
+                    }
+                    
+                    $this->log("Товар {$article}: запрошено={$requested_qty}, остаток={$available_qty}, статус={$stock_status}");
+                } else {
+                    $this->log("Товар {$article} отсутствует в API 1С — статус: Не принят");
+                    $stock_status = 'Не принят';
                 }
                 
                 $row = array($order_number, '', $name, $article, $quantity, $warehouse, $stock_status);

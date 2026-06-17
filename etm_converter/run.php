@@ -13,14 +13,20 @@ if (!in_array($_SERVER['SERVER_NAME'], $allowed_servers)) {
 
 require_once __DIR__ . '/edi_converter.php';
 
+$config = require __DIR__ . '/config.php';
+
 echo "<pre>";
 echo "=== Запуск ETM Converter ===\n";
 echo "Время: " . date('Y-m-d H:i:s') . "\n";
 echo "Сервер: " . $_SERVER['SERVER_NAME'] . "\n";
-echo "Директория скрипта: " . __DIR__ . "\n\n";
+echo "Директория скрипта: " . __DIR__ . "\n";
+echo "API URL: " . $config['api_url'] . "\n\n";
 
 $converter = new ETMConverter(array(
     'base_path' => '/home/moisait/public_html/rusavto',
+    'api_url' => $config['api_url'],
+    'api_login' => $config['api_login'],
+    'api_password' => $config['api_password'],
     'db_host' => 'localhost',
     'db_user' => 'moisait_olga',
     'db_pass' => 'olgaglr',

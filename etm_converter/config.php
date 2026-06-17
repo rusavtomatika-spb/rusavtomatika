@@ -18,6 +18,10 @@ return [
         'log_level' => 'INFO'
     ],
     
+    'api_url' => 'https://public.ark-sol.ru/upp_kf/hs/OtherStructures/ExtStructure/RA_Ostatkii',
+    'api_login' => 'HTTPSite',
+    'api_password' => 'Ms8dVyxgdRcts7rBt7s',
+    
     'warehouses' => [
         'ЭТМ,СПб' => ['gln' => '4660011510200', 'name' => 'Санкт-Петербург'],
         'ЭТМ,Москва' => ['gln' => '4660011510149', 'name' => 'Москва'],
