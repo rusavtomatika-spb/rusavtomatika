@@ -1,5 +1,17 @@
 <?php
 
+$valid_username = 'manager';
+$valid_password = '|M3Xph}NyH';
+
+if (!isset($_SERVER['PHP_AUTH_USER']) || 
+    $_SERVER['PHP_AUTH_USER'] !== $valid_username || 
+    $_SERVER['PHP_AUTH_PW'] !== $valid_password) {
+    
+    header('WWW-Authenticate: Basic realm="Склад ETM"');
+    header('HTTP/1.0 401 Unauthorized');
+    die('Доступ запрещён. Требуется авторизация.');
+}
+
 $allowed_servers = array(
     'www.rusavto.moisait.net',
     'rusavto.moisait.net',
@@ -26,7 +38,8 @@ $stock_data = $converter->getStockData();
 if (empty($stock_data)) {
     $json = file_get_contents($config['api_url'], false, stream_context_create(array(
         'http' => array(
-            'header' => "Authorization: Basic " . base64_encode($config['api_login'] . ':' . $config['api_password']) . "\r\n"
+            'header' => "Authorization: Basic " . base64_encode($config['api_login'] . ':' . $config['api_password']) . "\r\n",
+            'timeout' => 30
         )
     )));
     $data = json_decode($json, true);
