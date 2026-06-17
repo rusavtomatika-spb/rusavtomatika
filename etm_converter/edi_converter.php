@@ -37,8 +37,7 @@ class ETMConverter {
         $this->output_path = $this->base_path . '/from_etm';
         $this->log_file = __DIR__ . '/edi_converter.log';
         
-        // Файл с ценами по умолчанию
-        $this->price_file = __DIR__ . '/docs/prices.xlsx';
+        $this->price_file = __DIR__ . '/docs/price.csv';
         
         if (!empty($config['incoming_path'])) $this->incoming_path = $config['incoming_path'];
         if (!empty($config['archive_path'])) $this->archive_path = $config['archive_path'];
@@ -55,7 +54,7 @@ class ETMConverter {
     }
     
     /**
-     * Загрузка цен из XLSX
+     * Загрузка цен из CSV
      */
     private function loadPriceData() {
         if ($this->price_data !== null) {
@@ -68,21 +67,33 @@ class ETMConverter {
             return $this->price_data;
         }
         
-        $this->log("Загрузка цен из XLSX: {$this->price_file}");
+        $this->log("Загрузка цен из CSV: {$this->price_file}");
         
-        $rows = $this->parseXlsxFile($this->price_file);
-        
-        if ($rows === false) {
-            $this->log("ОШИБКА: Не удалось прочитать файл цен");
+        $content = file_get_contents($this->price_file);
+        if (empty($content)) {
+            $this->log("ОШИБКА: Файл цен пуст");
             $this->price_data = array();
             return $this->price_data;
         }
         
+        $detected = mb_detect_encoding($content, array('Windows-1251', 'UTF-8', 'CP1251'), true);
+        if ($detected === 'Windows-1251' || $detected === 'CP1251') {
+            $content = mb_convert_encoding($content, 'UTF-8', 'Windows-1251');
+        }
+        
+        $lines = explode("\n", $content);
+        
         $prices = array();
         $usd_rate = $this->getUsdRate();
-        
         $started = false;
-        foreach ($rows as $row) {
+        
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if (empty($line)) continue;
+            
+            $delim = (strpos($line, "\t") !== false) ? "\t" : ";";
+            $row = str_getcsv($line, $delim);
+            
             if (!$started) {
                 if (isset($row[0]) && mb_strtolower(trim($row[0])) === 'артикул') {
                     $started = true;
@@ -116,61 +127,14 @@ class ETMConverter {
             );
         }
         
-        $this->log("Загружено цен из XLSX: " . count($prices));
+        $this->log("Загружено цен из CSV: " . count($prices));
         $this->price_data = $prices;
         
         return $this->price_data;
     }
     
     /**
-     * Парсинг XLSX файла
-     */
-    private function parseXlsxFile($file_path) {
-        if (file_exists(__DIR__ . '/SimpleXLSX.php')) {
-            require_once __DIR__ . '/SimpleXLSX.php';
-            
-            if ($xlsx = SimpleXLSX::parse($file_path)) {
-                return $xlsx->rows();
-            } else {
-                $this->log("ОШИБКА SimpleXLSX: " . SimpleXLSX::parseError());
-                return false;
-            }
-        }
-        
-        if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-            require_once __DIR__ . '/vendor/autoload.php';
-            
-            try {
-                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file_path);
-                $worksheet = $spreadsheet->getActiveSheet();
-                return $worksheet->toArray();
-            } catch (Exception $e) {
-                $this->log("ОШИБКА PhpSpreadsheet: " . $e->getMessage());
-                return false;
-            }
-        }
-        
-        // Fallback: пробуем читать как CSV/TSV (если файл на самом деле текстовый)
-        $content = file_get_contents($file_path);
-        if ($content !== false) {
-            $lines = explode("\n", $content);
-            $rows = array();
-            foreach ($lines as $line) {
-                $line = trim($line);
-                if (empty($line)) continue;
-                // Определяем разделитель: табуляция или запятая
-                $delim = (strpos($line, "\t") !== false) ? "\t" : ",";
-                $rows[] = str_getcsv($line, $delim);
-            }
-            return $rows;
-        }
-        
-        $this->log("ОШИБКА: Нет доступной библиотеки для чтения XLSX");
-        return false;
-    }
-    
-    /**
-     * Получить цену товара из XLSX
+     * Получить цену товара из CSV
      */
     private function getPriceFromFile($article) {
         $prices = $this->loadPriceData();
