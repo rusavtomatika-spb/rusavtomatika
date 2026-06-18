@@ -18,8 +18,23 @@
           <a href="/stock/price.php" class="btn-back">Указать цены</a>
         </div>
       </div>
-      <div class="filters">
-        <input type="text" id="search" placeholder="🔍 Поиск по артикулу или названию..." autofocus>
+      <div class="actions-wrapper">
+        <div class="filters">
+          <input type="text" id="search" placeholder="🔍 Поиск по артикулу или названию..." autofocus>
+        </div>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%; justify-content: flex-end;">
+          <div class="filter-group" id="filter-brand">
+            <span style="font-size:13px;color:#888;margin-right:5px;">Бренд:</span>
+            <label><input type="checkbox" value="weintek" onchange="applyFilters()"> Weintek</label>
+            <label><input type="checkbox" value="ifc" onchange="applyFilters()"> IFC</label>
+            <label><input type="checkbox" value="other" onchange="applyFilters()"> Другое</label>
+          </div>
+          <div class="filter-group" id="filter-type">
+            <span style="font-size:13px;color:#888;margin-right:5px;">Тип:</span>
+            <label><input type="checkbox" value="panel" onchange="applyFilters()"> Панель оператора</label>
+            <label><input type="checkbox" value="server" onchange="applyFilters()"> Сервер</label>
+          </div>
+        </div>
       </div>
       <div class="table-wrap">
         <table id="stock-table">

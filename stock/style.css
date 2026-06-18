@@ -52,6 +52,13 @@ body {
   color: #666;
 }
 
+.actions-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
 .btn-back {
   display: inline-block;
   padding: 8px 16px;
@@ -68,7 +75,11 @@ body {
 }
 
 .filters {
+  display: flex;
+  align-items: center;
+  width: 100%;
   margin-bottom: 15px;
+  gap: 10px;
 }
 
 #search {
@@ -270,3 +281,32 @@ tbody tr:hover {
   color: #c62828;
   border-left: 4px solid #ef5350;
 }
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  transition: all 0.2s;
+  user-select: none;
+  background: #fff;
+}
+.filter-group label:hover { border-color: #00bcd4; background: #f0fdfd; }
+.filter-group label.active {
+  border-color: #00bcd4;
+  background: #e0f7fa;
+  color: #00838f;
+  font-weight: 500;
+}
+.filter-group input[type="checkbox"] { display: none; }

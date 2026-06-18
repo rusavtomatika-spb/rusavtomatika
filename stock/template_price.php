@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Цены</title>
+  <title>Цены товаров</title>
   <link rel="stylesheet" href="/stock/style.css">
 </head>
 <body>
@@ -17,9 +17,25 @@
         </div>
       </div>
       <div class="toast <?= $message_type ?>" id="toast"><?= htmlspecialchars($message) ?></div>
-      <div class="filters" style="display: flex; gap: 10px; align-items: center;">
-        <input type="text" id="search" placeholder="🔍 Поиск по артикулу или описанию..." autofocus style="flex: 1;">
-        <button class="btn btn-add" onclick="openAddModal()">Добавить товар</button>
+      <div class="actions-wrapper">
+        <div class="filters">
+          <input type="text" id="search" placeholder="🔍 Поиск по артикулу или описанию..." autofocus style="flex: 1;">
+          <button class="btn btn-add" onclick="openAddModal()">Добавить товар</button>
+        </div>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%; justify-content: flex-end;">
+          <div class="filter-group" id="filter-brand">
+            <span style="font-size:13px;color:#888;margin-right:5px;">Бренд:</span>
+            <label><input type="checkbox" value="weintek" onchange="applyFilters()"> Weintek</label>
+            <label><input type="checkbox" value="ifc" onchange="applyFilters()"> IFC</label>
+            <label><input type="checkbox" value="other" onchange="applyFilters()"> Другое</label>
+          </div>
+          <div class="filter-group" id="filter-type">
+            <span style="font-size:13px;color:#888;margin-right:5px;">Тип:</span>
+            <label><input type="checkbox" value="panel" onchange="applyFilters()"> Панель оператора</label>
+            <label><input type="checkbox" value="server" onchange="applyFilters()"> Сервер</label>
+            <label><input type="checkbox" value="gateway" onchange="applyFilters()"> Шлюз</label>
+          </div>
+        </div>
       </div>
       <div class="table-wrap">
         <table id="price-table">
@@ -39,18 +55,37 @@
               </tr>
             <?php else: ?>
               <?php foreach ($prices as $item): 
-                $article = htmlspecialchars($item['articul']);
+                $article_raw = $item['articul'];
+                $desc_raw = $item['description'] ?: '';
+                
+                $article = htmlspecialchars($article_raw);
                 $price_usd = $item['price_usd'] ? floatval($item['price_usd']) : 0;
                 $price_rub = $item['price_rub'] ? floatval($item['price_rub']) : 0;
-                $desc = htmlspecialchars($item['description'] ?: '');
+                $desc = htmlspecialchars($desc_raw);
                 $id = $item['id'];
+                
+                $searchData = mb_strtolower($article_raw . ' ' . $desc_raw, 'UTF-8');
+                $article_lower = mb_strtolower($article_raw, 'UTF-8');
+                $desc_lower = mb_strtolower($desc_raw, 'UTF-8');
+                
+                $hasWeintek = (strpos($article_lower, 'weintek') !== false || strpos($desc_lower, 'weintek') !== false) ? '1' : '0';
+                $hasIfc = (strpos($article_lower, 'ifc') !== false || strpos($desc_lower, 'ifc') !== false) ? '1' : '0';
+                $hasPanel = (strpos($article_lower, 'панель') !== false || strpos($desc_lower, 'панель') !== false) ? '1' : '0';
+                $hasServer = (strpos($article_lower, 'сервер') !== false || strpos($desc_lower, 'сервер') !== false) ? '1' : '0';
+                $hasGateway = (strpos($article_lower, 'шлюз ') !== false || strpos($desc_lower, 'шлюз') !== false) ? '1' : '0';
               ?>
-              <tr data-search="<?= strtolower($article . ' ' . $desc) ?>"
+              <tr data-search="<?= $searchData ?>"
                 data-id="<?= $id ?>"
                 data-articul="<?= $article ?>"
                 data-price-usd="<?= $price_usd ?>"
                 data-price-rub="<?= $price_rub ?>"
-                data-description="<?= htmlspecialchars($item['description'] ?: '') ?>">
+                data-description="<?= htmlspecialchars($item['description'] ?: '') ?>"
+                data-weintek="<?= $hasWeintek ?>"
+                data-ifc="<?= $hasIfc ?>"
+                data-panel="<?= $hasPanel ?>"
+                data-server="<?= $hasServer ?>"
+                data-gateway="<?= $hasGateway ?>"
+              >
                 <td class="article"><?= $article ?></td>
                 <td class="price"><?= formatPrice($price_usd, $usd_rate, true) ?></td>
                 <td class="price"><?= $price_rub ? '₽' . number_format($price_rub, 2, '.', ' ') : '—' ?></td>
@@ -104,22 +139,84 @@
     <script>
     <?php if ($message): ?>
     (function() {
-        var toast = document.getElementById('toast');
-        setTimeout(function() { toast.classList.add('show'); }, 100);
-        setTimeout(function() { 
-            toast.classList.remove('show');
-        }, 5000);
-    })();
+      var toast = document.getElementById('toast')
+      setTimeout(function() { toast.classList.add('show'); }, 100)
+      setTimeout(function() { toast.classList.remove('show'); }, 5000)
+    })()
     <?php endif; ?>
-    document.getElementById('search').addEventListener('input', function() {
-      var query = this.value.toLowerCase();
-      var rows = document.querySelectorAll('#price-table tbody tr');
+    
+    function applyFilters() {
+      document.querySelectorAll('.filter-group input[type="checkbox"]').forEach(function(cb) {
+        cb.parentElement.classList.toggle('active', cb.checked)
+      })
+      
+      var brandGroup = document.querySelectorAll('#filter-brand input[type="checkbox"]')
+      brandGroup.forEach(function(cb) {
+        cb.addEventListener('change', function() {
+          if (this.checked) {
+            brandGroup.forEach(function(other) {
+              if (other !== cb) other.checked = false
+              other.parentElement.classList.toggle('active', other.checked)
+            })
+          }
+          applyFilters()
+        })
+      })
+      
+      var rows = document.querySelectorAll('#price-table tbody tr')
+      var searchQuery = document.getElementById('search').value.toLowerCase()
+      
+      var brandWeintek = document.querySelector('#filter-brand input[value="weintek"]').checked
+      var brandIfc = document.querySelector('#filter-brand input[value="ifc"]').checked
+      var brandOther = document.querySelector('#filter-brand input[value="other"]').checked
+      var typePanel = document.querySelector('#filter-type input[value="panel"]').checked
+      var typeServer = document.querySelector('#filter-type input[value="server"]').checked
+      var typeGateway = document.querySelector('#filter-type input[value="gateway"]').checked
+      
       rows.forEach(function(row) {
-        var searchData = row.getAttribute('data-search');
-        if (!searchData) return;
-        row.style.display = searchData.indexOf(query) !== -1 ? '' : 'none';
-      });
-    });
+        var show = true
+        var searchData = row.getAttribute('data-search')
+        
+        if (searchQuery && searchData && searchData.indexOf(searchQuery) === -1) {
+          show = false
+        }
+        
+        if (show && (brandWeintek || brandIfc || brandOther)) {
+          var w = row.getAttribute('data-weintek') === '1'
+          var i = row.getAttribute('data-ifc') === '1'
+          
+          if (brandWeintek && !w) show = false
+          if (brandIfc && !i) show = false
+          if (brandOther && (w || i)) show = false
+        }
+        
+        if (show && (typePanel || typeServer || typeGateway)) {
+          var p = row.getAttribute('data-panel') === '1'
+          var s = row.getAttribute('data-server') === '1'
+          var g = row.getAttribute('data-gateway') === '1'
+          
+          if (typePanel && !p) show = false
+          if (typeServer && !s) show = false
+          if (typeGateway && !g) show = false
+        }
+        
+        row.style.display = show ? '' : 'none'
+      })
+    }
+    
+    document.getElementById('search').addEventListener('input', applyFilters)
+    
+    document.querySelectorAll('#filter-brand input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        if (this.checked) {
+          document.querySelectorAll('#filter-brand input[type="checkbox"]').forEach(function(other) {
+            if (other !== cb) other.checked = false
+            other.parentElement.classList.toggle('active', other.checked)
+          })
+        }
+        applyFilters()
+      })
+    })
     
     function openAddModal() {
       document.getElementById('modal-title').textContent = 'Добавить товар';
