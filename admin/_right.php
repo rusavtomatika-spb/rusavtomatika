@@ -2,6 +2,13 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+if (!preg_match("/www\.rusavtomatika\.com/i", $_SERVER['SERVER_NAME'])) {
+    if (empty($_COOKIE['m'])) {
+        header('HTTP/1.0 404 Not Found');
+        exit;
+    }
+}
+
 require_once 'admin_auth.php';
 
 $current_admin = check_admin_auth();
