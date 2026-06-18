@@ -79,7 +79,12 @@
               data-gateway="<?= $hasGateway ?>"
             >
               <td class="article"><?= $article ?></td>
-              <td class="name-full" title="<?= $name ?>"><?= $name ?></td>
+              <td class="name-full" title="<?= $name ?>">
+                <p><?= $name ?></p>
+                <?php if (mb_strlen($name_raw, 'UTF-8') > 48): ?>
+                  <button class="open__fullname-button">Открыть</button>
+                <?php endif; ?>
+              </td>
               <td class="<?= $qty_class ?>"><?= $qty ?></td>
               <td class="gtd"><?= $gtd ?: '—' ?></td>
               <td class="price"><?= $price > 0 ? number_format($price, floor($price) == $price ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
@@ -91,7 +96,15 @@
       </table>
     </div>
   </div>
-    
-  <script src="/filters/filters.js"></script>
+  <script>
+    document.querySelectorAll('.open__fullname-button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var td = this.parentElement
+        td.classList.toggle('expanded')
+        this.textContent = td.classList.contains('expanded') ? 'Скрыть' : 'Открыть'
+      })
+    })
+  </script>
+  <script src="/stock/filters/filters.js"></script>
 </body>
 </html>

@@ -157,11 +157,34 @@ tbody tr:hover {
 }
 
 .name-full {
+  display: flex;
+  align-items: flex-start;
   max-width: 400px;
+  gap: 8px;
+}
+
+.name-full p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #555;
+  width: 100%;
+}
+
+.name-full.expanded p {
+  white-space: normal;
+  overflow: visible;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.open__fullname-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #00acc1;
+  white-space: nowrap;
 }
 
 .qty-ok {
