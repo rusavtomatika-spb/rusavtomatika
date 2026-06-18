@@ -9,11 +9,32 @@ body {
   background: #f5f7fa;
   color: #333;
   padding: 20px;
+  width: 100%;
 }
 
 .container {
+  position: relative;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.header-wrapper {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+.header-actions-container {
+  display: flex;
+  flex-direction: column;
+  background: #f5f7fa;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1400px;
 }
 
 .header {
@@ -103,6 +124,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow-x: auto;
+  margin-top: 190px;
 }
 
 table {

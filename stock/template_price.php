@@ -8,35 +8,39 @@
 </head>
 <body>
     <div class="container">
-      <div class="header">
-        <h1>Цены товаров</h1>
-        <div class="header-info">
-          <span>Всего позиций: <?= count($prices) ?></span>
-          <span>Курс USD: <?= $usd_rate > 0 ? $usd_rate : 'не задан' ?></span>
-          <a href="/stock" class="btn-back">Склад 1С</a>
-        </div>
-      </div>
       <div class="toast <?= $message_type ?>" id="toast"><?= htmlspecialchars($message) ?></div>
-      <div class="actions-wrapper">
-        <div class="filters">
-          <input type="text" id="search" placeholder="🔍 Поиск по артикулу или описанию..." autofocus style="flex: 1;">
-          <button class="btn btn-add" onclick="openAddModal()">Добавить товар</button>
-        </div>
-        <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%; justify-content: flex-end;">
-          <div class="filter-group" id="filter-brand">
-            <span style="font-size:13px;color:#888;margin-right:5px;">Бренд:</span>
-            <label><input type="checkbox" value="weintek" onchange="applyFilters()"> Weintek</label>
-            <label><input type="checkbox" value="ifc" onchange="applyFilters()"> IFC</label>
-            <label><input type="checkbox" value="other" onchange="applyFilters()"> Другое</label>
+      <header class="header-wrapper">
+        <div class="header-actions-container">
+          <div class="header">
+            <h1>Цены товаров</h1>
+            <div class="header-info">
+              <span>Всего позиций: <?= count($prices) ?></span>
+              <span>Курс USD: <?= $usd_rate > 0 ? $usd_rate : 'не задан' ?></span>
+              <a href="/stock" class="btn-back">Склад 1С</a>
+            </div>
           </div>
-          <div class="filter-group" id="filter-type">
-            <span style="font-size:13px;color:#888;margin-right:5px;">Тип:</span>
-            <label><input type="checkbox" value="panel" onchange="applyFilters()"> Панель оператора</label>
-            <label><input type="checkbox" value="server" onchange="applyFilters()"> Сервер</label>
-            <label><input type="checkbox" value="gateway" onchange="applyFilters()"> Шлюз</label>
+          <div class="actions-wrapper">
+            <div class="filters">
+              <input type="text" id="search" placeholder="🔍 Поиск по артикулу или описанию..." autofocus style="flex: 1;">
+              <button class="btn btn-add" onclick="openAddModal()">Добавить товар</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; width: 100%; justify-content: flex-end;">
+              <div class="filter-group" id="filter-brand">
+                <span style="font-size:13px;color:#888;margin-right:5px;">Бренд:</span>
+                <label><input type="checkbox" value="weintek" onchange="applyFilters()"> Weintek</label>
+                <label><input type="checkbox" value="ifc" onchange="applyFilters()"> IFC</label>
+                <label><input type="checkbox" value="other" onchange="applyFilters()"> Другое</label>
+              </div>
+              <div class="filter-group" id="filter-type">
+                <span style="font-size:13px;color:#888;margin-right:5px;">Тип:</span>
+                <label><input type="checkbox" value="panel" onchange="applyFilters()"> Панель оператора</label>
+                <label><input type="checkbox" value="server" onchange="applyFilters()"> Сервер</label>
+                <label><input type="checkbox" value="gateway" onchange="applyFilters()"> Шлюз</label>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </header>
       <div class="table-wrap">
         <table id="price-table">
           <thead>
