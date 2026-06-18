@@ -21,6 +21,8 @@ class ETMConverter {
     
     private $price_file = null;
     
+    private $mysqli_price = null;
+    
     /**
      * Конструктор
      */
@@ -36,112 +38,84 @@ class ETMConverter {
         $this->output_path = $this->base_path . '/etm/to_etm';
         $this->log_file = __DIR__ . '/edi_converter.log';
         
-        $this->price_file = __DIR__ . '/docs/price.csv';
-        
         if (!empty($config['incoming_path'])) $this->incoming_path = $config['incoming_path'];
         if (!empty($config['archive_path'])) $this->archive_path = $config['archive_path'];
         if (!empty($config['output_path'])) $this->output_path = $config['output_path'];
         if (!empty($config['log_file'])) $this->log_file = $config['log_file'];
-        if (!empty($config['price_file'])) $this->price_file = $config['price_file'];
         
         if (!empty($config['api_url'])) $this->api_url = $config['api_url'];
         if (!empty($config['api_login'])) $this->api_login = $config['api_login'];
         if (!empty($config['api_password'])) $this->api_password = $config['api_password'];
+        
+        if (!empty($config['price_db_host'])) {
+            $this->mysqli_price = new mysqli(
+                $config['price_db_host'],
+                $config['price_db_user'],
+                $config['price_db_pass'],
+                $config['price_db_name']
+            );
+            if ($this->mysqli_price->connect_error) {
+                $this->log("ОШИБКА подключения к БД цен: " . $this->mysqli_price->connect_error);
+                $this->mysqli_price = null;
+            } else {
+                $this->mysqli_price->set_charset('utf8');
+            }
+        }
         
         $this->ensureDirectories();
         date_default_timezone_set('Europe/Moscow');
     }
     
     /**
-     * Загрузка цен из CSV
+     * Загрузка цен из БД
      */
     private function loadPriceData() {
         if ($this->price_data !== null) {
             return $this->price_data;
         }
         
-        if (!file_exists($this->price_file)) {
-            $this->log("ПРЕДУПРЕЖДЕНИЕ: Файл цен не найден: {$this->price_file}");
+        if (!$this->mysqli_price) {
+            $this->log("ПРЕДУПРЕЖДЕНИЕ: Нет подключения к БД цен");
             $this->price_data = array();
             return $this->price_data;
         }
         
-        $this->log("Загрузка цен из CSV: {$this->price_file}");
-        
-        $content = file_get_contents($this->price_file);
-        if (empty($content)) {
-            $this->log("ОШИБКА: Файл цен пуст");
-            $this->price_data = array();
-            return $this->price_data;
-        }
-        
-        $detected = mb_detect_encoding($content, array('Windows-1251', 'UTF-8', 'CP1251'), true);
-        if ($detected === 'Windows-1251' || $detected === 'CP1251') {
-            $content = mb_convert_encoding($content, 'UTF-8', 'Windows-1251');
-        }
-        
-        $lines = explode("\n", $content);
+        $this->log("Загрузка цен из БД");
         
         $prices = array();
         $usd_rate = $this->getUsdRate();
-        $header_found = false;
         
-        foreach ($lines as $line) {
-            $line = trim($line);
-            if (empty($line)) continue;
-            
-            if (substr($line, 0, 1) === '"' && substr($line, -1) === '"') {
-                $line = substr($line, 1, -1);
-                $line = str_replace('""', '"', $line);
-            }
-            
-            if (strpos($line, "\t") !== false) {
-                $delim = "\t";
-            } elseif (strpos($line, ";") !== false && substr_count($line, ';') >= 2) {
-                $delim = ";";
-            } else {
-                $delim = ",";
-            }
-            
-            $row = str_getcsv($line, $delim);
-            
-            if (!$header_found) {
-                if (isset($row[0]) && mb_strtolower(trim($row[0])) === 'артикул') {
-                    $header_found = true;
-                }
-                continue;
-            }
-            
-            $article = isset($row[0]) ? trim($row[0]) : '';
-            $price_usd = isset($row[1]) ? trim($row[1]) : '';
-            $price_rub = isset($row[2]) ? trim($row[2]) : '';
-            
-            if (empty($article)) continue;
-            
-            $article_key = mb_strtolower($article, 'UTF-8');
-            
-            $final_price_rub = 0;
-            
-            $price_usd = trim($price_usd, '"\' ');
-            $price_rub = trim($price_rub, '"\' ');
-            
-            if (!empty($price_rub) && is_numeric(str_replace(',', '.', $price_rub))) {
-                $final_price_rub = floatval(str_replace(',', '.', $price_rub));
-            } elseif (!empty($price_usd) && is_numeric(str_replace(',', '.', $price_usd)) && $usd_rate > 0) {
-                $final_price_rub = round(floatval(str_replace(',', '.', $price_usd)) * $usd_rate, 2);
-            } elseif (!empty($price_usd) && is_numeric(str_replace(',', '.', $price_usd))) {
-                $this->log("ПРЕДУПРЕЖДЕНИЕ: Курс USD не загружен, цена {$article} не конвертирована");
+        $result = $this->mysqli_price->query("SELECT articul, price_usd, price_rub FROM products_price");
+        
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $article = trim($row['articul']);
+                if (empty($article)) continue;
+                
+                $article_key = mb_strtolower($article, 'UTF-8');
+                $price_usd = $row['price_usd'] ? floatval($row['price_usd']) : 0;
+                $price_rub = $row['price_rub'] ? floatval($row['price_rub']) : 0;
+                
                 $final_price_rub = 0;
+                
+                if ($price_rub > 0) {
+                    $final_price_rub = $price_rub;
+                } elseif ($price_usd > 0 && $usd_rate > 0) {
+                    $final_price_rub = round($price_usd * $usd_rate, 2);
+                } elseif ($price_usd > 0) {
+                    $this->log("ПРЕДУПРЕЖДЕНИЕ: Курс USD не загружен, цена {$article} не конвертирована");
+                }
+                
+                $prices[$article_key] = array(
+                    'article' => $article,
+                    'price_rub' => $final_price_rub,
+                    'price_usd' => $price_usd
+                );
             }
-            
-            $prices[$article_key] = array(
-                'article' => $article,
-                'price_rub' => $final_price_rub,
-                'price_usd' => !empty($price_usd) ? floatval(str_replace(',', '.', $price_usd)) : 0
-            );
+            $result->free();
         }
         
-        $this->log("Загружено цен из CSV: " . count($prices));
+        $this->log("Загружено цен из БД: " . count($prices));
         $this->price_data = $prices;
         
         return $this->price_data;
@@ -727,5 +701,9 @@ class ETMConverter {
 
     public function getStockData() {
         return $this->loadStockData();
+    }
+
+    public function __destruct() {
+        if ($this->mysqli_price) $this->mysqli_price->close();
     }
 }

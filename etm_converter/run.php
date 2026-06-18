@@ -38,10 +38,10 @@ if (isset($_POST['run'])) {
         'api_url' => $config['api_url'],
         'api_login' => $config['api_login'],
         'api_password' => $config['api_password'],
-        'db_host' => 'localhost',
-        'db_user' => 'moisait_olga',
-        'db_pass' => 'olgaglr',
-        'db_name' => 'moisait_ra'
+        'price_db_host' => 'localhost',
+        'price_db_user' => 'moisait_olga',
+        'price_db_pass' => 'olgaglr',
+        'price_db_name' => 'moisait_weintek'
     ));
     
     try {
