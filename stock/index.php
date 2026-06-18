@@ -12,6 +12,22 @@ if (!isset($_SERVER['PHP_AUTH_USER']) ||
     die('Доступ запрещён. Требуется авторизация.');
 }
 
+session_start();
+
+if (!isset($_SESSION['authenticated'])) {
+    $_SESSION['authenticated'] = true;
+}
+
+$force_relogin = 300;
+if (isset($_SESSION['login_time']) && (time() - $_SESSION['login_time'] > $force_relogin)) {
+    session_unset();
+    session_destroy();
+    header('WWW-Authenticate: Basic realm="Склад 1С"');
+    header('HTTP/1.0 401 Unauthorized');
+    die('Требуется повторная авторизация.');
+}
+$_SESSION['login_time'] = time();
+
 $allowed_servers = array(
     'www.rusavto.moisait.net',
     'rusavto.moisait.net',
@@ -27,7 +43,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = rtrim($uri, '/');
 
 if ($uri === '/stock/price' || $uri === '/stock/price/') {
-    require_once __DIR__ . '/price.php';
+    require_once __DIR__ . '/price/index.php';
     exit;
 }
 

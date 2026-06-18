@@ -17,7 +17,7 @@
             </div>
             <div class="header-info">
               <span>Всего позиций: <?= count($stock_data) ?></span>
-              <a href="/stock/price.php" class="btn-back">Указать цены</a>
+              <a href="/stock/price" class="btn-back">Указать цены</a>
             </div>
           </div>
           <div class="actions-wrapper">

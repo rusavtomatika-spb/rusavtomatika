@@ -2,6 +2,15 @@
 
 session_start();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['login_time'])) {
+    header('Location: /stock/');
+    exit;
+}
+
 $db_host = 'localhost';
 $db_user = 'moisait_olga';
 $db_pass = 'olgaglr';
@@ -37,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt->close();
         }
-        header('Location: ' . $_SERVER['REQUEST_URI']);
+        header('Location: /stock/price');
         exit;
     }
     
@@ -61,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt->close();
         }
-        header('Location: ' . $_SERVER['REQUEST_URI']);
+        header('Location: /stock/price');
         exit;
     }
     
@@ -79,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt->close();
         }
-        header('Location: ' . $_SERVER['REQUEST_URI']);
+        header('Location: /stock/price');
         exit;
     }
 }
@@ -98,15 +107,9 @@ while ($row = $result->fetch_assoc()) {
 $mysqli->close();
 
 $usd_rate = 0;
-$rate_file = dirname(__DIR__) . '/usdrate.txt';
+$rate_file = dirname(dirname(__DIR__)) . '/usdrate.txt';
 if (file_exists($rate_file)) {
     $usd_rate = floatval(file_get_contents($rate_file));
-}
-if ($usd_rate <= 0) {
-    $rate_file = __DIR__ . '/../etm_converter/docs/usdrate.txt';
-    if (file_exists($rate_file)) {
-        $usd_rate = floatval(file_get_contents($rate_file));
-    }
 }
 
 function formatPrice($price, $usd_rate, $is_usd = false) {
@@ -120,4 +123,4 @@ function formatPrice($price, $usd_rate, $is_usd = false) {
     return '₽' . number_format($price, 2, '.', ' ');
 }
 
-require_once __DIR__ . '/template_price.php';
+require_once __DIR__ . '/template.php';
