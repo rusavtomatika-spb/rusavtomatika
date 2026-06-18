@@ -1,30 +1,11 @@
 <?php
+require_once __DIR__ . '/_right.php';
 
-$valid_username = 'manager';
-$valid_password = '|M3Xph}NyH';
-
-if (!isset($_SERVER['PHP_AUTH_USER']) || 
-    $_SERVER['PHP_AUTH_USER'] !== $valid_username || 
-    $_SERVER['PHP_AUTH_PW'] !== $valid_password) {
-    
-    header('WWW-Authenticate: Basic realm="Склад 1С"');
-    header('HTTP/1.0 401 Unauthorized');
-    die('Доступ запрещён. Требуется авторизация.');
-}
-
-session_start();
-
-if (!isset($_SESSION['authenticated'])) {
-    $_SESSION['authenticated'] = true;
-}
-
-$force_relogin = 300;
-if (isset($_SESSION['login_time']) && (time() - $_SESSION['login_time'] > $force_relogin)) {
+if (isset($_SESSION['login_time']) && (time() - $_SESSION['login_time'] > 1800)) {
     session_unset();
     session_destroy();
-    header('WWW-Authenticate: Basic realm="Склад 1С"');
-    header('HTTP/1.0 401 Unauthorized');
-    die('Требуется повторная авторизация.');
+    header('Location: /stock/');
+    exit;
 }
 $_SESSION['login_time'] = time();
 
@@ -33,6 +14,19 @@ $allowed_servers = array(
     'rusavto.moisait.net',
     'moisait.net'
 );
+
+if (!in_array($_SERVER['SERVER_NAME'], $allowed_servers)) {
+    header('HTTP/1.0 403 Forbidden');
+    die('Доступ запрещён. Сервер: ' . $_SERVER['SERVER_NAME']);
+}
+
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = rtrim($uri, '/');
+
+if ($uri === '/stock/price' || $uri === '/stock/price/') {
+    require_once __DIR__ . '/price/index.php';
+    exit;
+}
 
 if (!in_array($_SERVER['SERVER_NAME'], $allowed_servers)) {
     header('HTTP/1.0 403 Forbidden');
