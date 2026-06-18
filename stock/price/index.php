@@ -114,13 +114,18 @@ if (file_exists($rate_file)) {
 
 function formatPrice($price, $usd_rate, $is_usd = false) {
     if (!$price) return '—';
+    
+    $decimals = floor($price) == $price ? 0 : 2;
+    $rub = round($price * $usd_rate, 2);
+    $rub_decimals = floor($rub) == $rub ? 0 : 2;
+    
     if ($is_usd && $usd_rate > 0) {
-        return '$' . number_format($price, 2, '.', ' ') . ' / ₽' . number_format(round($price * $usd_rate, 2), 2, '.', ' ');
+        return number_format($price, $decimals, '.', ' ') . ' $ / ' . number_format($rub, $rub_decimals, '.', ' ') . ' ₽';
     }
     if ($is_usd) {
-        return '$' . number_format($price, 2, '.', ' ');
+        return number_format($price, $decimals, '.', ' ') . ' $';
     }
-    return '₽' . number_format($price, 2, '.', ' ');
+    return number_format($price, $decimals, '.', ' ') . ' ₽';
 }
 
 require_once __DIR__ . '/template.php';

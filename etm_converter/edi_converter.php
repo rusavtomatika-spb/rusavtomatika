@@ -211,7 +211,8 @@ class ETMConverter {
                     'article_key' => $article_key,
                     'name' => !empty($name) ? $name : $nomenclature,
                     'quantity' => $quantity,
-                    'gtd' => $gtd
+                    'gtd' => $gtd,
+                    'price_stock' => floatval(isset($item['Цена']) ? $item['Цена'] : 0)
                 );
             }
         }

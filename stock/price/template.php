@@ -92,7 +92,7 @@
               >
                 <td class="article"><?= $article ?></td>
                 <td class="price"><?= formatPrice($price_usd, $usd_rate, true) ?></td>
-                <td class="price"><?= $price_rub ? '₽' . number_format($price_rub, 2, '.', ' ') : '—' ?></td>
+                <td class="price"><?= $price_rub ? number_format($price_rub, floor($price_rub) == $price_rub ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
                 <td class="desc"><?= $desc ?: '—' ?></td>
                 <td class="actions">
                   <button class="btn-edit" onclick="openEditModal(this)">✎</button>

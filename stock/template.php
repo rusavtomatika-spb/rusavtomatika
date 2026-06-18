@@ -50,6 +50,8 @@
               <th>Наименование</th>
               <th>Остаток</th>
               <th>ГТД</th>
+              <th>Цена</th>
+              <th>Сумма</th>
             </tr>
           </thead>
           <tbody>
@@ -71,6 +73,8 @@
                 $name = htmlspecialchars($name_raw);
                 $qty = $item['quantity'];
                 $gtd = htmlspecialchars($item['gtd'] ? $item['gtd'] : '');
+                $price = isset($item['price_stock']) ? floatval($item['price_stock']) : 0;
+                $sum = $price * $qty;
                 
                 $qty_class = 'qty-ok';
                 if ($qty == 0) $qty_class = 'qty-zero';
@@ -97,6 +101,8 @@
                 <td class="name-full" title="<?= $name ?>"><?= $name ?></td>
                 <td class="<?= $qty_class ?>"><?= $qty ?></td>
                 <td class="gtd"><?= $gtd ?: '—' ?></td>
+                <td class="price"><?= $price > 0 ? number_format($price, floor($price) == $price ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
+                <td class="price"><?= $sum > 0 ? number_format($sum, floor($sum) == $sum ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
               </tr>
               <?php endforeach; ?>
             <?php endif; ?>

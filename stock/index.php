@@ -74,7 +74,8 @@ if (empty($stock_data)) {
                 'article_key' => $article_key,
                 'name' => isset($item['НаименованиеПолное']) ? trim($item['НаименованиеПолное']) : '',
                 'quantity' => floatval(isset($item['Остаток']) ? $item['Остаток'] : 0),
-                'gtd' => isset($item['НомерГТД']) ? trim($item['НомерГТД']) : ''
+                'gtd' => isset($item['НомерГТД']) ? trim($item['НомерГТД']) : '',
+                'price_stock' => floatval(isset($item['Цена']) ? $item['Цена'] : 0)
             );
         }
     }
