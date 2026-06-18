@@ -29,6 +29,8 @@
           <tr>
             <th>Артикул</th>
             <th>Наименование</th>
+            <th>Диагональ</th>
+            <th>Габариты</th>
             <th>Остаток</th>
             <th>ГТД</th>
             <th>Цена</th>
@@ -42,6 +44,7 @@
             </tr>
           <?php else: ?>
             <?php 
+
             uasort($stock_data, function($a, $b) {
               return strcasecmp($a['article_original'], $b['article_original']);
             });
@@ -64,7 +67,19 @@
               $searchData = mb_strtolower($article_raw . ' ' . $name_raw, 'UTF-8');
               $article_lower = mb_strtolower($article_raw, 'UTF-8');
               $name_lower = mb_strtolower($name_raw, 'UTF-8');
-              
+
+              $diagonal = '—';
+              if (isset($diagonal_data[$article_lower])) {
+                $d = $diagonal_data[$article_lower];
+                $diagonal = floor($d) == $d ? number_format($d, 0) : number_format($d, 1);
+                $diagonal .= '"';
+              }
+
+              $dimensions = '—';
+              if (isset($dimensions_data[$article_lower]) && !empty($dimensions_data[$article_lower])) {
+                $dimensions = htmlspecialchars($dimensions_data[$article_lower]);
+              }
+
               $hasWeintek = (strpos($article_lower, 'weintek') !== false || strpos($name_lower, 'weintek') !== false) ? '1' : '0';
               $hasIfc = (strpos($article_lower, 'ifc') !== false || strpos($name_lower, 'ifc') !== false) ? '1' : '0';
               $hasPanel = (strpos($article_lower, 'панель оператора') !== false || strpos($name_lower, 'панель оператора') !== false || strpos($article_lower, 'операторская панель') !== false || strpos($name_lower, 'операторская панель') !== false) ? '1' : '0';
@@ -72,6 +87,8 @@
               $hasGateway = (strpos($article_lower, 'шлюз') !== false || strpos($name_lower, 'шлюз') !== false) ? '1' : '0';
             ?>
             <tr data-search="<?= $searchData ?>"
+              data-diagonal="<?= isset($diagonal_data[$article_lower]) ? $diagonal_data[$article_lower] : '0' ?>"
+              data-price="<?= $price ?>"
               data-weintek="<?= $hasWeintek ?>"
               data-ifc="<?= $hasIfc ?>"
               data-panel="<?= $hasPanel ?>"
@@ -85,6 +102,8 @@
                   <button class="open__fullname-button">Открыть</button>
                 <?php endif; ?>
               </td>
+              <td><?= $diagonal ?></td>
+              <td class="gtd"><?= $dimensions ?></td>
               <td class="<?= $qty_class ?>"><?= $qty ?></td>
               <td class="gtd"><?= $gtd ?: '—' ?></td>
               <td class="price"><?= $price > 0 ? number_format($price, floor($price) == $price ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>

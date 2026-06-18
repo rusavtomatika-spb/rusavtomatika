@@ -40,16 +40,18 @@
     </div>
     <div class="sort__item">
       <span style="font-size:13px;color:#888;">По диагонали:</span>
-      <select>
-        <option>--По возрастанию--</option>
-        <option>--По убыванию--</option>
+      <select id="sort-diagonal">
+        <option value="">--По диагонали--</option>
+        <option value="asc">По возрастанию</option>
+        <option value="desc">По убыванию</option>
       </select>
     </div>
     <div class="sort__item">
       <span style="font-size:13px;color:#888;">По цене:</span>
-      <select>
-        <option>--По возрастанию--</option>
-        <option>--По убыванию--</option>
+      <select id="sort-price">
+        <option value="">--По цене--</option>
+        <option value="asc">По возрастанию</option>
+        <option value="desc">По убыванию</option>
       </select>
     </div>
   </div>

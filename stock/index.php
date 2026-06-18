@@ -81,4 +81,18 @@ if (empty($stock_data)) {
     }
 }
 
+$diagonal_data = array();
+$dimensions_data = array();
+$mysqli_ra = new mysqli('localhost', 'moisait_olga', 'olgaglr', 'moisait_ra');
+if (!$mysqli_ra->connect_error) {
+    $mysqli_ra->set_charset('utf8');
+    $result = $mysqli_ra->query("SELECT model, diagonal, dimentions FROM products_all WHERE 1");
+    while ($row = $result->fetch_assoc()) {
+        $key = mb_strtolower(trim($row['model']), 'UTF-8');
+        $diagonal_data[$key] = floatval($row['diagonal']);
+        $dimensions_data[$key] = trim($row['dimentions']);
+    }
+    $mysqli_ra->close();
+}
+
 require_once __DIR__ . '/template.php';

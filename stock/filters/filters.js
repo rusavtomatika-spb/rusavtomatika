@@ -47,7 +47,10 @@ function applyFilters() {
   })
 }
 
-document.getElementById('search').addEventListener('input', applyFilters)
+document.getElementById('search').addEventListener('input', function() {
+  applyFilters()
+  sortTable()
+})
 
 document.querySelectorAll('#filter-brand input[type="checkbox"]').forEach(function(cb) {
   cb.addEventListener('change', function() {
@@ -58,5 +61,59 @@ document.querySelectorAll('#filter-brand input[type="checkbox"]').forEach(functi
       })
     }
     applyFilters()
+    sortTable()
   })
 })
+
+document.querySelectorAll('#filter-type input[type="checkbox"]').forEach(function(cb) {
+  cb.addEventListener('change', function() {
+    applyFilters()
+    sortTable()
+  })
+})
+
+document.getElementById('sort-diagonal').addEventListener('change', sortTable)
+document.getElementById('sort-price').addEventListener('change', sortTable)
+
+function sortTable() {
+  var table = document.querySelector('table[id]')
+  var tbody = table.querySelector('tbody')
+  var rows = Array.from(tbody.querySelectorAll('tr[data-search]'))
+  
+  var diagonalSort = document.getElementById('sort-diagonal').value
+  var priceSort = document.getElementById('sort-price').value
+  
+  if (!diagonalSort && !priceSort) return
+  
+  var visibleRows = rows.filter(function(row) {
+    return row.style.display !== 'none'
+  })
+  
+  var hiddenRows = rows.filter(function(row) {
+    return row.style.display === 'none'
+  })
+  
+  visibleRows.sort(function(a, b) {
+    if (diagonalSort) {
+      var diagA = parseFloat(a.getAttribute('data-diagonal')) || 0
+      var diagB = parseFloat(b.getAttribute('data-diagonal')) || 0
+      
+      if (diagonalSort === 'asc') return diagA - diagB
+      if (diagonalSort === 'desc') return diagB - diagA
+    }
+    
+    if (priceSort) {
+      var priceA = parseFloat(a.getAttribute('data-price')) || 0
+      var priceB = parseFloat(b.getAttribute('data-price')) || 0
+      
+      if (priceSort === 'asc') return priceA - priceB
+      if (priceSort === 'desc') return priceB - priceA
+    }
+    
+    return 0
+  })
+  
+  tbody.innerHTML = ''
+  visibleRows.forEach(function(row) { tbody.appendChild(row) })
+  hiddenRows.forEach(function(row) { tbody.appendChild(row) })
+}
