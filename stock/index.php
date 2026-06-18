@@ -7,7 +7,7 @@ if (!isset($_SERVER['PHP_AUTH_USER']) ||
     $_SERVER['PHP_AUTH_USER'] !== $valid_username || 
     $_SERVER['PHP_AUTH_PW'] !== $valid_password) {
     
-    header('WWW-Authenticate: Basic realm="Склад ETM"');
+    header('WWW-Authenticate: Basic realm="Склад 1С"');
     header('HTTP/1.0 401 Unauthorized');
     die('Доступ запрещён. Требуется авторизация.');
 }

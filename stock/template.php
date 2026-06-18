@@ -3,13 +3,16 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Склад</title>
+    <title>Склад 1С</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
       <div class="header">
-        <h1>📦 Склад</h1>
+        <div class="header__logo-wrapper">
+          <h1>Склад</h1>
+          <img src="./assets/1c-logo.jpg">
+        </div>
         <div class="header-info">
           <span>Всего позиций: <?= count($stock_data) ?></span>
           <a href="/stock/price.php" class="btn-back">Указать цены</a>
