@@ -1,8 +1,8 @@
 <div class="actions-wrapper">
   <div class="filters-wrapper">
     <input type="text" id="search" placeholder="🔍 Поиск по артикулу или названию..." autofocus>
-    <input type="text" id="search" placeholder="🔍 Поиск по количеству..." autofocus>
-    <input type="text" id="search" placeholder="🔍 Поиск по цене..." autofocus>
+    <input type="text" id="search-qty" placeholder="🔍 Поиск по количеству...">
+    <input type="text" id="search-price" placeholder="🔍 Поиск по цене...">
   </div>
   <div class="filters-wrapper">
     <div class="sort-blocks">

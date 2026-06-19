@@ -82,6 +82,9 @@
 
               $hasWeintek = (strpos($article_lower, 'weintek') !== false || strpos($name_lower, 'weintek') !== false) ? '1' : '0';
               $hasIfc = (strpos($article_lower, 'ifc') !== false || strpos($name_lower, 'ifc') !== false) ? '1' : '0';
+              $hasSamkoon = (strpos($article_lower, 'samkoon') !== false || strpos($name_lower, 'samkoon') !== false) ? '1' : '0';
+              $hasAplex = (strpos($article_lower, 'aplex') !== false || strpos($name_lower, 'aplex') !== false) ? '1' : '0';
+              $hasSpiktek = (strpos($article_lower, 'спиктек') !== false || strpos($name_lower, 'спиктек') !== false) ? '1' : '0';
               $hasPanel = (strpos($article_lower, 'панель оператора') !== false || strpos($name_lower, 'панель оператора') !== false || strpos($article_lower, 'операторская панель') !== false || strpos($name_lower, 'операторская панель') !== false) ? '1' : '0';
               $hasServer = (strpos($article_lower, 'сервер') !== false || strpos($name_lower, 'сервер') !== false) ? '1' : '0';
               $hasGateway = (strpos($article_lower, 'шлюз') !== false || strpos($name_lower, 'шлюз') !== false) ? '1' : '0';
@@ -93,10 +96,14 @@
               $hasCommutator = (strpos($article_lower, 'коммутатор') !== false || strpos($name_lower, 'коммутатор') !== false) ? '1' : '0';
             ?>
             <tr data-search="<?= $searchData ?>"
-              data-diagonal="<?= isset($diagonal_data[$article_lower]) ? $diagonal_data[$article_lower] : '0' ?>"
+              data-qty="<?= $qty ?>"
               data-price="<?= $price ?>"
+              data-diagonal="<?= isset($diagonal_data[$article_lower]) ? $diagonal_data[$article_lower] : '0' ?>"
               data-weintek="<?= $hasWeintek ?>"
               data-ifc="<?= $hasIfc ?>"
+              data-samkoon="<?= $hasSamkoon ?>"
+              data-aplex="<?= $hasAplex ?>"
+              data-spiktek="<?= $hasSpiktek ?>"
               data-panel="<?= $hasPanel ?>"
               data-server="<?= $hasServer ?>"
               data-gateway="<?= $hasGateway ?>"

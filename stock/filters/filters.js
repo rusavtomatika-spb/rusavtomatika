@@ -6,41 +6,81 @@ function applyFilters() {
   var tableId = document.querySelector('table[id]').id;
   var rows = document.querySelectorAll('#' + tableId + ' tbody tr')
   var searchQuery = document.getElementById('search').value.toLowerCase()
+  var searchQty = document.getElementById('search-qty').value.trim()
+  var searchPrice = document.getElementById('search-price').value.trim()
   
-  var brandWeintek = document.querySelector('#filter-brand input[value="weintek"]').checked
-  var brandIfc = document.querySelector('#filter-brand input[value="ifc"]').checked
-  var brandOther = document.querySelector('#filter-brand input[value="other"]').checked
+  var brandWeintek = document.querySelector('#filter-brand input[value="weintek"]')?.checked || false
+  var brandIfc = document.querySelector('#filter-brand input[value="ifc"]')?.checked || false
+  var brandSamkoon = document.querySelector('#filter-brand input[value="samkoon"]')?.checked || false
+  var brandAplex = document.querySelector('#filter-brand input[value="aplex"]')?.checked || false
+  var brandSpiktek = document.querySelector('#filter-brand input[value="spiktek"]')?.checked || false
   var typePanel = document.querySelector('#filter-type input[value="panel"]').checked
   var typeServer = document.querySelector('#filter-type input[value="server"]').checked
   var typeGateway = document.querySelector('#filter-type input[value="gateway"]').checked
+  var typeMonitor = document.querySelector('#filter-type input[value="monitor"]')?.checked || false
+  var typePanelpc = document.querySelector('#filter-type input[value="panelpc"]')?.checked || false
+  var typeBoxpc = document.querySelector('#filter-type input[value="boxpc"]')?.checked || false
+  var typeModule = document.querySelector('#filter-type input[value="moduleinpout"]')?.checked || false
+  var typeCommModule = document.querySelector('#filter-type input[value="communicationmodule"]')?.checked || false
+  var typeCommutator = document.querySelector('#filter-type input[value="commutator"]')?.checked || false
   var typeOtherType = document.querySelector('#filter-type input[value="other_type"]')?.checked || false
   
   rows.forEach(function(row) {
     var show = true
     var searchData = row.getAttribute('data-search')
     
-    if (searchQuery && searchData && searchData.indexOf(searchQuery) === -1) {
+    if (show && searchQuery && searchData && searchData.indexOf(searchQuery) === -1) {
       show = false
     }
-    
-    if (show && (brandWeintek || brandIfc || brandOther)) {
+
+    if (show && searchQty !== '') {
+      var rowQty = parseInt(row.getAttribute('data-qty')) || 0
+      if (rowQty !== parseInt(searchQty)) {
+        show = false
+      }
+    }
+
+    if (show && searchPrice !== '') {
+      var rowPrice = Math.floor(parseFloat(row.getAttribute('data-price')) || 0)
+      var searchPriceInt = Math.floor(parseFloat(searchPrice.replace(',', '.')) || 0)
+      if (rowPrice !== searchPriceInt) {
+        show = false
+      }
+    }
+
+    var anyBrand = brandWeintek || brandIfc || brandSamkoon || brandAplex || brandSpiktek
+    if (show && anyBrand) {
       var w = row.getAttribute('data-weintek') === '1'
       var i = row.getAttribute('data-ifc') === '1'
+      var s = row.getAttribute('data-samkoon') === '1'
+      var a = row.getAttribute('data-aplex') === '1'
+      var sp = row.getAttribute('data-spiktek') === '1'
       
-      if (brandWeintek && !w) show = false
-      if (brandIfc && !i) show = false
-      if (brandOther && (w || i)) show = false
+      if ((brandWeintek && !w) || (brandIfc && !i) || (brandSamkoon && !s) || (brandAplex && !a) || (brandSpiktek && !sp)) {
+        show = false
+      }
     }
     
-    if (show && (typePanel || typeServer || typeGateway || typeOtherType)) {
+    var anyType = typePanel || typeMonitor || typePanelpc || typeBoxpc || typeModule || typeCommModule || typeCommutator || typeGateway || typeServer || typeOtherType
+    if (show && anyType) {
       var p = row.getAttribute('data-panel') === '1'
-      var s = row.getAttribute('data-server') === '1'
+      var m = row.getAttribute('data-monitor') === '1'
+      var ppc = row.getAttribute('data-panelpc') === '1'
+      var bpc = row.getAttribute('data-boxpc') === '1'
+      var mio = row.getAttribute('data-moduleinpout') === '1'
+      var cm = row.getAttribute('data-communicationmodule') === '1'
+      var com = row.getAttribute('data-commutator') === '1'
       var g = row.getAttribute('data-gateway') === '1'
+      var srv = row.getAttribute('data-server') === '1'
       
-      if (typePanel && !p) show = false
-      if (typeServer && !s) show = false
-      if (typeGateway && !g) show = false
-      if (typeOtherType && (p || s || g)) show = false
+      if ((typePanel && !p) || (typeMonitor && !m) || (typePanelpc && !ppc) || (typeBoxpc && !bpc) || 
+          (typeModule && !mio) || (typeCommModule && !cm) || (typeCommutator && !com) || 
+          (typeGateway && !g) || (typeServer && !srv)) {
+        show = false
+      }
+      if (typeOtherType && (p || m || ppc || bpc || mio || cm || com || g || srv)) {
+        show = false
+      }
     }
     
     row.style.display = show ? '' : 'none'
@@ -48,6 +88,14 @@ function applyFilters() {
 }
 
 document.getElementById('search').addEventListener('input', function() {
+  applyFilters()
+  sortTable()
+})
+document.getElementById('search-qty').addEventListener('input', function() {
+  applyFilters()
+  sortTable()
+})
+document.getElementById('search-price').addEventListener('input', function() {
   applyFilters()
   sortTable()
 })
