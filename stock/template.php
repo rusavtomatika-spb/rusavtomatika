@@ -16,7 +16,7 @@
             <img src="./assets/1c-logo.jpg">
           </div>
           <div class="header-info">
-            <span>Всего позиций: <?= count($stock_data) ?></span>
+            <span>Всего позиций на складе: <?= count($stock_data) ?></span>
             <a href="/stock/price" class="btn-back">Указать цены</a>
           </div>
         </div>
@@ -35,6 +35,7 @@
             <th>ГТД</th>
             <th>Цена</th>
             <th>Сумма</th>
+            <th style="width: 16px;"></th>
           </tr>
         </thead>
         <tbody>
@@ -115,18 +116,24 @@
               data-commutator="<?= $hasCommutator ?>"
             >
               <td class="article"><?= $article ?></td>
-              <td class="name-full" title="<?= $name ?>">
-                <p><?= $name ?></p>
-                <?php if (mb_strlen($name_raw, 'UTF-8') > 48): ?>
-                  <button class="open__fullname-button">Открыть</button>
-                <?php endif; ?>
-              </td>
+              <td class="name-full" title="<?= $name ?>"><?= $name ?></td>
               <td><?= $diagonal ?></td>
               <td class="gtd"><?= $dimensions ?></td>
               <td class="<?= $qty_class ?>"><?= $qty ?></td>
               <td class="gtd"><?= $gtd ?: '—' ?></td>
               <td class="price"><?= $price > 0 ? number_format($price, floor($price) == $price ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
               <td class="price"><?= $sum > 0 ? number_format($sum, floor($sum) == $sum ? 0 : 2, '.', ' ') . ' ₽' : '—' ?></td>
+              <td class="info">
+                <?php if (mb_strlen($name_raw, 'UTF-8') > 48 || mb_strlen($gtd, 'UTF-8') > 23) : ?>
+                  <button class="item__info-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="15" viewBox="0 0 256 256" xml:space="preserve">
+                      <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                        <path d="M 90 24.25 c 0 -0.896 -0.342 -1.792 -1.025 -2.475 c -1.366 -1.367 -3.583 -1.367 -4.949 0 L 45 60.8 L 5.975 21.775 c -1.367 -1.367 -3.583 -1.367 -4.95 0 c -1.366 1.367 -1.366 3.583 0 4.95 l 41.5 41.5 c 1.366 1.367 3.583 1.367 4.949 0 l 41.5 -41.5 C 89.658 26.042 90 25.146 90 24.25 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: #00acc1; fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                      </g>
+                    </svg>
+                  </button>
+                <?php endif; ?>
+              </td>
             </tr>
             <?php endforeach; ?>
           <?php endif; ?>
@@ -135,11 +142,11 @@
     </div>
   </div>
   <script>
-    document.querySelectorAll('.open__fullname-button').forEach(function(btn) {
+    document.querySelectorAll('.item__info-button').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var td = this.parentElement
-        td.classList.toggle('expanded')
-        this.textContent = td.classList.contains('expanded') ? 'Скрыть' : 'Открыть'
+        var row = this.closest('tr')
+        row.classList.toggle('expanded')
+        this.style.transform = row.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)'
       })
     })
   </script>

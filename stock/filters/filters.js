@@ -41,9 +41,9 @@ function applyFilters() {
     }
 
     if (show && searchPrice !== '') {
-      var rowPrice = Math.floor(parseFloat(row.getAttribute('data-price')) || 0)
-      var searchPriceInt = Math.floor(parseFloat(searchPrice.replace(',', '.')) || 0)
-      if (rowPrice !== searchPriceInt) {
+      var rowPriceStr = row.getAttribute('data-price') || '0'
+      var rowPriceInt = Math.floor(parseFloat(rowPriceStr) || 0).toString()
+      if (rowPriceInt.indexOf(searchPrice.replace(',', '.')) !== 0) {
         show = false
       }
     }

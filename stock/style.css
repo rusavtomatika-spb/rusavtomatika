@@ -52,7 +52,7 @@ body {
 .header-actions-container {
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding: 10px 0;
   width: 100%;
   max-width: 1400px;
 }
@@ -146,7 +146,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow-x: auto;
-  margin-top: 310px;
+  margin-top: 280px;
 }
 
 table {
@@ -186,34 +186,43 @@ tbody tr:hover {
 }
 
 .name-full {
-  display: flex;
-  align-items: flex-start;
-  max-width: 400px;
-  gap: 8px;
-}
-
-.name-full p {
+  max-width: 380px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #555;
-  width: 100%;
 }
 
-.name-full.expanded p {
-  white-space: normal;
-  overflow: visible;
+tr.expanded td {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  max-height: none !important;
+}
+
+tr.expanded .name-full,
+tr.expanded .gtd,
+tr.expanded .article,
+tr.expanded .price {
+  white-space: normal !important;
+  overflow: visible !important;
   max-height: 200px;
   overflow-y: auto;
 }
 
-.open__fullname-button {
+.item__info-button {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
-  text-decoration: underline;
   color: #00acc1;
-  white-space: nowrap;
+  transition: transform 0.2s;
+}
+
+.item__info-button svg {
+  transition: transform 0.2s;
 }
 
 .qty-ok {
@@ -245,6 +254,10 @@ tbody tr:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.info {
+  padding-right: 10px;
 }
 
 .empty {
