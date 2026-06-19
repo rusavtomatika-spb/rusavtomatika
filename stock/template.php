@@ -91,9 +91,6 @@
               $hasModuleInpOut = (strpos($article_lower, 'модуль ввода') !== false || strpos($name_lower, 'модуль ввода') !== false) ? '1' : '0';
               $hasCommunicationModule = (strpos($article_lower, 'коммуникационный модуль') !== false || strpos($name_lower, 'коммуникационный модуль') !== false) ? '1' : '0';
               $hasCommutator = (strpos($article_lower, 'коммутатор') !== false || strpos($name_lower, 'коммутатор') !== false) ? '1' : '0';
-              
-            
-            
             ?>
             <tr data-search="<?= $searchData ?>"
               data-diagonal="<?= isset($diagonal_data[$article_lower]) ? $diagonal_data[$article_lower] : '0' ?>"

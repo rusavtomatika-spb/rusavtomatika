@@ -4,6 +4,26 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+html .smooth-scroll {
+  scroll-behavior: smooth;
+  scroll-timeline: auto;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: #f5f7fa;
@@ -79,14 +99,14 @@ body {
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+  gap: 10px;
 }
 
-.search-filters-wrapper {
+.filters-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   width: 100%;
-  margin-bottom: 15px;
 }
 
 .btn-back {
@@ -125,7 +145,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   overflow-x: auto;
-  margin-top: 210px;
+  margin-top: 260px;
 }
 
 table {
@@ -333,6 +353,8 @@ tbody tr:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-height: 95px;
+  overflow-y: auto;
   gap: 8px;
 }
 
@@ -345,7 +367,8 @@ tbody tr:hover {
 
 .filter-blocks {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
   gap: 10px;
 }
@@ -375,7 +398,7 @@ tbody tr:hover {
 
 .sort-blocks {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
   gap: 16px;
@@ -389,7 +412,7 @@ tbody tr:hover {
   min-width: 180px;
 }
 
-.sort__item span {
+.filter-title {
   font-size: 12px;
   color: #888;
   font-weight: 500;
