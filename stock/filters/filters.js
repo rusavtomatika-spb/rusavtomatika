@@ -75,11 +75,23 @@ document.querySelectorAll('#filter-type input[type="checkbox"]').forEach(functio
 document.getElementById('sort-diagonal').addEventListener('change', sortTable)
 document.getElementById('sort-price').addEventListener('change', sortTable)
 
+document.getElementById('sort-type').addEventListener('change', sortTable)
+document.getElementById('sort-diagonal').addEventListener('change', sortTable)
+document.getElementById('sort-price').addEventListener('change', sortTable)
+document.addEventListener('DOMContentLoaded', function() {
+  sortTable()
+})
+
 function sortTable() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
   var table = document.querySelector('table[id]')
   var tbody = table.querySelector('tbody')
   var rows = Array.from(tbody.querySelectorAll('tr[data-search]'))
   
+  var typeSort = document.getElementById('sort-type').value
   var diagonalSort = document.getElementById('sort-diagonal').value
   var priceSort = document.getElementById('sort-price').value
   
@@ -91,27 +103,76 @@ function sortTable() {
     return row.style.display === 'none'
   })
   
-  if (diagonalSort || priceSort) {
-    visibleRows.sort(function(a, b) {
-      if (diagonalSort) {
-        var diagA = parseFloat(a.getAttribute('data-diagonal')) || 0
-        var diagB = parseFloat(b.getAttribute('data-diagonal')) || 0
-        
-        if (diagonalSort === 'asc') return diagA - diagB
-        if (diagonalSort === 'desc') return diagB - diagA
+  visibleRows.sort(function(a, b) {
+    if (typeSort) {
+      var typeOrder = {
+        'Панели оператора': 'panel',
+        'Промышленные мониторы': 'monitor',
+        'Панельные компьютеры': 'panelpc',
+        'Встраиваемые компьютеры': 'boxpc',
+        'Встраиваемые компьютеры': 'moduleinpout',
+        'Коммуникационные модули': 'communicationmodule',
+        'Коммутаторы': 'commutator',
+        'Шлюзы данных': 'gateway',
+        'Серверы': 'server',
+        'Остальное': 'other'
       }
       
-      if (priceSort) {
-        var priceA = parseFloat(a.getAttribute('data-price')) || 0
-        var priceB = parseFloat(b.getAttribute('data-price')) || 0
-        
-        if (priceSort === 'asc') return priceA - priceB
-        if (priceSort === 'desc') return priceB - priceA
+      var sortKey = typeOrder[typeSort] || ''
+      
+      if (sortKey === 'other') {
+        var aOther = (
+          a.getAttribute('data-panel') !== '1' && 
+          a.getAttribute('data-server') !== '1' && 
+          a.getAttribute('data-gateway') !== '1' && 
+          a.getAttribute('data-monitor') !== '1' &&
+          a.getAttribute('data-panelpc') !== '1' &&
+          a.getAttribute('data-boxpc') !== '1' &&
+          a.getAttribute('data-moduleinpout') !== '1' &&
+          a.getAttribute('data-communicationmodule') !== '1' &&
+          a.getAttribute('data-commutator') !== '1'
+        ) ? 0 : 1
+        var bOther = (
+          b.getAttribute('data-panel') !== '1' && 
+          b.getAttribute('data-server') !== '1' && 
+          b.getAttribute('data-gateway') !== '1' && 
+          b.getAttribute('data-monitor') !== '1' &&
+          b.getAttribute('data-panelpc') !== '1' &&
+          b.getAttribute('data-boxpc') !== '1' &&
+          b.getAttribute('data-moduleinpout') !== '1' &&
+          b.getAttribute('data-communicationmodule') !== '1' &&
+          b.getAttribute('data-commutator') !== '1'
+        ) ? 0 : 1
+        return aOther - bOther
       }
       
-      return 0
-    })
-  } else {
+      if (sortKey) {
+        var aMatch = a.getAttribute('data-' + sortKey) === '1' ? 0 : 1
+        var bMatch = b.getAttribute('data-' + sortKey) === '1' ? 0 : 1
+        if (aMatch !== bMatch) return aMatch - bMatch
+      }
+    }
+    
+    if (diagonalSort) {
+      var diagA = parseFloat(a.getAttribute('data-diagonal')) || 0
+      var diagB = parseFloat(b.getAttribute('data-diagonal')) || 0
+      
+      if (diagonalSort === 'asc') return diagA - diagB
+      if (diagonalSort === 'desc') return diagB - diagA
+    }
+    
+    if (priceSort) {
+      var priceA = parseFloat(a.getAttribute('data-price')) || 0
+      var priceB = parseFloat(b.getAttribute('data-price')) || 0
+      
+      if (priceSort === 'asc') return priceA - priceB
+      if (priceSort === 'desc') return priceB - priceA
+    }
+    
+    return 0
+  })
+  
+  if (!typeSort && !diagonalSort && !priceSort) {
     visibleRows.sort(function(a, b) {
       var aSearch = a.getAttribute('data-search') || ''
       var bSearch = b.getAttribute('data-search') || ''

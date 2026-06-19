@@ -24,18 +24,17 @@
   <div class="sort-blocks">
     <div class="sort__item">
       <span style="font-size:13px;color:#888;">По типу:</span>
-      <select>
-        <option>--Сначала Панели оператора--</option>
-        <option>--Сначала Облачные панели--</option>
-        <option>--Сначала Встраиваемые компьютеры--</option>
-        <option>--Сначала Промышленные мониторы--</option>
-        <option>--Сначала Коммутаторы--</option>
-        <option>--Сначала Рамки--</option>
-        <option>--Сначала PLC--</option>
-        <option>--Сначала PPC--</option>
-        <option>--Сначала APC--</option>
-        <option>--Сначала RIO--</option>
-        <option>--Сначала остальное--</option>
+      <select id="sort-type">
+        <option>Панели оператора</option>
+        <option>Промышленные мониторы</option>
+        <option>Панельные компьютеры</option>
+        <option>Встраиваемые компьютеры</option>
+        <option>Модули ввода-вывода</option>
+        <option>Коммуникационные модули</option>
+        <option>Коммутаторы</option>
+        <option>Шлюзы данных</option>
+        <option>Серверы</option>
+        <option>Остальное</option>
       </select>
     </div>
     <div class="sort__item">

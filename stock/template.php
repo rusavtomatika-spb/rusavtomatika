@@ -85,6 +85,15 @@
               $hasPanel = (strpos($article_lower, 'панель оператора') !== false || strpos($name_lower, 'панель оператора') !== false || strpos($article_lower, 'операторская панель') !== false || strpos($name_lower, 'операторская панель') !== false) ? '1' : '0';
               $hasServer = (strpos($article_lower, 'сервер') !== false || strpos($name_lower, 'сервер') !== false) ? '1' : '0';
               $hasGateway = (strpos($article_lower, 'шлюз') !== false || strpos($name_lower, 'шлюз') !== false) ? '1' : '0';
+              $hasMonitor = (strpos($article_lower, 'промышленный монитор') !== false || strpos($name_lower, 'промышленный монитор') !== false) ? '1' : '0';
+              $hasPanelPc = (strpos($article_lower, 'панельный компьютер') !== false || strpos($name_lower, 'панельный компьютер') !== false) ? '1' : '0';
+              $hasBoxPc = (strpos($article_lower, 'встраиваемый компьютер') !== false || strpos($name_lower, 'встраиваемый компьютер') !== false) ? '1' : '0';
+              $hasModuleInpOut = (strpos($article_lower, 'модуль ввода') !== false || strpos($name_lower, 'модуль ввода') !== false) ? '1' : '0';
+              $hasCommunicationModule = (strpos($article_lower, 'коммуникационный модуль') !== false || strpos($name_lower, 'коммуникационный модуль') !== false) ? '1' : '0';
+              $hasCommutator = (strpos($article_lower, 'коммутатор') !== false || strpos($name_lower, 'коммутатор') !== false) ? '1' : '0';
+              
+            
+            
             ?>
             <tr data-search="<?= $searchData ?>"
               data-diagonal="<?= isset($diagonal_data[$article_lower]) ? $diagonal_data[$article_lower] : '0' ?>"
@@ -94,6 +103,12 @@
               data-panel="<?= $hasPanel ?>"
               data-server="<?= $hasServer ?>"
               data-gateway="<?= $hasGateway ?>"
+              data-monitor="<?= $hasMonitor ?>"
+              data-panelpc="<?= $hasPanelPc ?>"
+              data-boxpc="<?= $hasBoxPc ?>"
+              data-moduleinpout="<?= $hasModuleInpOut ?>"
+              data-communicationmodule="<?= $hasCommunicationModule ?>"
+              data-commutator="<?= $hasCommutator ?>"
             >
               <td class="article"><?= $article ?></td>
               <td class="name-full" title="<?= $name ?>">
