@@ -2,7 +2,9 @@ Options -Indexes
 
 RewriteEngine on
 
-
+# Редирект с /termit/ на /accessories/
+RewriteRule ^termit/(.*)$ /accessories/$1 [R=301,L,QSD]
+RewriteRule ^termit$ /accessories/ [R=301,L,QSD]
 
 RewriteRule industrial_computers_full_ip65/(.*)$ /industrial_computers_full_ip69k/$1 [R=301,L]
 RewriteRule /ifc/IFC-BOX-NS53_copy/ / [R=301,L]
