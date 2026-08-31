@@ -60,7 +60,8 @@ if (isset($_GET['series'])) {
 }
 
 if (isset($_GET['availablity'])) {
-    $condition .= " AND `availablity` = '" . addslashes($_GET['availablity']) . "'";
+    //$condition .= " AND `availablity` = '" . addslashes($_GET['availablity']) . "'";
+    $condition .= " AND `onstock` = " . $_GET['availablity'];
 }
 
 if (isset($_GET['sensor_type'])) {

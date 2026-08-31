@@ -23,12 +23,15 @@ global $arResult;
 global $TITLE;
 global $H1;
 global $DESCRIPTION;
+global $KEYWORDS;
 global $usd_currency, $arSettings;
 if ( file_exists( $_SERVER[ "DOCUMENT_ROOT" ] . "/usdrate.txt" ) ) {
   $usd_currency = floatval( file_get_contents( $_SERVER[ "DOCUMENT_ROOT" ] . "/usdrate.txt" ) );
 } else $usd_currency = 0;
 $TITLE = "Корзина - Русавтоматика";
 $H1 = "Корзина";
+$DESCRIPTION = "Корзина товаров";
+$KEYWORDS = "корзина,товары,русавтоматика";
 //CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 CoreApplication::add_breadcrumbs_chain( "Корзина" );
 $series[ "products" ] = $arResult[ "ITEMS" ];
@@ -95,22 +98,26 @@ $series[ "products" ] = $arResult[ "ITEMS" ];
                 if ( isset( $product[ 'retail_price' ] )and intval( $product[ 'retail_price' ] ) > 0 and $product[ "retail_price_hide" ] == 0 ) {
                   switch ( $product[ 'currency' ] ) {
                     case 'USD':
-                      ?>
-                <div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>">
+                  if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
+                      ?><div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>">
                   <?= $product['retail_price'] ?>
-                  </span> <span class="usd">$</span> </div>
-                <?
+                  </span> <span class="usd">$</span> </div><?
+									} else {
+				  ?><div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>">
+                  <?= intval($product['retail_price'] * $usd_currency) ?>
+                  </span> <span class="usd">&#8381;</span> </div><?
+									}
                 if ( $usd_currency ) {
-                  ?>
-                <div class="rub_price"> <span class="rub_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] * $usd_currency); ?></span> <span class="usd">&#8381;</span> </div>
-                <?
+                  if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
+                  ?><div class="rub_price"> <span class="rub_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] * $usd_currency); ?></span> <span class="usd">&#8381;</span> </div><?
+				  }
                 }
                 break;
                 case 'RUR':
                   if ( $usd_currency ) {
                     ?>
                 <div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] / $usd_currency); ?></span> <span class="usd">$</span></div>
-                <?
+                <? 
                 }
                 ?>
                 <div class="rub_price"> <span class="rub_price_value" data-model="<?=$product["model"]?>">
