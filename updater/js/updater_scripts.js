@@ -15,16 +15,16 @@ if (document.querySelector('#app_vue_updater') !== null) {
                 ajax_reply: {},
                 ajax_reply_message: "",
                 mess_strings: {
-                    "dest_list_of_files_is_created": "Создан список своих файлов",
-                    "dest_list_of_files_is_saved_on_source": "Список своих файлов отправлен на ИСТОЧНИК",
-                    "source_list_of_files_is_created_on_source": "Создан список файлов на ИСТОЧНИКЕ",
-                    "difference_list_of_files_is_created_on_source": "Составлен список РАЗНЫХ файлов",
-                    "zip_file_is_created_on_source": "Создан zip-архив РАЗНЫХ файлов",
-                    "zip_file_is_downloaded": "Zip-архив скачан",
-                    "zip_file_is_extracted": "Zip-архив распакован!!!",
-                    "sql_backup_is_created": "Создан sql-файл базы данных на источнике",
-                    "sql_backup_is_downloaded": "Sql-файл скачан",
-                    "database_is_updated": "База данных обновлена",
+                    "dest_list_of_files_is_created": "РЎРѕР·РґР°РЅ СЃРїРёСЃРѕРє СЃРІРѕРёС… С„Р°Р№Р»РѕРІ",
+                    "dest_list_of_files_is_saved_on_source": "РЎРїРёСЃРѕРє СЃРІРѕРёС… С„Р°Р№Р»РѕРІ РѕС‚РїСЂР°РІР»РµРЅ РЅР° РРЎРўРћР§РќРРљ",
+                    "source_list_of_files_is_created_on_source": "РЎРѕР·РґР°РЅ СЃРїРёСЃРѕРє С„Р°Р№Р»РѕРІ РЅР° РРЎРўРћР§РќРРљР•",
+                    "difference_list_of_files_is_created_on_source": "РЎРѕСЃС‚Р°РІР»РµРЅ СЃРїРёСЃРѕРє Р РђР—РќР«РҐ С„Р°Р№Р»РѕРІ",
+                    "zip_file_is_created_on_source": "РЎРѕР·РґР°РЅ zip-Р°СЂС…РёРІ Р РђР—РќР«РҐ С„Р°Р№Р»РѕРІ",
+                    "zip_file_is_downloaded": "Zip-Р°СЂС…РёРІ СЃРєР°С‡Р°РЅ",
+                    "zip_file_is_extracted": "Zip-Р°СЂС…РёРІ СЂР°СЃРїР°РєРѕРІР°РЅ!!!",
+                    "sql_backup_is_created": "РЎРѕР·РґР°РЅ sql-С„Р°Р№Р» Р±Р°Р·С‹ РґР°РЅРЅС‹С… РЅР° РёСЃС‚РѕС‡РЅРёРєРµ",
+                    "sql_backup_is_downloaded": "Sql-С„Р°Р№Р» СЃРєР°С‡Р°РЅ",
+                    "database_is_updated": "Р‘Р°Р·Р° РґР°РЅРЅС‹С… РѕР±РЅРѕРІР»РµРЅР°",
                 },
                 database_host: "",
                 database_name: "",
@@ -56,17 +56,17 @@ if (document.querySelector('#app_vue_updater') !== null) {
                             case 'dest_list_of_files_is_created':
                                 this.progress_bar_value += 10;
                                 this.ajax_reply_message = this.mess_strings[val['reply']] + '<br>';
-                                this.send(this.source_ajax_url, "take_dest_list_of_files", val.files); // посылаем на source список файлов
+                                this.send(this.source_ajax_url, "take_dest_list_of_files", val.files); // РїРѕСЃС‹Р»Р°РµРј РЅР° source СЃРїРёСЃРѕРє С„Р°Р№Р»РѕРІ
                                 break;
                             case 'dest_list_of_files_is_saved_on_source':
                                 this.progress_bar_value += 10;
                                 this.ajax_reply_message += this.mess_strings[val['reply']] + '<br>';
-                                this.send(this.source_ajax_url, "create_source_list_of_files", {}); // командуем сорсу создать свой список файлов
+                                this.send(this.source_ajax_url, "create_source_list_of_files", {}); // РєРѕРјР°РЅРґСѓРµРј СЃРѕСЂСЃСѓ СЃРѕР·РґР°С‚СЊ СЃРІРѕР№ СЃРїРёСЃРѕРє С„Р°Р№Р»РѕРІ
                                 break;
                             case 'source_list_of_files_is_created_on_source':
                                 this.progress_bar_value += 10;
                                 this.ajax_reply_message += this.mess_strings[val['reply']] + '<br>';
-                                this.send(this.source_ajax_url, "create_difference_list_of_files", {}); // командуем сорсу найти различия в файлах
+                                this.send(this.source_ajax_url, "create_difference_list_of_files", {}); // РєРѕРјР°РЅРґСѓРµРј СЃРѕСЂСЃСѓ РЅР°Р№С‚Рё СЂР°Р·Р»РёС‡РёСЏ РІ С„Р°Р№Р»Р°С…
                                 break;
                             case 'difference_list_of_files_is_created_on_source':
                                 this.progress_bar_value += 10;
@@ -74,9 +74,9 @@ if (document.querySelector('#app_vue_updater') !== null) {
                                 this.ajax_reply_message += val['data'].toString() + '<br>';
                                 if (Number(val['counter']) > 0) {
                                     this.send(this.source_ajax_url, "create_zip_list_of_files", {});
-                                } // командуем сорсу создать архив отличающихся файлов
+                                } // РєРѕРјР°РЅРґСѓРµРј СЃРѕСЂСЃСѓ СЃРѕР·РґР°С‚СЊ Р°СЂС…РёРІ РѕС‚Р»РёС‡Р°СЋС‰РёС…СЃСЏ С„Р°Р№Р»РѕРІ
                                 else {
-                                    this.ajax_reply_message += '<b>Файлы на обоих серверах совпадают!</b><hr>';
+                                    this.ajax_reply_message += '<b>Р¤Р°Р№Р»С‹ РЅР° РѕР±РѕРёС… СЃРµСЂРІРµСЂР°С… СЃРѕРІРїР°РґР°СЋС‚!</b><hr>';
                                     if (this.start_updating_all == 1) {
                                         this.start_updating_all = 2;
                                         this.progress_bar_value += 30;
@@ -91,13 +91,13 @@ if (document.querySelector('#app_vue_updater') !== null) {
                                 this.ajax_reply_message += this.mess_strings[val['reply']] + ' ';
                                 this.ajax_reply_message += val['data']['link'].toString() + '<br>';
                                 //this.ajax_reply_message += val['buffer'].toString()+'<br>';
-                                this.send(this.destination_ajax_url, "download_zip_from_source", {"link": val['data']['link'].toString()}); // командуем сорсу создать архив отличающихся файлов
+                                this.send(this.destination_ajax_url, "download_zip_from_source", {"link": val['data']['link'].toString()}); // РєРѕРјР°РЅРґСѓРµРј СЃРѕСЂСЃСѓ СЃРѕР·РґР°С‚СЊ Р°СЂС…РёРІ РѕС‚Р»РёС‡Р°СЋС‰РёС…СЃСЏ С„Р°Р№Р»РѕРІ
                                 break;
                             case 'zip_file_is_downloaded':
                                 this.progress_bar_value += 10;
                                 this.ajax_reply_message += this.mess_strings[val['reply']] + ' ';
                                 this.ajax_reply_message += val['buffer'].toString() + '<br>';
-                                this.send(this.destination_ajax_url, "extract_zip_list_of_files"); // командуем распаковать архив отличающихся файлов
+                                this.send(this.destination_ajax_url, "extract_zip_list_of_files"); // РєРѕРјР°РЅРґСѓРµРј СЂР°СЃРїР°РєРѕРІР°С‚СЊ Р°СЂС…РёРІ РѕС‚Р»РёС‡Р°СЋС‰РёС…СЃСЏ С„Р°Р№Р»РѕРІ
                                 break;
                             case 'zip_file_is_extracted':
                                 this.progress_bar_value += 10;
@@ -139,7 +139,7 @@ if (document.querySelector('#app_vue_updater') !== null) {
                                 this.updater_password = val['settings']['updater_password'];
                                 break;
                             default:
-                                this.alert("В источнике произошла ошибка! " + val['reply']);
+                                this.alert("Р’ РёСЃС‚РѕС‡РЅРёРєРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°! " + val['reply']);
                                 break;
                         }
                     }
@@ -292,8 +292,8 @@ if (document.querySelector('#app_vue_updater') !== null) {
                         this.ajax_reply = response.data;
                     }).catch(function (error) {
                         this.panel_loading = false;
-                        this.alert("Сетевая ошибка! Network's error!");
-                        console.log("Вот сучка!", error);
+                        this.alert("РЎРµС‚РµРІР°СЏ РѕС€РёР±РєР°! Network's error!");
+                        console.log("Р’РѕС‚ СЃСѓС‡РєР°!", error);
                     });
                     ;
                 }
@@ -316,12 +316,12 @@ if (document.querySelector('#app_vue_updater') !== null) {
                 ,
                 setCookie(name, value, options = {}) {
 
-                    // Пример использования:
+                    // РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ:
                     //setCookie('user', 'John', {secure: true, 'max-age': 3600});
                     options = {
                         path: '/',
                         samesite: 'lax',
-                        // при необходимости добавьте другие значения по умолчанию
+                        // РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РґРѕР±Р°РІСЊС‚Рµ РґСЂСѓРіРёРµ Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
                         //...options
                     };
 
