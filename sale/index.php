@@ -76,7 +76,7 @@ if (empty($route_string) && isset($_GET['discounted']) && !empty($_GET['discount
             $CANONICAL = "https://www.rusavtomatika.com/sale/?discounted=" . $product['seo_url'];
             $H1 = $product['name'];
             
-            include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist_detail/templates/sale/template.php";
+            include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist/templates/sales/template.php";
         } else {
             http_response_code(404);
             echo "<h1>404 - Товар не найден</h1>";
@@ -110,7 +110,7 @@ if (!empty($route_string)) {
         $CANONICAL = "https://www.rusavtomatika.com/sale/" . $product['seo_url'] . "/";
         $H1 = $product['name'];
         
-        include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist_detail/templates/sale/template.php";
+        include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist/templates/sales/template.php";
     } else {
         http_response_code(404);
         echo "<h1>404 - Товар не найден</h1>";
@@ -120,7 +120,7 @@ if (!empty($route_string)) {
 } else {
     $arguments = array();
     $arguments["route_string"] = "";
-    $arguments["template"] = "sale";
+    $arguments["template"] = "sales";
     $arguments["component"] = "newslist";
     CoreApplication::include_component($arguments);
 }

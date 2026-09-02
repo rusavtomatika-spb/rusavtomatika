@@ -25,6 +25,7 @@ if (!isset($arResult['product']) || empty($arResult['product'])) {
         $result = mysqli_query($mysqli_db, $query);
         $product = mysqli_fetch_assoc($result);
         if ($product) {
+            $product['price'] = isset($product['retail_price']) ? floatval($product['retail_price']) : 0;
             $arResult['product'] = $product;
         }
     }
@@ -37,6 +38,19 @@ if (!isset($arResult['product']) || empty($arResult['product'])) {
 }
 
 $product = $arResult['product'];
+
+if (!isset($product['price']) || $product['price'] == 0) {
+    $product['price'] = isset($product['retail_price']) ? floatval($product['retail_price']) : 0;
+}
+
+$product['model'] = isset($product['model']) ? $product['model'] : '';
+$product['brand'] = isset($product['brand']) ? $product['brand'] : '';
+$product['name'] = isset($product['name']) ? $product['name'] : '';
+$product['quantity'] = isset($product['quantity']) ? intval($product['quantity']) : 0;
+$product['description'] = isset($product['description']) ? $product['description'] : '';
+$product['text'] = isset($product['text']) ? $product['text'] : '';
+$product['preview_picture'] = isset($product['preview_picture']) ? $product['preview_picture'] : '';
+$product['images'] = isset($product['images']) ? $product['images'] : '';
 
 $main_image = !empty($product['preview_picture']) ? $product['preview_picture'] : '/images/no-image.png';
 
@@ -56,9 +70,9 @@ if (!empty($product['images'])) {
 global $H1;
 $H1 = $product['name'];
 ?>
-<div id="vue_component_catalog_detail" data-model="<?= $product['model'] ?>">
+<div id="vue_component_catalog_detail" data-model="<?= htmlspecialchars($product['model']) ?>">
 <div class="component_catalog_detail" itemscope itemtype="https://schema.org/Product">
-<meta itemprop="model" content="<?= $product['model'] ?>">
+<meta itemprop="model" content="<?= htmlspecialchars($product['model']) ?>">
 <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 <meta itemprop="price" content="<?= $product['price'] ?>">
 <meta itemprop="priceCurrency" content="RUB">
@@ -75,7 +89,7 @@ $H1 = $product['name'];
 <meta itemprop="email" content="sales@rusavtomatika.com">
 </span> </span>
 <span itemprop="brand" itemscope itemtype="https://schema.org/Brand">
-<meta itemprop="name" content="<?= $product['brand'] ?>">
+<meta itemprop="name" content="<?= htmlspecialchars($product['brand']) ?>">
 </span>
 
 <div class="component_wrapper">
@@ -102,7 +116,7 @@ $H1 = $product['name'];
         <div class="container is-widescreen">
           <div class="sticky_block_inner_wrapper">
             <div class="left">
-              <h1 itemprop="name"><?= $H1 ?></h1>
+              <h1 itemprop="name"><?= htmlspecialchars($H1) ?></h1>
             </div>
           </div>
         </div>
@@ -119,9 +133,9 @@ $H1 = $product['name'];
               id="component_catalog_detail__image-main_link_<?= ($idx+1) ?>" 
               style="display: <?= $idx == 0 ? 'block' : 'none' ?>;" 
               data-fancybox="product" 
-              data-caption="<?= $product['brand'] . ' ' . $product['model'] ?>" 
-              href="<?= $image_url ?>">
-                <img class="img_product-inner" src="<?= $image_url ?>" alt="<?= $product['model'] . '_' . ($idx+1) ?>">
+              data-caption="<?= htmlspecialchars($product['brand'] . ' ' . $product['model']) ?>" 
+              href="<?= htmlspecialchars($image_url) ?>">
+                <img class="img_product-inner" src="<?= htmlspecialchars($image_url) ?>" alt="<?= htmlspecialchars($product['model'] . '_' . ($idx+1)) ?>">
             </a>
           <? endforeach; ?>
           <div class="component_catalog_detail__images-mini__wrapper num_pics_<?= count($product['arr_pics']) ?>">
@@ -130,7 +144,7 @@ $H1 = $product['name'];
                 <div data-rel="component_catalog_detail__image-main_link_<?= ($idx+1) ?>" 
                   class="component_catalog_detail__images-mini <?= $idx == 0 ? 'active' : '' ?>"
                 >
-                  <img src="<?= $image_url ?>" alt="<?= $product['model'] . '_' . ($idx+1) ?>">
+                  <img src="<?= htmlspecialchars($image_url) ?>" alt="<?= htmlspecialchars($product['model'] . '_' . ($idx+1)) ?>">
                 </div>
               <? endforeach; ?>
             </div>
@@ -145,7 +159,7 @@ $H1 = $product['name'];
       <div class="component_catalog_detail__info_block">
         <div class="component_catalog_detail__info1">
           <div class="item">
-            <span class="info_tag info_brand"><?= $product['brand'] ?></span>
+            <span class="info_tag info_brand"><?= htmlspecialchars($product['brand']) ?></span>
           </div>
           <div class="item">
             <? if ($product['quantity'] > 0): ?>
@@ -173,7 +187,7 @@ $H1 = $product['name'];
       </div>
       
       <div class="component_catalog_detail__buttons1">
-        <div class="button is-primary add_to_cart" data-model="<?= $product['model'] ?>" data-box="cart">
+        <div class="button is-primary add_to_cart" data-model="<?= htmlspecialchars($product['model']) ?>" data-box="cart">
           <span class="btn_icon_order"></span>
           <span class="btn_icon_order_text">В заказ</span>
         </div>
@@ -219,8 +233,8 @@ $(function() {
 $(function() {
   $(".add_to_cart").on("click", function() {
     var model = $(this).data("model");
-    var productName = "<?= addslashes($product['name']) ?>";
-    var productPrice = "<?= $product['price'] ?>";
+    var productName = "<?= addslashes(htmlspecialchars($product['name'])) ?>";
+    var productPrice = "<?= floatval($product['price']) ?>";
     
     if (typeof show_backup_call === 'function') {
       show_backup_call(2, model);

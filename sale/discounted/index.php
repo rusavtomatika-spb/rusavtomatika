@@ -26,11 +26,15 @@ if (!empty($route_string)) {
     }
     
     if ($product) {
+        $product['price'] = isset($product['retail_price']) ? floatval($product['retail_price']) : 0;
+        $product['name'] = isset($product['name']) ? $product['name'] : '';
+        $product['seo_url'] = isset($product['seo_url']) ? $product['seo_url'] : $route_string;
+        
         $arResult['product'] = $product;
         
         global $TITLE, $DESCRIPTION, $CANONICAL, $H1;
         $TITLE = $product['name'] . " | Уцененный товар | Купить со скидкой | Русавтоматика";
-        $DESCRIPTION = "Уцененный товар " . $product['name'] . " по цене " . $product['price'] . " руб.";
+        $DESCRIPTION = "Уцененный товар " . $product['name'] . " по цене " . number_format($product['price'], 0, '', ' ') . " руб.";
         $CANONICAL = "https://www.rusavtomatika.com/sale/discounted/" . $product['seo_url'] . "/";
         $H1 = $product['name'];
         
