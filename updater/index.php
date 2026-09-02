@@ -5,43 +5,10 @@
     <div id="app_vue_updater">
 
         <h1>Обновление сайта <a target="_blank"
-                                href="<?= $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER['HTTP_HOST'] . "/" ?>"><?= $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER['HTTP_HOST'] . "/" ?></a>
-        </h1>
 
-        <div class="diagnostic_panel" style="background: #f5f5f5; border: 1px solid #ddd; padding: 10px; margin: 10px 0;">
-            <h3>Диагностическая информация:</h3>
-            <button @click="show_diagnostics = !show_diagnostics" class="button_submit" type="button">
-                {{ show_diagnostics ? 'Скрыть диагностику' : 'Показать диагностику' }}
-            </button>
-            
-            <div v-show="show_diagnostics" style="margin-top: 10px; font-size: 12px;">
-                <div><b>PHP Version:</b> <?= phpversion() ?></div>
-                <div><b>DOCUMENT_ROOT:</b> <?= $_SERVER['DOCUMENT_ROOT'] ?></div>
-                <div><b>Текущая директория:</b> <?= getcwd() ?></div>
-                <div><b>Server Software:</b> <?= $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown' ?></div>
-                <div><b>User:</b> <?= get_current_user() ?></div>
-                
-                <h4>Проверка прав доступа:</h4>
-                <div v-for="check in access_checks" :style="{color: check.status ? 'green' : 'red'}">
-                    {{ check.message }}
-                </div>
-                
-                <h4>Доступные PHP расширения:</h4>
-                <div>
-                    iconv: <?= function_exists('iconv') ? '✓' : '✗' ?><br>
-                    mbstring: <?= function_exists('mb_convert_encoding') ? '✓' : '✗' ?><br>
-                    hash: <?= function_exists('hash_file') ? '✓' : '✗' ?><br>
-                </div>
-                
-                <h4>Последние действия:</h4>
-                <div class="action_log" style="max-height: 300px; overflow-y: auto; background: #fff; border: 1px solid #ccc; padding: 5px;">
-                    <div v-for="(log, index) in action_logs" :key="index" 
-                         :style="{color: log.type === 'error' ? 'red' : log.type === 'warning' ? 'orange' : 'green'}">
-                        [{{ log.time }}] {{ log.message }}
-                    </div>
-                </div>
-            </div>
-        </div>
+                                href="<?= $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER['HTTP_HOST'] . "/" ?>"><?= $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER['HTTP_HOST'] . "/" ?></a>
+
+        </h1>
 
         <input class="button_submit button_settings" @click="button_settings_clicked" type="submit" value="Настройки">
 
