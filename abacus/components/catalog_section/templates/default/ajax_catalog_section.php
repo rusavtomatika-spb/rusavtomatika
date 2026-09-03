@@ -64,7 +64,7 @@ if ( isset( $_POST[ 'view_mode' ] )and $_POST[ 'view_mode' ] != "" ) {
 } else $view_mode = 'list';
 $sec_current = $DB_WORK_CATALOG->get_section_by_code( $_GET[ "section" ] )[ 'code' ];
 $sort_cookie_name = 'section_catalog_view_sort_' . $sec_current;
-$sort_mode = "popular";
+$sort_mode = "recommended";
 if ($sec_current == "industrial_computers_full_ip65") {
   $sort_mode = "recommended";
 }

@@ -1,3 +1,3 @@
-<?php
-header("Location: /abacus/admin/");
-exit();
+<?php
+header("Location: /abacus/admin/");
+exit();

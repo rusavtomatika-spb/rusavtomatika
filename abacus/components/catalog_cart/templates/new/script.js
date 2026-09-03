@@ -380,14 +380,18 @@ $(document).ready(
       }
 	let bezcen1 = document.getElementsByClassName('bezcen1');
 	let bezcen2 = document.getElementsByClassName('bezcen2');
+	let ocene = document.getElementsByName('ocene');
       if (total_noprice > 0 & total_usd > 0 ) {
 		bezcen1[0].style.display = "contents";
 		bezcen2[0].style.display = "contents";
+		ocene[0].style.display = "contents";
       } else if (total_noprice == 0 & total_usd > 0 ) {
 		bezcen1[0].style.display = "none";
+		ocene[0].style.display = "none";
       } else if (total_noprice > 0 & total_usd == 0 ) {
 		bezcen1[0].style.display = "contents";
 		bezcen2[0].style.display = "none";
+		ocene[0].style.display = "contents";
       }
       if (podzakaz < 1) {
 		spasibodiv[0].style.display = "block";
@@ -419,6 +423,7 @@ $(document).ready(
       var status = GetStatus();
 
       //var bsk = basket_to_string();
+      var models_list = models_to_string();
       var cart_list = cart_to_string();
 
 
@@ -437,7 +442,10 @@ $(document).ready(
           kpp: kpp,
           ogrn: ogrn,
           address: address,
+          type: 'Корзина',
+          refer: 'rusavomatika',
           basket: cart_list,
+          models: models_list,
           status: status
         },
         success: function (msg) {
@@ -491,6 +499,29 @@ $(document).ready(
       let total_rub_value = $('.panel_itogo2 .total_rub_value').html();
       out += '<tr><td></td>' + '<td style="text-align: right">' + '<b>Сумма:</b></td><td style="text-align: left"><div><b>' + total_usd_value + ' $</b></div><div><b>' + total_rub_value + ' руб.</b></div></td><td><b>' + 'Всего: ' + total_quantity_value + ' шт.</b>' + text_total_noprice_value + '</td></tr>';
       return "<table cellspacing='0' border='1' cellpadding='15' width='100%' style='width:100%;text-align: left;background: #dff3df' >" + out + "</table><br><hr><br>";
+    }
+function cleanString(str) {
+    // Очищаем строку от HTML-тегов
+    str = str.replace(/<\/?[^>]+(>|$)/g, '');
+    
+    // Замена различных представлений " " на обычный пробел
+    str = str.replace(/&(nbsp|#160|\u00A0| );?/gi, ' ');
+
+    // Удаляем знаки вопроса
+    str = str.replace(/\?+/g, '');
+
+    // Удаляем лишние пробелы вначале и в конце строки
+    return str.trim();
+}
+    function models_to_string() {
+      let out = '';
+      //$('table.series_products tr').each(function () {
+      $('div.series_products div.tr').each(function () {
+        let model = $(this).find('.model').html();
+		model = cleanString(model);
+        out += model + ',';
+      });
+      return out;
     }
 
     function save_cookie_contacts() {

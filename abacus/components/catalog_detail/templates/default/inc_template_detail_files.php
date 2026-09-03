@@ -16,6 +16,8 @@ function UR_exists($url){
    return stripos($headers[0],"200 OK")?true:false;
 }
 
+$nofollow = array('cMT2166X','cMT2158X','cMT2108X2','cMT2078X');
+
 if ( isset( $arResult[ 'product' ][ 'files' ] )and is_array( $arResult[ 'product' ][ 'files' ] )and count( $arResult[ 'product' ][ 'files' ] ) > 0 ) {
   ?>
 <div class="table-container">
@@ -37,7 +39,10 @@ if ( isset( $arResult[ 'product' ][ 'files' ] )and is_array( $arResult[ 'product
       <tr>
         <td><?
         if ( isset( $file[ "name" ] )and $file[ "name" ] != "" ): ?>
-          <div class=""><a <?if($file["type"] != 'pdf' && $file["type"] != 'online'){?>download<?}?> title="Скачать" target="_blank" <?if( preg_match('/Спецификация/',$file['name']) != FALSE ){?>doc="spec"<?}?> href="<?= printDefiningLink($file["path"], $site) ?>"><?= $file["name"] ?></a></div>
+          <div class=""><a <? if($file["type"] != 'pdf' && $file["type"] != 'online'){?>download<?}?> title="Скачать 1" target="_blank" 
+						   <? if( preg_match('/Спецификация/',$file['name']) != FALSE ) { ?>doc="spec"<? } ?>
+						   <? if(( preg_match('/Спецификация/',$file['name']) != FALSE ) && (in_array($arResult[ 'product' ][ 'model' ], $nofollow, true))) { ?> rel="nofollow"<? } ?>
+						   href="<?= printDefiningLink($file["path"], $site) ?>"><?= $file["name"] ?></a></div>
           <? endif; ?>
           <?
           if ( isset( $file[ "annotation" ] )and $file[ "annotation" ] != "" ): ?>
@@ -94,7 +99,9 @@ if ( isset( $arResult[ 'product' ][ 'files' ] )and is_array( $arResult[ 'product
       <tr>
         <td><?
         if ( isset( $file[ "title" ] )and $file[ "title" ] != "" ): ?>
-          <div class=""><a <?if($file["ftype"] != 'pdf' && $file["ftype"] != 'online'){?>download<?}?> title="Скачать" target="_blank" <?if( preg_match('/Спецификация/',$file['title']) != FALSE ){?>doc="spec"<?}?> href="https://www.rusavtomatika.com/upload_files/documents/weintek/<?= $file["path"] . "/" . ( $file[ 'fname' ] ) ?>"><?= $file["title"] ?></a></div>
+          <div class=""><a <?if($file["ftype"] != 'pdf' && $file["ftype"] != 'online'){?>download<?}?> title="Скачать 2" target="_blank" <?if( preg_match('/Спецификация/',$file['title']) != FALSE ){?>doc="spec"<?}?>
+						   <? if(( preg_match('/Спецификация/',$file['title']) != FALSE ) && (in_array($arResult[ 'product' ][ 'model' ], $nofollow, true))) { ?> rel="nofollow"<? } ?>
+						   href="https://www.rusavtomatika.com/upload_files/documents/weintek/<?= $file["path"] . "/" . ( $file[ 'fname' ] ) ?>"><?= $file["title"] ?></a></div>
           <? endif; ?>
           <?
           if ( isset( $file[ "description" ] )and $file[ "description" ] != "" ): ?>

@@ -32,7 +32,7 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
                                 let text = $('.catalog_toolbar__form_search input[type=text]').val();
                                 
                                 if(text != undefined && text != ''){
-                                    text = text.replace(/[^a-zа-я\d\s\(\) -]+/gi, "");
+                                    text = text.replace(/[^a-zа-я\d\s\(\) -ёЁ]+/gi, "");
                                     
                                     let params = [];
                                     

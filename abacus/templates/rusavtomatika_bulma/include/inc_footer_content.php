@@ -80,11 +80,6 @@
           </li>
           <li class="footer__cataloge_list_item">
             <ul>
-              <li> <a href="/catalog/power_supplies/"> Блоки питания <b>Faraday</b> </a> </li>
-            </ul>
-          </li>
-          <li class="footer__cataloge_list_item">
-            <ul>
               <li> <a href="/catalog/accessories/">Аксессуары</a> </li>
             </ul>
           </li>

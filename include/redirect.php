@@ -116,6 +116,7 @@ if ( EX != "_" ) {
     '/paneli-operatora/' => '/catalog/operator_panels/',
     '/modules/EBM-B.php' => '/catalog/modules_io/',
     '/modules/CPM-C.php' => '/catalog/modules_io/',
+    '/catalog/industrial_computers_full_ip65/' => '/catalog/industrial_computers_full_ip69k/',
     '/cincoze/' => '/articles/promyshlennye-kompyutery/',
     '/cincoze/CV-108-P1001.php' => '/catalog/panel_computers/',
     '/cincoze/CV-110-P1001.php' => '/catalog/panel_computers/',

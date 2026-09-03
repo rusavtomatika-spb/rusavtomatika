@@ -1,4 +1,12 @@
 <?php
+function renderNewLabel($product_date, $months = 12) {
+    if (empty($product_date)) {
+        return '';
+    }
+    $now = time();
+    $dateTimestamp = strtotime($product_date);
+    return ($dateTimestamp && $now - $dateTimestamp <= $months * 2629800) ? '<span class="new_plate">НОВИНКА</span>' : '';
+}
 
 function sort_array_by(&$array, $extra_params)
 {

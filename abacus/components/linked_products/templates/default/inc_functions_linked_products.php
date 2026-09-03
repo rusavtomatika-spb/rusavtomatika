@@ -328,7 +328,7 @@ class C_LinkedProducts
             $out['title'] = $element['model_fullname'];
             $out['preview_image'] = '/images/'.$element['brand'].'/'.$element['type'].'/130/'.$element['model'].'/'.$element['model'].'_1.webp';
             if ($element['brand'] != 'accessories') {
-            $out['url'] = '/'.$element['brand'].'/'.$element['model'].'/';
+            $out['url'] = '/'.strtolower($element['brand']).'/'.$element['model'].'/';
             }else {
             $out['url'] = $element['link_detail2'];
             }

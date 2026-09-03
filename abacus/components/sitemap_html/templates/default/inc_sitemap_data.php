@@ -1,5 +1,5 @@
 <?php
-global $ar_main_static_links, $ar_dynamic_links, $ar_catalog_links;
+global $ar_main_static_links, $ar_dynamic_links, $ar_catalog_links,$ar_series_links;
 $ar_xml_links = [];
 
 $ar_main_static_links = [
@@ -45,6 +45,14 @@ $ar_main_static_links = [
             ["link" => "https://t.me/rusavtomatika", "anchor" => "Телеграм-канал Русавтоматика"],
             ["link" => "https://vk.com/weintek_official", "anchor" => "Группа Русавтоматика в VK"],
             ["link" => "https://rutube.ru/channel/23487925/videos/", "anchor" => "Rutube канал Русавтоматика"],
+        ],
+    ],
+    ["title" => "Часто Задаваемые Вопросы/FAQ",
+        "items" => [
+            ["link" => "/faq/", "anchor" => "Часто задаваемые вопросы"],
+            ["link" => "/faq/section/paneli-operatora", "anchor" => "Часто задаваемые вопросы | Панели оператора"],
+            ["link" => "/faq/section/bezekrannyye-paneli-operatora", "anchor" => "Часто задаваемые вопросы | Безэкранные панели оператора"],
+            ["link" => "/faq/section/ctrl01", "anchor" => "Часто задаваемые вопросы | CTRL01"],
         ],
     ],
 ];

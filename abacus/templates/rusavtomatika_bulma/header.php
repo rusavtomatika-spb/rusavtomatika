@@ -212,7 +212,8 @@ CoreApplication::include_component($arguments);
 ?>
 <?
 if ($current_page == '') {
-    include "./include_utf_8/main_page/content/block_big_banner4.php";
+    //include "./include_utf_8/main_page/content/block_big_banner4.php";
+    include "./include_utf_8/main_page/content/block_big_banner_ifc.php";
     //include "./abacus/components/big_slider/templates/big_slide_banner/template.php";
 }
 ?>

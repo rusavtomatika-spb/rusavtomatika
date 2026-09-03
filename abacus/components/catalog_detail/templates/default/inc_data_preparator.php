@@ -51,7 +51,10 @@ if (count($arResult_product) == 0) {
         $arResult['section'] = $arResult_section[0];
     }
 
-    $arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']["type"]}' and series = '{$arResult['product']["series"]}'", "");
+    //$arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']["type"]}' and series like '{$arResult['product']["series"]}'", "");
+    $arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']['type']}' and FIND_IN_SET( series,'{$arResult['product']['series']}') > 0", "");
+	
+	
 
     if (count($arr_product_types) > 0) {
         $product_type = $arr_product_types[0];
@@ -62,6 +65,7 @@ if (count($arResult_product) == 0) {
 
 
     $template_h1 = $product_type["template_h1"];
+    $template_description = $product_type["template_description"];
     $template_title = $product_type["template_title"];
     $product_type_genitive_case = $product_type["genitive_case"];
 
@@ -124,10 +128,19 @@ usort($arSelected_articles, function($a, $b) {
 		}
 	}
 
-    if ($arResult['product']["description"] == '') {
+    if (($arResult['product']["description"] == '')&&($template_description == '')) {
         $DESCRIPTION = $product_type["short_name"] . " " . $arResult['product']["model"] . " " . $arResult['product']["brand"] . " " . $arResult['product']["preview_text"] . "; " . $arResult['product']["preview_text_extra"] . ". Склад в РФ, бесплатная доставка по всей России.";
         $DESCRIPTION_micro = $product_type["short_name"] . " " . $arResult['product']["model"] . " " . $arResult['product']["brand"] . " " . $arResult['product']["preview_text"] . ", " . $arResult['product']["preview_text_extra"];
 
+    } elseif(($arResult['product']["description"] == '')&&($template_description != '')) {
+		$template_description = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $template_description);
+        $template_description = str_replace('#model#', $arResult['product']["model"], $template_description);
+        $template_description = str_replace('#brand#', $arResult['product']["brand"], $template_description);
+        if ($arResult['product']["diagonal"] != '') {
+            $template_description = str_replace('#diagonal#', str_replace(".0", "", $arResult['product']["diagonal"]) . "&quot;", $template_description);
+        }
+        $DESCRIPTION = $template_description;
+        $DESCRIPTION_micro = $product_type["short_name"] . " " . $arResult['product']["model"] . " " . $arResult['product']["brand"] . " " . $arResult['product']["preview_text"] . ", " . $arResult['product']["preview_text_extra"];
     } else {
         $DESCRIPTION = $arResult['product']["description"];
         $DESCRIPTION_micro = $product_type["short_name"] . " " . $arResult['product']["model"] . " " . $arResult['product']["brand"] . " " . $arResult['product']["preview_text"] . ", " . $arResult['product']["preview_text_extra"];
@@ -165,6 +178,20 @@ usort($arSelected_articles, function($a, $b) {
         $product_type_genitive_case = "";
     }
 
+$arResult['product']['wifi'] = 'Нет';
+
+// Проверяем наличие ключа и его значение
+if (isset($arResult['product']['wifi_support'])) {
+    switch ($arResult['product']['wifi_support']) {
+        case 1:
+            $arResult['product']['wifi'] = 'Есть';
+            break;
+        case 2:
+            $arResult['product']['wifi'] = 'Опционально';
+            break;
+        // Для любого другого значения (например, 3, 'string') останется 'Нет'
+    }
+}
 
     $template_h1 = str_replace('#model#', $arResult['product']["model"], $template_h1);
     $template_h1 = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $template_h1);

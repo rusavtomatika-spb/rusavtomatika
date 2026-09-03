@@ -5,6 +5,7 @@ $arSettings['path_to_product_images'] = '/images/';
 function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
     $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
     
+    // Проверка имени поля
     $isMemoryField = false;
     foreach ($memoryFieldNames as $memField) {
         if ($fieldName === $memField) {
@@ -13,39 +14,85 @@ function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
         }
     }
     
+    // Базовые проверки: не то поле, пусто или ноль
     if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
         return false;
     }
     
-    $numericValue = floatval($fieldValue);
+    // Приводим к числу (входящие данные считаем Мегабайтами)
+    $mbValue = floatval($fieldValue);
     
-    if (stripos($fieldValue, 'Гб') !== false || stripos($fieldValue, 'GB') !== false) {
-        $valueInGB = $numericValue;
-    } elseif (stripos($fieldValue, 'Мб') !== false || stripos($fieldValue, 'MB') !== false) {
-        $valueInGB = $numericValue / 1024;
-    } else {
-        $valueInGB = $numericValue / 1024;
-    }
-    
+    // Переводим в Гигабайты для сравнения
+    $valueInGB = $mbValue / 1024;
+
+    // Если получилось 1 Гб или больше — выводим в Гб
     if ($valueInGB >= 1) {
-        $newUnit = 'Гб';
+        // Убираем лишние нули после запятой (например, из "2.00" сделает "2")
         if ($valueInGB == intval($valueInGB)) {
             $displayValue = intval($valueInGB) . ' Гб';
         } else {
             $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
         }
-    } elseif ($valueInGB > 0) {
-        $newUnit = 'Мб';
-        $mbValue = $valueInGB * 1024;
+        
+    // Если меньше 1 Гб (но больше 0) — оставляем в Мегабайтах
+    } elseif ($mbValue > 0) {
+        // Округляем до целого числа, чтобы убрать ".0"
         $displayValue = round($mbValue) . ' Мб';
+        
     } else {
         return false;
     }
     
+    // Записываем отформатированное значение обратно по ссылке
     $fieldValue = $displayValue;
     
     return true;
 }
+
+//function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
+//    $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
+//    
+//    $isMemoryField = false;
+//    foreach ($memoryFieldNames as $memField) {
+//        if ($fieldName === $memField) {
+//            $isMemoryField = true;
+//            break;
+//        }
+//    }
+//    
+//    if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
+//        return false;
+//    }
+//    
+//    $numericValue = floatval($fieldValue);
+//    
+//    if (stripos($fieldValue, 'Гб') !== false || stripos($fieldValue, 'GB') !== false) {
+//        $valueInGB = $numericValue;
+//    } elseif (stripos($fieldValue, 'Мб') !== false || stripos($fieldValue, 'MB') !== false) {
+//        $valueInGB = $numericValue / 1024;
+//    } else {
+//        $valueInGB = $numericValue / 1024;
+//    }
+//    
+//    if ($valueInGB >= 1) {
+//        $newUnit = 'Гб';
+//        if ($valueInGB == intval($valueInGB)) {
+//            $displayValue = intval($valueInGB) . ' Гб';
+//        } else {
+//            $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
+//        }
+//    } elseif ($valueInGB > 0) {
+//        $newUnit = 'Мб';
+//        $mbValue = $valueInGB * 1024;
+//        $displayValue = round($mbValue) . ' Мб';
+//    } else {
+//        return false;
+//    }
+//    
+//    $fieldValue = $displayValue;
+//    
+//    return true;
+//}
 
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
@@ -80,6 +127,7 @@ $arr_types = [
     "panel-terminal" => "Панель терминал",
     "monitor" => "Монитор",
     "module" => "Модуль ввода-вывода",
+    "coupler" => "Коммуникационный модуль",
 
     "" => "",
 ];
@@ -123,7 +171,7 @@ $arr_fields = [
     ["name" => "ram_type", "rus_name" => "Тип ОЗУ", "type" => "text"],
     ["name" => "ram_slots", "rus_name" => "Кол-во слотов ОЗУ", "type" => "text"],
     ["name" => "ram_max", "rus_name" => "Макс. объем ОЗУ", "type" => "text"],
-    ["name" => "flash", "rus_name" => "Flash", "type" => "text"],
+    ["name" => "flash", "rus_name" => "Flash", "type" => "text", "units" => "Гб"],
     ["name" => "hdd_size_gb", "rus_name" => "Накопитель", "type" => "text"],
     ["name" => "hdd_type", "rus_name" => "Тип накопителя", "type" => "text"],
     ["name" => "rtc", "rus_name" => "Часы реального времени", "type" => "text"],
@@ -221,7 +269,7 @@ if ($num_columns >= 0) {
                                         if (isset($product["link_detail2"]) and $product["link_detail2"] != "") {
                                             $product["link_detail_page"] = $product["link_detail2"];
                                         } else {
-                                            $product["link_detail_page"] = "/" . strtolower($product["brand"]) . "_/" . $product["model"] . "/";
+                                            $product["link_detail_page"] = "/" . strtolower($product["brand"]) . "/" . $product["model"] . "/";
                                         }
 
                                         switch ($field["name"]) {

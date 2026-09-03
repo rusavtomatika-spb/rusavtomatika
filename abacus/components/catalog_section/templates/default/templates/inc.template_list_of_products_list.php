@@ -5,12 +5,13 @@
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
 
-$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+//$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d'; 
+$apiKey = '2fe032454318a8fa0c013d2927d70ccc28154d1b'; 
 $userIp = $_SERVER[ 'REMOTE_ADDR' ];
 $userCountry = getCountryFromDaData($userIp, $apiKey);
 
 ?>
-<table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products <?= $userCountry ?>">
+<table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products <? echo $userCountry; ?>">
   <?
     if (isset($series["products"]) and is_array($series["products"])) {
 //        if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
@@ -30,7 +31,7 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 //        }
 
 		foreach ($series["products"] as $product) {
-					if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
+					//if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
 			if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
                 $product["diagonal"] = str_replace(".0", "", $product["diagonal"]);
@@ -88,7 +89,7 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
                             ?>
       </span></a>
       <div class="preview_text_block">
-        <div><a class="has-text-weight-bold" href="<?= $product["link_detail_page"]; ?>"><? echo $diagonal . " " . $product["short_name"]; ?></a>&nbsp;&nbsp;&nbsp;
+        <div>
           <? if (count($prod_series)>0){ 
 			echo '<span>Серия: ';
 							$prev_ser = '';
@@ -138,17 +139,22 @@ echo '<a class="tag mr-1" href="/catalog/'.$all_serie['menu_category_item_code']
 
                                 switch ($product['currency']) {
                                     case 'USD':
+                                    if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
                                         echo '<div class="usd_price"><span class="value">' . $product['retail_price'] . '</span>';
                                         echo '&nbsp;<span class="usd">$</span>';
+									} else {
+                                        echo '<div class="usd_price"><span class="value">' . (int) round($product['retail_price']*$usd_currency) . '</span>';
+                                        echo '&nbsp;<span class="usd">&#8381;</span>';
+									}
 										if ($product['action_price'] > 0) {
 										echo '<br><span class="act_price"><span class="value">' . $product['action_price'] . '</span>';
                                         echo '&nbsp;<span class="usd">$</span></span>';
 										}
 										echo '</div>';
                                         if ($usd_currency) {
-                                            ?>
-          <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> &#8381; </div>
-          <?
+                                    if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
+                                            ?> <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> &#8381; </div><?
+									} 
                                         }
                                         break;
                                     case 'RUR':
