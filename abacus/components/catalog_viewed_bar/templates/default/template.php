@@ -2,6 +2,34 @@
 
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/catalog_viewed_bar_style.css");
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
+
+$userCountry = 'RU';
+
+if (function_exists('getCountryFromDaData')) {
+    $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+    $userIp = $_SERVER['REMOTE_ADDR'];
+    $userCountry = getCountryFromDaData($userIp, $apiKey);
+    
+    if (!$userCountry) {
+        $userCountry = 'UNKNOWN';
+    }
+} else {
+    $funcFile = $_SERVER['DOCUMENT_ROOT'] . '/abacus/components/catalog_search/templates/default/inc_functions.php';
+    if (file_exists($funcFile)) {
+        require_once $funcFile;
+        
+        if (function_exists('getCountryFromDaData')) {
+            $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+            $userIp = $_SERVER['REMOTE_ADDR'];
+            $userCountry = getCountryFromDaData($userIp, $apiKey);
+            
+            if (!$userCountry) {
+                $userCountry = 'UNKNOWN';
+            }
+        }
+    }
+}
+
 if (isset($arguments["viewed_products"]) and count($arguments["viewed_products"]) > 0):
     ?>
     <div class="catalog_viewed_bar_wrapper">
@@ -20,19 +48,17 @@ if (isset($arguments["viewed_products"]) and count($arguments["viewed_products"]
                                     $arr_types[$item["code"]] = $item["short_name"];
                                 }
                                 foreach ($arguments["viewed_products"] as $model) {
+                                    if (isset($model["model"]) && $model["model"] == 'Codesys' && $userCountry != 'RU') {
+                                        continue;
+                                    }
+                                    
                                     $url_for_link = str_replace("www.rusavtomatika.com", $_SERVER["HTTP_HOST"], $model["link_detail_page"]);
-									
+                                    
                                     if (!(isset($model["type"]) and $model["type"] != "")) continue;
                                     if (!(isset($model["link_detail_page"]) and $model["link_detail_page"] != "")) continue;
                                     if (!(isset($arr_types[$model["type"]]) and $arr_types[$model["type"]] != "")) continue;
 
-//                                    $pic = '/images/' . strtolower($model["brand"]) . '/' . strtolower($model["type"]) . '/' . $model["model"] . '/130/' . $model["model"] . '_1.webp';
-									$fname = str_replace(array(')', '(', '/',' '),  array('\)', '\(', '_', '_'), $model["model"]);
-//									$mod_name = explode("/",$model["link_detail_page"]);
-//									$mod_name = array_slice($mod_name,2);
-//									array_pop($mod_name);
-//									$mod_name = str_replace(array(')', '(', '/',' '),  array('\)', '\(', '_', '_'), implode("/",$mod_name));
-//                                    $url_for_link = '//'.$_SERVER["HTTP_HOST"].'/'.strtolower($model["brand"]).'/'.$mod_name.'/';
+                                    $fname = str_replace(array(')', '(', '/',' '),  array('\)', '\(', '_', '_'), $model["model"]);
                                     $pic = '/images/' . strtolower($model["brand"]) . '/' . strtolower($model["type"]) . '/' . $fname . '/130/' . $fname . '_1.webp';
                                     $name = $arr_types[$model["type"]] . " " . $model["model"];
                                     $pos = strpos($arr_types[$model["type"]], "#model_fullname#");

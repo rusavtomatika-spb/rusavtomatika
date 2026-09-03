@@ -5,8 +5,7 @@
 global $usd_currency, $arSettings;
 //echo $_SERVER['SCRIPT_NAME'];
 
-//$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d'; 
-$apiKey = '2fe032454318a8fa0c013d2927d70ccc28154d1b'; 
+$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d'; 
 $userIp = $_SERVER[ 'REMOTE_ADDR' ];
 $userCountry = getCountryFromDaData($userIp, $apiKey);
 
@@ -31,7 +30,7 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 //        }
 
 		foreach ($series["products"] as $product) {
-					//if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
+			if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
 			if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
             if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
                 $product["diagonal"] = str_replace(".0", "", $product["diagonal"]);

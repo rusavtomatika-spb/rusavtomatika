@@ -1,9 +1,31 @@
 <?php
 
 require_once __DIR__ . '/inc_data_preparator.php';
-//require_once __DIR__ . '/inc_functions_linked_products.php';
+// require_once __DIR__ . '/inc_functions_linked_products.php';
 //error_reporting( E_ALL ^ E_NOTICE );
-
+if (isset($arResult['product']['model']) && $arResult['product']['model'] == 'Codesys') {
+    global $userCountry;
+    
+    if (!isset($userCountry) || !$userCountry) {
+        $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+        $userIp = $_SERVER['REMOTE_ADDR'];
+        $userCountry = getCountryFromDaData($userIp, $apiKey);
+    }
+    
+    if ($userCountry != 'RU') {
+        header("HTTP/1.0 404 Not Found");
+        
+        global $TITLE;
+        global $H1;
+        $TITLE = $H1 = "Ошибка 404";
+        
+        CoreApplication::add_style("/abacus/components/catalog/templates/default/style.css");
+        CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
+        
+        include "inc_404.php";
+        exit();
+    }
+}
 global $TITLE;
 global $DESCRIPTION;
 global $DESCRIPTION_micro;
@@ -12,9 +34,6 @@ global $CANONICAL;
 global $H1;
 global $SEO_URL;
 global $UPPER_SEO_TEXT, $LOWER_SEO_TEXT, $model,$fi4i_out;
-//ini_set("error_reporting", E_ALL);
-//ini_set("display_errors", 1);
-//ini_set("display_startup_errors", 1);
 
 function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
     if (strpos($fieldName, 'Flash') !== false || strpos($fieldName, 'flash') !== false) {
@@ -57,22 +76,18 @@ function fileExistsOnFtp($filePath) {
 	
     global $ftp_server, $ftp_user, $ftp_password;
 
-    // Подключаемся к FTP-сереверу
     $connection = ftp_connect($ftp_server);
 
     if (!$connection) {
         throw new Exception("Невозможно подключиться к FTP серверу.");
     }
 
-    // Аутентификация пользователя
     if (!ftp_login($connection, $ftp_user, $ftp_password)) {
         throw new Exception("Ошибка авторизации на FTP сервере.");
     }
 
-    // Проверяем размер файла
     $size = ftp_size($connection, $filePath);
 
-    // Если size равен -1, значит файл не существует
     return $size !== -1;
 }
 
@@ -104,11 +119,8 @@ if ( ERROR_404 ) {
   CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
 
   CoreApplication::add_breadcrumbs_chain( $arResult[ 'section' ][ "name" ], "/catalog/" . $arResult[ 'section' ][ "code" ] . "/" );
-  //CoreApplication::add_section( $arResult[ 'section' ][ "name" ], "/catalog/" . $arResult[ 'section' ][ "code" ] . "/" );
-  //CoreApplication::add_section( "test", "/catalog/" . "proba" . "/" );
   CoreApplication::add_breadcrumbs_chain( $arResult[ 'product' ][ "model" ] );
   $schemes = get_schemes( $arResult[ 'product' ][ "model" ] );
-  //$mod_viewed = transformString($arResult['product']["model"]);
 
   ?>
 <div id="vue_component_catalog_detail" data-model="<?= $arResult['product']["model"] ?>">
@@ -159,7 +171,6 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                 <?= $H1; echo $arrChunks__; ?>
               </h1>
               <?
-              //echo $var_dump;
               if ( $arResult[ 'product' ][ 'brand' ] == "eWON" ) {
                 include $_SERVER[ "DOCUMENT_ROOT" ] . "/include_utf_8/widgets/inc_no_ewon.php";
               }
@@ -224,7 +235,25 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                   <?
 
                   if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ) {
-					  if ($arResult['product']['currency'] == 'USD') {
+                      if ($arResult['product']['currency'] == 'USD') {
+                          if (intval($arResult['product']['show_rub_po_kursu_usd']) == 1) {
+                    ?>
+                  <div class="item price">
+                    <div> <span class="price_usd_value">
+                      <?= $arResult['product']['price_rub_value'] ?>
+                      </span> <span class="price_usd_currency">
+                      <?= $arResult['product']['price_rub_currency'] ?>
+                      </span>
+                      <? if ( intval( $arResult[ 'product' ][ "price_rub_act_value" ] ) > 0 ) { ?>
+                      <span class="price_act">
+                      <?= $arResult['product']['price_rub_act_value'] ?>
+                      <?= $arResult['product']['price_rub_currency'] ?>
+                      </span>
+                      <? } ?>
+                    </div>
+                  </div>
+                  <?
+                          } else {
                     ?>
                   <div class="item price">
                     <div> <span class="price_usd_value">
@@ -259,7 +288,8 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                     ?>
                   </div>
                   <?
-				  } elseif ($arResult['product']['currency'] == 'RUR') {
+                          }
+                  } elseif ($arResult['product']['currency'] == 'RUR') {
                     ?>
                   <div class="item price">
                     <?
@@ -277,32 +307,20 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                       </span>
                       <? } ?>
                     </div>
-                    <div> <span class="price_rub_value">
-                      <?= $arResult['product']['price_usd_value'] ?>
-                      </span> <span class="price_rub_currency">
-                      <?= $arResult['product']['price_usd_currency'] ?>
-                      </span>
-                      <? if ( intval( $arResult[ 'product' ][ "price_usd_act_value" ] ) > 0 ) { ?>
-                      <span class="price_act">
-                      <?= $arResult['product']['price_usd_act_value'] ?>
-                      <?= $arResult['product']['price_usd_currency'] ?>
-                      </span>
-                      <? } ?>
-                    </div>
                     <?
                     }
                     ?>
                   </div>
                   <?
-				  }
-				  } else {
+                  }
+                  } else {
                     ?>
                   <div class="button button_demand_price"
                                                          idm="<?= $arResult['product']["model"] ?>"
                                                          onclick="show_backup_call(6, &quot;<?= $arResult['product']["model"] ?>&quot;)"> Запросить&nbsp;цену </div>
                 </div>
                 <?
-				  }
+                  }
                 ?>
                 <? if ($arResult['product']["discontinued"] != '1') { ?>
                 <div @click="add_too_box" class='button is-primary add_to_cart'
@@ -340,7 +358,6 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
     <div class="columns">
       <div class="column is-6">
         <?
-        //echo CoreApplication::print_pictures_in_detail_template($arResult['product']["brand"], $arResult['product']["type"], $arResult['product']["model"], $arResult['product']["pics_number"]);
         ?>
         <div class="component_catalog_detail__images_wrapper">
           <?
@@ -395,17 +412,13 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
         </div>
         <?
         if ( isset( $arResult[ 'product' ][ 'youtube_video' ] ) && $arResult[ 'product' ][ 'youtube_video' ] != '' ) {
-          //          $youtube_video = '<div class="block_view_video">';
           $youtube_video = $arResult[ 'product' ][ 'youtube_video' ];
-          //          $youtube_video .= '</div>';
         } else $youtube_video = '';
         echo $youtube_video;
         ?>
         <?
         if ( isset( $arResult[ 'product' ][ 'view360' ] ) && $arResult[ 'product' ][ 'view360' ] != '' ) {
-          //          $view360 = '<div class="block_view_video">';
           $view360 = $arResult[ 'product' ][ 'view360' ];
-          //          $view360 .= '</div>';
         } else $view360 = '';
         echo $view360;
         ?>
@@ -477,6 +490,23 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
             <div class="item price">
               <?
               if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ):
+                  if ( $arResult['product']['currency'] == 'USD' && intval($arResult['product']['show_rub_po_kursu_usd']) == 1 ):
+                ?>
+              <div>
+                <span class="price_usd_value">
+                <?= $arResult['product']['price_rub_value'] ?>
+                </span> <span class="price_usd_currency">
+                <?= $arResult['product']['price_rub_currency'] ?>
+                </span>
+                <? if ( intval( $arResult[ 'product' ][ "price_rub_act_value" ] ) > 0 ) { ?>
+                <span class="price_act">
+                <?= $arResult['product']['price_rub_act_value'] ?>
+                <?= $arResult['product']['price_rub_currency'] ?>
+                </span>
+                <? } ?>
+              </div>
+              <?
+                  else:
                 ?>
               <div>
                 <? if ( $arResult['product']['currency'] == 'USD' ) { ?>
@@ -500,7 +530,8 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                 <? } ?>
               </div>
               <?
-              if ( intval( $arResult[ 'product' ][ "currency" ] ) == "RUR" ) {
+                  endif;
+                  if ( intval( $arResult[ 'product' ][ "currency" ] ) == "RUR" ) {
                 ?>
               <div>
                 <? if ( $arResult['product']['currency'] == 'RUR' ) { ?>
@@ -509,7 +540,7 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                 <?= $arResult['product']['price_rub_currency'] ?>
                 </span>
                 <? } ?>
-				  <? if ( intval( $arResult[ 'product' ][ "price_rub_act_value" ] ) > 0 ) { ?>
+                  <? if ( intval( $arResult[ 'product' ][ "price_rub_act_value" ] ) > 0 ) { ?>
  <span class="price_act">
                 <?= $arResult['product']['price_rub_act_value'] ?>
                 <?= $arResult['product']['price_rub_currency'] ?>
@@ -559,25 +590,11 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
             <span class="btn_text">&nbsp;В избранное</span>
           </div>
               <? } 
-	if (($arResult['product']["discontinued"] == "1") && ($arResult['product']['analogs'] == "")) { ?>
+    if (($arResult['product']["discontinued"] == "1") && ($arResult['product']['analogs'] == "")) { ?>
           Мы готовы предложить<br>
 более новые модели: <a href="<? echo "/catalog/".$arResult['section']["code"]."/"; ?>"><div class='button is-primary'>  <span class="btn_text"><?= $arResult['section']["name"] ?></span> </div></a>
               <? } 
-			//echo "<pre>";
-//var_dump($arResult);
-//			echo "</pre>";
-			?>
-          
-          <!--                                        <div class='button is-light order_one_click'
-                                             data-model='<? /*= $arResult['product']["model"] */ ?>'>
-                                            заказ в 1 клик
-                                        </div>
-                                        <div class='button is-light order_callback'
-                                             data-model='<? /*= $arResult['product']["model"] */ ?>'
-                                             onclick='show_backup_call(1, "<? /*= $arResult['product']["model"] */ ?>")'>
-                                            Получить скидку
-                                        </div>
---> 
+            ?>
         <div
           @click="add_too_box"
           class='button button_like_link add_to_compare'
@@ -617,8 +634,6 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
         <div class="component_catalog_detail__advantages">
           <?= $arResult['product']["text_features"] ?>
           <?
-//          if ( $tech_out != '' ) {
-//            echo $tech_out; } 
           if ( $UPPER_SEO_TEXT ) {
             ?>
           <div class="UPPER_SEO_TEXT">
@@ -977,7 +992,7 @@ endif;
 <?
 CoreApplication::include_component( array( "component" => "linked_products", "model" => $arResult[ 'product' ][ "model" ] ) );
 ?>
-	<?
+    <?
 if ( isset( $LOWER_SEO_TEXT )and $LOWER_SEO_TEXT != "" ) {
   ?>
 <div class="section_description p-5">
@@ -986,37 +1001,26 @@ if ( isset( $LOWER_SEO_TEXT )and $LOWER_SEO_TEXT != "" ) {
 <?
 }
 ?>
-<!--div><a class="button is-primary" href="<?= "/catalog/" . $arResult['section']["code"] . "/" ?>">Назад в
-  &laquo;
-  <?= $arResult['section']["name"] ?>
-  &raquo;</a></div-->
 </div>
 </div>
 </div>
 <div class="result" v-html="result"></div>
 </div>
 <script type="text/javascript">
-//let table = document.querySelector('#table-download-files');
-//$(document).ready(function() {
-//  sort();
-//});
 function sortTable(table_id, sortColumn){
     var tableData = document.getElementById(table_id).getElementsByTagName('tbody').item(0);
-    //var tableData = document.getElementById(table_id).getElementsByTagName('tbody');
     var rowData = tableData.getElementsByTagName('tr');            
-	console.log(rowData.length);
+    console.log(rowData.length);
     for(var i = 0; i < rowData.length - 1; i++){
         for(var j = 0; j < rowData.length - (i + 1); j++){
             if(Number(rowData.item(j).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, "")) > Number(rowData.item(j+1).getElementsByTagName('td').item(sortColumn).innerHTML.replace(/[^0-9\.]+/g, ""))){
-    		    tableData.insertBefore(rowData.item(j+1),rowData.item(j));
-		    }
+                tableData.insertBefore(rowData.item(j+1),rowData.item(j));
+            }
         }
     }
 }
 $(document).ready(function() {
-    // pass the id and the <td> place you want to sort by (td counts from 0)
     sortTable('table-download-files',5);
-	//alert('111');
 });
 </script>
 
