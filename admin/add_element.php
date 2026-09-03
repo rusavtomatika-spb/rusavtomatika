@@ -37,6 +37,7 @@ $arguments = array();
             $arguments["title"] = $_GET["title"];
             $arguments["description"] = $_GET["description"];
             $arguments["keywords"] = $_GET["keywords"];
+            $arguments["date_pub"] = date('Y-m-d');
             $result = $db_work->add_product_element($arguments);
             if ($result["success"] == true) {
                 echo "<div class='success_message'>" . $result["message"] . "</div>";

@@ -32,7 +32,7 @@ class DBWORK {
         }
 
         $this->query = "INSERT INTO `products_all`" .
-                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`)" .
+                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`, `date_pub`)" .
                 " VALUES ('" . strip_tags($arguments['name']) .
                 "', '" . strip_tags($arguments['name']) .
                 "', '" . strip_tags($arguments['h1']) .
@@ -41,6 +41,7 @@ class DBWORK {
                 "', '" . addslashes(strip_tags($arguments['keywords'])) .
                 "', '" . addslashes($arguments['text_preview']) .
                 "', '" . addslashes($arguments['text_detail']) .
+                "', '" . $arguments['date_pub'] .
                 "');";
 
         database_connect();
@@ -292,6 +293,12 @@ class DBWORK {
                 continue;
             }
             
+            if ($field == 'date_pub') {
+                $fields[] = "`$field`";
+                $values[] = "'".date('Y-m-d')."'";
+                continue;
+            }
+            
             if ($field == 'model') {
                 $new_value = $value . '_copy';
                 $fields[] = "`$field`";
@@ -422,8 +429,55 @@ class DBWORK {
         }
         return $out;
     }
+	
+public function get_editable_fields_by_element_id($element_id) {
+    database_connect();
+    global $mysqli_db;
+    mysqli_query($mysqli_db, "SET NAMES utf8");
 
-    public function is_suitable_for_type($name,$type) {
+    $result_type = mysqli_query($mysqli_db, "SELECT `type` FROM `products_all` WHERE `index` = " . $element_id);
+    if (!$result_type || mysqli_num_rows($result_type) === 0) {
+        return [];
+    }
+    $row = mysqli_fetch_assoc($result_type);
+    $product_type = $row['type'];
+
+    $result_codes = mysqli_query($mysqli_db, "SELECT `code` FROM `catalog_field_descriptions` WHERE FIND_IN_SET('" . $product_type . "', `product_types`) > 0");
+    if (!$result_codes) {
+        return [];
+    }
+
+    $codes = [];
+    while ($row = mysqli_fetch_assoc($result_codes)) {
+        $codes[] = $row['code'];
+    }
+
+    if (empty($codes)) {
+        return [];
+    }
+
+    $fields_list = implode("', '", $codes);
+    $sql_columns = "
+        SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, COLUMN_DEFAULT, EXTRA
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_NAME = 'products_all'
+          AND TABLE_SCHEMA = DATABASE()
+          AND COLUMN_NAME IN ('" . $fields_list . "')
+        ORDER BY ORDINAL_POSITION";
+
+    $result_columns = mysqli_query($mysqli_db, $sql_columns);
+
+    $out = [];
+    while ($col = mysqli_fetch_row($result_columns)) {
+        $out[] = $col;
+    }
+
+    return $out;
+}
+	
+	
+	
+	public function is_suitable_for_type($name,$type) {
         global $mysqli_db;
         database_connect();
         mysqli_query($mysqli_db,"SET NAMES utf8");

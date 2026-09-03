@@ -55,6 +55,7 @@ $types = $db_work->get_types();
             <li><a href="/admin">Полный список элементов</a></li>
             <li class="separator"></li>
             <li><a target="_blank" href="/">На сайт</a></li>
+            <li>Обновить sitemap.xml: <a target="_blank" href="https://www.rusavtomatika.com/sitemap/generate_sitemap_xml.php">На проде</a> | <a target="_blank" href="https://www.rusavto.moisait.net/sitemap/generate_sitemap_xml.php">На MC</a></li>
         </ul>
     </div>
     <?

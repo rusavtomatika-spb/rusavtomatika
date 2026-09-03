@@ -602,7 +602,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-5">
             <div class="block_padding">
-              <p><a class="download_zip" href="/upload_files/soft/cMT/CODESYS/Weintek_CODESYS_and_RemoteIO_package/Weintek_CODESYS_and_RemoteIO_1.5.3.527.package">Weintek_CODESYS_and_RemoteIO_1.5.3.527.package</a> <span class="small_gray_text">[15 МБ]</span></p>
+              <p><a class="download_zip" href="/upload_files/soft/cMT/CODESYS/Weintek_CODESYS_and_RemoteIO_package/Weintek_CODESYS_and_RemoteIO_1.5.3.527.package" download="Weintek_CODESYS_and_RemoteIO_1.5.3.527.package">Weintek_CODESYS_and_RemoteIO_1.5.3.527.package</a> <span class="small_gray_text">[15 МБ]</span></p>
             </div>
           </div>
         </div>

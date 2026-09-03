@@ -14,6 +14,10 @@ if (!function_exists('var_dump_pre')) {
     }
 }
 
+$json = file_get_contents(__DIR__ . '/stop_words.json');
+// Декодируем JSON в массив
+$stopwords = json_decode($json, true);
+
 
 define('admin', true);
 define('PRODUCTS_ALL', true);
@@ -407,25 +411,51 @@ function get_elements($table)
 
 function get_words($content, $filter = true)
 {
-
-    $regexp_word = '/([a-zа-я0-9\-]+)/';
+    // Регулярные выражения остаются без изменений
+    $regexp_word = '/([a-zа-я0-9\-]+)/u'; // Добавлен флаг 'u' для корректной работы с UTF-8
     $regexp_entity = '/&([a-zA-Z0-9\-]+);/';
 
-    // Фильтрация HTML-тегов и HTML-сущностей //
+    // Фильтрация HTML-тегов и HTML-сущностей
     if ($filter) {
         $content = strip_tags($content);
         $content = preg_replace($regexp_entity, ' ', $content);
     }
-    // Перевод в верхний регистр //
-    $content = mb_strtoupper($content, 'windows-1251');
-    // Замена ё на е //
-    //echo $content = str_ireplace('Ё', 'Е', $content);
-    // Выделение слов из контекста //
-    $content = preg_replace("/[^a-zA-ZА-Яа-я0-9\-\s]/", " ", $content);
-    $content = str_replace("NBSP", ' ', $content);
-    $content = preg_replace('/[\s]{2,}/', ' ', $content);
 
+    // Переводим весь контент в верхний регистр для единообразия
+    $content = mb_strtoupper($content, 'UTF-8');
+    
+    // Заменяем ё на е для корректной работы с морфологическим анализатором
+    //$content = str_ireplace('Ё', 'Е', $content);
+    
+    // Оставляем только буквы, цифры, дефисы и пробелы
+    $content = preg_replace("/[^a-zA-ZА-Яа-я0-9\-\s]/u", " ", $content);
+    
+    // Заменяем множественные пробелы на один
+    $content = preg_replace('/[\s]{2,}/', ' ', $content);
+    
+    // Разбиваем текст на слова
     $arrWords = explode(" ", $content);
-    //$arrWords = array_unique($arrWords);
-    return $arrWords;
+    
+    // --- НАЧАЛО БЛОКА ФИЛЬТРАЦИИ СТОП-СЛОВ ---
+    
+    // Подключаем массив стоп-слов из внешнего файла.
+    // Убедитесь, что путь к файлу указан верно.
+    $stopWords = include(__DIR__ . '/stop_words.php'); 
+    
+    // Преобразуем все стоп-слова в верхний регистр для корректного сравнения
+    $stopWordsUpper = array_map('mb_strtoupper', $stopWords, array_fill(0, count($stopWords), 'UTF-8'));
+    
+    // Фильтруем исходный массив слов.
+    // array_filter() создаст новый массив, содержащий только те элементы,
+    // для которых коллбэк-функция вернет true.
+    $arrWords = array_filter($arrWords, function($word) use ($stopWordsUpper) {
+        // word_exists() - это псевдоним in_array() с третьим параметром true (строгое сравнение)
+        // Возвращаем true, если слова НЕТ в списке стоп-слов.
+        return !in_array($word, $stopWordsUpper, true);
+    });
+    
+    // --- КОНЕЦ БЛОКА ФИЛЬТРАЦИИ СТОП-СЛОВ ---
+    
+    // Удаляем пустые элементы (если они есть) и возвращаем результат
+    return array_values(array_filter($arrWords));
 }
