@@ -69,6 +69,9 @@ if (!empty($product['images'])) {
 
 global $H1;
 $H1 = $product['name'];
+
+CoreApplication::add_breadcrumbs_chain("Распродажа", "/sale/");
+CoreApplication::add_breadcrumbs_chain($product['name']);
 ?>
 <div id="vue_component_catalog_detail" data-model="<?= htmlspecialchars($product['model']) ?>">
 <div class="component_catalog_detail" itemscope itemtype="https://schema.org/Product">
@@ -191,6 +194,9 @@ $H1 = $product['name'];
           <span class="btn_icon_order"></span>
           <span class="btn_icon_order_text">В заказ</span>
         </div>
+        <a href="/sale" class="button button_like_link">
+          <span class="btn_text">Акционные товары</span>
+        </a>
       </div>
       
       <div class="component_catalog_detail__advantages">

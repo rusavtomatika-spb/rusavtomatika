@@ -6,7 +6,6 @@ global $TITLE, $CANONICAL, $DESCRIPTION, $usd_currency;
 $TITLE = "Распродажа | Акции и скидки | Уцененные товары | Русавтоматика";
 $CANONICAL = "https://www.rusavtomatika.com/sale/";
 $DESCRIPTION = "Акционные товары, распродажа, товары со скидкой, уцененные товары, неликвиды. Покупайте со скидкой в интернет-магазине rusavtomatika.com";
-CoreApplication::add_breadcrumbs_chain("Распродажа", "/sale/");
 
 include 'functions.php';
 
@@ -227,10 +226,12 @@ function getFirstLiElements($html, $count = 3) {
     return $output;
 }
 
+CoreApplication::add_breadcrumbs_chain("Главная", "/");
+CoreApplication::add_breadcrumbs_chain("Распродажа");
 ?>
 
 <div class="component_newslist">
-    <? CoreApplication::include_component(array("component"=> "breadcrumbs")); ?>
+    <? CoreApplication::include_component(array("component" => "breadcrumbs")); ?>
     <div class="component_wrapper">
         <div class="row" style="position: relative;">
             <div class="col-md-12">
