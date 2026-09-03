@@ -1,5 +1,13 @@
 <?php
 
+function highlight_search($text, $query) {
+    if ($query !== '') {
+        // Регулярное выражение для точного слова, без учёта регистра
+        $pattern = '/\b(' . preg_quote($query, '/') . ')\b/iu';
+        return preg_replace($pattern, '<span style="background-color: #ffe100;">$1</span>', $text);
+    }
+    return $text;
+}
 
 function search_by_words($arr_search_words)
 {
@@ -11,36 +19,30 @@ function search_by_words($arr_search_words)
     return $arrResult;
 }
 
-function search_by_words_texts($arr_search_words)
-{
-    $arrResult = array();
-    $arrIDs = array();
-    global $mysqli_db;
-    $arrResult = array();
-    if (isset($arr_search_words) and is_array($arr_search_words) and count($arr_search_words) > 0) {
-
-        $counter = 0;
-
+function search_by_words_texts($arr_search_words) {
+    $finalUniqueArticles = array();
+    
+    if (isset($arr_search_words) && is_array($arr_search_words) && count($arr_search_words) > 0) {
         foreach ($arr_search_words as $word) {
-            $counter++;
+            $arrIDs = array();
+            $arrResultForCurrentWord = array();
+            global $mysqli_db;
+            
             $word = mysqli_real_escape_string($mysqli_db, $word);
+            $counter = 0;
 
-            if ($counter < 3) { // только первые две прямых фразы
-
+            if ($counter < 3) { 
                 $rows_direct_match = CoreApplication::get_rows_from_table('search_texts_lemmatized', "", "(original_text like '%$word%')");
-
                 if (count($rows_direct_match) > 0) {
-
                     foreach ($rows_direct_match as $article_ref) {
                         $arrIDs_current_id = $article_ref["table"] . $article_ref['article_id'];
                         if (!(isset($arrIDs[$arrIDs_current_id]) and $arrIDs[$arrIDs_current_id] == true)) {
-                            //var_dump_pre($article_ref["table"]);
-                            //getting article
                             if ($article_ref['table'] == 'search_static_pages_lemmatized') $selected_fields = "id,name,stext,link,img";
                             elseif ($article_ref['table'] == 'videos') $selected_fields = "id,name,date,text_preview,code,picture_preview";
                             else $selected_fields = "id,name,date,stext,sys_name,img";
+                            
                             $arr_article = CoreApplication::get_rows_from_table($article_ref['table'], $selected_fields, "`show`='1' and id='{$article_ref['article_id']}'");
-                            if (is_array($arr_article) and count($arr_article) > 0) {
+                            if (is_array($arr_article) && count($arr_article) > 0) {
                                 $article = $arr_article[0];
                                 if ($article_ref['table'] == 'articles' || $article_ref['table'] == 'news') {
                                     $article['link'] = "/" . $article_ref['table'] . '/' . $article['sys_name'] . '/';
@@ -60,44 +62,41 @@ function search_by_words_texts($arr_search_words)
                                     if (isset($stat_num[1])) $article['freqs'] += $stat_num[1];
                                 }
 
-
-                                //getting article
                                 if ($article_ref['table'] == 'videos') {
                                     $article['stext'] = $article['text_preview'];
                                     $article['img'] = $article['picture_preview'];
                                     $article['link'] = "/video/" . $article['code'] . "/";
                                 }
-                                $arrResult[] = $article;
-                                //echo "-1- ".$product["model"]." ";
+                                $arrResultForCurrentWord[] = $article;
                                 $arrIDs[$arrIDs_current_id] = true;
                             }
                         }
                     }
                 }
             }
+
             $rows = CoreApplication::get_rows_from_table('search_texts_lemmatized', "", "(lemmas like '% $word %' or lemmas like '% $word.%' or lemmas like '$word%')");
             if (count($rows) > 0) {
                 foreach ($rows as $article_ref) {
                     $arrIDs_current_id = $article_ref["table"] . $article_ref['article_id'];
                     if (!(isset($arrIDs[$arrIDs_current_id]) and $arrIDs[$arrIDs_current_id] == true)) {
                         $freqs = '';
-                        if (isset($word) and $word != '') {
+                        if (isset($word) && $word != '') {
                             $pos1 = strpos($article_ref["lemmas_statistics"], $word);
                             if ($pos1 !== false) {
                                 $pos2 = strpos($article_ref["lemmas_statistics"], "###", $pos1);
                                 $tmp = substr($article_ref["lemmas_statistics"], $pos1, $pos2 - $pos1);
                                 $stat_num = explode(" ", $tmp);
-                                //$freqs = $stat_num[1];
-                                    if (isset($stat_num[1])) $freqs = $stat_num[1];
+                                if (isset($stat_num[1])) $freqs = $stat_num[1];
                             }
                         }
-                        //getting article
+
                         if ($article_ref['table'] == 'search_static_pages_lemmatized') $selected_fields = "id,name,stext,link,img";
                         elseif ($article_ref['table'] == 'videos') $selected_fields = "id,name,text_preview,code,picture_preview";
                         else $selected_fields = "id,name,date,stext,sys_name,img";
 
                         $arr_article = CoreApplication::get_rows_from_table($article_ref['table'], $selected_fields, "`show`='1' and id='{$article_ref['article_id']}'");
-                        if (is_array($arr_article) and count($arr_article) > 0) {
+                        if (is_array($arr_article) && count($arr_article) > 0) {
                             $article = $arr_article[0];
                             if ($article_ref['table'] == 'articles' || $article_ref['table'] == 'news') {
                                 $article['link'] = "/" . $article_ref['table'] . '/' . $article['sys_name'] . '/';
@@ -105,36 +104,61 @@ function search_by_words_texts($arr_search_words)
                             $article['word'] = $word;
                             $article['table'] = $article_ref['table'];
                             $article['freqs'] = $freqs;
-                            //getting article
+
                             if ($article_ref['table'] == 'videos') {
                                 $article['stext'] = $article['text_preview'];
                                 $article['img'] = $article['picture_preview'];
                                 $article['link'] = "/video/" . $article['code'] . "/";
                             }
-                            $arrResult[] = $article;
-                            //echo "-1- ".$product["model"]." ";
+                            $arrResultForCurrentWord[] = $article;
                             $arrIDs[$arrIDs_current_id] = true;
                         }
                     }
                 }
             }
-        }
-    }
 
+            // Объединение результатов для текущего слова с финальным списком уникальных статей
+            foreach ($arrResultForCurrentWord as $article) {
+                $unique_id = $article['table'] . $article['id'];
+                if (!isset($finalUniqueArticles[$unique_id])) {
+                    $finalUniqueArticles[$unique_id] = $article;
+                }
+            }
+        }
+        $arrResult = array_values($finalUniqueArticles);
+    } else {
+        $arrResult = array();
+    }
 
     usort($arrResult, "cmp_by_freqs");
 
-
     return $arrResult;
 }
-
 // SORTING
 function cmp_by_freqs($a, $b)
 {
-    if ($a['freqs'] == $b['freqs']) {
-        return 0;
+    if ($a['freqs'] > $b['freqs']) {
+        return -1;
+    } elseif ($a['freqs'] < $b['freqs']) {
+        return 1;
+    } else {
+        if (!isset($a['date']) && !isset($b['date'])) {
+            return 0;
+        }
+        if (!isset($a['date'])) {
+            return 1;
+        }
+        if (!isset($b['date'])) {
+            return -1;
+        }
+        if ($a['date'] > $b['date']) {
+            return -1;
+        } elseif ($a['date'] < $b['date']) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    return ($a['freqs'] > $b['freqs']) ? -1 : 1;
 }
 
 
@@ -152,7 +176,7 @@ function search_in_products_all_by_model($arr_search_words, &$arrIDs)
             $word = str_replace("стк", "ctk", $word);
             }                            
             $word = mysqli_real_escape_string($mysqli_db, $word);
-            $rows = CoreApplication::get_rows_from_table('products_all', "", " parent='' and status!='0' and brand!='Cincoze' and (model like '%$word%' or `model_fullname` like '%$word%')");
+            $rows = CoreApplication::get_rows_from_table('products_all', "", " parent='' and (status!='0' or show_in_search='1') and brand!='Cincoze' and (model like '%$word%' or `model_fullname` like '%$word%')");
 			//var_dump($rows);
             if (count($rows) > 0) {
                 foreach ($rows as $product) {
@@ -316,7 +340,7 @@ function switchTextToEnglish($text)
         "я", "ч", "с", "м", "и", "т", "ь", "б", "ю",
         "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
         "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э",
-        "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю"
+        "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "ё", "Ё"
     );
 
     $str_replace = array(
@@ -325,7 +349,7 @@ function switchTextToEnglish($text)
         "z", "x", "c", "v", "b", "n", "m", ",", ".",
         "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]",
         "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'",
-        "Z", "X", "C", "V", "B", "N", "M", ",", "."
+        "Z", "X", "C", "V", "B", "N", "M", ",", ".", "`", "~"
     );
     return str_replace($str_search, $str_replace, $text);
 }
@@ -340,7 +364,7 @@ function switchTextToRussian($text)
         "z", "x", "c", "v", "b", "n", "m", ",", ".",
         "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]",
         "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'",
-        "Z", "X", "C", "V", "B", "N", "M", ",", "."
+        "Z", "X", "C", "V", "B", "N", "M", ",", ".", "`", "~"
     );
 
     $str_replace = array(
@@ -349,7 +373,7 @@ function switchTextToRussian($text)
         "я", "ч", "с", "м", "и", "т", "ь", "б", "ю",
         "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
         "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э",
-        "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю"
+        "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "ё", "Ё"
     );
 
     return str_replace($str_search, $str_replace, $text);
@@ -370,7 +394,7 @@ function switcher($text, $arrow = 0)
         'З' => 'P', 'Х' => '[', 'Ъ' => ']', 'Ф' => 'A', 'Ы' => 'S', 'В' => 'D',
         'А' => 'F', 'П' => 'G', 'Р' => 'H', 'О' => 'J', 'Л' => 'K', 'Д' => 'L',
         'Ж' => ';', 'Э' => '\'', '?' => 'Z', 'Ч' => 'X', 'С' => 'C', 'М' => 'V',
-        'И' => 'B', 'Т' => 'N', 'Ь' => 'M', 'Б' => ',', 'Ю' => '.',
+        'И' => 'B', 'Т' => 'N', 'Ь' => 'M', 'Б' => ',', 'Ю' => '.', 'Ё' => '~', 'ё' => '`',
     );
     $str[1] = array('q' => 'й', 'w' => 'ц', 'e' => 'у', 'r' => 'к', 't' => 'е',
         'y' => 'н', 'u' => 'г', 'i' => 'ш', 'o' => 'щ', 'p' => 'з', '[' => 'х',
@@ -382,7 +406,7 @@ function switcher($text, $arrow = 0)
         'P' => 'З', '[' => 'Х', ']' => 'Ъ', 'A' => 'Ф', 'S' => 'Ы', 'D' => 'В',
         'F' => 'А', 'G' => 'П', 'H' => 'Р', 'J' => 'О', 'K' => 'Л', 'L' => 'Д',
         ';' => 'Ж', '\'' => 'Э', 'Z' => '?', 'X' => 'ч', 'C' => 'С', 'V' => 'М',
-        'B' => 'И', 'N' => 'Т', 'M' => 'Ь', ',' => 'Б', '.' => 'Ю',
+        'B' => 'И', 'N' => 'Т', 'M' => 'Ь', ',' => 'Б', '.' => 'Ю', '~' => 'Ё', '`' => 'ё',
     );
     $result = isset($str[$arrow]) ? $str[$arrow] : array_merge($str[0], $str[1]);
 

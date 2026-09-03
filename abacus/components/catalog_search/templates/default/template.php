@@ -1,7 +1,7 @@
 <?php
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
-global $H1, $TITLE,$userCountry;
+global $H1, $TITLE, $userCountry;
 global $arSettings;
 $arSettings[ 'path_to_product_images' ] = '/images/';
 /*!!!!!!!!!!!!!!!!!!!!!!*/
@@ -9,53 +9,56 @@ require "inc_functions.php";
 /*!!!!!!!!!!!!!!!!!!!!!!*/
 $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
 $userIp = $_SERVER[ 'REMOTE_ADDR' ];
-$userCountry = getCountryFromDaData($userIp, $apiKey);
+$userCountry = getCountryFromDaData( $userIp, $apiKey );
 
 $extra_h1 = '';
-function myStrToLower($string) {
-    $upperCaseRu = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
-    $lowerCaseRu = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'];
 
-    return str_replace($upperCaseRu, $lowerCaseRu, $string);
+function myStrToLower( $string ) {
+  $upperCaseRu = [ 'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я' ];
+  $lowerCaseRu = [ 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я' ];
+
+  return str_replace( $upperCaseRu, $lowerCaseRu, $string );
 }
-if (isset($_GET['search']) && $_GET['search'] != "") {
-  $search_text = strip_tags($_GET['search']);
-  $search_text = $search_text_orig = myStrToLower($search_text);
-  
+
+if ( isset( $_GET[ 'search' ] ) && $_GET[ 'search' ] !== '' && !ctype_space( $_GET[ 'search' ] ) ) {
+  $search_text = trim(strip_tags( $_GET[ 'search' ] ));
+  $search_text = $search_text_orig = myStrToLower( $search_text );
+
   $vesa_filter = false;
-  if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
-      $vesa_filter = true;
+  if ( isset( $_GET[ 'vesa' ] ) && $_GET[ 'vesa' ] == 'yes' ) {
+    $vesa_filter = true;
   }
 
-  $arr_sinonims = CoreApplication::get_rows_from_table('search_sinonim', '', '');
-  $sinonims = $arr_sinonims[0]['sinonim'];
+  $arr_sinonims = CoreApplication::get_rows_from_table( 'search_sinonim', '', '' );
+  $sinonims = $arr_sinonims[ 0 ][ 'sinonim' ];
 
-  $lines = explode(",\n", trim($sinonims));
+  $lines = explode( ",\n", trim( $sinonims ) );
 
   $synonyms = [];
 
-  foreach ($lines as $line) {
-    $parts = array_map('trim', explode("=", $line));
-    
-    $key = strtolower($parts[0]);
-    $value = strtolower($parts[1]);
+  foreach ( $lines as $line ) {
+    $parts = array_map( 'trim', explode( "=", $line ) );
 
-    $synonyms[$key] = $value;
+    $key = strtolower( $parts[ 0 ] );
+    $value = strtolower( $parts[ 1 ] );
+
+    $synonyms[ $key ] = $value;
   }
 
-  function replaceSynonyms($query, $synonyms) {
-    $query_lower = strtolower($query);
+  function replaceSynonyms( $query, $synonyms ) {
 
-    if (isset($synonyms[$query_lower])) {
-      return $synonyms[$query_lower];
+	  $query_lower = strtolower( $query );
+
+    if ( isset( $synonyms[ $query_lower ] ) ) {
+      return $synonyms[ $query_lower ];
     }
 
     return $query;
   }
 
-  $search_text = replaceSynonyms($search_text, $synonyms);
+  $search_text = replaceSynonyms( $search_text, $synonyms );
 
-  $arr_search_words = search_string_to_array($search_text);
+  $arr_search_words = search_string_to_array( $search_text );
   $extra_h1 = ": «" . $search_text_orig . "»";
 }
 if ( isset( $arr_search_words )and is_array( $arr_search_words )and count( $arr_search_words ) > 0 ) {
@@ -67,106 +70,106 @@ if ( isset( $arr_search_words )and is_array( $arr_search_words )and count( $arr_
     $arr_catalog_types[ $type[ 'code' ] . $type[ 'series' ] ] = $type[ "template_h1" ];
   }
 
-  $arrResult = search_by_words($arr_search_words, $vesa_filter);
-  
-  if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
-      global $mysqli_db;
-      
-      $sql = "SELECT * FROM products_all 
+  $arrResult = search_by_words( $arr_search_words, $vesa_filter );
+
+  if ( isset( $_GET[ 'vesa' ] ) && $_GET[ 'vesa' ] == 'yes' ) {
+    global $mysqli_db;
+
+    $sql = "SELECT * FROM products_all 
               WHERE parent='' 
               AND status!='0' 
               AND (vesa75 IS NOT NULL AND vesa75 != '' 
                    OR vesa100 IS NOT NULL AND vesa100 != '')";
-      
-      $result = mysqli_query($mysqli_db, $sql);
-      
-      if ($result) {
-          $existing_indices = array();
-          foreach ($arrResult as $item) {
-              $existing_indices[] = $item['index'];
-          }
-          
-          while ($row = mysqli_fetch_assoc($result)) {
-              if (!in_array($row['index'], $existing_indices)) {
-                  if (empty($row['model_fullname'])) {
-                      global $arr_catalog_types;
-                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
-                          $name = $arr_catalog_types[$row['type'] . $row['series']];
-                          $name = str_replace("#brand#", $row['brand'], $name);
-                          $name = str_replace("#model#", $row['model'], $name);
-                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
-                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
-                          } else {
-                              $name = str_replace("#diagonal#", '', $name);
-                          }
-                          $row['model_fullname'] = $name;
-                      }
-                  }
-                  $row['freqs'] = 500;
-                  $arrResult[] = $row;
-              }
-          }
-          mysqli_free_result($result);
+
+    $result = mysqli_query( $mysqli_db, $sql );
+
+    if ( $result ) {
+      $existing_indices = array();
+      foreach ( $arrResult as $item ) {
+        $existing_indices[] = $item[ 'index' ];
       }
+
+      while ( $row = mysqli_fetch_assoc( $result ) ) {
+        if ( !in_array( $row[ 'index' ], $existing_indices ) ) {
+          if ( empty( $row[ 'model_fullname' ] ) ) {
+            global $arr_catalog_types;
+            if ( isset( $arr_catalog_types[ $row[ 'type' ] . $row[ 'series' ] ] ) ) {
+              $name = $arr_catalog_types[ $row[ 'type' ] . $row[ 'series' ] ];
+              $name = str_replace( "#brand#", $row[ 'brand' ], $name );
+              $name = str_replace( "#model#", $row[ 'model' ], $name );
+              if ( isset( $row[ 'diagonal' ] ) && $row[ 'diagonal' ] > 0 && $row[ 'diagonal_hide' ] != '1' ) {
+                $name = str_replace( "#diagonal#", $row[ 'diagonal' ], $name );
+              } else {
+                $name = str_replace( "#diagonal#", '', $name );
+              }
+              $row[ 'model_fullname' ] = $name;
+            }
+          }
+          $row[ 'freqs' ] = 500;
+          $arrResult[] = $row;
+        }
+      }
+      mysqli_free_result( $result );
+    }
   }
-  
-  if (isset($_GET['interfaces']) && $_GET['interfaces'] == 'wifi') {
-      global $mysqli_db;
-      
-      $sql = "SELECT * FROM products_all 
+
+  if ( isset( $_GET[ 'interfaces' ] ) && $_GET[ 'interfaces' ] == 'wifi' ) {
+    global $mysqli_db;
+
+    $sql = "SELECT * FROM products_all 
               WHERE parent='' 
               AND status!='0' 
               AND (wifi IS NOT NULL AND wifi != '' AND wifi != '0')";
-      
-      $result = mysqli_query($mysqli_db, $sql);
-      
-      if ($result) {
-          $existing_indices = array();
-          foreach ($arrResult as $item) {
-              $existing_indices[] = $item['index'];
-          }
-          
-          while ($row = mysqli_fetch_assoc($result)) {
-              if (!in_array($row['index'], $existing_indices)) {
-                  if (empty($row['model_fullname'])) {
-                      global $arr_catalog_types;
-                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
-                          $name = $arr_catalog_types[$row['type'] . $row['series']];
-                          $name = str_replace("#brand#", $row['brand'], $name);
-                          $name = str_replace("#model#", $row['model'], $name);
-                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
-                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
-                          } else {
-                              $name = str_replace("#diagonal#", '', $name);
-                          }
-                          $row['model_fullname'] = $name;
-                      }
-                  }
-                  $row['freqs'] = 500;
-                  $arrResult[] = $row;
+
+    $result = mysqli_query( $mysqli_db, $sql );
+
+    if ( $result ) {
+      $existing_indices = array();
+      foreach ( $arrResult as $item ) {
+        $existing_indices[] = $item[ 'index' ];
+      }
+
+      while ( $row = mysqli_fetch_assoc( $result ) ) {
+        if ( !in_array( $row[ 'index' ], $existing_indices ) ) {
+          if ( empty( $row[ 'model_fullname' ] ) ) {
+            global $arr_catalog_types;
+            if ( isset( $arr_catalog_types[ $row[ 'type' ] . $row[ 'series' ] ] ) ) {
+              $name = $arr_catalog_types[ $row[ 'type' ] . $row[ 'series' ] ];
+              $name = str_replace( "#brand#", $row[ 'brand' ], $name );
+              $name = str_replace( "#model#", $row[ 'model' ], $name );
+              if ( isset( $row[ 'diagonal' ] ) && $row[ 'diagonal' ] > 0 && $row[ 'diagonal_hide' ] != '1' ) {
+                $name = str_replace( "#diagonal#", $row[ 'diagonal' ], $name );
+              } else {
+                $name = str_replace( "#diagonal#", '', $name );
               }
+              $row[ 'model_fullname' ] = $name;
+            }
           }
-          mysqli_free_result($result);
+          $row[ 'freqs' ] = 500;
+          $arrResult[] = $row;
+        }
       }
+      mysqli_free_result( $result );
+    }
   }
-  
-  usort($arrResult, function($a, $b) {
-      $a_discontinued = isset($a['discontinued']) && $a['discontinued'] == 1 ? 1 : 0;
-      $b_discontinued = isset($b['discontinued']) && $b['discontinued'] == 1 ? 1 : 0;
-      
-      if ($a_discontinued != $b_discontinued) {
-          return $a_discontinued - $b_discontinued;
-      }
-      
-      $a_freqs = isset($a['freqs']) ? $a['freqs'] : 0;
-      $b_freqs = isset($b['freqs']) ? $b['freqs'] : 0;
-      
-      if ($a_freqs == $b_freqs) {
-          return 0;
-      }
-      return ($a_freqs > $b_freqs) ? -1 : 1;
-  });
-  
+
+  usort( $arrResult, function ( $a, $b ) {
+    $a_discontinued = isset( $a[ 'discontinued' ] ) && $a[ 'discontinued' ] == 1 ? 1 : 0;
+    $b_discontinued = isset( $b[ 'discontinued' ] ) && $b[ 'discontinued' ] == 1 ? 1 : 0;
+
+    if ( $a_discontinued != $b_discontinued ) {
+      return $a_discontinued - $b_discontinued;
+    }
+
+    $a_freqs = isset( $a[ 'freqs' ] ) ? $a[ 'freqs' ] : 0;
+    $b_freqs = isset( $b[ 'freqs' ] ) ? $b[ 'freqs' ] : 0;
+
+    if ( $a_freqs == $b_freqs ) {
+      return 0;
+    }
+    return ( $a_freqs > $b_freqs ) ? -1 : 1;
+  } );
+
   $arrResult_texts = search_by_words_texts( $arr_search_words );
   if ( count( $arrResult ) == 0 ) {
     $extra_h1 = '';
@@ -213,9 +216,11 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
               <?
               global $product;
               foreach ( $arrResult as $product ) {
-if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {	
-	continue;
-} else {                include "inc_template_result_item.php";}
+                if ( ( $product[ 'model' ] == 'Codesys----------------------------' )and( $userCountry != 'RU' ) ) {
+                  continue;
+                } else {
+                  include "inc_template_result_item.php";
+                }
               }
               ?>
             </table>
@@ -225,7 +230,7 @@ if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {
               ?>
           </div>
           <div class="column is-half">
-            <h2>Текстовые материалы</h2>
+            <h2>Новости и статьи по запросу</h2>
             <?
             }
             global $article;
@@ -236,28 +241,51 @@ if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {
                 <td colspan="2"></td>
               </tr>
               <?
-foreach ($arrResult_texts as &$item) {
-    if (!isset($item['date'])) continue;
-    $date = trim($item['date']);
-    if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
-        unset($item['date']);
-        continue;
-    }
-    if (strlen($date) <= 10) {
-        $date .= ' 00:00:00';
-    }
-    $item['date'] = $date;
-}
-unset($item);
+              //foreach ($arrResult_texts as &$item) {
+              //    if (!isset($item['date'])) continue;
+              //    $date = trim($item['date']);
+              //    if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
+              //        unset($item['date']);
+              //        continue;
+              //    }
+              //    if (strlen($date) <= 10) {
+              //        $date .= ' 00:00:00';
+              //    }
+              //    $item['date'] = $date;
+              //}
+              //unset($item);
+              //
+              //usort($arrResult_texts, function ($a, $b) {
+              //    if (!isset($a['date']) || !isset($b['date'])) return 0;
+              //    return strcmp($b['date'], $a['date']);
+              //});
 
-usort($arrResult_texts, function ($a, $b) {
-    if (!isset($a['date']) || !isset($b['date'])) return 0;
-    return strcmp($b['date'], $a['date']);
+$arrResult_texts_relative = array_slice($arrResult_texts, 0, 5);
+$arrResult_texts_fresh = array_slice($arrResult_texts, 5);
+
+usort($arrResult_texts_fresh, function($a, $b) {
+    // Проверяем наличие и непустоту поля 'date'
+    $hasDateA = isset($a['date']) && $a['date'] !== '';
+    $hasDateB = isset($b['date']) && $b['date'] !== '';
+
+    if ($hasDateA && $hasDateB) {
+        return strtotime($b['date']) - strtotime($a['date']);
+    }
+    if (!$hasDateA && !$hasDateB) {
+        return 0;
+    }
+    // Элементы с датой всегда идут перед элементами без даты
+    return $hasDateA ? -1 : 1;
 });
 				
-				
-				foreach ( $arrResult_texts as $article ) {
+              foreach ( $arrResult_texts_relative as $article ) {
                 include "inc_template_result_item_article.php";
+              }
+				if ( count( $arrResult_texts_fresh ) > 0 ) { ?>
+				<tr style="border: none;"><td colspan="2"><h2>Также может быть полезно</h2></td></tr>
+              <? foreach ( $arrResult_texts_fresh as $article ) {
+                include "inc_template_result_item_article.php";
+				}
               }
               ?>
             </table>

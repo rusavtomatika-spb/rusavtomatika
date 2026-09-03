@@ -1,9 +1,31 @@
 <?php
 
 require_once __DIR__ . '/inc_data_preparator.php';
-//require_once __DIR__ . '/inc_functions_linked_products.php';
+// require_once __DIR__ . '/inc_functions_linked_products.php';
 //error_reporting( E_ALL ^ E_NOTICE );
-
+if (isset($arResult['product']['model']) && $arResult['product']['model'] == 'Codesys') {
+    global $userCountry;
+    
+    if (!isset($userCountry) || !$userCountry) {
+        $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+        $userIp = $_SERVER['REMOTE_ADDR'];
+        $userCountry = getCountryFromDaData($userIp, $apiKey);
+    }
+    
+    if ($userCountry != 'RU') {
+        header("HTTP/1.0 404 Not Found");
+        
+        global $TITLE;
+        global $H1;
+        $TITLE = $H1 = "Ошибка 404";
+        
+        CoreApplication::add_style("/abacus/components/catalog/templates/default/style.css");
+        CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
+        
+        include "inc_404.php";
+        exit();
+    }
+}
 global $TITLE;
 global $DESCRIPTION;
 global $DESCRIPTION_micro;

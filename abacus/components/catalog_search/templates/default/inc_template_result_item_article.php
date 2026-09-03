@@ -19,8 +19,8 @@ if (isset($article['name']) and $article['name'] != '') {
         } ?>
         <td class="td_short_description" <? if ($no_first_td) { echo ' colspan="2" ';} ?>>
             <a target="_blank" href="<?= $article["link"]; ?>" data-word="<?=$article['word']?>" data-word="<?=$article['table']?>">
-                <span class="name"><? echo $article["name"]; ?><?if(isset($article["date"]) and $article["date"] !=''){echo " <span class='date'>".date( 'd-m-Y', strtotime($article["date"]))."</span>";}?></span>
-                <span class="stext"><?= $article["stext"] ?></span>
+                <span class="name"><? echo highlight_search($article["name"], $article['word']); ?><?if(isset($article["date"]) and $article["date"] !=''){echo " <span class='date'>".date( 'd-m-Y', strtotime($article["date"]))."</span>";}?><? //if(isset($article["freqs"]) and $article["freqs"] !=''){echo " <span class='date'>".$article["freqs"]."&nbsp;</span>";}?></span>
+                <span class="stext"><?= highlight_search($article["stext"], $article['word']) ?></span>
             </a>
         </td>
     </tr>

@@ -239,22 +239,22 @@ if (!(isset($product["link_detail2"]) and $product["link_detail2"] != "")) {
 
                         case 'USD':
 
+                                    if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
                             echo '<span><span class="value">' . $product['retail_price'] . '</span>';
 
                             echo '&nbsp;<span class="usd">$</span></span>';
+									} else {
+                            echo '<span><span class="value">' . (int) round($product['retail_price']*$usd_currency) . '</span>';
+
+                            echo '&nbsp;<span class="usd">&#8381;</span></span>';
+									}
+							
+							
 
                             if ($usd_currency) {
-
-                                ?>
-
-                                <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?>
-
-                                    &#8381;
-
-                                </div>
-
-                                <?
-
+                                    if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
+                                ?><div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?>&#8381;</div><?
+									}
                             }
 
                             break;
