@@ -11,67 +11,46 @@ RewriteRule ^termit/termit-antenna-pin-sma/?$ /accessories/termit-antenna-pin-sm
 RewriteRule industrial_computers_full_ip65/(.*)$ /industrial_computers_full_ip69k/$1 [R=301,L]
 RewriteRule /ifc/IFC-BOX-NS53_copy/ / [R=301,L]
 
-
 # Редирект на HTTPS и www
 RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-
-
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-
 
 # МАРШРУТИЗАЦИЯ (должна быть ПЕРВОЙ после редиректов)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^news/(.*)$ news/index.php?q=$1 [L,QSA]
 
-
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^articles/(.*)$ articles/index.php?q=$1 [L,QSA]
-
-
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ifc/(.*)$ ifc/index.php?q=$1 [L,QSA]
 
-
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^catalog/(.*)$ catalog/index.php?q=$1 [QSA]
-
-
 
 # Основные типы файлов
 AddType application/octet-stream .step .dwg .wmf .package
 AddType application/vnd.android.package-archive .package
 AddType application/vnd.android.package-archive .apk
 
-
-
 # Страницы ошибок
 ErrorDocument 404 /404.php
 ErrorDocument 503 /503.php
-
-
 
 # Блокировка плохих IP
 deny from 47.239.158.0/24
 deny from 47.239.157.0/24
 deny from 47.239.156.0/24
 
-
-
 # Защита .htaccess
 RewriteRule ^.htaccess$ - [F]
-
-
 
 # Редиректы картинок и файлов
 RewriteRule ^images/(.*)$ https://www.rusavtomatika.com/upload_files/images/$1 [L,R=301]
@@ -80,8 +59,6 @@ RewriteRule ^soft/(.*)$ https://www.rusavtomatika.com/upload_files/soft/$1 [L,R=
 RewriteRule ^install/(.*)$ https://www.rusavtomatika.com/upload_files/install/$1 [L,R=301]
 RewriteRule ^drawing/(.*)$ https://www.rusavtomatika.com/upload_files/drawing/$1 [L,R=301]
 RewriteRule ^drivers/(.*)$ https://www.rusavtomatika.com/upload_files/drivers/$1 [L,R=301]
-
-
 
 # Редиректы для старых URL
 RewriteRule ^plc/$ /plc/yottacontrol/ [L,R=301]
@@ -95,27 +72,19 @@ RewriteRule ^box-pc/(.*)$ /promyshlennye-kompyutery-box-pc/$1 [L,R=301]
 RewriteRule ^vpn-routers$ /ewon/ [L,R=301]
 RewriteRule ^main.php$ / [L,R=301]
 
-
-
 # Редиректы для Cincoze
 RewriteRule cincoze/DA-1000-R10.php(.*)$ /cincoze/DA-1000.php$1 [L,R=301]
 RewriteRule cincoze/DC-1100-R10.php(.*)$ /cincoze/DC-1100.php$1 [L,R=301]
 RewriteRule cincoze/DS-1000-R11.php(.*)$ /cincoze/DS-1000.php$1 [L,R=301]
 RewriteRule cincoze/DS-1002-EE-R11.php(.*)$ /cincoze/DS-1002.php$1 [L,R=301]
 
-
-
 # Дополнительные редиректы
 RewriteRule ^M02\.html/?$ /accessories/M02/ [L,R=301]
 RewriteRule ^new_products(.+)$ new-products$1 [R=301,L]
 
-
-
 # Удаляем UTM-метки
 RewriteCond %{QUERY_STRING} "utm" [NC]
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSD]
-
-
 
 # PHP обработчик
 <IfModule mime_module>
