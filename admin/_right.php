@@ -2,14 +2,44 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (!preg_match("/www\.rusavtomatika\.com/i", $_SERVER['SERVER_NAME'])) {
-    if (empty($_COOKIE['m'])) {
-        header('HTTP/1.0 404 Not Found');
-        exit;
+if (!getenv('APP_ENV') && !getenv('API_KEY')) {
+    $configFile = __DIR__ . '/../config.php';
+    if (file_exists($configFile)) {
+        require_once $configFile;
     }
 }
 
-require_once 'admin_auth.php';
+$appEnv = getenv('APP_ENV');
+$allowedHosts = getenv('ALLOWED_HOSTS');
+$allowLocal = getenv('ALLOW_LOCAL');
+
+$isAllowed = false;
+
+if (preg_match("/www\.rusavtomatika\.com/i", $_SERVER['SERVER_NAME'])) {
+    $isAllowed = true;
+}
+
+if ($allowLocal === 'true' || $allowLocal === '1') {
+    $localHosts = ['localhost', '127.0.0.1', '127.0.1.29', '127.0.1.31', 'rusavtomatika.local', 'moisait'];
+    
+    foreach ($localHosts as $localHost) {
+        if (stripos($_SERVER['SERVER_NAME'], $localHost) !== false) {
+            $isAllowed = true;
+            break;
+        }
+    }
+}
+
+if (!$isAllowed && !empty($_COOKIE['m'])) {
+    $isAllowed = true;
+}
+
+if (!$isAllowed) {
+    header('HTTP/1.0 404 Not Found');
+    exit;
+}
+
+require_once __DIR__ . '/admin_auth.php';
 
 $current_admin = check_admin_auth();
 
@@ -19,7 +49,7 @@ if (!$current_admin) {
     <html>
     <head>
         <title>Вход в админ-панель</title>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <style>
             body {
                 font-family: Arial, sans-serif;

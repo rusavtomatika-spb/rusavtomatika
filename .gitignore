@@ -1,6 +1,7 @@
 *.ftpquota
 *.htaccess
 *.htaccess-
+.env
 *error_log
 *.DS_Store
 *.config
@@ -54,7 +55,6 @@
 /uploads
 /upload_files
 /orders/excel
-/admin/config/admin_dbcon.php
 sc/phpmorphy/cache/
 sc/phpmorphy/data/
 sc/phpmorphy/temp/

@@ -1,7 +1,36 @@
 <?php
 require_once 'admin_auth.php';
 
-if ($_SERVER['SERVER_NAME'] != 'www.rusavto.moisait.net') {
+if (!getenv('APP_ENV') && !getenv('API_KEY')) {
+    $configFile = __DIR__ . '/../config.php';
+    if (file_exists($configFile)) {
+        require_once $configFile;
+    }
+}
+
+$allowLocal = getenv('ALLOW_LOCAL') ?: 'false';
+$isAllowed = false;
+
+$allowedDomains = ['www.rusavto.moisait.net', 'rusavtomatika.local'];
+
+if (in_array($_SERVER['SERVER_NAME'], $allowedDomains)) {
+    $isAllowed = true;
+}
+
+if ($allowLocal === 'true' || $allowLocal === '1') {
+    if (preg_match('/\.local$/i', $_SERVER['SERVER_NAME'])) {
+        $isAllowed = true;
+    }
+    if (preg_match('/moisait/i', $_SERVER['SERVER_NAME'])) {
+        $isAllowed = true;
+    }
+}
+
+if (!$isAllowed && !empty($_COOKIE['m'])) {
+    $isAllowed = true;
+}
+
+if (!$isAllowed) {
     header('HTTP/1.0 403 Forbidden');
     echo 'Доступ запрещен. Неизвестный маршрут.';
     exit;
