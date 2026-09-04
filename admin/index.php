@@ -218,7 +218,7 @@ if ( isset( $_GET[ "sort_by" ] ) ) {
   $result = $db_work->get_list_catalog_elements();
 }
 
-if (!empty($result) && $_SERVER['SERVER_NAME'] == 'www.rusavto.moisait.net') {
+if (!empty($result) && $isAllowed) {
   echo "<div class='table-container'>";
   echo "<div class='sticky-header'>";
   echo "<table class='fixed-table'>";
