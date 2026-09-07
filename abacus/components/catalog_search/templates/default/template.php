@@ -1,15 +1,24 @@
 <?php
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
-global $H1, $TITLE,$userCountry;
+global $H1, $TITLE, $userCountry;
 global $arSettings;
 $arSettings[ 'path_to_product_images' ] = '/images/';
 /*!!!!!!!!!!!!!!!!!!!!!!*/
 require "inc_functions.php";
 /*!!!!!!!!!!!!!!!!!!!!!!*/
-$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
-$userIp = $_SERVER[ 'REMOTE_ADDR' ];
-$userCountry = getCountryFromDaData($userIp, $apiKey);
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/CountryDetector.php';
+
+$userCountry = CountryDetector::getCountry();
+
+if (!$userCountry) {
+    $userCountry = 'UNKNOWN';
+}
+
+$arrResult = array();
+$arrResult_texts = array();
+$arr_search_words = array();
 
 $extra_h1 = '';
 function myStrToLower($string) {
@@ -184,8 +193,6 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
     <?
     CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
     ?>
-    <?php
-    ?>
     <h1>
       <?= $H1 ?>
     </h1>
@@ -213,9 +220,11 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
               <?
               global $product;
               foreach ( $arrResult as $product ) {
-if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {	
-	continue;
-} else {                include "inc_template_result_item.php";}
+                if ($product['model'] == 'Codesys' && $userCountry != 'RU') {
+                  continue;
+                }
+                  
+                include "inc_template_result_item.php";
               }
               ?>
             </table>
@@ -229,7 +238,7 @@ if (($product['model'] == 'Codesys') and ($userCountry != 'RU') ) {
             <?
             }
             global $article;
-            if ( count( $count_texts ) > 0 ) {
+            if ( $count_texts > 0 ) {
               ?>
             <table class="series_products">
               <tr class="separator">

@@ -2,43 +2,13 @@
 
 global $usd_currency, $arSettings;
 
-// Получаем страну пользователя (как в catalog_detail)
-$userCountry = 'RU'; // По умолчанию Россия
-
-if (function_exists('getCountryFromDaData')) {
-    $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
-    $userIp = $_SERVER['REMOTE_ADDR'];
-    $userCountry = getCountryFromDaData($userIp, $apiKey);
-    
-    if (!$userCountry) {
-        $userCountry = 'UNKNOWN';
-    }
-} else {
-    // Пробуем подключить файл с функцией
-    $funcFile = $_SERVER['DOCUMENT_ROOT'] . '/abacus/components/catalog_search/templates/default/inc_functions.php';
-    if (file_exists($funcFile)) {
-        require_once $funcFile;
-        
-        if (function_exists('getCountryFromDaData')) {
-            $apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
-            $userIp = $_SERVER['REMOTE_ADDR'];
-            $userCountry = getCountryFromDaData($userIp, $apiKey);
-            
-            if (!$userCountry) {
-                $userCountry = 'UNKNOWN';
-            }
-        }
-    }
-}
-
 ?>
 
 <table class="series_products">
     <?
     if (isset($series["products"]) and is_array($series["products"])) {
         foreach ($series["products"] as $product) {
-            // Пропускаем Codesys для не-российских пользователей
-            if ($product["model"] == 'Codesys' && $userCountry != 'RU') {
+            if (isset($product["model"]) && strtolower($product["model"]) == 'codesys') {
                 continue;
             }
             
