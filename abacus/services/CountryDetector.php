@@ -118,6 +118,17 @@ class CountryDetector {
         self::log("Stats HTTP {$httpCode}: {$response}");
         return false;
     }
+
+    public static function getKeyStats($keyName) {
+        if (!isset(self::$apiKeys[$keyName])) {
+            return false;
+        }
+        
+        $token = self::$apiKeys[$keyName]['token'];
+        $secret = self::$apiKeys[$keyName]['secret'];
+        
+        return self::getDailyStats($token, $secret);
+    }
     
     private static function requestDaData($ipAddress, $apiKey) {
         $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);

@@ -58,12 +58,54 @@ if ($username) {
         .user-link { color: #2196F3; text-decoration: none; font-weight: bold; }
         .user-link:hover { text-decoration: underline; }
         .username-cell { font-weight: bold; color: #666; }
+        
+        .nav-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-link {
+            padding: 10px 20px;
+            background: white;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .nav-link:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        .nav-link.active {
+            background: #4CAF50;
+            color: white;
+        }
+        .nav-link.keys {
+            background: #ffc107;
+            color: #333;
+        }
+        .nav-link.keys:hover {
+            background: #e0a800;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📊 Статистика изменений товаров</h1>
+        </div>
+        
+        <div class="nav-bar">
+            <a href="/stats/index.php?view=overview" class="nav-link <?= $view == 'overview' ? 'active' : '' ?>">📊 Обзор</a>
+            <a href="/stats/index.php?view=users" class="nav-link <?= $view == 'users' ? 'active' : '' ?>">👥 Пользователи</a>
+            <a href="/stats/check_ip.php" class="nav-link">🔍 Проверка IP</a>
+            <a href="/stats/test_country_detector.php" class="nav-link keys">🔑 Ключи DaData</a>
         </div>
         
         <div class="tabs">

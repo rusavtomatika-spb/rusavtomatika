@@ -1,47 +1,44 @@
 <?php
-$accessPassword = 'K4c3gzOr9Z';
-
-$isAuthorized = false;
-
-if (isset($_GET['pass']) && $_GET['pass'] === $accessPassword) {
-    $isAuthorized = true;
-    setcookie('country_test_access', '1', time() + 3600, '/');
-} elseif (isset($_COOKIE['country_test_access']) && $_COOKIE['country_test_access'] === '1') {
-    $isAuthorized = true;
-}
-
-if (!$isAuthorized) {
-    ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Доступ запрещен</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <div style="text-align:center;margin-top:100px;">
-            <form method="GET">
-                <input type="password" name="pass" placeholder="Пароль" required autofocus>
-                <button type="submit">Войти</button>
-            </form>
-        </div>
-    </body>
-    </html>
-    <?php
+$server_name = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
+if ($server_name != 'www.rusavto.moisait.net' && $server_name != 'rusavto.moisait.net' && $server_name != 'rusavtomatika.local') {
+    header('HTTP/1.0 403 Forbidden');
     exit;
 }
 
+session_start();
+
+require_once __DIR__ . '/auth.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/CountryDetector.php';
 
 if (isset($_GET['force_key'])) {
     CountryDetector::setForcedKey($_GET['force_key']);
-    header('Location: test_country_detector.php');
+    header('Location: /stats/test_country_detector.php');
     exit;
 }
 
 if (isset($_GET['clear_force'])) {
     CountryDetector::clearForcedKey();
-    header('Location: test_country_detector.php');
+    header('Location: /stats/test_country_detector.php');
+    exit;
+}
+
+if (isset($_GET['refresh_all'])) {
+    unset($_SESSION['stats_cache']);
+    unset($_SESSION['stats_cache_time']);
+    header('Location: /stats/test_country_detector.php');
+    exit;
+}
+
+if (isset($_GET['refresh_key'])) {
+    $refreshKeyName = $_GET['refresh_key'];
+    $keyStats = CountryDetector::getKeyStats($refreshKeyName);
+    
+    if ($keyStats !== false && isset($_SESSION['stats_cache'])) {
+        $_SESSION['stats_cache'][$refreshKeyName] = $keyStats;
+        $_SESSION['stats_cache_time'][$refreshKeyName] = time();
+    }
+    
+    header('Location: /stats/test_country_detector.php');
     exit;
 }
 
@@ -51,11 +48,21 @@ if (file_exists($forcedKeyFile)) {
     $forcedKey = trim(file_get_contents($forcedKeyFile));
 }
 
+if (!isset($_SESSION['stats_cache'])) {
+    $_SESSION['stats_cache'] = CountryDetector::getAllStats();
+    
+    foreach ($_SESSION['stats_cache'] as $keyName => $stat) {
+        $_SESSION['stats_cache_time'][$keyName] = time();
+    }
+}
+
+$stats = $_SESSION['stats_cache'];
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Проверка API ключей DaData</title>
+    <title>Управление ключами DaData</title>
     <meta charset="utf-8">
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
@@ -75,24 +82,19 @@ if (file_exists($forcedKeyFile)) {
         .error { background: #f8d7da; color: #721c24; }
         .warning { background: #fff3cd; color: #856404; }
         .active { background: #cce5ff; }
-        .logout {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #dc3545;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
         .button {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
+            margin-right: 3px;
+            font-size: 13px;
         }
         .button-use { background: #007bff; color: white; }
         .button-clear { background: #6c757d; color: white; }
+        .button-refresh-all { background: #28a745; color: white; }
+        .button-refresh-key { background: #17a2b8; color: white; }
         .badge {
             display: inline-block;
             padding: 3px 8px;
@@ -100,11 +102,34 @@ if (file_exists($forcedKeyFile)) {
             font-size: 12px;
             font-weight: bold;
         }
+        .last-updated {
+            font-size: 11px;
+            color: #999;
+            display: block;
+        }
+        .nav-links {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .nav-links a {
+            margin-right: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Проверка API ключей DaData</h1>
+        <div class="nav-links">
+            <a href="/stats/">← Назад к статистике</a>
+        </div>
+        
+        <h1>🔑 Управление ключами DaData</h1>
         
         <?php if ($forcedKey): ?>
             <p>
@@ -113,18 +138,20 @@ if (file_exists($forcedKeyFile)) {
             </p>
         <?php endif; ?>
         
-        <h2>Статистика по ключам:</h2>
+        <h2>
+            Статистика по ключам:
+            <a href="?refresh_all=1" class="button button-refresh-all">🔄 Обновить всё</a>
+        </h2>
+        
         <table>
             <tr>
                 <th>Ключ</th>
                 <th>Использовано сегодня</th>
                 <th>Осталось</th>
                 <th>Статус</th>
-                <th>Действие</th>
+                <th>Действия</th>
             </tr>
             <?php
-            $stats = CountryDetector::getAllStats();
-            
             foreach ($stats as $keyName => $stat) {
                 $used = isset($stat['services']['suggestions']) ? $stat['services']['suggestions'] : 'N/A';
                 $remaining = isset($stat['remaining']['suggestions']) ? $stat['remaining']['suggestions'] : 'N/A';
@@ -144,44 +171,25 @@ if (file_exists($forcedKeyFile)) {
                 }
                 
                 $rowClass = ($forcedKey === $keyName) ? 'active' : '';
+                $lastUpdate = isset($_SESSION['stats_cache_time'][$keyName]) 
+                    ? date('H:i:s', $_SESSION['stats_cache_time'][$keyName]) 
+                    : 'никогда';
                 
                 echo "<tr class='{$rowClass}'>";
-                echo "<td>{$keyName}" . ($forcedKey === $keyName ? ' <span class="badge" style="background:#007bff;color:white;">активен</span>' : '') . "</td>";
+                echo "<td>{$keyName}" . ($forcedKey === $keyName ? ' <span class="badge" style="background:#007bff;color:white;">активен</span>' : '') . "";
+                echo "<span class='last-updated'>обновлено: {$lastUpdate}</span></td>";
                 echo "<td>{$used}</td>";
                 echo "<td>{$remaining}</td>";
                 echo "<td class='{$statusClass}'>{$statusText}</td>";
-                echo "<td><a class='button button-use' href='?force_key={$keyName}'>Использовать</a></td>";
+                echo "<td>";
+                echo "<a class='button button-use' href='?force_key={$keyName}'>Использовать</a> ";
+                echo "<a class='button button-refresh-key' href='?refresh_key={$keyName}'>Обновить</a>";
+                echo "</td>";
                 echo "</tr>";
             }
             ?>
         </table>
         
-        <h2>Проверка определения страны (IP: 77.88.8.8):</h2>
-        <?php
-        foreach (array_keys($stats) as $keyName) {
-            $result = CountryDetector::checkKey($keyName, '77.88.8.8');
-            
-            echo "<div class='key-result " . ($result['country_result']['success'] ? 'success' : 'error') . "'>";
-            echo "<strong>{$keyName}:</strong> ";
-            if ($result['country_result']['success']) {
-                echo "✅ Страна: {$result['country_result']['country']}";
-            } else {
-                echo "❌ {$result['country_result']['message']}";
-            }
-            echo "</div>";
-        }
-        ?>
-        
-        <h2>Определение страны для текущего пользователя:</h2>
-        <?php
-        $userCountry = CountryDetector::getCountry();
-        echo "<div class='key-result " . ($userCountry ? 'success' : 'error') . "'>";
-        echo "IP: " . $_SERVER['REMOTE_ADDR'] . "<br>";
-        echo "Страна: " . ($userCountry ? $userCountry : 'не определена');
-        echo "</div>";
-        ?>
-        
-        <a href="?logout=1" class="logout">Выйти</a>
     </div>
 </body>
 </html>
