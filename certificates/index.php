@@ -1,12 +1,12 @@
 <?php
 
-
-
 global $CONTENT_ON_WIDE_SCREEN;
 
 $CONTENT_ON_WIDE_SCREEN = false;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/CountryDetector.php';
 
 global $TITLE, $DESCRIPTION, $KEYWORDS, $extra_openGraph;
 
@@ -19,94 +19,16 @@ $DESCRIPTION = 'Официальный дистрибьютор Weintek, IFC, Sa
 $KEYWORDS = 'Weintek, IFC, Samkoon, операторские панели, автоматизация производства, прямые поставки, vpn-роутеры, со склада, в наличии, тех.поддержка, Русавтоматика, официальный дистрибьютор';
 
 $extra_openGraph = array(
-
     "openGraph_image" => "https://www.rusavtomatika.com/upload_files/images/openGraph_images/about.png",
-
     "openGraph_title" => "О компании Русавтоматика",
-
     "openGraph_siteName" => "Русавтоматика"
-
 );
 
+$userCountry = CountryDetector::getCountry();
 
-
-function getCountryFromDaData($ipAddress, $apiKey) {
-
-    $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);
-
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-
-        'Accept: application/json',
-
-        'Authorization: Token ' . $apiKey
-
-    ]);
-
-
-
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-
-
-
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-
-
-
-    $response = curl_exec($ch);
-
-
-
-    if (curl_error($ch)) {
-
-        curl_close($ch);
-
-        return false;
-
-    }
-
-
-
-    curl_close($ch);
-
-
-
-    if (!$response) {
-
-        return false;
-
-    }
-
-
-
-    $result = json_decode($response, true);
-
-
-
-    if (isset($result['location']['data']['country_iso_code'])) {
-
-        return $result['location']['data']['country_iso_code'];
-
-    }
-
-
-
-    return false;
-
+if (!$userCountry) {
+    $userCountry = 'UNKNOWN';
 }
-
-
-
-$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
-
-$userIp = $_SERVER[ 'REMOTE_ADDR' ];
-
-$userCountry = getCountryFromDaData($userIp, $apiKey);
 
 ?>
 
@@ -125,12 +47,6 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
             компьютеры), <strong>Haiwell</strong>, <strong>Yottacontroll</strong>
 
             (vpn-роутеры). Всего на нашем сайте представлено более 100 наименований продукции.</p>
-
-
-
-
-
-
 
         <div class="block_sertificates" >
 
@@ -216,26 +132,6 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 
                 </div>
 
-                <!--div class="column  is-12-mobile">
-
-                    <a data-fancybox="gallery"
-
-                       class="block_sertificates__link"
-
-                       href="/images/controllers/yottacontrol/ce/A5.png"
-
-                    >
-
-                        <div class="block_sertificates__item" title="Нажмите для увеличения"
-
-                             style="background-image: url('/images/controllers/yottacontrol/ce/A5.png')">
-
-                        </div>
-
-                        <div class="block_sertificates__item_title">Yottacontrol</div>
-
-                    </a></div-->
-
                 <div class="column  is-12-mobile has-text-centered">
 
                     <a data-fancybox="gallery"
@@ -260,41 +156,13 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 
                 </div>
 
-                <!--div class="column  is-12-mobile">
-
-                    <a data-fancybox="gallery"
-
-                       class="block_sertificates__link"
-
-                       href="/images/haiwell/Haiwell-Certificate.jpg"
-
-                    >
-
-                        <div class="block_sertificates__item" title="Нажмите для увеличения"
-
-                             style="background-image: url('/images/haiwell/Haiwell-Certificate-s.jpg')">
-
-                        </div>
-
-                        <div class="block_sertificates__item_title">Haiwell</div>
-
-                    </a>
-
-                </div-->
-
             </div>
 
         </div>
 
     </article>
 
-
-
-
-
     <style>
-
-
 
         .block_sertificates a.block_sertificates__link {
 
@@ -320,8 +188,6 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 
         }
 
-
-
         .block_sertificates .block_sertificates__item {
 
             max-width: 100%;
@@ -335,8 +201,6 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
             display: block;
 
         }
-
-
 
         .block_sertificates a.block_sertificates__link .block_sertificates__item_title {
 
@@ -352,18 +216,8 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
 
         }
 
-
-
     </style>
 
-
-
-
-
 <?php
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/templates/rusavtomatika_bulma/include/inc_backup_call.php";
-
-//include $_SERVER["DOCUMENT_ROOT"]."/sc/lib_new_includes/functions_messages.php";
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
