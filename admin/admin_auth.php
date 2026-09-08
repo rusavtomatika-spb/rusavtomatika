@@ -3,7 +3,7 @@
 ob_start();
 
 if (!getenv('DB_HOST')) {
-    $configFile = __DIR__ . '/../config.php';
+    $configFile = __DIR__ . '/config/admin_dbcon.php';
     if (file_exists($configFile)) {
         require_once $configFile;
     }

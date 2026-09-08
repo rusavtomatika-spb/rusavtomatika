@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (!getenv('APP_ENV') && !getenv('API_KEY')) {
-    $configFile = __DIR__ . '/../config.php';
+if (!getenv('APP_ENV')) {
+    $configFile = __DIR__ . '/config/admin_dbcon.php';
     if (file_exists($configFile)) {
         require_once $configFile;
     }

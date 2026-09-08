@@ -1,12 +1,30 @@
 <?
-if (!defined('admin')) exit;
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Exception/ExceptionInterface.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Exception/InvalidCallbackException.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Exception/InvalidFileException.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Exception/InvalidPathException.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Exception/ValidationException.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Parser.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Loader.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Validator.php';
+require_once __DIR__ . '/../vendor/vlucas/phpdotenv/src/Dotenv.php';
+use Dotenv\Dotenv;
+
+$dotenv = new Dotenv(__DIR__ . '/..');
+$dotenv->load();
+
+$dbHost = getenv('DB_HOST');
+$dbUser = getenv('DB_USER');
+$dbPass = getenv('DB_PASS');
+$dbName = getenv('DB_NAME');
+
 global $db;
 global $mysqli_db;
 
 ini_set("error_reporting", E_ALL & ~E_DEPRECATED); 
 
 if (!getenv('DB_HOST')) {
-    $configFile = $_SERVER['DOCUMENT_ROOT'] . '/config.php';
+    $configFile = __DIR__ . '/config/admin_dbcon.php';
     if (file_exists($configFile)) {
         require_once $configFile;
     }
