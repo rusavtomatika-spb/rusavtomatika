@@ -1,7 +1,6 @@
 *.ftpquota
 *.htaccess
 *.htaccess-
-.env
 *error_log
 *.DS_Store
 *.config
@@ -77,5 +76,6 @@ sc/QRCode/*.jpeg
 .vscode/sftp.json
 sc/dbcon.php
 admin/edit_element2.php
+admin/config/admin_dbcon.php
 .osp
 sc/dbcon.php
