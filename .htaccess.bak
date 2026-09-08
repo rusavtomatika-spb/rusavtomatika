@@ -1,5 +1,23 @@
 Options -Indexes
 
+# Защита .env файла от прямого доступа
+<Files .env>
+  Order allow,deny
+  Deny from all
+</Files>
+
+# Защита .env файла от прямого доступа
+<FilesMatch "^\.env">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Защита всех скрытых файлов (начинающихся с точки)
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
 RewriteEngine on
 
 # Редирект с /termit/ на /accessories/

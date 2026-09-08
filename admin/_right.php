@@ -2,32 +2,20 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-if (!getenv('APP_ENV')) {
-    $configFile = __DIR__ . '/config/admin_dbcon.php';
-    if (file_exists($configFile)) {
-        require_once $configFile;
-    }
-}
-
-$appEnv = getenv('APP_ENV');
-$allowedHosts = getenv('ALLOWED_HOSTS');
-$allowLocal = getenv('ALLOW_LOCAL');
-
 $isAllowed = false;
 
-if (preg_match("/www\.rusavtomatika\.com/i", $_SERVER['SERVER_NAME'])) {
+$allowedDomains = array('www.rusavto.moisait.net', 'rusavtomatika.local');
+
+if (in_array($_SERVER['SERVER_NAME'], $allowedDomains)) {
     $isAllowed = true;
 }
 
-if ($allowLocal === 'true' || $allowLocal === '1') {
-    $localHosts = ['localhost', '127.0.0.1', '127.0.1.29', '127.0.1.31', 'rusavtomatika.local', 'moisait'];
-    
-    foreach ($localHosts as $localHost) {
-        if (stripos($_SERVER['SERVER_NAME'], $localHost) !== false) {
-            $isAllowed = true;
-            break;
-        }
-    }
+if (preg_match('/\.local$/i', $_SERVER['SERVER_NAME'])) {
+    $isAllowed = true;
+}
+
+if (preg_match('/moisait/i', $_SERVER['SERVER_NAME'])) {
+    $isAllowed = true;
 }
 
 if (!$isAllowed && !empty($_COOKIE['m'])) {
@@ -39,7 +27,7 @@ if (!$isAllowed) {
     exit;
 }
 
-require_once __DIR__ . '/admin_auth.php';
+require_once 'admin_auth.php';
 
 $current_admin = check_admin_auth();
 
@@ -49,7 +37,7 @@ if (!$current_admin) {
     <html>
     <head>
         <title>Вход в админ-панель</title>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <style>
             body {
                 font-family: Arial, sans-serif;

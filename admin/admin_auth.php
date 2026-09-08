@@ -1,20 +1,11 @@
 <?php
-
 ob_start();
 
-if (!getenv('DB_HOST')) {
-    $configFile = __DIR__ . '/config/admin_dbcon.php';
-    if (file_exists($configFile)) {
-        require_once $configFile;
-    }
-}
-
 function get_admin_db() {
-    $db_host = getenv('ADMIN_DB_HOST') ?: getenv('DB_HOST') ?: '127.0.1.29';
-    $db_user = getenv('ADMIN_DB_USER') ?: getenv('DB_USER') ?: 'root';
-    $db_pass = getenv('ADMIN_DB_PASS') !== false ? getenv('ADMIN_DB_PASS') : '';
-    $db_name = getenv('ADMIN_DB_NAME') ?: 'admins';
-    
+    $db_host = '127.0.1.29';
+    $db_user = 'root';
+    $db_pass = '';
+    $db_name = 'admins';
     $connection = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
     if (!$connection) {
@@ -23,6 +14,7 @@ function get_admin_db() {
     }
 
     mysqli_set_charset($connection, "utf8");
+
     return $connection;
 }
 
@@ -36,6 +28,7 @@ function check_admin_auth() {
     }
 
     $mysqli_db = get_admin_db();
+
     if (!$mysqli_db) {
         return false;
     }
@@ -51,17 +44,18 @@ function check_admin_auth() {
     }
 
     mysqli_close($mysqli_db);
+
     return false;
 }
 
 function login_admin($username, $password) {
     $mysqli_db = get_admin_db();
+
     if (!$mysqli_db) {
         return false;
     }
 
     $username = mysqli_real_escape_string($mysqli_db, $username);
-
     $query = "SELECT * FROM admins WHERE username = '$username' LIMIT 1";
     $result = mysqli_query($mysqli_db, $query);
 
@@ -75,16 +69,19 @@ function login_admin($username, $password) {
             mysqli_query($mysqli_db, $update);
             setcookie("admin_token", $token, time() + 60 * 60 * 24 * 365, "/", $_SERVER['SERVER_NAME'], 0);
             mysqli_close($mysqli_db);
+
             return $admin;
         }
     }
 
     mysqli_close($mysqli_db);
+
     return false;
 }
 
 function logout_admin() {
     $mysqli_db = get_admin_db();
+
     if ($mysqli_db && isset($_COOKIE['admin_token'])) {
         $token = mysqli_real_escape_string($mysqli_db, $_COOKIE['admin_token']);
         mysqli_query($mysqli_db, "UPDATE admins SET auth_token = NULL WHERE auth_token = '$token'");
@@ -95,7 +92,9 @@ function logout_admin() {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_POST['password'])) {
+
     $admin = login_admin($_POST['login'], $_POST['password']);
+
     if ($admin) {
         header('Location: /admin/');
         exit;
@@ -103,4 +102,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login']) && isset($_P
         $error = "Неверный логин или пароль";
     }
 }
+
 ?>
