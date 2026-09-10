@@ -1,10 +1,9 @@
 <?php
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
-CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
+CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js?10092026" );
 
 if (isset($_GET['type']) && $_GET['type'] === 'products') {
     CoreApplication::add_style( "/abacus/components/catalog_section/templates/default/style.css" );
-    CoreApplication::add_script( "/abacus/components/catalog_section/templates/default/script.js" );
 }
 
 global $H1, $TITLE, $userCountry;
