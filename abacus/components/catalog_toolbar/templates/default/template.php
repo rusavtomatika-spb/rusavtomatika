@@ -35,7 +35,6 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
                                 ?>>
                                 <button></button>
                             </form>
-                            
                             <div class="catalog_toolbar__search_type">
                                 <span class="search_type_label">поиск:</span>
                                 <div class="search_type_dropdown">
@@ -47,15 +46,12 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
                                     </button>
                                     <div class="search_type_menu">
                                         <a href="#" class="search_type_option <?= $currentType == 'all' ? 'active' : '' ?>" data-type="all">
-                                            <span class="search_type_check"><?= $currentType == 'all' ? '✓' : '' ?></span>
                                             везде
                                         </a>
                                         <a href="#" class="search_type_option <?= $currentType == 'products' ? 'active' : '' ?>" data-type="products">
-                                            <span class="search_type_check"><?= $currentType == 'products' ? '✓' : '' ?></span>
                                             по товарам
                                         </a>
                                         <a href="#" class="search_type_option <?= $currentType == 'articles' ? 'active' : '' ?>" data-type="articles">
-                                            <span class="search_type_check"><?= $currentType == 'articles' ? '✓' : '' ?></span>
                                             по статьям
                                         </a>
                                     </div>
@@ -150,108 +146,3 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
     <div class="catalog_toolbar__dialog_wrapper"><div class="catalog_toolbar__dialog"><div class="title"></div><div class="question"></div><div class="buttons"><div class="button button_confirm"></div><div class="button button_cancel"></div></div></div></div>
     </div>
 </div>
-
-<style>
-.catalog_toolbar__search_block {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.catalog_toolbar__search_type {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    white-space: nowrap;
-}
-.search_type_label {
-    font-size: 13px;
-    color: #666;
-}
-
-/* Выпадающий селект */
-.search_type_dropdown {
-    position: relative;
-    display: inline-block;
-}
-.search_type_toggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 10px;
-    background: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-width: 120px;
-    justify-content: space-between;
-}
-.search_type_toggle:hover {
-    background: #e8e8e8;
-}
-.search_type_dropdown.open .search_type_toggle {
-    background: #00ad61;
-    border-color: #00ad61;
-    color: white;
-}
-.search_type_arrow {
-    transition: transform 0.2s;
-}
-.search_type_dropdown.open .search_type_arrow {
-    transform: rotate(180deg);
-}
-.search_type_menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin-top: 5px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-5px);
-    transition: all 0.2s;
-}
-.search_type_menu.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-.search_type_option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    font-size: 14px;
-    color: #333;
-    text-decoration: none !important;
-    transition: background 0.15s;
-    cursor: pointer;
-}
-.search_type_option:first-child {
-    border-radius: 4px 4px 0 0;
-}
-.search_type_option:last-child {
-    border-radius: 0 0 4px 4px;
-}
-.search_type_option:hover {
-    background: #f5f5f5;
-}
-.search_type_option.active {
-    background: #e8f5e9;
-    color: #00ad61;
-    font-weight: 600;
-}
-.search_type_check {
-    display: inline-block;
-    width: 14px;
-    color: #00ad61;
-    font-weight: bold;
-}
-</style>
