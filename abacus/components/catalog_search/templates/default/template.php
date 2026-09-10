@@ -20,6 +20,8 @@ $arrResult = array();
 $arrResult_texts = array();
 $arr_search_words = array();
 
+$search_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
 $extra_h1 = '';
 function myStrToLower($string) {
     $upperCaseRu = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
@@ -76,108 +78,113 @@ if ( isset( $arr_search_words )and is_array( $arr_search_words )and count( $arr_
     $arr_catalog_types[ $type[ 'code' ] . $type[ 'series' ] ] = $type[ "template_h1" ];
   }
 
-  $arrResult = search_by_words($arr_search_words, $vesa_filter);
-  
-  if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
-      global $mysqli_db;
+  if ($search_type == 'all' || $search_type == 'products') {
+      $arrResult = search_by_words($arr_search_words, $vesa_filter);
       
-      $sql = "SELECT * FROM products_all 
-              WHERE parent='' 
-              AND status!='0' 
-              AND (vesa75 IS NOT NULL AND vesa75 != '' 
-                   OR vesa100 IS NOT NULL AND vesa100 != '')";
+      if (isset($_GET['vesa']) && $_GET['vesa'] == 'yes') {
+          global $mysqli_db;
+          
+          $sql = "SELECT * FROM products_all 
+                  WHERE parent='' 
+                  AND status!='0' 
+                  AND (vesa75 IS NOT NULL AND vesa75 != '' 
+                       OR vesa100 IS NOT NULL AND vesa100 != '')";
+          
+          $result = mysqli_query($mysqli_db, $sql);
+          
+          if ($result) {
+              $existing_indices = array();
+              foreach ($arrResult as $item) {
+                  $existing_indices[] = $item['index'];
+              }
+              
+              while ($row = mysqli_fetch_assoc($result)) {
+                  if (!in_array($row['index'], $existing_indices)) {
+                      if (empty($row['model_fullname'])) {
+                          global $arr_catalog_types;
+                          if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
+                              $name = $arr_catalog_types[$row['type'] . $row['series']];
+                              $name = str_replace("#brand#", $row['brand'], $name);
+                              $name = str_replace("#model#", $row['model'], $name);
+                              if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
+                                  $name = str_replace("#diagonal#", $row['diagonal'], $name);
+                              } else {
+                                  $name = str_replace("#diagonal#", '', $name);
+                              }
+                              $row['model_fullname'] = $name;
+                          }
+                      }
+                      $row['freqs'] = 500;
+                      $arrResult[] = $row;
+                  }
+              }
+              mysqli_free_result($result);
+          }
+      }
       
-      $result = mysqli_query($mysqli_db, $sql);
+      if (isset($_GET['interfaces']) && $_GET['interfaces'] == 'wifi') {
+          global $mysqli_db;
+          
+          $sql = "SELECT * FROM products_all 
+                  WHERE parent='' 
+                  AND status!='0' 
+                  AND (wifi IS NOT NULL AND wifi != '' AND wifi != '0')";
+          
+          $result = mysqli_query($mysqli_db, $sql);
+          
+          if ($result) {
+              $existing_indices = array();
+              foreach ($arrResult as $item) {
+                  $existing_indices[] = $item['index'];
+              }
+              
+              while ($row = mysqli_fetch_assoc($result)) {
+                  if (!in_array($row['index'], $existing_indices)) {
+                      if (empty($row['model_fullname'])) {
+                          global $arr_catalog_types;
+                          if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
+                              $name = $arr_catalog_types[$row['type'] . $row['series']];
+                              $name = str_replace("#brand#", $row['brand'], $name);
+                              $name = str_replace("#model#", $row['model'], $name);
+                              if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
+                                  $name = str_replace("#diagonal#", $row['diagonal'], $name);
+                              } else {
+                                  $name = str_replace("#diagonal#", '', $name);
+                              }
+                              $row['model_fullname'] = $name;
+                          }
+                      }
+                      $row['freqs'] = 500;
+                      $arrResult[] = $row;
+                  }
+              }
+              mysqli_free_result($result);
+          }
+      }
       
-      if ($result) {
-          $existing_indices = array();
-          foreach ($arrResult as $item) {
-              $existing_indices[] = $item['index'];
+      usort($arrResult, function($a, $b) {
+          $a_discontinued = isset($a['discontinued']) && $a['discontinued'] == 1 ? 1 : 0;
+          $b_discontinued = isset($b['discontinued']) && $b['discontinued'] == 1 ? 1 : 0;
+          
+          if ($a_discontinued != $b_discontinued) {
+              return $a_discontinued - $b_discontinued;
           }
           
-          while ($row = mysqli_fetch_assoc($result)) {
-              if (!in_array($row['index'], $existing_indices)) {
-                  if (empty($row['model_fullname'])) {
-                      global $arr_catalog_types;
-                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
-                          $name = $arr_catalog_types[$row['type'] . $row['series']];
-                          $name = str_replace("#brand#", $row['brand'], $name);
-                          $name = str_replace("#model#", $row['model'], $name);
-                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
-                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
-                          } else {
-                              $name = str_replace("#diagonal#", '', $name);
-                          }
-                          $row['model_fullname'] = $name;
-                      }
-                  }
-                  $row['freqs'] = 500;
-                  $arrResult[] = $row;
-              }
-          }
-          mysqli_free_result($result);
-      }
-  }
-  
-  if (isset($_GET['interfaces']) && $_GET['interfaces'] == 'wifi') {
-      global $mysqli_db;
-      
-      $sql = "SELECT * FROM products_all 
-              WHERE parent='' 
-              AND status!='0' 
-              AND (wifi IS NOT NULL AND wifi != '' AND wifi != '0')";
-      
-      $result = mysqli_query($mysqli_db, $sql);
-      
-      if ($result) {
-          $existing_indices = array();
-          foreach ($arrResult as $item) {
-              $existing_indices[] = $item['index'];
-          }
+          $a_freqs = isset($a['freqs']) ? $a['freqs'] : 0;
+          $b_freqs = isset($b['freqs']) ? $b['freqs'] : 0;
           
-          while ($row = mysqli_fetch_assoc($result)) {
-              if (!in_array($row['index'], $existing_indices)) {
-                  if (empty($row['model_fullname'])) {
-                      global $arr_catalog_types;
-                      if (isset($arr_catalog_types[$row['type'] . $row['series']])) {
-                          $name = $arr_catalog_types[$row['type'] . $row['series']];
-                          $name = str_replace("#brand#", $row['brand'], $name);
-                          $name = str_replace("#model#", $row['model'], $name);
-                          if (isset($row['diagonal']) && $row['diagonal'] > 0 && $row['diagonal_hide'] != '1') {
-                              $name = str_replace("#diagonal#", $row['diagonal'], $name);
-                          } else {
-                              $name = str_replace("#diagonal#", '', $name);
-                          }
-                          $row['model_fullname'] = $name;
-                      }
-                  }
-                  $row['freqs'] = 500;
-                  $arrResult[] = $row;
-              }
+          if ($a_freqs == $b_freqs) {
+              return 0;
           }
-          mysqli_free_result($result);
-      }
+          return ($a_freqs > $b_freqs) ? -1 : 1;
+      });
   }
   
-  usort($arrResult, function($a, $b) {
-      $a_discontinued = isset($a['discontinued']) && $a['discontinued'] == 1 ? 1 : 0;
-      $b_discontinued = isset($b['discontinued']) && $b['discontinued'] == 1 ? 1 : 0;
-      
-      if ($a_discontinued != $b_discontinued) {
-          return $a_discontinued - $b_discontinued;
-      }
-      
-      $a_freqs = isset($a['freqs']) ? $a['freqs'] : 0;
-      $b_freqs = isset($b['freqs']) ? $b['freqs'] : 0;
-      
-      if ($a_freqs == $b_freqs) {
-          return 0;
-      }
-      return ($a_freqs > $b_freqs) ? -1 : 1;
-  });
+  if ($search_type == 'all' || $search_type == 'articles') {
+      $arrResult_texts = search_by_words_texts( $arr_search_words );
+  }
   
-  $arrResult_texts = search_by_words_texts( $arr_search_words );
-  if ( count( $arrResult ) == 0 ) {
+  if ( count( $arrResult ) == 0 && count( $arrResult_texts ) == 0 ) {
     $extra_h1 = '';
   }
 }
@@ -196,15 +203,27 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
     <h1>
       <?= $H1 ?>
     </h1>
+    
+    <div class="search_type_selector">
+        <label>Поиск:</label>
+        <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
+            <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
+            <option value="products" <?= $search_type == 'products' ? 'selected' : '' ?>>По товарам</option>
+            <option value="articles" <?= $search_type == 'articles' ? 'selected' : '' ?>>По статьям</option>
+        </select>
+    </div>
+    
     <div class="view-mode-list">
       <div class="catalog_search__results">
         <?
         if ( ( isset( $arrResult )and is_array( $arrResult )and count( $arrResult ) > 0 )or( isset( $arrResult_texts )and is_array( $arrResult_texts )and count( $arrResult_texts ) > 0 ) ) {
           $count_products = count( $arrResult );
           $count_texts = count( $arrResult_texts );
-          if ( $count_products > 0 and $count_texts > 0 ) {
+          
+          if ( $search_type == 'all' && $count_products > 0 && $count_texts > 0 ) {
             $two_columns = true;
           } else $two_columns = false;
+          
           if ( $two_columns ) {
             ?>
         <div class="columns ">
@@ -296,3 +315,23 @@ usort($arrResult_texts, function ($a, $b) {
     </div>
   </div>
 </div>
+
+<style>
+.search_type_selector {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+.search_type_selector label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+.search_type_selector select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+</style>
