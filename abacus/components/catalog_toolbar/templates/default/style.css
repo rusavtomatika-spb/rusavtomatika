@@ -307,7 +307,6 @@
     color: #333;
     cursor: pointer;
     transition: all 0.2s;
-    min-width: 100px;
     justify-content: space-between;
     border: none;
     background: none;
@@ -341,6 +340,7 @@
     visibility: hidden;
     transform: translateY(-5px);
     transition: all 0.2s;
+    width: 120px;
 }
 .search_type_menu.open {
     opacity: 1;

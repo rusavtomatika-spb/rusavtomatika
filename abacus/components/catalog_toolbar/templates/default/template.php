@@ -36,7 +36,7 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
                                 <button></button>
                             </form>
                             <div class="catalog_toolbar__search_type">
-                                <span class="search_type_label">поиск:</span>
+                                <span class="search_type_label">искать:</span>
                                 <div class="search_type_dropdown">
                                     <button type="button" class="search_type_toggle">
                                         <span class="search_type_current"><?= htmlspecialchars($currentTypeLabel) ?></span>
