@@ -8,9 +8,9 @@ if (isset($article['name']) and $article['name'] != '') {
     ?>
     <tr class="tr_article_id<?= $article["id"]; ?> <?="freqs_".$article['freqs']?>">
         <? if (!$no_first_td) { ?>
-            <td class="td_preview_image">
+            <td class="td_preview_image_article" style="vertical-align: top;">
                 <a target="_blank" href="<?= $article["link"] ?>">
-                    <div class="preview_image">
+                    <div class="preview_image_article">
                         <img loading="lazy" src="<?= $article["img"] ?>"/>
                     </div>
                 </a>
