@@ -1,8 +1,11 @@
 <?php
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
-CoreApplication::add_style( "/abacus/components/catalog_section/templates/default/style.css" );
-CoreApplication::add_script( "/abacus/components/catalog_section/templates/default/script.js" );
+
+if (isset($_GET['type']) && $_GET['type'] === 'products') {
+    CoreApplication::add_style( "/abacus/components/catalog_section/templates/default/style.css" );
+    CoreApplication::add_script( "/abacus/components/catalog_section/templates/default/script.js" );
+}
 
 global $H1, $TITLE, $userCountry;
 global $arSettings;
@@ -24,6 +27,8 @@ $arrResult_texts = array();
 $arr_search_words = array();
 
 $search_type = isset($_GET['type']) ? $_GET['type'] : 'all';
+
+$use_grid_layout = ($search_type === 'products');
 
 $extra_h1 = '';
 function myStrToLower($string) {
@@ -198,18 +203,15 @@ if ( isset( $search_text )and $search_text != "" ) {
 }
 CoreApplication::add_breadcrumbs_chain( $H1 );
 ?>
+<?php if ($use_grid_layout): ?>
 <div id="vue_app_component_catalog_search">
   <div class="component_catalog_section">
     <div class="component_wrapper">
-      <?
-      CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
-      ?>
+      <? CoreApplication::include_component( array( "component" => "breadcrumbs" ) ); ?>
       
       <div class="columns is-gapless">
         <div class="column is-12-desktop column_content">
-          <h1 class="title">
-            <?= $H1 ?>
-          </h1>
+          <h1 class="title"><?= $H1 ?></h1>
           
           <div class="search_type_selector" style="margin: 10px 0 10px 30px;">
               <label>Поиск:</label>
@@ -251,7 +253,7 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
                               if ($product['model'] == 'Codesys' && $userCountry != 'RU') {
                                 continue;
                               }
-                              include "inc_template_result_item.php";
+                              include "inc_template_result_item_grid.php";
                             }
                             ?>
                           </div>
@@ -276,30 +278,29 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
                       <td colspan="2"></td>
                     </tr>
                     <?
-        foreach ($arrResult_texts as &$item) {
-            if (!isset($item['date'])) continue;
-            $date = trim($item['date']);
-            if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
-                unset($item['date']);
-                continue;
-            }
-            if (strlen($date) <= 10) {
-                $date .= ' 00:00:00';
-            }
-            $item['date'] = $date;
-        }
-        unset($item);
+                    foreach ($arrResult_texts as &$item) {
+                        if (!isset($item['date'])) continue;
+                        $date = trim($item['date']);
+                        if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
+                            unset($item['date']);
+                            continue;
+                        }
+                        if (strlen($date) <= 10) {
+                            $date .= ' 00:00:00';
+                        }
+                        $item['date'] = $date;
+                    }
+                    unset($item);
 
-        usort($arrResult_texts, function ($a, $b) {
-            if (!isset($a['date']) || !isset($b['date'])) return 0;
-            return strcmp($b['date'], $a['date']);
-        });
-                                    
-                                    
-                                    foreach ( $arrResult_texts as $article ) {
-                            include "inc_template_result_item_article.php";
-                          }
-                          ?>
+                    usort($arrResult_texts, function ($a, $b) {
+                        if (!isset($a['date']) || !isset($b['date'])) return 0;
+                        return strcmp($b['date'], $a['date']);
+                    });
+                    
+                    foreach ( $arrResult_texts as $article ) {
+                        include "inc_template_result_item_article.php";
+                    }
+                    ?>
                   </table>
                   <?
                 }
@@ -330,6 +331,121 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
     </div>
   </div>
 </div>
+
+<?php else: ?>
+<div class="component_catalog_search" id="vue_app_component_catalog_search">
+  <div class="component_wrapper">
+    <? CoreApplication::include_component( array( "component" => "breadcrumbs" ) ); ?>
+    <h1><?= $H1 ?></h1>
+    
+    <div class="search_type_selector">
+        <label>Поиск:</label>
+        <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
+            <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
+            <option value="products" <?= $search_type == 'products' ? 'selected' : '' ?>>По товарам</option>
+            <option value="articles" <?= $search_type == 'articles' ? 'selected' : '' ?>>По статьям</option>
+        </select>
+    </div>
+    
+    <div class="view-mode-list">
+      <div class="catalog_search__results">
+        <?
+        if ( ( isset( $arrResult )and is_array( $arrResult )and count( $arrResult ) > 0 )or( isset( $arrResult_texts )and is_array( $arrResult_texts )and count( $arrResult_texts ) > 0 ) ) {
+          $count_products = count( $arrResult );
+          $count_texts = count( $arrResult_texts );
+          
+          if ( $search_type == 'all' && $count_products > 0 && $count_texts > 0 ) {
+            $two_columns = true;
+          } else $two_columns = false;
+          
+          if ( $two_columns ) {
+            ?>
+            <div class="columns ">
+              <div class="column is-half">
+                <h2>Каталог</h2>
+            <?
+          }
+          if ( $count_products > 0 ) {
+            ?>
+            <table class="series_products  <? if ($two_columns) {
+                            echo "in_two_cols";
+                        } ?>">
+              <?
+              global $product;
+              foreach ( $arrResult as $product ) {
+                if ($product['model'] == 'Codesys' && $userCountry != 'RU') {
+                  continue;
+                }
+                include "inc_template_result_item_table.php";
+              }
+              ?>
+            </table>
+            <?
+          }
+          if ( $two_columns ) {
+            ?>
+              </div>
+              <div class="column is-half">
+                <h2>Текстовые материалы</h2>
+            <?
+          }
+          global $article;
+          if ( $count_texts > 0 ) {
+            ?>
+            <table class="series_products">
+              <tr class="separator">
+                <td colspan="2"></td>
+              </tr>
+              <?
+              foreach ($arrResult_texts as &$item) {
+                  if (!isset($item['date'])) continue;
+                  $date = trim($item['date']);
+                  if (!$date || !preg_match('/^\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?$/', $date)) {
+                      unset($item['date']);
+                      continue;
+                  }
+                  if (strlen($date) <= 10) {
+                      $date .= ' 00:00:00';
+                  }
+                  $item['date'] = $date;
+              }
+              unset($item);
+
+              usort($arrResult_texts, function ($a, $b) {
+                  if (!isset($a['date']) || !isset($b['date'])) return 0;
+                  return strcmp($b['date'], $a['date']);
+              });
+              
+              foreach ( $arrResult_texts as $article ) {
+                  include "inc_template_result_item_article.php";
+              }
+              ?>
+            </table>
+            <?
+          }
+          if ( $two_columns ) {
+            ?>
+              </div>
+            </div>
+            <?
+          }
+        } else {
+          if ( isset( $search_text )and $search_text != "" ) {
+            ?>
+            <h2>По запросу <?= ": &laquo;" . $search_text . "&raquo;" ?> ничего не найдено...</h2>
+            <?
+          } else {
+            ?>
+            <h2>Введите текст для поиска...</h2>
+            <?
+          }
+        }
+        ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
 
 <style>
 .search_type_selector {

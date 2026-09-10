@@ -140,7 +140,10 @@ $all_series = get_all_series();
         </div>
         
         <div class="series_products__panel_buttons">
-            <span class="brand"><?php echo $brand; ?></span>
+            Бренд:
+            <a target="_blank" href="/<?php echo strtolower($brand); ?>" class="tag mr-1">
+                <?php echo $brand; ?>
+            </a>
         </div>
     </div>
     
