@@ -210,9 +210,9 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
       
       <div class="columns is-gapless">
         <div class="column is-12-desktop column_content">
-          <h1 class="title"><?= $H1 ?></h1>
+          <h1 class="title" style="margin-left: 0;"><?= $H1 ?></h1>
           
-          <div class="search_type_selector" style="margin: 10px 0 10px 30px;">
+          <div class="search_type_selector" style="margin: 10px 0 10px 0;">
               <label>Поиск:</label>
               <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
                   <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
@@ -244,7 +244,7 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
                   <div class="component_catalog_section__panel_of_products_wrapper">
                     <div class="component_catalog_section__panel_of_products">
                       <div class="is_ajax view-mode-tile">
-                        <div class="IS_NOT_SERVER_RENDERING series_products_tiles fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop <?= $userCountry ?>">
+                        <div class="IS_NOT_SERVER_RENDERING series_products_tiles fixed-grid has-1-cols-mobile has-2-cols-tablet has-3-cols-desktop <?= $userCountry ?>" style="padding-left: 0;">
                           <div class="grid">
                             <?
                             global $product;
@@ -337,7 +337,7 @@ CoreApplication::add_breadcrumbs_chain( $H1 );
     <? CoreApplication::include_component( array( "component" => "breadcrumbs" ) ); ?>
     <h1><?= $H1 ?></h1>
     
-    <div class="search_type_selector">
+    <div class="search_type_selector" style="margin-left: 0;">
         <label>Поиск:</label>
         <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
             <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
