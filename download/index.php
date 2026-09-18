@@ -647,7 +647,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-5">
             <div class="block_padding">
-              <p><a class="download_zip" href="/soft/SKTOOL/setup_SKTOOL.rar">Дистрибутив 7.1.0.53</a> <span class="small_gray_text">[08-08-2024] [473&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/SKTOOL/setup_SKTOOL.rar">Дистрибутив 7.1.0.79</a> <span class="small_gray_text">[18-09-2026] [0.5&nbsp;Гб]</span></p>
               <p><a class="download_pdf" href="/soft/SKTOOL/SKTOOL_Help.pdf">Руководство (eng)</a> <span class="small_gray_text">[23-06-2017] [18.4&nbsp;Мб]</span></p>
             </div>
           </div>
