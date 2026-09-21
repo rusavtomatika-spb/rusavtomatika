@@ -220,10 +220,12 @@ $(window).on('scroll', function () {
     if (window_scroll_top > start_y) {
         if (!$('.catalog_toolbar').hasClass('fixed')) {
             $('.catalog_toolbar').addClass('fixed');
+            $('.catalog_toolbar__search_block').addClass('none');
         }
     } else {
         if ($('.catalog_toolbar').hasClass('fixed')) {
             $('.catalog_toolbar').removeClass('fixed');
+            $('.catalog_toolbar__search_block').removeClass('none');
         }
     }
 });
