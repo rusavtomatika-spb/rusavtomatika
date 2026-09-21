@@ -1,6 +1,9 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;600&display=swap') */
 
 .catalog_toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 500;
   opacity: 1 !important;
   position: relative;
@@ -11,7 +14,9 @@
   height: 40px;
   box-sizing: border-box;
   color: white;
-  transition: 0.2s; }
+  transition: 0.2s;
+  padding: 0 1rem;
+}
   .catalog_toolbar.fixed {
     top: 0;
     position: fixed;
@@ -49,8 +54,8 @@
       right: 0;
       left: 0;
       width: 100%;
-      padding-left: 1rem;
-      padding-right: 1rem; } }
+  } 
+}
 /*.catalog_toolbar:hover {
  *    opacity: 0.99 !important;
  *    background: $color-green;
@@ -63,7 +68,8 @@
   justify-content: space-between;
   gap: 15px;
   background: #eee;
-  border-radius: 4px; }
+  border-radius: 4px;
+}
 
 .catalog_toolbar__item_group {
   display: flex;
@@ -231,7 +237,12 @@
     cursor: pointer; }
 
 /*  RESPONSIVENESS */
+@media (max-width: 969px) {
+  .catalog_toolbar__wrapper { padding: 0.5rem 1rem; }
+  .catalog_toolbar { padding: 0; }
+}
 @media (max-width: 768px) {
+  .catalog_toolbar { padding: 0; }
   .catalog_toolbar.fixed .catalog_toolbar__form_search {
     display: none; }
 
@@ -241,7 +252,6 @@
   .catalog_toolbar__wrapper {
     flex-wrap: wrap;
     gap: 0;
-    padding: 0.5rem;
   }
 
   .search_type_menu { width: max-content !important; }
