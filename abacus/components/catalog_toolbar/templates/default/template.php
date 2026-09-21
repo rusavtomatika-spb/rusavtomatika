@@ -28,7 +28,7 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
                         <div class="catalog_toolbar__search_block" style="width: 100%;">
                             <form action="/catalog/search/" class="catalog_toolbar__form_search">
                                 <input type="hidden" name="type" value="<?= htmlspecialchars($currentType) ?>" class="search_type_input">
-                                <input type="text" placeholder="Поиск по каталогу (ищу даже по трём символам)" <?
+                                <input type="text" placeholder="Поиск (ищу даже по трём символам)" <?
                                 if(isset($_GET['search']) and $_GET['search'] != ''){
                                     echo 'value="'.strip_tags($_GET['search']).'"';
                                 }
@@ -59,6 +59,23 @@ $currentTypeLabel = isset($typeLabels[$currentType]) ? $typeLabels[$currentType]
                             </div>
                         </div>
                         <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const input = document.querySelector('.catalog_toolbar__form_search input[type=text]');
+                                if (!input) return;
+
+                                const PLACEHOLDER_DESKTOP = 'Поиск (ищу даже по трём символам)';
+                                const PLACEHOLDER_MOBILE = 'Поиск';
+
+                                const mql = window.matchMedia('(max-width: 969px)');
+
+                                function updatePlaceholder(e) {
+                                    input.placeholder = e.matches ? PLACEHOLDER_MOBILE : PLACEHOLDER_DESKTOP;
+                                }
+
+                                updatePlaceholder(mql);
+
+                                mql.addEventListener('change', updatePlaceholder);
+                            });
                             $(document).ready(function() {
                                 $('.search_type_toggle').on('click', function(e) {
                                     e.preventDefault();

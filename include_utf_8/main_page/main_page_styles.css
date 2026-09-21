@@ -439,11 +439,7 @@ a.bright_text:hover {
   }
 
   .glide__arrows {
-    top: auto;
-    bottom: 0;
-    right: auto;
-    left: 50%;
-    margin-left: -42px;
+    display: none;
   }
 
   .glide--carousel {
