@@ -129,7 +129,55 @@ $stats = $_SESSION['stats_cache'];
             <a href="/stats/">← Назад к статистике</a>
         </div>
         
-        <h1>🔑 Управление ключами DaData</h1>
+        <?php
+        $geoDebug = CountryDetector::getServerVariableDebug();
+
+        $geoClass = 'success';
+        if ($geoDebug['status'] === 'empty')      { $geoClass = 'warning'; }
+        if ($geoDebug['status'] === 'invalid')    { $geoClass = 'error'; }
+        if ($geoDebug['status'] === 'blacklisted'){ $geoClass = 'error'; }
+        ?>
+        <h2>🌍 GeoIP</h2>
+        <table>
+            <tr>
+                <th style="width: 220px;">Имя переменной</th>
+                <td><code><?= htmlspecialchars($geoDebug['var_name']) ?></code></td>
+            </tr>
+            <tr>
+                <th>Будет использована</th>
+                <td class="<?= $geoClass ?>">
+                    <?php if ($geoDebug['detected'] !== false): ?>
+                        <strong><?= htmlspecialchars($geoDebug['detected']) ?></strong>
+                        &nbsp;— <span><?= htmlspecialchars($geoDebug['statusText']) ?></span>
+                    <?php else: ?>
+                        <strong>нет</strong>
+                        &nbsp;— <span><?= htmlspecialchars($geoDebug['statusText']) ?></span>
+                        &nbsp;→ пойдёт запрос в DaData
+                    <?php endif; ?>
+                </td>
+            </tr>
+        </table>
+
+        <h2>🧪 Текущий запрос</h2>
+        <?php
+        $currentIp      = CountryDetector::getCurrentIpForDebug();
+        $currentCountry = CountryDetector::getCountry();
+        $sourceUsed     = ($geoDebug['detected'] !== false) ? 'переменная' : 'DaData';
+        ?>
+        <table>
+            <tr>
+                <th style="width: 220px;">IP клиента</th>
+                <td><code><?= htmlspecialchars((string)$currentIp) ?></code></td>
+            </tr>
+            <tr>
+                <th>Определённая страна</th>
+                <td><strong><?= htmlspecialchars((string)$currentCountry) ?></strong></td>
+            </tr>
+            <tr>
+                <th>Источник</th>
+                <td><?= htmlspecialchars($sourceUsed) ?></td>
+            </tr>
+        </table>
         
         <?php if ($forcedKey): ?>
             <p>

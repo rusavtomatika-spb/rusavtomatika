@@ -1,6 +1,8 @@
 <?php
 class CountryDetector {
-    
+    const SERVER_VAR_NAME = 'COUNTRY_CODE';
+    private static $serverVarBlacklist = array('XX', 'T1', 'A1', 'A2', 'O1', '--');
+
     private static $apiKeys = array(
         'key1' => array(
             'token' => 'b237155b14c4b6f777d91207ebc3775cb712ad6d',
@@ -15,11 +17,11 @@ class CountryDetector {
             'secret' => '464ab2b27a65b7072d62019b35f196e9e51f3205',
         ),
     );
-    
+
     private static $logFile = '/logs/country_detector.log';
     private static $forcedKeyFile = '/logs/forced_key.txt';
     private static $minRemaining = 1000;
-    
+
     public static function getCountry($ipAddress = null) {
         if ($ipAddress === null) {
             $ipAddress = self::getUserIp();
@@ -28,7 +30,88 @@ class CountryDetector {
         if (self::isLocalIp($ipAddress)) {
             return 'RU';
         }
-        
+
+        $serverCountry = self::getCountryFromServerVariable();
+        if ($serverCountry !== false) {
+            self::log("GeoIp: {$serverCountry} (IP: {$ipAddress})");
+            return $serverCountry;
+        }
+
+        self::log("Переменная GeoIp пустая (IP: {$ipAddress})");
+        return self::getCountryFromDaData($ipAddress);
+    }
+
+    private static function getCountryFromServerVariable() {
+        if (empty($_SERVER[self::SERVER_VAR_NAME])) {
+            return false;
+        }
+
+        $raw  = $_SERVER[self::SERVER_VAR_NAME];
+        $code = strtoupper(trim($raw));
+
+        if (!preg_match('/^[A-Z]{2}$/', $code)) {
+            self::log("Некорректная переменная GeoIp: [" . $raw . "]");
+            return false;
+        }
+
+        if (in_array($code, self::$serverVarBlacklist, true)) {
+            self::log("Некорректная переменная GeoIp: {$code}");
+            return false;
+        }
+
+        return $code;
+    }
+
+    public static function getServerVariableDebug() {
+        $varName = self::SERVER_VAR_NAME;
+
+        if (empty($_SERVER[$varName])) {
+            return array(
+                'var_name'   => $varName,
+                'raw'        => null,
+                'code'       => null,
+                'detected'   => false,
+                'status'     => 'empty',
+                'statusText' => 'переменная пустая или не задана',
+            );
+        }
+
+        $raw  = $_SERVER[$varName];
+        $code = strtoupper(trim($raw));
+
+        if (!preg_match('/^[A-Z]{2}$/', $code)) {
+            return array(
+                'var_name'   => $varName,
+                'raw'        => $raw,
+                'code'       => $code,
+                'detected'   => false,
+                'status'     => 'invalid',
+                'statusText' => 'невалидный формат (ожидается 2 латинские буквы)',
+            );
+        }
+
+        if (in_array($code, self::$serverVarBlacklist, true)) {
+            return array(
+                'var_name'   => $varName,
+                'raw'        => $raw,
+                'code'       => $code,
+                'detected'   => false,
+                'status'     => 'blacklisted',
+                'statusText' => 'в чёрном списке (' . implode(', ', self::$serverVarBlacklist) . ')',
+            );
+        }
+
+        return array(
+            'var_name'   => $varName,
+            'raw'        => $raw,
+            'code'       => $code,
+            'detected'   => $code,
+            'status'     => 'ok',
+            'statusText' => 'используется как основной источник',
+        );
+    }
+
+    private static function getCountryFromDaData($ipAddress) {
         $forcedKey = self::getForcedKey();
         if ($forcedKey !== false && isset(self::$apiKeys[$forcedKey])) {
             $token = self::$apiKeys[$forcedKey]['token'];
@@ -59,7 +142,7 @@ class CountryDetector {
         
         return false;
     }
-    
+
     private static function getAvailableKey() {
         foreach (self::$apiKeys as $keyName => $keyData) {
             $stats = self::getDailyStats($keyData['token'], $keyData['secret']);
@@ -271,6 +354,10 @@ class CountryDetector {
             'stats' => $stats,
             'country_result' => $countryResult,
         );
+    }
+
+    public static function getCurrentIpForDebug() {
+        return self::getUserIp();
     }
 }
 

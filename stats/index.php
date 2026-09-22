@@ -104,8 +104,7 @@ if ($username) {
         <div class="nav-bar">
             <a href="/stats/index.php?view=overview" class="nav-link <?= $view == 'overview' ? 'active' : '' ?>">📊 Обзор</a>
             <a href="/stats/index.php?view=users" class="nav-link <?= $view == 'users' ? 'active' : '' ?>">👥 Пользователи</a>
-            <a href="/stats/check_ip.php" class="nav-link">🔍 Проверка IP</a>
-            <a href="/stats/test_country_detector.php" class="nav-link keys">🔑 Ключи DaData</a>
+            <a href="/stats/test_country_detector.php" class="nav-link keys">🌍 GeoIP</a>
         </div>
         
         <div class="tabs">
