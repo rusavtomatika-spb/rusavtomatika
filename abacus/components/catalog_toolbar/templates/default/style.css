@@ -11,11 +11,10 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 40px;
   box-sizing: border-box;
   color: white;
   transition: 0.2s;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
 }
   .catalog_toolbar.fixed {
     top: 0;
