@@ -4429,6 +4429,7 @@ fieldset[disabled] .select select:hover {
   .field-label {
     margin-bottom: 0.5rem;
   }
+  .title { text-align: center; }
 }
 
 @media screen and (min-width: 769px), print {

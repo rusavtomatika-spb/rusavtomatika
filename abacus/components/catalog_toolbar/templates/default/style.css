@@ -20,7 +20,10 @@
     top: 0;
     position: fixed;
     background: #eee;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
   .catalog_toolbar .button_open_menu {
     display: flex;
     align-items: center;

@@ -173,6 +173,7 @@ CoreApplication::add_script("/include_utf_8/main_page/js/cloud.js");
         .double-swiper-block {
             display: flex;
             flex-direction: column;
+            gap: 0;
         }
 
         .double-swiper-block::before {

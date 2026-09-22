@@ -226,6 +226,7 @@ ul.glide__slides li {
     border-top-right-radius: 0;
     height: 12vw;
   }
+  .bright_text .post-text { display: none; }
 }
 
 @media (max-width: 769px) {
