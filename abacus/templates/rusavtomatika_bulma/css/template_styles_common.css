@@ -52,7 +52,6 @@ a.bright_text {
 }
 a.bright_text:hover {
   color: #00ad61;
-  border-bottom: dotted 1px #00ad61;
 }
 
 .clearfix:after {
