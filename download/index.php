@@ -357,6 +357,21 @@ file_put_contents($ebpro_files_block, $ebpro_files );
         <a id="easybuilder8000"></a>
         <div class="columns  is-multiline">
           <div class="column is-12 background-gray">
+            <div class="block_padding"> <span class="page_downloads_title3"><a href="#easybuilderx">EasyBuilder X</a></span> &nbsp;&nbsp;&nbsp; серии MT6000i, MT8000i </div>
+          </div>
+          <div class="column is-7">
+            <div class="block_padding">
+              <p> EasyBuilder X - ПО нового поколения с объектно-ориентированным дизайном, переменными вместо прямых адресов ПЛК и обновлённым рабочим пространством.</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p><a class="download_zip" href="/soft/EBProX/EBX-1.01.329.zip">Дистрибутив V1.01.329</a> <span class="small_gray_text">[16-09-2026] [285&nbsp;Мб]</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="columns  is-multiline">
+          <div class="column is-12 background-gray">
             <div class="block_padding"> <span class="page_downloads_title3"><a href="#easybuilder8000">EasyBuilder 8000</a></span> &nbsp;&nbsp;&nbsp; серии MT6000i, MT8000i </div>
           </div>
           <div class="column is-7">
