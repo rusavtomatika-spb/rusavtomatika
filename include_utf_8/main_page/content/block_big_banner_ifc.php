@@ -156,7 +156,7 @@ function showSlides(n) {
     }
 	.item, .slider {
         display: block !important;
-		height: 360px;
+		height: 355px;
 		width: 1340px;
 	}
 }

@@ -83,10 +83,10 @@ section.cloud_tags {
   height: 34px;
   margin: 0 auto;
   transform: scale(0.9);
+  transition: .5s;
 }
 #glide_brands_gallery_tray a.brand_slide img:hover {
   transform: scale(1);
-  transition: 0.1s;
 }
 
 .cert_gallery {
