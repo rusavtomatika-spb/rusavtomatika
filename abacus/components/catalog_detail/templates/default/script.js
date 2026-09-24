@@ -366,7 +366,7 @@ $(window).on('scroll', function () {
       $('.sticky_block_wrap_inn').addClass('container-xxl');
       setTimeout(function () {
         $('.sticky_block').animate({
-          top: 30
+          top: 50
         }, 600);
       }, 100);
     }

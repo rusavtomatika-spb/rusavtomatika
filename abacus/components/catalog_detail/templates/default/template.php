@@ -225,14 +225,7 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
               </div>
               <div class="component_catalog_detail__small_info_block">
                 <div class="component_catalog_detail__price">
-                  <div class="item">
-                    <div class="component_catalog_detail__small_info_block__image"> <img itemprop="image"
-                                                                 class="img_product-inner"
-                                                                 src="<? echo $arResult['imgRemoteDir'] . "130/" . $arResult['product']["arr_pics"][0]; ?>"
-                                                                 alt="<?= $arResult['product']["model"] ?>"> </div>
-                  </div>
                   <?
-
                   if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ) {
                       if ($arResult['product']['currency'] == 'USD') {
                           if (intval($arResult['product']['show_rub_po_kursu_usd']) == 1) {
