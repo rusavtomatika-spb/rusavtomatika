@@ -5,6 +5,8 @@ var app = new Vue({
     compare: [],
     cart: [],
     current_section: 1,
+    isBurgerOpen: false,
+    isMobile: false
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -335,6 +337,24 @@ var app = new Vue({
         'max-age': -1
       })
     },
+
+    toggleBurgerMenu() {
+      this.isBurgerOpen = !this.isBurgerOpen
+    },
+    closeBurgerMenu() {
+      this.isBurgerOpen = false
+    },
+    onMediaChange(e) {
+      this.isMobile = e.matches
+    },
+  },
+  mounted() {
+    this.mql = window.matchMedia('(max-width: 969px)')
+    this.isMobile = this.mql.matches
+    this.mql.addEventListener('change', this.onMediaChange)
+  },
+  beforeUnmount() {
+    this.mql?.removeEventListener('change', this.onMediaChange)
   },
 });
 
@@ -364,6 +384,7 @@ $(window).on('scroll', function () {
     if (!$('.sticky_block').hasClass('fixed')) {
       $('.sticky_block').addClass('fixed');
       $('.sticky_block_wrap_inn').addClass('container-xxl');
+      $('.burger-mobile').addClass('active-burger-btn')
       setTimeout(function () {
         $('.sticky_block').animate({
           top: 50
@@ -379,6 +400,7 @@ $(window).on('scroll', function () {
         $('.sticky_block').removeClass('fixed');
         $('.sticky_block').removeClass('in_animation');
         $('.sticky_block_wrap_inn').removeClass('container-xxl');
+        $('.burger-mobile').removeClass('active-burger-btn')
       });
     }
   }

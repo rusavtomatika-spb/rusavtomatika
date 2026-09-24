@@ -223,7 +223,18 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
                 </div>
                 <? endif; ?>
               </div>
-              <div class="component_catalog_detail__small_info_block">
+              <button class="button is-success burger-mobile" @click="toggleBurgerMenu" style="padding: 5px 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                  <g id="SVGRepo_iconCarrier">
+                    <circle cx="18" cy="12" r="1.5" transform="rotate(90 18 12)" fill="#fff"/>
+                    <circle cx="12" cy="12" r="1.5" transform="rotate(90 12 12)" fill="#fff"/>
+                    <circle cx="6" cy="12" r="1.5" transform="rotate(90 6 12)" fill="#fff"/>
+                  </g>
+                </svg>
+              </button>
+              <div class="component_catalog_detail__small_info_block" v-if="isBurgerOpen || !isMobile">
                 <div class="component_catalog_detail__price">
                   <?
                   if ( intval( $arResult[ 'product' ][ "price_usd_value" ] ) > 0 and $arResult[ 'product' ][ 'retail_price_hide' ] == "0" ) {

@@ -168,10 +168,11 @@
   display: flex;
   justify-content: space-between;
 }
-  .sticky_block_inner_wrapper .right {
-    display: flex;
-    align-items: center;
-  }
+.sticky_block_inner_wrapper .right {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
 
 .sticky_block.fixed .component_catalog_detail__panel_info_currency_rate, .sticky_block .component_catalog_detail__small_info_block {
   display: none; }
@@ -515,6 +516,8 @@ font-weight: 300;
 
 .sticky_block nav ul li.button_open_this_menu {
   display: none; }
+.burger-mobile { display: none !important; }
+.active-burger-btn { display: flex !important; }
 
 @media (max-width: 1408px) {
   .sticky_block.fixed nav ul li:not(.is-active):not(.button_open_this_menu) {
@@ -586,9 +589,19 @@ font-weight: 300;
   .component_catalog_detail__small_info_block .item.price {
     padding-right: 10px; } }
 @media (max-width: 969px) {
+  .burger-mobile { display: flex; }
+  .sticky_block_inner_wrapper .right { align-items: flex-start; }
   .sticky_block.fixed .component_catalog_detail__small_info_block {
+    position: absolute;
+    top: 50px;
+    right: 0;
     display: grid;
     grid-template-columns: repeat(2, auto);
+    width: auto;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
   }
 }
 @media (max-width: 768px) {
@@ -642,21 +655,6 @@ font-weight: 300;
   .component_catalog_detail__small_info_block .item.price {
     padding-right: 1px; } }
 @media (max-width: 480px) {
-  .sticky_block.fixed .sticky_block_inner_wrapper .item.price,
-  .sticky_block.fixed .sticky_block_inner_wrapper .add_to_compare,
-  .sticky_block.fixed .sticky_block_inner_wrapper .add_to_favorites,
-  .sticky_block.fixed .sticky_block_inner_wrapper .button_demand_price {
-    display: none; }
-
-  .sticky_block_inner_wrapper {
-    position: relative; }
-
-  .sticky_block.fixed .component_catalog_detail__small_info_block {
-    position: absolute;
-    top: auto;
-    right: 15px;
-    left: auto;
-    bottom: 0px; }
     .sticky_block.fixed .component_catalog_detail__small_info_block .button.add_to_cart {
       height: 36px;
       border-radius: 4px 4px 0 0; }
@@ -682,14 +680,6 @@ font-weight: 300;
     margin: 1% auto;
     padding: 1%;
     box-sizing: border-box; }
-
-  .component_catalog_detail section .sticky_block.fixed h1 {
-    margin: 25px 0 0 1%;
-    max-width: 99%; }
-
-  .sticky_block.fixed {
-    min-height: 0px;
-    padding-top: 0px; }
 
   .sticky_block nav ul li a {
     width: 200px; }
