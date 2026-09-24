@@ -517,7 +517,6 @@ font-weight: 300;
 .sticky_block nav ul li.button_open_this_menu {
   display: none; }
 .burger-mobile { display: none !important; }
-.active-burger-btn { display: flex !important; }
 
 @media (max-width: 1408px) {
   .sticky_block.fixed nav ul li:not(.is-active):not(.button_open_this_menu) {
@@ -589,7 +588,7 @@ font-weight: 300;
   .component_catalog_detail__small_info_block .item.price {
     padding-right: 10px; } }
 @media (max-width: 969px) {
-  .burger-mobile { display: flex; }
+  .active-burger-btn { display: flex !important; }
   .sticky_block_inner_wrapper .right { align-items: flex-start; }
   .sticky_block.fixed .component_catalog_detail__small_info_block {
     position: absolute;
