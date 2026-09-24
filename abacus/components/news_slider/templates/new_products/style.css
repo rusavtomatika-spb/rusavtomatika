@@ -34,6 +34,7 @@
     font-size: 14px !important;
     font-weight: 500;
     opacity: 0;
+    transition: .5s;
 }
 @media (max-width: 1280px) {
   .glide__slide a { opacity: 1; }
@@ -41,5 +42,5 @@
 }
 #glide_new_products a:hover .hor_gallery_item_hover_link.bottom_hide {
     opacity: 1;
-    transition: 0.2s;
+    transition: .5s;
 }
