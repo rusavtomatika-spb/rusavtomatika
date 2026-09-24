@@ -154,7 +154,9 @@
   display: flex;
   justify-content: left;
   gap: 30px;
-  margin: 15px 0 15px; }
+  margin: 15px 0 15px;
+  flex-wrap: wrap;
+}
 
 .component_catalog_detail__buttons2 {
   display: flex;
