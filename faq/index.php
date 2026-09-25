@@ -32,8 +32,15 @@ while ($row = mysqli_fetch_assoc($sections_result)) {
 }
 
 $current_section = '';
-if ($section_url && isset($sections_map[$section_url])) {
-    $current_section = $sections_map[$section_url];
+if ($section_url) {
+    if (isset($sections_map[$section_url])) {
+        $current_section = $sections_map[$section_url];
+    } else {
+        http_response_code(404);
+        include $_SERVER['DOCUMENT_ROOT'] . '/404.php';
+        require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
+        exit;
+    }
 }
 
 $where_conditions = array();
