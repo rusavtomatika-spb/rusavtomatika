@@ -4,6 +4,8 @@ php_value default_charset "cp1251"
 
 RewriteEngine On
 
+RewriteRule ^termit-antenna-pin-sma/?$ /accessories/termit-antenna-pin-sma/ [R=301,L,QSD]
+
 RewriteCond %{HTTPS} =off
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
