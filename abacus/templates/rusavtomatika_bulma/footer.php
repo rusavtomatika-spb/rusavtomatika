@@ -1,6 +1,14 @@
 <? if (!defined('PROLOG_INCLUDED')) exit;
 if (!$CONTENT_ON_WIDE_SCREEN):
     ?>
+    <? if ($current_page != '' and $current_page != 'catalog_viewed') { ?>
+        <div class="block_viewed">
+            <?
+            CoreApplication::include_component(["component" => "catalog_viewed_bar"]);
+            ?>
+        </div>
+    <?php }
+    ?>
     </div>
     </div>
     </div>
@@ -9,15 +17,6 @@ endif;
 ?>
 </main>
 </div>
-<!-- /maincontent -->
-<? if ($current_page != '' and $current_page != 'catalog_viewed') { ?>
-    <div class="block_viewed">
-        <?
-        CoreApplication::include_component(["component" => "catalog_viewed_bar"]);
-        ?>
-    </div>
-<?php }
-?>
 <footer id="footer">
     <div class="padding_wrapper">
         <div class="container is-widescreen">
