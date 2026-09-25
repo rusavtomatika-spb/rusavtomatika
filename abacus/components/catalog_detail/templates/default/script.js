@@ -9,9 +9,21 @@ var app = new Vue({
     isMobile: false
   },
   mounted: function () {
-    this.$nextTick(function () {
+    this.$nextTick(() => {
       this.init();
     });
+
+    this.mql = window.matchMedia('(max-width: 969px)')
+    this.isMobile = this.mql.matches
+    this.mql.addEventListener('change', this.onMediaChange)
+
+    document.addEventListener('click', this.onDocumentClick)
+    document.addEventListener('keydown', this.onKeydown)
+  },
+  beforeDestroy() {
+    this.mql?.removeEventListener('change', this.onMediaChange)
+    document.removeEventListener('click', this.onDocumentClick)
+    document.removeEventListener('keydown', this.onKeydown)
   },
   watch: {
     favorites: function (newVal) {
@@ -341,21 +353,51 @@ var app = new Vue({
     toggleBurgerMenu() {
       this.isBurgerOpen = !this.isBurgerOpen
     },
-    closeBurgerMenu() {
+
+    onDocumentClick(e) {
+      if (!this.isMobile) return
+      if (!this.isBurgerOpen) return
+
+      const menu = this.$refs.burgerWrapper
+      const btn  = this.$refs.burgerBtn
+
+      if (!menu) return
+
+      if (menu.contains(e.target) || (btn && btn.contains(e.target))) {
+        return
+      }
+
       this.isBurgerOpen = false
     },
+
+    onKeydown(e) {
+      if (e.key === 'Escape' && this.isMobile && this.isBurgerOpen) {
+        this.isBurgerOpen = false
+      }
+    },
+
     onMediaChange(e) {
       this.isMobile = e.matches
+      if (!this.isMobile) this.isBurgerOpen = false
     },
-  },
-  mounted() {
-    this.mql = window.matchMedia('(max-width: 969px)')
-    this.isMobile = this.mql.matches
-    this.mql.addEventListener('change', this.onMediaChange)
-  },
-  beforeUnmount() {
-    this.mql?.removeEventListener('change', this.onMediaChange)
-  },
+
+    onKeydown(e) {
+      if (e.key === 'Escape' && this.isBurgerOpen) {
+        this.isBurgerOpen = false
+      }
+    },
+
+    onResize() {
+      if (!this.isMobile && this.isBurgerOpen) {
+        this.isBurgerOpen = false
+      }
+    },
+
+    onMediaChange(e) {
+      this.isMobile = e.matches
+      if (!this.isMobile) this.isBurgerOpen = false
+    }
+  }
 });
 
 /*******************************************************************************************************************/
