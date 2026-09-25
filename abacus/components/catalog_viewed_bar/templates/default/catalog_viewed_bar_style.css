@@ -8,6 +8,7 @@
 
 .viewed_products .tns-outer{
     position: relative;
+    overflow: hidden;
 }
 
 .viewed_products .tns-outer button[data-controls="prev"],
@@ -27,23 +28,13 @@
 }
 
 .viewed_products .tns-outer button[data-controls="prev"]{
-    left: -25px;
+    left: -15px;
     background: url("prev.svg") center/24px no-repeat;
 }
 
 .viewed_products .tns-outer button[data-controls="next"]{
-    right: -25px;
+    right: -15px;
     background: url("next.svg") center/24px no-repeat;
-}
-
-@media(max-width: 799px){
-    .viewed_products .tns-outer button[data-controls="prev"]{
-        left: -15px;
-    }
-
-    .viewed_products .tns-outer button[data-controls="next"]{
-        right: -15px;
-    }
 }
 
 .viewed_products .tns-outer button[data-controls="prev"]:hover,

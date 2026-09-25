@@ -1446,8 +1446,10 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 		text-align: center;
     }
     .component_catalog_section__panel_of_products table tr {
-        display: block;
-        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
     }
     .component_catalog_section__panel_of_products .view-mode-list table td.td_short_description {
         width: 100%;
@@ -1493,13 +1495,18 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 		text-align: left;
     }
     .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons {
-        display: block;
-        padding: 0 0;
-margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 20px;
+        padding: 0;
+        margin-top: 10px;
 	}
+    .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .brand { min-width: 0; }
     .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .buttons_add {
         display: flex;
-        margin: 20px 0;
         font-size: var(--font-size-xs);
 		justify-content: center;
     }
@@ -1525,20 +1532,23 @@ margin-top: auto;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 30px;
     }
     .component_catalog_section__panel_of_products .view-mode-list .price_block .rub_price {
         font-size: 24px;
         text-align: center;
-        width: 50%;
     }
-    .component_catalog_section__panel_of_products .view-mode-list .price_block .usd_price {
-        text-align: center;
-        width: 50%;
+    .component_catalog_section__panel_of_products .view-mode-list .price_block .act_price {
+        margin-left: 5px !important;
+        font-size: 20px !important;
     }
+    .component_catalog_section__panel_of_products .view-mode-list .price_block .usd_price br { display: none; }
     .component_catalog_section__panel_of_products .view-mode-list table td.td_buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
         width: 100%;
-        text-align: center;
+        gap: 20px;
     }
 
     .component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button  {
@@ -1550,12 +1560,19 @@ margin-top: auto;
 
     .component_catalog_section__panel_of_products .view-mode-list .price_block .no_price {
         display: block;
-        margin: 1rem 0;
         width: 170px;
         padding: 10px 5px 10px 5px;
         font-size: 1rem;
     }
     .component_catalog_section__panel_of_products .td_buttons {
         font-size: var(--font-size-sm);
+    }
+
+    .catalog_viewed .component_catalog_section__panel_of_products .view-mode-list table td.td_model { width: 100%; }
+    .catalog_viewed .component_catalog_section__panel_of_products .view-mode-list .model {
+        text-align: center;
+        font-weight: bold;
+        width: 100%;
+        font-size: 21px;
     }
 }
