@@ -19,13 +19,13 @@
 
 #float_filter_block.fixed {
     position: fixed;
-    top: 40px;
+    top: 70px;
     width: 250px;
 }
 #float_filter_block.fixed.fixed_to_bottom{
     position: absolute;
     top: auto;
-	bottom: 0;
+	bottom: 255px;
 }
 
 #float_filter_block.open_for_touch{

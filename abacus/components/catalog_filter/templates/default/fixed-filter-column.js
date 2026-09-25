@@ -3,12 +3,12 @@ $(document).ready(function () {
     if ($("div").is("#float_filter_block")) {
       if ($(window).width() < 1024) return;
 
-      // if (height_content > height_float_block) // если контент длиннее, чем левое меню, то имеет смысл прилипать
+      // if (height_content > height_float_block) // РµСЃР»Рё РєРѕРЅС‚РµРЅС‚ РґР»РёРЅРЅРµРµ, С‡РµРј Р»РµРІРѕРµ РјРµРЅСЋ, С‚Рѕ РёРјРµРµС‚ СЃРјС‹СЃР» РїСЂРёР»РёРїР°С‚СЊ
 
       /*
       const offset_bottom = 170;
-      let topPos = $('#float_filter_block').offset().top - offset; // стат позиция плавуна
-      let height_float_filter_block = $('#float_filter_block').outerHeight(); // высота плавуна
+      let topPos = $('#float_filter_block').offset().top - offset; // СЃС‚Р°С‚ РїРѕР·РёС†РёСЏ РїР»Р°РІСѓРЅР°
+      let height_float_filter_block = $('#float_filter_block').outerHeight(); // РІС‹СЃРѕС‚Р° РїР»Р°РІСѓРЅР°
       */
 
 
@@ -25,19 +25,19 @@ $(document).ready(function () {
         console.log(height_float_block, height_column_content);
         const offset = 10;
 
-        if (height_column_content > height_float_block) // если контент длиннее, чем левое меню, то имеет смысл прилипать                   
+        if (height_column_content > height_float_block) // РµСЃР»Рё РєРѕРЅС‚РµРЅС‚ РґР»РёРЅРЅРµРµ, С‡РµРј Р»РµРІРѕРµ РјРµРЅСЋ, С‚Рѕ РёРјРµРµС‚ СЃРјС‹СЃР» РїСЂРёР»РёРїР°С‚СЊ                   
         {
           if ($(window).width() < 1024) return;
           let height_window = $(window).height();
           let top_vue_component_catalog_section = $('#vue_component_catalog_section').offset().top;
           let top_main = $('main').offset().top;
 
-          let top = $(document).scrollTop(); // С‚РµРєСѓС‰РµРµ РїРѕР»РѕР¶РµРЅРёРµ РѕРєРЅР°
-          let bottom_content_block = $('.component_catalog_section__bottom_of_list').offset().top; // bottom_content_block положение низа контента
-          let height_content_block = $('.component_catalog_section').outerHeight(); // высота контента
-          let height_float_filter_block = $('#float_filter_block').outerHeight(); // высота плавуна
-          let top_float_filter_block = $('#float_filter_block').offset().top; // стат положение верха плавуна
-          let bottom_float_filter_block = top_float_filter_block + height_float_filter_block; // стат положение низа плавуна
+          let top = $(document).scrollTop();
+          let bottom_content_block = $('.component_catalog_section__bottom_of_list').offset().top; // bottom_content_block РїРѕР»РѕР¶РµРЅРёРµ РЅРёР·Р° РєРѕРЅС‚РµРЅС‚Р°
+          let height_content_block = $('.component_catalog_section').outerHeight(); // РІС‹СЃРѕС‚Р° РєРѕРЅС‚РµРЅС‚Р°
+          let height_float_filter_block = $('#float_filter_block').outerHeight(); // РІС‹СЃРѕС‚Р° РїР»Р°РІСѓРЅР°
+          let top_float_filter_block = $('#float_filter_block').offset().top; // СЃС‚Р°С‚ РїРѕР»РѕР¶РµРЅРёРµ РІРµСЂС…Р° РїР»Р°РІСѓРЅР°
+          let bottom_float_filter_block = top_float_filter_block + height_float_filter_block; // СЃС‚Р°С‚ РїРѕР»РѕР¶РµРЅРёРµ РЅРёР·Р° РїР»Р°РІСѓРЅР°
           let dynamic_bottom_content = bottom_content_block - top + height_window;
           if (
             top > top_vue_component_catalog_section
@@ -46,7 +46,7 @@ $(document).ready(function () {
           ) {
             $('#float_filter_block').addClass('fixed');
             $('#float_filter_block').removeClass('fixed_to_bottom');
-            // Если фильтр меньше высоты окна
+            // Р•СЃР»Рё С„РёР»СЊС‚СЂ РјРµРЅСЊС€Рµ РІС‹СЃРѕС‚С‹ РѕРєРЅР°
 
             if (height_float_filter_block > height_window - 50) {
               //$('.component_catalog_section__filter .filter_panel').addClass('height_limited');
