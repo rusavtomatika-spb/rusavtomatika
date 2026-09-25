@@ -211,7 +211,7 @@ if ( $HTTP_REFERER != "" ) {
             CoreApplication::include_component( $arguments );
             ?>
          </div>
-          <div class=" column is-10-desktop is-12-tablet column_content">
+          <div class="column column_content">
             <?
             if ( $arrSection[ "code" ] == "vpn_routers" ) {
               include $_SERVER[ "DOCUMENT_ROOT" ] . "/include_utf_8/widgets/inc_no_ewon.php";

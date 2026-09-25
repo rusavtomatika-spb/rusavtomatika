@@ -148,19 +148,6 @@
     width: 100%;
 }
 
-@media (max-width: 1023px) {
-    .component_catalog_section__panel_of_products table.series_products{
-        display: block;
-    }
-    .component_catalog_section__panel_of_products table.series_products td{
-        //display: block;
-    }
-}
-
-
-
-
-
 .component_catalog_section__panel_of_products table tr {
     /*    background: #f3f3f3;*/
     border: 1px solid #e0e0e0;
@@ -1276,11 +1263,6 @@ tr.flying_row td {
     width: 30%;
 }
 
-.component_catalog_section__panel_of_products .view-mode-list table td.td_short_description {
-    width: 70%;
-    line-height: 1.5;
-}
-
 .component_catalog_section__panel_of_products .view-mode-list table td.td_price {
     width: 12%;
     line-height: 1;
@@ -1417,26 +1399,23 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 
 @media (max-width: 1023px){
     .component_catalog_section__panel_of_products .view-mode-list .preview_image {
-        margin-right: auto;
-        margin-left: 0;
-    }
-    .component_catalog_section__panel_of_products .view-mode-list .preview_image {
         padding: 0px;
         box-sizing: border-box;
         margin-left: 0px;
         text-align: center;
-		width:100%;
-		height:auto;
+		height: auto;
+        width: 100%;
+        min-width: 120px;
     }
     .component_catalog_section__panel_of_products .view-mode-list .preview_image img {
-		width:80%;
+		width: 100%;
 		height: auto;
 	}
     .component_catalog_section .section_list_view_sort select {
         padding: 5px 5px 5px 10px;
     }
     .component_catalog_section__panel_of_products .view-mode-list table td {
-        padding: 10px 1px;
+        padding: 10px 5px;
 
     }
     .component_catalog_section__panel_of_products .view-mode-list table td.td_buttons {
@@ -1445,6 +1424,10 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     .component_catalog_section__panel_of_products_wrapper {
         border: none;
 
+    }
+    .component_catalog_section h1, .pretext, .section_list_view_mode_button_wrapper {
+        margin-left: 0;
+        padding-left: 0;
     }
 }
 @media (max-width: 900px){
