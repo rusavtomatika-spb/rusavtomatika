@@ -975,18 +975,20 @@ button.flying_row {
 
 
 .component_catalog_section__panel_of_products .view-mode-list .indicator_availability {
-    text-align: center;
+    text-align: right;
 }
 
 .component_catalog_section__panel_of_products .indicator_availability {
     text-align: right;
 }
 
-.component_catalog_section__panel_of_products .view-mode-list .indicator_availability .green {
+.component_catalog_section__panel_of_products .view-mode-list .indicator_availability .green,
+.td_price .green, .td_onstock .green {
     color: var(--color-green);
 }
 
-.component_catalog_section__panel_of_products .view-mode-list .indicator_availability .red {
+.component_catalog_section__panel_of_products .view-mode-list .indicator_availability .red,
+.td_price .red, .td_onstock .red {
     color: var(--color-red);
 }
 
@@ -1011,7 +1013,6 @@ button.flying_row {
 
 .component_catalog_section__panel_of_products .view-mode-list .price_block .act_price {
     text-align: center;
-    width: 110px;
 	font-size: 14px !important;
 	text-decoration: line-through;
     font-weight: normal;
@@ -1025,7 +1026,7 @@ button.flying_row {
     line-height: 1.5;
     text-align: center;
     color: var(--color-green);
-    width: 110px;
+    text-align: right;
 }
 .component_catalog_section__panel_of_products .view-mode-tiles .price_block {
 	display: flex;
@@ -1091,7 +1092,7 @@ button.flying_row {
     text-align: center;
     display: block;
     color: #333;
-    width: 110px;
+    text-align: right;
 }
 
 .component_catalog_section__panel_of_products .view-mode-tiles .price_block .rub_price {
@@ -1305,10 +1306,7 @@ tr.flying_row td {
     background-size: cover;
     width: 150px;
     height: 115px;
-    padding: 5px;
     box-sizing: border-box;
-    margin-right: 10px;
-    margin-left: 10px;
     text-align: center;
 }
 
@@ -1415,11 +1413,8 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         padding: 5px 5px 5px 10px;
     }
     .component_catalog_section__panel_of_products .view-mode-list table td {
-        padding: 10px 5px;
+        padding: 10px;
 
-    }
-    .component_catalog_section__panel_of_products .view-mode-list table td.td_buttons {
-        padding-right: 10px;
     }
     .component_catalog_section__panel_of_products_wrapper {
         border: none;
@@ -1577,4 +1572,15 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         width: 100%;
         font-size: 21px;
     }
+
+    .component_catalog_section__panel_of_products .view-mode-list table td.td_price, .buttons_panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        column-gap: 10px;
+    }
+
+    .td_onstock .green, .td_onstock .red { margin-right: 20px; }
 }

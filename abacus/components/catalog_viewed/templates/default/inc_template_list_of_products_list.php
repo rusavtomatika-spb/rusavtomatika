@@ -31,7 +31,7 @@ global $usd_currency, $arSettings;
                     <a href="<?= $product["link_detail_page"]; ?>">
                         <div class="preview_image">
                             <img alt="<?= $product["model"]; ?>" loading="lazy"
-                                 src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/130/<?= $product["model"] ?>_1.webp">
+                                 src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/580/<?= $product["model"] ?>_1.webp">
                         </div>
                     </a>
                 </td>
@@ -40,20 +40,19 @@ global $usd_currency, $arSettings;
                 </td>
                 <td class="td_short_description">
                     <a href="<?= $product["link_detail_page"]; ?>">
-                        <?= $product["preview_text"]; ?>; <span> <?= $product["preview_text_extra"]; ?> </span>
+                        <?= $product["preview_text"]; ?><span> <?= $product["preview_text_extra"]; ?> </span>
                     </a>
                 </td>
-                <td class="td_onstock">
-                    <a href="<?= $product["link_detail_page"]; ?>">
+                <td class="td_price">
+                    <a href="<?= $product["link_detail_page"]; ?>" class="td_onstock">
                         <?
                         if ($product['onstock_spb'] > 0 or $product['onstock_msk'] > 0) {
                             echo '<span class="green">В&nbsp;наличии</span>';
                         } else echo '<span class="red">Под&nbsp;заказ</span>';
                         ?>
                     </a>
-                </td>
-                <td class="td_price">
                     <a href="<?= $product["link_detail_page"]; ?>">
+                        <div class="price_block">
                         <?
                         if (isset($product['retail_price']) and intval($product['retail_price']) > 0 and $product["retail_price_hide"] == 0) {
                             echo $product['retail_price']; ?>&nbsp;<?
@@ -62,18 +61,19 @@ global $usd_currency, $arSettings;
                                     echo '<span class="usd">$</span>';
                                     if ($usd_currency) {
                                         ?>
-                                        <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> р.</div>
+                                        <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> ₽</div>
                                         <?
                                     }
                                     break;
                                 case 'RUR':
-                                    echo '<span class="rub">Р</span>';
+                                    echo '<span class="rub">₽</span>';
                                     break;
                             }
                         } else {
                             echo '<span class="no_price">Цена по запросу</span>';
                         }
                         ?>
+                        </div>
                     </a>
                 </td>
                 <td class="td_buttons">
