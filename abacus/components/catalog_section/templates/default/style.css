@@ -1450,6 +1450,8 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         flex-direction: column;
         padding: 20px;
         gap: 10px;
+        margin-bottom: 20px;
+        border-radius: 10px;
     }
     .component_catalog_section__panel_of_products .view-mode-list table td.td_short_description {
         width: 100%;
