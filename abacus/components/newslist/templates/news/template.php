@@ -1,6 +1,6 @@
 <?php
 $current_folder_url = str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__);
-CoreApplication::add_style($current_folder_url . "/style.css");
+CoreApplication::add_style($current_folder_url . "/style.css?28092026");
 CoreApplication::add_script($current_folder_url . "/newslist_news_scripts.js");
 
 global $TITLE, $DESCRIPTION, $KEYWORDS, $CANONICAL;

@@ -19,7 +19,9 @@
 
 }
 
-
+.container.is-widescreen > .columns {
+    flex-direction: column;
+}
 .component_newslist .brand_item, .component_newslist .discount_categories_item {
     flex-grow: 2;
     padding: 5px 10px;
