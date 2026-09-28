@@ -1308,6 +1308,7 @@ tr.flying_row td {
     height: 115px;
     box-sizing: border-box;
     text-align: center;
+    margin: 0;
 }
 
 .component_catalog_section__panel_of_products .view-mode-list .preview_image img {
@@ -1400,7 +1401,9 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     width: 100%;
     font-size: 21px;
 }
-
+.td_preview_image {
+    width: 180px;
+}
 @media (max-width: 1023px){
     .component_catalog_section__panel_of_products .view-mode-list .preview_image {
         padding: 0px;
@@ -1410,6 +1413,8 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 		height: auto;
         width: 100%;
         min-width: 120px;
+        max-width: 120px;
+        margin: 0;
     }
     .component_catalog_section__panel_of_products .view-mode-list .preview_image img {
 		width: 100%;
@@ -1435,7 +1440,12 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     .UPPER_SEO_TEXT{
         margin-left: 0px;
     }
-
+    .component_catalog_section__panel_of_products .view-mode-list .preview_image {
+        max-width: 100%;
+    }
+    .td_preview_image {
+        width: 100%;
+    }
     .component_catalog_section__panel_of_products .view-mode-list table td {
         padding: 1px 5px;
         display: block;
