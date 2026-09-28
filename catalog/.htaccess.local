@@ -1,9 +1,60 @@
 Options -Indexes
+
 RewriteEngine on
 
+RewriteCond %{HTTPS} =off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+
+RewriteCond %{HTTP_HOST} !^www.
+RewriteCond %{REQUEST_URI} (.*)
+RewriteRule (.*) https://www.%{HTTP_HOST}%1 [R=301,L]
+
+RewriteCond %{REQUEST_URI} (.*)/&(.*)
+RewriteRule ^(.*)/&(.*) $1/?&$2 [L,R=301]
+
+RewriteCond %{THE_REQUEST} \s/+(.*?)/{2,}([^\s]*)
+RewriteCond %{REQUEST_URI} !(?:catalog) [NC]
+RewriteRule ^ %1/%2 [R=301,L]
+RewriteCond %{THE_REQUEST} \s/(.*)/{2,}(.*)\s
+RewriteRule .* /%1/%2 [R=301,L]
+
+RewriteRule ^catalog/operator_panels/$ catalog/operator_panels/?&brand=Weintek [QSA,R=301,L]
+
+RewriteCond %{QUERY_STRING} "utm" [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSD]
+
+RewriteCond %{QUERY_STRING} brand [NC]
+RewriteCond %{QUERY_STRING} !(weintek|ifc|aplex|samkoon|ewon|faraday|smatipc|spiktek) [NC]
+RewriteRule (.*) https://%{HTTP_HOST}/? [R=404,L]
+
+RewriteCond %{THE_REQUEST} \s/catalog/\?(.*)\s [NC]
+RewriteRule (.*) https://%{HTTP_HOST}/? [R=404,L]
+
+RewriteCond %{THE_REQUEST} \s/catalog/industrial-communication-equipment/?&interfaces=sfp\s [NC]
+RewriteRule ^/catalog/industrial-communication-equipment/(sfp)/$  /catalog/index.php?q=$1 [QSA]
+
+RewriteRule ^.htaccess$ - [F]
+
+RewriteCond %{REQUEST_URI} (.*)/$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [L,QSA]
+RewriteRule ^(.*)$ /catalog/index.php?q=$1 [QSA]
 
-RewriteRule ^images/(.*)$ https://www.rusavtomatika.com/upload_files/images/$1 [L,R=301]
-RewriteRule ^upload_files/(.*)$ https://www.rusavtomatika.com/upload_files/$1 [L,R=301]
+RewriteBase /catalog
+RewriteCond %{QUERY_STRING} (brand=smatipc) [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) /index.php?q=catalog/embedded_computers/?&brand=IFC [C]
+RewriteRule (.*) /catalog/embedded_computers/?&brand=IFC [R=301,L]
+
+RewriteBase /catalog
+RewriteCond %{QUERY_STRING} (series=IEXP) [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) /index.php?q=catalog/embedded_computers/?&series=BOX-PC [C]
+RewriteRule (.*) /catalog/embedded_computers/?&series=BOX-PC [R=301,L]
+
+RewriteBase /catalog
+RewriteCond %{REQUEST_URI} !(/$|\.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule (.*) /catalog/index.php?q=$1 [QSA,C]
+RewriteRule (.*) %{REQUEST_URI}/? [R=301,L]
