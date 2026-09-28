@@ -27,7 +27,6 @@
     padding: 5px 10px;
     display: inline-block;
     background: #f0f0f0;
-    margin: 0 5px;
     cursor: pointer;
     transition: 0.2s;
 
@@ -61,7 +60,7 @@
     font-size: 16px;
     position: relative;
     min-height: 100px;
-    margin: 10px -5px;
+    margin: 10px 0;
     transition: 0.2s;
     background: #f0f0f0;
     position: relative;
@@ -488,7 +487,7 @@
 
 #vue_app_articles{display: block!important;}
 
- .tabs li a {
+.tabs li a {
     color: #333;
     text-decoration: none;
     font-weight: 700;
@@ -499,6 +498,12 @@
     background-color: #00AD61 !important;
     border-color: #00AD61 !important;
 }
- .tabs ul li {
+.tabs ul {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.tabs ul, .tabs ul li {
     margin: 0;
 }

@@ -163,10 +163,14 @@ else $edit_mode = false;
     <div class="component_wrapper" v-cloak>
       <div class="tabs is-medium is-centered mb-3 is-toggle is-fullwidth">
         <ul>
-          <li @click="select_brand(brand_item)"
-                              :key="brand_index"
-                              :class="['brand_item', {'active': brand_item.active}]"
-                              v-for="(brand_item, brand_index) in arr_brands">{{brand_item.name}}</li>
+          <li
+            @click="select_brand(brand_item)"
+            :key="brand_index"
+            :class="['brand_item', {'active': brand_item.active}]"
+            v-for="(brand_item, brand_index) in arr_brands"
+          >
+            {{brand_item.name}}
+          </li>
         </ul>
       </div>
       <div id="rendering_content_source">

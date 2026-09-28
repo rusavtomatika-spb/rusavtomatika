@@ -189,41 +189,29 @@ if (strlen($filter_brands_str) > 0 or strlen($filter_categories_str) > 0) {
 ob_start();
 
 
-
-$rows = get_rows_from_table("`articles`" , '','', "date DESC");
-
-
-
-$brands_out[] = array("name" => $all, "active" => true);
-
-
-
-foreach ($rows as $row) {
-
-    $brands[] = $row["brand"];
-
+$brand_filter_condition = "`show` = '1'";
+if (isset($_COOKIE['edit_mode']) and $_COOKIE['edit_mode'] == '1') {
+    $brand_filter_condition = " `id` != '' ";
 }
 
-$brands = array_unique($brands);
+$rows_for_brands = get_rows_from_table("`articles`", 'brand', $brand_filter_condition, "");
 
+$brands_out = array();
+$brands_out[] = array("name" => $all, "active" => true);
+
+$brands = array();
+foreach ($rows_for_brands as $row) {
+    $b = isset($row["brand"]) ? trim($row["brand"]) : '';
+    if ($b !== '') {
+        $brands[] = $b;
+    }
+}
+$brands = array_unique($brands);
 sort($brands);
 
-
-
-$something_selected = false;
-
 foreach ($brands as $brand) {
-
-    if (in_array($brand, $filter_brands)) {
-
-        $activeness = true;
-
-        $something_selected = true;
-
-    } else $activeness = false;
-
-    $brands_out[] = array("name" => $brand, "active" => $activeness);;
-
+    $activeness = in_array($brand, $filter_brands, true);
+    $brands_out[] = array("name" => $brand, "active" => $activeness);
 }
 
 if ($something_selected) {
@@ -501,14 +489,3 @@ function get_pager($table_name, $condition, $number_elements_per_page, $current_
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
