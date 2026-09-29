@@ -169,9 +169,9 @@ function showSlides(n) {
 
 <div class="item banner-container">
     <!-- Мобильный -->
-    <iframe src="/include_utf_8/main_page/content/slider-ra/action-ra-mes.1.0/action-ra-mes.1.0_970x250/index.html" class="banner mobile-only"></iframe>
+    <iframe src="/include_utf_8/main_page/content/slider-ra/action-ra-mes.1.0/action-ra-mes.1.0_970x250/index.html" class="banner mobile-only" title="banner-mobile"></iframe>
     <!-- Десктоп -->
-    <iframe src="/include_utf_8/main_page/content/slider-ra/action-ra-mes.1.0/action-ra-mes.1.0_1340x360/index.html" class="banner desktop-only"></iframe>
+    <iframe src="/include_utf_8/main_page/content/slider-ra/action-ra-mes.1.0/action-ra-mes.1.0_1340x360/index.html" class="banner desktop-only" title="banner-desktop"></iframe>
 </div>
 </div>
 

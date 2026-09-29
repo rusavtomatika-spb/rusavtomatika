@@ -1,6 +1,5 @@
 <?
 if (!defined('PROLOG_INCLUDED')) exit;
-/* NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH */
 $arrPagesWithNoCash = ["/catalog/favorites/", "/catalog/cart/", "/catalog/viewed/", "/catalog/compare/", "/catalog/search/",];
 $url = $_SERVER['REQUEST_URI'];
 $url = explode('?', $url);
@@ -9,17 +8,12 @@ if (in_array($url, $arrPagesWithNoCash)) {
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Expires: " . date("r"));
 }
-/* NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH  NO CASH */
 global $CONTENT_ON_WIDE_SCREEN;
 $cms_template_url = "/abacus/templates/rusavtomatika_bulma/";
 $current_page = str_replace("index.php", "", $_SERVER['REQUEST_URI']);
 $current_page = str_replace("index2.php", "", $current_page);
 $current_page = trim($current_page, "/ ");
 $current_page = str_replace("/", "_", $current_page);
-//ini_set('display_errors', 'On');
-//ini_set('error_reporting', E_ALL);
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -29,32 +23,18 @@ $current_page = str_replace("/", "_", $current_page);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/js/jquery-3.6.0.js"></script>
     <script src="/sc/jBox.all.min.js?310120201008"></script>
-	<!--script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script-->    <?
-
-    /* ?><title><?= (3.5mm jack ?></title>
-      <meta name="description" content="<?= $DESCRIPTION ?>">
-      <meta name="keywords" content="<?= $KEYWORDS ?>"><? */ ?>
-    <!--link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>bootstrap-grid.css" /-->
     <link href="/lightbox/css/lightbox.css" rel="stylesheet"/>
     <link href="/abacus/templates/rusavtomatika_bulma/assets/all.min.css" rel="stylesheet">
-    <!--link rel="stylesheet" type="text/css" href="/css/ra.css" /-->
-    <!--link rel="stylesheet" type="text/css" href="/css/menu4.css" /-->
-    <!--link rel="stylesheet" type="text/css" href="/css/tabs.css" /-->
-    <!--link rel="stylesheet" type="text/css" href="/css/button.css" /-->
-    <!--link rel="stylesheet" type="text/css" href="/css/tango/skin.css" /-->
     <link rel="stylesheet" href="/js/jquery-ui.css">
     <link rel="stylesheet" href="/sc/jBox.all.min.css">
     <? if (!defined('IS_LOCAL') || !IS_LOCAL): ?>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <? endif; ?>
-    <!--script src="/js/jquery-1.10.2.js?310120201008"></script-->
     <?
     if ($current_page != ''):
-    //if ($current_page == '7987987877779876445546'):
         if (defined('IS_LOCAL') && IS_LOCAL): ?>
         <script src="/js/jquery-ui.js"></script>
         <? else: ?>
-        <!--script src="//code.jquery.com/ui/1.9.2/jquery-ui.js"></script-->
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <? endif;
     endif;
@@ -65,33 +45,14 @@ $current_page = str_replace("/", "_", $current_page);
 	<?
     endif;
     ?>
-
-    <!--script type="text/javascript" src="/js/jquery.jcarousel.js"></script-->
-    <!--script src="/lightbox/js/lightbox.js"></script-->
-    <!--script type="text/javascript" src="/js/ra_scripts.js"></script-->
-    <!--script type="text/javascript" src="/js/s.js"></script-->
     <script type="text/javascript" src="/js/jquery.maskedinput.js"></script>
     <script type="text/javascript" src="/js/clipboard.min.js"></script>
-    <!--script type="text/javascript" src="/js/sha512.js"></script-->
-
-    <!--script src="/js/search.js"></script-->
     <link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>fancybox3/jquery.fancybox.min.css"/>
-    <!--script type="text/javascript" src="<?= $cms_template_url ?>fancybox3/jquery.fancybox.min.js"></script-->
     <link rel="stylesheet" type="text/css" href="/css/fancybox.css"/>
     <?
     include "include/inc_extra_open_graph.php";
     ?>
-    <!--link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>bulma/css/bulma.css"/-->
-    <!--link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>css/template_styles_bulma_overriding.css"/-->
-    <!--script src="//cdn.jsdelivr.net/gh/jquery-form/form@4.3.0/dist/jquery.form.min.js"></script-->
-<link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>css/template_styles.css"/>
-    <!--    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_colors_and_sizes.css?<? /*= rand() */ ?>"/>
-    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_links_and_buttons.css?<? /*= rand() */ ?>"/>
-    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_common.css?<? /*= rand() */ ?>"/>
-    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_header.css?<? /*= rand() */ ?>"/>
-    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_footer.css?<? /*= rand() */ ?>"/>
-    <link rel="stylesheet" type="text/css" href="<? /*= $cms_template_url */ ?>template_styles_responsive.css?<? /*= rand() */ ?>"/>
--->
+    <link rel="stylesheet" type="text/css" href="<?= $cms_template_url ?>css/template_styles.css"/>
     <style>
         [v-cloak] {
             display: none;
@@ -122,21 +83,6 @@ $current_page = str_replace("/", "_", $current_page);
             display: none;
         }</style>
 </noscript>
-<!--[if IE 7]>
-Вы используете устаревший браузер Internet explorer 7<br>
-Пожалуйста, обновите браузер, чтобы просмотреть эту страницу
-<style> div {
-    display: none;
-}</style>
-<![endif]-->
-
-<!--[if IE 6]>
-Вы используете устаревший браузер Internet explorer 6<br>
-Пожалуйста, обновите браузер, чтобы просмотреть эту страницу
-<style> div {
-    display: none;
-}</style>
-<![endif]-->
 <div class="padding_wrapper">
     <header>
         <div class="container is-widescreen">
@@ -212,9 +158,7 @@ CoreApplication::include_component($arguments);
 ?>
 <?
 if ($current_page == '') {
-    //include "./include_utf_8/main_page/content/block_big_banner4.php";
     include "./include_utf_8/main_page/content/block_big_banner_ifc.php";
-    //include "./abacus/components/big_slider/templates/big_slide_banner/template.php";
 }
 ?>
 <div class="padding_wrapper">

@@ -55,7 +55,7 @@
   margin: 0 1px; }
   .sticky_block nav ul li a {
     display: inline-flex;
-    padding: 5px 15px;
+    padding: 5px 10px;
     text-decoration: none;
     font-weight: normal;
     transition: all 0.3s ease;
@@ -63,14 +63,16 @@
     border-bottom: none;
     border-radius: 5px 5px 0 0;
     background: var(--color-light-gray);
-    color: #000; }
+    color: #000;
+  }
     .sticky_block nav ul li a:hover {
       background: var(--color-green);
       color: #FFF; }
 
 #body_cont .sticky_block nav a:hover, .sticky_block nav ul li a.active, #body_cont .sticky_block nav a.active {
   background: var(--color-green);
-  color: #FFF; }
+  color: #FFF; 
+}
 
 /*.sticky_block nav ul li a.active {
  *    border-bottom: 2px solid #FFF;
