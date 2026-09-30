@@ -20,61 +20,172 @@ class DBWORK {
     
     public function add_product_element($arguments) {
         $errors = "";
-        if ($arguments["name"] == "") {
-            $success = false;
-            $errors = " Имя ";
+
+        if (empty($arguments["model"])) {
+            $errors .= " Модель ";
+        }
+        if (empty($arguments["type"])) {
+            $errors .= " Тип ";
+        }
+        if (empty($arguments["brand"])) {
+            $errors .= " Бренд ";
         }
 
         if ($errors) {
-            $out["message"] = "Элемент не добавлен!<br>Заполните обязательные поля:" . $errors;
-            $out["success"] = false;
-            return $out;
+            return [
+                "success" => false,
+                "message" => "Элемент не добавлен! Заполните обязательные поля:" . $errors
+            ];
         }
-
-        $this->query = "INSERT INTO `products_all`" .
-                " (`model`, `s_name`, `h1`, `title`, `description`, `keywords`, `text_preview`, `text_detail`, `date_pub`)" .
-                " VALUES ('" . strip_tags($arguments['name']) .
-                "', '" . strip_tags($arguments['name']) .
-                "', '" . strip_tags($arguments['h1']) .
-                "', '" . addslashes(strip_tags($arguments['title'])) .
-                "', '" . addslashes(strip_tags($arguments['description'])) .
-                "', '" . addslashes(strip_tags($arguments['keywords'])) .
-                "', '" . addslashes($arguments['text_preview']) .
-                "', '" . addslashes($arguments['text_detail']) .
-                "', '" . $arguments['date_pub'] .
-                "');";
 
         database_connect();
         global $mysqli_db;
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $result = mysqli_query($mysqli_db,$this->query);
+        mysqli_query($mysqli_db, "SET NAMES utf8");
 
-        if ($result) {
-            $new_id = mysqli_insert_id($mysqli_db);
-            $model = strip_tags($arguments['name']);
-            
-            $h1_text = !empty($arguments['h1']) ? strip_tags($arguments['h1']) : $model;
-            
-            $user = $this->getCurrentUser();
-            
-            Core_database_goods_changes_history::save_change(
-                $model,
-                'PRODUCT_CREATED',
-                '',
-                'Создан новый товар: ' . $h1_text,
-                'insert',
-                $user ? $user['id'] : null,
-                $user ? $user['username'] : null
-            );
-            
-            $out["message"] = "Элемент " . $arguments['name'] . " добавлен. ID: " . $new_id;
-            $out["success"] = true;
-            return $out;
-        } else {
-            $out["message"] = "Ошибка! " . mysqli_error($mysqli_db);
-            $out["success"] = false;
-            return $out;
+        $aliases = [
+            'name'            => 'model',
+            'code'            => 'articuls',
+            'section_code'    => 'section',
+            'picture_preview' => 'pic_small',
+            'picture_detail'  => 'pic_big',
+            'price'           => 'retail_price',
+            'in_stock'        => 'onstock',
+        ];
+
+        $data = [];
+        foreach ($arguments as $k => $v) {
+            $real_key = isset($aliases[$k]) ? $aliases[$k] : $k;
+            $data[$real_key] = $v;
         }
+
+        $enum_defaults = [
+            'status'                    => '1',
+            'new_product'               => '0',
+            'currency'                  => 'USD',
+            'codesys'                   => 'N',
+            'easy_access'               => 'N',
+            'vnc_server_new'            => 'Нет',
+            'panel_mount'               => '',
+            'cpu_fan'                   => '',
+            'lpt'                       => '',
+            'creating_custom_protocols' => '',
+            'hdmi_port'                 => '',
+            'hdmi_audio'                => '',
+            'ethernet_speed'            => '',
+            'ethernet_port'             => '',
+            'os_codes'                  => '',
+            'show_rub_po_kursu_usd'     => '0',
+            'discontinued'              => '',
+            'show_in_search'            => '',
+        ];
+
+        $columns_meta = [];
+        $res = mysqli_query($mysqli_db, "SHOW COLUMNS FROM `products_all`");
+        while ($col = mysqli_fetch_assoc($res)) {
+            if ($col['Field'] === 'index') continue;
+            if (strpos($col['Extra'], 'auto_increment') !== false) continue;
+            $columns_meta[$col['Field']] = $col;
+        }
+
+        $data['date_pub'] = date('d-m-Y');
+
+        $fields = [];
+        $values = [];
+
+        foreach ($columns_meta as $col_name => $meta) {
+            $type        = $meta['Type'];
+            $is_nullable = ($meta['Null'] === 'YES');
+            $has_default = ($meta['Default'] !== null);
+            $is_numeric  = (bool) preg_match('/^(int|tinyint|smallint|mediumint|bigint|decimal|float|double|bit)/i', $type);
+            $is_enum_set = (bool) preg_match('/^(enum|set)/i', $type);
+
+            if (array_key_exists($col_name, $data)) {
+                $value = $data[$col_name];
+            } elseif (array_key_exists($col_name, $enum_defaults)) {
+                $value = $enum_defaults[$col_name];
+            } elseif ($has_default) {
+                $value = $meta['Default'];
+            } elseif ($is_nullable) {
+                $value = null;
+            } else {
+                $value = '';
+            }
+
+            if ($value === null) {
+                $fields[] = "`$col_name`";
+                $values[] = "NULL";
+                continue;
+            }
+
+            $value = (string) $value;
+
+            if ($is_numeric) {
+                if ($value === '' || !is_numeric($value)) {
+                    if ($is_nullable) {
+                        $fields[] = "`$col_name`";
+                        $values[] = "NULL";
+                    } else {
+                        $fields[] = "`$col_name`";
+                        $values[] = "0";
+                    }
+                    continue;
+                }
+                $fields[] = "`$col_name`";
+                $values[] = $value;
+                continue;
+            }
+
+            if ($is_enum_set) {
+                if ($value === '') {
+                    if ($has_default) {
+                        $value = $meta['Default'];
+                    } elseif (!preg_match("/'\\s*'/", $type)) {
+                        if (preg_match_all("/'((?:[^'\\\\]|\\\\.)*)'/", $type, $m)) {
+                            $value = isset($m[1][0]) ? $m[1][0] : '';
+                        }
+                    }
+                }
+                $fields[] = "`$col_name`";
+                $values[] = "'" . mysqli_real_escape_string($mysqli_db, $value) . "'";
+                continue;
+            }
+
+            $fields[] = "`$col_name`";
+            $values[] = "'" . mysqli_real_escape_string($mysqli_db, $value) . "'";
+        }
+
+        $query = "INSERT INTO `products_all` (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $values) . ")";
+
+        $result = mysqli_query($mysqli_db, $query);
+
+        if (!$result) {
+            return [
+                "success" => false,
+                "message" => "Ошибка добавления: " . mysqli_error($mysqli_db)
+            ];
+        }
+
+        $new_id = mysqli_insert_id($mysqli_db);
+        $model = isset($data['model']) ? $data['model'] : '';
+
+        $user = $this->getCurrentUser();
+        $h1_text = !empty($data['h1']) ? strip_tags($data['h1']) : $model;
+
+        Core_database_goods_changes_history::save_change(
+            $model,
+            'PRODUCT_CREATED',
+            '',
+            'Создан новый товар: ' . $h1_text,
+            'insert',
+            $user ? $user['id'] : null,
+            $user ? $user['username'] : null
+        );
+
+        return [
+            "success" => true,
+            "message" => "Элемент «" . htmlspecialchars($model) . "» добавлен. ID: " . $new_id,
+            "new_id"  => $new_id
+        ];
     }
 
     public function edit_catalog_element($element_id, $arguments) {
@@ -348,54 +459,42 @@ class DBWORK {
     public function get_brands() {
         global $mysqli_db;
         database_connect();
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $query = "SELECT * FROM `catalog_brands`;";
-        $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db));
-        $rows = mysqli_num_rows($result);
-        if ($rows > 0) {
-            for ($row = 0; $row < $rows; $row++) {
-                $current_row = mysqli_fetch_assoc($result);
-                $out[] = $current_row;
-            }
-        } else {
-            $out = 'пусто';
-        };
-        return $out;
-    }
-
-    public function get_series() {
-        global $mysqli_db;
-        database_connect();
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $query = "SELECT * FROM `catalog_series`;";
-        $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db));
-        $rows = mysqli_num_rows($result);
-        if ($rows > 0) {
-            for ($row = 0; $row < $rows; $row++) {
-                $current_row = mysqli_fetch_assoc($result);
-                $out[] = $current_row;
-            }
-        } else {
-            $out = 'пусто';
-        };
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $out = [];
+        $query = "SELECT `id`, `code`, `name` FROM `catalog_brands` WHERE `active` = '1' ORDER BY `position` ASC, `name` ASC";
+        $result = mysqli_query($mysqli_db, $query);
+        if (!$result) return [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $out[] = $row;
+        }
         return $out;
     }
 
     public function get_types() {
         global $mysqli_db;
         database_connect();
-        mysqli_query($mysqli_db,"SET NAMES utf8");
-        $query = "SELECT * FROM `catalog_types`;";
-        $result = mysqli_query($mysqli_db,$query) or die("Invalid query: " . mysqli_error($mysqli_db));
-        $rows = mysqli_num_rows($result);
-        if ($rows > 0) {
-            for ($row = 0; $row < $rows; $row++) {
-                $current_row = mysqli_fetch_assoc($result);
-                $out[] = $current_row;
-            }
-        } else {
-            $out = 'пусто';
-        };
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $out = [];
+        $query = "SELECT `id`, `code`, `short_name` FROM `catalog_types` WHERE `active` = 1 ORDER BY `position` ASC, `code` ASC";
+        $result = mysqli_query($mysqli_db, $query);
+        if (!$result) return [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $out[] = $row;
+        }
+        return $out;
+    }
+
+    public function get_series() {
+        global $mysqli_db;
+        database_connect();
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+        $out = [];
+        $query = "SELECT `id`, `name`, `name_russian`, `brand` FROM `catalog_series` WHERE `active` = '1' ORDER BY `position` ASC, `name` ASC";
+        $result = mysqli_query($mysqli_db, $query);
+        if (!$result) return [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $out[] = $row;
+        }
         return $out;
     }
 
