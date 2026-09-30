@@ -1384,8 +1384,7 @@ tr.flying_row td {
 }
 
 .series_products_tiles {
-        /*display: flex;*/
-	padding: 30px 0 30px 30px ;
+    display: flex;
 	flex-direction: row;
     flex-wrap: wrap;
 	gap: 30px;
