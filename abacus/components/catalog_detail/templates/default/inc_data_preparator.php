@@ -267,6 +267,27 @@ if (isset($arResult['product']['wifi_support'])) {
 		if ($arResult['product']["wifi_support"] >= 1) {
         $tech_h1[] = "Wi-Fi";
 		}
+$eth_all = '';
+
+if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"] !== '') {
+    
+    $eth_all = $arResult['product']["ethernets"];
+
+    if (isset($arResult['product']["ethernet_port"])) {
+        $eth_all .= 'x' . $arResult['product']["ethernet_port"];
+    }
+    if (isset($arResult['product']["ethernet_speed"])) {
+        $eth_all .= ', ' . $arResult['product']["ethernet_speed"];
+    }
+    if (isset($arResult['product']["ethernet_card"])) {
+        $eth_all .= ', ' . $arResult['product']["ethernet_card"];
+    }
+    if (isset($arResult['product']["ethernet_additional_info"])) {
+        $eth_all .= ', ' . $arResult['product']["ethernet_additional_info"];
+    }
+
+    $arResult['product']['ethernet_all'] = trim($eth_all, ', ');
+}
 
 	if (count($tech)>0) {
 		$tech_out = '<ul style="margin-top: 0"><li>' . implode('</li><li>', $tech) . '</li></ul>';
