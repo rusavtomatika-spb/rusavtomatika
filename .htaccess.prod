@@ -79,13 +79,6 @@ ErrorDocument 503 /503.php
 
 
 
-# Блокировка плохих IP
-deny from 47.239.158.0/24
-deny from 47.239.157.0/24
-deny from 47.239.156.0/24
-
-
-
 # Защита .htaccess
 RewriteRule ^.htaccess$ - [F]
 
@@ -98,8 +91,6 @@ RewriteRule ^soft/(.*)$ https://www.rusavtomatika.com/upload_files/soft/$1 [L,R=
 RewriteRule ^install/(.*)$ https://www.rusavtomatika.com/upload_files/install/$1 [L,R=301]
 RewriteRule ^drawing/(.*)$ https://www.rusavtomatika.com/upload_files/drawing/$1 [L,R=301]
 RewriteRule ^drivers/(.*)$ https://www.rusavtomatika.com/upload_files/drivers/$1 [L,R=301]
-RewriteRule ^termit/(.*)$ /accessories/$1 [R=301,L,QSD]
-RewriteRule ^termit$ /accessories/ [R=301,L,QSD]
 
 
 
