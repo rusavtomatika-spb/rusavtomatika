@@ -1,0 +1,8 @@
+DefaultLanguage ru
+AddDefaultCharset windows-1251
+php_value default_charset "cp1251"
+
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
