@@ -476,11 +476,7 @@ font-weight: 300;
   margin-bottom: 30px;
   text-align: center; }
 
-.component_catalog_detail__image-main_link {
-  display: block;
-  min-height: 300px;
-  width: 100%;
-  background: url("/abacus/templates/rusavtomatika_bulma/images/loading.gif") center no-repeat; }
+.component_catalog_detail__image-main_link { display: none; }
   .component_catalog_detail__image-main_link .img_product-inner {
     margin-top: 10px; }
 
