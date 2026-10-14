@@ -310,26 +310,54 @@ if ($filter_exists) {
     }
 
     if (count($arProcessors) > 0) {
-        //$catalog_processors = $DB_WORK_CATALOG->get_all_catalog_processors();
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
-        } else $filter_chunk = ' and (';
+        } else {
+            $filter_chunk = ' and (';
+        }
+
+        $processor_conditions = array();
+
         foreach ($arProcessors as $processor) {
-			if ($processor == 'Intel Core i5') {
-            $filter_chunk .= " `cpu_code` like '%Ultra 5%' OR ";
-			}
-			if ($processor == 'Intel Core i7') {
-            $filter_chunk .= " `cpu_code` like '%Ultra 7%' OR ";
-			}
-            $filter_chunk .= " `cpu_code` like '%$processor%' ";
-            if ($processor == end($arProcessors)) {
-                $filter_chunk .= ") ";
-            } else {
-                $filter_chunk .= " or ";
+            $processor = trim(preg_replace('/\s+/', ' ', $processor));
+
+            $tokens = array();
+
+            if (stripos($processor, 'i5') !== false) {
+                $tokens[] = 'Ultra 5';
+                $tokens[] = 'i5';
+            }
+            if (stripos($processor, 'i7') !== false) {
+                $tokens[] = 'Ultra 7';
+                $tokens[] = 'i7';
+            }
+
+            $parts = preg_split('/[\s\/,]+/', $processor);
+            foreach ($parts as $p) {
+                $p = trim($p);
+                if ($p === '' || mb_strlen($p) < 2) continue;
+                if (in_array(strtolower($p), array('intel', 'core', 'amd', 'ryzen'))) continue;
+                $tokens[] = $p;
+            }
+
+            $tokens = array_unique($tokens);
+
+            foreach ($tokens as $token) {
+                $token_safe = addslashes($token);
+                $processor_conditions[] = "(
+                    REPLACE(`cpu_code`, '  ', ' ') LIKE '%$token_safe%'
+                    OR REPLACE(`cpu_type`, '  ', ' ') LIKE '%$token_safe%'
+                )";
             }
         }
-        //var_dump_pre($filter_chunk_tmp);
-        $mysql_product_filter .= $filter_chunk;
+
+        if (count($processor_conditions) > 0) {
+            $filter_chunk .= implode(' OR ', $processor_conditions) . ') ';
+            $mysql_product_filter .= $filter_chunk;
+        } else {
+            $filter_chunk .= '1) ';
+            $mysql_product_filter .= $filter_chunk;
+        }
     }
     if (count($arethernets_fix) > 0) {
         if ($filter_chunk == '') {
