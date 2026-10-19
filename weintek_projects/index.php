@@ -246,6 +246,15 @@ clearstatcache();
 
 $stat = stat( $docs_result );
 
+$sections_names = array(
+  "EasyBuilderX"        => "EasyBuilder X",
+  "Part_Sample"         => "Объекты EBPro",
+  "PLC_Sample"          => "ПЛК",
+  "Macro_Sample"        => "Макросы",
+  "System_Sample"       => "Функции, примеры решения задач",
+  "Application_sample"  => "Комплексные примеры проектов",
+  "CODESYS_Sample"      => "CODESYS и модули ввода-вывода",
+);
 ?>
 
 <article>
@@ -264,6 +273,8 @@ $stat = stat( $docs_result );
 
           <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/" data-rel="" <? if ($ask_d == "") echo ' class="active" '; ?>>ВСЕ</a></li>
 
+          <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=EasyBuilderX" data-rel="EasyBuilderX" <? if ($ask_d == "EasyBuilderX") echo ' class="active" '; ?>>EasyBuilder X</a></li>
+
           <!--li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=HMI_Sample" data-rel="HMI Sample" <? if ($ask_d == "HMI_Sample") echo ' class="active" '; ?>>Демо-проекты</a></li-->
 
           <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=Part_Sample" data-rel="Part Sample" <? if ($ask_d == "Part_Sample") echo ' class="active" '; ?>>Объекты EBPro</a></li>
@@ -277,8 +288,6 @@ $stat = stat( $docs_result );
           <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=Application_sample" data-rel="Application sample" <? if ($ask_d == "Application_sample") echo ' class="active" '; ?>>Комплексные примеры проектов</a></li>
 
           <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=CODESYS_Sample" data-rel="CODESYS Sample" <? if ($ask_d == "CODESYS_Sample") echo ' class="active" '; ?>>CODESYS и модули ввода-вывода</a></li>
-
-          <li class="button is-light is-small  is-outlined"><a href="/weintek_projects<?=EX?>/?section=EasyBuilderX" data-rel="EasyBuilderX" <? if ($ask_d == "EasyBuilderX") echo ' class="active" '; ?>>EasyBuilder X</a></li>
 
         </ul>
 
@@ -311,63 +320,63 @@ $stat = stat( $docs_result );
             <!--input class="filterInput input" type="text" placeholder="Фильтр по названию или дате..." id="search"/-->
 
             <div id="docs" class="grid">
-
               <?
+              $grouped_docs = array();
+              foreach ( $docs as $item ) {
+                $group_key = isset( $item['section_get'] ) ? $item['section_get'] : '';
+                $grouped_docs[ $group_key ][] = $item;
+              }
+
+              $ordered_keys = array();
+              foreach ( $sections_names as $key => $name ) {
+                if ( isset( $grouped_docs[ $key ] ) ) {
+                  $ordered_keys[] = $key;
+                }
+              }
+              foreach ( $grouped_docs as $key => $unused ) {
+                if ( !isset( $sections_names[ $key ] ) ) {
+                  $ordered_keys[] = $key;
+                }
+              }
 
               $num = 1;
-
-              foreach ( $docs as $item ) {
-
+              foreach ( $ordered_keys as $group_key ) {
+                $group_items = $grouped_docs[ $group_key ];
+                $group_title = isset( $sections_names[ $group_key ] ) ? $sections_names[ $group_key ] : $group_key;
                 ?>
-
+              <div class="projects-group-title" style="grid-column: 1 / -1; margin: 20px 0 10px;">
+                <h2 style="font-size: 1.25rem; margin: 0; padding: 8px 0; border-bottom: 2px solid #00ad61;">
+                  <? echo htmlspecialchars( $group_title ); ?>
+                  <span style="color:#B8B8B8; font-size: 0.8rem; font-weight: normal;">— <? echo count( $group_items ); ?> шт.</span>
+                </h2>
+              </div>
+              <?
+                foreach ( $group_items as $item ) {
+                  ?>
               <section>
-
                 <div class="cell" style="height: 100%">
-
                   <div class="card" style="height: 100%">
-
                     <header class="card-header">
-
                       <h4 class="card-header-title"><? echo( $item[ 'title' ] )?></h4>
-
                     </header>
-
                     <div class="card-image" style="background: #ECE9D8;">
-
                       <figure class="image is-fullwidth has-ratio"><a href="<? print 'https://rusavtomatika.com/upload_files/projects/images/'.$item[ 'image' ]; ?>" data-fancybox><img src="<? print 'https://rusavtomatika.com/upload_files/projects/images/'.$item[ 'image' ]; ?>" alt="<? echo( $item[ 'title' ] );?> image" loading="lazy"  /></a></figure>
-
                     </div>
-
-                  <footer class="card-footer">
-
-					  <span class="card-footer-item"><? echo( date("d.m.Y",$item[ 'mod_data' ]) )?></span> 
-
-					  <span class="card-footer-item"><? echo( formatSizeUnits($item[ 'size' ]) )?></span> 
-
-					  <a class="card-footer-item downl" href="<? echo $down_path.$item[ 'put' ]."/".$item[ 'fname' ] ;?>">СКАЧАТЬ</a> 
-
-					</footer>
-
-					  <? if ( $item[ 'stext' ] != '' ) { ?>
-
+                    <footer class="card-footer">
+                      <span class="card-footer-item"><? echo( date("d.m.Y",$item[ 'mod_data' ]) )?></span>
+                      <span class="card-footer-item"><? echo( formatSizeUnits($item[ 'size' ]) )?></span>
+                      <a class="card-footer-item downl" href="<? echo $down_path.$item[ 'put' ]."/".$item[ 'fname' ] ;?>">СКАЧАТЬ</a>
+                    </footer>
+                    <? if ( $item[ 'stext' ] != '' ) { ?>
                     <div class="card-content">
-
                       <div class="content"><? echo( $item[ 'stext' ] )?></div>
-
                     </div>
-
-					  <? } ?>
-
-
-
+                    <? } ?>
                   </div>
-
                 </div>
-
               </section>
-
               <? $num++; } ?>
-
+              <? } ?>
             </div>
 
           </div>
@@ -1064,4 +1073,4 @@ require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
   }
 
-        </script>
+</script>
