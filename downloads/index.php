@@ -4,7 +4,7 @@ $TITLE = "Каталог программного обеспечения, дра
 $CANONICAL = "https://www.rusavtomatika.com/downloads/";
 $DESCRIPTION = 'Каталог программного обеспечения, драйверов, макросов, проектов, документации и графических библиотек. Каталог ежедневно обновляется.';
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
-CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
+CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css?19102026");
 $arr_data = [
     [
         "title" => "Скачать",
@@ -44,7 +44,7 @@ $arr_data = [
     <p><br></p>
     <div class="page_library">
 
-        <div class="columns is-multiline ">
+        <div class="download__links-wrapper">
 
             <?
             foreach ($arr_data as $item){
