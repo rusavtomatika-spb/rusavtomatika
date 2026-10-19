@@ -367,6 +367,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           <div class="column is-5">
             <div class="block_padding">
               <p><a class="download_zip" href="/soft/EBProX/EBX-1.01.329.zip">Дистрибутив V1.01.329</a> <span class="small_gray_text">[16-09-2026] [285&nbsp;Мб]</span></p>
+              <p><a class="download_pdf" href="/upload_files/documents/weintek/easybuilder_x/EasyBuilder-X-v1.01-UserManual-eng.pdf">Руководство по EasyBuilderX 1.01.329</a></p>
             </div>
           </div>
         </div>
