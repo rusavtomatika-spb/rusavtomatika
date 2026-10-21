@@ -29,6 +29,12 @@ if (strpos($arResult["model"], "faraday") === false) {
     $arResult_product = CoreApplication::get_rows_from_table("`products_all`", "*", "s_name = '{$arResult["model"]}'", "", 1);
 }
 
+if (count($arResult_product) > 0 
+    && strcasecmp($arResult_product[0]['brand'], 'LicOS') === 0 
+    && $arResult_product[0]['status'] !== '1') {
+    $arResult_product = array();
+}
+
 //var_dump($arResult_product);
 if (count($arResult_product) == 0) {
     header("HTTP/1.0 404 Not Found");
@@ -334,6 +340,17 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
 //    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
 //        $arResult['product']["hdd_size_gb"] = "Отсутствует";
 //    }
+
+    if (isset($arResult['product']["cpu_code"]) and $arResult['product']["type"]=='box-pc' and preg_match('/ultra/i', $arResult['product']['cpu_code'])) {
+        $arResult['product']["standby_power_consumption"] = '1~2';
+        $arResult['product']["power_consumption_under_average_load"] = '10~40';
+        $arResult['product']["maximum_power_consumption"] = '70 (Ultra 5); 80 (Ultra 7)';
+        $prim_power = '<p><sup>*</sup> Энергопотребление устройства может зависеть от нескольких факторов, таких как режим работы устройства и тип выполняемых задач.  Энергопотребление варьируется в зависимости от способа использования устройства. Приведенные выше данные носят справочный характер.</p>';
+    } else {
+        $arResult['product']["standby_power_consumption"] = '';
+        $arResult['product']["power_consumption_under_average_load"] = '';
+        $arResult['product']["maximum_power_consumption"] = '';
+    }
 
     if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
         $arResult['product']["hdd_size_gb"] = $arResult['product']["hdd_size_gb"];

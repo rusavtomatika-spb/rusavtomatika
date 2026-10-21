@@ -731,6 +731,10 @@ if ( count( $product_field_descriptions ) > 0 and $arResult[ 'product' ][ "repla
 </section>
 <?
 endif;
+	if ( $prim_power != '' ) { 
+	echo $prim_power;
+	 }
+
 if ( $arResult[ 'product' ][ 'articuls' ] != '' ) {
   ?>
 <h2>Информация для заказа:</h2>

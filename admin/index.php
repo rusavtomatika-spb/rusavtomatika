@@ -265,7 +265,7 @@ if (!empty($result) && $isAllowed) {
         echo "<tr><form action='$link' method='post'>";
       endif;
       
-      echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span></td>";
+      echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span><br><p style='font-size:12px;text-align:center;'><a target='_blank' href='/".strtolower($row[ 'brand' ])."/".$row[ 'model' ]."/' name='menu' class='nav-link'>[См. на МС]</a></p></td>";
       echo "<td class='code'><select name='field_status' id='status' class='status' style='font-size: 0.7em;min-width:70px;'><option value='0'";
       if ( $row[ 'status' ] == "0" )echo " selected class='status-off'";
       echo ">ВЫКЛ</option><option value='1'";
@@ -528,7 +528,11 @@ if (!empty($result) && $isAllowed) {
   width: auto;
   color: #fff;
 }
+.nav-link { color: blue; text-decoration: none; position: relative; /* Важно для позиционирования ::after */ padding-right: 15px; /* Отступ, чтобы текст не наезжал на >>> */ } .nav-link::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-weight: bold; color: blue; /* Цвет маркера по умолчанию */ } /* Правило для активной ссылки */ .nav-link.active::after { content: '>>>'; /* Вот здесь появляются символы */ color: red; /* Цвет активного маркера */ }
 </style>
+<script type="javascript>">
+document.addEventListener('DOMContentLoaded', function() { const links = document.querySelectorAll('.nav-link'); const currentUrl = window.location.href; // Проверка при загрузке (если вернулись назад) links.forEach(link => { if (link.href === currentUrl) { link.classList.add('active'); } }); // Обработчик клика links.forEach(link => { link.addEventListener('click', function() { links.forEach(l => l.classList.remove('active')); this.classList.add('active'); }); }); });    
+</script>
 <?
 include $core_admin_path . 'template/footer.php';
 ?>
