@@ -346,11 +346,12 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
         $arResult['product']["power_consumption_under_average_load"] = '10~40';
         $arResult['product']["maximum_power_consumption"] = '70 (Ultra 5); 80 (Ultra 7)';
         $prim_power = '<p><sup>*</sup> Энергопотребление устройства может зависеть от нескольких факторов, таких как режим работы устройства и тип выполняемых задач.  Энергопотребление варьируется в зависимости от способа использования устройства. Приведенные выше данные носят справочный характер.</p>';
-    } else {
-        $arResult['product']["standby_power_consumption"] = '';
-        $arResult['product']["power_consumption_under_average_load"] = '';
-        $arResult['product']["maximum_power_consumption"] = '';
-    }
+    } 
+//	else {
+//        $arResult['product']["standby_power_consumption"] = '';
+//        $arResult['product']["power_consumption_under_average_load"] = '';
+//        $arResult['product']["maximum_power_consumption"] = '';
+//    }
 
     if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
         $arResult['product']["hdd_size_gb"] = $arResult['product']["hdd_size_gb"];
