@@ -30,6 +30,7 @@ $docs_result = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/docs_result.txt';
 $items = json_decode( file_get_contents( $docs_result ), true ); // JSON с документами weintek
 $total_docs = count( $items );
 $sections = array(
+  "Среда разработки EasyBuilder Pro" => "ebx",
   "Среда разработки EasyBuilder Pro" => "ebpro",
   "Удаленный доступ EasyAccess 2.0" => "ea20",
   "Серия cMT" => "cmt",
@@ -76,6 +77,7 @@ array_multisort( $tit, SORT_DESC, $docs );
             <div class="sectionItem-arrow active"></div>
             </a>
             <transition name="slide-fade">
+              <div class="section_inner"><a href="?docsection=ebpro" class="subSection subSection-item router-link-active"><span class="subSection-item-ancore">Среда разработки EasyBuilder X</span></a> </div>
               <div class="section_inner"><a href="?docsection=ebpro" class="subSection subSection-item router-link-active"><span class="subSection-item-ancore">Среда разработки EasyBuilder Pro</span></a> </div>
               <div class="section_inner"><a href="?docsection=ea20" class="subSection subSection-item router-link-active"><span class="subSection-item-ancore">Удаленный доступ EasyAccess 2.0</span></a> </div>
               <div class="section_inner"><a href="?docsection=cmt" class="subSection subSection-item router-link-active"><span class="subSection-item-ancore">Серия cMT</span></a> </div>

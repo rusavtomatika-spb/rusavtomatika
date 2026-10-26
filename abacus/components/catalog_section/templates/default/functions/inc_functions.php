@@ -33,6 +33,27 @@ function sort_array_by(&$array, $extra_params)
 function print_product_list($products, $view_mode)
 {
     global $arSettings;
+
+    if (!empty($products) && is_array($products)) {
+        $products = array_values(array_filter($products, function ($product) {
+            if (!isset($product['brand'])) {
+                return true;
+            }
+            $brand = $product['brand'];
+            if (is_array($brand)) {
+                $name = isset($brand['name']) ? $brand['name']
+                      : (isset($brand['code']) ? $brand['code'] : '');
+            } else {
+                $name = $brand;
+            }
+            if (strcasecmp(trim((string)$name), 'LicOS') !== 0) {
+                return true;
+            }
+            $status = isset($product['status']) ? trim((string)$product['status']) : '';
+            return $status === '1';
+        }));
+    }
+
     $series["products"] = $products;
     ?>
     <div class=" <? if($_POST["is_ajax"]) {  echo "is_ajax";   } ?> view-mode-<?= $view_mode ?>"><?

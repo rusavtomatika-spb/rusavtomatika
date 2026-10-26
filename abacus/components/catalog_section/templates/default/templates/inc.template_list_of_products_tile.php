@@ -192,8 +192,11 @@ $userCountry = getCountryFromDaData( $userIp, $apiKey );
 
                                  src="<?=$image_src?>"></a> </div>
       </div>
-      <div class="td_short_description"><a href="<?= $product["link_detail_page"]; ?>"><span class="model"> <? echo $product["model"];?> </span>
-        <div class="preview_text_block"> </a>
+      <div class="td_short_description">
+        <a href="<?= $product["link_detail_page"]; ?>">
+          <span class="model"> <? echo $product["model"];?> </span>
+        </a>
+        <div class="preview_text_block">
           <p>
             <?
             if ( count( $prod_series ) > 0 ) {
@@ -227,9 +230,10 @@ $userCountry = getCountryFromDaData( $userIp, $apiKey );
 
             ?>
           </p>
-          <a href="<?= $product["link_detail_page"]; ?>"><span class="preview_text">
-          <?= $product["preview_text"]; ?>
-          </span></a> </div>
+          <a href="<?= $product["link_detail_page"]; ?>">
+            <span class="preview_text"><?= $product["preview_text"]; ?></span>
+          </a>
+        </div>
       </div>
       <div class="td_buttons">
         <div class="series_products__panel_buttons">
@@ -253,14 +257,15 @@ $userCountry = getCountryFromDaData( $userIp, $apiKey );
                                   echo '<div class="usd_price"><span class="value">' . ( int )round( $product[ 'retail_price' ] * $usd_currency ) . '</span>';
                                   echo '&nbsp;<span class="usd">&#8381;</span>';
                                 }
-                                echo '</div>';
+                                echo '</div>';                   // закрывает usd_price
                                 if ( $usd_currency ) {
-                                  if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1 ) {
+                                  if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1  ) {
                                     ?>
-                          <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> &#8381; </div></div>
-                          <?
-                          }
-                          }
+                                    <div class="rub_price">...</div>
+                                    <?
+                                  }
+                                }
+                                echo '</div>'; 
                           break;
                           case 'RUR':
                             if ( $usd_currency ) {
