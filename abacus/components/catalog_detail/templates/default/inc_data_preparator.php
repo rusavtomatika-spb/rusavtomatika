@@ -340,12 +340,12 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
 //    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
 //        $arResult['product']["hdd_size_gb"] = "Отсутствует";
 //    }
+        $prim_power = '<p><sup>*</sup> Энергопотребление устройства может зависеть от нескольких факторов, таких как режим работы устройства и тип выполняемых задач.  Энергопотребление варьируется в зависимости от способа использования устройства. Приведенные выше данные носят справочный характер.</p>';
 
     if (isset($arResult['product']["cpu_code"]) and $arResult['product']["type"]=='box-pc' and preg_match('/ultra/i', $arResult['product']['cpu_code'])) {
         $arResult['product']["standby_power_consumption"] = '1~2';
         $arResult['product']["power_consumption_under_average_load"] = '10~40';
         $arResult['product']["maximum_power_consumption"] = '70 (Ultra 5); 80 (Ultra 7)';
-        $prim_power = '<p><sup>*</sup> Энергопотребление устройства может зависеть от нескольких факторов, таких как режим работы устройства и тип выполняемых задач.  Энергопотребление варьируется в зависимости от способа использования устройства. Приведенные выше данные носят справочный характер.</p>';
     } 
 //	else {
 //        $arResult['product']["standby_power_consumption"] = '';
