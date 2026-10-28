@@ -324,16 +324,18 @@ if ($filter_exists) {
 
             if (mb_strpos($lower, 'ultra 5') !== false || mb_strpos($lower, 'ultra5') !== false) {
                 $processor_conditions[] = "(
-                    REPLACE(REPLACE(`cpu_code`, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
-                    OR REPLACE(REPLACE(`cpu_type`, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
+                    REPLACE(REPLACE(cpu_code, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
+                    OR REPLACE(REPLACE(cpu_type, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
                 )";
                 continue;
             }
 
             if (mb_strpos($lower, 'ultra 7') !== false || mb_strpos($lower, 'ultra7') !== false) {
                 $processor_conditions[] = "(
-                    REPLACE(REPLACE(`cpu_code`, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
-                    OR REPLACE(REPLACE(`cpu_type`, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
+                    REPLACE(REPLACE(cpu_code, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
+                    OR REPLACE(REPLACE(cpu_type, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
+                    OR REPLACE(REPLACE(cpu_code, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5/7%'
+                    OR REPLACE(REPLACE(cpu_type, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5/7%'
                 )";
                 continue;
             }
