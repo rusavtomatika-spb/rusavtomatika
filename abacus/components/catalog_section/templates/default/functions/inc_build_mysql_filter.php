@@ -320,35 +320,60 @@ if ($filter_exists) {
 
         foreach ($arProcessors as $processor) {
             $processor = trim(preg_replace('/\s+/', ' ', $processor));
+            $lower = mb_strtolower($processor);
 
-            $tokens = array();
-
-            if (stripos($processor, 'i5') !== false) {
-                $tokens[] = 'Ultra 5';
-                $tokens[] = 'i5';
-            }
-            if (stripos($processor, 'i7') !== false) {
-                $tokens[] = 'Ultra 7';
-                $tokens[] = 'i7';
-            }
-
-            $parts = preg_split('/[\s\/,]+/', $processor);
-            foreach ($parts as $p) {
-                $p = trim($p);
-                if ($p === '' || mb_strlen($p) < 2) continue;
-                if (in_array(strtolower($p), array('intel', 'core', 'amd', 'ryzen'))) continue;
-                $tokens[] = $p;
-            }
-
-            $tokens = array_unique($tokens);
-
-            foreach ($tokens as $token) {
-                $token_safe = addslashes($token);
+            if (mb_strpos($lower, 'ultra 5') !== false || mb_strpos($lower, 'ultra5') !== false) {
                 $processor_conditions[] = "(
-                    REPLACE(`cpu_code`, '  ', ' ') LIKE '%$token_safe%'
-                    OR REPLACE(`cpu_type`, '  ', ' ') LIKE '%$token_safe%'
+                    REPLACE(REPLACE(`cpu_code`, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
+                    OR REPLACE(REPLACE(`cpu_type`, '  ', ' '), 'Ultra5', 'Ultra 5') LIKE '%Ultra 5%'
                 )";
+                continue;
             }
+
+            if (mb_strpos($lower, 'ultra 7') !== false || mb_strpos($lower, 'ultra7') !== false) {
+                $processor_conditions[] = "(
+                    REPLACE(REPLACE(`cpu_code`, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
+                    OR REPLACE(REPLACE(`cpu_type`, '  ', ' '), 'Ultra7', 'Ultra 7') LIKE '%Ultra 7%'
+                )";
+                continue;
+            }
+
+            if (mb_strpos($lower, 'ryzen') !== false) {
+                $processor_conditions[] = "(
+                    `cpu_code` LIKE '%Ryzen%' OR `cpu_type` LIKE '%Ryzen%'
+                )";
+                continue;
+            }
+
+            if (preg_match('/\bi3\b/i', $processor) || $lower === 'i3' || $lower === 'intel core i3') {
+                $processor_conditions[] = "(
+                    `cpu_code` REGEXP '[[:<:]]i3[[:>:]]'
+                    OR `cpu_type` REGEXP '[[:<:]]i3[[:>:]]'
+                )";
+                continue;
+            }
+
+            if (preg_match('/\bi5\b/i', $processor) || $lower === 'i5' || $lower === 'intel core i5') {
+                $processor_conditions[] = "(
+                    `cpu_code` REGEXP '[[:<:]]i5[[:>:]]'
+                    OR `cpu_type` REGEXP '[[:<:]]i5[[:>:]]'
+                )";
+                continue;
+            }
+
+            if (preg_match('/\bi7\b/i', $processor) || $lower === 'i7' || $lower === 'intel core i7') {
+                $processor_conditions[] = "(
+                    `cpu_code` REGEXP '[[:<:]]i7[[:>:]]'
+                    OR `cpu_type` REGEXP '[[:<:]]i7[[:>:]]'
+                )";
+                continue;
+            }
+
+            $token_safe = addslashes($processor);
+            $processor_conditions[] = "(
+                `cpu_code` LIKE '%$token_safe%'
+                OR `cpu_type` LIKE '%$token_safe%'
+            )";
         }
 
         if (count($processor_conditions) > 0) {
