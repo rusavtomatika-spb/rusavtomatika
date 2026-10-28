@@ -731,7 +731,9 @@ if ( count( $product_field_descriptions ) > 0 and $arResult[ 'product' ][ "repla
 </section>
 <?
 endif;
-	if ( $prim_power != '' ) { 
+	if ( (isset($arResult['product']["standby_power_consumption"]) && $arResult['product']["standby_power_consumption"] !='') ||
+  (isset($arResult['product']["power_consumption_under_average_load"]) && $arResult['product']["power_consumption_under_average_load"] !='') ||
+  (isset($arResult['product']["maximum_power_consumption"]) && $arResult['product']["maximum_power_consumption"] !='')) { 
 	echo $prim_power;
 	 }
 

@@ -1354,8 +1354,9 @@ tr.flying_row td {
     border-radius: 4px !important;
 }
 
-.UPPER_SEO_TEXT, .pretext {
+.UPPER_SEO_TEXT, .posttext, .pretext {
     margin: 0 0 1rem 30px;
+    text-align: justify;
 }
 
 .series_products_tiles {
