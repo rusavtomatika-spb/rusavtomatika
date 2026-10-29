@@ -78,7 +78,7 @@ var app = new Vue({
     current_filter_options: "",
     urlGetVars: [],
     view_mode: 'list',
-    product_sort: 'popular',
+    product_sort: 'recommended',
     favorites: [],
     compare: [],
     cart: [],
