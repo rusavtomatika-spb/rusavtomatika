@@ -41,42 +41,7 @@ global $db_work;
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include $core_admin_path . 'template/header.php';
 ?>
-<header class="admin__header">
-  <h1>Административная панель</h1>
 
-  <div class="header__user-info">
-    <p><?= htmlspecialchars($current_admin['username']) ?></p>
-    <a href="/admin/logout.php" class="logout-button">
-      Выход
-      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <style>
-            .cls-1 {
-              fill: none;
-              stroke: #fff;
-              stroke-linecap: round;
-              stroke-linejoin: round;
-              stroke-width: 2px;
-            }
-            path {
-              fill: #fff;
-              stroke: none;
-            }
-          </style>
-        </defs>
-        <title/>
-        <g id="logout">
-          <line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/>
-          <path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z"/>
-          <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/>
-          <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/>
-          <line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/>
-          <line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/>
-        </g>
-      </svg>
-    </a>
-  </div>
-</header>
 <?
 include $core_admin_path . 'menu.php';
 include $core_admin_path . 'classes/functions.php';
