@@ -31,7 +31,6 @@ if (!$current_admin) {
 
 header( "Cache-Control: no-store, no-cache, must-revalidate" );
 header( "Expires: " . date( "r" ) );
-
 define( 'admin', true );
 define('PRODUCTS_ALL', true);
 
@@ -40,9 +39,6 @@ global $db_work;
 
 $core_admin_path = $_SERVER[ 'DOCUMENT_ROOT' ] . '/admin/';
 include $core_admin_path . 'template/header.php';
-?>
-
-<?
 include $core_admin_path . 'menu.php';
 include $core_admin_path . 'classes/functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/admin/classes/databases.php';
@@ -82,6 +78,32 @@ if ( isset( $_GET[ "brands" ] )and $_GET[ "brands" ] > 0 ) {
 ?>
 <script type="text/javascript" src="/js/vue.js"></script> 
 <script type="text/javascript" src="/js/axios.min.js"></script>
+
+<?
+session_start();
+$sync_toast = null;
+if (!empty($_SESSION['sync_toast'])) {
+  $sync_toast = $_SESSION['sync_toast'];
+  unset($_SESSION['sync_toast']);
+}
+?>
+<? if ($sync_toast): ?>
+<div id="sync-toast" class="sync-toast sync-toast--<?= htmlspecialchars($sync_toast['type']) ?>">
+  <?= htmlspecialchars($sync_toast['text']) ?>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('sync-toast');
+  if (!el) return;
+  requestAnimationFrame(function () { el.classList.add('sync-toast--visible'); });
+  setTimeout(function () {
+    el.classList.remove('sync-toast--visible');
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+  }, 5000);
+})();
+</script>
+<? endif; ?>
+
 <?
 if ( isset( $_GET[ "message" ] ) ) {
   if ( $_GET[ "success" ] ) {
@@ -155,7 +177,6 @@ if ( isset( $_GET[ "action" ] )and $_GET[ "action" ] == "recalculate_positions"
   }
 }
 
-
 $db_work = new DBWORK();
 if ( isset( $_GET[ "sort_by" ] ) ) {
   $result = $db_work->get_list_catalog_elements( $_GET[ "sort_by" ] );
@@ -226,7 +247,7 @@ if (!empty($result) && $isAllowed) {
         echo "<tr><form action='$link' method='post'>";
       endif;
       
-      echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span><br><p style='font-size:12px;text-align:center;'><a target='_blank' href='/".strtolower($row[ 'brand' ])."/".$row[ 'model' ]."/' name='menu' class='nav-link'>[См. на МС]</a></p></td>";
+      echo "<td class='name'><a target='_blank' class='' href='/admin/edit_element.php?index=" . $row[ 'index' ] . "'>" . $row[ 'model' ] . "</a><input type='hidden' name='field_model' value='" . $row[ 'model' ] . "'><span style='display:none;'>" . $row[ 'type' ] . "</span><span style='display:none;'>" . $row[ 'series' ] . "</span><span style='display:none;'>" . $row[ 'brand' ] . "</span><br><p style='font-size:12px;text-align:center;'><a target='_blank' href='/".strtolower($row[ 'brand' ])."/".$row[ 'model' ]."/' name='menu' class='nav-link'>См. на МС</a></p></td>";
       echo "<td class='code'><select name='field_status' id='status' class='status' style='font-size: 0.7em;min-width:70px;'><option value='0'";
       if ( $row[ 'status' ] == "0" )echo " selected class='status-off'";
       echo ">ВЫКЛ</option><option value='1'";

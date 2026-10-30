@@ -773,4 +773,40 @@ public function get_editable_fields_by_element_id($element_id) {
         endif;
         return;
     }
+
+    public function set_product_onstock_spb($index, $value) {
+        $index = (int)$index;
+        $value = (int)$value;
+        $value = max(0, $value);
+
+        database_connect();
+        global $mysqli_db;
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+
+        $sql = "UPDATE `products_all` SET `onstock_spb` = " . $value . " WHERE `index` = " . $index . " LIMIT 1";
+        $ok = mysqli_query($mysqli_db, $sql);
+
+        if ($ok) {
+            return array('success' => true, 'message' => 'OK');
+        }
+        return array('success' => false, 'message' => mysqli_error($mysqli_db));
+    }
+
+    public function get_products_with_articuls() {
+        database_connect();
+        global $mysqli_db;
+        mysqli_query($mysqli_db, "SET NAMES utf8");
+
+        $out = array();
+        $sql = "SELECT `index`, `model`, `articuls`, `onstock_spb`
+                FROM `products_all`
+                WHERE `articuls` IS NOT NULL AND TRIM(`articuls`) <> ''";
+        $result = mysqli_query($mysqli_db, $sql);
+        if (!$result) return $out;
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $out[] = $row;
+        }
+        return $out;
+    }
 }

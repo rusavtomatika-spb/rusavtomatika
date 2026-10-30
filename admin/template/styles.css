@@ -87,15 +87,8 @@ th {
 
 
 td {
-
     padding: 5px 20px;
-
-    line-height: 1.5;
-
-    font-size: 1.2em;
-
 	border-bottom: solid 1px #ccc;
-
 }
 
 
@@ -1327,8 +1320,21 @@ select:has(> option.status-on) {
   width: auto;
   color: #fff;
 }
-.nav-link { color: blue; text-decoration: none; position: relative; /* Важно для позиционирования ::after */ padding-right: 15px; /* Отступ, чтобы текст не наезжал на >>> */ } .nav-link::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-weight: bold; color: blue; /* Цвет маркера по умолчанию */ } /* Правило для активной ссылки */ .nav-link.active::after { content: '>>>'; /* Вот здесь появляются символы */ color: red; /* Цвет активного маркера */ }
-
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 5px;
+    background: #5D3FD3;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: .3s;
+}
+.nav-link:hover {
+    background: #833AB4;
+    color: #fff;
+}
 
 .admin-menu-wrapper {
     display: flex;
@@ -1375,6 +1381,7 @@ select.choosing_template_theme {
     text-decoration: none;
     border-radius: 5px;
     transition: .3s;
+    border: none;
 }
 .action__button:hover {
     transform: scale(1.01);
@@ -1390,4 +1397,34 @@ select.choosing_template_theme {
     width: 100%;
     text-align: center;
     margin-top: auto;
+}
+
+.sync-toast {
+    position: fixed;
+    right: 20px;
+    top: 10px;
+    z-index: 99999;
+    max-width: 420px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 1px 1px 5px 1px #787575;
+}
+.sync-toast--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.sync-toast--success {
+    background: #34AB5E;
+}
+.sync-toast--error {
+    background: #d9534f;
 }

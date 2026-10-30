@@ -123,14 +123,16 @@ $admin_username = isset($current_admin['username']) ? $current_admin['username']
             </svg>
             Добавить товар
         </a>
-        <a href="" class="action__button sync-btn">
-            <svg fill="#fff" height="20px" width="20px" version="1.1" id="XMLID_123_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" stroke="#fff">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                <g id="SVGRepo_iconCarrier"> <g id="sync"> <path d="M7.3,23.7L2.6,19l4.7-4.7l1.4,1.4L6.4,18H16c3.3,0,6-2.7,6-6V9h2v3c0,4.4-3.6,8-8,8H6.4l2.3,2.3L7.3,23.7z M2,15H0v-3 c0-4.4,3.6-8,8-8h9.6l-2.3-2.3l1.4-1.4L21.4,5l-4.7,4.7l-1.4-1.4L17.6,6H8c-3.3,0-6,2.7-6,6V15z"/> </g> </g>
-            </svg>
-            Синхрон. Кол-во
-        </a>
+        <form action="/admin/sync_product.php" method="post" style="display:inline;">
+            <button type="submit" name="run_sync" value="1" class="action__button sync-btn">
+                <svg fill="#fff" height="20px" width="20px" version="1.1" id="XMLID_123_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" stroke="#fff">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g id="SVGRepo_iconCarrier"> <g id="sync"> <path d="M7.3,23.7L2.6,19l4.7-4.7l1.4,1.4L6.4,18H16c3.3,0,6-2.7,6-6V9h2v3c0,4.4-3.6,8-8,8H6.4l2.3,2.3L7.3,23.7z M2,15H0v-3 c0-4.4,3.6-8,8-8h9.6l-2.3-2.3l1.4-1.4L21.4,5l-4.7,4.7l-1.4-1.4L17.6,6H8c-3.3,0-6,2.7-6,6V15z"/> </g> </g>
+                </svg>
+                Синхрон. Кол-во
+            </button>
+        </form>
         <script>
             $(document).ready(function () {
                 console.log($.cookie("template_theme"));
