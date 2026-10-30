@@ -213,16 +213,14 @@ if (!empty($result) && $isAllowed) {
   echo "<th style='width:17%'>Модель</th>";
   echo "<th style='width:12%'>ВКЛ</th>";
   echo "<th style='width:12%'>Фоток</th>";
-  echo "<th style='width:12%'>Старьё</th>";
   echo "<th style='width:12%'>Цена</th>";
   echo "<th style='width:12%'>Скрыть цену</th>";
-  echo "<th style='width:12%'>COM</th>";
   echo "<th style='width:12%'>На складе</th>";
   echo "<th style='width:12%'>На складе СПБ</th>";
   echo "<th style='width:13%'>Показ На складе</th>";
   echo "<th style='width:13%'>Показ в каталоге</th>";
   echo "<th style='width:12%'>Сортировка</th>";
-  echo "<th style='width:12%' class='td_center'>Действия</th>";
+  echo "<th style='width:17%' class='td_center'>Действия</th>";
   echo "</tr>";
   echo "</thead>";
   echo "</table>";
@@ -237,12 +235,10 @@ if (!empty($result) && $isAllowed) {
   echo "<col style='width:12%'>";
   echo "<col style='width:12%'>";
   echo "<col style='width:12%'>";
-  echo "<col style='width:12%'>";
-  echo "<col style='width:12%'>";
   echo "<col style='width:13%'>";
   echo "<col style='width:13%'>";
   echo "<col style='width:12%'>";
-  echo "<col style='width:12%'>";
+  echo "<col style='width:17%'>";
   echo "</colgroup>";
   echo "<tbody>";
   
@@ -274,19 +270,19 @@ if (!empty($result) && $isAllowed) {
       if ( $row[ 'status' ] == "2" )echo " selected";
       echo ">2</option></select></td>";
       echo "<td class='code'><input type='text' name='field_pics_number' value='" . $row[ 'pics_number' ] . "'></td>";
-      echo "<td class='code'><input type='text' name='field_discontinued' value='" . $row[ 'discontinued' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_retail_price' value='" . $row[ 'retail_price' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_retail_price_hide' value='" . $row[ 'retail_price_hide' ] . "'></td>";
-      echo "<td class='code'><input type='text' name='field_serials' value='" . $row[ 'serials' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_onstock' value='" . $row[ 'onstock' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_onstock_spb' value='" . $row[ 'onstock_spb' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_show_on_stock' value='" . $row[ 'show_on_stock' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_show_in_cat' value='" . $row[ 'show_in_cat' ] . "'></td>";
       echo "<td class='code'><input type='text' name='field_sort' value='" . $row[ 'sort' ] . "'></td>";
       echo '<td class="td_center actions-wrapper">';
-	  echo "<input type='hidden' name='id' value='" . $row['index'] . "'>";
-      echo '<button type="submit" name="Submit" class="product__action-button green">Применить</button>';
-      echo '<a href="?action=copy_element&id=' . $row['index'] . '" class="product__action-button green">Копировать</a>';
+      echo "<input type='hidden' name='id' value='" . $row['index'] . "'>";
+      echo '<div style="display: flex; align-items: center; gap: 5px; width: 100%;">';
+      echo '<button type="submit" name="Submit" class="product__action-button green">Прим.</button>';
+      echo '<a href="?action=copy_element&id=' . $row['index'] . '" class="product__action-button green">Копир.</a>';
+      echo '</div>';
       echo '<a href="?action=delete_product_element&id=' . $row['index'] . '" class="product__action-button red">Удалить</a>';
       echo "</td>";
       echo "</form></tr>";
@@ -297,14 +293,6 @@ if (!empty($result) && $isAllowed) {
     echo "</tr>";
   }
   echo "</tbody>";
-  echo "</table>";
-  echo "</div>";
-  
-  echo "<div class='table-footer'>";
-  echo "<table class='fixed-table'>";
-  echo "<tr>";
-  echo "<td colspan='13' class='td_center'> Всего $counter строк </td>";
-  echo "</tr>";
   echo "</table>";
   echo "</div>";
   echo "</div>";

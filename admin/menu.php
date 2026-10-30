@@ -8,7 +8,9 @@ $types = $db_work->get_types();
 //echo "<pre>";
 //echo print_r($types);
 //echo "</pre>";
-
+$db_work_count = new DBWORK();
+$all_elements_count = $db_work_count->get_list_catalog_elements();
+$total_products = is_array($all_elements_count) ? count($all_elements_count) : 0;
 ?><div class="menu_wrapper">
         <div class="menu_wrapper_col1">
           <input class="filterInput input" type="text" placeholder="Фильтр по тексту..." id="search">
@@ -57,6 +59,7 @@ $types = $db_work->get_types();
             <li><a target="_blank" href="/">На сайт</a></li>
             <li>Обновить sitemap.xml: <a target="_blank" href="https://www.rusavtomatika.com/sitemap/generate_sitemap_xml.php">На проде</a> | <a target="_blank" href="https://www.rusavto.moisait.net/sitemap/generate_sitemap_xml.php">На MC</a></li>
         </ul>
+        <p class="products__counter-p">Всего товаров: <?= $total_products ?></p>
     </div>
     <?
     if (isset($_COOKIE["template_theme"])) {
