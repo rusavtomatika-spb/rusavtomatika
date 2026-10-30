@@ -67,11 +67,26 @@ $types = $db_work->get_types();
     } else $selected_show_all_fields = "";
     ?>
     <div class="admin-menu-wrapper">
-        <select class="choosing_template_theme" name="template_theme">
+        <select class="choosing_template_theme" name="template_theme" style="width: 100%;">
             <option value="0" <?if($selected_theme_option == 0) echo 'selected'?>>Тема КРУПНАЯ</option>
             <option value="1" <?if($selected_theme_option == 1) echo 'selected'?>>Тема МЕЛКАЯ</option>
         </select>
-        <a href="/admin/add_element.php" class="add__element-link">Добавить элемент</a>
+        <a href="/admin/add_element.php" class="add__element-link" style="width: 100%;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none" stroke="#fff">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                <g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+            </svg>
+            Добавить элемент
+        </a>
+        <a href="" class="sync__button">
+            <svg fill="#fff" height="20px" width="20px" version="1.1" id="XMLID_123_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve" stroke="#fff">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                <g id="SVGRepo_iconCarrier"> <g id="sync"> <path d="M7.3,23.7L2.6,19l4.7-4.7l1.4,1.4L6.4,18H16c3.3,0,6-2.7,6-6V9h2v3c0,4.4-3.6,8-8,8H6.4l2.3,2.3L7.3,23.7z M2,15H0v-3 c0-4.4,3.6-8,8-8h9.6l-2.3-2.3l1.4-1.4L21.4,5l-4.7,4.7l-1.4-1.4L17.6,6H8c-3.3,0-6,2.7-6,6V15z"/> </g> </g>
+            </svg>
+            Синх. Кол-во
+        </a>
         <script>
             $(document).ready(function () {
                 console.log($.cookie("template_theme"));
@@ -107,58 +122,3 @@ $types = $db_work->get_types();
         </script>
     </div>
 </div>
-
-<style>
-.admin-menu-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    min-width: 243px;
-    max-width: 243px;
-    gap: 10px;
-}
-.menu-points-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    width: 100%;
-}
-.menu-points-wrapper div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    gap: 10px;
-}
-.add__element-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #34AB5E;
-    font-size: 15px;
-    color: #fff;
-    padding: 10px 15px;
-    margin-top: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: .3s;
-    width: 100%;
-}
-.add__element-link:hover {
-    transform: scale(1.02);
-    color: #fff;
-}
-.menu_wrapper_col2 .menu { padding-left: 0; }
-.menu_wrapper {
-    margin-bottom: 50px;
-}
-select.choosing_template_theme {
-    width: 100%;
-    display: inline;
-}
-.menu_wrapper_col1 input[type="text"], .menu_wrapper_col1 select {
-    width: 100%;
-}
-</style>
