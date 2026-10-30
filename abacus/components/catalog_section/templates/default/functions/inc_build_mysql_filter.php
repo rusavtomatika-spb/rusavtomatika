@@ -900,12 +900,18 @@ if ($filter_exists) {
     if ($case_material != '') {
         if ($filter_chunk == '') {
             $filter_chunk = ' (';
-        } else $filter_chunk = ' and (';
+        } else {
+            $filter_chunk = ' and (';
+        }
 
         if ($case_material == "Пластик+Металл") {
-            $filter_chunk .= " `case_material` = 'Пластик,Металл') ";
+            $filter_chunk .= " (`case_material` = 'Пластик,Металл' OR `case_material` = 'Пластик+Металл' OR `case_material` = 'Пластик + Металл' OR `case_material` LIKE '%Пластик%Металл%')) ";
+        } elseif ($case_material == "Алюминий") {
+            $filter_chunk .= " (`case_material` LIKE '%Алюмин%')) ";
+        } elseif ($case_material == "Пластик") {
+            $filter_chunk .= " (`case_material` = 'Пластик')) ";
         } else {
-            $filter_chunk .= " `case_material` = '$case_material') ";
+            $filter_chunk .= " `case_material` = '" . $case_material . "')) ";
         }
         $mysql_product_filter .= $filter_chunk;
     }
