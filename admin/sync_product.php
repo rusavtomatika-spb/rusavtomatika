@@ -57,20 +57,23 @@ function sync_decrypt($b64, $key) {
     return openssl_decrypt($cipher, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
 }
 
-$sync_db = new mysqli('host', 'user', 'db_pass', 'db_name');
-if ($sync_db->connect_errno) {
+global $mysqli_db;
+if (!$mysqli_db) {
+    if (function_exists('database_connect')) database_connect();
+    global $mysqli_db;
+}
+if (!$mysqli_db) {
     header('HTTP/1.0 500 Internal Server Error');
     exit('sync db connect error');
 }
-$sync_db->set_charset('utf8mb4');
 
 $sync_secrets = array();
-$res = $sync_db->query("SELECT `name`, `value` FROM `scrt`");
+$res = mysqli_query($mysqli_db, "SELECT `name`, `value` FROM `scrt`");
 if (!$res) {
     header('HTTP/1.0 500 Internal Server Error');
     exit('sync secrets query error');
 }
-while ($row = $res->fetch_assoc()) {
+while ($row = mysqli_fetch_assoc($res)) {
     $dec = sync_decrypt($row['value'], $sync_key);
     if ($dec === false) {
         header('HTTP/1.0 500 Internal Server Error');
@@ -201,27 +204,21 @@ foreach ($api_data as $row) {
 }
 
 $products = array();
-if (function_exists('database_connect')) {
-    database_connect();
-}
-global $mysqli_db;
-if ($mysqli_db) {
-    $sql = "SELECT `index`, `model`, `articuls`, `onstock_spb`, `discontinued` FROM `products_all`";
-    $r = mysqli_query($mysqli_db, $sql);
-    if ($r) {
-        while ($row = mysqli_fetch_assoc($r)) {
-            $products[] = $row;
-        }
+$sql = "SELECT `index`, `model`, `articuls`, `onstock_spb`, `discontinued` FROM `products_all`";
+$r = mysqli_query($mysqli_db, $sql);
+if ($r) {
+    while ($row = mysqli_fetch_assoc($r)) {
+        $products[] = $row;
     }
 }
 
-$run_started_at   = date('Y-m-d H:i:s');
-$admin_id         = isset($current_admin['id']) ? (int)$current_admin['id'] : null;
-$admin_username   = isset($current_admin['username']) ? $current_admin['username'] : null;
-$api_rows_count   = count($api_data);
-$run_id           = null;
+$run_started_at = date('Y-m-d H:i:s');
+$admin_id       = isset($current_admin['id']) ? (int)$current_admin['id'] : null;
+$admin_username = isset($current_admin['username']) ? $current_admin['username'] : null;
+$api_rows_count = count($api_data);
+$run_id         = null;
 
-$stmt_run = $sync_db->prepare(
+$stmt_run = $mysqli_db->prepare(
     "INSERT INTO `sync_log_runs` (`started_at`, `admin_id`, `admin_username`, `api_rows`)
      VALUES (?, ?, ?, ?)"
 );
@@ -282,7 +279,7 @@ foreach ($products as $row) {
     }
 
     if ($run_id !== null) {
-        $stmt_b = $sync_db->prepare(
+        $stmt_b = $mysqli_db->prepare(
             "INSERT INTO `sync_log_before`
                 (`run_id`, `product_index`, `model`, `onstock_spb_before`, `discontinued`)
              VALUES (?, ?, ?, ?, ?)"
@@ -311,7 +308,7 @@ foreach ($products as $row) {
             $changed_at = date('Y-m-d H:i:s');
             $stock_in_api = $matched ? (int)$best_stock : null;
 
-            $stmt_c = $sync_db->prepare(
+            $stmt_c = $mysqli_db->prepare(
                 "INSERT INTO `sync_log_changes`
                     (`run_id`, `product_index`, `model`, `old_value`, `new_value`,
                      `matched_article`, `stock_in_api`, `reason`, `changed_at`)
@@ -334,7 +331,7 @@ foreach ($products as $row) {
 
 if ($run_id !== null) {
     $finished_at = date('Y-m-d H:i:s');
-    $stmt_fin = $sync_db->prepare(
+    $stmt_fin = $mysqli_db->prepare(
         "UPDATE `sync_log_runs`
          SET `finished_at` = ?, `updated_to_1` = ?, `updated_to_0` = ?, `unchanged` = ?,
              `matched_zero` = ?, `not_found` = ?, `skipped_discontinued` = ?, `errors` = ?
@@ -350,8 +347,6 @@ if ($run_id !== null) {
         $stmt_fin->close();
     }
 }
-
-$sync_db->close();
 
 $msg = 'Синхронизация завершена: '
      . 'обновлено в наличии ' . $updated_to_1 . ', '
