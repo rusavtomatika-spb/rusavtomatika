@@ -354,7 +354,7 @@ file_put_contents($ebpro_files_block, $ebpro_files );
             </div>
           </div>
         </div>
-        <a id="easybuilder8000"></a>
+        <a id="ebx"></a>
         <div class="columns  is-multiline">
           <div class="column is-12 background-gray">
             <div class="block_padding"> <span class="page_downloads_title3"><a href="#easybuilderx">EasyBuilder X</a></span> &nbsp;&nbsp;&nbsp; серии <a href="/catalog/operator_panels/?&series=cMT">cMT</a>, <a href="/catalog/operator_panels/?&series=cMT-X">cMT X</a> </div>
@@ -366,8 +366,8 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-5">
             <div class="block_padding">
-              <p><a class="download_zip" href="/soft/EBProX/EBX-1.01.329.zip">Дистрибутив V1.01.329</a> <span class="small_gray_text">[16-09-2026] [285&nbsp;Мб]</span></p>
-              <p><a class="download_pdf" href="/upload_files/documents/weintek/easybuilder_x/EasyBuilder-X-v1.01-UserManual-eng.pdf">Руководство по EasyBuilderX 1.01.329</a></p>
+              <p><a class="download_zip" href="/soft/EBProX/EBX-1.01.376.zip">Дистрибутив V1.01.376</a> <span class="small_gray_text">[14-10-2026] [285&nbsp;Мб]</span></p>
+              <p><a class="download_pdf" href="/soft/EBProX/ReleaseNotes/EBX-1.01.376-ReleaseNotes-eng.pdf">Руководство по EasyBuilderX 1.01.376</a></p>
             </div>
           </div>
         </div>
