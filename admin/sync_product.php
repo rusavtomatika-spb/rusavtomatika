@@ -115,11 +115,14 @@ function sync_api_request($url, $login, $pass) {
 function sync_normalize($s) {
     $s = (string)$s;
     $s = str_replace(array("\xC2\xA0", "\r", "\n", "\t"), ' ', $s);
+    $s = str_replace(array('–', '—', '−'), '-', $s);
     $s2 = preg_replace('/\s+/u', ' ', $s);
     if ($s2 === null) {
         $s2 = preg_replace('/\s+/', ' ', $s);
     }
-    return trim($s2);
+    $s2 = trim($s2);
+    $s2 = preg_replace('/\s*-\s*/u', '-', $s2);
+    return $s2;
 }
 function sync_key($s) {
     $s = sync_normalize($s);
@@ -204,7 +207,7 @@ foreach ($api_data as $row) {
 }
 
 $products = array();
-$sql = "SELECT `index`, `model`, `articuls`, `onstock_spb`, `discontinued` FROM `products_all`";
+$sql = "SELECT `index`, `model`, `articuls`, `articuls_api`, `onstock_spb`, `discontinued` FROM `products_all`";
 $r = mysqli_query($mysqli_db, $sql);
 if ($r) {
     while ($row = mysqli_fetch_assoc($r)) {
@@ -248,8 +251,8 @@ foreach ($products as $row) {
     $mk = sync_key($model);
     if ($mk !== '' && $mk !== '0') $keys[$mk] = $model;
 
-    $parsed = sync_parse_articuls(isset($row['articuls']) ? $row['articuls'] : '');
-    foreach ($parsed as $pa) {
+    $parsed_api = sync_parse_articuls(isset($row['articuls_api']) ? $row['articuls_api'] : '');
+    foreach ($parsed_api as $pa) {
         $pk = sync_key($pa);
         if ($pk !== '' && $pk !== '0') $keys[$pk] = $pa;
     }
