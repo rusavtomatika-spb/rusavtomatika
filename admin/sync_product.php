@@ -82,10 +82,10 @@ if ($mysqli_weintek->connect_errno) {
 $mysqli_weintek->set_charset('utf8mb4');
 
 $sync_secrets = array();
-$res = $mysqli_ra->query("SELECT `name`, `value` FROM `scrt`");
+$res = $mysqli_weintek->query("SELECT `name`, `value` FROM `scrt`");
 if (!$res) {
     header('HTTP/1.0 500 Internal Server Error');
-    exit('sync secrets query error: ' . $mysqli_ra->error);
+    exit('sync secrets query error: ' . $mysqli_weintek->error);
 }
 while ($row = $res->fetch_assoc()) {
     $dec = sync_decrypt($row['value'], $sync_key);
@@ -220,14 +220,14 @@ foreach ($api_data as $row) {
 
 $products = array();
 $sql = "SELECT `index`, `model`, `articuls`, `articuls_api`, `onstock_spb`, `discontinued` FROM `products_all`";
-$r = $mysqli_weintek->query($sql);
+$r = $mysqli_ra->query($sql);
 if ($r) {
     while ($row = $r->fetch_assoc()) {
         $products[] = $row;
     }
 } else {
     header('HTTP/1.0 500 Internal Server Error');
-    exit('weintek products query error: ' . $mysqli_weintek->error);
+    exit('products query error: ' . $mysqli_ra->error);
 }
 
 $run_started_at = date('Y-m-d H:i:s');
@@ -315,7 +315,7 @@ foreach ($products as $row) {
         continue;
     }
 
-    $stmt_u = $mysqli_weintek->prepare("UPDATE `products_all` SET `onstock_spb` = ? WHERE `index` = ? LIMIT 1");
+    $stmt_u = $mysqli_ra->prepare("UPDATE `products_all` SET `onstock_spb` = ? WHERE `index` = ? LIMIT 1");
     $ok = false;
     if ($stmt_u) {
         $stmt_u->bind_param('ii', $new_value, $index);
