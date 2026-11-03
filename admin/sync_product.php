@@ -1,6 +1,16 @@
 <?php
 require_once 'admin_auth.php';
 
+$RA_HOST = 'localhost';
+$RA_USER = '';
+$RA_PASS = '';
+$RA_NAME = 'moisait_ra';
+
+$WEINTEK_HOST = 'localhost';
+$WEINTEK_USER = '';
+$WEINTEK_PASS = '';
+$WEINTEK_NAME = 'moisait_weintek';
+
 $isAllowed = false;
 $allowedDomains = array('www.rusavto.moisait.net', 'rusavtomatika.local');
 if (in_array($_SERVER['SERVER_NAME'], $allowedDomains)) $isAllowed = true;
@@ -57,23 +67,27 @@ function sync_decrypt($b64, $key) {
     return openssl_decrypt($cipher, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
 }
 
-global $mysqli_db;
-if (!$mysqli_db) {
-    if (function_exists('database_connect')) database_connect();
-    global $mysqli_db;
-}
-if (!$mysqli_db) {
+$mysqli_ra = @new mysqli($RA_HOST, $RA_USER, $RA_PASS, $RA_NAME);
+if ($mysqli_ra->connect_errno) {
     header('HTTP/1.0 500 Internal Server Error');
-    exit('sync db connect error');
+    exit('ra db connect error: ' . $mysqli_ra->connect_error);
 }
+$mysqli_ra->set_charset('utf8mb4');
+
+$mysqli_weintek = @new mysqli($WEINTEK_HOST, $WEINTEK_USER, $WEINTEK_PASS, $WEINTEK_NAME);
+if ($mysqli_weintek->connect_errno) {
+    header('HTTP/1.0 500 Internal Server Error');
+    exit('weintek db connect error: ' . $mysqli_weintek->connect_error);
+}
+$mysqli_weintek->set_charset('utf8mb4');
 
 $sync_secrets = array();
-$res = mysqli_query($mysqli_db, "SELECT `name`, `value` FROM `scrt`");
+$res = $mysqli_ra->query("SELECT `name`, `value` FROM `scrt`");
 if (!$res) {
     header('HTTP/1.0 500 Internal Server Error');
-    exit('sync secrets query error');
+    exit('sync secrets query error: ' . $mysqli_ra->error);
 }
-while ($row = mysqli_fetch_assoc($res)) {
+while ($row = $res->fetch_assoc()) {
     $dec = sync_decrypt($row['value'], $sync_key);
     if ($dec === false) {
         header('HTTP/1.0 500 Internal Server Error');
@@ -159,8 +173,6 @@ $not_found    = 0;
 $errors       = 0;
 $skipped_discontinued = 0;
 
-$db_work = new DBWORK();
-
 $api = sync_api_request(API_URL, API_LOGIN, API_PASS);
 if (!$api['ok']) {
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -208,11 +220,14 @@ foreach ($api_data as $row) {
 
 $products = array();
 $sql = "SELECT `index`, `model`, `articuls`, `articuls_api`, `onstock_spb`, `discontinued` FROM `products_all`";
-$r = mysqli_query($mysqli_db, $sql);
+$r = $mysqli_weintek->query($sql);
 if ($r) {
-    while ($row = mysqli_fetch_assoc($r)) {
+    while ($row = $r->fetch_assoc()) {
         $products[] = $row;
     }
+} else {
+    header('HTTP/1.0 500 Internal Server Error');
+    exit('weintek products query error: ' . $mysqli_weintek->error);
 }
 
 $run_started_at = date('Y-m-d H:i:s');
@@ -221,7 +236,7 @@ $admin_username = isset($current_admin['username']) ? $current_admin['username']
 $api_rows_count = count($api_data);
 $run_id         = null;
 
-$stmt_run = $mysqli_db->prepare(
+$stmt_run = $mysqli_ra->prepare(
     "INSERT INTO `sync_log_runs` (`started_at`, `admin_id`, `admin_username`, `api_rows`)
      VALUES (?, ?, ?, ?)"
 );
@@ -282,7 +297,7 @@ foreach ($products as $row) {
     }
 
     if ($run_id !== null) {
-        $stmt_b = $mysqli_db->prepare(
+        $stmt_b = $mysqli_ra->prepare(
             "INSERT INTO `sync_log_before`
                 (`run_id`, `product_index`, `model`, `onstock_spb_before`, `discontinued`)
              VALUES (?, ?, ?, ?, ?)"
@@ -300,8 +315,13 @@ foreach ($products as $row) {
         continue;
     }
 
-    $res = $db_work->set_product_onstock_spb($index, $new_value);
-    $ok  = !empty($res['success']);
+    $stmt_u = $mysqli_weintek->prepare("UPDATE `products_all` SET `onstock_spb` = ? WHERE `index` = ? LIMIT 1");
+    $ok = false;
+    if ($stmt_u) {
+        $stmt_u->bind_param('ii', $new_value, $index);
+        $ok = $stmt_u->execute();
+        $stmt_u->close();
+    }
 
     if ($ok) {
         if ($new_value > 0) $updated_to_1++;
@@ -311,7 +331,7 @@ foreach ($products as $row) {
             $changed_at = date('Y-m-d H:i:s');
             $stock_in_api = $matched ? (int)$best_stock : null;
 
-            $stmt_c = $mysqli_db->prepare(
+            $stmt_c = $mysqli_ra->prepare(
                 "INSERT INTO `sync_log_changes`
                     (`run_id`, `product_index`, `model`, `old_value`, `new_value`,
                      `matched_article`, `stock_in_api`, `reason`, `changed_at`)
@@ -334,7 +354,7 @@ foreach ($products as $row) {
 
 if ($run_id !== null) {
     $finished_at = date('Y-m-d H:i:s');
-    $stmt_fin = $mysqli_db->prepare(
+    $stmt_fin = $mysqli_ra->prepare(
         "UPDATE `sync_log_runs`
          SET `finished_at` = ?, `updated_to_1` = ?, `updated_to_0` = ?, `unchanged` = ?,
              `matched_zero` = ?, `not_found` = ?, `skipped_discontinued` = ?, `errors` = ?
@@ -350,6 +370,9 @@ if ($run_id !== null) {
         $stmt_fin->close();
     }
 }
+
+$mysqli_ra->close();
+$mysqli_weintek->close();
 
 $msg = 'Синхронизация завершена: '
      . 'обновлено в наличии ' . $updated_to_1 . ', '
