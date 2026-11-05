@@ -33,6 +33,7 @@ $sending_by_email_only = "";
 $with_database_only = "";
 $web_only = "";
 $terminal_cmt_only = "";
+$ai_only = "";
 
 /*if(is_array($_GET) and count($_GET)>0){
     $arr_all_available_filters_rows = $DB_WORK_CATALOG->get_rows_from_table("catalog_filters");
@@ -164,6 +165,10 @@ if (isset($_GET["web"]) and $_GET["web"] == 'yes') {
 }
 if (isset($_GET["terminal_cmt"]) and $_GET["terminal_cmt"] == 'yes') {
     $terminal_cmt_only = "1";
+    $filter_exists = true;
+}
+if (isset($_GET["ai"]) and $_GET["ai"] == 'yes') {
+    $ai_only = "1";
     $filter_exists = true;
 }
 
@@ -511,21 +516,20 @@ if ($filter_exists) {
         $mysql_product_filter .= $filter_chunk;
     }
 
-
-        if ($com_range_max != '') {
-            if ($filter_chunk == '') {
-                $filter_chunk = ' (';
-            } else $filter_chunk = ' and (';
-            $filter_chunk .= " `serials` <= '$com_range_max') ";
-            $mysql_product_filter .= $filter_chunk;
-        }
-        if ($com_range_min != '') {
-            if ($filter_chunk == '') {
-                $filter_chunk = ' (';
-            } else $filter_chunk = ' and (';
-            $filter_chunk .= " `serials` >= '$com_range_min') ";
-            $mysql_product_filter .= $filter_chunk;
-        }
+    if ($com_range_max != '') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `serials` <= '$com_range_max') ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+    if ($com_range_min != '') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `serials` >= '$com_range_min') ";
+        $mysql_product_filter .= $filter_chunk;
+    }
 
     if ($ethernets_range_max != '') {
         if ($filter_chunk == '') {
@@ -928,6 +932,13 @@ if ($filter_exists) {
             $filter_chunk = ' (';
         } else $filter_chunk = ' and (';
         $filter_chunk .= " `diagonal` <= " . floatval($range_diagonal_max) . ") ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+    if ($ai_only == '1') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `ai` = 1) ";
         $mysql_product_filter .= $filter_chunk;
     }
 

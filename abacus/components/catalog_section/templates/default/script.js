@@ -90,7 +90,8 @@ var app = new Vue({
     filterSelectedSendingByEmail: false,
     filterSelectedWithDatabase: false,
     filterSelectedWeb: false,
-    filterSelectedTerminalCmt: false
+    filterSelectedTerminalCmt: false,
+    filterSelectedAi: false
   },
   watch: {
     extra_h1: function (newVal) {
@@ -460,6 +461,10 @@ var app = new Vue({
           this.filterSelectedTerminalCmt = false;
           this.filterChanged();
           break;
+        case 'filterSelectedAi':
+          this.filterSelectedAi = false;
+          this.filterChanged();
+          break;
         default:
         case 'all':
           this.filterSelectedBrands = [];
@@ -507,6 +512,7 @@ var app = new Vue({
           this.filterSelectedWithDatabase = false;
           this.filterSelectedWeb = false;
           this.filterSelectedTerminalCmt = false;
+          this.filterSelectedAi = false;
           this.filterChanged();
 
           break;
@@ -809,6 +815,10 @@ var app = new Vue({
               return -1;
             } else return 1;
           });
+        case 'filterSelectedAi':
+          this.filterSelectedAi = false;
+          this.filterChanged();
+          break;
         case 'filterSelectedTypes':
           this.filterSelectedTypes = "";
           /*
@@ -948,6 +958,9 @@ var app = new Vue({
       }
       if (this.filterSelectedTerminalCmt) {
         this.filter_string += '&terminal_cmt=yes';
+      }
+      if (this.filterSelectedAi) {
+        this.filter_string += '&ai=yes';
       }
       if (this.filterSelectedRangeDiagonal_min > 0) {
         this.filter_string += '&range_diagonal_min=' + this.filterSelectedRangeDiagonal_min;
@@ -1367,6 +1380,9 @@ var app = new Vue({
             case "full_hd":
               h1_chunk = ",С Full HD экраном";
               break;
+            case 'ai':
+              h1_chunk = ',с ИИ-ускорителем';
+              break;
             default:
               h1_chunk = "," + item_splitted[1];
               break;
@@ -1739,6 +1755,9 @@ var app = new Vue({
       }
       if (this.urlGetVars['terminal_cmt'] != null) {
         this.filterSelectedTerminalCmt = true;
+      }
+      if (this.urlGetVars['ai'] != null) {
+        this.filterSelectedAi = true;
       }
       if (this.urlGetVars['series'] != null) {
         this.filterSelectedSeries = this.urlGetVars['series'];
