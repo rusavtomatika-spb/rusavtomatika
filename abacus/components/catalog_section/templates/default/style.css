@@ -1404,6 +1404,10 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 .td_preview_image {
     width: 180px;
 }
+.section-preview-text {
+    padding-left: 30px;
+    text-align: justify;
+}
 @media (max-width: 1023px){
     .component_catalog_section__panel_of_products .view-mode-list .preview_image {
         padding: 0px;

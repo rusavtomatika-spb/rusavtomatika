@@ -555,6 +555,22 @@ if ( $HTTP_REFERER != "" ) {
                 include "catalog_section_products.php";
                 ?>
               </div>
+              <?
+              $preview_text = '';
+              if (isset($_GET['ai']) && $_GET['ai'] === 'yes') {
+                  $ai_section = CoreApplication::get_rows_from_table(
+                      "catalog_sections", "", "`code`='embedded_computers_ai'"
+                  )[0];
+                  if (!empty($ai_section['preview_text'])) {
+                      $preview_text = $ai_section['preview_text'];
+                  }
+              }
+              if ($preview_text === '' && !empty($arrSection['preview_text'])) {
+                  $preview_text = $arrSection['preview_text'];
+              }
+              if ($preview_text !== ''): ?>
+                  <div class="section-preview-text"><?= $preview_text ?></div>
+              <? endif; ?>
             </div>
             <?
             if ( isset( $posttext )and $posttext != "" ) {
