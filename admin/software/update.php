@@ -84,7 +84,16 @@ $zipUrl = null;
 $fileNameFromPage = null;
 
 $needle = $isX ? 'EasyBuilder X' : 'EasyBuilder Pro';
-$pos = stripos($html, $needle);
+$posH3 = stripos($html, 'text-dark-blue');
+
+$pos = false;
+if ($posH3 !== false) {
+    $pos = stripos($html, $needle, $posH3);
+}
+
+if ($pos === false) {
+    $pos = stripos($html, $needle);
+}
 
 if ($pos !== false) {
     $chunk = substr($html, $pos, 5000);
