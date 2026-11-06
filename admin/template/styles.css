@@ -1370,10 +1370,11 @@ select.choosing_template_theme {
 }
 
 .action__button {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 180px;
+    width: 100%;
     padding: 5px;
     font-size: 14px;
     color: #fff;
@@ -1383,13 +1384,10 @@ select.choosing_template_theme {
     transition: .3s;
     border: none;
 }
-.action__button:hover {
-    transform: scale(1.01);
-    color: #fff;
-}
 .add-btn { background: #34AB5E; }
 .sync-btn { background: #89CFF0; }
-
+.update-btn { background: #d7d11a; }
+.logout-btn { background: #c96b00; }
 
 .products__counter-p {
     font-size: 25px;
@@ -1428,3 +1426,11 @@ select.choosing_template_theme {
 .sync-toast--error {
     background: #d9534f;
 }
+
+.action__buttons-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+.action__buttons-wrapper form { width: 100%; }
