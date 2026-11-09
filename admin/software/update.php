@@ -246,6 +246,16 @@ if (!$uploaded) {
     $ftpErr = 'ftp_put failed';
 }
 
+$setupName = $isX ? 'EBProX_setup.zip' : 'EBpro_setup.zip';
+$uploadedSetup = false;
+$setupErr = '';
+if ($uploaded) {
+    $uploadedSetup = @ftp_put($ftp, $setupName, $filePath, FTP_BINARY);
+    if (!$uploadedSetup) {
+        $setupErr = 'ftp_put setup failed';
+    }
+}
+
 ftp_close($ftp);
 
 if (!$uploaded) {
@@ -256,11 +266,19 @@ if (!$uploaded) {
     header('Location: /admin'); exit;
 }
 
+if (!$uploadedSetup) {
+    $_SESSION['sync_toast'] = array(
+        'type' => 'error',
+        'text' => 'FTP: основной файл загружен, но копия ' . $setupName . ' не создана (' . $setupErr . '). Файл сохранён локально: ' . $fileName
+    );
+    header('Location: /admin'); exit;
+}
+
 @unlink($filePath);
 
 $_SESSION['sync_toast'] = array(
     'type' => 'success',
-    'text' => 'Скачано и загружено на FTP: ' . $remoteName . ' → ' . $ftpDir . ' (' . formatSizeUnits($size) . ')'
+    'text' => 'Скачано и загружено на FTP: ' . $remoteName . ' + ' . $setupName . ' → ' . $ftpDir . ' (' . formatSizeUnits($size) . ')'
 );
 header('Location: /admin'); exit;
 
