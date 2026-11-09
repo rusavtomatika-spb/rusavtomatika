@@ -308,7 +308,7 @@ if ($uploaded) {
     }
 }
 
-$pdfRemoteDir = $ftpDir . '/ReleaseNotes';
+$pdfRemoteDir = $ftpDir . '/release_notes';
 $pdfUploaded = false;
 $pdfUploadErr = '';
 
@@ -423,7 +423,7 @@ if ($pdfLocalPath !== null) {
     }
 
     $sectionKey = $isX ? 'ebx' : 'ebpro';
-    $putFolder  = $isX ? 'EBProX/ReleaseNotes' : 'EBPro/ReleaseNotes';
+    $putFolder  = $isX ? 'EBProX/release_notes' : 'EBPro/release_notes';
 
     $newUpdEntry = array(
         'title'       => $isX
@@ -467,7 +467,7 @@ if ($pdfUrl === null) {
 } elseif (!$pdfUploaded) {
     $pdfInfo = ' [PDF не загружен: ' . $pdfUploadErr . ']';
 } else {
-    $pdfInfo = ' + ' . $pdfFileName . ' (ReleaseNotes)';
+    $pdfInfo = ' + ' . $pdfFileName . ' (release_notes)';
 }
 
 $_SESSION['sync_toast'] = array(
