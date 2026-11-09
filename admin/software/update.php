@@ -184,6 +184,84 @@ $_SESSION['sync_toast'] = array(
     'type' => 'success',
     'text' => 'Скачано: ' . $fileName . ' (' . formatSizeUnits($size) . ')'
 );
+
+$size = filesize($filePath);
+
+define('FTP_HOST', '82.202.162.16');
+define('FTP_PORT', 21);
+define('FTP_USER', 'upload_olga@weblector.ru');
+define('FTP_PASS', 'olgaglr');
+define('FTP_DIR_X',   '/soft/EBProX');
+define('FTP_DIR_PRO', '/soft/EBPro');
+
+$ftpDir = $isX ? FTP_DIR_X : FTP_DIR_PRO;
+
+$ftp = @ftp_connect(FTP_HOST, FTP_PORT, 15);
+if (!$ftp) {
+    $_SESSION['sync_toast'] = array(
+        'type' => 'error',
+        'text' => 'FTP: не удалось подключиться к ' . FTP_HOST . ':' . FTP_PORT . '. Файл сохранён локально: ' . $fileName
+    );
+    header('Location: /admin'); exit;
+}
+
+if (!@ftp_login($ftp, FTP_USER, FTP_PASS)) {
+    ftp_close($ftp);
+    $_SESSION['sync_toast'] = array(
+        'type' => 'error',
+        'text' => 'FTP: не удалось авторизоваться (' . FTP_USER . '). Файл сохранён локально: ' . $fileName
+    );
+    header('Location: /admin'); exit;
+}
+
+ftp_pasv($ftp, true);
+
+if (!@ftp_chdir($ftp, $ftpDir)) {
+    $parts = explode('/', trim($ftpDir, '/'));
+    $cur = '';
+    $okDir = true;
+    foreach ($parts as $part) {
+        $cur .= '/' . $part;
+        if (!@ftp_chdir($ftp, $cur)) {
+            if (!@ftp_mkdir($ftp, $cur)) {
+                $okDir = false;
+                break;
+            }
+        }
+    }
+    if (!$okDir) {
+        ftp_close($ftp);
+        $_SESSION['sync_toast'] = array(
+            'type' => 'error',
+            'text' => 'FTP: не удалось перейти/создать ' . $ftpDir . '. Файл сохранён локально: ' . $fileName
+        );
+        header('Location: /admin'); exit;
+    }
+}
+
+$remoteName = $fileName;
+$uploaded = @ftp_put($ftp, $remoteName, $filePath, FTP_BINARY);
+$ftpErr = '';
+if (!$uploaded) {
+    $ftpErr = 'ftp_put failed';
+}
+
+ftp_close($ftp);
+
+if (!$uploaded) {
+    $_SESSION['sync_toast'] = array(
+        'type' => 'error',
+        'text' => 'FTP: ошибка загрузки ' . $fileName . ' в ' . $ftpDir . ' (' . $ftpErr . '). Файл сохранён локально'
+    );
+    header('Location: /admin'); exit;
+}
+
+@unlink($filePath);
+
+$_SESSION['sync_toast'] = array(
+    'type' => 'success',
+    'text' => 'Скачано и загружено на FTP: ' . $remoteName . ' → ' . $ftpDir . ' (' . formatSizeUnits($size) . ')'
+);
 header('Location: /admin'); exit;
 
 function formatSizeUnits($bytes) {
