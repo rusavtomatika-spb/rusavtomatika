@@ -83,17 +83,37 @@ function filter_arr( $array, $key, $value, $out = 'download', $exclude1 = 'qqqqq
         } else {
           $new = '';
         }
+
+        $el_title = $element[ 'title' ];
+        $version  = '';
+
         if ( preg_match( '/Дистрибутив для PC/', $element[ 'title' ] ) ) {
           preg_match( '/(\d+\.\d+\.\d+)/', $element[ 'fname' ], $matches );
           $version = '[' . $matches[ 1 ] . '] ';
-        } else {
-          $version = '';
+        }
+
+        if ( preg_match( '/ReleaseNotes/i', $element[ 'fname' ] ) ) {
+          $version_num = '';
+          if ( preg_match( '/(\d+\.\d+(?:\.\d+)?(?:\.\d+)?)/', $element[ 'fname' ], $m ) ) {
+            $version_num = $m[ 1 ];
+          }
+
+          $product = '';
+          if ( stripos( $element[ 'title' ], 'EasyBuilder Pro' ) !== false || stripos( $element[ 'fname' ], 'EBPro' ) !== false ) {
+            $product = 'EasyBuilder Pro';
+          } elseif ( stripos( $element[ 'title' ], 'EasyBuilder X' ) !== false || stripos( $element[ 'fname' ], 'EasyBuilder-X' ) !== false ) {
+            $product = 'EasyBuilder X';
+          }
+
+          if ( $version_num !== '' ) {
+            $el_title = 'Примечания к выпуску' . ( $product ? ' ' . $product : '' ) . ' V' . $version_num;
+          }
         }
 
         if ($out=='download') {
-          echo '<p><a class="download_' . strtolower( $element[ 'ftype' ] ) . '" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $element[ 'title' ] . '</a> <span class="small_gray_text">' . $version . $mod_data . ' ' . $fsize . '</span> ' . $new . '</p>';
+          echo '<p><a class="download_' . strtolower( $element[ 'ftype' ] ) . '" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $el_title . '</a> <span class="small_gray_text">' . $version . $mod_data . ' ' . $fsize . '</span> ' . $new . '</p>';
         } else {
-          echo '<tr><td><div><a download="" title="Скачать" target="_blank" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '">' . $element[ 'title' ] . '</a></div><div class="down_item_descr">' . $element[ 'description' ] . '</div></td><td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">' . $element[ 'ftype' ] . '</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">' . $mod_data . '</span></td> <td style="font-size: 0.8em;"><span class="size">' . $fsize . '</span></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Еng</span></td><td style="display: none;">' . $element[ 'sort' ] . '</td></tr>';
+          echo '<tr><td><div><a download="" title="Скачать" target="_blank" href="' . $folder . '/' . $fput . $element[ 'fname' ] . '">' . $el_title . '</a></div><div class="down_item_descr">' . $element[ 'description' ] . '</div></td><td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">' . $element[ 'ftype' ] . '</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">' . $mod_data . '</span></td> <td style="font-size: 0.8em;"><span class="size">' . $fsize . '</span></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Еng</span></td><td style="display: none;">' . $element[ 'sort' ] . '</td></tr>';
         }
       } else continue;
     }
@@ -103,32 +123,38 @@ function filter_arr( $array, $key, $value, $out = 'download', $exclude1 = 'qqqqq
 
 function arr_out( $array, $out = 'download' ) {
     global $recs;
-  if ( is_array( $array ) ) {
-    foreach ( $array as $element ) {
-      $info = pathinfo( $element[ 'url' ] );
-      if ( array_key_exists( 'fsize', $element ) ) {
-        $fsize = ' [' . formatSizeUnits( $element[ 'fsize' ] ) . ']';
-      } else $fsize = '';
-      $el_title = $element[ 'title' ];
-      if ( $el_title = 'EasyBuilder Pro User Manual (All chapters)(English)' ) {
-            $ebp_ver = findRecordBySoftware($recs, 'EBPro', 'version');
-        $el_title = 'Руководство по EasyBuilderPro ' . $ebp_ver;
-      }
-          $days_difference = floor(abs(time() - $element[ 'mod_data' ]) / 86400);
-          if ($days_difference < 11) {
-          $new = ' <span class="new-label">NEW</span>';
-          } else {
-          $new = '';
-          }
+    if ( is_array( $array ) ) {
+        foreach ( $array as $element ) {
+            $info = pathinfo( $element[ 'url' ] );
+            if ( array_key_exists( 'fsize', $element ) && $element['fsize'] > 0 ) {
+                $fsize = ' [' . formatSizeUnits( $element[ 'fsize' ] ) . ']';
+            } else {
+                $fsize = '';
+            }
 
-        if ($out=='download') {
-      echo '<p><a class="download_' . $info[ 'extension' ] . '" href="https://www.rusavtomatika.com/upload_files/documents/weintek/' . $element[ 'put' ] . '/' . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $el_title . '</a> <span class="small_gray_text">[' . date( "d.m.Y", $element[ 'mod_data' ] ) . '] ' . $fsize . '</span>' . $new . '</p>';
-        } else {
-      echo '<tr><td><div><a title="Скачать" target="_blank" href="https://www.rusavtomatika.com/upload_files/documents/weintek/' . $element[ 'put' ] . '/' . $element[ 'fname' ] . '">' . $el_title . '</a></div><div class="down_item_descr">' . $element[ 'description' ] . '</div></td><td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">' . $element[ 'ftype' ] . '</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">' . date( "d.m.Y", $element[ 'mod_data' ] ) . '</span></td> <td style="font-size: 0.8em;"><span class="size">' . $fsize . '</span></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Eng</span></td><td style="display: none;">' . $element[ 'sort' ] . '</td></tr>';
-      }
+            $el_title = $element[ 'title' ];
+
+            // Проверка на вхождение, а не точное совпадение
+            if ( stripos( $el_title, 'EasyBuilder Pro User Manual (All chapters)' ) !== false ) {
+                $ebp_ver = findRecordBySoftware($recs, 'EBPro', 'version');
+                $el_title = 'Руководство по EasyBuilderPro ' . $ebp_ver;
+            }
+
+            $mod_data = ( ! empty($element['mod_data']) && is_numeric($element['mod_data']) )
+                ? '[' . date( "d.m.Y", $element[ 'mod_data' ] ) . ']'
+                : '';
+
+            $days_difference = floor(abs(time() - (int)$element[ 'mod_data' ]) / 86400);
+            $new = ($days_difference < 11) ? ' <span class="new-label">NEW</span>' : '';
+
+            if ($out == 'download') {
+                echo '<p><a class="download_' . $info[ 'extension' ] . '" href="https://www.rusavtomatika.com/upload_files/documents/weintek/' . $element[ 'put' ] . '/' . $element[ 'fname' ] . '" download="' . $element[ 'fname' ] . '">' . $el_title . '</a> <span class="small_gray_text">' . $mod_data . ' ' . $fsize . '</span>' . $new . '</p>';
+            } else {
+                echo '<tr><td><div><a title="Скачать" target="_blank" href="https://www.rusavtomatika.com/upload_files/documents/weintek/' . $element[ 'put' ] . '/' . $element[ 'fname' ] . '">' . $el_title . '</a></div><div class="down_item_descr">' . $element[ 'description' ] . '</div></td><td style="font-size: 0.8em; white-space: nowrap;text-transform: uppercase;">' . $element[ 'ftype' ] . '</td> <td style="font-size: 0.8em; white-space: nowrap;"><span class="date">' . date( "d.m.Y", $element[ 'mod_data' ] ) . '</span></td> <td style="font-size: 0.8em;"><span class="size">' . $fsize . '</span></td> <td style="font-size: 0.8em; text-transform: uppercase;"><span class="language">Eng</span></td><td style="display: none;">' . $element[ 'sort' ] . '</td></tr>';
+            }
+        }
     }
-  }
-  return false;
+    return false;
 }
 
 function files_out( $array, $folder ) {
@@ -254,8 +280,6 @@ $arc = [
             <div class="block_padding">
               <?php filter_arr( $progs, 'section', 'ebpro' ); ?>
               <?php if ( is_array( $updates ) ) { filter_arr( $updates, 'section', 'ebpro' ); } ?>
-
-              <p><a class="download_pdf" href="/soft/EBPro/release_notes/EBPro_ReleaseNotes_en.pdf" target="_blank">Примечания к выпуску версии <?= findRecordBySoftware($recs, 'EBPro', 'version'); ?> (Eng)</a> <span class="small_gray_text">[<?= findRecordBySoftware($recs, 'EBPro', 'date'); ?>]</span></p>
 
               <?php
               $searchword = 'EasyBuilder Pro User Manual (All chapters)';
