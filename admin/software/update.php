@@ -81,7 +81,9 @@ if (stripos($html, 'You are not logged in') !== false || stripos($html, '/Accoun
 $isX = ($type === 'x');
 
 $zipUrl = null;
+$pdfUrl = null;
 $fileNameFromPage = null;
+$pdfNameFromPage = null;
 
 $needle = $isX ? 'EasyBuilder X' : 'EasyBuilder Pro';
 $posH3 = stripos($html, 'text-dark-blue');
@@ -104,6 +106,18 @@ if ($pos !== false) {
 
     if (preg_match('/<a[^>]+href="(\/Download\/FileLink\?[^"]+)"[^>]*>/i', $chunk, $mLink)) {
         $zipUrl = html_entity_decode($mLink[1], ENT_QUOTES, 'UTF-8');
+    }
+
+    if (preg_match('/<a[^>]+href="(https:\/\/dl\.weintek\.com\/[^"]+\.pdf[^"]*)"[^>]*>/i', $chunk, $mPdf)) {
+        $pdfUrl = html_entity_decode($mPdf[1], ENT_QUOTES, 'UTF-8');
+        $qpos = strpos($pdfUrl, '?');
+        if ($qpos !== false) {
+            $pdfUrl = substr($pdfUrl, 0, $qpos);
+        }
+        $pdfPath = parse_url($pdfUrl, PHP_URL_PATH);
+        if ($pdfPath) {
+            $pdfNameFromPage = basename($pdfPath);
+        }
     }
 }
 
@@ -165,7 +179,7 @@ if (!$ok || $code !== 200 || filesize($filePath) < 1024) {
     @unlink($filePath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'Ошибка скачивания (HTTP ' . $code . ', size=' . (int)$size . ', ' . $err . ')'
+        'text' => 'Ошибка скачивания ZIP (HTTP ' . $code . ', size=' . (int)$size . ', ' . $err . ')'
     );
     header('Location: /admin'); exit;
 }
@@ -174,18 +188,50 @@ if (stripos((string)$contentType, 'html') !== false) {
     @unlink($filePath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'Вместо файла пришёл HTML (Content-Type: ' . $contentType . ')'
+        'text' => 'Вместо ZIP пришёл HTML (Content-Type: ' . $contentType . ')'
     );
     header('Location: /admin'); exit;
 }
 
 $size = filesize($filePath);
-$_SESSION['sync_toast'] = array(
-    'type' => 'success',
-    'text' => 'Скачано: ' . $fileName . ' (' . formatSizeUnits($size) . ')'
-);
 
-$size = filesize($filePath);
+$pdfLocalPath = null;
+$pdfFileName = null;
+$pdfErr = '';
+
+if ($pdfUrl !== null) {
+    $pdfFileName = $pdfNameFromPage ? $pdfNameFromPage : basename(parse_url($pdfUrl, PHP_URL_PATH));
+    $pdfLocalPath = TMP_DIR . '/' . $pdfFileName;
+
+    $fpPdf = @fopen($pdfLocalPath, 'wb');
+    if ($fpPdf !== false) {
+        $chPdf = curl_init($pdfUrl);
+        curl_setopt($chPdf, CURLOPT_FILE, $fpPdf);
+        curl_setopt($chPdf, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($chPdf, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($chPdf, CURLOPT_TIMEOUT, 120);
+        curl_setopt($chPdf, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($chPdf, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($chPdf, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($chPdf, CURLOPT_USERAGENT, W_UA);
+        curl_setopt($chPdf, CURLOPT_REFERER, $downloadPageUrl);
+
+        $okPdf = curl_exec($chPdf);
+        $codePdf = curl_getinfo($chPdf, CURLINFO_HTTP_CODE);
+        $errPdf = curl_error($chPdf);
+        curl_close($chPdf);
+        fclose($fpPdf);
+
+        if (!$okPdf || $codePdf !== 200 || filesize($pdfLocalPath) < 1024) {
+            $pdfErr = 'HTTP ' . $codePdf . ' ' . $errPdf;
+            @unlink($pdfLocalPath);
+            $pdfLocalPath = null;
+        }
+    } else {
+        $pdfErr = 'не удалось открыть ' . $pdfLocalPath;
+        $pdfLocalPath = null;
+    }
+}
 
 define('FTP_HOST', '82.202.162.16');
 define('FTP_PORT', 21);
@@ -198,18 +244,22 @@ $ftpDir = $isX ? FTP_DIR_X : FTP_DIR_PRO;
 
 $ftp = @ftp_connect(FTP_HOST, FTP_PORT, 15);
 if (!$ftp) {
+    @unlink($filePath);
+    if ($pdfLocalPath) @unlink($pdfLocalPath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'FTP: не удалось подключиться к ' . FTP_HOST . ':' . FTP_PORT . '. Файл сохранён локально: ' . $fileName
+        'text' => 'FTP: не удалось подключиться к ' . FTP_HOST . ':' . FTP_PORT
     );
     header('Location: /admin'); exit;
 }
 
 if (!@ftp_login($ftp, FTP_USER, FTP_PASS)) {
     ftp_close($ftp);
+    @unlink($filePath);
+    if ($pdfLocalPath) @unlink($pdfLocalPath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'FTP: не удалось авторизоваться (' . FTP_USER . '). Файл сохранён локально: ' . $fileName
+        'text' => 'FTP: не удалось авторизоваться (' . FTP_USER . ')'
     );
     header('Location: /admin'); exit;
 }
@@ -231,9 +281,11 @@ if (!@ftp_chdir($ftp, $ftpDir)) {
     }
     if (!$okDir) {
         ftp_close($ftp);
+        @unlink($filePath);
+        if ($pdfLocalPath) @unlink($pdfLocalPath);
         $_SESSION['sync_toast'] = array(
             'type' => 'error',
-            'text' => 'FTP: не удалось перейти/создать ' . $ftpDir . '. Файл сохранён локально: ' . $fileName
+            'text' => 'FTP: не удалось перейти/создать ' . $ftpDir
         );
         header('Location: /admin'); exit;
     }
@@ -256,29 +308,72 @@ if ($uploaded) {
     }
 }
 
+$pdfRemoteDir = $ftpDir . '/ReleaseNotes';
+$pdfUploaded = false;
+$pdfUploadErr = '';
+
+if ($pdfLocalPath !== null && $uploaded) {
+    if (!@ftp_chdir($ftp, $pdfRemoteDir)) {
+        $parts = explode('/', trim($pdfRemoteDir, '/'));
+        $cur = '';
+        $okPdfDir = true;
+        foreach ($parts as $part) {
+            $cur .= '/' . $part;
+            if (!@ftp_chdir($ftp, $cur)) {
+                if (!@ftp_mkdir($ftp, $cur)) {
+                    $okPdfDir = false;
+                    break;
+                }
+            }
+        }
+        if (!$okPdfDir) {
+            $pdfUploadErr = 'не удалось перейти/создать ' . $pdfRemoteDir;
+        }
+    }
+    if (empty($pdfUploadErr)) {
+        $pdfUploaded = @ftp_put($ftp, $pdfFileName, $pdfLocalPath, FTP_BINARY);
+        if (!$pdfUploaded) {
+            $pdfUploadErr = 'ftp_put pdf failed';
+        }
+    }
+}
+
 ftp_close($ftp);
 
 if (!$uploaded) {
+    @unlink($filePath);
+    if ($pdfLocalPath) @unlink($pdfLocalPath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'FTP: ошибка загрузки ' . $fileName . ' в ' . $ftpDir . ' (' . $ftpErr . '). Файл сохранён локально'
+        'text' => 'FTP: ошибка загрузки ' . $fileName . ' в ' . $ftpDir . ' (' . $ftpErr . ')'
     );
     header('Location: /admin'); exit;
 }
 
 if (!$uploadedSetup) {
+    if ($pdfLocalPath) @unlink($pdfLocalPath);
     $_SESSION['sync_toast'] = array(
         'type' => 'error',
-        'text' => 'FTP: основной файл загружен, но копия ' . $setupName . ' не создана (' . $setupErr . '). Файл сохранён локально: ' . $fileName
+        'text' => 'FTP: основной файл загружен, но копия ' . $setupName . ' не создана (' . $setupErr . '). Локально сохранён: ' . $fileName
     );
     header('Location: /admin'); exit;
 }
 
 @unlink($filePath);
+if ($pdfLocalPath) @unlink($pdfLocalPath);
+
+$pdfInfo = '';
+if ($pdfUrl === null) {
+    $pdfInfo = ' [release notes не найдены на странице]';
+} elseif (!$pdfUploaded) {
+    $pdfInfo = ' [PDF не загружен: ' . $pdfUploadErr . ']';
+} else {
+    $pdfInfo = ' + ' . $pdfFileName . ' (ReleaseNotes)';
+}
 
 $_SESSION['sync_toast'] = array(
     'type' => 'success',
-    'text' => 'Скачано и загружено на FTP: ' . $remoteName . ' + ' . $setupName . ' → ' . $ftpDir . ' (' . formatSizeUnits($size) . ')'
+    'text' => 'Загружено на FTP: ' . $remoteName . ' + ' . $setupName . $pdfInfo . ' → ' . $ftpDir . ' (' . formatSizeUnits($size) . ')'
 );
 header('Location: /admin'); exit;
 
