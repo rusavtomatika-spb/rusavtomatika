@@ -698,10 +698,10 @@ file_put_contents($ebpro_files_block, $ebpro_files );
           </div>
           <div class="column is-5">
             <div class="block_padding">
-              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815WC-1255U.7z">Дистрибутив IFC-815WC-1255U (рус)</a> <span class="small_gray_text">[09-04-2026] [890&nbsp;Мб]</span></p>
-              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1255U.7z">Дистрибутив IFC-815R-1255U (рус)</a> <span class="small_gray_text">[09-04-2026] [895&nbsp;Мб]</span></p>
-              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1135G7.7z">IFC-800 CPU: 1135G7</a> <span class="small_gray_text">[09-04-2026] [908&nbsp;Мб]</span></p>
-              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-N100.7z">IFC-800 CPU: N100</a> <span class="small_gray_text">[09-04-2026] [1.26&nbsp;Гб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815WC-1255U.7z">IFC-800 CPU: 1255U ёмкостный (рус)</a> <span class="small_gray_text">[09-04-2026] [890&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1255U.7z">IFC-800 CPU: 1255u резистивный (рус)</a> <span class="small_gray_text">[09-04-2026] [895&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-1135G7.7z">IFC-800 CPU: 1135G7 резистивный</a> <span class="small_gray_text">[09-04-2026] [908&nbsp;Мб]</span></p>
+              <p><a class="download_zip" href="/soft/IFC_drivers/IFC-815R-N100.7z">IFC-800 CPU: N100 резистивный</a> <span class="small_gray_text">[09-04-2026] [1.26&nbsp;Гб]</span></p>
             </div>
           </div>
           <div class="column is-12 background-gray">
