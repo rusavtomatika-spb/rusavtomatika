@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 define('W_LOGIN',    'maxbelousov@ya.ru');
 define('W_PASSWORD', 'V5cN7Ar0Tv');

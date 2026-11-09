@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['run_sync'])) {
     header('Location: /admin'); exit;
 }
 
-define('W_BASE', 'https://www.weintek.com');
 define('TMP_DIR', __DIR__ . '/tmp');
+define('FTP_URL_PUBLIC', 'https://www.rusavtomatika.com');
 
 $type = isset($_POST['type']) ? $_POST['type'] : '';
 if (!in_array($type, array('x', 'pro'), true)) {
@@ -308,7 +308,7 @@ if ($uploaded) {
     }
 }
 
-$pdfRemoteDir = $ftpDir . '/ReleaseNotes';
+$pdfRemoteDir = $ftpDir . '/release_notes';
 $pdfUploaded = false;
 $pdfUploadErr = '';
 
@@ -359,6 +359,105 @@ if (!$uploadedSetup) {
     header('Location: /admin'); exit;
 }
 
+$softResultPath = $_SERVER['DOCUMENT_ROOT'] . '/download/soft_result.json';
+if (!is_file($softResultPath)) {
+    $softResultPath = $_SERVER['DOCUMENT_ROOT'] . '/download/soft_result.txt';
+}
+
+if (is_file($softResultPath)) {
+    $softData = json_decode( file_get_contents( $softResultPath ), true );
+    if (!is_array($softData)) $softData = array();
+
+    $sectionKey = $isX ? 'ebx' : 'ebpro';
+    $putFolder  = $isX ? 'EBProX' : 'EBPro';
+
+    $title = $isX
+        ? 'EasyBuilder X V' . preg_replace('/^EBX-|\.zip$/i', '', $fileName)
+        : 'EasyBuilder Pro V' . preg_replace('/^EBPro-|\.zip$/i', '', $fileName);
+
+    $description = $isX
+        ? 'EasyBuilder X — ПО нового поколения с объектно-ориентированным дизайном, переменными вместо прямых адресов ПЛК и обновлённым рабочим пространством.'
+        : 'Программное обеспечение EasyBuilderPro применяется для создания пользовательских проектов для операторских панелей Weintek всех серий.<br>\nИспользование ПО EasyBuilderPro полностью бесплатно, вы можете скачивать ПО и пользоваться им без каких-либо ограничений.<br>\nUSB драйвера для подключения панели к ПК устанавливаются автоматически при установке EasyBuilderPro';
+
+    $newEntry = array(
+        'title'       => $title,
+        'mod_data'    => time(),
+        'url'         => rtrim(FTP_URL_PUBLIC, '/') . '/soft/' . $putFolder . '/' . $remoteName,
+        'put'         => $putFolder,
+        'fname'       => $remoteName,
+        'fsize'       => $size,
+        'category'    => 'Software',
+        'ftype'       => 'zip',
+        'section'     => $sectionKey,
+        'label'       => '',
+        'sort'        => '1450',
+        'description' => $description,
+    );
+
+    $found = false;
+    foreach ($softData as $i => $row) {
+        if (isset($row['section']) && $row['section'] === $sectionKey) {
+            $softData[$i] = $newEntry;
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) $softData[] = $newEntry;
+
+    file_put_contents(
+        $softResultPath,
+        json_encode($softData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+}
+
+if ($pdfLocalPath !== null) {
+    $softUpdatesPath = $_SERVER['DOCUMENT_ROOT'] . '/download/soft_updates.json';
+    if (!is_file($softUpdatesPath)) {
+        $softUpdatesPath = $_SERVER['DOCUMENT_ROOT'] . '/download/soft_updates.txt';
+    }
+
+    $updData = array();
+    if (is_file($softUpdatesPath)) {
+        $tmp = json_decode(file_get_contents($softUpdatesPath), true);
+        if (is_array($tmp)) $updData = $tmp;
+    }
+
+    $sectionKey = $isX ? 'ebx' : 'ebpro';
+    $putFolder  = $isX ? 'EBProX/release_notes' : 'EBPro/release_notes';
+
+    $newUpdEntry = array(
+        'title'       => $isX
+                            ? 'Примечания к выпуску EasyBuilder X (Eng)'
+                            : 'Примечания к выпуску EasyBuilder Pro (Eng)',
+        'mod_data'    => time(),
+        'url'         => rtrim(FTP_URL_PUBLIC, '/') . '/soft/' . $putFolder . '/' . $pdfFileName,
+        'put'         => $putFolder,
+        'fname'       => $pdfFileName,
+        'fsize'       => filesize($pdfLocalPath),
+        'category'    => 'Software',
+        'ftype'       => 'pdf',
+        'section'     => $sectionKey,
+        'label'       => '',
+        'sort'        => '1450',
+        'description' => '',
+    );
+
+    $found = false;
+    foreach ($updData as $i => $row) {
+        if (isset($row['section']) && $row['section'] === $sectionKey) {
+            $updData[$i] = $newUpdEntry;
+            $found = true;
+            break;
+        }
+    }
+    if (!$found) $updData[] = $newUpdEntry;
+
+    file_put_contents(
+        $softUpdatesPath,
+        json_encode($updData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+}
+
 @unlink($filePath);
 if ($pdfLocalPath) @unlink($pdfLocalPath);
 
@@ -368,7 +467,7 @@ if ($pdfUrl === null) {
 } elseif (!$pdfUploaded) {
     $pdfInfo = ' [PDF не загружен: ' . $pdfUploadErr . ']';
 } else {
-    $pdfInfo = ' + ' . $pdfFileName . ' (ReleaseNotes)';
+    $pdfInfo = ' + ' . $pdfFileName . ' (release_notes)';
 }
 
 $_SESSION['sync_toast'] = array(
