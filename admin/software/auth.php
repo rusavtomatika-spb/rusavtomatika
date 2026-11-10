@@ -146,6 +146,7 @@ function w_login() {
             'success' => true,
             'message' => '✅ Вы авторизовались как ' . W_LOGIN,
             'log' => $log,
+            'jar' => $jar,
         );
     }
 

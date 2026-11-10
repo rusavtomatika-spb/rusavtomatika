@@ -147,15 +147,20 @@ $CANONICAL = "https://www.rusavtomatika.com".$arResult[ 'brand_page_link' ];
             <? else: ?>
             <li><a href="/ifc/">IFC</a></li>
             <? endif; ?>
-            <? if ($_SERVER['REQUEST_URI'] == '/aplex/'): ?>
-            <li><span>Aplex</span></li>
+            <? if ($_SERVER['REQUEST_URI'] == '/licos/'): ?>
+            <li><span>LicOS</span></li>
             <? else: ?>
-            <li><a href="/aplex/">Aplex</a></li>
+            <li><a href="/licos/">LicOS</a></li>
             <? endif; ?>
             <? if ($_SERVER['REQUEST_URI'] == '/samkoon/'): ?>
             <li><span>Samkoon</span></li>
             <? else: ?>
             <li><a href="/samkoon/">Samkoon</a></li>
+            <? endif; ?>
+            <? if ($_SERVER['REQUEST_URI'] == '/aplex/'): ?>
+            <li><span>Aplex</span></li>
+            <? else: ?>
+            <li><a href="/aplex/">Aplex</a></li>
             <? endif; ?>
             <? if ($_SERVER['REQUEST_URI'] == '/faraday/'): ?>
             <li><span>Faraday</span></li>

@@ -662,10 +662,10 @@ CoreApplication::include_component( array( "component" => "breadcrumbs" ) );
 <?
 $product_field_descriptions = get_product_field_descriptions( $arResult[ 'product' ][ "type" ] );
 
-if ( $arResult[ 'product' ][ 'type' ] == 'controllers'
-  or $arResult[ 'product' ][ 'type' ] == 'coupler' ) {
+if ( ($arResult[ 'product' ][ 'type' ] == 'controllers'
+  or $arResult[ 'product' ][ 'type' ] == 'coupler' )
+  && $arResult[ 'product' ][ 'brand' ] == 'Weintek' ) {
   include "inc_io_modules_table.php";
-
 }
 
 
