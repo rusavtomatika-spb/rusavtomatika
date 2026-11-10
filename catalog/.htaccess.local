@@ -16,22 +16,50 @@ RewriteRule ^(.*)/&(.*) $1/?&$2 [L,R=301]
 RewriteCond %{THE_REQUEST} \s/+(.*?)/{2,}([^\s]*)
 RewriteCond %{REQUEST_URI} !(?:catalog) [NC]
 RewriteRule ^ %1/%2 [R=301,L]
+
+# Удаляем дублирующие слеши и перенаправляем на правильный URL
 RewriteCond %{THE_REQUEST} \s/(.*)/{2,}(.*)\s
 RewriteRule .* /%1/%2 [R=301,L]
 
+# Перенаправляем на конечный URL без дублей слешей
 RewriteRule ^catalog/operator_panels/$ catalog/operator_panels/?&brand=Weintek [QSA,R=301,L]
+
+############# Убираем //////////// в любом месте УРЛ ######################### 1
+#RewriteCond %{THE_REQUEST} ![\?+?][\s?] [NC]
+#RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)/([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)[/?]{2,}([\w\d-_]*?)/[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)/([\w\d-_]*?)/[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)[/?]{2,}([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)[/?]{2,}([\w\d-_]*?)/[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?][/?]{2,}([\w\d]*?)/([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?]/([\w\d]*?)[/?]{2,}([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC]
+#RewriteCond %{REQUEST_URI} !(?:news|articles|soft|updater|updater_source|xml|forum|cart|compare) [NC]
+#RewriteCond %{QUERY_STRING} !(?:.*)(?:submit)(?:.*) [NC]
+#RewriteCond %{THE_REQUEST} !\s(?:.*)/\?\s [NC]
+#RewriteRule (.*) https://%{HTTP_HOST}/%1/%2/ [R=301,L]
+
+######################################
+#RewriteCond %{THE_REQUEST} [\s?](?:.*)/([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?](?:.*)[/?]{2,}([\w\d-_]*?)/[^\?][\s?] [NC,OR]
+#RewriteCond %{THE_REQUEST} [\s?](?:.*)[/?]{2,}([\w\d-_]*?)[/?]{2,}[^\?][\s?] [NC]
+#RewriteCond %{REQUEST_URI} !(?:news|articles|soft|updater|updater_source|xml|forum|cart|compare) [NC]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{QUERY_STRING} !(?:.*)(?:submit)(?:.*) [NC]
+#RewriteCond %{THE_REQUEST} !\s(?:.*)/\?\s [NC]
+#RewriteRule (.*) https://%{HTTP_HOST}/%1/ [R=301,L]
 
 RewriteCond %{QUERY_STRING} "utm" [NC]
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSD]
 
 RewriteCond %{QUERY_STRING} brand [NC]
-RewriteCond %{QUERY_STRING} !(weintek|ifc|aplex|samkoon|ewon|faraday|smatipc|spiktek) [NC]
+RewriteCond %{QUERY_STRING} !(weintek|ifc|aplex|samkoon|ewon|faraday|smatipc|spiktek|licos) [NC]
 RewriteRule (.*) https://%{HTTP_HOST}/? [R=404,L]
 
 RewriteCond %{THE_REQUEST} \s/catalog/\?(.*)\s [NC]
 RewriteRule (.*) https://%{HTTP_HOST}/? [R=404,L]
 
 RewriteCond %{THE_REQUEST} \s/catalog/industrial-communication-equipment/?&interfaces=sfp\s [NC]
+#RewriteRule ^(.*)$ /catalog/index.php?q=$1 [QSA]
 RewriteRule ^/catalog/industrial-communication-equipment/(sfp)/$  /catalog/index.php?q=$1 [QSA]
 
 RewriteRule ^.htaccess$ - [F]

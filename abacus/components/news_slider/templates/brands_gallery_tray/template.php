@@ -21,9 +21,9 @@ $arResult["items"] = [
         'img' => '/include/main_page/images/brands/ifc.webp'
     ],
     4 => [
-        'url' => '/aplex' . EX . '/',
-        'name' => 'Aplex',
-        'img' => '/include/main_page/images/brands/aplex.webp'
+        'url' => '/licos' . EX . '/',
+        'name' => 'LicOS',
+        'img' => '/include/main_page/images/brands/licos.png'
     ],
 ];
 
