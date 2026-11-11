@@ -1,8 +1,6 @@
 <?php
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
-
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
-//CoreApplication::add_style( "/abacus/components/catalog_section/templates/default/style.css" );
 
 global $TITLE, $CANONICAL, $DESCRIPTION, $usd_currency;
 $TITLE = "Новинки каталога РУСАВТОМАТИКА от Weintek, IFC, Спиктек и Samkoon";
@@ -12,7 +10,29 @@ CoreApplication::add_breadcrumbs_chain( "Новая продукция", "/new-p
 
 include 'functions.php';
 
-$rows_sale = get_rows_from_table( "products_all", "", "`status` != '0' AND `discontinued` !='1'", " `date_pub` DESC LIMIT 16" );
+### Временная мера, для того чтобы товары licos не перекрывали новые ifc
+$before_licos = array();
+foreach (array('IFC-BOX-RT33A','IFC-BOX-NS34','IFC-BOX-XD32','IFC-BOX-NS53F','IFC-BOX-RT32A') as $m) {
+    $r = get_rows_from_table("products_all", "", 
+      "`model` = '" . addslashes($m) . "' AND `status` != '0' AND `discontinued` !='1'", 
+      "`index` LIMIT 1");
+    if (is_array($r) && count($r) > 0) $before_licos[] = $r[0];
+}
+usort($before_licos, function($a, $b) {
+    return strcmp($b['date_pub'], $a['date_pub']);
+});
+
+$licos_series = array('EC200','EC300','EC400','MC500','MC600','MC700','GL200','GR200');
+$licos_rows = array();
+foreach ($licos_series as $s) {
+    $rows = get_rows_from_table("products_all", "", 
+        "`brand`='LicOS' AND `series`='$s' AND `status` != '0' AND `discontinued` !='1'", 
+        "`sort`, `index` LIMIT 5");
+    if (is_array($rows)) $licos_rows = array_merge($licos_rows, $rows);
+}
+
+$rows_sale = array_merge($before_licos, $licos_rows);
+///
 
 $typeDictionary = [
   'hmi' => 'Панель оператора',
