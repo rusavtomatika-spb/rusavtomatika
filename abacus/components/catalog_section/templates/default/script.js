@@ -1241,6 +1241,9 @@ var app = new Vue({
             case "range_diagonal_min":
               h1_chunk = ",диагональ от " + item_splitted[1] + "&Prime;";
               break;
+            case "diagonals":
+              h1_chunk = ",диагональ: " + item_splitted[1].split(',').map(function(d){return d + '&Prime;';}).join(', ');
+              break;
             case "range_diagonal_max":
               h1_chunk = ",диагональ до " + item_splitted[1] + "&Prime;";
               break;
@@ -2230,7 +2233,7 @@ var app = new Vue({
         resultArray[valueAndKey[0]] = valueAndKey[1]; // пишем в итоговый массив имя переменной и ее значение
       }
 
-      return resultArray; // возвращаем результат
+      return resultArray;
     },
 
     toggleDiagonalFilter: function(diagonalValue, type, event) {
@@ -2246,6 +2249,9 @@ var app = new Vue({
       this.filterSelectedDiagonals.sort(function(a, b) {
         return a - b;
       });
+      
+      this.filterSelectedRangeDiagonal_min = this.filterSelectedRangeDiagonal_min_start;
+      this.filterSelectedRangeDiagonal_max = this.filterSelectedRangeDiagonal_max_start;
       
       this.filterChanged();
     },

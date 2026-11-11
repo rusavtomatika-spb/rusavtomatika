@@ -171,16 +171,18 @@ if (isset($_GET["diagonals"]) and $_GET["diagonals"] != '') {
     $arDiagonals = explode(",", $_GET["diagonals"]);
     $filter_exists = true;
 }
-
-if (isset($_GET["range_diagonal_min"]) and $_GET["range_diagonal_min"] != '') {
-    $range_diagonal_min = $_GET["range_diagonal_min"];
-    $filter_exists = true;
-} else $range_diagonal_min = "";
-
-if (isset($_GET["range_diagonal_max"]) and $_GET["range_diagonal_max"] != '') {
-    $range_diagonal_max = $_GET["range_diagonal_max"];
-    $filter_exists = true;
-} else $range_diagonal_max = "";
+$range_diagonal_min = "";
+$range_diagonal_max = "";
+if (count($arDiagonals) === 0) {
+    if (isset($_GET["range_diagonal_min"]) and $_GET["range_diagonal_min"] != '') {
+        $range_diagonal_min = $_GET["range_diagonal_min"];
+        $filter_exists = true;
+    }
+    if (isset($_GET["range_diagonal_max"]) and $_GET["range_diagonal_max"] != '') {
+        $range_diagonal_max = $_GET["range_diagonal_max"];
+        $filter_exists = true;
+    }
+}
 
 if (isset($_GET["range_price_min"]) and $_GET["range_price_min"] != '') {
     $range_price_min = $_GET["range_price_min"];
