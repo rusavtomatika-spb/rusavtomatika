@@ -34,24 +34,8 @@ $with_database_only = "";
 $web_only = "";
 $terminal_cmt_only = "";
 $ai_only = "";
+$motion_only = "";
 
-/*if(is_array($_GET) and count($_GET)>0){
-    $arr_all_available_filters_rows = $DB_WORK_CATALOG->get_rows_from_table("catalog_filters");
-    foreach ($arr_all_available_filters_rows as $filter_item){
-        $arr_all_available_filters[] = $filter_item["filter_code"];
-    }
-    foreach ($_GET as &$param){
-        if(!in_array($param,$arr_all_available_filters)){
-            echo $param."<br>";
-        }
-    }
-}*/
-//var_dump_pre($arr_all_available_filters);
-
-
-/*if (isset($_GET["series"]) and $_GET["series"] != '') {
-    $only_series = $_GET["series"];
-}*/
 if (isset($_GET["vesa"]) and $_GET["vesa"] == 'yes') {
     $vesa_only = "1";
     $filter_exists = true;
@@ -169,6 +153,10 @@ if (isset($_GET["terminal_cmt"]) and $_GET["terminal_cmt"] == 'yes') {
 }
 if (isset($_GET["ai"]) and $_GET["ai"] == 'yes') {
     $ai_only = "1";
+    $filter_exists = true;
+}
+if (isset($_GET["motion"]) and $_GET["motion"] == 'yes') {
+    $motion_only = "1";
     $filter_exists = true;
 }
 
@@ -939,6 +927,13 @@ if ($filter_exists) {
             $filter_chunk = ' (';
         } else $filter_chunk = ' and (';
         $filter_chunk .= " `ai` = 1) ";
+        $mysql_product_filter .= $filter_chunk;
+    }
+    if ($motion_only == '1') {
+        if ($filter_chunk == '') {
+            $filter_chunk = ' (';
+        } else $filter_chunk = ' and (';
+        $filter_chunk .= " `motion` = 1) ";
         $mysql_product_filter .= $filter_chunk;
     }
 

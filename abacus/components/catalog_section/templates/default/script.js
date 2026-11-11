@@ -91,7 +91,8 @@ var app = new Vue({
     filterSelectedWithDatabase: false,
     filterSelectedWeb: false,
     filterSelectedTerminalCmt: false,
-    filterSelectedAi: false
+    filterSelectedAi: false,
+    filterSelectedMotion: false,
   },
   watch: {
     extra_h1: function (newVal) {
@@ -352,6 +353,10 @@ var app = new Vue({
           this.filterSelectedPlastAlum = false;
           this.filterChanged();
           break;
+        case 'filterSelectedMotion':
+          this.filterSelectedMotion = false;
+          this.filterChanged();
+          break;
         case 'filterSelectedOss':
           this.filterSelectedOss.splice(this.filterSelectedOss.indexOf(item), 1);
           this.filterChanged();
@@ -513,6 +518,7 @@ var app = new Vue({
           this.filterSelectedWeb = false;
           this.filterSelectedTerminalCmt = false;
           this.filterSelectedAi = false;
+          this.filterSelectedMotion = false;
           this.filterChanged();
 
           break;
@@ -817,6 +823,10 @@ var app = new Vue({
           });
         case 'filterSelectedAi':
           this.filterSelectedAi = false;
+          this.filterChanged();
+          break;
+        case 'filterSelectedMotion':
+          this.filterSelectedMotion = false;
           this.filterChanged();
           break;
         case 'filterSelectedTypes':
@@ -1134,6 +1144,9 @@ var app = new Vue({
       if (this.filterSelectedPlastAlum) {
         this.filter_string += '&plastalum=yes';
       }
+      if (this.filterSelectedMotion) {
+        this.filter_string += '&motion=yes';
+      }
       if (this.filterSelectedOss.length > 0) {
         let sorted_list = this.filterSelectedOss;
         sorted_list.sort();
@@ -1335,6 +1348,9 @@ var app = new Vue({
               break;
             case "sort":
               h1_chunk = "";
+              break;
+            case "motion":
+              h1_chunk = ",Motion";
               break;
             case "case_material":
                 switch (item_splitted[1]) {
@@ -1792,91 +1808,58 @@ var app = new Vue({
         }
       }
       if (this.urlGetVars['codesys'] != null) {
-        if (this.urlGetVars['codesys'] = 'yes') {
-          this.filterSelectedCodesys = true;
-        }
+        this.filterSelectedCodesys = true;
       }
       if (this.urlGetVars['sdcard'] != null) {
-        if (this.urlGetVars['sdcard'] = 'yes') {
-          this.filterSelectedSdcard = true;
-        }
+        this.filterSelectedSdcard = true;
       }
       if (this.urlGetVars['plc_web_browser'] != null) {
-        if (this.urlGetVars['plc_web_browser'] = 'yes') {
-          this.filterSelectedPlcWebBrowser = true;
-        }
+        this.filterSelectedPlcWebBrowser = true;
       }
       if (this.urlGetVars['webview'] != null) {
-        if (this.urlGetVars['webview'] = 'yes') {
-
-          this.filterSelectedWebView = true;
-        }
+        this.filterSelectedWebView = true;
       }
       if (this.urlGetVars['poe'] != null) {
-        if (this.urlGetVars['poe'] = 'yes') {
-
-          this.filterSelectedpoe = true;
-        }
+        this.filterSelectedpoe = true;
       }
       if (this.urlGetVars['screenless'] != null) {
-        if (this.urlGetVars['screenless'] = 'yes') {
-          this.filterSelectedScreenless = true;
-        }
+        this.filterSelectedScreenless = true;
       }
       if (this.urlGetVars['vesa'] != null) {
-        if (this.urlGetVars['vesa'] = 'yes') {
-          this.filterSelectedVesa = true;
-        }
+        this.filterSelectedVesa = true;
       }
       if (this.urlGetVars['cmtviewer'] != null) {
-        if (this.urlGetVars['cmtviewer'] = 'yes') {
-          this.filterSelectedCmtviewer = true;
-        }
+        this.filterSelectedCmtviewer = true;
       }
       if (this.urlGetVars['camera_ip'] != null) {
-        if (this.urlGetVars['camera_ip'] = 'yes') {
-          this.filterSelectedCameraIP = true;
-        }
+        this.filterSelectedCameraIP = true;
       }
       if (this.urlGetVars['camera_usb'] != null) {
-        if (this.urlGetVars['camera_usb'] = 'yes') {
-          this.filterSelectedCameraUSB = true;
-        }
+        this.filterSelectedCameraUSB = true;
       }
       if (this.urlGetVars['HddSATA'] != null) {
-        if (this.urlGetVars['HddSATA'] = 'yes') {
-          this.filterSelectedHddSATA = true;
-        }
+        this.filterSelectedHddSATA = true;
       }
       if (this.urlGetVars['HddmSATA'] != null) {
-        if (this.urlGetVars['HddmSATA'] = 'yes') {
-          this.filterSelectedHddmSATA = true;
-        }
+        this.filterSelectedHddmSATA = true;
       }
       if (this.urlGetVars['HddM2'] != null) {
-        if (this.urlGetVars['HddM2'] = 'yes') {
-          this.filterSelectedHddM2 = true;
-        }
+        this.filterSelectedHddM2 = true;
       }
       if (this.urlGetVars['HddPCIE'] != null) {
-        if (this.urlGetVars['HddPCIE'] = 'yes') {
-          this.filterSelectedHddPCIE = true;
-        }
+        this.filterSelectedHddPCIE = true;
       }
       if (this.urlGetVars['plast'] != null) {
-        if (this.urlGetVars['plast'] = 'yes') {
-          this.filterSelectedPlast = true;
-        }
+        this.filterSelectedPlast = true;
       }
       if (this.urlGetVars['alum'] != null) {
-        if (this.urlGetVars['alum'] = 'yes') {
-          this.filterSelectedAlum = true;
-        }
+        this.filterSelectedAlum = true;
       }
       if (this.urlGetVars['plastalum'] != null) {
-        if (this.urlGetVars['plastalum'] = 'yes') {
-          this.filterSelectedPlastAlum = true;
-        }
+        this.filterSelectedPlastAlum = true;
+      }
+      if (this.urlGetVars['motion'] != null) {
+        this.filterSelectedMotion = true;
       }
       if (this.urlGetVars['os'] != null) {
         let arrayInterfaces = this.urlGetVars['os'].split(',');
