@@ -194,7 +194,13 @@ $userCountry = getCountryFromDaData( $userIp, $apiKey );
       </div>
       <div class="td_short_description">
         <a href="<?= $product["link_detail_page"]; ?>">
-          <span class="model"> <? echo $product["model"];?> </span>
+
+          <span class="model">
+            <?php if ($product["type"] === 'controllers'): ?>
+              ПЛК
+            <?php endif; ?>
+            <? echo $product["model"];?>
+          </span>
         </a>
         <div class="preview_text_block">
           <p>
