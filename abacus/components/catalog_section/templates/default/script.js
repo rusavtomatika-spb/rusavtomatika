@@ -77,7 +77,7 @@ var app = new Vue({
     html_filtered_products: $('.component_catalog_section__panel_of_products').html(),
     current_filter_options: "",
     urlGetVars: [],
-    view_mode: 'list',
+    view_mode: 'tile',
     product_sort: 'recommended',
     favorites: [],
     compare: [],
