@@ -228,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <?php
                             if (isset($sub0) && $sub0 != '') {
                                 $arr_section_sub = explode(",", $sub0);
+                                $show_brands = (count($arr_section_sub) > 1);
                                 if (count($arr_section_sub) > 1) {
                             ?>
                             <ul class="subsection">
@@ -236,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     if (empty($section_sub)) continue;
                                 ?>
                                 <ul class="subsection">
+                                    <?php if ($show_brands): ?>
                                     <li class="cataloge_list_item_subitem">
                                         <a title="Производитель <?= htmlspecialchars($section_sub) ?>" href="<?= $section["category_link"] . '?&brand=' . urlencode($section_sub) ?>">
                                             <span @click="handle_button_show_items"
@@ -250,6 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </span>
                                         </a>
                                     </li>
+                                    <?php endif; ?>
                                     <?php
                                     foreach ($arrSer as $i => $serie) {
                                         if (empty($serie['brand']) || empty($serie['type'])) continue;
@@ -289,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (isset($sub1) && $sub1 != '') {
                                 $arr_section_sub = explode(",", $sub1);
                                 $cur = 1;
-                                if (count($arr_section_sub) > 1) {
+                                if (count($arr_section_sub) >= 1) {
                             ?>
                             <ul class="subsection">
                                 <?php
@@ -342,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <?php
                             if (isset($sub2) && $sub2 != '') {
                                 $arr_section_sub = explode(",", $sub2);
-                                if (count($arr_section_sub) > 1) {
+                                if (count($arr_section_sub) >= 1) {
                             ?>
                             <ul class="subsection">
                                 <?php
