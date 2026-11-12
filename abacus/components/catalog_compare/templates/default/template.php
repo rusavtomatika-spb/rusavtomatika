@@ -5,7 +5,6 @@ $arSettings['path_to_product_images'] = '/images/';
 function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
     $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
     
-    // Проверка имени поля
     $isMemoryField = false;
     foreach ($memoryFieldNames as $memField) {
         if ($fieldName === $memField) {
@@ -14,93 +13,37 @@ function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
         }
     }
     
-    // Базовые проверки: не то поле, пусто или ноль
     if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
         return false;
     }
     
-    // Приводим к числу (входящие данные считаем Мегабайтами)
     $mbValue = floatval($fieldValue);
     
-    // Переводим в Гигабайты для сравнения
     $valueInGB = $mbValue / 1024;
 
-    // Если получилось 1 Гб или больше — выводим в Гб
     if ($valueInGB >= 1) {
-        // Убираем лишние нули после запятой (например, из "2.00" сделает "2")
         if ($valueInGB == intval($valueInGB)) {
             $displayValue = intval($valueInGB) . ' Гб';
         } else {
             $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
         }
         
-    // Если меньше 1 Гб (но больше 0) — оставляем в Мегабайтах
     } elseif ($mbValue > 0) {
-        // Округляем до целого числа, чтобы убрать ".0"
         $displayValue = round($mbValue) . ' Мб';
         
     } else {
         return false;
     }
     
-    // Записываем отформатированное значение обратно по ссылке
     $fieldValue = $displayValue;
     
     return true;
 }
 
-//function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
-//    $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
-//    
-//    $isMemoryField = false;
-//    foreach ($memoryFieldNames as $memField) {
-//        if ($fieldName === $memField) {
-//            $isMemoryField = true;
-//            break;
-//        }
-//    }
-//    
-//    if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
-//        return false;
-//    }
-//    
-//    $numericValue = floatval($fieldValue);
-//    
-//    if (stripos($fieldValue, 'Гб') !== false || stripos($fieldValue, 'GB') !== false) {
-//        $valueInGB = $numericValue;
-//    } elseif (stripos($fieldValue, 'Мб') !== false || stripos($fieldValue, 'MB') !== false) {
-//        $valueInGB = $numericValue / 1024;
-//    } else {
-//        $valueInGB = $numericValue / 1024;
-//    }
-//    
-//    if ($valueInGB >= 1) {
-//        $newUnit = 'Гб';
-//        if ($valueInGB == intval($valueInGB)) {
-//            $displayValue = intval($valueInGB) . ' Гб';
-//        } else {
-//            $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
-//        }
-//    } elseif ($valueInGB > 0) {
-//        $newUnit = 'Мб';
-//        $mbValue = $valueInGB * 1024;
-//        $displayValue = round($mbValue) . ' Мб';
-//    } else {
-//        return false;
-//    }
-//    
-//    $fieldValue = $displayValue;
-//    
-//    return true;
-//}
-
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
-
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
 CoreApplication::add_style("/abacus/components/catalog_section/templates/default/style.css");
 
-
-//CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 global $arResult;
 global $TITLE;
 global $H1;
@@ -110,7 +53,6 @@ global $arr_model_collection;
 $TITLE = "Сравнение товаров";
 $H1 = "Сравнение товаров";
 
-//CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 CoreApplication::add_breadcrumbs_chain("Сравнение товаров");
 $series["products"] = $arResult["ITEMS"];
 
@@ -128,7 +70,20 @@ $arr_types = [
     "monitor" => "Монитор",
     "module" => "Модуль ввода-вывода",
     "coupler" => "Коммуникационный модуль",
-
+    "controllers" => "Программируемый логический контроллер",
+    "servo-drivers" => "Сервопривод",
+    "monitors" => "Промышленный монитор",
+    "Gateway" => "Шлюз данных",
+    "panel_pc_wce" => "Панельный компьютер Windows CE",
+    "panel_pc_ip65" => "Панельный компьютер IP65",
+    "ps" => "Блок питания",
+    "frame" => "Рамка",
+    "accessories" => "Аксессуар",
+    "antenna" => "Антенна",
+    "vpn-router" => "VPN-роутер",
+    "serial-server" => "Serial-сервер",
+    "ethernet-switch" => "Ethernet-коммутатор",
+    "bloki-pitaniya" => "Блок питания",
     "" => "",
 ];
 
@@ -324,11 +279,12 @@ if ($num_columns >= 0) {
                                                     <div class="table_compare_tools_wrapper">
                                                         <a href="<?= $product["link_detail_page"]; ?>">
                                                             <div class="preview_image">
-                                                                <img
-                                                                        alt="<?= $product["model"]; ?>"
-                                                                        loading="lazy"
-                                                                        src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/190/<?= $product["model"] ?>_1.webp"
-                                                                >
+                                                                <?
+                                                                $img_190 = "/images/" . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] . "/190/" . $product["model"] . "_1.webp";
+                                                                $img_580 = "/images/" . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] . "/580/" . $product["model"] . "_1.webp";
+                                                                $img_src = file_exists($_SERVER['DOCUMENT_ROOT'] . $img_190) ? $img_190 : $img_580;
+                                                                ?>
+                                                                <img alt="<?= $product["model"]; ?>" loading="lazy" src="<?= $img_src ?>">
                                                             </div>
                                                         </a>
                                                         <div class="table_compare_tools">
