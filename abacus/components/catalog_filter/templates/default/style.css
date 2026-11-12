@@ -437,3 +437,16 @@ label.nomanagement {
 	font-size: 0.6rem;
 }
 .borderless {border:none;}
+
+.card-text {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 0;
+    background: #fff; border-bottom: 1px solid #e5e5e5;
+    text-decoration: none; color: #1a1a1a;
+    transition: background 0.15s ease, padding-left 0.15s ease;
+    border-bottom: 1px solid #b2b2b2;
+}
+.card-text:hover {
+    text-decoration: none;
+}

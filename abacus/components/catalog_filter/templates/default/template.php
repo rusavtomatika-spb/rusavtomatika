@@ -48,6 +48,51 @@ if ($arguments["section"]["filters"] != "") {
         </div>
         <?php
     }
-} ?>
+}
 
-
+if (isset($arguments['section']['code']) && $arguments['section']['code'] == 'modules_io') {
+    $licos_modules = CoreApplication::get_rows_from_table(
+        "products_all", 
+        "model, preview_text, `index`", 
+        "`brand`='LicOS' AND `type` IN ('module','coupler') 
+         AND `status` != '0' AND `discontinued` !='1'", 
+        "`type` ASC, `sort` ASC, `index` ASC"
+    );
+    if (is_array($licos_modules) && count($licos_modules) > 0):
+?>
+<div id="float_filter_block_licos" style="margin-top: 20px;">
+    <div class="component_catalog_section__filter">
+        <div class="filter_panel">
+            <div class="filter_field_block borderless" style="padding: 0;">
+                <div class="filter_field_block__title" style="font-weight: bold; font-size: 16px; margin-bottom: 0;">
+                    LicOS
+                </div>
+                <div class="filter_field_block__content">
+                    <?php foreach ($licos_modules as $licos_item): 
+                        $licos_model = htmlspecialchars($licos_item['model']);
+                        $licos_preview = !empty($licos_item['preview_text']) 
+                            ? htmlspecialchars(mb_substr($licos_item['preview_text'], 0, 100)) 
+                            : '';
+                    ?>
+                    <a href="/licos/<?= urlencode($licos_item['model']) ?>/" class="card-text"
+                        onmouseover="this.style.background='#f5f9ff';"
+                        onmouseout="this.style.background='#fff';">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--color-green); margin-bottom: 3px;">
+                            <?= $licos_model ?>
+                        </div>
+                        <?php if ($licos_preview !== ''): ?>
+                            <div style="font-size: 12px; color: #555; line-height: 1.4;">
+                                <?= $licos_preview ?>
+                            </div>
+                        <?php endif; ?>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+    endif;
+}
+?>

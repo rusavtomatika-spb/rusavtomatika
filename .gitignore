@@ -79,3 +79,4 @@ admin/config/admin_dbcon.php
 .osp
 sc/dbcon.php
 !weintek_projects/pr.txt
+/admin/scrt.php

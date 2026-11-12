@@ -192,15 +192,6 @@ if ( $HTTP_REFERER != "" ) {
   <div id="vue_component_catalog_section" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="component_catalog_section">
       <div class="component_wrapper">
-        <? /*?>
-<div class="row">
-  <div class="col-md-12">
-    <div class="component_catalog_section__tags">
-      <h3>Тэги</h3>
-    </div>
-  </div>
-</div>
-        <?*/ ?>
         <div class="columns is-gapless">
           <div class="is-hidden-touch column is-2-desktop column_filter is-narrow" style="min-width: 250px">
             <?
