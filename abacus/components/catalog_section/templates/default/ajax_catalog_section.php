@@ -58,10 +58,17 @@ ob_start();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-if ( isset( $_POST[ 'view_mode' ] )and $_POST[ 'view_mode' ] != "" ) {
-  $view_mode = $_POST[ 'view_mode' ];
-  //echo $view_mode;
-} else $view_mode = 'list';
+$allowed_view_modes = ['list', 'tile', 'tiles', 'table'];
+
+if ( isset( $GLOBALS['server_view_mode'] ) && in_array( $GLOBALS['server_view_mode'], $allowed_view_modes, true ) ) {
+  $view_mode = $GLOBALS['server_view_mode'];
+} elseif ( isset( $_POST['view_mode'] ) && $_POST['view_mode'] !== '' && in_array( $_POST['view_mode'], $allowed_view_modes, true ) ) {
+  $view_mode = $_POST['view_mode'];
+} elseif ( isset( $_COOKIE['section_catalog_view_mode'] ) && in_array( $_COOKIE['section_catalog_view_mode'], $allowed_view_modes, true ) ) {
+  $view_mode = $_COOKIE['section_catalog_view_mode'];
+} else {
+  $view_mode = 'tile';
+}
 $sec_current = $DB_WORK_CATALOG->get_section_by_code( $_GET[ "section" ] )[ 'code' ];
 $sort_cookie_name = 'section_catalog_view_sort_' . $sec_current;
 $sort_mode = "recommended";

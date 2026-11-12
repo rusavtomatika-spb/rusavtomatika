@@ -1,3 +1,5 @@
+[v-cloak] { display: none; }
+
 .show_in_dev_mode {
     font-size: 8px;
     color: red;
@@ -7,7 +9,6 @@
     left: 0;
     opacity: 0.2;
 }
-
 
 .component_catalog_section .panel_chosen_filters{
     margin: 20px 30px;

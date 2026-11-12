@@ -60,7 +60,6 @@ if (isset($_GET['series'])) {
 }
 
 if (isset($_GET['availablity'])) {
-    //$condition .= " AND `availablity` = '" . addslashes($_GET['availablity']) . "'";
     $condition .= " AND `onstock` = " . $_GET['availablity'];
 }
 
@@ -138,28 +137,21 @@ if ( $arrSection[ "description" ] != "" ) {
 }
 
 if ( !$do_not_add_extra_h1 ) {
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   include "inc_handle_h1.php";
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-//CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 if ( isset( $arrSection[ "name_breadcrumbs" ] )and $arrSection[ "name_breadcrumbs" ] != '' ) {
   $breadcrumbs_name = $arrSection[ "name_breadcrumbs" ];
 } else $breadcrumbs_name = $arrSection[ "name" ];
 
 CoreApplication::add_breadcrumbs_chain( $breadcrumbs_name );
 
-//var_dump_pre($arrSection["product_sort"]);
-
 $arr_product_sort = [];
-
 
 if ( $arrSection[ "product_sort" ] != "" ) {
   $arr_product_sort = explode( ",", $arrSection[ "product_sort" ] );
 }
 
-//var_dump_pre($arr_product_sort);
 $HTTP_REFERER = $_SERVER[ "REQUEST_URI" ];
 
 $HTTP_REFERER = str_replace( "https://www.rusavto.moisait.net", "", $HTTP_REFERER );
@@ -172,9 +164,14 @@ if ( $HTTP_REFERER != "" ) {
   global $SEO_URL;
 
   $url = $HTTP_REFERER;
-	//$url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 }
 	$url = preg_replace('/[&\?]*ysclid=[^&]+/', '', $url);
+
+$server_view_mode = 'tile';
+if (isset($_COOKIE['section_catalog_view_mode']) && in_array($_COOKIE['section_catalog_view_mode'], ['list','tile','tiles','table'])) {
+    $server_view_mode = $_COOKIE['section_catalog_view_mode'];
+}
+$GLOBALS['server_view_mode'] = $server_view_mode;
 
 ?>
   <?
@@ -198,7 +195,6 @@ if ( $HTTP_REFERER != "" ) {
             $arguments[ "template" ] = "default";
             $arguments[ "component" ] = "catalog_filter";
             $arguments[ "section" ] = $arrSection;
-            //$arguments["filter_items"] = $arrSection["filters"];
             CoreApplication::include_component( $arguments );
             ?>
          </div>
@@ -207,9 +203,7 @@ if ( $HTTP_REFERER != "" ) {
             if ( $arrSection[ "code" ] == "vpn_routers" ) {
               include $_SERVER[ "DOCUMENT_ROOT" ] . "/include_utf_8/widgets/inc_no_ewon.php";
             }
-            /////////////////
             $all_series = CoreApplication::get_rows_from_table( 'catalog_series', '', "active = '1'", 'position' );
-            ////////////////////			
 
             global $H1_original;
             global $TITLE_original;
@@ -337,15 +331,6 @@ if ( $HTTP_REFERER != "" ) {
                                         @click="clear_filter_item('filterSelectedRangePrice_max','')"
                                         class="button_clear_filter"> </span></span></span> 
                 
-                <!--span class="item"
-                              v-if="filterSelectedRangeDiagonal_min > filterSelectedRangeDiagonal_min_start"><span>диагональ от: <b>{{ filterSelectedRangeDiagonal_min }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeDiagonal_min', '')"
-                                        class="button_clear_filter"> </span></span></span>
-                        <span-- class="item"
-                              v-if="filterSelectedRangeDiagonal_max < filterSelectedRangeDiagonal_max_start"><span>диагональ до: <b>{{ filterSelectedRangeDiagonal_max }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeDiagonal_max', '')"
-                                        class="button_clear_filter"> </span></span></span--> 
-                
                 <span class="item"
                               v-if="filterSelectedRangeEthernets_min > filterSelectedRangeEthernets_min_start"><span>количество Ethernet от: <b>{{ filterSelectedRangeEthernets_min }}&Prime;</b> <span
                                         @click="clear_filter_item('filterSelectedRangeEthernets_min', '')"
@@ -381,8 +366,6 @@ if ( $HTTP_REFERER != "" ) {
 				<? if ($arrSection[ 'filter_brands' ] != 'NO_BRANDS' && $arrSection[ 'code' ] != 'industrial-computers') {?>
               <div class="is-hidden-touch is-size-12" style="margin-left: 30px;line-height: 45px;">Серии:
                 <?
-                //$all_series = get_all_series();
-                //print_r($all_series);
                 $sub0 = $arrSection[ 'subsection_brands' ];
 			  if (preg_match('/,/',$sub0)) {
                 $arr_section_sub = explode( ",", $sub0 );
@@ -399,7 +382,6 @@ if ( $HTTP_REFERER != "" ) {
                 foreach ( $all_series as $i => $all_serie ) {
 					$pattern = '/('.$all_serie["type"].')/i';
                   if ( $all_serie[ 'menu_category_item_code' ] == $arrSection[ "code" ] && $all_serie[ 'brand' ] == $section_sub && (preg_match($pattern,$arrSection["product_types"] ) == 1)) {
-                  //if ( $all_serie[ 'menu_category_item_code' ] == $arrSection[ "code" ] && $all_serie[ 'brand' ] == $section_sub) {
                     echo '<a class="button is-small mr-1 is-uppercase" href="/catalog/' . $all_serie[ 'menu_category_item_code' ] . '/?&series=' . $all_serie[ 'name' ] . '" title="' . $all_serie[ 'name_russian' ] . '">' . $all_serie[ 'name' ] . '</a>';
                   }
                 }
@@ -520,10 +502,7 @@ if ( $HTTP_REFERER != "" ) {
                 <div class="section_list_view_mode is-hidden-touch ">
                   <div class="is-size-7">Вид</div>
                   <div class="elements"> <span v-bind:class="['section_list_view_mode_button button_view_mode_list' , {'active': (view_mode == 'list')} ]" @click="change_view_mode('list')"></span> 
-                    <!--span v-bind:class="['section_list_view_mode_button button_view_mode_table' , {'active': (view_mode == 'table')} ]" @click="change_view_mode('table')"></span> 
-                  <span v-bind:class="['section_list_view_mode_button button_view_mode_tiles' , {'active': (view_mode == 'tiles')} ]" @click="change_view_mode('tiles')"></span--> 
                     <span v-bind:class="['section_list_view_mode_button button_view_mode_tiles' , {'active': (view_mode == 'tile')} ]" @click="change_view_mode('tile')"></span>
-                    <? /*?><span class="section_list_view_mode_button button_view_mode_tiles"></span><?*/ ?>
                   </div>
                 </div>
                 <?
@@ -540,12 +519,21 @@ if ( $HTTP_REFERER != "" ) {
                 <? endif; ?>
               </div>
             </noindex>
-            <div class="component_catalog_section__panel_of_products_wrapper">
-              <div class="component_catalog_section__panel_of_products" v-html="html_filtered_products" >
-                <?
-                include "catalog_section_products.php";
-                ?>
-              </div>
+
+            <?php
+            $view_mode = $server_view_mode;
+            $GLOBALS['server_view_mode'] = $server_view_mode;
+
+            ob_start();
+            include "catalog_section_products.php";
+            $catalog_section_server_html = ob_get_clean();
+            ?>
+            <div class="component_catalog_section__panel_of_products_wrapper"
+                 data-server-view-mode="<?= htmlspecialchars($server_view_mode) ?>">
+              <div class="component_catalog_section__panel_of_products"
+                   v-html="html_filtered_products"
+                   v-cloak
+                   data-server-html-id="catalog_section_server_html"><?= $catalog_section_server_html ?></div>
               <?
               $preview_text = '';
               if (isset($_GET['ai']) && $_GET['ai'] === 'yes') {
