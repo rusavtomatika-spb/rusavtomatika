@@ -490,7 +490,3 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
 
     require_once __DIR__ . "/inc_prepare_link_advanced_search.php";
 }
-
-
-
-//

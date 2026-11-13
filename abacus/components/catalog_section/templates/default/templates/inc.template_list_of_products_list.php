@@ -112,9 +112,11 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
             </div>
             <span class="preview_text">
             <?= $product["preview_text"]; ?>
-            </span>;<span class="preview_text_extra">
+            </span>
+            <span class="preview_text_extra">
             <?= $product["preview_text_extra"]; ?>
-            </span></div>
+            </span>
+        </div>
         <div class="series_products__panel_buttons">
             <?
                             if(in_array($brand,["Weintek","IFC","Aplex","Spiktek","Samkoon","eWON","Faraday"])){
