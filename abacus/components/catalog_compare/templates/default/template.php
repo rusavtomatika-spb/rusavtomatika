@@ -4,7 +4,7 @@ $arSettings['path_to_product_images'] = '/images/';
 
 function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
     $memoryFieldNames = ['ram', 'ram_max', 'flash', 'hdd_size_gb'];
-    
+
     $isMemoryField = false;
     foreach ($memoryFieldNames as $memField) {
         if ($fieldName === $memField) {
@@ -12,13 +12,12 @@ function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
             break;
         }
     }
-    
+
     if (!$isMemoryField || empty($fieldValue) || $fieldValue == '0') {
         return false;
     }
-    
+
     $mbValue = floatval($fieldValue);
-    
     $valueInGB = $mbValue / 1024;
 
     if ($valueInGB >= 1) {
@@ -27,16 +26,28 @@ function formatMemoryField(&$fieldName, &$fieldValue, $fieldUnits) {
         } else {
             $displayValue = rtrim(rtrim(number_format($valueInGB, 2, '.', ''), '0'), '.') . ' Гб';
         }
-        
     } elseif ($mbValue > 0) {
         $displayValue = round($mbValue) . ' Мб';
-        
     } else {
         return false;
     }
-    
+
     $fieldValue = $displayValue;
-    
+
+    return true;
+}
+
+function is_field_filled($raw) {
+    if ($raw === null || $raw === false || $raw === '') {
+        return false;
+    }
+    if (is_numeric($raw) && floatval($raw) == 0) {
+        return false;
+    }
+    $trim = trim((string)$raw);
+    if ($trim === '' || preg_match('/^[0\.,]+$/', $trim)) {
+        return false;
+    }
     return true;
 }
 
@@ -172,14 +183,51 @@ $arr_fields = [
     ["name" => "temp_operating", "rus_name" => "Рабочая темп-ра, &degC\"", "type" => "text"],
 ];
 
-$extra_h1 = ' ';
-if ($num_columns >= 0) {
+$field_filled_count = [];
+foreach ($arr_fields as $field) {
+    if ($field["type"] === "separator") continue;
+    if ($field["name"] === 'image') {
+        $field_filled_count[$field["name"]] = 1;
+        continue;
+    }
+    $cnt = 0;
     if (is_array($series["products"])) {
         foreach ($series["products"] as $product) {
-            $extra_h1 .= $product["model"];
-            if (next($series["products"]) == true) $extra_h1 .= ", ";
+            $raw = isset($product[$field["name"]]) ? $product[$field["name"]] : '';
+            if (is_field_filled($raw)) $cnt++;
         }
     }
+    $field_filled_count[$field["name"]] = $cnt;
+}
+
+$separator_has_visible_field = [];
+$current_separator_idx = null;
+foreach ($arr_fields as $idx => $field) {
+    if ($field["type"] === "separator") {
+        $current_separator_idx = $idx;
+        $separator_has_visible_field[$idx] = false;
+        continue;
+    }
+    if ($current_separator_idx !== null && !empty($field_filled_count[$field["name"]])) {
+        $separator_has_visible_field[$current_separator_idx] = true;
+    }
+}
+
+$extra_h1 = ' ';
+if (is_array($series["products"])) {
+    $models = [];
+    foreach ($series["products"] as $product) {
+        if (isset($product["model"]) && $product["model"] !== '') {
+            $models[] = $product["model"];
+        }
+    }
+    if (!empty($models)) {
+        $extra_h1 = ' ' . implode(', ', $models);
+    }
+}
+
+$html_result = '';
+if ($num_columns > 0) {
     ob_start();
     ?>
     <div id="vue_app_component_compare">
@@ -194,25 +242,59 @@ if ($num_columns >= 0) {
             <div class="wrapper2">
                 <div class="div2">
 
-
                     <table v-cloak class="table is-hoverable table_compare is-fullwidth num_columns_<?= $num_columns ?>"
                            v-bind:class="'view_mode_'+view_mode">
                         <?php
-                        foreach ($arr_fields as $field) {
-                            $num_values = 0;
-                            $different = '';
-                            if (isset($series["products"][0][$field["name"]])) {
-                                $cur_value = $series["products"][0][$field["name"]];
-                                $different = 'same';
+                        foreach ($arr_fields as $field_idx => $field) {
+
+                            if ($field["type"] === "separator") {
+                                if (empty($separator_has_visible_field[$field_idx])) {
+                                    continue;
+                                }
+                                ?>
+                                <tr class="num_values_0 field_name_separator">
+                                    <td class="noborder" style="text-align: left;padding-top: 1rem"
+                                        colspan="<?= $num_columns + 1 ?>">
+                                        <?
+                                        if (isset($field["rus_name"]) and $field["rus_name"] != "") {
+                                            echo "<h3>" . $field["rus_name"] . "</h3>";
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?
+                                continue;
                             }
-                            if (is_array($series["products"])) {
-                                foreach ($series["products"] as $product) {
-                                    if (isset($field["name"]) and isset($product[$field["name"]]) and $product[$field["name"]] != '' and $product[$field["name"]] != '0') {
-                                        $num_values++;
-                                        if ($cur_value != $product[$field["name"]]) {
-                                            $different = 'different';
+
+                            if (empty($field_filled_count[$field["name"]])) {
+                                continue;
+                            }
+
+                            if ($field["name"] === 'image') {
+                                $different = 'service';
+                                $num_values = 0;
+                            } else {
+                                $values = [];
+                                $hasEmpty = false;
+                                $num_values = 0;
+
+                                if (is_array($series["products"])) {
+                                    foreach ($series["products"] as $product) {
+                                        $raw = isset($product[$field["name"]]) ? $product[$field["name"]] : '';
+                                        if (is_field_filled($raw)) {
+                                            $values[] = (string)$raw;
+                                            $num_values++;
+                                        } else {
+                                            $hasEmpty = true;
                                         }
                                     }
+                                }
+
+                                if ($hasEmpty) {
+                                    $different = 'different';
+                                } else {
+                                    $unique = array_unique($values);
+                                    $different = (count($unique) === 1) ? 'same' : 'different';
                                 }
                             }
                             ?>
@@ -238,36 +320,19 @@ if ($num_columns >= 0) {
                                                             </div>
                                                             <ul>
                                                                 <li>
-
-                                                                    <input id="choice_features_0"
-                                                                           type="radio"
-                                                                           checked
-                                                                           name="choice_features"
-                                                                           v-model="view_mode"
-                                                                           value="0">
-                                                                    <label for="choice_features_0"> Все
-                                                                        характеристики</label>
+                                                                    <input id="choice_features_0" type="radio" checked
+                                                                           name="choice_features" v-model="view_mode" value="0">
+                                                                    <label for="choice_features_0"> Все характеристики</label>
                                                                 </li>
                                                                 <li>
-
-                                                                    <input
-                                                                            id="choice_features_1"
-                                                                            type="radio"
-                                                                            name="choice_features"
-                                                                            v-model="view_mode"
-                                                                            value="1">
-                                                                    <label for="choice_features_1">
-                                                                        Только различия
-                                                                    </label>
+                                                                    <input id="choice_features_1" type="radio"
+                                                                           name="choice_features" v-model="view_mode" value="1">
+                                                                    <label for="choice_features_1">Только различия</label>
                                                                 </li>
                                                                 <li>
-
-                                                                    <input id="choice_features_2"
-                                                                           type="radio" name="choice_features"
-                                                                           v-model="view_mode"
-                                                                           value="2">
-                                                                    <label for="choice_features_2">Только
-                                                                        совпадения</label>
+                                                                    <input id="choice_features_2" type="radio"
+                                                                           name="choice_features" v-model="view_mode" value="2">
+                                                                    <label for="choice_features_2">Только совпадения</label>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -280,45 +345,35 @@ if ($num_columns >= 0) {
                                                         <a href="<?= $product["link_detail_page"]; ?>">
                                                             <div class="preview_image">
                                                                 <?
-                                                                $img_190 = "/images/" . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] . "/190/" . $product["model"] . "_1.webp";
-                                                                $img_580 = "/images/" . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] . "/580/" . $product["model"] . "_1.webp";
+                                                                $brandLower = isset($product["brand"]) ? mb_strtolower($product["brand"]) : '';
+                                                                $typeLower = isset($product["type"]) ? mb_strtolower($product["type"]) : '';
+                                                                $model = isset($product["model"]) ? $product["model"] : '';
+                                                                $img_190 = "/images/" . $brandLower . "/" . $typeLower . "/" . $model . "/190/" . $model . "_1.webp";
+                                                                $img_580 = "/images/" . $brandLower . "/" . $typeLower . "/" . $model . "/580/" . $model . "_1.webp";
                                                                 $img_src = file_exists($_SERVER['DOCUMENT_ROOT'] . $img_190) ? $img_190 : $img_580;
                                                                 ?>
-                                                                <img alt="<?= $product["model"]; ?>" loading="lazy" src="<?= $img_src ?>">
+                                                                <img alt="<?= $model; ?>" loading="lazy" src="<?= $img_src ?>">
                                                             </div>
                                                         </a>
                                                         <div class="table_compare_tools">
-                                                        <span class="table_compare__button favorites"
-                                                              @click="add_too_box" data-box="favorites"
-                                                              data-model="<?= $product["model"] ?>"><i class="fa-regular fa-heart"></i> В ИЗБРАННОЕ</span>
+                                                            <span class="table_compare__button favorites"
+                                                                  @click="add_too_box" data-box="favorites"
+                                                                  data-model="<?= $model ?>"><i class="fa-regular fa-heart"></i> В ИЗБРАННОЕ</span>
                                                             <button title="Добавить в заказ"
                                                                     class="table_compare__button table_compare__button_cart"
                                                                     @click="add_too_box"
-                                                                    data-model="<?= $product["model"] ?>"
+                                                                    data-model="<?= $model ?>"
                                                                     data-box="cart"><i class="fa-solid fa-cart-shopping"></i> В ЗАКАЗ
                                                             </button>
                                                             <span class="delete_item active" @click="add_too_box"
                                                                   data-box="compare"
-                                                                  data-model="<?= $product["model"] ?>"></span>
+                                                                  data-model="<?= $model ?>"></span>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <?
                                                 break;
-                                            case "separator":
-                                                if ($counter == 0) {
-                                                    ?>
-                                                    <td class="noborder" style="text-align: left;padding-top: 1rem"
-                                                        colspan="<? echo($num_columns + 1); ?>">
-                                                        <?
-                                                        if (isset($field["rus_name"]) and $field["rus_name"] != "")
-                                                            echo "<h3>" . $field["rus_name"] . "</h3>";
-                                                        ?>
-                                                    </td>
-                                                    <?
-                                                } ?>
-                                                <?
-                                                break;
+
                                             case "type":
                                                 if ($counter == 0) {
                                                     ?>
@@ -332,13 +387,17 @@ if ($num_columns >= 0) {
                                                 } ?>
                                                 <td>
                                                     <?
-                                                    if (isset($arr_types[$product["type"]]) and $arr_types[$product["type"]] != "") {
-                                                        echo $arr_types[$product["type"]];
+                                                    $typeVal = isset($product["type"]) ? $product["type"] : '';
+                                                    if (isset($arr_types[$typeVal]) and $arr_types[$typeVal] != "") {
+                                                        echo $arr_types[$typeVal];
+                                                    } else {
+                                                        echo '&mdash;';
                                                     }
                                                     ?>
                                                 </td>
                                                 <?
                                                 break;
+
                                             case "onstock_spb":
                                                 if ($counter == 0) {
                                                     ?>
@@ -352,9 +411,9 @@ if ($num_columns >= 0) {
                                                 } ?>
                                                 <td>
                                                     <?
-                                                    if ($product["onstock_spb"] > 0) {
+                                                    if (isset($product["onstock_spb"]) && $product["onstock_spb"] > 0) {
                                                         echo "в наличии";
-                                                    } elseif ($product['discontinued'] == '1') {
+                                                    } elseif (isset($product['discontinued']) && $product['discontinued'] == '1') {
                                                         echo '<span class="has-text-danger">снято&nbsp;с&nbsp;производства</span>';
                                                     } else {
                                                         echo "под заказ";
@@ -363,6 +422,7 @@ if ($num_columns >= 0) {
                                                 </td>
                                                 <?
                                                 break;
+
                                             case "retail_price":
                                                 if ($counter == 0) {
                                                     ?>
@@ -376,25 +436,23 @@ if ($num_columns >= 0) {
                                                 } ?>
                                                 <td>
                                                     <?
-                                                    if ($product["retail_price"] > 0 and $product["retail_price_hide"] != '1') {
+                                                    $priceVal = isset($product["retail_price"]) ? $product["retail_price"] : '';
+                                                    $priceHide = isset($product["retail_price_hide"]) ? $product["retail_price_hide"] : '';
+                                                    if ($priceVal > 0 and $priceHide != '1') {
                                                         if ($field["type"] == 'title') {
-                                                            echo "<h3>" . $product[$field["name"]] . "</h3>";
+                                                            echo "<h3>" . $priceVal . "</h3>";
                                                         } else {
-                                                            echo $product[$field["name"]];
+                                                            echo $priceVal;
                                                         }
-                                                        if ($product["currency"] == 'USD') {
-                                                            echo " $";
-                                                        }
-                                                        if ($product["currency"] == 'RUB') {
-                                                            echo ' руб.';
-                                                        }
+                                                        $cur = isset($product["currency"]) ? $product["currency"] : '';
+                                                        if ($cur == 'USD') echo " $";
+                                                        if ($cur == 'RUB') echo ' руб.';
                                                     } else {
                                                         echo "по запросу";
                                                     }
                                                     ?>
                                                 </td>
                                                 <?
-
                                                 break;
 
                                             default:
@@ -410,27 +468,30 @@ if ($num_columns >= 0) {
                                                 } ?>
                                                 <td>
                                                     <?
+                                                    $raw = isset($product[$field["name"]]) ? $product[$field["name"]] : '';
                                                     if ($field["type"] == 'title') {
-                                                        echo "<h4>" . $product[$field["name"]] . "</h4>";
+                                                        echo "<h4>" . (is_field_filled($raw) ? $raw : '&mdash;') . "</h4>";
                                                     } else {
-                                                        if ($product[$field["name"]] != '' and $product[$field["name"]] != '0') {
-                                                            $fieldValue = $product[$field["name"]];
+                                                        if (is_field_filled($raw)) {
+                                                            $fieldValue = $raw;
                                                             $fieldName = $field["name"];
                                                             $fieldUnits = isset($field["units"]) ? $field["units"] : '';
-                                                            
+
                                                             $memoryConverted = formatMemoryField($fieldName, $fieldValue, $fieldUnits);
-                                                            
+
                                                             if ($memoryConverted) {
                                                                 echo $fieldValue;
                                                             } else {
-                                                                echo $product[$field["name"]];
+                                                                echo $raw;
                                                                 if (isset($field["units"]) and $field["units"] != '') {
-                                                                    if ($field["name"] == 'current' and $product['type'] == 'module') {
+                                                                    if ($field["name"] == 'current' and isset($product['type']) and $product['type'] == 'module') {
                                                                     } else {
                                                                         echo " " . $field["units"];
                                                                     }
                                                                 }
                                                             }
+                                                        } else {
+                                                            echo '&mdash;';
                                                         }
                                                     }
                                                     ?>
@@ -444,23 +505,19 @@ if ($num_columns >= 0) {
                                 ?>
                             </tr>
                             <?
-
                         }
-
                         ?>
                     </table>
                 </div>
             </div>
 
         </div>
-
     </div>
     <?php
     $html_result = ob_get_clean();
 } else {
     $html_result = 'Товары для сравнения не выбраны';
 }
-
 ?>
 <div class="catalog_compare">
     <div class="container">
@@ -473,22 +530,8 @@ if ($num_columns >= 0) {
 
                 <?
                 echo $html_result;
-
                 ?>
-                <? /*?>
-                <div class="component_catalog_section__panel_of_products">
-                    <div class="view-mode-list">
-                        <?
-                        include __DIR__ . "/inc_template_list_of_products_list.php";
-                        ?>
-                    </div>
-
-                </div>
-
-                <?*/ ?>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -510,29 +553,21 @@ if ($num_columns >= 0) {
                                               value="<?= $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"; ?>">
     <div id="message_copy_link" class="has-text-weight-bold py-2"></div>
     <button class="button is-success is-small js-textareacopybtn">Копировать ссылку</button>
-
 </div>
 <div id="vue_data" data-models="<?= implode(',', $arr_model_collection) ?>"></div>
 
 <script>
     $(document).ready(function () {
-/*
-        if ($('table.series_products tr').length == 0) {
-            $('.catalog_compare__button_clearall').css('display', 'none');
-        }
-*/
         $('.catalog_compare__button_clearall').on('click', function () {
             $(this).css('display', 'none');
             setCookie('box2_compare', "", {'max-age': -1});
             $('.catalog_toolbar__item.compare .number').html('');
-            localStorage.setItem('compare',Date.now());
+            localStorage.setItem('compare', Date.now());
             location.href = '/catalog/compare/';
             $('.component_catalog_section__panel_of_products .view-mode-list').html('<hr>Нет товаров...<hr>');
         });
 
         function setCookie(name, value, options = {}) {
-            // Пример использования:
-            //setCookie('user', 'John', {secure: true, 'max-age': 3600});
             let date = new Date;
             date.setDate(date.getDate() + 365);
             date = date.toUTCString();
@@ -554,56 +589,20 @@ if ($num_columns >= 0) {
             }
 
 
-
-            updatedCookie +=  ';SameSite=Strict;Secure';
+            updatedCookie += ';SameSite=Strict;Secure';
             document.cookie = updatedCookie;
             console.log(updatedCookie);
         }
 
     });
-</script>
-<style>
-    .wrapper1, .wrapper2 {
-        width: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
-    }
 
-    .wrapper2 {
-        box-shadow: 1px 10px 5px rgba(0, 0, 0, 0.5) inset;
-    }
-
-    .wrapper1 {
-        height: 20px;
-        margin-bottom: 20px;
-    }
-
-    .div1 {
-        height: 20px;
-    }
-
-    .div2 {
-        overflow: hidden;
-
-    }
-
-
-    .div2.active {
-        user-select: none;
-        cursor: ew-resize;
-    }
-</style>
-<script>
     $(function () {
         $('.wrapper1').on('scroll', function (e) {
             $('.wrapper2').scrollLeft($('.wrapper1').scrollLeft());
-
         });
         $('.wrapper2').on('scroll', function (e) {
             $('.wrapper1').scrollLeft($('.wrapper2').scrollLeft());
         });
-
-
     });
     $(window).on('load', function (e) {
         $('.div1').width($('table').width());
@@ -626,18 +625,13 @@ if ($num_columns >= 0) {
 
             function handle_dragging(e) {
                 var left = my_dragging.offset0.left + (e.pageX - my_dragging.pageX0);
-                //var left2 = my_dragging.offset0.left + (my_dragging.pageX0 - e.pageX);
                 var top = my_dragging.offset0.top + (e.pageY - my_dragging.pageY0);
 
 
                 var moving = (my_dragging.pageX0 - e.pageX) / 20 + $('.wrapper2').scrollLeft();
 
-                //console.log($('.wrapper2').scrollLeft(), moving);
-
 
                 $('.wrapper2').scrollLeft(moving);
-
-                //$(my_dragging.elem).offset({top: top, left: left});
             }
 
             function handle_mouseup(e) {
@@ -662,7 +656,6 @@ if ($num_columns >= 0) {
         copyTextarea.select();
 
         try {
-
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
@@ -671,5 +664,4 @@ if ($num_columns >= 0) {
             $('#message_copy_link').html('Ваш браузер не поддерживает копирование. Используйте комбинацию клавиш "Ctrl+C"');
         }
     });
-
 </script>

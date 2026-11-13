@@ -4,10 +4,6 @@
 .catalog_compare .table_compare{
     width: 100%;
 }
-.catalog_compare .table_compare tr.num_values_0:not(.field_name_image):not(.field_name_separator){
-    display: none;
-}
-
 
 .catalog_compare .table_compare td{
     padding: 0.5rem 1rem;
@@ -34,10 +30,6 @@
     width: 45%;
 }
 
-
-
-
-
 .catalog_compare__button_clearall_wrapper{
     display: flex;
     justify-content: center;
@@ -63,17 +55,12 @@
     object-fit: contain;
 }
 
-
-.catalog_compare .table_compare.view_mode_2 tr.different{
-    display: none;
-}
-.catalog_compare .table_compare.view_mode_1 tr.same{
-    display: none;
-}
 .catalog_compare .table_compare tr.different{
     background: #fff7f7;
 }
-
+.catalog_compare .table_compare tr.service {
+    display: table-row !important;
+}
 
 .catalog_compare__button_clearall{
     display: inline-block;
@@ -193,4 +180,63 @@
 }
 .catalog_compare input[type="radio"]:checked + label::before {
     background-position: center -50px;
+}
+.wrapper1, .wrapper2 {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.wrapper2 {
+    box-shadow: 1px 10px 5px rgba(0, 0, 0, 0.5) inset;
+}
+
+.wrapper1 {
+    height: 20px;
+    margin-bottom: 20px;
+}
+
+.div1 {
+    height: 20px;
+}
+
+.div2 {
+    overflow: hidden;
+}
+
+.div2.active {
+    user-select: none;
+    cursor: ew-resize;
+}
+
+.catalog_compare .table_compare tr.num_values_0:not(.field_name_image):not(.field_name_separator):not(.service) {
+    display: none;
+}
+
+.catalog_compare .table_compare tr.service {
+    display: table-row !important;
+}
+
+.catalog_compare .table_compare.view_mode_1 tr.same:not(.service):not(.field_name_separator) {
+    display: none;
+}
+.catalog_compare .table_compare.view_mode_1 tr.different:not(.service):not(.field_name_separator) {
+    display: table-row;
+}
+.catalog_compare .table_compare.view_mode_1 tr.field_name_separator {
+    display: none;
+}
+
+.catalog_compare .table_compare.view_mode_2 tr.different:not(.service):not(.field_name_separator) {
+    display: none;
+}
+.catalog_compare .table_compare.view_mode_2 tr.same:not(.service):not(.field_name_separator) {
+    display: table-row;
+}
+.catalog_compare .table_compare.view_mode_2 tr.field_name_separator {
+    display: none;
+}
+
+.catalog_compare .table_compare tr.different:not(.service) {
+    background: #fff7f7;
 }
