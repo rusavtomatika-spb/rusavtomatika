@@ -737,9 +737,16 @@ if (($arResult['product']['type'] == 'controllers'
 }
 ?>
 <meta itemprop="description" content="<?= $DESCRIPTION_micro ?>">
+
+<?php if (!empty($arResult['product']['template_html'])): ?>
+<section id="custom_html">
+  <?= $arResult['product']['template_html'] ?>
+</section>
+<?php endif; ?>
+
 <?php
 if (count($product_field_descriptions) > 0 and $arResult['product']["replace_detail_text_with_file"] == ""):
-  ?>
+?>
 <section id="specifications">
   <h2>Технические
     характеристики
