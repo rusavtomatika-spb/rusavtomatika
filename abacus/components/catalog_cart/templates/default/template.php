@@ -77,7 +77,7 @@ $series[ "products" ] = $arResult[ "ITEMS" ];
               
               <!--a href="<?= $product["link_detail_page"]; ?>"-->
               <?= $product["preview_text"]; ?>
-              ; <span>
+              <span>
               <?= $product["preview_text_extra"]; ?>
               </span> 
               <!--/a-->

@@ -5,8 +5,6 @@
 //include ("lib.php");
 //database_connect();
 
-
-
 if (isset($_POST["id"]))
     $id = $_POST["id"];
 else

@@ -14,8 +14,8 @@ $WEINTEK_NAME = 'moisait_weintek';
 $isAllowed = false;
 $allowedDomains = array('www.rusavto.moisait.net', 'rusavtomatika.local');
 if (in_array($_SERVER['SERVER_NAME'], $allowedDomains)) $isAllowed = true;
-if (preg_match('/\.local$/i', $_SERVER['SERVER_NAME']))  $isAllowed = true;
-if (!$isAllowed && !empty($_COOKIE['m']))                $isAllowed = true;
+if (preg_match('/\.local$/i', $_SERVER['SERVER_NAME'])) $isAllowed = true;
+if (!$isAllowed && !empty($_COOKIE['m']))               $isAllowed = true;
 
 if (!$isAllowed) {
     header('HTTP/1.0 403 Forbidden');
@@ -219,7 +219,10 @@ foreach ($api_data as $row) {
 }
 
 $products = array();
-$sql = "SELECT `index`, `model`, `articuls`, `articuls_api`, `onstock_spb`, `discontinued` FROM `products_all`";
+$sql = "SELECT p.`index`, p.`model`, p.`articuls`, p.`articuls_api`, p.`discontinued`,
+               COALESCE(s.`onstock_spb`, 0) AS `onstock_spb`
+        FROM `products_all` p
+        LEFT JOIN `product_stock` s ON s.`product_index` = p.`index`";
 $r = $mysqli_ra->query($sql);
 if ($r) {
     while ($row = $r->fetch_assoc()) {
@@ -231,8 +234,8 @@ if ($r) {
 }
 
 $run_started_at = date('Y-m-d H:i:s');
-$admin_id       = isset($current_admin['id']) ? (int)$current_admin['id'] : null;
-$admin_username = isset($current_admin['username']) ? $current_admin['username'] : null;
+$admin_id       = isset($current_admin['id']) ? (int)$current_admin['id'] : 0;
+$admin_username = isset($current_admin['username']) ? (string)$current_admin['username'] : '';
 $api_rows_count = count($api_data);
 $run_id         = null;
 
@@ -243,10 +246,12 @@ $stmt_run = $mysqli_ra->prepare(
 if ($stmt_run) {
     $stmt_run->bind_param('sisi', $run_started_at, $admin_id, $admin_username, $api_rows_count);
     if ($stmt_run->execute()) {
-        $run_id = $stmt_run->insert_id;
+        $run_id = (int)$stmt_run->insert_id;
     }
     $stmt_run->close();
 }
+
+$run_id_param = ($run_id !== null) ? (int)$run_id : 0;
 
 foreach ($products as $row) {
     if (isset($row['discontinued']) && trim((string)$row['discontinued']) === '1') {
@@ -274,14 +279,14 @@ foreach ($products as $row) {
 
     $matched         = false;
     $best_stock      = 0;
-    $matched_article = null;
+    $matched_article = '';
 
     foreach ($keys as $k => $original) {
         if (isset($api_stock[$k])) {
             $matched = true;
             if ($api_stock[$k]['stock'] > $best_stock) {
                 $best_stock      = $api_stock[$k]['stock'];
-                $matched_article = $api_stock[$k]['article'];
+                $matched_article = (string)$api_stock[$k]['article'];
             }
         }
     }
@@ -303,8 +308,9 @@ foreach ($products as $row) {
              VALUES (?, ?, ?, ?, ?)"
         );
         if ($stmt_b) {
-            $disc = isset($row['discontinued']) ? (string)$row['discontinued'] : '';
-            $stmt_b->bind_param('iisis', $run_id, $index, $model, $current, $disc);
+            $disc      = isset($row['discontinued']) ? (string)$row['discontinued'] : '';
+            $disc_bind = (string)$disc;
+            $stmt_b->bind_param('iisis', $run_id_param, $index, $model, $current, $disc_bind);
             $stmt_b->execute();
             $stmt_b->close();
         }
@@ -315,10 +321,16 @@ foreach ($products as $row) {
         continue;
     }
 
-    $stmt_u = $mysqli_ra->prepare("UPDATE `products_all` SET `onstock_spb` = ? WHERE `index` = ? LIMIT 1");
+    $stmt_u = $mysqli_ra->prepare(
+        "INSERT INTO `product_stock` (`product_index`, `onstock_spb`, `source_run_id`)
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+        `onstock_spb`   = VALUES(`onstock_spb`),
+        `source_run_id` = VALUES(`source_run_id`)"
+    );
     $ok = false;
     if ($stmt_u) {
-        $stmt_u->bind_param('ii', $new_value, $index);
+        $stmt_u->bind_param('iii', $index, $new_value, $run_id_param);
         $ok = $stmt_u->execute();
         $stmt_u->close();
     }
@@ -328,8 +340,10 @@ foreach ($products as $row) {
         else                $updated_to_0++;
 
         if ($run_id !== null) {
-            $changed_at = date('Y-m-d H:i:s');
-            $stock_in_api = $matched ? (int)$best_stock : null;
+            $changed_at    = date('Y-m-d H:i:s');
+            $stock_in_api  = $matched ? (int)$best_stock : 0;
+            $reason_bind   = (string)$reason;
+            $matched_art_b = (string)$matched_article;
 
             $stmt_c = $mysqli_ra->prepare(
                 "INSERT INTO `sync_log_changes`
@@ -340,8 +354,8 @@ foreach ($products as $row) {
             if ($stmt_c) {
                 $stmt_c->bind_param(
                     'iisiiisss',
-                    $run_id, $index, $model, $current, $new_value,
-                    $matched_article, $stock_in_api, $reason, $changed_at
+                    $run_id_param, $index, $model, $current, $new_value,
+                    $matched_art_b, $stock_in_api, $reason_bind, $changed_at
                 );
                 $stmt_c->execute();
                 $stmt_c->close();
@@ -364,7 +378,7 @@ if ($run_id !== null) {
         $stmt_fin->bind_param(
             'siiiiiiii',
             $finished_at, $updated_to_1, $updated_to_0, $unchanged,
-            $matched_zero, $not_found, $skipped_discontinued, $errors, $run_id
+            $matched_zero, $not_found, $skipped_discontinued, $errors, $run_id_param
         );
         $stmt_fin->execute();
         $stmt_fin->close();

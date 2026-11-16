@@ -74,30 +74,30 @@ function print_product_list($products, $view_mode)
     }
     ?></div><?
 }
-    function get_series_by_product($product)
-    {
-        global $mysqli_db;
-		$rows = array();
-        $query = "SELECT * FROM `catalog_series`WHERE `name`='$product' and `active`= '1'";
-        $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            $rows[] = $row;
-        }
-        return $rows;
+
+function get_series_by_product($product)
+{
+    global $mysqli_db;
+    $rows = array();
+    $query = "SELECT * FROM `catalog_series`WHERE `name`='$product' and `active`= '1'";
+    $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $rows[] = $row;
     }
-	
-    function get_all_series()
-    {
-        global $mysqli_db;
-		$rows = array();
-        $query = "SELECT * FROM `catalog_series`WHERE `active`= '1' ORDER BY `position`";
-        $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            $rows[] = $row;
-        }
-        return $rows;
+    return $rows;
+}
+
+function get_all_series()
+{
+    global $mysqli_db;
+    $rows = array();
+    $query = "SELECT * FROM `catalog_series`WHERE `active`= '1' ORDER BY `position`";
+    $result = mysqli_query($mysqli_db, $query) or die("INVALID QUERY: " . $query . "  " . mysqli_error($mysqli_db) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__);
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $rows[] = $row;
     }
-	
+    return $rows;
+}
 
 function getCountryFromDaData($ipAddress, $apiKey) {
     $url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/detectAddressByIp?ip=" . urlencode($ipAddress);

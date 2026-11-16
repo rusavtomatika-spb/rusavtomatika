@@ -7,26 +7,44 @@ if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/usdrate.txt")) {
 error_reporting(E_ALL ^ E_NOTICE);
 
 require_once __DIR__ . '/inc_template_detail_functions.php';
-//require_once __DIR__ . "/inc_functions_linked_products.php";
 
 $wt_files_result = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/wt_files_result.txt';
-$files = json_decode( file_get_contents( $wt_files_result ), true ); // JSON с документами weintek
-//echo count($files);
+$files = json_decode( file_get_contents( $wt_files_result ), true );
 $ebpro_files_block = $_SERVER[ 'DOCUMENT_ROOT' ] . '/download/ebpro_files_block.txt';
 $arResult = array(
     "model" => $arguments["component_route_params"]["detail"],"brand" => $arguments["component_route_params"]["brand"],
 );
 global $select_by_s_name;
-//      echo "<pre>";
-//      var_dump( $files );
-//      echo "</pre>";
+
 if (strpos($arResult["model"], "faraday") === false) {
     $select_by_s_name = false;
-	$brand_prod = strtolower($arResult["brand"]);
-    $arResult_product = CoreApplication::get_rows_from_table("`products_all`", "*", "model = '{$arResult["model"]}'", "", 1);
+    $brand_prod = strtolower($arResult["brand"]);
+    $where_field = 'model';
 } else {
     $select_by_s_name = true;
-    $arResult_product = CoreApplication::get_rows_from_table("`products_all`", "*", "s_name = '{$arResult["model"]}'", "", 1);
+    $where_field = 's_name';
+}
+
+$arResult_product = array();
+if (isset($GLOBALS['mysqli_db']) && $GLOBALS['mysqli_db']) {
+    $mysqli_db_local = $GLOBALS['mysqli_db'];
+} else {
+    database_connect();
+    $mysqli_db_local = $GLOBALS['mysqli_db'];
+}
+$model_esc = mysqli_real_escape_string($mysqli_db_local, $arResult["model"]);
+$sql_product = "
+    SELECT p.*, COALESCE(s.`onstock_spb`, 0) AS `onstock_spb`
+    FROM `products_all` p
+    LEFT JOIN `product_stock` s ON s.`product_index` = p.`index`
+    WHERE p.`{$where_field}` = '{$model_esc}'
+    LIMIT 1
+";
+$res_product = mysqli_query($mysqli_db_local, $sql_product);
+if ($res_product) {
+    while ($row_product = mysqli_fetch_assoc($res_product)) {
+        $arResult_product[] = $row_product;
+    }
 }
 
 if (count($arResult_product) > 0 
@@ -35,7 +53,6 @@ if (count($arResult_product) > 0
     $arResult_product = array();
 }
 
-//var_dump($arResult_product);
 if (count($arResult_product) == 0) {
     header("HTTP/1.0 404 Not Found");
     define('ERROR_404', true);
@@ -57,10 +74,7 @@ if (count($arResult_product) == 0) {
         $arResult['section'] = $arResult_section[0];
     }
 
-    //$arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']["type"]}' and series like '{$arResult['product']["series"]}'", "");
     $arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']['type']}' and FIND_IN_SET( series,'{$arResult['product']['series']}') > 0", "");
-	
-	
 
     if (count($arr_product_types) > 0) {
         $product_type = $arr_product_types[0];
@@ -68,7 +82,6 @@ if (count($arResult_product) == 0) {
         $arr_product_types = CoreApplication::get_rows_from_table("`catalog_types`", "*", "code = '{$arResult['product']["type"]}'", "");
         $product_type = $arr_product_types[0];
     }
-
 
     $template_h1 = $product_type["template_h1"];
     $template_description = $product_type["template_description"];
@@ -81,14 +94,9 @@ if (count($arResult_product) == 0) {
     global $KEYWORDS;
     global $CANONICAL;
     global $H1;
-	//AND (`linked_products` LIKE '%{$arResult["product"]["model"]}%'
 
     $arResult_articles = CoreApplication::get_rows_from_table("`articles`", "*", "`show` = 1","");
 	$arSelected_articles = array();
-//	$pr_model = $arResult["product"]["model"]."111111111111111111111111111111";
-//	$pr_brand = $arResult["product"]["brand"]."111111111111111111111111111111";
-//	$pr_serie = $arResult["product"]["series"]."111111111111111111111111111111";
-//	$pr_type = $arResult["product"]["type"]."111111111111111111111111111111";
 	$pr_model = $arResult["product"]["model"];
 	$pr_brand = $arResult["product"]["brand"];
 	$pr_serie = $arResult["product"]["series"];
@@ -103,22 +111,17 @@ if (count($arResult_product) == 0) {
 			array_push($arSelected_articles,$article);
 		}
 	}
-// Сортируем массив arSelected_articles по убыванию поля 'pos'
-usort($arSelected_articles, function($a, $b) {
-    if ($a['por'] == $b['por']) {   // Если равны, возвращаем 0
-        return 0;
-    }
-    return ($a['por'] > $b['por']) ? -1 : 1; // Большее значение вперед
-});
+    usort($arSelected_articles, function($a, $b) {
+        if ($a['por'] == $b['por']) {
+            return 0;
+        }
+        return ($a['por'] > $b['por']) ? -1 : 1;
+    });
 	$arSelected_articles = array_slice($arSelected_articles, 0, 5);
 
 
     $arResult_videos = CoreApplication::get_rows_from_table("`videos`", "*", "`show` = 1","");
 	$arSelected_videos = array();
-//	$pr_model = $arResult["product"]["model"]."111111111111111111111111111111";
-//	$pr_brand = $arResult["product"]["brand"]."111111111111111111111111111111";
-//	$pr_serie = $arResult["product"]["series"]."111111111111111111111111111111";
-//	$pr_type = $arResult["product"]["type"]."111111111111111111111111111111";
 	$pr_model = $arResult["product"]["model"];
 	$pr_brand = $arResult["product"]["brand"];
 	$pr_serie = $arResult["product"]["series"];
@@ -155,8 +158,6 @@ usort($arSelected_articles, function($a, $b) {
     $DESCRIPTION = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $DESCRIPTION);
     $DESCRIPTION_micro = str_replace('#model_fullname#', $arResult['product']["model_fullname"], $DESCRIPTION_micro);
 
-
-
     $KEYWORDS = $product_type["short_name"] . ", " . $arResult['product']["model"] . ", " . $arResult['product']["brand"];
 
 	if ($arResult['product']["section"]=='accessories') {
@@ -186,7 +187,6 @@ usort($arSelected_articles, function($a, $b) {
 
 $arResult['product']['wifi'] = 'Нет';
 
-// Проверяем наличие ключа и его значение
 if (isset($arResult['product']['wifi_support'])) {
     switch ($arResult['product']['wifi_support']) {
         case 1:
@@ -195,7 +195,6 @@ if (isset($arResult['product']['wifi_support'])) {
         case 2:
             $arResult['product']['wifi'] = 'Опционально';
             break;
-        // Для любого другого значения (например, 3, 'string') останется 'Нет'
     }
 }
 
@@ -267,9 +266,6 @@ if (isset($arResult['product']['wifi_support'])) {
         $tech_h1[] = "Dashboard";
 		}
     }
-//		if ($arResult['product']["matrix"] != '') {
-//        $tech_h1[] = $arResult['product']["matrix"];
-//		}
 		if ($arResult['product']["wifi_support"] >= 1) {
         $tech_h1[] = "Wi-Fi";
 		}
@@ -337,9 +333,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
     if (isset($arResult['product']["usb_host"]) and $arResult['product']["usb_host"] == "1") {
         $arResult['product']["usb_host"] = "Есть";
     }
-//    if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
-//        $arResult['product']["hdd_size_gb"] = "Отсутствует";
-//    }
         $prim_power = '<p><sup>*</sup> Энергопотребление устройства может зависеть от нескольких факторов, таких как режим работы устройства и тип выполняемых задач.  Энергопотребление варьируется в зависимости от способа использования устройства. Приведенные выше данные носят справочный характер.</p>';
 
     if (isset($arResult['product']["cpu_code"]) and $arResult['product']["type"]=='box-pc' and preg_match('/ultra/i', $arResult['product']['cpu_code'])) {
@@ -347,11 +340,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
         $arResult['product']["power_consumption_under_average_load"] = '10~40';
         $arResult['product']["maximum_power_consumption"] = '70 (Ultra 5); 80 (Ultra 7)';
     } 
-//	else {
-//        $arResult['product']["standby_power_consumption"] = '';
-//        $arResult['product']["power_consumption_under_average_load"] = '';
-//        $arResult['product']["maximum_power_consumption"] = '';
-//    }
 
     if (isset($arResult['product']["hdd_size_gb"]) and $arResult['product']["hdd_size_gb"] == 0) {
         $arResult['product']["hdd_size_gb"] = $arResult['product']["hdd_size_gb"];
@@ -409,9 +397,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
         $H1 = $arResult['product']["h1"].$tech_h1_out;
     }
 
-
-    /** IMAGES ************************************************************************************************************/
-
     if ($select_by_s_name) {
         $model = str_replace("/", "_", $arResult['product']["model"]);
         $model = str_replace(" ", "_", $model);
@@ -419,7 +404,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
     } else {
         $arResult['imgRemoteDir'] = "/images/" . mb_strtolower($arResult['product']['brand']) . "/" . mb_strtolower($arResult['product']['type']) . "/" . $arResult['product']['model'] . "/";
     }
-
 
     if ($arResult['product']["pics_number"] > 0) {
         for ($x = 1; $x <= ($arResult['product']["pics_number"]); $x++) {
@@ -442,8 +426,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
     );
 
 
-    /** FILES *************************************************************************************************************/
-
     $files_product = $files_product2 = $files_common = $files_series = $files_product_json = array();
     $arguments["where"] = "product_name='{$arResult['product']["model"]}'";
     $arguments["order"] = "position desc";
@@ -451,7 +433,6 @@ if (isset($arResult['product']["ethernets"]) && $arResult['product']["ethernets"
     $model_regex = str_replace('/','\/',$arResult["product"]["model"]);
     $model_regex = str_replace('(','\(',$model_regex);
     $model_regex = str_replace(')','\)',$model_regex);
-	//echo $model_regex;
     $regex = '/[,]*(' . $model_regex . ',)(.*)(Datasheet|Installation|usermanual|Brochure|2D CAD|3D Model|Software|demo|project)/i';
     $files_product_json = array_filter( $files, function ( $var )use( $regex ) {
       return preg_match( $regex, $var[ 'label' ] );

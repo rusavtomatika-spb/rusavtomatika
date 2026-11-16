@@ -94,9 +94,7 @@ class C_DB_WORK_CATALOG {
     $result = mysqli_query( $mysqli_db, $query )or die( "INVALID QUERY: " . $query . "  " . mysqli_error( $mysqli_db ) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__ );
     $line = mysqli_fetch_array( $result, MYSQLI_ASSOC );
     $set = $line[ 'Type' ];
-    // Remove "set(" at start and ");" at end.
     $set = substr( $set, 5, strlen( $set ) - 7 );
-    // Split into an array.
     return preg_split( "/','/", $set );
   }
 
@@ -114,7 +112,6 @@ class C_DB_WORK_CATALOG {
     global $mysqli_db;
     $query = "SELECT * FROM `catalog_sections` WHERE `code` = '$code' ";
     $result = mysqli_query( $mysqli_db, $query )or die( "INVALID QUERY: " . $query . "  " . mysqli_error( $mysqli_db ) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__ );
-    //echo $query;
     return mysqli_fetch_array( $result, MYSQLI_ASSOC );
   }
 
@@ -130,7 +127,6 @@ class C_DB_WORK_CATALOG {
     global $mysqli_db;
     $rows = [];
     $brands = $this->get_all_brands();
-    //echo $section_id;
     foreach ( $brands as $brand ) {
       $query = "SELECT * FROM `catalog_series` WHERE FIND_IN_SET('$section_id',`menu_category_item_code`) and `brand_id` = '{$brand['id']}'  and `active`= '1' order by position, id;";
       $result = mysqli_query( $mysqli_db, $query )or die( "INVALID QUERY: " . $query . "  " . mysqli_error( $mysqli_db ) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__ );
@@ -171,7 +167,6 @@ class C_DB_WORK_CATALOG {
     global $mysql_product_filter;
 
     if ( $mysql_product_filter != "" ) {
-      //$mysql_product_filter .= " and `discontinued` != '1' and `show_in_cat` != '0' and `status` != '0'";
       $pos = strpos( $query, "ORDER" );
       if ( $pos !== false ) {
         $query = substr( $query, 0, $pos ) . $mysql_product_filter . substr( $query, $pos );
@@ -182,10 +177,8 @@ class C_DB_WORK_CATALOG {
     global $mysqli_db;
 
     $result = mysqli_query( $mysqli_db, $query )or die( "INVALID QUERY: " . $query . "  " . mysqli_error( $mysqli_db ) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__ );
-    //echo $query;
     while ( $row = mysqli_fetch_array( $result, MYSQLI_ASSOC ) ) {
 
-      //            $row["link_detail_page"] = "/catalog/" . $this->current_section_code . "/" . $row["brand"] . "/" . $row["series"] . "/" . $row["model"] . "/";
       if ( isset( $row[ "link_detail2" ] )and $row[ "link_detail2" ] != "" ) {
         $row[ "link_detail_page" ] = $row[ "link_detail2" ];
         if ( EX != '_' ) {
@@ -231,12 +224,14 @@ class C_DB_WORK_CATALOG {
 
     $product_filter = trim( $product_filter );
 
-    $query = "SELECT * FROM `products_all`  
-                WHERE FIND_IN_SET('$series',`series`) 
-                AND FIND_IN_SET(`type`,'$type') 
-                AND `parent` = '' 
-                AND `discontinued` != '1' 
-                AND `show_in_cat` != '0'";
+    $query = "SELECT p.*, COALESCE(s.`onstock_spb`, 0) AS `onstock_spb` 
+            FROM `products_all` p
+            LEFT JOIN `product_stock` s ON s.`product_index` = p.`index`
+            WHERE FIND_IN_SET('$series', p.`series`) 
+            AND FIND_IN_SET(p.`type`,'$type') 
+            AND p.`parent` = '' 
+            AND p.`discontinued` != '1' 
+            AND p.`show_in_cat` != '0'";
 
     if ( !empty( $product_filter ) ) {
       if ( substr( $product_filter, 0, 4 ) == ' and' ) {
@@ -310,9 +305,6 @@ class C_DB_WORK_CATALOG {
     if ( $order != '' )$query .= " ORDER BY  " . $order . " ";
     if ( $limit != '' )$query .= " LIMIT  " . $limit . " ";
 
-    /*        var_dump($query);
-            echo "<br>";*/
-
     $result = mysqli_query( $mysqli_db, $query )or die( "INVALID QUERY: " . $query . "  " . mysqli_error( $mysqli_db ) . " <br>FILE: " . __FILE__ . " <br>LINE: " . __LINE__ );
     while ( $row = mysqli_fetch_assoc( $result ) ) {
       $out[] = $row;
@@ -320,5 +312,4 @@ class C_DB_WORK_CATALOG {
 
     return $out;
   }
-
 }

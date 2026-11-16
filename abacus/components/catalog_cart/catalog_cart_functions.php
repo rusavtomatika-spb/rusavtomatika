@@ -1,6 +1,5 @@
 <?php
 global $arResult;
-//CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/jquery.form.min.js");
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/abacus/database/Core_database_products_all.php';
 
@@ -25,7 +24,3 @@ if (isset($arr_products) and is_array($arr_products) and count($arr_products) > 
         }
     }
 }
-
-
-
-
