@@ -40,8 +40,9 @@ class Core_database_products_all
         if ($type != "" and $brand != "") {
             global $mysqli_db;
 
-
-            $query = "SELECT * FROM `catalog_series` WHERE `brand` = '" . $brand . "' and `type` = '" . $type . "'";
+            $brand_esc = mysqli_real_escape_string($mysqli_db, $brand);
+            $type_esc  = mysqli_real_escape_string($mysqli_db, $type);
+            $query = "SELECT * FROM `catalog_series` WHERE `brand` = '" . $brand_esc . "' and `type` = '" . $type_esc . "'";
             $result = mysqli_query($mysqli_db, $query) or die("Invalid query: " . $query . "  " . mysqli_error($mysqli_db));
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
