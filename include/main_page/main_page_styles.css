@@ -183,16 +183,13 @@ ul.glide__slides li {
 .glide__slides a,
 .glide__slides div.card {
   margin: 20px 10px;
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: black;
   position: relative;
   background: white;
   border-radius: 0;
-}
-.glide__slides a img,
-.glide__slides div.card img {
-  display: block;
 }
 
 #glide_brands_gallery_tray .glide__slides a {

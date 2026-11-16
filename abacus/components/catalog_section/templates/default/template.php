@@ -136,6 +136,128 @@ if ( $arrSection[ "description" ] != "" ) {
   $DESCRIPTION = $arrSection[ "description" ];
 }
 
+$HTTP_REFERER = $_SERVER[ "REQUEST_URI" ];
+$HTTP_REFERER = str_replace( "https://www.rusavto.moisait.net",        "", $HTTP_REFERER );
+$HTTP_REFERER = str_replace( "https://www.rusavtomatika.com",          "", $HTTP_REFERER );
+$HTTP_REFERER = str_replace( "https://www.test.rusavtomatika.com",     "", $HTTP_REFERER );
+$HTTP_REFERER = preg_replace( '/[&\?]*ysclid=[^&]+/', '', $HTTP_REFERER );
+$url = $HTTP_REFERER;
+
+$seo_data = null;
+if ( $url != '' ) {
+    $__seo_row = CoreApplication::get_rows_from_table( 'seo', '', "url = '" . addslashes( $url ) . "'", '', '1' );
+    if ( isset( $__seo_row[0] ) and $__seo_row[0]['active'] == '1' ) {
+        $seo_data = $__seo_row[0];
+    }
+}
+
+$selected_brands = array();
+$selected_series = array();
+
+if ( isset( $_GET['brand'] ) and $_GET['brand'] != '' ) {
+    $selected_brands = array_values( array_filter( array_map( 'trim', explode( ',', $_GET['brand'] ) ) ) );
+}
+if ( isset( $_GET['series'] ) and $_GET['series'] != '' ) {
+    $selected_series = array_values( array_filter( array_map( 'trim', explode( ',', $_GET['series'] ) ) ) );
+}
+
+if ( empty( $selected_brands ) and !empty( $selected_series ) ) {
+    global $mysqli_db;
+    if ( !$mysqli_db ) { database_connect(); $mysqli_db = $GLOBALS['mysqli_db']; }
+
+    $__series_sql = array();
+    foreach ( $selected_series as $__s ) {
+        $__series_sql[] = "'" . mysqli_real_escape_string( $mysqli_db, $__s ) . "'";
+    }
+    if ( !empty( $__series_sql ) ) {
+        $__sql_bs = "SELECT DISTINCT `brand` FROM `catalog_series`
+                     WHERE `name` IN (" . implode( ',', $__series_sql ) . ")
+                       AND `active` = '1'";
+        $__res_bs = mysqli_query( $mysqli_db, $__sql_bs );
+        if ( $__res_bs ) {
+            while ( $__row_bs = mysqli_fetch_assoc( $__res_bs ) ) {
+                if ( !empty( $__row_bs['brand'] ) and !in_array( $__row_bs['brand'], $selected_brands ) ) {
+                    $selected_brands[] = $__row_bs['brand'];
+                }
+            }
+        }
+    }
+
+    if ( empty( $selected_brands ) and !empty( $products ) and is_array( $products ) ) {
+        foreach ( $products as $__p ) {
+            if ( isset( $__p['brand'] ) and $__p['brand'] != '' and !in_array( $__p['brand'], $selected_brands ) ) {
+                $selected_brands[] = $__p['brand'];
+            }
+        }
+    }
+}
+
+$__brand_str  = !empty( $selected_brands ) ? implode( ', ', array_unique( $selected_brands ) ) : '';
+$__series_str = !empty( $selected_series ) ? implode( ', ', array_unique( $selected_series ) ) : '';
+
+if ( !function_exists( 'catalogSection_apply_placeholders' ) ) {
+    function catalogSection_apply_placeholders( $text, $brand_str, $series_str ) {
+        if ( !is_string( $text ) || $text === '' ) {
+            return $text;
+        }
+        $brand_series = trim( $brand_str . ( $brand_str !== '' && $series_str !== '' ? ', ' : '' ) . $series_str, ' ,' );
+
+        $text = str_replace( '#brand_series#', $brand_series, $text );
+        $text = str_replace( '#brand#',        $brand_str,    $text );
+        $text = str_replace( '#series#',       $series_str,   $text );
+
+        $text = preg_replace( '/\s*,\s*(?=[,.\-–—]|$)/u', '', $text );
+        $text = preg_replace( '/\(\s*\)/u', '', $text );
+        $text = preg_replace( '/\s+/u', ' ', $text );
+        $text = trim( $text, " ,.-–—" );
+        return $text;
+    }
+}
+
+$do_not_add_extra_h1 = false;
+
+if ( isset( $TITLE_original ) and $TITLE_original != "" ) {
+    $TITLE = $TITLE_original;
+    $do_not_add_extra_h1 = true;
+} elseif ( $seo_data !== null and !empty( $seo_data['TITLE'] ) ) {
+    $TITLE = $seo_data['TITLE'];
+    $do_not_add_extra_h1 = true;
+} else {
+    $TITLE = $arrSection[ "title" ];
+    $TITLE = catalogSection_apply_placeholders( $TITLE, $__brand_str, $__series_str );
+}
+
+$h1_from_seo = false;
+
+if ( isset( $H1_original ) and $H1_original != "" ) {
+    $H1 = $H1_original;
+    $do_not_add_extra_h1 = true;
+} elseif ( $seo_data !== null and !empty( $seo_data['H1'] ) ) {
+    $H1 = $seo_data['H1'];
+    $h1_from_seo = true;
+    $do_not_add_extra_h1 = true;
+} elseif ( $arrSection[ "h1" ] != "" ) {
+    $H1 = $arrSection[ "h1" ];
+    $H1 = catalogSection_apply_placeholders( $H1, $__brand_str, $__series_str );
+} else {
+    $H1 = $arrSection[ "name" ];
+    $H1 = catalogSection_apply_placeholders( $H1, $__brand_str, $__series_str );
+}
+
+if ( $seo_data !== null and !empty( $seo_data['DESCRIPTION'] ) ) {
+    $DESCRIPTION = str_replace( '#brand_series#', $__brand_str, $seo_data['DESCRIPTION'] );
+    $DESCRIPTION = str_replace( '#brand#',        $__brand_str, $DESCRIPTION );
+    $DESCRIPTION = str_replace( '#series#',       '',           $DESCRIPTION );
+    $DESCRIPTION = preg_replace( '/\s+/u', ' ', $DESCRIPTION );
+    $DESCRIPTION = trim( $DESCRIPTION );
+} elseif ( $arrSection[ "description" ] != "" ) {
+    $DESCRIPTION = str_replace( '#brand_series#', $__brand_str, $arrSection[ "description" ] );
+    $DESCRIPTION = str_replace( '#brand#',        $__brand_str, $DESCRIPTION );
+    $DESCRIPTION = str_replace( '#series#',       '',           $DESCRIPTION );
+    $DESCRIPTION = preg_replace( '/\s+/u', ' ', $DESCRIPTION );
+    $DESCRIPTION = trim( $DESCRIPTION );
+}
+
 if ( !$do_not_add_extra_h1 ) {
   include "inc_handle_h1.php";
 }
