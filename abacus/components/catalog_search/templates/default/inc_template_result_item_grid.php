@@ -61,7 +61,7 @@ if (isset($product["h1"]) && $product["h1"] != "") {
 }
 
 $tech = array();
-if ($product["brand"] == 'Weintek') {
+if ($product["brand"] == 'Weintek' || $product["brand"] == 'LicOS') {
     if ($product["mqtt"] == 1) $tech[] = "MQTT";
     if ($product["easy_access"] == 'optional') $tech[] = "EasyAccess2 опция";
     if ($product["easy_access"] == 'build_in') $tech[] = "EasyAccess2 с лиц.";

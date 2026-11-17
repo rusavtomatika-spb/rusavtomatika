@@ -437,7 +437,11 @@ if (ERROR_404) {
   <div class="">
     <div class="columns">
       <div class="column is-6">
-        <div class="component_catalog_detail__images_wrapper">
+        <?php
+        $__num_pics = isset($arResult['product']["arr_pics"]) ? count($arResult['product']["arr_pics"]) : 0;
+        $__images_style = ($__num_pics === 1) ? ' style="margin-bottom: 0;"' : '';
+        ?>
+        <div class="component_catalog_detail__images_wrapper"<?= $__images_style ?>>
           <?php
           $counter = 0;
           if (isset($arResult['product']["arr_pics"]) and count($arResult['product']["arr_pics"]) > 0) {

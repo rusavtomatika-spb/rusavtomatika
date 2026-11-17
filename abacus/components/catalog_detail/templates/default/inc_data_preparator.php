@@ -211,45 +211,33 @@ if (isset($arResult['product']['wifi_support'])) {
     }
 
 	$tech = $tech_h1 = $fi4i = array();
-	if ($arResult['product']["brand"] == 'Weintek') {
-		if ($arResult['product']["mqtt"] == 1) {
-        $tech[] = "<a href='/articles/mqtt/' target='_new'>MQTT</a>: есть";
-		}
-		if ($arResult['product']["easy_access"] == 'optional') {
-        $tech[] = "<a href='/accessories/easyaccess/' target='_new'>EasyAccess 2.0</a>: опционально";
-		}
-		if ($arResult['product']["easy_access"] == 'build_in') {
-        $tech[] = "<a href='/accessories/easyaccess/' target='_new'>EasyAccess 2.0</a>: с лицензией";
-		}
-		if ($arResult['product']["opc_ua"] == 1) {
-        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new' qqq='222'>OPC UA</a>: клиент";
-		}
-		if ($arResult['product']["opc_ua"] == 2) {
-        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new'>OPC UA</a>: клиент/сервер";
-		}
-		if ($arResult['product']["opc_ua"] == 3) {
-        $tech[] = "<a href='/news/Weintek-hmi-opcua/' target='_new'>OPC UA</a>: клиент-есть/сервер-опционально";
-		}
-		if ($arResult['product']["codesys"] == 'build_in') {
-        $tech[] = "<a href='/articles/codesys-ot-weintek-bystryy-start/' target='_new'>Codesys</a>: c лицензией";
-		}
-		if ($arResult['product']["codesys"] == 'optional') {
-        $tech[] = "<a href='/articles/codesys-ot-weintek-bystryy-start/' target='_new'>Codesys</a>: опционально";
-		}
-		if ($arResult['product']["dashboard"] == 1) {
-        $tech[] = "<a href='/articles/vse-o-weincloud-dashboard/' target='_new'>Dashboard</a>: есть";
-		}
+	
+    if ($arResult['product']["brand"] == 'Weintek') {
+        if ($arResult['product']["mqtt"] == 1) {
+            $tech_h1[] = "MQTT";
+        }
+        if ($arResult['product']["easy_access"] != 'N') {
+            $tech_h1[] = "EasyAccess 2.0";
+        }
+        if ($arResult['product']["opc_ua"] != 0) {
+            $tech_h1[] = "OPC UA";
+        }
+        if ($arResult['product']["dashboard"] == 1) {
+            $tech_h1[] = "Dashboard";
+        }
     }
-		if ($arResult['product']["matrix"] != '') {
-        $tech[] = "Матрица: ".$arResult['product']["matrix"];
-		}
-		if ($arResult['product']["wifi_support"] == 1) {
-        $tech[] = "Wi-Fi: есть";
-		}
-		if ($arResult['product']["wifi_support"] == 2) {
-        $tech[] = "Wi-Fi: опционально";
-		}
-	if ($arResult['product']["brand"] == 'Weintek') {
+
+    if ($arResult['product']["matrix"] != '') {
+    $tech[] = "Матрица: ".$arResult['product']["matrix"];
+    }
+    if ($arResult['product']["wifi_support"] == 1) {
+    $tech[] = "Wi-Fi: есть";
+    }
+    if ($arResult['product']["wifi_support"] == 2) {
+    $tech[] = "Wi-Fi: опционально";
+    }
+
+	if ($arResult['product']["brand"] == 'Weintek' || $arResult['product']["brand"] == 'LicOS') {
 		if ($arResult['product']["mqtt"] == 1) {
         $tech_h1[] = "MQTT";
 		}
