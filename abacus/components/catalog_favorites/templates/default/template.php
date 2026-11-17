@@ -3,17 +3,16 @@ global $arSettings;
 $arSettings['path_to_product_images'] = '/images/';
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
 CoreApplication::add_style("/abacus/components/catalog_cart/templates/default/style.css");
+CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
-
-//CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 global $arResult;
 global $TITLE;
 global $H1;
 global $DESCRIPTION;
 $TITLE = "Избранное - Русавтоматика";
 $H1 = "Избранное";
+$DESCRIPTION = "Избранное | Русавтоматика. Официальный дистрибьютор в РФ. Оптимальная цена. Бесплатная доставка в регионы, гарантия, техподдержка.";
 
-//CoreApplication::add_breadcrumbs_chain("Каталог оборудования", "/catalog/");
 CoreApplication::add_breadcrumbs_chain("Избранное");
 $series["products"] = $arResult["ITEMS"];
 ?>
@@ -68,8 +67,6 @@ $series["products"] = $arResult["ITEMS"];
             location.href = '/catalog/favorites/';
         });
         function setCookie(name, value, options = {}) {
-            // Пример использования:
-            //setCookie('user', 'John', {secure: true, 'max-age': 3600});
             let date = new Date;
             date.setDate(date.getDate() + 365);
             date = date.toUTCString();

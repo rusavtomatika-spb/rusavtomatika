@@ -63,6 +63,7 @@ global $arr_model_collection;
 
 $TITLE = "Сравнение товаров";
 $H1 = "Сравнение товаров";
+$DESCRIPTION = "Сравнение товаров | Русавтоматика. Официальный дистрибьютор в РФ. Оптимальная цена. Бесплатная доставка в регионы, гарантия, техподдержка.";
 
 CoreApplication::add_breadcrumbs_chain("Сравнение товаров");
 $series["products"] = $arResult["ITEMS"];
