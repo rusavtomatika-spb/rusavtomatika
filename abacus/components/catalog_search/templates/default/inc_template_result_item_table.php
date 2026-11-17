@@ -113,7 +113,7 @@ if (!(isset($product["link_detail2"]) and $product["link_detail2"] != "")) {
                 else $s_h1 =  $product["model"] . " - ". str_replace(".0", "", $product["diagonal"]) ."&Prime; " . $product["short_name"] . " " . $product["brand"];
 			
 	$tech = array();
-	if ($product["brand"] == 'Weintek' || $product["brand"] == 'LicOS') {
+	if ($product["brand"] == 'Weintek') {
 		if ($product["mqtt"] == 1) {
         $tech[] = "MQTT";
 		}

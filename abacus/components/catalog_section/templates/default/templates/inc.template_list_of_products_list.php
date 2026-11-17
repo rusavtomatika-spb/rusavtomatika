@@ -88,10 +88,14 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
                 }
 
                 if ($product["type"] === 'controllers') {
-                    echo 'ПЛК&nbsp;';
+                    echo 'ПЛК ';
                 }
 
                 echo $product["model"];
+
+                if ($product["type"] === 'controllers') {
+                    echo ' с CODESYS';
+                }
                 ?></span>
             </a>
         <div class="preview_text_block">

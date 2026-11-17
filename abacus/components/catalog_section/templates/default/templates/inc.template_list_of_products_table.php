@@ -49,8 +49,9 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
                         <span class="model">
                             <?php 
                             echo $diagonal;
-                            if ($product["type"] === 'controllers') echo 'ПЛК&nbsp;';
+                            if ($product["type"] === 'controllers') echo 'ПЛК ';
                             echo $product["model"];
+                            if ($product["type"] === 'controllers') echo ' с CODESYS';
                             ?>
                         </span>
                     </a>

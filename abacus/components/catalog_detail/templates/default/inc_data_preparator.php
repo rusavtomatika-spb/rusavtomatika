@@ -237,7 +237,7 @@ if (isset($arResult['product']['wifi_support'])) {
     $tech[] = "Wi-Fi: опционально";
     }
 
-	if ($arResult['product']["brand"] == 'Weintek' || $arResult['product']["brand"] == 'LicOS') {
+	if ($arResult['product']["brand"] == 'Weintek') {
 		if ($arResult['product']["mqtt"] == 1) {
         $tech_h1[] = "MQTT";
 		}

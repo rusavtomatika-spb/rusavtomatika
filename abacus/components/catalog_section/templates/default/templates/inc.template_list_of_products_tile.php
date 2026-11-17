@@ -200,6 +200,9 @@ $userCountry = getCountryFromDaData( $userIp, $apiKey );
               ПЛК
             <?php endif; ?>
             <? echo $product["model"];?>
+            <?php if ($product["type"] === 'controllers' && $product["codesys"] != 'N'): ?>
+              с CODESYS
+            <?php endif; ?>
           </span>
         </a>
         <div class="preview_text_block">
