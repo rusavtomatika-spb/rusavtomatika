@@ -91,5 +91,3 @@ $series["products"] = $arResult["ITEMS"];
 
     });
 </script>
-
-

@@ -555,6 +555,68 @@ $arc = [
             </div>
           </div>
         </div>
+
+        <a id="licos"></a>
+        <div class="columns  is-multiline">
+          <div class="column is-12">
+            <h2 id="Samkoon">Программное обеспечение для LicOS</h2>
+          </div>
+          <div class="column is-12 background-gray">
+            <div class="block_padding"> <span class="page_downloads_title3">LicOS</span></div>
+          </div>
+          <div class="column is-7">
+            <div class="block_padding">
+              <p>Библиотеки</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p>
+                <a class="download_zip" href="/soft/licos/libraries/HC_V1001.zip">HC V1.0.0.1</a>
+                <span class="small_gray_text">[18-11-2026] [37.68&nbsp;Мб]</span>
+              </p>
+              <p>
+                <a class="download_zip" href="/soft/licos/libraries/HC_V203.zip">HC V2.0.3</a>
+                <span class="small_gray_text">[18-11-2026] [111.75&nbsp;Мб]</span>
+              </p>
+              <p>
+                <a class="download_zip" href="/soft/licos/libraries/HC_V207.zip">HC V2.0.7</a>
+                <span class="small_gray_text">[18-11-2026] [60&nbsp;Мб]</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="column is-7">
+            <div class="block_padding">
+              <p>Таргет файлы</p>
+            </div>
+          </div>
+          <div class="column is-5">
+            <div class="block_padding">
+              <p>
+                <a class="download_zip" href="/soft/licos/target/LocalBus.zip">LocalBus</a>
+                <span class="small_gray_text">[18-11-2026] [466&nbsp;Кб]</span>
+              </p>
+              <p>
+                <a class="download_zip" href="/soft/licos/target/ModuleSync.zip">Модуль синхронизации CSL</a>
+                <span class="small_gray_text">[18-11-2026] [2.4&nbsp;Мб]</span>
+              </p>
+              <p>
+                <a class="download_zip" href="/soft/licos/target/NetworkAdapters.zip">Сетевые адаптеры IO GR200 ModbusTCP, EthernetIP, EtherCAT, Profinet</a>
+                <span class="small_gray_text">[18-11-2026] [4.8&nbsp;Мб]</span>
+              </p>
+              <p>
+                <a class="download_zip" href="/soft/licos/target/Profinet.zip">Файлы описания Profinet для ПЛК</a>
+                <span class="small_gray_text">[18-11-2026] [30&nbsp;Кб]</span>
+              </p>
+              <p>
+                <a class="download_android" href="/soft/licos/target/LicOS_Card_PLC_Device_1.2.0.0.package">Card PLC Device V1.2.0.0.package.apk</a>
+                <span class="small_gray_text">[18-11-2026] [122&nbsp;Мб]</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
         <a id="SKWorkshop"></a>
         <div class="columns  is-multiline">
           <div class="column is-12">
