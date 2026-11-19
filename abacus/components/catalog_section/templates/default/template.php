@@ -343,7 +343,8 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             }
             ?>
             <h1 class="title">
-              <?= $H1 ?> 
+              <?= htmlspecialchars($H1, ENT_QUOTES, 'UTF-8') ?>
+              <span v-if="extra_h1"> (<span v-html="extra_h1"></span>)</span>
             </h1>
             <?
             if ( isset( $pretext )and $pretext != "" ) {
@@ -355,8 +356,7 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             }
             include "inc_weintek_info.php";
             ?>
-            <!--meta name="original_h1" content="<?= $H1_original ?>"--> 
-            <!--meta name="original_title" content="<?= $TITLE_original ?>"-->
+            <meta name="original-title" content="<?= htmlspecialchars($TITLE, ENT_QUOTES, 'UTF-8') ?>">
             <noindex>
               <div class="panel_chosen_filters"
                          v-if="filterSelectedBrands.length > 0

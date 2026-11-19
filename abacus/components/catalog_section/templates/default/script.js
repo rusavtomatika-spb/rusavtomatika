@@ -497,56 +497,71 @@
             break;
           default:
           case 'all':
-            this.filterSelectedBrands = [];
-            this.filterSelectedInterfaces = [];
-            this.filterSelectedCodesys = false;
-            this.filterSelectedSdcard = false;
-            this.filterSelectedVesa = false;
-            this.filterSelectedCmtviewer = false;
-            this.filterSelectedWebView = false;
-            this.filterSelectedpoe = false;
-            this.filterSelectedScreenless = false;
-            this.filterSelectedPlcWebBrowser = false;
-            this.filterSelectedCameraIP = false;
-            this.filterSelectedCameraUSB = false;
-            this.filterSelectedHddSATA = false;
-            this.filterSelectedHddmSATA = false;
-            this.filterSelectedHddM2 = false;
-            this.filterSelectedHddPCIE = false;
-            this.filterSelectedPlast = false;
-            this.filterSelectedAlum = false;
-            this.filterSelectedPlastAlum = false;
-            this.filterSelectedOss = [];
-            this.filterSelectedResolutions = [];
-            this.filterSelectedProcessors = [];
-            this.filterSelectedethernets_fix = [];
-            this.filterSelectedSeries = "";
-            this.filterSelectedTypes = "";
-            this.filterSelectedAvailablity = "0";
-            this.filterSelectedmanagement = "0";
-            this.filterSelectedSensorType = "";
-            this.filterSelectedСase_material = "";
-            this.filterSelectedRangeDiagonal_min = this.filterSelectedRangeDiagonal_min_start;
-            this.filterSelectedRangeDiagonal_max = this.filterSelectedRangeDiagonal_max_start;
-            this.filterSelectedRangePrice_min = this.filterSelectedRangePrice_min_start;
-            this.filterSelectedRangePrice_max = this.filterSelectedRangePrice_max_start;
-            this.filterSelectedRangeEthernets_min = this.filterSelectedRangeEthernets_min_start;
-            this.filterSelectedRangeEthernets_max = this.filterSelectedRangeEthernets_max_start;
-            this.filterSelectedRangerammax_min = this.filterSelectedRangerammax_min_start;
-            this.filterSelectedRangerammax_max = this.filterSelectedRangerammax_max_start;
-            this.filterSelectedRangeUSB_min = this.filterSelectedRangeUSB_min_start;
-            this.filterSelectedRangeUSB_max = this.filterSelectedRangeUSB_max_start;
-            this.filterSelectedRangeCOM_min = this.filterSelectedRangeCOM_min_start;
-            this.filterSelectedRangeCOM_max = this.filterSelectedRangeCOM_max_start;
-            this.filterSelectedSendingByEmail = false;
-            this.filterSelectedWithDatabase = false;
-            this.filterSelectedWeb = false;
-            this.filterSelectedTerminalCmt = false;
-            this.filterSelectedAi = false;
-            this.filterSelectedMotion = false;
-            this.filterChanged();
+              this.filterSelectedBrands = [];
+              this.filterSelectedInterfaces = [];
 
-            break;
+              this.filterSelectedCodesys = false;
+              this.filterSelectedSdcard = false;
+              this.filterSelectedVesa = false;
+              this.filterSelectedCmtviewer = false;
+              this.filterSelectedWebView = false;
+              this.filterSelectedpoe = false;
+              this.filterSelectedScreenless = false;
+              this.filterSelectedPlcWebBrowser = false;
+              this.filterSelectedCameraIP = false;
+              this.filterSelectedCameraUSB = false;
+
+              this.filterSelectedHddSATA = false;
+              this.filterSelectedHddmSATA = false;
+              this.filterSelectedHddM2 = false;
+              this.filterSelectedHddPCIE = false;
+
+              this.filterSelectedPlast = false;
+              this.filterSelectedAlum = false;
+              this.filterSelectedPlastAlum = false;
+
+              this.filterSelectedMotion = false;
+
+              this.filterSelectedOss = [];
+              this.filterSelectedResolutions = [];
+              this.filterSelectedProcessors = [];
+              this.filterSelectedethernets_fix = [];
+              this.filterSelectedDiagonals = [];
+
+              this.filterSelectedSeries = "";
+              this.filterSelectedTypes = "";
+
+              this.filterSelectedAvailablity = "0";
+              this.filterSelectedmanagement = "0";
+              this.filterSelectedSensorType = "";
+              this.filterSelectedСase_material = "";
+
+              this.filterSelectedRangeDiagonal_min = this.filterSelectedRangeDiagonal_min_start;
+              this.filterSelectedRangeDiagonal_max = this.filterSelectedRangeDiagonal_max_start;
+
+              this.filterSelectedRangePrice_min = this.filterSelectedRangePrice_min_start;
+              this.filterSelectedRangePrice_max = this.filterSelectedRangePrice_max_start;
+
+              this.filterSelectedRangeEthernets_min = this.filterSelectedRangeEthernets_min_start;
+              this.filterSelectedRangeEthernets_max = this.filterSelectedRangeEthernets_max_start;
+
+              this.filterSelectedRangerammax_min = this.filterSelectedRangerammax_min_start;
+              this.filterSelectedRangerammax_max = this.filterSelectedRangerammax_max_start;
+
+              this.filterSelectedRangeUSB_min = this.filterSelectedRangeUSB_min_start;
+              this.filterSelectedRangeUSB_max = this.filterSelectedRangeUSB_max_start;
+
+              this.filterSelectedRangeCOM_min = this.filterSelectedRangeCOM_min_start;
+              this.filterSelectedRangeCOM_max = this.filterSelectedRangeCOM_max_start;
+
+              this.filterSelectedSendingByEmail = false;
+              this.filterSelectedWithDatabase = false;
+              this.filterSelectedWeb = false;
+              this.filterSelectedTerminalCmt = false;
+              this.filterSelectedAi = false;
+
+              this.filterChanged();
+              break;
         }
       },
       open_form_require_price(e) {
@@ -1416,6 +1431,14 @@
           this.extra_h1 = '';
         }
         this.extra_h1 = this.extra_h1.replace(/^,|,$/gm, '');
+
+        const originalTitleMeta = document.querySelector('meta[name="original-title"]');
+        if (originalTitleMeta) {
+          const baseTitle = originalTitleMeta.getAttribute('content');
+          document.title = baseTitle + (
+            this.extra_h1 ? ' (' + this.extra_h1 + ')' : ''
+          );
+        }
 
         this.send_ajax_query();
       },
