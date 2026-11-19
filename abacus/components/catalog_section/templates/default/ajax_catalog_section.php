@@ -222,18 +222,17 @@ switch ( $sort_mode ) {
     foreach ( $arrSeries as $key => $brand ) {
       foreach ( $brand as $series ) {
         foreach ( $series[ "products" ] as $product ) {
-
-          if ( $product[ "recommended" ] != "0" ) {
+          if ( (int)$product[ "recommended" ] > 0 ) {
             $arr_products_sorted_by_recommended[] = $product;
-
           } else {
             $arr_products_sorted_by_diagonal[] = $product;
           }
-
         }
       }
     }
-    sort_array_by( $arr_products_sorted_by_recommended, [ "field_name" => "recommended", "sort_direction" => "DESC" ] );
+    usort($arr_products_sorted_by_recommended, function($a, $b) {
+        return (int)$b["recommended"] - (int)$a["recommended"];
+    });
     sort_array_by( $arr_products_sorted_by_diagonal, [ "field_name" => "diagonal", "sort_direction" => "ASC" ] );
     $arr_products = array_merge( $arr_products_sorted_by_recommended, $arr_products_sorted_by_diagonal );
     print_product_list( $arr_products, $view_mode );
