@@ -292,6 +292,8 @@ if (!@ftp_chdir($ftp, $ftpDir)) {
 }
 
 $remoteName = $fileName;
+ftp_set_option($ftp, FTP_TIMEOUT_SEC, 600);
+set_time_limit(900);
 $uploaded = @ftp_put($ftp, $remoteName, $filePath, FTP_BINARY);
 $ftpErr = '';
 if (!$uploaded) {

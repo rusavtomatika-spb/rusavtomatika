@@ -36,8 +36,6 @@
     margin: 30px;
 }
 
-
-
 .catalog_compare .table_compare .preview_image {
     min-width: 190px;
     max-width: 100%;
@@ -63,15 +61,20 @@
 }
 
 .catalog_compare__button_clearall{
-    display: inline-block;
-    padding: 8px 23px;
-    background: #44bb6e;
-    color: #ffffff;
-    transition: 0.2s;
     cursor: pointer;
-    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #44bb6e;
+    color: #fff;
+    transition: .3s;
+    font-size: 1rem;
+	padding: 10px 15px;
+    width: max-content;
+    border-radius: 5px;
+    line-height: 150%;
+    gap: 10px;
 }
-
 .catalog_compare__button_clearall:hover {
     background: #34ab5e;
 }

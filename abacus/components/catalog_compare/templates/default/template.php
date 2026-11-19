@@ -521,41 +521,37 @@ if ($num_columns > 0) {
 }
 ?>
 <div class="catalog_compare">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <?
-                CoreApplication::include_component(array("component" => "breadcrumbs"));
-                ?>
-                <h1><?= $H1 . $extra_h1 ?></h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <?
+            CoreApplication::include_component(array("component" => "breadcrumbs"));
+            ?>
+            <h1><?= $H1 . $extra_h1 ?></h1>
 
-                <?
-                echo $html_result;
-                ?>
-            </div>
+            <?
+            echo $html_result;
+            ?>
         </div>
     </div>
 </div>
-
+<?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])) { ?>
 <div class="catalog_compare">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="catalog_compare__button_clearall_wrapper">
-                    <div class="catalog_compare__button_clearall">Очистить список товаров</div>
-                </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="catalog_compare__button_clearall_wrapper">
+                <div class="catalog_compare__button_clearall">Очистить список <i class="fa-solid fa-circle-xmark fa-lg"></i></div>
             </div>
         </div>
     </div>
 </div>
-
 <div id="link_to_this_page">
-    <b>Ссылка на текущую страницу:</b> <input class="copy_link_input js-copytextarea input" type="text"
-                                              value="<?= $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"; ?>">
+    <b>Ссылка на текущую страницу:</b>
+    <input class="copy_link_input js-copytextarea input" type="text" value="<?= $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"; ?>">
     <div id="message_copy_link" class="has-text-weight-bold py-2"></div>
     <button class="button is-success is-small js-textareacopybtn">Копировать ссылку</button>
 </div>
 <div id="vue_data" data-models="<?= implode(',', $arr_model_collection) ?>"></div>
+<?php } ?>
 
 <script>
     $(document).ready(function () {

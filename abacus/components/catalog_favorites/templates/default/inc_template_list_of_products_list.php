@@ -20,71 +20,61 @@ global $usd_currency, $arSettings;
         $short_description = trim( $short_description, ", " );
       } else $short_description = "";
   ?>
-  <div class="tr columns tr_product_<?= $product["model"]; ?>" style="text-align: center;">
-    <div class="td_preview_image is-narrow column is-full-mobile is-3-tablet is-2-desktop"> <a href="<?= $product["link_detail_page"]; ?>">
-      <div class="preview_image"> <img alt="<?= $product["model"]; ?>" loading="lazy" src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/580/<?= $product["model"] ?>_1.webp"> </div>
-      </a></div>
-    <div class="td_model column is-6-desktop is-5-tablet is-6-widescreen" style="text-align: left;"><a href="<?= $product["link_detail_page"]; ?>"><span class="model"><? echo $diagonal . " " . $product["short_name"] . " " . $product["brand"] . " " . $product["model"]; ?></span></a> <br>
-      <?= $product["preview_text"]; ?>
-      ; <span>
-      <?= $product["preview_text_extra"]; ?>
-      </span> 
-    </div>
-    <div class=" column td_price is-2-desktop" style="padding:0 15px;">
-      <div class="price_block is-center">
-        <?
-        if ( isset( $product[ 'retail_price' ] )and intval( $product[ 'retail_price' ] ) > 0 and $product[ "retail_price_hide" ] == 0 ) {
-          switch ( $product[ 'currency' ] ) {
-            case 'USD':
-              ?>
-        <div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>">
-          <?= $product['retail_price'] ?>
-          </span> <span class="usd">$</span> </div>
-        <?
-        if ( $usd_currency ) {
-          ?>
-        <div class="rub_price"> <span class="rub_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] * $usd_currency); ?></span> <span class="usd">&#8381;</span> </div>
-        <?
-        }
-        break;
-        case 'RUR':
-          if ( $usd_currency ) {
+    <div class="product__item-wrapper">
+      <a href="<?= $product["link_detail_page"]; ?>" class="product__link-wrapper">
+        <div class="preview_image">
+          <img alt="<?= $product["model"]; ?>" loading="lazy" src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/580/<?= $product["model"] ?>_1.webp">
+        </div>
+        <div class="product__description-wrapper">
+          <h2 class="product__model"><? echo $product["h1"] ?></h2>
+          <div><?= $product["preview_text"] ? $product["preview_text"] : $product["preview_text_extra"] ; ?></div>
+        </div>
+        <div class="price__stock-wrapper">
+          <div class="price_block">
+            <?
+              if ( isset( $product[ 'retail_price' ] )and intval( $product[ 'retail_price' ] ) > 0 and $product[ "retail_price_hide" ] == 0 ) {
+                switch ( $product[ 'currency' ] ) {
+                  case 'USD':
             ?>
-        <div class="usd_price"> <span class="usd_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] / $usd_currency); ?></span> <span class="usd">$</span></div>
-        <?
-        }
-        ?>
-        <div class="rub_price"> <span class="rub_price_value" data-model="<?=$product["model"]?>">
-          <?= $product['retail_price'] ?>
-          </span> <span class="rub">&#8381;</span></div>
-        <?
-        break;
-        }
-        $class_no_price = "";
-        }
-        else {
-          echo '<span class="no_price">Цена по<br>запросу</span>';
-          $class_no_price = "no_price";
-        }
-        ?>
-      </div>
-      <div class="td_onstock is-narrow">
-        <?
-        if ( $product[ 'onstock_spb' ] > 0 or $product[ 'onstock_msk' ] > 0 ) {
-          echo '<span class="green"><span class="green"><i class="fa-solid fa-check"></i>&nbsp;В&nbsp;наличии</span>';
-        } else echo '<span class="black">Под&nbsp;заказ</span>';
-        ?>
+            <span class="usd_price_value" data-model="<?=$product["model"]?>"><?= $product['retail_price'] ?> $</span>
+            <?
+            if ( $usd_currency ) {
+              ?>
+                <span class="rub_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] * $usd_currency); ?> ₽</span>
+              <?
+            }
+            break;
+            case 'RUR':
+              if ( $usd_currency ) {
+                ?>
+                <span class="usd_price_value" data-model="<?=$product["model"]?>"><? echo intval($product['retail_price'] / $usd_currency); ?> $</span>
+            <?
+            }
+            ?>
+              <span class="rub_price_value" data-model="<?=$product["model"]?>"><?= $product['retail_price'] ?> ₽</span>
+            <?
+            break;
+            }
+            $class_no_price = "";
+            }
+            else {
+              echo '<span class="no_price">Цена по запросу</span>';
+              $class_no_price = "no_price";
+            }
+            ?>
+          </div>
+          <?
+          if ( $product[ 'onstock_spb' ] > 0 or $product[ 'onstock_msk' ] > 0 ) {
+            echo '<span class="green"><i class="fa-solid fa-check"></i> В наличии</span>';
+          } else echo '<span class="red">Под заказ</span>';
+          ?>
+        </div>
+      </a>
+      <div class="product__actions-wrapper">
+        <button title="Добавить в сравнение" class="fa-solid fa-align-right fa-rotate-90" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="compare"></button>
+        <button title="Удалить из избранного" class="fa-solid fa-xmark" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
       </div>
     </div>
-    <div class="td_buttons column is-1 is-2-tablet is-2-desktop">
-      <div class="buttons_panel is-flex is-justify-content-center">
-        <button title="Добавить в избранное" class="favorites fa-solid fa-heart mr-1" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
-        <button title="Добавить в сравнение" class="compare fa-solid fa-align-right fa-rotate-90 mr-1" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="compare"></button>
-        <button title="Удалить из избранного" class="cart fa-solid fa-xmark" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
-      </div>
-    </div>
-    <div class="is-clearfix">&nbsp;</div>
-  </div>
   <?
   }
   } else {

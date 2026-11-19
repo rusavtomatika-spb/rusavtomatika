@@ -509,8 +509,7 @@ input[type=file]::file-selector-button {
 .component_catalog_cart__panel_of_products .section_list_view_mode .button_view_mode_table:hover {
     background-position: -57px -30px;
 }
-.component_wrapper {
-}
+
 .component_catalog .section_link {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
     padding: 10px;

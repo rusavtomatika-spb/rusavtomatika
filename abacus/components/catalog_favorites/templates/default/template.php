@@ -2,7 +2,6 @@
 global $arSettings;
 $arSettings['path_to_product_images'] = '/images/';
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
-CoreApplication::add_style("/abacus/components/catalog_cart/templates/default/style.css");
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
 global $arResult;
@@ -17,30 +16,28 @@ CoreApplication::add_breadcrumbs_chain("Избранное");
 $series["products"] = $arResult["ITEMS"];
 ?>
 <div class="catalog_favorites">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <?
-                CoreApplication::include_component(array("component" => "breadcrumbs"));
-                ?>
-                <h1><?= $H1 ?></h1><br>
-
-                <div class="component_catalog_section__panel_of_products">
-                    <div class="view-mode-list">
-                        <?
-                        include __DIR__ . "/inc_template_list_of_products_list.php";
-                        ?>
-                    </div>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <?
+            CoreApplication::include_component(array("component" => "breadcrumbs"));
+            ?>
+            <h1><?= $H1 ?></h1><br>
+            <div class="component_catalog_section__panel_of_products">
+                <div class="view-mode-list">
+                    <?
+                    include __DIR__ . "/inc_template_list_of_products_list.php";
+                    ?>
                 </div>
+
             </div>
+        </div>
+        <?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])) { ?>
             <div class="col-lg-12">
                 <div class="catalog_favorites__button_clearall_wrapper">
-                    <div class="catalog_favorites__button_clearall">Очистить список избранных товаров&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-circle-xmark fa-lg"></i></div>
+                    <div class="catalog_favorites__button_clearall">Очистить список <i class="fa-solid fa-circle-xmark fa-lg"></i></div>
                 </div>
             </div>
-
-        </div>
+        <?php }?>
     </div>
 </div>
 <script>
