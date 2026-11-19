@@ -26,7 +26,15 @@ global $usd_currency, $arSettings;
           <img alt="<?= $product["model"]; ?>" loading="lazy" src="<?= $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" . mb_strtolower($product["type"]) . "/" . $product["model"] ?>/580/<?= $product["model"] ?>_1.webp">
         </div>
         <div class="product__description-wrapper">
-          <h2 class="product__model"><? echo $product["h1"] ?></h2>
+          <h2 class="product__model">
+            <?
+            if ( !empty( $product["model_fullname"] ) ) {
+                echo $product["model_fullname"];
+            } else {
+                echo $diagonal . " " . $product["short_name"] . " " . $product["brand"] . " " . $product["model"];
+            }
+            ?>
+          </h2>
           <div><?= $product["preview_text"] ? $product["preview_text"] : $product["preview_text_extra"] ; ?></div>
         </div>
         <div class="price__stock-wrapper">
@@ -70,10 +78,11 @@ global $usd_currency, $arSettings;
           ?>
         </div>
       </a>
-      <div class="product__actions-wrapper">
-        <button title="Добавить в сравнение" class="fa-solid fa-align-right fa-rotate-90" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="compare"></button>
-        <button title="Удалить из избранного" class="fa-solid fa-xmark" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
+      <div class="buttons_panel product__actions-wrapper">
+        <button title="Добавить в сравнение" class="compare fa-solid fa-align-right fa-rotate-90" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="compare"></button>
+        <button title="Удалить из избранного" class="cart fa-solid fa-xmark" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
       </div>
+      <div class="is-clearfix">&nbsp;</div>
     </div>
   <?
   }
