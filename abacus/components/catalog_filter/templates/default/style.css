@@ -438,6 +438,9 @@ label.nomanagement {
 }
 .borderless {border:none;}
 
+.float_filter_block_licos {
+    margin-top: 20px;
+}
 .card-item {
     display: block;
     padding: 3px 5px;

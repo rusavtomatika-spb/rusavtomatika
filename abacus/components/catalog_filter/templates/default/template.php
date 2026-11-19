@@ -62,7 +62,7 @@ if (
     );
     if (is_array($licos_modules) && count($licos_modules) > 0):
 ?>
-<div id="float_filter_block_licos" style="margin-top: 20px;">
+<div id="float_filter_block_licos" style="margin-top: 20px;" v-if="filterSelectedBrands.includes('LicOS')">
     <div class="component_catalog_section__filter">
         <div class="filter_panel">
             <div class="filter_field_block borderless" style="padding: 0;">
