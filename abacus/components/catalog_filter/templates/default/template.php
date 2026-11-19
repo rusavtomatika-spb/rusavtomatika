@@ -51,14 +51,14 @@ $selected_brand = isset($arguments['brand']) ? $arguments['brand'] : (isset($_GE
 if (
     isset($arguments['section']['code'])
     && $arguments['section']['code'] == 'modules_io'
-    && strcasecmp($selected_brand, 'LicOS') === 0
+    && (strcasecmp($selected_brand, 'LicOS') === 0 || $selected_brand === '')
 ) {
     $licos_modules = CoreApplication::get_rows_from_table(
         "products_all", 
-        "model, DIO_full, `index`", 
+        "model, type, DIO_full, `index`", 
         "`brand`='LicOS' AND `type` IN ('module','coupler') 
          AND `status` != '0' AND `discontinued` !='1'", 
-        "`type` ASC, `sort` ASC, `index` ASC"
+        "`recommended` DESC, `index` ASC"
     );
     if (is_array($licos_modules) && count($licos_modules) > 0):
 ?>
@@ -75,6 +75,7 @@ if (
                         $dash_pos = strpos($raw_model, '-');
                         $short_model = ($dash_pos !== false) ? substr($raw_model, $dash_pos + 1) : $raw_model;
                         $licos_model = htmlspecialchars($short_model);
+                        $licos_type = htmlspecialchars($licos_item['type']);
 
                         $licos_preview = !empty($licos_item['DIO_full']) 
                             ? htmlspecialchars(mb_substr($licos_item['DIO_full'], 0, 100, 'UTF-8')) 
@@ -83,6 +84,7 @@ if (
                     <a
                         href="/licos/<?= urlencode($licos_item['model']) ?>/"
                         class="card-item"
+                        v-if="!filterSelectedTypes.length || filterSelectedTypes.includes('<?= $licos_type ?>')"
                     >
                         <p class="card-title">
                             <?= $licos_model ?>: 
