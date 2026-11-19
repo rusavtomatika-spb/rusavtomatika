@@ -438,15 +438,29 @@ label.nomanagement {
 }
 .borderless {border:none;}
 
-.card-text {
+.card-item {
     display: block;
-    padding: 10px 12px;
+    padding: 3px 5px;
     margin-bottom: 0;
     background: #fff; border-bottom: 1px solid #e5e5e5;
     text-decoration: none; color: #1a1a1a;
     transition: background 0.15s ease, padding-left 0.15s ease;
     border-bottom: 1px solid #b2b2b2;
+    background: #fff;
 }
-.card-text:hover {
+.card-item:hover {
     text-decoration: none;
+    background: #f5f9ff;
+}
+.card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-green);
+    white-space: nowrap;
+    margin: 0;
+}
+.card-desc {
+    font-size: 10px;
+    color: #555;
+    line-height: 1.4;
 }

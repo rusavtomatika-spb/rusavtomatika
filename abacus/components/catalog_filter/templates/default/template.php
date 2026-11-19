@@ -6,8 +6,6 @@ $catalog_filter_settings["diagonals"] = array("0","3.5","4.3","5","5.6","5.7","7
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
 CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/fixed-filter-column.js");
 
-//CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
-
 if ($arguments["section"]["filters"] != "") {
     $list_of_filter_items = explode(",", $arguments["section"]["filters"]);
     if (is_array($list_of_filter_items) and count($list_of_filter_items) > 0) {
@@ -26,7 +24,6 @@ if ($arguments["section"]["filters"] != "") {
         if ($condition != "") $condition = " (" . $condition;
         $arr_filter_items = CoreApplication::get_rows_from_table("`catalog_filters`", "*", $condition, "position");
         ?>
-
         <div id="float_filter_block"><span class="is-hidden-desktop button_close_mobile_filter">Применить</span>
             <div class="component_catalog_section__filter">
                 <div class="title is-hidden-desktop">Фильтры</div>
@@ -50,10 +47,15 @@ if ($arguments["section"]["filters"] != "") {
     }
 }
 
-if (isset($arguments['section']['code']) && $arguments['section']['code'] == 'modules_io') {
+$selected_brand = isset($arguments['brand']) ? $arguments['brand'] : (isset($_GET['brand']) ? $_GET['brand'] : '');
+if (
+    isset($arguments['section']['code'])
+    && $arguments['section']['code'] == 'modules_io'
+    && strcasecmp($selected_brand, 'LicOS') === 0
+) {
     $licos_modules = CoreApplication::get_rows_from_table(
         "products_all", 
-        "model, preview_text, `index`", 
+        "model, DIO_full, `index`", 
         "`brand`='LicOS' AND `type` IN ('module','coupler') 
          AND `status` != '0' AND `discontinued` !='1'", 
         "`type` ASC, `sort` ASC, `index` ASC"
@@ -69,22 +71,25 @@ if (isset($arguments['section']['code']) && $arguments['section']['code'] == 'mo
                 </div>
                 <div class="filter_field_block__content">
                     <?php foreach ($licos_modules as $licos_item): 
-                        $licos_model = htmlspecialchars($licos_item['model']);
-                        $licos_preview = !empty($licos_item['preview_text']) 
-                            ? htmlspecialchars(mb_substr($licos_item['preview_text'], 0, 100)) 
+                        $raw_model = $licos_item['model'];
+                        $dash_pos = strpos($raw_model, '-');
+                        $short_model = ($dash_pos !== false) ? substr($raw_model, $dash_pos + 1) : $raw_model;
+                        $licos_model = htmlspecialchars($short_model);
+
+                        $licos_preview = !empty($licos_item['DIO_full']) 
+                            ? htmlspecialchars(mb_substr($licos_item['DIO_full'], 0, 100, 'UTF-8')) 
                             : '';
                     ?>
-                    <a href="/licos/<?= urlencode($licos_item['model']) ?>/" class="card-text"
-                        onmouseover="this.style.background='#f5f9ff';"
-                        onmouseout="this.style.background='#fff';">
-                        <div style="font-size: 13px; font-weight: 600; color: var(--color-green); margin-bottom: 3px;">
-                            <?= $licos_model ?>
-                        </div>
-                        <?php if ($licos_preview !== ''): ?>
-                            <div style="font-size: 12px; color: #555; line-height: 1.4;">
-                                <?= $licos_preview ?>
-                            </div>
-                        <?php endif; ?>
+                    <a
+                        href="/licos/<?= urlencode($licos_item['model']) ?>/"
+                        class="card-item"
+                    >
+                        <p class="card-title">
+                            <?= $licos_model ?>: 
+                            <?php if ($licos_preview !== ''): ?>
+                                <span class="card-desc"><?= $licos_preview ?></span>
+                            <?php endif; ?>
+                        </p>
                     </a>
                     <?php endforeach; ?>
                 </div>
