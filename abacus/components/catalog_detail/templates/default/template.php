@@ -827,15 +827,30 @@ if ($arResult['product']['articuls'] != '') {
   <td style="border: none;" class="is-size-7 has-text-grey-light has-text-weight-light">КОНФИГУРАЦИЯ</td>
 </tr>
 <?php
-$arts = explode("\n", $arResult['product']['articuls']);
+$arts = explode("\n", trim($arResult['product']['articuls']));
 foreach ($arts as $art) {
-    $articul = explode(":", $art);
-    echo '<tr id="' . $articul[0] . '"><td class="is-size-7" style="border-bottom:1px solid white;background:#dbdbdb"><strong>';
-    echo $articul[0] . '</strong></td><td class=" is-size-7">' . (isset($articul[1]) ? $articul[1] : '') . '</td><td style="border:none;    vertical-align: middle;"><a title="Скопировать" class="is-pulled-right" style="text-decoration: none;" onclick="copyToClipboard(\'' . htmlentities($art) . '\')"><i class="fa-regular fa-copy" style="color:#ccc;"></i></a></td></tr>';
+  $art = trim($art);
+  if ($art === '') {
+    continue;
+  }
+
+  $articul = explode(":", $art, 2);
+  $raw_code = trim($articul[0]);
+  $config = isset($articul[1]) ? trim($articul[1]) : '';
+
+  $colored_code = preg_replace('/([DS])$/', '<span style="color:#00AD61;">$1</span>', $raw_code);
+  $clean_copy_text = htmlentities(strip_tags($raw_code . ($config !== '' ? ': ' . $config : '')), ENT_QUOTES, 'UTF-8');
+
+  echo '<tr id="' . htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') . '">';
+  echo '<td class="is-size-7" style="border-bottom:1px solid white;background:#dbdbdb"><strong>' . $colored_code . '</strong></td>';
+  echo '<td class="is-size-7">' . $config . '</td>';
+  echo '<td style="border:none; vertical-align: middle;"><a title="Скопировать" class="is-pulled-right" style="text-decoration: none;" onclick="copyToClipboard(\'' . $clean_copy_text . '\')"><i class="fa-regular fa-copy" style="color:#ccc;"></i></a></td>';
+  echo '</tr>';
 }
 echo '</table></div><br>';
 }
 ?>
+
 <?php
 if ($arResult['product']["replace_detail_text_with_file"] == ""):
     $model = str_replace("/", "_", $product["model"]);
