@@ -310,6 +310,9 @@
     text-decoration: none;
     cursor: pointer;
 }
+.button_show_items {
+    text-decoration: none;
+}
 
 #vue_catalog_pop_menu .cataloge_list span.button_show_items.disabled {
     opacity: 0.5;
@@ -592,6 +595,7 @@
 }
 #functional .product_cloud_item a {
     color: #000 !important;
+    text-decoration: none;
 }
 #vue_catalog_pop_menu #category,
 #vue_catalog_pop_menu #brands,
