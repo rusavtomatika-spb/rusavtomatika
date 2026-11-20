@@ -33,6 +33,7 @@
     width: 100%;
     gap: 10px;
     background: none;
+    transition: .3s;
 }
 .product__link-wrapper:hover { text-decoration: none; }
 .preview_image {
@@ -95,11 +96,16 @@
     justify-content: center;
     width: 30px;
     height: 30px;
-    color: #fff;
-    background: #44bb6e;
     border: none;
     border-radius: 5px;
     line-height: 150%;
+    background: #c5c5c5;
+    color: #ececec;
+    transition: .3s;
+}
+.product__actions-wrapper .active {
+    background: #44bb6e;
+    color: #fff;
 }
 .price_block {
     display: flex;

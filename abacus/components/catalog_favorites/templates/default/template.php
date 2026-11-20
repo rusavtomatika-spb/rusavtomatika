@@ -23,12 +23,11 @@ $series["products"] = $arResult["ITEMS"];
             ?>
             <h1><?= $H1 ?></h1><br>
             <div class="component_catalog_section__panel_of_products">
-                <div class="view-mode-list">
+                <div class="view-mode-list" id="vue_app_component_favorites">
                     <?
                     include __DIR__ . "/inc_template_list_of_products_list.php";
                     ?>
                 </div>
-
             </div>
         </div>
         <?php if(!empty($arResult["ITEMS"]) && is_array($arResult["ITEMS"])) { ?>
@@ -40,51 +39,3 @@ $series["products"] = $arResult["ITEMS"];
         <?php }?>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-
-        window.addEventListener('storage', function(event) {
-            if(event.key == 'favorites'){
-                setTimeout(function () {
-                            location.reload();
-                },1);
-            }
-        });
-
-        if($('div.series_products div').length == 0){
-            $('.catalog_favorites__button_clearall').css('display','none');
-        }
-
-        $('.catalog_favorites__button_clearall').on('click', function () {
-            setCookie('box2_favorites', "", {'max-age': -1});
-            $('.component_catalog_section__panel_of_products .view-mode-list').html('<hr>Нет товаров...<hr>');
-            $(this).css('display','none');
-            $('.catalog_toolbar__item.favorites .number').html('');
-            localStorage.setItem('favorites',Date.now());
-            location.href = '/catalog/favorites/';
-        });
-        function setCookie(name, value, options = {}) {
-            let date = new Date;
-            date.setDate(date.getDate() + 365);
-            date = date.toUTCString();
-            options = {
-                path: '/',
-                'expires': date,
-                domain: '.' + window.location.host,
-            };
-            if (options.expires instanceof Date) {
-                options.expires = options.expires.toUTCString();
-            }
-            let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-            for (let optionKey in options) {
-                updatedCookie += "; " + optionKey;
-                let optionValue = options[optionKey];
-                if (optionValue !== true) {
-                    updatedCookie += "=" + optionValue;
-                }
-            }
-            document.cookie = updatedCookie;
-        }
-
-    });
-</script>

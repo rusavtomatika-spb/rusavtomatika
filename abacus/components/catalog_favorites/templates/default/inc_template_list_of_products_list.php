@@ -80,7 +80,7 @@ global $usd_currency, $arSettings;
       </a>
       <div class="buttons_panel product__actions-wrapper">
         <button title="Добавить в сравнение" class="compare fa-solid fa-align-right fa-rotate-90" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="compare"></button>
-        <button title="Удалить из избранного" class="cart fa-solid fa-xmark" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
+        <button title="Удалить из избранного" class="cart fa-solid fa-xmark active" @click="add_too_box" data-model="<?= $product["model"]; ?>" data-box="favorites"></button>
       </div>
       <div class="is-clearfix">&nbsp;</div>
     </div>

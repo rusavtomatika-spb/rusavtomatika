@@ -175,10 +175,6 @@ if (!function_exists('catalogDetail_transformString')) {
     }
 }
 
-/* =========================================================================
-   ОСНОВНОЙ ВЫВОД
-   ========================================================================= */
-
 if (ERROR_404) {
     global $TITLE;
     global $H1;
@@ -721,6 +717,50 @@ if (ERROR_404) {
           </div>
           <?php } ?>
         </div>
+        <?php if (!empty($arResult['product']['articuls'])): ?>
+          <div class="order-info-box">
+            <p class="order-info-box__title">Информация для заказа:</p>
+            <div class="order-info-list">
+              <div class="order-info-header">
+                <div class="order-info-col-code">Артикул</div>
+                <div class="order-info-col-config">Конфигурация</div>
+                <div class="order-info-col-copy"></div>
+              </div>
+              <?php
+              $arts = explode("\n", trim($arResult['product']['articuls']));
+              foreach ($arts as $art) {
+                $art = trim($art);
+                if ($art === '') {
+                  continue;
+                }
+
+                $articul = explode(":", $art, 2);
+                $raw_code = trim($articul[0]);
+                $config = isset($articul[1]) ? trim($articul[1]) : '';
+
+                $colored_code = preg_replace('/([DS])$/', '<span style="color:#00AD61;">$1</span>', $raw_code);
+
+                $colored_config = preg_replace(
+                  '/(?:<strong>)?(\((?:NPN|PNP)\))(?:<\/strong>)?/i',
+                  '<strong><span style="color:#00AD61;">$1</span></strong>',
+                  $config
+                );
+
+                $clean_copy_text = htmlentities(strip_tags($raw_code . ($config !== '' ? ': ' . $config : '')), ENT_QUOTES, 'UTF-8');
+              ?>
+                <div class="order-info-row" id="<?= htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') ?>">
+                  <div class="order-info-col-code"><?= $colored_code ?></div>
+                  <p class="order-info-col-config"><?= $colored_config ?></p>
+                  <div class="order-info-col-copy">
+                    <a title="Скопировать" class="order-info-copy-btn" onclick="copyToClipboard('<?= $clean_copy_text ?>')">
+                      <i class="fa-regular fa-copy"></i>
+                    </a>
+                  </div>
+                </div>
+              <?php } ?>
+            </div>
+          </div>
+        <?php endif; ?>
         <div class="component_catalog_detail__buttons2">
           <div>
             <?= isset($link_advanced_search) ? $link_advanced_search : '' ?>
@@ -815,39 +855,6 @@ if (
     )
 ) {
     echo $prim_power;
-}
-
-if ($arResult['product']['articuls'] != '') {
-  ?>
-<h2>Информация для заказа:</h2>
-<div class="table-container">
-<table class="table  is-bordered is-hoverable">
-<tr>
-  <td class="is-size-7 has-text-grey-light has-text-weight-light" style="border: none;">АРТИКУЛ</td>
-  <td style="border: none;" class="is-size-7 has-text-grey-light has-text-weight-light">КОНФИГУРАЦИЯ</td>
-</tr>
-<?php
-$arts = explode("\n", trim($arResult['product']['articuls']));
-foreach ($arts as $art) {
-  $art = trim($art);
-  if ($art === '') {
-    continue;
-  }
-
-  $articul = explode(":", $art, 2);
-  $raw_code = trim($articul[0]);
-  $config = isset($articul[1]) ? trim($articul[1]) : '';
-
-  $colored_code = preg_replace('/([DS])$/', '<span style="color:#00AD61;">$1</span>', $raw_code);
-  $clean_copy_text = htmlentities(strip_tags($raw_code . ($config !== '' ? ': ' . $config : '')), ENT_QUOTES, 'UTF-8');
-
-  echo '<tr id="' . htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') . '">';
-  echo '<td class="is-size-7" style="border-bottom:1px solid white;background:#dbdbdb"><strong>' . $colored_code . '</strong></td>';
-  echo '<td class="is-size-7">' . $config . '</td>';
-  echo '<td style="border:none; vertical-align: middle;"><a title="Скопировать" class="is-pulled-right" style="text-decoration: none;" onclick="copyToClipboard(\'' . $clean_copy_text . '\')"><i class="fa-regular fa-copy" style="color:#ccc;"></i></a></td>';
-  echo '</tr>';
-}
-echo '</table></div><br>';
 }
 ?>
 
@@ -1122,27 +1129,6 @@ $(document).ready(function() {
     sortTable('table-download-files',5);
 });
 </script>
-
-<style>
-  .button-3d-link {
-    text-decoration: none;
-  }
-
-  .button-3d-link svg {
-    margin-right: 5px;
-  }
-
-  @media (max-width: 768px) {
-    .button-3d-link span {
-      display: none;
-    }
-
-    .button-3d-link svg {
-      margin-right: 0;
-    }
-  }
-</style>
-
 <?php
 }
 
