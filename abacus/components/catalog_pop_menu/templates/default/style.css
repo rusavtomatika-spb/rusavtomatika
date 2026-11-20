@@ -1,21 +1,36 @@
 #vue_catalog_pop_menu {
     display: none;
-    position: absolute;
-    top: 40px;
-    left: -1px;
-    right: -1px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    background: white;
+    background: #fff;
     border-radius: 6px;
     z-index: 2001;
+    transform: translateX(-50%);
+    overflow: hidden;
+    max-height: calc(100vh - 20px);
 }
 #vue_catalog_pop_menu.active {
-    display: block;
+    display: flex;
+    align-items: stretch;
 }
+
+.catalog_pop_menu {
+    padding: 15px;
+    width: 1344px;
+    max-width: 100%;
+    max-height: calc(100vh - 20px);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    box-sizing: border-box;
+}
+
 #vue_catalog_pop_menu ul, #vue_catalog_pop_menu li {
     list-style: none;
     margin: 0;
-    line-height: 1.15;
+    line-height: 150%;
 }
 
 #vue_catalog_pop_menu ul.series-list {
@@ -57,17 +72,12 @@
 }
 
 #vue_catalog_pop_menu .hidden-menu {
-    position: fixed;
     width: 100%;
-    max-width: 1344px;
-    top: 175px;
-    bottom: 10px;
-    overflow-y: auto;
-    z-index: 200;
-}
-
-body.current_page_ #vue_catalog_pop_menu .hidden-menu {
-    top: 194px;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 #vue_catalog_pop_menu .category_link {
@@ -149,19 +159,26 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 #vue_catalog_pop_menu .box.cataloge {
     display: flex;
     flex-direction: column;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    padding-left: 1.25rem;
-    height: auto;
+    height: 100%;
+    padding: 0;
+}
+
+.catalog_pop_menu_wrap_inn {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1 1 auto;
 }
 
 .tab-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #eee;
     gap: 5px;
+    flex: 0 0 auto;
 }
 .tab-wrapper button {
     cursor: pointer;
@@ -186,12 +203,14 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 }
 
 #vue_catalog_pop_menu ul.cataloge-list {
-	padding-top: 3px;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-	width: 1300px;
-	flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 1300px;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
 }
 #vue_catalog_pop_menu .list_item {
   width: 50% !important;
@@ -337,9 +356,9 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 
 #vue_catalog_pop_menu .cataloge_list_item_icon {
     display: flex;
-    margin-bottom: 14px;
     align-self: flex-start;
-	width:50%;
+    margin-bottom: 20px;
+	width: 50%;
 }
 #vue_catalog_pop_menu .cataloge_list_item_icon .cataloge_list_item__picture {
     width: 74px;
@@ -573,4 +592,45 @@ body.current_page_ #vue_catalog_pop_menu .hidden-menu {
 }
 #functional .product_cloud_item a {
     color: #000 !important;
+}
+#vue_catalog_pop_menu #category,
+#vue_catalog_pop_menu #brands,
+#vue_catalog_pop_menu #functional {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+}
+#vue_catalog_pop_menu #category::-webkit-scrollbar,
+#vue_catalog_pop_menu #category::-webkit-scrollbar,
+#vue_catalog_pop_menu #category::-webkit-scrollbar,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar {
+  width: 5px;
+  background: var(--color-light-gray);
+}
+#vue_catalog_pop_menu #category::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #category::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #category::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #brands::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar-thumb,
+#vue_catalog_pop_menu #functional::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+#vue_catalog_pop_menu ul.cataloge-list {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow: visible;
+    height: auto;
 }

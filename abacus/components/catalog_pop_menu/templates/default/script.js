@@ -4,15 +4,14 @@
       $('#vue_catalog_pop_menu').removeAttr('style');
       $('#vue_catalog_pop_menu').toggleClass('active');
       $('.popup_background').toggleClass('active');
+      $('html').addClass('overflow-body-hidden')
     });
     $('.popup_background, .button_close_catalog_popmenu').bind('click', function () {
       $('#vue_catalog_pop_menu').removeAttr('style');
       $('#vue_catalog_pop_menu').removeClass('active');
       $('.popup_background').removeClass('active');
+      $('html').removeClass('overflow-body-hidden')
     });
-    //$('.catalog_toolbar .open_pop_catalog').click();
-    /*****************************************************************************************************/
-
 
     var app = new Vue({
       el: '#vue_catalog_pop_menu',
