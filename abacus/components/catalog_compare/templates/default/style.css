@@ -1,10 +1,16 @@
-.catalog_compare{
-
+.series_products {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    gap: 10px;
 }
 .catalog_compare .table_compare{
     width: 100%;
 }
-
 .catalog_compare .table_compare td{
     padding: 0.5rem 1rem;
     border: #DDDDDD 1px solid;

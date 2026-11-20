@@ -87,7 +87,7 @@ global $usd_currency, $arSettings;
   <?
   }
   } else {
-    echo "<hr>Нет товаров...<hr>";
+    echo '<p class="no__products">Нет товаров...</p>';
   }
   ?>
 </div>

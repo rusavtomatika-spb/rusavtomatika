@@ -722,9 +722,8 @@ if (ERROR_404) {
             <p class="order-info-box__title">Информация для заказа:</p>
             <div class="order-info-list">
               <div class="order-info-header">
-                <div class="order-info-col-code">Артикул</div>
-                <div class="order-info-col-config">Конфигурация</div>
-                <div class="order-info-col-copy"></div>
+                <p class="order-info-col-code">Артикул</p>
+                <p class="order-info-col-code">Конфигурация</p>
               </div>
               <?php
               $arts = explode("\n", trim($arResult['product']['articuls']));
@@ -748,15 +747,15 @@ if (ERROR_404) {
 
                 $clean_copy_text = htmlentities(strip_tags($raw_code . ($config !== '' ? ': ' . $config : '')), ENT_QUOTES, 'UTF-8');
               ?>
-                <div class="order-info-row" id="<?= htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') ?>">
-                  <div class="order-info-col-code"><?= $colored_code ?></div>
+                <a
+                  id="<?= htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') ?>"
+                  onclick="copyToClipboard('<?= $clean_copy_text ?>')"
+                  title="Копировать артикул: <?= $colored_code ?>"
+                  class="order-info-row"
+                >
+                  <p class="order-info-col-code"><?= $colored_code ?></p>
                   <p class="order-info-col-config"><?= $colored_config ?></p>
-                  <div class="order-info-col-copy">
-                    <a title="Скопировать" class="order-info-copy-btn" onclick="copyToClipboard('<?= $clean_copy_text ?>')">
-                      <i class="fa-regular fa-copy"></i>
-                    </a>
-                  </div>
-                </div>
+                </a>
               <?php } ?>
             </div>
           </div>

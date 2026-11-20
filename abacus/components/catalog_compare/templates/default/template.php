@@ -517,7 +517,7 @@ if ($num_columns > 0) {
     <?php
     $html_result = ob_get_clean();
 } else {
-    $html_result = 'Товары для сравнения не выбраны';
+    $html_result = '<div class="series_products"><p class="no__products">Нет товаров...</p></div>';
 }
 ?>
 <div class="catalog_compare">

@@ -21,7 +21,7 @@ $series["products"] = $arResult["ITEMS"];
             <?
             CoreApplication::include_component(array("component" => "breadcrumbs"));
             ?>
-            <h1><?= $H1 ?></h1><br>
+            <h1><?= $H1 ?></h1>
             <div class="component_catalog_section__panel_of_products">
                 <div class="view-mode-list" id="vue_app_component_favorites">
                     <?

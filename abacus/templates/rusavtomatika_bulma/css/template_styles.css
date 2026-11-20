@@ -1160,3 +1160,9 @@ a:hover#showSubscribe  {
     margin-right: 10px;
     margin-top: -10px;
 }
+
+.no__products {
+  font-size: 20px;
+  font-weight: 600;
+  color: #a3a3a3;
+}
