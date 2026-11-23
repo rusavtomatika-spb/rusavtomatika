@@ -17,10 +17,12 @@ $popCurrentTypeLabel = $popTypeLabels[$popCurrentType];
 
 $searchInstanceId = isset($search_instance_id) ? $search_instance_id : 'catalog_search_' . uniqid();
 ?>
-<div class="catalog_toolbar__search_block pop_menu_search_block"
-     id="<?= htmlspecialchars($searchInstanceId) ?>"
-     data-search-instance="<?= htmlspecialchars($searchInstanceId) ?>"
-     style="width: 100%; margin-bottom: 10px;">
+<div
+    class="catalog_toolbar__search_block pop_menu_search_block"
+    id="<?= htmlspecialchars($searchInstanceId) ?>"
+    data-search-instance="<?= htmlspecialchars($searchInstanceId) ?>"
+    style="width: 100%;"
+>
     <form action="/catalog/search/" class="catalog_toolbar__form_search" method="get">
         <input type="hidden"
                name="type"
