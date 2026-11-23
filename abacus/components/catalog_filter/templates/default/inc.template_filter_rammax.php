@@ -3,7 +3,7 @@
                 v-if="filterSelectedRangerammax_min > filterSelectedRangerammax_min_start || filterSelectedRangerammax_max < filterSelectedRangerammax_max_start"
                 @click="clicked_button_clear_filter_field_block('filterSelectedRangerammax')"
                 class="button_clear_filter_field_block">x</span></div>
-        <div class="columns is-gapless is-multiline">
+        <div class="columns is-gapless is-multiline p-1">
             <div class="column is-12">
             <div class="filter_field_block__input_range_wrapper">
                 <input class="filter_field_block__input_range"

@@ -1,15 +1,4 @@
 <?php
-//$brands = CoreApplication::get_rows_from_table("`catalog_brands`", "", "", "name ");
-
-/*
- *
- section
-menu_brand_series ->
- *
- *
- * */
-
-
 
 if (isset($arguments["section"]["filter_ethernets_fix"]) && $arguments["section"]["filter_ethernets_fix"] != "") {
     $list_of_items = explode(",", $arguments["section"]["filter_ethernets_fix"]);
@@ -27,24 +16,21 @@ if (isset($arguments["section"]["filter_ethernets_fix"]) && $arguments["section"
             }
         }
         if ($condition != "") $condition = " (" . $condition;
-
-        //$items = CoreApplication::get_rows_from_table("`catalog_resolutions`", "*", $condition, "code");
         ?>
-
 
         <div class="filter_field_block">
             <div class="filter_field_block__title">Количество портов<span v-if="filterSelectedethernets_fix.length"
                                                                @click="clicked_button_clear_filter_field_block('filterSelectedethernets_fix')"
                                                                class="button_clear_filter_field_block">x</span>
             </div>
-            <div class="columns is-gapless is-multiline">
+            <div class="columns is-gapless is-multiline p-1">
                 <?php
                 foreach ($list_of_items as $item) {
                     ?>
                     <div class="column is-6-fullhd is-12-widescreen is-12-desktop is-12-tablet">
                         <input class="<?= $item ?>" @change="filterChanged" v-model="filterSelectedethernets_fix" type="checkbox"
                                id="checkbox_processor_<?= $item ?>"
-                               value="<?= $item ?>"/>&nbsp;
+                               value="<?= $item ?>"/>
                         <label for="checkbox_processor_<?= $item ?>"><?= $item ?></label>
                     </div>
                     <?

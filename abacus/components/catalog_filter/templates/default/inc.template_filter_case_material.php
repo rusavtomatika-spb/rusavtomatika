@@ -3,7 +3,7 @@
                                                          @click="clicked_button_clear_filter_field_block('filterSelectedСase_material')"
                                                          class="button_clear_filter_field_block">x</span>
     </div>
-    <div class="columns is-gapless is-multiline">
+    <div class="columns is-gapless is-multiline p-1">
             <div class="is-hidden">
                 <input @change="filterChanged" type="radio" id="Сase_material_one" value="" v-model="filterSelectedСase_material">
                 <label for="Сase_material_one">Неважно</label>

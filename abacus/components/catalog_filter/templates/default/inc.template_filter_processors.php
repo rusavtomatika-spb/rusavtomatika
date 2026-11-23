@@ -21,14 +21,14 @@ if (isset($arguments["section"]["filter_processors"]) && $arguments["section"]["
                                                                @click="clicked_button_clear_filter_field_block('filterSelectedProcessors')"
                                                                class="button_clear_filter_field_block">x</span>
             </div>
-            <div class="columns is-gapless is-multiline">
+            <div class="columns is-gapless is-multiline p-1">
                 <?php
                 foreach ($list_of_items as $item) {
                     ?>
                     <div class="column is-6-fullhd is-12-widescreen is-12-desktop is-12-tablet">
                         <input class="<?= $item ?>" @change="filterChanged" v-model="filterSelectedProcessors" type="checkbox"
                                id="checkbox_processor_<?= $item ?>"
-                               value="<?= $item ?>"/>&nbsp;
+                               value="<?= $item ?>"/>
                         <label for="checkbox_processor_<?= $item ?>"><?= $item ?></label>
                     </div>
                     <?

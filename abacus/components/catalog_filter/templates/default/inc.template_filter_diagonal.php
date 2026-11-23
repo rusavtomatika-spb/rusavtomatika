@@ -6,7 +6,7 @@ global $arrSection;
                 v-if="filterSelectedRangeDiagonal_min > filterSelectedRangeDiagonal_min_start || filterSelectedRangeDiagonal_max < filterSelectedRangeDiagonal_max_start "
                 @click="clicked_button_clear_filter_field_block('filterSelectedRangeDiagonals')"
                 class="button_clear_filter_field_block">x</span></div>
-    <div class="columns is-gapless is-multiline">
+    <div class="columns is-gapless is-multiline p-1">
         <div class="column is-12">
             <div class="filter_field_block__input_range_wrapper">
                 <input class="filter_field_block__input_range"

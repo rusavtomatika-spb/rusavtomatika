@@ -1,10 +1,5 @@
 <?php
 $arr_series = CoreApplication::get_rows_from_table("`catalog_series`", "", "`active` = '1' and `menu_category_item_code` = '{$arguments['section']['code']}'", "position");
-    //echo $arguments['section']['product_types'];
-/*foreach ($arr_series as $series) {
-    echo($series ["name_russian"]);
-    echo "<br><br>";
-}*/
 $ser_brand = isset($_GET['brand']) ? $_GET['brand'] : '';
 if (is_array($arr_series) and count($arr_series) > 0) {
     ?>

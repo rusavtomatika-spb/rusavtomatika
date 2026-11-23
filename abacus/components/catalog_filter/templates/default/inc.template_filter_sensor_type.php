@@ -3,7 +3,7 @@
                                                          @click="clicked_button_clear_filter_field_block('filterSelectedSensorType')"
                                                          class="button_clear_filter_field_block">x</span>
     </div>
-    <div class="columns is-gapless is-multiline">
+    <div class="columns is-gapless is-multiline p-1">
             <div class="column is-6-widescreen is-12-desktop is-12-tablet is-hidden">
                 <input @change="filterChanged" type="radio" id="sensor_type_one" value="" v-model="filterSelectedSensorType">
                 <label for="sensor_type_one">Неважно</label>

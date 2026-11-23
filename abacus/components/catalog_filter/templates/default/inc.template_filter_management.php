@@ -3,7 +3,7 @@
                                                          @click="clicked_button_clear_filter_field_block('filterSelectedmanagement')"
                                                          class="button_clear_filter_field_block">x</span>
     </div>
-    <div class="columns is-gapless is-multiline">
+    <div class="columns is-gapless is-multiline p-1">
         <div class="column is-12">
             <div>
                 <input @change="filterChanged" type="radio" id="man" value="2" v-model="filterSelectedmanagement">
