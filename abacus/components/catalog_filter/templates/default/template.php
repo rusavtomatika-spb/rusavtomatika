@@ -79,7 +79,7 @@ if (isset($arguments['section']['code']) && $arguments['section']['code'] == 'mo
             'module'  => 'Модули в/в'
         );
 ?>
-<div id="float_filter_block_modules_io" style="margin-top: 20px;" v-if="filterSelectedBrands.length > 0" v-cloak>
+<div id="float_filter_block_modules_io" v-if="filterSelectedBrands.length > 0" v-cloak>
     <?php foreach ($grouped_io as $brand_name => $types_map):
         $brand_js = htmlspecialchars(json_encode($brand_name), ENT_QUOTES, 'UTF-8');
         $brand_slug = strtolower(preg_replace('/[^a-zA-Z0-9_-]/', '', $brand_name));

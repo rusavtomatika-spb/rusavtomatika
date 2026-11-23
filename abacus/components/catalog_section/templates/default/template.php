@@ -3,6 +3,23 @@ CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
 require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/TypeDictionary.php';
 
+if (!function_exists('getCanonicalSeoUrl')) {
+  function getCanonicalSeoUrl($rawUrl) {
+    $parts = parse_url($rawUrl);
+    $path = isset($parts['path']) ? $parts['path'] : '';
+    if (empty($parts['query'])) {
+      return $path;
+    }
+    parse_str(ltrim($parts['query'], '&'), $params);
+    unset($params['sort'], $params['ysclid'], $params['utm_source'], $params['utm_medium'], $params['utm_campaign']);
+    if (empty($params)) {
+      return $path;
+    }
+    ksort($params);
+    return $path . '?&' . http_build_query($params);
+  }
+}
+
 global $arrSection;
 $sections = CoreApplication::get_rows_from_table( "`catalog_sections`" );
 $arrSection = CoreApplication::get_rows_from_table( "catalog_sections", "", "`is_main_item`='1' and `code`='" . $arguments[ "component_route_params" ][ "section" ] . "'" )[ 0 ];
@@ -148,10 +165,11 @@ $url = $HTTP_REFERER;
 
 $seo_data = null;
 if ( $url != '' ) {
-    $__seo_row = CoreApplication::get_rows_from_table( 'seo', '', "url = '" . addslashes( $url ) . "'", '', '1' );
-    if ( isset( $__seo_row[0] ) and $__seo_row[0]['active'] == '1' ) {
-        $seo_data = $__seo_row[0];
-    }
+  $canonical_url = getCanonicalSeoUrl($url);
+  $__seo_row = CoreApplication::get_rows_from_table( 'seo', '', "url = '" . addslashes( $canonical_url ) . "'", '', '1' );
+  if ( isset( $__seo_row[0] ) and $__seo_row[0]['active'] == '1' ) {
+    $seo_data = $__seo_row[0];
+  }
 }
 
 $selected_brands = array();
@@ -286,6 +304,8 @@ if ( $HTTP_REFERER != "" ) {
   global $H1, $TITLE, $DESCRIPTION, $KEYWORDS, $CANONICAL, $UPPER_SEO_TEXT, $LOWER_SEO_TEXT;
   global $H1_original;
   global $TITLE_original;
+  $canonical_url = getCanonicalSeoUrl($url);
+  $row = CoreApplication::get_rows_from_table( 'seo', '', "url = '" . addslashes( $canonical_url ) . "'", '', '1' );
   global $SEO_URL;
 
   $url = $HTTP_REFERER;
@@ -336,7 +356,9 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
 
             global $H1_original;
             global $TITLE_original;
-            $row = CoreApplication::get_rows_from_table( 'seo', '', "url = '$url'", '', '1' );
+            $canonical_url = getCanonicalSeoUrl($url);
+            $row = CoreApplication::get_rows_from_table( 'seo', '', "url = '" . addslashes( $canonical_url ) . "'", '', '1' );
+
             if ( isset( $row[ 0 ] ) ) {
               $seo_data = $row[ 0 ];
               if ( $seo_data[ "active" ] == "1" ) {
@@ -364,7 +386,7 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             include "inc_weintek_info.php";
             ?>
             <meta name="original-title" content="<?= htmlspecialchars($TITLE, ENT_QUOTES, 'UTF-8') ?>">
-            <noindex>
+            <noindex class="section-actions-wrapper">
               <?php if ($arrSection['code'] == 'modules_io'): ?>
                 <?php
                 $rawBrands = !empty($arrSection['subsection_brands']) ? $arrSection['subsection_brands'] : $arrSection['filter_brands'];

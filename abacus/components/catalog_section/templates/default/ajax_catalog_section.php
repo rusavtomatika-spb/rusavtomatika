@@ -2,6 +2,22 @@
 
 $_POST = json_decode( file_get_contents( 'php://input' ), true );
 
+if (!function_exists('getCanonicalSeoUrl')) {
+  function getCanonicalSeoUrl($rawUrl) {
+    $parts = parse_url($rawUrl);
+    $path = isset($parts['path']) ? $parts['path'] : '';
+    if (empty($parts['query'])) {
+      return $path;
+    }
+    parse_str(ltrim($parts['query'], '&'), $params);
+    unset($params['sort'], $params['ysclid'], $params['utm_source'], $params['utm_medium'], $params['utm_campaign']);
+    if (empty($params)) {
+      return $path;
+    }
+    ksort($params);
+    return $path . '?&' . http_build_query($params);
+  }
+}
 
 if ( !defined( 'ENCODING' ) ) {
   define( 'ENCODING', "UTF-8" );
@@ -333,15 +349,17 @@ if ( $HTTP_REFERER != "" ) {
   global $SEO_URL;
 
   $url = $HTTP_REFERER;
+  $canonical_url = getCanonicalSeoUrl($url);
   ?>
 <meta name="fragment" content="!">
-<?
-$row = $DB_WORK_CATALOG->get_rows_from_table( 'seo', '', "url = '$url'", '', '1' );
+<?php
+$row = $DB_WORK_CATALOG->get_rows_from_table( 'seo', '', "url = '" . addslashes( $canonical_url ) . "'", '', '1' );
+
 if ( isset( $row[ 0 ] ) ) {
   $seo_data = $row[ 0 ];
   if ( $seo_data[ "active" ] == "1" ) {
 if ( $seo_data[ "TITLE" ] != "" ) {
-      $TITLE = $TITLE_original = $seo_data[ "TITLE" ]; // идёт в я-вебмастер
+      $TITLE = $TITLE_original = $seo_data[ "TITLE" ];
       if ( $TITLE != "" ) {
         ?>
 <meta name="component_seo_title" content="<?= $TITLE ?>">
@@ -405,6 +423,3 @@ if ( isset( $seo_data[ "rel_canonical" ] )and $seo_data[ "rel_canonical" ] != ""
 <?php
 }
 }
-
-
-//echo json_encode($out);
