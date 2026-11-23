@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         switch(activeIndex) {
             case 0:
-                categoryBlock.style.display = 'flex';
+                categoryBlock.style.display = 'grid';
                 break;
             case 1:
                 functionalBlock.style.display = 'flex';
