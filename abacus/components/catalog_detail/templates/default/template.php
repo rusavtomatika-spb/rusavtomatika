@@ -186,8 +186,21 @@ if (ERROR_404) {
     CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
     CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/script.js");
 
-    CoreApplication::add_breadcrumbs_chain($arResult['section']["name"], "/catalog/" . $arResult['section']["code"] . "/");
+    $section_breadcrumb_url = "/catalog/" . $arResult['section']["code"] . "/";
+    if (!empty($_SERVER['HTTP_REFERER'])) {
+      $referer_parts = parse_url($_SERVER['HTTP_REFERER']);
+      $referer_host = isset($referer_parts['host']) ? $referer_parts['host'] : '';
+      $current_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+      $referer_path = isset($referer_parts['path']) ? $referer_parts['path'] : '';
+
+      if ($referer_host === $current_host && $referer_path === $section_breadcrumb_url && !empty($referer_parts['query'])) {
+        $section_breadcrumb_url .= "?" . $referer_parts['query'];
+      }
+    }
+
+    CoreApplication::add_breadcrumbs_chain($arResult['section']["name"], $section_breadcrumb_url);
     CoreApplication::add_breadcrumbs_chain($arResult['product']["model"]);
+    
     $schemes = get_schemes($arResult['product']["model"]);
     ?>
 <div id="vue_component_catalog_detail" data-model="<?= $arResult['product']["model"] ?>">
