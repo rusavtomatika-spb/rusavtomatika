@@ -365,160 +365,6 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             ?>
             <meta name="original-title" content="<?= htmlspecialchars($TITLE, ENT_QUOTES, 'UTF-8') ?>">
             <noindex>
-              <div
-                class="panel_chosen_filters"
-                v-if="filterSelectedBrands.length > 0
-                || filterSelectedTypes != ''
-                || filterSelectedSeries != ''
-                || filterSelectedInterfaces.length > 0
-                || filterSelectedCodesys
-                || filterSelectedVesa
-                || filterSelectedSdcard
-                || filterSelectedCmtviewer
-                || filterSelectedWebView
-                || filterSelectedpoe
-                || filterSelectedScreenless
-                || filterSelectedPlcWebBrowser
-                || filterSelectedCameraIP
-                || filterSelectedCameraUSB
-                || filterSelectedOss.length > 0
-                || filterSelectedResolutions.length > 0
-                || filterSelectedProcessors.length > 0
-                || filterSelectedAvailablity > 0
-                || filterSelectedSensorType  != ''
-                || filterSelectedPlast
-                || filterSelectedPlastAlum
-                || filterSelectedAlum
-                || filterSelectedRangePrice_min > 0
-                || filterSelectedRangePrice_max < filterSelectedRangePrice_max_start
-                || filterSelectedRangeDiagonal_min > filterSelectedRangeDiagonal_min_start
-                || filterSelectedRangeDiagonal_max < filterSelectedRangeDiagonal_max_start
-                || filterSelectedRangerammax_min > filterSelectedRangerammax_min_start
-                || filterSelectedRangerammax_max < filterSelectedRangerammax_max_start
-                || filterSelectedRangeCOM_min > filterSelectedRangeCOM_min_start
-                || filterSelectedRangeCOM_max < filterSelectedRangeCOM_max_start
-                || filterSelectedRangeEthernets_min > filterSelectedRangeEthernets_min_start
-                || filterSelectedRangeEthernets_max < filterSelectedRangeEthernets_max_start
-                || filterSelectedRangeUSB_min > filterSelectedRangeUSB_min_start
-                || filterSelectedRangeUSB_max < filterSelectedRangeUSB_max_start"
-                v-cloak
-              >
-                <span class="item">
-                  <span class="clear_all">очистить фильтры 
-                    <span @click="clear_filter_item('all','')" class="button_clear_filter"></span>
-                  </span>
-                </span>
-                <span class="item" v-if="filterSelectedSeries != ''">
-                  <span>серия: <b>{{filterSelectedSeries}}</b> 
-                    <span @click="clear_filter_item('filterSelectedSeries','')" class="button_clear_filter"> </span>
-                  </span>
-                </span> 
-                <?php
-                $jsTypesDict = array();
-                if (is_array($typesDict)) {
-                    foreach ($typesDict as $k => $v) {
-                        $jsTypesDict[$k] = str_replace('ввода-вывода', 'в/в', $v);
-                    }
-                }
-                ?>
-                <span class="item" v-if="filterSelectedTypes != ''">
-                  <span>тип: <b>{{ (<?= htmlspecialchars(json_encode($jsTypesDict), ENT_QUOTES, 'UTF-8') ?>)[filterSelectedTypes] || filterSelectedTypes }}</b>
-                    <span @click="clear_filter_item('filterSelectedTypes','')" class="button_clear_filter"> </span>
-                  </span>
-                </span>
-                <span class="item" v-if="filterSelectedBrands.length > 0">
-                  <span v-for="brand in filterSelectedBrands">бренд: <b>{{ brand }}</b> 
-                    <span @click="clear_filter_item('filterSelectedBrands',brand)" class="button_clear_filter"> </span>
-                  </span>
-                </span> 
-                <span class="item" v-if="filterSelectedCodesys">
-                  <span>Codesys 
-                    <span @click="clear_filter_item('filterSelectedCodesys')" class="button_clear_filter"> </span>
-                  </span>
-                </span> 
-          <span class="item" v-if="filterSelectedVesa">
-            <span>VESA <span @click="clear_filter_item('filterSelectedVesa')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedSdcard"><span>SD-карта <span
-                                        @click="clear_filter_item('filterSelectedSdcard')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedCmtviewer"><span>CMT Viewer <span
-                                        @click="clear_filter_item('filterSelectedCmtviewer')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedWebView"><span>WebView <span
-                                        @click="clear_filter_item('filterSelectedWebView')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedpoe"><span>POE <span
-                                        @click="clear_filter_item('filterSelectedpoe')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedScreenless"><span>Безэкранные <span
-                                        @click="clear_filter_item('filterSelectedScreenless')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedPlcWebBrowser"><span>PLC Web-Browser <span
-                                        @click="clear_filter_item('filterSelectedPlcWebBrowser')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedCameraIP"><span>IP-камера <span
-                                        @click="clear_filter_item('filterSelectedCameraIP')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedCameraUSB"><span>USB-камера <span
-                                        @click="clear_filter_item('filterSelectedCameraUSB')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedOss.length > 0"><span
-                                    v-for="Os in filterSelectedOss">ОС: <b>{{ Os }}</b> <span
-                                        @click="clear_filter_item('filterSelectedOss',Os)"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedInterfaces.length > 0"><span
-                                    v-for="Interface in filterSelectedInterfaces">интерфейс: <b>{{ Interface }}</b> <span
-                                        @click="clear_filter_item('filterSelectedInterfaces',Interface)"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedResolutions.length > 0"><span
-                                    v-for="Resolution in filterSelectedResolutions">разрешение: <b>{{ Resolution }}</b> <span
-                                        @click="clear_filter_item('filterSelectedResolutions',Resolution)"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedProcessors.length > 0"><span
-                                    v-for="Processor in filterSelectedProcessors">процессор: <b>{{ Processor }}</b> <span
-                                        @click="clear_filter_item('filterSelectedProcessors',Processor)"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedAvailablity > 0"><span>доступность: <b
-                                        v-if="filterSelectedAvailablity == 1">В наличии</b><b
-                                        v-if="filterSelectedAvailablity == 2">Под заказ</b> <span
-                                        @click="clear_filter_item('filterSelectedAvailablity','')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedSensorType!=''"><span>тип сенсора: <b
-                                        v-if="filterSelectedSensorType == 'resistive'">Резистивный</b><b
-                                        v-if="filterSelectedSensorType == 'capacitive'">Емкостный</b> <span
-                                        @click="clear_filter_item('filterSelectedSensorType','')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedPlast"><span>Пластик <span
-                                        @click="clear_filter_item('filterSelectedPlast')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedAlum"><span>Алюминий <span
-                                        @click="clear_filter_item('filterSelectedAlum')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedPlastAlum"><span>Пластик+Металл <span
-                                        @click="clear_filter_item('filterSelectedPlastAlum')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item" v-if="filterSelectedRangePrice_min > 0"><span>цена от: <b>{{ filterSelectedRangePrice_min }} $</b> <span
-                                        @click="clear_filter_item('filterSelectedRangePrice_min','')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item"
-                              v-if="filterSelectedRangePrice_max < filterSelectedRangePrice_max_start"><span>цена до: <b>{{ filterSelectedRangePrice_max }} $</b> <span
-                                        @click="clear_filter_item('filterSelectedRangePrice_max','')"
-                                        class="button_clear_filter"> </span></span></span> 
-                
-                <span class="item"
-                              v-if="filterSelectedRangeEthernets_min > filterSelectedRangeEthernets_min_start"><span>количество Ethernet от: <b>{{ filterSelectedRangeEthernets_min }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeEthernets_min', '')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item"
-                              v-if="filterSelectedRangeEthernets_max < filterSelectedRangeEthernets_max_start"><span>количество Ethernet до: <b>{{ filterSelectedRangeEthernets_max }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeEthernets_max', '')"
-                                        class="button_clear_filter"> </span></span></span> 
-				
-                <span class="item"
-                              v-if="filterSelectedRangeCOM_min > filterSelectedRangeCOM_min_start"><span>количество COM-портов от: <b>{{ filterSelectedRangeCOM_min }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeCOM_min', '')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item"
-                              v-if="filterSelectedRangeCOM_max < filterSelectedRangeCOM_max_start"><span>количество COM-портов до: <b>{{ filterSelectedRangeCOM_max }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeCOM_max', '')"
-                                        class="button_clear_filter"> </span></span></span> 
-				
-                <span class="item"
-                              v-if="filterSelectedRangerammax_min > filterSelectedRangerammax_min_start"><span>max Размер ОЗУ от: <b>{{ filterSelectedRangerammax_min }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangerammax_min', '')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item"
-                              v-if="filterSelectedRangerammax_max < filterSelectedRangerammax_max_start"><span>max Размер ОЗУ до: <b>{{ filterSelectedRangerammax_max }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangerammax_max', '')"
-                                        class="button_clear_filter"> </span></span></span> 
-				
-                <span class="item"
-                              v-if="filterSelectedRangeUSB_min > filterSelectedRangeUSB_min_start"><span>количество USB от: <b>{{ filterSelectedRangeUSB_min }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeUSB_min', '')"
-                                        class="button_clear_filter"> </span></span></span> <span class="item"
-                              v-if="filterSelectedRangeUSB_max < filterSelectedRangeUSB_max_start"><span>количество USB до: <b>{{ filterSelectedRangeUSB_max }}&Prime;</b> <span
-                                        @click="clear_filter_item('filterSelectedRangeUSB_max', '')"
-                                        class="button_clear_filter"> </span></span></span> </div>
-
               <?php if ($arrSection['code'] == 'modules_io'): ?>
                 <?php
                 $rawBrands = !empty($arrSection['subsection_brands']) ? $arrSection['subsection_brands'] : $arrSection['filter_brands'];
@@ -551,33 +397,34 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                 }
                 ?>
                 <?php if (!empty($brandTypesMap)): ?>
-                  <div class="is-hidden-touch is-size-12" style="margin-left: 10px; line-height: 45px;">
-                    Типы:
+                  <div class="is-hidden-touch is-size-12 filters-types-block">
                     <?php foreach ($ioBrands as $brandName):
                       if (empty($brandTypesMap[$brandName])) continue;
                       $brandEscJs = htmlspecialchars(json_encode($brandName), ENT_QUOTES, 'UTF-8');
                       $brandUrl = urlencode($brandName);
                     ?>
-                      <a class="button is-small"
-                        title="Производитель <?= htmlspecialchars($brandName) ?>"
-                        v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === '' ? 'is-success' : 'is-dark'"
-                        href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>"
-                        @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, '')">
-                        <?= htmlspecialchars($brandName) ?>
-                      </a> :
-                      <?php foreach ($brandTypesMap[$brandName] as $typeCode):
-                        $typeLabel = str_replace('ввода-вывода', 'в/в', TypeDictionary::get($typeCode, 'modules_io'));
-                        $typeEscJs = htmlspecialchars(json_encode($typeCode), ENT_QUOTES, 'UTF-8');
-                        $typeUrl = urlencode($typeCode);
-                      ?>
-                        <a class="button is-small mr-1"
-                          v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === <?= $typeEscJs ?> ? 'is-success' : ''"
-                          href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>&types=<?= $typeUrl ?>"
-                          @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, <?= $typeEscJs ?>)">
-                          <?= htmlspecialchars($typeLabel) ?>
+                      <div class="filter-item-block">
+                        <a class="button is-small"
+                          title="Производитель <?= htmlspecialchars($brandName) ?>"
+                          v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === '' ? 'is-success' : 'is-dark'"
+                          href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>"
+                          @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, '')">
+                          <?= htmlspecialchars($brandName) ?>
                         </a>
-                      <?php endforeach; ?>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;:&nbsp;
+                        <?php foreach ($brandTypesMap[$brandName] as $typeCode):
+                          $typeLabel = str_replace('ввода-вывода', 'в/в', TypeDictionary::get($typeCode, 'modules_io'));
+                          $typeEscJs = htmlspecialchars(json_encode($typeCode), ENT_QUOTES, 'UTF-8');
+                          $typeUrl = urlencode($typeCode);
+                        ?>
+                          <a class="button is-small mr-1"
+                            v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === <?= $typeEscJs ?> ? 'is-success' : ''"
+                            href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>&types=<?= $typeUrl ?>"
+                            @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, <?= $typeEscJs ?>)">
+                            <?= htmlspecialchars($typeLabel) ?>
+                          </a>
+                        <?php endforeach; ?>
+                      </div>
                     <?php endforeach; ?>
                   </div>
                 <?php endif; ?>
@@ -607,6 +454,284 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                   <div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
                 </div>
               <?php endif; ?>
+
+              <div
+                class="panel_chosen_filters"
+                v-if="filterSelectedBrands.length > 0
+                  || filterSelectedTypes != ''
+                  || filterSelectedSeries != ''
+                  || filterSelectedInterfaces.length > 0
+                  || filterSelectedCodesys
+                  || filterSelectedVesa
+                  || filterSelectedSdcard
+                  || filterSelectedCmtviewer
+                  || filterSelectedWebView
+                  || filterSelectedpoe
+                  || filterSelectedScreenless
+                  || filterSelectedPlcWebBrowser
+                  || filterSelectedCameraIP
+                  || filterSelectedCameraUSB
+                  || filterSelectedOss.length > 0
+                  || filterSelectedResolutions.length > 0
+                  || filterSelectedProcessors.length > 0
+                  || filterSelectedAvailablity > 0
+                  || filterSelectedSensorType  != ''
+                  || filterSelectedPlast
+                  || filterSelectedPlastAlum
+                  || filterSelectedAlum
+                  || filterSelectedRangePrice_min > 0
+                  || filterSelectedRangePrice_max < filterSelectedRangePrice_max_start
+                  || filterSelectedRangeDiagonal_min > filterSelectedRangeDiagonal_min_start
+                  || filterSelectedRangeDiagonal_max < filterSelectedRangeDiagonal_max_start
+                  || filterSelectedRangerammax_min > filterSelectedRangerammax_min_start
+                  || filterSelectedRangerammax_max < filterSelectedRangerammax_max_start
+                  || filterSelectedRangeCOM_min > filterSelectedRangeCOM_min_start
+                  || filterSelectedRangeCOM_max < filterSelectedRangeCOM_max_start
+                  || filterSelectedRangeEthernets_min > filterSelectedRangeEthernets_min_start
+                  || filterSelectedRangeEthernets_max < filterSelectedRangeEthernets_max_start
+                  || filterSelectedRangeUSB_min > filterSelectedRangeUSB_min_start
+                  || filterSelectedRangeUSB_max < filterSelectedRangeUSB_max_start"
+                v-cloak
+              >
+                <span class="item">
+                  <span class="clear_all">
+                    очистить фильтры
+                    <span @click="clear_filter_item('all','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedSeries != ''">
+                  <span>
+                    серия: <b>{{filterSelectedSeries}}</b>
+                    <span @click="clear_filter_item('filterSelectedSeries','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <?php
+                $jsTypesDict = array();
+                if (is_array($typesDict)) {
+                    foreach ($typesDict as $k => $v) {
+                        $jsTypesDict[$k] = str_replace('ввода-вывода', 'в/в', $v);
+                    }
+                }
+                ?>
+                <span class="item" v-if="filterSelectedTypes != ''">
+                  <span>
+                    тип: <b>{{ (<?= htmlspecialchars(json_encode($jsTypesDict), ENT_QUOTES, 'UTF-8') ?>)[filterSelectedTypes] || filterSelectedTypes }}</b>
+                    <span @click="clear_filter_item('filterSelectedTypes','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedBrands.length > 0">
+                  <span v-for="brand in filterSelectedBrands">
+                    бренд: <b>{{ brand }}</b>
+                    <span @click="clear_filter_item('filterSelectedBrands',brand)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedCodesys">
+                  <span>
+                    Codesys
+                    <span @click="clear_filter_item('filterSelectedCodesys')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedVesa">
+                  <span>
+                    VESA
+                    <span @click="clear_filter_item('filterSelectedVesa')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedSdcard">
+                  <span>
+                    SD-карта
+                    <span @click="clear_filter_item('filterSelectedSdcard')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedCmtviewer">
+                  <span>
+                    CMT Viewer
+                    <span @click="clear_filter_item('filterSelectedCmtviewer')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedWebView">
+                  <span>
+                    WebView
+                    <span @click="clear_filter_item('filterSelectedWebView')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedpoe">
+                  <span>
+                    POE
+                    <span @click="clear_filter_item('filterSelectedpoe')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedScreenless">
+                  <span>
+                    Безэкранные
+                    <span @click="clear_filter_item('filterSelectedScreenless')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedPlcWebBrowser">
+                  <span>
+                    PLC Web-Browser
+                    <span @click="clear_filter_item('filterSelectedPlcWebBrowser')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedCameraIP">
+                  <span>
+                    IP-камера
+                    <span @click="clear_filter_item('filterSelectedCameraIP')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedCameraUSB">
+                  <span>
+                    USB-камера
+                    <span @click="clear_filter_item('filterSelectedCameraUSB')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedOss.length > 0">
+                  <span v-for="Os in filterSelectedOss">
+                    ОС: <b>{{ Os }}</b>
+                    <span @click="clear_filter_item('filterSelectedOss',Os)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedInterfaces.length > 0">
+                  <span v-for="Interface in filterSelectedInterfaces">
+                    интерфейс: <b>{{ Interface }}</b>
+                    <span @click="clear_filter_item('filterSelectedInterfaces',Interface)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedResolutions.length > 0">
+                  <span v-for="Resolution in filterSelectedResolutions">
+                    разрешение: <b>{{ Resolution }}</b>
+                    <span @click="clear_filter_item('filterSelectedResolutions',Resolution)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedProcessors.length > 0">
+                  <span v-for="Processor in filterSelectedProcessors">
+                    процессор: <b>{{ Processor }}</b>
+                    <span @click="clear_filter_item('filterSelectedProcessors',Processor)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedAvailablity > 0">
+                  <span>
+                    доступность: <b v-if="filterSelectedAvailablity == 1">В наличии</b><b v-if="filterSelectedAvailablity == 2">Под заказ</b>
+                    <span @click="clear_filter_item('filterSelectedAvailablity','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedSensorType!=''">
+                  <span>
+                    тип сенсора: <b v-if="filterSelectedSensorType == 'resistive'">Резистивный</b><b v-if="filterSelectedSensorType == 'capacitive'">Емкостный</b>
+                    <span @click="clear_filter_item('filterSelectedSensorType','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedPlast">
+                  <span>
+                    Пластик
+                    <span @click="clear_filter_item('filterSelectedPlast')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedAlum">
+                  <span>
+                    Алюминий
+                    <span @click="clear_filter_item('filterSelectedAlum')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedPlastAlum">
+                  <span>
+                    Пластик+Металл
+                    <span @click="clear_filter_item('filterSelectedPlastAlum')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangePrice_min > 0">
+                  <span>
+                    цена от: <b>{{ filterSelectedRangePrice_min }} $</b>
+                    <span @click="clear_filter_item('filterSelectedRangePrice_min','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangePrice_max < filterSelectedRangePrice_max_start">
+                  <span>
+                    цена до: <b>{{ filterSelectedRangePrice_max }} $</b>
+                    <span @click="clear_filter_item('filterSelectedRangePrice_max','')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeEthernets_min > filterSelectedRangeEthernets_min_start">
+                  <span>
+                    количество Ethernet от: <b>{{ filterSelectedRangeEthernets_min }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeEthernets_min', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeEthernets_max < filterSelectedRangeEthernets_max_start">
+                  <span>
+                    количество Ethernet до: <b>{{ filterSelectedRangeEthernets_max }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeEthernets_max', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeCOM_min > filterSelectedRangeCOM_min_start">
+                  <span>
+                    количество COM-портов от: <b>{{ filterSelectedRangeCOM_min }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeCOM_min', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeCOM_max < filterSelectedRangeCOM_max_start">
+                  <span>
+                    количество COM-портов до: <b>{{ filterSelectedRangeCOM_max }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeCOM_max', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangerammax_min > filterSelectedRangerammax_min_start">
+                  <span>
+                    max Размер ОЗУ от: <b>{{ filterSelectedRangerammax_min }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangerammax_min', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangerammax_max < filterSelectedRangerammax_max_start">
+                  <span>
+                    max Размер ОЗУ до: <b>{{ filterSelectedRangerammax_max }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangerammax_max', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeUSB_min > filterSelectedRangeUSB_min_start">
+                  <span>
+                    количество USB от: <b>{{ filterSelectedRangeUSB_min }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeUSB_min', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
+                <span class="item" v-if="filterSelectedRangeUSB_max < filterSelectedRangeUSB_max_start">
+                  <span>
+                    количество USB до: <b>{{ filterSelectedRangeUSB_max }}&Prime;</b>
+                    <span @click="clear_filter_item('filterSelectedRangeUSB_max', '')" class="button_clear_filter"></span>
+                  </span>
+                </span>
+              </div>
 
               <div class="section_list_view_mode_button_wrapper" v-cloak>
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>

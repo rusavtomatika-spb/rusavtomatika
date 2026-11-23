@@ -9,53 +9,39 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
 
 if ($arguments["section"]["filters"] != "") {
     $list_of_filter_items = explode(",", $arguments["section"]["filters"]);
-    if (is_array($list_of_filter_items) && count($list_of_filter_items) > 0) {
+    if (is_array($list_of_filter_items) and count($list_of_filter_items) > 0) {
         $condition = "";
         foreach ($list_of_filter_items as $item) {
             if ($item != "") {
                 $condition .= " `filter_code`= '$item' ";
-                if (end($list_of_filter_items)) {
+                if (end($list_of_filter_items))
                     if ($item == end($list_of_filter_items)) {
                         $condition .= ") ";
                     } else {
                         $condition .= " or ";
                     }
-                }
             }
         }
-        if ($condition != "") {
-            $condition = " (" . $condition;
-        }
+        if ($condition != "") $condition = " (" . $condition;
         $arr_filter_items = CoreApplication::get_rows_from_table("`catalog_filters`", "*", $condition, "position");
-
-        $filters_html = '';
-        if (is_array($arr_filter_items)) {
-            foreach ($arr_filter_items as $item) {
-                if ($item['filter_code'] === 'type' && isset($arguments['section']['code']) && $arguments['section']['code'] === 'modules_io') {
-                    continue;
-                }
-                ob_start();
-                include "inc.template_filter_{$item['filter_code']}.php";
-                $single_filter_html = trim(ob_get_clean());
-
-                if ($single_filter_html !== '') {
-                    $filters_html .= '<div class="filter_code_' . htmlspecialchars($item['filter_code']) . '">' . $single_filter_html . '</div>';
-                }
-            }
-        }
-
-        if ($filters_html !== ''):
         ?>
         <div id="float_filter_block"><span class="is-hidden-desktop button_close_mobile_filter">Применить</span>
             <div class="component_catalog_section__filter">
                 <div class="title is-hidden-desktop">Фильтры</div>
                 <div class="filter_panel">
-                    <?= $filters_html ?>
+                    <?
+                    foreach ($arr_filter_items as $item) {
+                        ?>
+                        <div class="filter_code_<?= $item['filter_code'] ?>"><?
+                        include "inc.template_filter_{$item['filter_code']}.php";
+                        ?></div><?
+                    }
+                    ?>
                 </div>
+
             </div>
         </div>
         <?php
-        endif;
     }
 }
 
@@ -93,7 +79,7 @@ if (isset($arguments['section']['code']) && $arguments['section']['code'] == 'mo
             'module'  => 'Модули в/в'
         );
 ?>
-<div id="float_filter_block_modules_io" v-if="filterSelectedBrands.length > 0" v-cloak>
+<div id="float_filter_block_modules_io" style="margin-top: 20px;" v-if="filterSelectedBrands.length > 0" v-cloak>
     <?php foreach ($grouped_io as $brand_name => $types_map):
         $brand_js = htmlspecialchars(json_encode($brand_name), ENT_QUOTES, 'UTF-8');
         $brand_slug = strtolower(preg_replace('/[^a-zA-Z0-9_-]/', '', $brand_name));

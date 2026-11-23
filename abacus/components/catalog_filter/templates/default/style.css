@@ -437,6 +437,7 @@ label.nomanagement {
     color: #4a4a4a;
     padding: 7px 5px;
     margin: 0;
+    border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     background-color: #f0fff7;
 }
@@ -450,12 +451,13 @@ label.nomanagement {
     border-bottom: 1px solid #b2b2b2;
     background: #fff;
 }
+.card-item:last-child { border-bottom: none; }
 .card-item:hover {
     text-decoration: none;
     background: #f5f9ff;
 }
 .card-title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--color-green);
     white-space: nowrap;
