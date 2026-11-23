@@ -337,8 +337,10 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
         <div class="columns is-gapless">
           <div
             class="is-hidden-touch column is-2-desktop column_filter is-narrow"
-            style="min-width: 280px"
-            <?php if ($arrSection['code'] == 'modules_io'): ?>v-if="filterSelectedBrands.length > 0"<?php endif; ?>
+            style="min-width: 280px;"
+            <?php if ($arrSection['code'] == 'modules_io'): ?>
+              v-if="filterSelectedBrands.length > 0"
+            <?php endif; ?>
           >
             <?
             $arguments[ "template" ] = "default";
@@ -450,32 +452,40 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                     <?php endforeach; ?>
                   </div>
                 <?php endif; ?>
-              <?php elseif ($arrSection['filter_brands'] != 'NO_BRANDS' && $arrSection['code'] != 'industrial-computers'): ?>
-                <div class="is-hidden-touch is-size-12" style="margin-left: 30px;line-height: 45px;">Серии:
-                  <?php
-                  $sub0 = $arrSection['subsection_brands'];
-                  $arr_section_sub = preg_match('/,/', $sub0) ? explode(",", $sub0) : array($sub0);
-                  if (count($arr_section_sub) >= 1) {
-                    foreach ($arr_section_sub as $section_sub) {
-                  ?>
-                      <a class="button is-dark is-small" title="Производитель <?= $section_sub ?>" href="<?= $arrSection["category_link"] . '?&brand=' . $section_sub ?>">
-                        <?= $section_sub ?>
-                      </a> :
-                  <?php
-                      foreach ($all_series as $i => $all_serie) {
-                        $pattern = '/(' . $all_serie["type"] . ')/i';
-                        if ($all_serie['menu_category_item_code'] == $arrSection["code"] && $all_serie['brand'] == $section_sub && (preg_match($pattern, $arrSection["product_types"]) == 1)) {
-                          echo '<a class="button is-small mr-1" href="/catalog/' . $all_serie['menu_category_item_code'] . '/?&series=' . $all_serie['name'] . '" title="' . $all_serie['name_russian'] . '">' . $all_serie['name'] . '</a>';
-                        }
-                      }
-                      echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                    }
-                  }
-                  ?>
-                  <div id="inc_srav" class="is-hidden" style="display: inline-block"><a href="/weintek-stavnenie-seriy/"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения всех серий Weintek</span></a></div>
-                  <div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
-                </div>
-              <?php endif; ?>
+                <?php elseif ($arrSection['filter_brands'] != 'NO_BRANDS' && $arrSection['code'] != 'industrial-computers'): ?>
+                  <div class="is-hidden-touch is-size-12 filters-types-block">
+                    <?php
+                    $sub0 = $arrSection['subsection_brands'];
+                    $arr_section_sub = preg_match('/,/', $sub0) ? explode(",", $sub0) : array($sub0);
+                    if (count($arr_section_sub) >= 1):
+                      foreach ($arr_section_sub as $section_sub):
+                        $section_sub = trim($section_sub);
+                        if ($section_sub === '') continue;
+                    ?>
+                        <div class="filter-item-block">
+                          <a class="button is-dark is-small"
+                            title="Производитель <?= htmlspecialchars($section_sub) ?>"
+                            href="<?= $arrSection["category_link"] . '?&brand=' . urlencode($section_sub) ?>">
+                            <?= htmlspecialchars($section_sub) ?>
+                          </a>
+                          &nbsp;:&nbsp;
+                          <?php
+                          foreach ($all_series as $all_serie) {
+                            $pattern = '/(' . $all_serie["type"] . ')/i';
+                            if ($all_serie['menu_category_item_code'] == $arrSection["code"] && $all_serie['brand'] == $section_sub && (preg_match($pattern, $arrSection["product_types"]) == 1)) {
+                              echo '<a class="button is-small mr-1" href="/catalog/' . $all_serie['menu_category_item_code'] . '/?&series=' . urlencode($all_serie['name']) . '" title="' . htmlspecialchars($all_serie['name_russian']) . '">' . htmlspecialchars($all_serie['name']) . '</a>';
+                            }
+                          }
+                          ?>
+                        </div>
+                    <?php
+                      endforeach;
+                    endif;
+                    ?>
+                    <div id="inc_srav" class="is-hidden" style="display: inline-block"><a href="/weintek-stavnenie-seriy/"><span class="section_list__set_availablity__button seo_buttons">Таблица сравнения всех серий Weintek</span></a></div>
+                    <div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
+                  </div>
+                <?php endif; ?>
 
               <div
                 class="panel_chosen_filters"

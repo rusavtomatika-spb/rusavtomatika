@@ -1,16 +1,36 @@
 (function () {
 	if ($("#vue_catalog_pop_menu").length > 0) {
+    function lockBodyScroll() {
+      var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      if (scrollbarWidth > 0) {
+        $('body').css('padding-right', scrollbarWidth + 'px');
+      }
+      $('html').addClass('overflow-body-hidden');
+    }
+
+    function unlockBodyScroll() {
+      $('html').removeClass('overflow-body-hidden');
+      $('body').css('padding-right', '');
+    }
+
     $('.catalog_toolbar .open_pop_catalog').bind('click', function () {
-      $('#vue_catalog_pop_menu').removeAttr('style');
-      $('#vue_catalog_pop_menu').toggleClass('active');
-      $('.popup_background').toggleClass('active');
-      $('html').addClass('overflow-body-hidden')
+      var $menu = $('#vue_catalog_pop_menu');
+      $menu.removeAttr('style');
+      if ($menu.hasClass('active')) {
+        $menu.removeClass('active');
+        $('.popup_background').removeClass('active');
+        setTimeout(unlockBodyScroll, 400);
+      } else {
+        lockBodyScroll();
+        $menu.addClass('active');
+        $('.popup_background').addClass('active');
+      }
     });
+
     $('.popup_background, .button_close_catalog_popmenu').bind('click', function () {
-      $('#vue_catalog_pop_menu').removeAttr('style');
-      $('#vue_catalog_pop_menu').removeClass('active');
+      $('#vue_catalog_pop_menu').removeAttr('style').removeClass('active');
       $('.popup_background').removeClass('active');
-      $('html').removeClass('overflow-body-hidden')
+      setTimeout(unlockBodyScroll, 400);
     });
 
     var app = new Vue({

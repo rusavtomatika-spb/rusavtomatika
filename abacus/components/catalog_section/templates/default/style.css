@@ -137,7 +137,6 @@
 
 .component_catalog_section__panel_of_products_wrapper {
     border-bottom: none;
-    margin-left: 10px;
 }
 
 .component_catalog_section__panel_of_products a {
@@ -511,8 +510,9 @@ button.flying_row {
 
 
 .component_catalog_section .section_list_view_mode {
-    display: block;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .component_catalog_section .section_list_view_mode .elements {
@@ -552,6 +552,7 @@ button.flying_row {
     gap: 5px;
     text-align: right;
     padding-top: 5px;
+    margin-left: 18px;
     box-sizing: border-box;
     max-width: 310px;   
     width: 100%;
@@ -591,7 +592,7 @@ button.flying_row {
     transition: all 0.2s;
 }
 .component_catalog_section .section_list__set_diagonal_span .scroll-btn.left {
-    left: -25px;
+    left: -4px;
 }
 .component_catalog_section .section_list__set_diagonal_span .scroll-btn.right {
     right: -25px;
@@ -774,7 +775,7 @@ button.flying_row {
 }
 
 .component_catalog_section h1{
-    margin: 10px 10px 8px 10px;
+    margin: 10px 10px 8px 0;
 }
 
 
@@ -788,7 +789,7 @@ button.flying_row {
 
 .component_catalog_section .component_catalog_section__filter {
     margin-bottom: 15px;
-    margin-right: -1px;
+    margin-right: 10px;
     min-width: 200px;
 }
 
@@ -805,12 +806,12 @@ button.flying_row {
     align-items: center;
     justify-content: space-between;
     margin: 20px 0;
+    width: 100%;
     gap: 10px;
 }
 
 .section-actions-wrapper {
     display: flex;
-    margin-left: 10px;
     box-sizing: border-box;
     width: 100%;
     flex-direction: column;
@@ -1356,7 +1357,7 @@ tr.flying_row td {
 }
 
 .UPPER_SEO_TEXT, .posttext, .pretext {
-    margin: 0 0 1rem 10px;
+    padding: 0 0 1rem 0;
     text-align: justify;
 }
 
@@ -1367,8 +1368,9 @@ tr.flying_row td {
 	gap: 30px;
 }
 .tile {
-	border: solid #e0e0e0 1px;
-	padding: 15px;
+	border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
     flex-direction: column;
 }
 .tile:hover {
@@ -1413,6 +1415,7 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
     width: 100%;
     gap: 50px;
 }
