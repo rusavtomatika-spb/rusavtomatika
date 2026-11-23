@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<div id="vue_catalog_pop_menu" v-cloak="" style="display: none">
+<div id="vue_catalog_pop_menu" v-cloak="">
     <div class="catalog_pop_menu">
         <?
         CoreApplication::include_component(array(
