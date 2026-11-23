@@ -1644,3 +1644,39 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     background: url('/abacus/templates/rusavtomatika_bulma/images/check_mark_green.png') -1px 6px no-repeat;
     list-style: none;
 }
+
+.component_catalog_section .column_filter {
+    min-width: 290px;
+    max-width: 290px;
+    overflow: hidden;
+}
+
+.filter-slide-right-enter-active,
+.filter-slide-right-leave-active {
+    transition:
+        min-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        max-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.28s ease,
+        clip-path 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow: hidden;
+}
+
+.filter-slide-right-enter,
+.filter-slide-right-leave-to {
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+}
+
+.filter-slide-right-enter-to,
+.filter-slide-right-leave {
+    min-width: 290px !important;
+    max-width: 290px !important;
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+}
+
+.filter-slide-right-leave-active #float_filter_block_modules_io {
+    width: 260px;
+}
