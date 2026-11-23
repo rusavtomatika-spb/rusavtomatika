@@ -1,9 +1,12 @@
 <?php
 CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/script.js" );
 CoreApplication::add_style( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/style.css" );
+require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/TypeDictionary.php';
+
 global $arrSection;
 $sections = CoreApplication::get_rows_from_table( "`catalog_sections`" );
 $arrSection = CoreApplication::get_rows_from_table( "catalog_sections", "", "`is_main_item`='1' and `code`='" . $arguments[ "component_route_params" ][ "section" ] . "'" )[ 0 ];
+$typesDict = TypeDictionary::all($arrSection['code']);
 
 global $TITLE;
 global $H1;
@@ -484,38 +487,95 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                               v-if="filterSelectedRangeUSB_max < filterSelectedRangeUSB_max_start"><span>количество USB до: <b>{{ filterSelectedRangeUSB_max }}&Prime;</b> <span
                                         @click="clear_filter_item('filterSelectedRangeUSB_max', '')"
                                         class="button_clear_filter"> </span></span></span> </div>
-				
-				<? if ($arrSection[ 'filter_brands' ] != 'NO_BRANDS' && $arrSection[ 'code' ] != 'industrial-computers') {?>
-              <div class="is-hidden-touch is-size-12" style="margin-left: 30px;line-height: 45px;">Серии:
-                <?
-                $sub0 = $arrSection[ 'subsection_brands' ];
-			  if (preg_match('/,/',$sub0)) {
-                $arr_section_sub = explode( ",", $sub0 );
-			  } else {
-				  $arr_section_sub[] = $sub0;
-			  }
-                if ( count( $arr_section_sub ) >= 1 ) {
-                  foreach ( $arr_section_sub as $section_sub ) {
-                    ?>
-                <a class="button is-dark is-small" title="Производитель <?= $section_sub ?>" href="<?= $arrSection["category_link"].'?&brand='.$section_sub ?>">
-                <?= $section_sub ?>
-                </a> :
-                <?
-                foreach ( $all_series as $i => $all_serie ) {
-					$pattern = '/('.$all_serie["type"].')/i';
-                  if ( $all_serie[ 'menu_category_item_code' ] == $arrSection[ "code" ] && $all_serie[ 'brand' ] == $section_sub && (preg_match($pattern,$arrSection["product_types"] ) == 1)) {
-                    echo '<a class="button is-small mr-1 is-uppercase" href="/catalog/' . $all_serie[ 'menu_category_item_code' ] . '/?&series=' . $all_serie[ 'name' ] . '" title="' . $all_serie[ 'name_russian' ] . '">' . $all_serie[ 'name' ] . '</a>';
-                  }
+              <?php if ($arrSection['code'] == 'modules_io'): ?>
+                <?php
+                $rawBrands = !empty($arrSection['subsection_brands']) ? $arrSection['subsection_brands'] : $arrSection['filter_brands'];
+                $ioBrands = array_values(array_filter(array_map('trim', explode(',', $rawBrands))));
+
+                $ioProducts = CoreApplication::get_rows_from_table(
+                    'products_all',
+                    'DISTINCT brand, type',
+                    "`section` = 'modules_io' AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'",
+                    "`brand` ASC, `type` ASC"
+                );
+
+                $brandTypesMap = array();
+                if (is_array($ioProducts)) {
+                    foreach ($ioProducts as $row) {
+                        $b = trim($row['brand']);
+                        $t = trim($row['type']);
+                        if ($b !== '' && $t !== '') {
+                            if (!isset($brandTypesMap[$b])) {
+                                $brandTypesMap[$b] = array();
+                            }
+                            if (!in_array($t, $brandTypesMap[$b])) {
+                                $brandTypesMap[$b][] = $t;
+                            }
+                            if (!in_array($b, $ioBrands)) {
+                                $ioBrands[] = $b;
+                            }
+                        }
+                    }
                 }
-                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                }
-                } ?>
-				<div id="inc_srav" class="is-hidden" style="display: inline-block"><a href="/weintek-stavnenie-seriy/"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения всех серий Weintek</span></a></div>
-				<div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
-              <? echo '</div>';
-}
                 ?>
-				
+                <?php if (!empty($brandTypesMap)): ?>
+                  <div class="is-hidden-touch is-size-12" style="margin-left: 30px; line-height: 45px;">
+                    Типы:
+                    <?php foreach ($ioBrands as $brandName):
+                      if (empty($brandTypesMap[$brandName])) continue;
+                      $brandEscJs = htmlspecialchars(json_encode($brandName), ENT_QUOTES, 'UTF-8');
+                      $brandUrl = urlencode($brandName);
+                    ?>
+                      <a class="button is-small"
+                        title="Производитель <?= htmlspecialchars($brandName) ?>"
+                        v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === '' ? 'is-success' : 'is-dark'"
+                        href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>"
+                        @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, '')">
+                        <?= htmlspecialchars($brandName) ?>
+                      </a> :
+                      <?php foreach ($brandTypesMap[$brandName] as $typeCode):
+                        $typeLabel = str_replace('ввода-вывода', 'в/в', TypeDictionary::get($typeCode, 'modules_io'));
+                        $typeEscJs = htmlspecialchars(json_encode($typeCode), ENT_QUOTES, 'UTF-8');
+                        $typeUrl = urlencode($typeCode);
+                      ?>
+                        <a class="button is-small mr-1"
+                          v-bind:class="filterSelectedBrands.includes(<?= $brandEscJs ?>) && filterSelectedTypes === <?= $typeEscJs ?> ? 'is-success' : ''"
+                          href="<?= $arrSection['category_link'] ?>?&brand=<?= $brandUrl ?>&types=<?= $typeUrl ?>"
+                          @click.prevent="toggleBrandAndType(<?= $brandEscJs ?>, <?= $typeEscJs ?>)">
+                          <?= htmlspecialchars($typeLabel) ?>
+                        </a>
+                      <?php endforeach; ?>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php endforeach; ?>
+                  </div>
+                <?php endif; ?>
+              <?php elseif ($arrSection['filter_brands'] != 'NO_BRANDS' && $arrSection['code'] != 'industrial-computers'): ?>
+                <div class="is-hidden-touch is-size-12" style="margin-left: 30px;line-height: 45px;">Серии:
+                  <?php
+                  $sub0 = $arrSection['subsection_brands'];
+                  $arr_section_sub = preg_match('/,/', $sub0) ? explode(",", $sub0) : array($sub0);
+                  if (count($arr_section_sub) >= 1) {
+                    foreach ($arr_section_sub as $section_sub) {
+                  ?>
+                      <a class="button is-dark is-small" title="Производитель <?= $section_sub ?>" href="<?= $arrSection["category_link"] . '?&brand=' . $section_sub ?>">
+                        <?= $section_sub ?>
+                      </a> :
+                  <?php
+                      foreach ($all_series as $i => $all_serie) {
+                        $pattern = '/(' . $all_serie["type"] . ')/i';
+                        if ($all_serie['menu_category_item_code'] == $arrSection["code"] && $all_serie['brand'] == $section_sub && (preg_match($pattern, $arrSection["product_types"]) == 1)) {
+                          echo '<a class="button is-small mr-1" href="/catalog/' . $all_serie['menu_category_item_code'] . '/?&series=' . $all_serie['name'] . '" title="' . $all_serie['name_russian'] . '">' . $all_serie['name'] . '</a>';
+                        }
+                      }
+                      echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                    }
+                  }
+                  ?>
+                  <div id="inc_srav" class="is-hidden" style="display: inline-block"><a href="/weintek-stavnenie-seriy/"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения всех серий Weintek</span></a></div>
+                  <div id="inc_srav_spik" class="is-hidden" style="display: inline-block"><a href="/srav_spiktek_weintek.php"><span class="section_list__set_availablity__button seo_buttons" style="top: -8px; position: relative;">Таблица сравнения Weintek iP и СПИКТЕК СТК</span></a></div>
+                </div>
+              <?php endif; ?>
+
               <div class="section_list_view_mode_button_wrapper" v-cloak>
                 <div class="is-hidden-desktop button is-success  is-small button_open_filter"> <span class="button_open_filter__icon"></span> <span class="button_open_filter___text">Фильтры</span> </div>
                 <div class="is-hidden-touch is-hidden-desktop-only111 section_list__set_diagonal_span" v-if="section_list__set_diagonal_span_show && <?= $showDiagonalSpan ? 'true' : 'false' ?> && !<?= $isScreenlessFilterActive ? 'true' : 'false' ?>">

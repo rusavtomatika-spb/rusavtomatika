@@ -495,6 +495,10 @@
             this.filterSelectedAi = false;
             this.filterChanged();
             break;
+          case 'filterSelectedTypes':
+            this.filterSelectedTypes = '';
+            this.filterChanged();
+            break;
           default:
           case 'all':
               this.filterSelectedBrands = [];
@@ -698,6 +702,20 @@
         let filter_field_block_filter_Types = document.querySelector('.filter_field_block.filter_types');
         if (filter_field_block_filter_Types != null && !filter_field_block_filter_Types.classList.contains('unfolded')) {
           this.sort_Types();
+        }
+        this.filterChanged();
+      },
+
+      toggleBrandAndType(brand, type) {
+        const isSameBrand = this.filterSelectedBrands.length === 1 && this.filterSelectedBrands[0] === brand;
+        const isSameType = this.filterSelectedTypes === type;
+
+        if (isSameBrand && isSameType) {
+          this.filterSelectedBrands = [];
+          this.filterSelectedTypes = '';
+        } else {
+          this.filterSelectedBrands = [brand];
+          this.filterSelectedTypes = type;
         }
         this.filterChanged();
       },
