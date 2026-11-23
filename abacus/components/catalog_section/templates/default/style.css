@@ -11,7 +11,7 @@
 }
 
 .component_catalog_section .panel_chosen_filters{
-    margin: 20px 30px;
+    margin: 10px;
     text-align: left;
     user-select: none;
 
@@ -132,12 +132,8 @@
 }
 
 .component_catalog_section__panel_of_products_wrapper {
-    /*border: 1px solid #e0e0e0;*/
     border-bottom: none;
-
-    /*
-    padding: 0px 0px 10px 0px;
-    */
+    margin-left: 10px;
 }
 
 .component_catalog_section__panel_of_products a {
@@ -774,7 +770,7 @@ button.flying_row {
 }
 
 .component_catalog_section h1{
-    margin: 10px 10px 8px 30px;
+    margin: 10px 10px 8px 10px;
 }
 
 
@@ -802,9 +798,9 @@ button.flying_row {
 
 .section_list_view_mode_button_wrapper {
     height: 65px;
-    padding-left: 30px;
+    padding: 0 0 10px 10px;
     display: flex;
-    gap: 30px;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;

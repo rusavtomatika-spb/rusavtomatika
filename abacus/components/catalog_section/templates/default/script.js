@@ -1438,6 +1438,13 @@
               case 'ai':
                 h1_chunk = ',с ИИ-ускорителем';
                 break;
+              case "types":
+                const typeNames = {
+                  'coupler': 'Каплер',
+                  'module': 'Модуль в/в'
+                };
+                h1_chunk = ",тип: " + (typeNames[item_splitted[1]] || item_splitted[1]);
+                break;
               default:
                 h1_chunk = "," + item_splitted[1];
                 break;

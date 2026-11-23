@@ -222,12 +222,6 @@
     background-position: center -50px;
 }
 
-/*
-.component_catalog_section__filter .filter_panel label input[type="checkbox"]:checked{
-    z-index: 1;
-}
-*/
-
 
 .component_catalog_section__filter .filter_panel label:hover {
     color: #1A712C;
@@ -236,14 +230,13 @@
 .filter_field_block__title {
     font-weight: bold;
     text-align: left;
-    margin-left: 5px;
     position: relative;
     border-bottom: 1px solid #ccc;
-    padding: 5px 10px 4px;
-    margin: 0px -5px 5px;
-
+    padding: 7px 5px;
     background-color: var(--color-light-green);
-
+    margin-bottom: 0;
+    width: 100%;
+    font-size: 1rem;
 }
 
 .filter_series .filter_field_block__content, .filter_sections .filter_field_block__content{
@@ -278,14 +271,12 @@
 
 
 .filter_field_block {
-    padding: 0px 5px 10px;
     border-bottom: 1px solid #cccccc;
     box-sizing: border-box;
     height: auto;
     transition: height 0.9s;
     overflow: hidden;
     position: relative;
-
 }
 .filter_field_block.unfolded {
     padding: 0px 5px 30px;
@@ -309,7 +300,6 @@
 .filter_field_block.filter_series a,.filter_field_block.filter_types a,.filter_field_block.filter_sections a{
     padding: 7px 3px 6px 7px;
     border-bottom: 1px solid #cccccc;
-    margin: 0 -5px;
     color: #000;
     line-height: 1.2;
     display: block;
@@ -440,6 +430,15 @@ label.nomanagement {
 
 .float_filter_block_licos {
     margin-top: 20px;
+}
+.filter__type-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #4a4a4a;
+    padding: 7px 5px;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #f0fff7;
 }
 .card-item {
     display: block;

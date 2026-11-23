@@ -1,9 +1,6 @@
 <?php
 $arr_types = CoreApplication::get_rows_from_table( "`catalog_types`", "", "`active` = '1' and `show_filter_in_section` = '{$arguments['section']['code']}'", "position" );
-/*foreach ($arr_types as $types) {
-    echo($types ["short_name"]);
-    echo "<br><br>";
-}*/
+
 if ( is_array( $arr_types )and count( $arr_types ) > 0 ) {
   ?>
 <div class="filter_field_block filter_types"  v-cloak>
