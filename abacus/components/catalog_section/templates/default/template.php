@@ -315,14 +315,18 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
     <div class="component_catalog_section">
       <div class="component_wrapper">
         <div class="columns is-gapless">
-          <div class="is-hidden-touch column is-2-desktop column_filter is-narrow" style="min-width: 250px">
+          <div
+            class="is-hidden-touch column is-2-desktop column_filter is-narrow"
+            style="min-width: 280px"
+            <?php if ($arrSection['code'] == 'modules_io'): ?>v-if="filterSelectedBrands.length > 0"<?php endif; ?>
+          >
             <?
             $arguments[ "template" ] = "default";
             $arguments[ "component" ] = "catalog_filter";
             $arguments[ "section" ] = $arrSection;
             CoreApplication::include_component( $arguments );
             ?>
-         </div>
+          </div>
           <div class="column column_content">
             <?
             if ( $arrSection[ "code" ] == "vpn_routers" ) {
