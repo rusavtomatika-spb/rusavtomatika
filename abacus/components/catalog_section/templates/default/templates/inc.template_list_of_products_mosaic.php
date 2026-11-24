@@ -60,22 +60,26 @@ $userCountry = getCountryFromDaData($userIp, $apiKey);
             ) {
                 switch ($product['currency']) {
                     case 'USD':
+                        $price_html .= '<div class="price_row">';
                         if ($product['action_price'] > 0) {
                             $price_html .= '<span class="act_price">' . $product['action_price'] . ' $</span>';
                         }
                         $price_html .= '<span class="usd_price">' . $product['retail_price'] . ' $</span>';
+                        $price_html .= '</div>';
                         if ($usd_currency) {
                             $price_html .= '<span class="rub_price">' . intval($product['retail_price'] * $usd_currency) . ' &#8381;</span>';
                         }
                         break;
 
                     case 'RUR':
+                        $price_html .= '<div class="price_row">';
                         if ($product['action_price'] > 0) {
                             $price_html .= '<span class="act_price green">' . $product['action_price'] . ' &#8381;</span>';
                         }
                         if ($usd_currency) {
-                            $price_html .= '<span class="usd_price">' . intval($product['retail_price'] / $usd_currency) . ' $</span>';
+                            $price_html .= '<span class="usd_price green">' . intval($product['retail_price'] / $usd_currency) . ' $</span>';
                         }
+                        $price_html .= '</div>';
                         $price_html .= '<span class="rub_price green">' . $product['retail_price'] . ' &#8381;</span>';
                         break;
                 }

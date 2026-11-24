@@ -242,36 +242,9 @@
     display: flex;
 	flex-direction: row;
     justify-content: space-between;
+    gap: 10px;
 }
 
-.component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button, .flying_row button, button.flying_row {
-    width: 105px;
-    margin: 5px 0;
-    height: auto;
-    background: none;
-    border-radius: 4px;
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    box-sizing: border-box;
-
-    background-color: var(--color-green);
-    border: 1px solid var(--color-green);
-
-/*    background: url("/abacus/templates/rusavtomatika_bulma/images/order_button.png") 5px 4px no-repeat var(--color-dark-green);*/
-    background-size: initial;
-    display: inline-block;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-/*
-.component_catalog_section__panel_of_products tr .td_buttons .buttons_panel button:hover, button.flying_row  {
-    background-color: #34ab5e;
-    border-color:  #34ab5e;
-    color: #ffffff;
-}
-*/
 button.flying_row {
     background-color: #34ab5e;
     border-color: #34ab5e;
@@ -351,13 +324,6 @@ button.flying_row {
     width: 8%;
     line-height: 1;
     text-align: right;
-}
-
-.component_catalog_section__panel_of_products .view-mode-table table td.td_price .rub_price {
-    font-size: 14px;
-    font-weight: normal;
-    color: #249b4e;
-    margin-top: 5px;
 }
 
 .component_catalog_section__panel_of_products .view-mode-table table td.td_onstock {
@@ -788,6 +754,7 @@ button.flying_row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 10px 0;
     width: 100%;
 }
 .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons {
@@ -799,44 +766,7 @@ button.flying_row {
 
 .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .buttons_add {
     display: flex;
-    gap: 30px;
-}
-
-.component_catalog_section__panel_of_products .view-mode-tiles .buttons_add {
-    display: flex;
     gap: 10px;
-}
-
-.component_catalog_section__panel_of_products .view-mode-tile .buttons_add {
-    display: flex;
-    gap: 10px;
-}
-
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .favorites {
-    line-height: 20px;
-    cursor: pointer;
-    color: #777;
-    white-space: nowrap;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .favorites.active {
-    background-position: left -1px;
-    color: var(--color-green);
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .compare {
-    background: url("/abacus/templates/rusavtomatika_bulma/images/add_button_compare.png") left -100px no-repeat;
-    padding-left: 20px;
-    line-height: 20px;
-    cursor: pointer;
-    color: #777;
-    white-space: nowrap;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .compare.active {
-    background-position: left 0px;
-    color: var(--color-green);
 }
 
 .series_products__button {
@@ -854,6 +784,9 @@ button.flying_row {
     border: 1px solid #eee;
     text-align: center;
     line-height: 150%;
+    margin: 0;
+    white-space: nowrap;
+    width: 100%;
 }
 .series_products__button:hover {
     color: #00AD61;
@@ -892,11 +825,11 @@ button.flying_row {
     color: var(--color-red);
 }
 
-.component_catalog_section__panel_of_products .view-mode-list .price_block_wrapper {
+.price_block_wrapper {
     display: flex;
     align-items: center;
     justify-content: right;
-    height: 73px;
+    margin: 10px 0;
 }
 
 .component_catalog_section__panel_of_products .view-mode-tiles .price_block_wrapper {
@@ -905,29 +838,6 @@ button.flying_row {
     justify-content: left;
 }
 
-.component_catalog_section__panel_of_products .view-mode-tile .price_block_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .price_block .act_price {
-    text-align: center;
-	font-size: 14px !important;
-	text-decoration: line-through;
-    font-weight: normal;
-    line-height: 0.9;
-    color: red;
-	margin: 0 !important;
-}
-.component_catalog_section__panel_of_products .view-mode-list .price_block {
-    font-size: 21px;
-    font-weight: bold;
-    line-height: 1.5;
-    text-align: center;
-    color: var(--color-green);
-    text-align: right;
-}
 .component_catalog_section__panel_of_products .view-mode-tiles .price_block {
 	display: flex;
     font-size: 21px;
@@ -951,59 +861,6 @@ button.flying_row {
 	margin: 10px 0;
 }
 
-.component_catalog_section__panel_of_products .view-mode-tile .price_block {
-	display: flex;
-    align-items: center;
-    font-size: 21px;
-    font-weight: bold;
-    line-height: 1.5;
-    text-align: left;
-    color: var(--color-green);
-    width: 100%;
-	gap: 15px;
-    margin: 10px 0;
-}
-
-.component_catalog_section__panel_of_products .view-mode-tile .price_block .act_price {
-    font-size: 16px;
-	text-decoration: line-through;
-    font-weight: normal;
-    line-height: 1.9;
-    text-align: left;
-    color: red;
-	margin: 0;
-}
-
-.component_catalog_section__panel_of_products .view-mode-tile .price_block .indicator_availability {
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.5;
-    text-align: right;
-    color: #333;
-	width: 100%;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .price_block .rub_price {
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.5;
-    text-align: center;
-    display: block;
-    color: #333;
-    text-align: right;
-}
-
-.component_catalog_section__panel_of_products .view-mode-tiles .price_block .rub_price {
-    font-size: 21px;
-    font-weight: normal;
-    line-height: 1.5;
-    text-align: left;
-    display: inline-block;
-    color: #333;
-	white-space: nowrap;
-}
-
-
 .component_catalog_section__panel_of_products .view-mode-list .model, .component_catalog_section__panel_of_products .view-mode-tiles .model {
     font-size: 21px;
     font-weight: bold;
@@ -1013,17 +870,6 @@ button.flying_row {
     display: block;
 }
 
-.component_catalog_section__panel_of_products .view-mode-tile .price_block .rub_price {
-    font-size: 21px;
-    font-weight: normal;
-    line-height: 1.5;
-    text-align: left;
-    display: inline-block;
-    color: #333;
-	white-space: nowrap;
-}
-
-
 .component_catalog_section__panel_of_products .view-mode-list .model, .component_catalog_section__panel_of_products .view-mode-tile .model {
     font-size: 21px;
     font-weight: bold;
@@ -1032,7 +878,6 @@ button.flying_row {
     margin: 10px 0;
     display: block;
 }
-
 
 .catalog_viewed .component_catalog_section__panel_of_products .view-mode-list .model {
     font-size: 16px;
@@ -1094,13 +939,6 @@ tr.flying_row td {
     width: 12%;
     line-height: 1;
     text-align: right;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list table td.td_price .rub_price {
-    font-size: 14px;
-    font-weight: normal;
-    color: #249b4e;
-    margin-top: 5px;
 }
 
 .component_catalog_section__panel_of_products .view-mode-list table td.td_onstock {
@@ -1185,11 +1023,11 @@ tr.flying_row td {
     text-align: justify;
 }
 
-.series_products_tiles {
+.series_products_tiles, .brand-model-wrapper {
     display: flex;
 	flex-direction: row;
     flex-wrap: wrap;
-	gap: 30px;
+	gap: 20px;
 }
 .tile {
 	border: 1px solid #e0e0e0;
@@ -1249,6 +1087,33 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     align-items: center;
     width: max-content;
 }
+
+.price_block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.series_products__panel_buttons .price_block {
+    align-items: flex-start;
+}
+.price_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.act_price {
+    color: red;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    line-height: 150%;
+}
+.usd_price, .rub_price {
+    color: var(--color-green);
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 150%;
+}
+.act_price, .usd_price, .rub_price { white-space: nowrap; }
 @media (max-width: 1023px){
     .component_catalog_section__panel_of_products .view-mode-list .preview_image {
         padding: 0px;
@@ -1391,10 +1256,6 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         justify-content: center;
         align-items: center;
     }
-    .component_catalog_section__panel_of_products .view-mode-list .price_block .rub_price {
-        font-size: 24px;
-        text-align: center;
-    }
     .component_catalog_section__panel_of_products .view-mode-list .price_block .act_price {
         margin-left: 5px !important;
         font-size: 20px !important;
@@ -1402,18 +1263,11 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     .component_catalog_section__panel_of_products .view-mode-list .price_block .usd_price br { display: none; }
     .component_catalog_section__panel_of_products .view-mode-list table td.td_buttons {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
+        justify-content: space-between;
         flex-wrap: wrap;
         width: 100%;
-        gap: 20px;
-    }
-
-    .component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button  {
-        width: 170px;
-        font-size: 1rem;
-        padding: 10px 5px 10px 5px;
-        background-image: none;
+        gap: 10px;
     }
 
     .component_catalog_section__panel_of_products .td_buttons {
@@ -1449,6 +1303,10 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         display: flex;
         flex-direction: column;
     }
+}
+
+.preview__text-wrapper {
+    margin-top: 10px;
 }
 
 .preview_text ul {

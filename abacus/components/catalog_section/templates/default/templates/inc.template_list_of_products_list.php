@@ -61,19 +61,26 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
             ) {
                 switch ($product['currency']) {
                     case 'USD':
+                        $price_html .= '<div class="price_row">';
                         if ($product['action_price'] > 0) {
                             $price_html .= '<span class="act_price">' . $product['action_price'] . ' $</span>';
                         }
                         $price_html .= '<span class="usd_price">' . $product['retail_price'] . ' $</span>';
+                        $price_html .= '</div>';
                         if ($usd_currency && intval($product['show_rub_po_kursu_usd']) !== 1) {
                             $price_html .= '<span class="rub_price">' . intval($product['retail_price'] * $usd_currency) . ' &#8381;</span>';
                         }
                         break;
 
                     case 'RUR':
+                        $price_html .= '<div class="price_row">';
                         if ($product['action_price'] > 0) {
                             $price_html .= '<span class="act_price green">' . $product['action_price'] . ' &#8381;</span>';
                         }
+                        if ($usd_currency) {
+                            $price_html .= '<span class="usd_price green">' . intval($product['retail_price'] / $usd_currency) . ' $</span>';
+                        }
+                        $price_html .= '</div>';
                         $price_html .= '<span class="rub_price green">' . intval($product['retail_price']) . ' &#8381;</span>';
                         break;
                 }
@@ -110,28 +117,40 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
 
                     <div class="preview_text_block">
                         <?php if (count($prod_series) > 0): ?>
-                            <div>
-                                <span>Серия: </span>
-                                <?php
-                                $prev_ser = '';
-                                foreach ($prod_series as $serie) {
-                                    foreach ($all_series as $all_serie) {
-                                        $pattern = '/[^_,\w]*' . $product['type'] . '[^_,\w]*/im';
-                                        if (
-                                            $all_serie['name'] !== 'INDUSTRIAL'
-                                            && $all_serie['name'] !== $prev_ser
-                                            && $all_serie['name'] === $serie
-                                            && preg_match($pattern, $all_serie['type'])
-                                        ) {
-                                            echo '<a class="tag mr-1" href="/catalog/'
-                                                . $all_serie['menu_category_item_code']
-                                                . '/?&series=' . $all_serie['name'] . '">'
-                                                . $all_serie['name'] . '</a>';
+                            <div class="brand-model-wrapper">
+                                <div>
+                                    <span>Серия: </span>
+                                    <?php
+                                    $prev_ser = '';
+                                    foreach ($prod_series as $serie) {
+                                        foreach ($all_series as $all_serie) {
+                                            $pattern = '/[^_,\w]*' . $product['type'] . '[^_,\w]*/im';
+                                            if (
+                                                $all_serie['name'] !== 'INDUSTRIAL'
+                                                && $all_serie['name'] !== $prev_ser
+                                                && $all_serie['name'] === $serie
+                                                && preg_match($pattern, $all_serie['type'])
+                                            ) {
+                                                echo '<a class="tag mr-1" href="/catalog/'
+                                                    . $all_serie['menu_category_item_code']
+                                                    . '/?&series=' . $all_serie['name'] . '">'
+                                                    . $all_serie['name'] . '</a>';
+                                            }
+                                            $prev_ser = $all_serie['name'];
                                         }
-                                        $prev_ser = $all_serie['name'];
                                     }
-                                }
-                                ?>
+                                    ?>
+                                </div>
+                                <div>
+                                    <span>
+                                        Бренд: 
+                                    </span>
+                                    <?php if (in_array($brand, ['Weintek', 'IFC', 'Aplex', 'Spiktek', 'Samkoon', 'eWON', 'Faraday', 'LicOS'])): ?>
+                                        <a class="tag" href="/<?= strtolower($brand) ?>/"><?= $brand ?></a>
+                                    <?php else: ?>
+                                        <span class="tag"><?= $brand ?></span>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         <?php endif; ?>
 
@@ -140,23 +159,22 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                     </div>
 
                     <div class="series_products__panel_buttons">
-                        <?php if (in_array($brand, ['Weintek', 'IFC', 'Aplex', 'Spiktek', 'Samkoon', 'eWON', 'Faraday'])): ?>
-                            <a class="brand" href="/<?= strtolower($brand) ?>/"><?= $brand ?></a>
-                        <?php else: ?>
-                            <span class="brand"><?= $brand ?></span>
-                        <?php endif; ?>
-
                         <span class="buttons_add">
                             <span title="Добавить в сравнение"
                                   class="series_products__button compare"
                                   @click="add_too_box"
                                   data-model="<?= $product['model'] ?>"
-                                  data-box="compare">В сравнение</span>
+                                  data-box="compare">
+                                  <i class="fa-solid fa-align-right fa-rotate-90"></i>
+                                  В сравнение
+                            </span>
                             <span title="Добавить в избранное"
                                   class="series_products__button favorites"
                                   @click="add_too_box"
                                   data-model="<?= $product['model'] ?>"
-                                  data-box="favorites"><i class="fa-regular fa-heart"></i> В избранное</span>
+                                  data-box="favorites"><i class="fa-regular fa-heart"></i>
+                                  В избранное
+                            </span>
                         </span>
                     </div>
                 </td>
@@ -176,7 +194,7 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
 
                     <div class="buttons_panel">
                         <button title="Добавить в заказ"
-                                class="series_products__button cart"
+                                class="series_products__button cart active"
                                 @click="add_too_box"
                                 data-model="<?= $product['model'] ?>"
                                 data-box="cart">
