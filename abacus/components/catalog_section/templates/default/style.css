@@ -283,21 +283,6 @@ button.flying_row {
 }
 
 
-.component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button.active,
-.component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button:hover {
-    background-color: var(--color-green);
-    border: 1px solid var(--color-green);
-}
-
-.component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button:hover {
-    border: 1px solid var(--color-green);
-    color: #fff;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list tr .td_buttons .buttons_panel button.active:hover {
-    opacity: 0.5;
-}
-
 .component_catalog_section__panel_of_products .view-mode-table table td {
     padding: 0px 5px;
     border: none;
@@ -754,19 +739,14 @@ button.flying_row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 5px 0;
     width: 100%;
 }
 .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons {
     display: flex;
-    gap: 30px;
+    gap: 10px;
     justify-content: left;
     padding: 0;
-}
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .buttons_add {
-    display: flex;
-    gap: 10px;
 }
 
 .series_products__button {
@@ -775,36 +755,30 @@ button.flying_row {
     align-items: center;
     justify-content: center;
 	border-radius: 5px;
-	background: #eee;
-    color: var(--color-dark-gray);
 	font-size: 14px;
 	padding: 5px;
     transition: .3s;
     gap: 10px;
-    border: 1px solid #eee;
     text-align: center;
     line-height: 150%;
     margin: 0;
     white-space: nowrap;
     width: 100%;
-}
-.series_products__button:hover {
-    color: #00AD61;
-	background: #fff;
-    border: 1px solid #00AD61;
-}
-.series_products__button.active {
+    height: 32.6px;
     background: #00AD61;
 	color: #fff;
-	border: none;
+	border: 1px solid #00AD61;
 }
-
-.component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .brand {
-    min-width: 200px;
-    background: url("/abacus/templates/rusavtomatika_bulma/images/cogwheel.png") left 3px no-repeat;
-    padding-left: 17px;
-    line-height: 20px;
-
+.series_products__button.active {
+    color: #00AD61;
+	background: #fff !important;
+    border: 1px solid #00AD61;
+}
+.series_products__button:hover,
+.series_products__button.active:hover {
+    border: 1px solid #e1e1e1 !important;
+	background: #e1e1e1 !important;
+    color: var(--color-dark-gray);
 }
 
 .indicator_availability span {
@@ -829,7 +803,7 @@ button.flying_row {
     display: flex;
     align-items: center;
     justify-content: right;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .component_catalog_section__panel_of_products .view-mode-tiles .price_block_wrapper {
@@ -1227,11 +1201,9 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
         width: 100%;
-        gap: 20px;
         padding: 0;
-        margin-top: 10px;
+        margin: 0;
 	}
     .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .brand { min-width: 0; }
     .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .buttons_add {

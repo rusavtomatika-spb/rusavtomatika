@@ -631,15 +631,15 @@
               }
               if (this.cart.indexOf(model) == -1) {
                 $(button).addClass('active');
-                $(button).html('<i class=\"fa-solid fa-check\" style=\"font-size:1.1rem;\"></i>&nbsp;&nbsp;<span>В ЗАКАЗЕ</span>');
+                $(button).html('<i class=\"fa-solid fa-check\"></i> В заказе');
                 this.cart.push(model);
                 const source_element = $('.tr_product_' + model);
                 const destination_element = $(".catalog_toolbar__item." + box);
                 this.do_flying_row(source_element, destination_element);
               } else {
-                this.cart.splice(this.cart.indexOf(model), 1);
                 $(button).removeClass('active');
-                $(button).html('<i class=\"fa-solid fa-cart-plus\" style=\"font-size:1.1rem;\"></i>&nbsp;&nbsp;<span>В ЗАКАЗ</span>');
+                this.cart.splice(this.cart.indexOf(model), 1);
+                $(button).html('<i class=\"fa-solid fa-cart-plus\"></i> В заказ');
               }
               localStorage.setItem('cart', Date.now());
               break;

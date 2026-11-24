@@ -85,7 +85,7 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                         break;
                 }
             } else {
-                $price_html .= '<button class="series_products__button" data-rel-model="' . $product['model'] . '" @click="open_form_require_price">Запросить цену</button>';
+                $price_html .= '<button class="series_products__button active" data-rel-model="' . $product['model'] . '" @click="open_form_require_price"><i class="fa-solid fa-comment-dollar"></i> Запрос цены</button>';
                 if (isset($_COOKIE['dev_mode']) && $_COOKIE['dev_mode'] > 0) {
                     $price_html .= '<span class="show_in_dev_mode">' . $product['retail_price'] . '</span>';
                 }
@@ -155,26 +155,6 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                         <span class="preview_text"><?= $product['preview_text'] ?></span>
                         <span class="preview_text_extra"><?= $product['preview_text_extra'] ?></span>
                     </div>
-
-                    <div class="series_products__panel_buttons">
-                        <span class="buttons_add">
-                            <span title="Добавить в сравнение"
-                                  class="series_products__button compare"
-                                  @click="add_too_box"
-                                  data-model="<?= $product['model'] ?>"
-                                  data-box="compare">
-                                  <i class="fa-solid fa-align-right fa-rotate-90"></i>
-                                  В сравнение
-                            </span>
-                            <span title="Добавить в избранное"
-                                  class="series_products__button favorites"
-                                  @click="add_too_box"
-                                  data-model="<?= $product['model'] ?>"
-                                  data-box="favorites"><i class="fa-regular fa-heart"></i>
-                                  В избранное
-                            </span>
-                        </span>
-                    </div>
                 </td>
 
                 <td class="td_buttons">
@@ -196,15 +176,29 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                         <div class="price_block"><?= $price_html ?></div>
                     </div>
 
-                    <div class="buttons_panel">
-                        <button title="Добавить в заказ"
-                                class="series_products__button cart active"
+                    <div class="series_products__panel_buttons">
+                        <button title="Добавить в сравнение"
+                                class="series_products__button compare"
                                 @click="add_too_box"
                                 data-model="<?= $product['model'] ?>"
-                                data-box="cart">
-                            <i class="fa-solid fa-cart-plus"></i> В ЗАКАЗ
+                                data-box="compare">
+                                <i class="fa-solid fa-align-right fa-rotate-90"></i>
+                        </button>
+                        <button title="Добавить в избранное"
+                                class="series_products__button favorites"
+                                @click="add_too_box"
+                                data-model="<?= $product['model'] ?>"
+                                data-box="favorites"><i class="fa-regular fa-heart"></i>
                         </button>
                     </div>
+
+                    <button title="Добавить в заказ"
+                            class="series_products__button cart"
+                            @click="add_too_box"
+                            data-model="<?= $product['model'] ?>"
+                            data-box="cart">
+                        <i class="fa-solid fa-cart-plus"></i> В заказ
+                    </button>
                 </td>
             </tr>
         <?php endforeach; ?>

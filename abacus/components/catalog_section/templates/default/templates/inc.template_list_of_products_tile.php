@@ -101,7 +101,7 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                             break;
                     }
                 } else {
-                    $price_html .= '<span class="no_price series_products__button" data-rel-model="' . $product['model'] . '" @click="open_form_require_price"><i class="fa-solid fa-comment-dollar"></i>&nbsp;Запросить цену</span>';
+                    $price_html .= '<button class="series_products__button active" data-rel-model="' . $product['model'] . '" @click="open_form_require_price"><i class="fa-solid fa-comment-dollar"></i> Запрос цены</button>';
                     if (isset($_COOKIE['dev_mode']) && $_COOKIE['dev_mode'] > 0) {
                         $price_html .= '<span class="show_in_dev_mode">' . $product['retail_price'] . '</span>';
                     }
@@ -200,22 +200,22 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                         <div class="buttons_panel">
                           <button title="Добавить в сравнение"
                                   class="series_products__button compare fa-solid fa-align-right fa-rotate-90"
-                                  style="min-width: 35px; max-width: 35px; height: 35px;"
+                                  style="min-width: 32.6px; max-width: 32.6px; height: 32.6px;"
                                   @click="add_too_box"
                                   data-model="<?= $product['model'] ?>"
                                   data-box="compare"></button>
                           <button title="Добавить в избранное"
                                   class="series_products__button favorites fa-regular fa-heart"
-                                  style="min-width: 35px; max-width: 35px; height: 35px;"
+                                  style="min-width: 32.6px; max-width: 32.6px; height: 32.6px;"
                                   @click="add_too_box"
                                   data-model="<?= $product['model'] ?>"
                                   data-box="favorites"></button>
                             <button title="Добавить в заказ"
-                                    class="series_products__button cart active"
+                                    class="series_products__button cart"
                                     @click="add_too_box"
                                     data-model="<?= $product['model'] ?>"
                                     data-box="cart">
-                                <i class="fa-solid fa-cart-plus"></i> В ЗАКАЗ
+                                <i class="fa-solid fa-cart-plus"></i> В заказ
                             </button>
                         </div>
                     </div>
