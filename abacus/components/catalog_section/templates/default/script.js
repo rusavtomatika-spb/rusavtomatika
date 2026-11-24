@@ -1383,7 +1383,11 @@
                 h1_chunk = ",серия: " + item_splitted[1] + "";
                 break;
               case "types":
-                h1_chunk = ",тип: " + item_splitted[1] + "";
+                const typeNames = {
+                  'coupler': 'Каплер',
+                  'module': 'Модуль в/в'
+                };
+                h1_chunk = ",тип: " + (typeNames[item_splitted[1]] || item_splitted[1]);
                 break;
               case "sort":
                 h1_chunk = "";
@@ -1438,13 +1442,6 @@
               case 'ai':
                 h1_chunk = ',с ИИ-ускорителем';
                 break;
-              case "types":
-                const typeNames = {
-                  'coupler': 'Каплер',
-                  'module': 'Модуль в/в'
-                };
-                h1_chunk = ",тип: " + (typeNames[item_splitted[1]] || item_splitted[1]);
-                break;
               default:
                 h1_chunk = "," + item_splitted[1];
                 break;
@@ -1458,7 +1455,7 @@
         this.extra_h1 = this.extra_h1.replace(/^,|,$/gm, '');
 
         const originalTitleMeta = document.querySelector('meta[name="original-title"]');
-        if (originalTitleMeta) {
+        if (originalTitleMeta && this.current_section !== 'modules_io') {
           const baseTitle = originalTitleMeta.getAttribute('content');
           document.title = baseTitle + (
             this.extra_h1 ? ' (' + this.extra_h1 + ')' : ''
