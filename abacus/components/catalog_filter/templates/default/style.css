@@ -125,6 +125,8 @@
     z-index: 2;
     scrollbar-width: initial;
     scrollbar-color: var(--color-dark-gray) var(--color-light-gray);
+    border-radius: 5px;
+    overflow: hidden;
 }
 .component_catalog_section__filter .filter_panel::-webkit-scrollbar {
     height: 20px;
@@ -236,6 +238,7 @@
     width: 100%;
     font-size: 1rem;
 }
+.filter_field_block:last-child { border-bottom: none; }
 
 .filter_series .filter_field_block__content, .filter_sections .filter_field_block__content{
     margin-top: -5px;
