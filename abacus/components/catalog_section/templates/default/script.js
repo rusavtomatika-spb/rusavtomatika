@@ -154,6 +154,9 @@
         if (new_LOWER_SEO_TEXT == 'no') {
           $('.posttext').html('');
         }
+        if (this.current_section === 'modules_io') {
+          return;
+        }
       },
       favorites: function (newVal) {
         if (newVal.length > 0) {
