@@ -879,12 +879,8 @@ button.flying_row {
     text-align: right;
     font-size: 1rem;
 }
-.indicator_availability .red {
-    color: red;
-}
-.indicator_availability .green {
-    color: var(--color-green);
-}
+.red { color: red !important; }
+.green { color: var(--color-green) !important; }
 
 .component_catalog_section__panel_of_products .view-mode-list .indicator_availability .green,
 .td_price .green, .td_onstock .green {

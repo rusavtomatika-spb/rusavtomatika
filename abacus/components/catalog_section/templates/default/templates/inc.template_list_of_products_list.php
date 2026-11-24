@@ -62,23 +62,19 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                 switch ($product['currency']) {
                     case 'USD':
                         if ($product['action_price'] > 0) {
-                            $price_html .= '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>&nbsp;<span class="usd">$</span></span>';
+                            $price_html .= '<span class="act_price">' . $product['action_price'] . ' $</span>';
                         }
-                        $price_html .= '<div class="usd_price"><span class="value">' . $product['retail_price'] . '</span>&nbsp;<span class="usd">$</span></div>';
+                        $price_html .= '<span class="usd_price">' . $product['retail_price'] . ' $</span>';
                         if ($usd_currency && intval($product['show_rub_po_kursu_usd']) !== 1) {
-                            $price_html .= '<div class="rub_price"><span class="value">'
-                                . intval($product['retail_price'] * $usd_currency)
-                                . '</span>&nbsp;<span class="rub">&#8381;</span></div>';
+                            $price_html .= '<span class="rub_price">' . intval($product['retail_price'] * $usd_currency) . ' &#8381;</span>';
                         }
                         break;
 
                     case 'RUR':
                         if ($product['action_price'] > 0) {
-                            $price_html .= '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>&nbsp;<span class="usd">&#8381;</span></span>';
+                            $price_html .= '<span class="act_price green">' . $product['action_price'] . ' &#8381;</span>';
                         }
-                        $price_html .= '<div class="rub_price"><span class="value">'
-                            . intval($product['retail_price'])
-                            . '</span>&nbsp;<span class="rub">&#8381;</span></div>';
+                        $price_html .= '<span class="rub_price green">' . intval($product['retail_price']) . ' &#8381;</span>';
                         break;
                 }
             } else {
