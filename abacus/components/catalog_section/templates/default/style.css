@@ -149,9 +149,9 @@
 }
 
 .component_catalog_section__panel_of_products table tr {
-    /*    background: #f3f3f3;*/
     border: 1px solid #e0e0e0;
-
+    border-radius: 5px;
+    transition: .3s;
 }
 
 .component_catalog_section__panel_of_products tr a:hover {
@@ -761,7 +761,7 @@ button.flying_row {
     display: flex;
     gap: 30px;
     justify-content: left;
-    padding: 10px 0 0;
+    padding: 0;
 }
 
 .component_catalog_section__panel_of_products .view-mode-list .series_products__panel_buttons .buttons_add {
@@ -1036,7 +1036,7 @@ tr.flying_row td {
     flex-direction: column;
     transition: .3s;
 }
-.tile:hover {
+.tile:hover, .component_catalog_section__panel_of_products table tr:hover {
 -webkit-box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 -moz-box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
 box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
@@ -1114,6 +1114,12 @@ box-shadow: 0px 0px 45px 0px rgba(34, 60, 80, 0.2);
     line-height: 150%;
 }
 .act_price, .usd_price, .rub_price { white-space: nowrap; }
+
+.viewed__table-body, .catalog__table-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 @media (max-width: 1023px){
     .component_catalog_section__panel_of_products .view-mode-list .preview_image {
         padding: 0px;

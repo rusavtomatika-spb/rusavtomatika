@@ -105,55 +105,53 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                         </div>
                     </a>
                 </td>
-
                 <td class="td_short_description">
-                    <a href="<?= $product['link_detail_page'] ?>">
-                        <span class="model">
-                            <?php if ($product['type'] === 'controllers'): ?>ПЛК <?php endif; ?>
-                            <?= $product['model'] ?>
-                            <?php if ($product['type'] === 'controllers' && $product['codesys'] !== 'N'): ?> с CODESYS<?php endif; ?>
-                        </span>
-                    </a>
-
-                    <div class="preview_text_block">
+                    <div class="brand-model-wrapper" style="align-items: center;">
+                        <a href="<?= $product['link_detail_page'] ?>">
+                            <span class="model">
+                                <?php if ($product['type'] === 'controllers'): ?>ПЛК <?php endif; ?>
+                                <?= $product['model'] ?>
+                                <?php if ($product['type'] === 'controllers' && $product['codesys'] !== 'N'): ?> с CODESYS<?php endif; ?>
+                            </span>
+                        </a>
                         <?php if (count($prod_series) > 0): ?>
-                            <div class="brand-model-wrapper">
-                                <div>
-                                    <span>Серия: </span>
-                                    <?php
-                                    $prev_ser = '';
-                                    foreach ($prod_series as $serie) {
-                                        foreach ($all_series as $all_serie) {
-                                            $pattern = '/[^_,\w]*' . $product['type'] . '[^_,\w]*/im';
-                                            if (
-                                                $all_serie['name'] !== 'INDUSTRIAL'
-                                                && $all_serie['name'] !== $prev_ser
-                                                && $all_serie['name'] === $serie
-                                                && preg_match($pattern, $all_serie['type'])
-                                            ) {
-                                                echo '<a class="tag mr-1" href="/catalog/'
-                                                    . $all_serie['menu_category_item_code']
-                                                    . '/?&series=' . $all_serie['name'] . '">'
-                                                    . $all_serie['name'] . '</a>';
-                                            }
-                                            $prev_ser = $all_serie['name'];
+                            <div>
+                                <span>Серия: </span>
+                                <?php
+                                $prev_ser = '';
+                                foreach ($prod_series as $serie) {
+                                    foreach ($all_series as $all_serie) {
+                                        $pattern = '/[^_,\w]*' . $product['type'] . '[^_,\w]*/im';
+                                        if (
+                                            $all_serie['name'] !== 'INDUSTRIAL'
+                                            && $all_serie['name'] !== $prev_ser
+                                            && $all_serie['name'] === $serie
+                                            && preg_match($pattern, $all_serie['type'])
+                                        ) {
+                                            echo '<a class="tag mr-1" href="/catalog/'
+                                                . $all_serie['menu_category_item_code']
+                                                . '/?&series=' . $all_serie['name'] . '">'
+                                                . $all_serie['name'] . '</a>';
                                         }
+                                        $prev_ser = $all_serie['name'];
                                     }
-                                    ?>
-                                </div>
-                                <div>
-                                    <span>
-                                        Бренд: 
-                                    </span>
-                                    <?php if (in_array($brand, ['Weintek', 'IFC', 'Aplex', 'Spiktek', 'Samkoon', 'eWON', 'Faraday', 'LicOS'])): ?>
-                                        <a class="tag" href="/<?= strtolower($brand) ?>/"><?= $brand ?></a>
-                                    <?php else: ?>
-                                        <span class="tag"><?= $brand ?></span>
-                                    <?php endif; ?>
-                                </div>
+                                }
+                                ?>
+                            </div>
+                            <div>
+                                <span>
+                                    Бренд: 
+                                </span>
+                                <?php if (in_array($brand, ['Weintek', 'IFC', 'Aplex', 'Spiktek', 'Samkoon', 'eWON', 'Faraday', 'LicOS'])): ?>
+                                    <a class="tag" href="/<?= strtolower($brand) ?>/"><?= $brand ?></a>
+                                <?php else: ?>
+                                    <span class="tag"><?= $brand ?></span>
+                                <?php endif; ?>
                             </div>
                         <?php endif; ?>
+                    </div>
 
+                    <div class="preview_text_block">
                         <span class="preview_text"><?= $product['preview_text'] ?></span>
                         <span class="preview_text_extra"><?= $product['preview_text_extra'] ?></span>
                     </div>
@@ -182,9 +180,15 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                 <td class="td_buttons">
                     <div class="indicator_availability">
                         <?php if (intval($product['onstock_spb']) > 0): ?>
-                            <span class="green">В наличии</span>
+                            <span class="green">
+                                <i class="fa-solid fa-check"></i>
+                                В наличии
+                            </span>
                         <?php else: ?>
-                            <span class="red">Под заказ</span>
+                            <span class="red">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                                Под заказ
+                            </span>
                         <?php endif; ?>
                     </div>
 

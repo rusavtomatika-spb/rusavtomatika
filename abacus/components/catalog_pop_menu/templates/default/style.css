@@ -1,3 +1,8 @@
+html.pop-menu-opened .catalog_toolbar.fixed,
+html.pop-menu-opened .sticky_block.fixed {
+  position: static !important;
+  transform: none !important;
+}
 #vue_catalog_pop_menu {
     display: flex;
     align-items: stretch;

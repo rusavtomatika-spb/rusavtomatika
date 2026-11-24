@@ -19,9 +19,11 @@
       if ($menu.hasClass('active')) {
         $menu.removeClass('active');
         $('.popup_background').removeClass('active');
+        $('html').removeClass('pop-menu-opened');
         setTimeout(unlockBodyScroll, 400);
       } else {
         lockBodyScroll();
+        $('html').addClass('pop-menu-opened');
         $menu.addClass('active');
         $('.popup_background').addClass('active');
       }
@@ -30,6 +32,7 @@
     $('.popup_background, .button_close_catalog_popmenu').bind('click', function () {
       $('#vue_catalog_pop_menu').removeAttr('style').removeClass('active');
       $('.popup_background').removeClass('active');
+      $('html').removeClass('pop-menu-opened');
       setTimeout(unlockBodyScroll, 400);
     });
 
