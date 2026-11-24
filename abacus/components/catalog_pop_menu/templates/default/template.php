@@ -5,6 +5,8 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
 CoreApplication::add_style("/include_utf_8/main_page/main_page_styles.css");
 CoreApplication::add_style("/include_utf_8/main_page/css/cloud.css");
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/abacus/services/TypeDictionary.php';
+
 $arrSections = CoreApplication::get_rows_from_table("catalog_sections", '', "active='1'", "position ASC");
 $arrBrands = CoreApplication::get_rows_from_table("catalog_brands", '', "active='1'", "position ASC");
 $arrSeries = CoreApplication::get_rows_from_table("catalog_series", '', "active='1'", "position ASC");
@@ -53,6 +55,30 @@ foreach ($arrSeries as $serie) {
         'position' => $serie['position'],
         'menu_category_item_code' => $serie['menu_category_item_code']
     );
+}
+
+
+$ioProductsPop = CoreApplication::get_rows_from_table(
+    'products_all',
+    'DISTINCT brand, type',
+    "`section` = 'modules_io' AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'",
+    "`brand` ASC, `type` ASC"
+);
+
+$popBrandTypesMap = array();
+if (is_array($ioProductsPop)) {
+    foreach ($ioProductsPop as $ioRow) {
+        $b = trim($ioRow['brand']);
+        $t = trim($ioRow['type']);
+        if ($b !== '' && $t !== '') {
+            if (!isset($popBrandTypesMap[$b])) {
+                $popBrandTypesMap[$b] = array();
+            }
+            if (!in_array($t, $popBrandTypesMap[$b])) {
+                $popBrandTypesMap[$b][] = $t;
+            }
+        }
+    }
 }
 ?>
 
@@ -231,7 +257,58 @@ document.addEventListener('DOMContentLoaded', function() {
                                 ?>
 
                                 <?php
-                                if (isset($sub0) && $sub0 != '') {
+                                if ($section['code'] == 'modules_io' && !empty($popBrandTypesMap)) {
+                                    $rawPopBrands = !empty($section['subsection_brands']) ? $section['subsection_brands'] : $section['filter_brands'];
+                                    $popIoBrands = array_values(array_filter(array_map('trim', explode(',', $rawPopBrands))));
+                                    foreach (array_keys($popBrandTypesMap) as $bKey) {
+                                        if (!in_array($bKey, $popIoBrands)) {
+                                            $popIoBrands[] = $bKey;
+                                        }
+                                    }
+                                ?>
+                                <ul class="subsection">
+                                    <?php
+                                    foreach ($popIoBrands as $section_sub) {
+                                        if (empty($popBrandTypesMap[$section_sub])) continue;
+                                    ?>
+                                    <ul class="subsection">
+                                        <li class="cataloge_list_item_subitem">
+                                            <a title="Производитель <?= htmlspecialchars($section_sub) ?>" href="<?= $section["category_link"] . '?&brand=' . urlencode($section_sub) ?>">
+                                                <span @click="handle_button_show_items"
+                                                    class="section_list_tag_button"
+                                                    data-action="show_section_by_categories_one_brand_only"
+                                                    data-link="<?= $section["category_link"] . '&brand=' . urlencode($section_sub) ?>"
+                                                    data-section-code="<?= $section['code'] ?>"
+                                                    data-section-id="<?= $section['id'] ?>"
+                                                    data-section-sub="<?= htmlspecialchars($section_sub) ?>"
+                                                    data-brand="<?= htmlspecialchars($section_sub) ?>">
+                                                    <?= htmlspecialchars($section_sub) ?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <?php
+                                        foreach ($popBrandTypesMap[$section_sub] as $typeCode) {
+                                            $typeLabel = str_replace('ввода-вывода', 'в/в', TypeDictionary::get($typeCode, 'modules_io'));
+                                        ?>
+                                        <li class="cataloge_list_item_subitem">
+                                            <a title="<?= htmlspecialchars($typeLabel) ?>" href="<?= $section["category_link"] . '?&brand=' . urlencode($section_sub) . '&types=' . urlencode($typeCode) ?>">
+                                                <span @click="handle_button_show_items"
+                                                    class="section_list_tag_button ser"
+                                                    data-action="show_section_by_categories_one_brand_only">
+                                                    <?= htmlspecialchars($typeLabel) ?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                    }
+                                    ?>
+                                </ul>
+                                <?php
+                                } elseif (isset($sub0) && $sub0 != '') {
                                     $arr_section_sub = explode(",", $sub0);
                                     $show_brands = (count($arr_section_sub) > 1);
                                     if (count($arr_section_sub) > 1) {
@@ -292,7 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     };
                                 }
                                 ?>
-
                                 <?php
                                 if (isset($sub1) && $sub1 != '') {
                                     $arr_section_sub = explode(",", $sub1);
