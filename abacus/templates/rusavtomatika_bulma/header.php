@@ -72,6 +72,7 @@ $current_page = str_replace("/", "_", $current_page);
 <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Rusavtomatika" />
 <link rel="manifest" href="/site.webmanifest" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="template_rusavtomatika_bulma current_page_<?= $current_page ?>" style="opacity: 0;">
 <div class="popup_background"></div>

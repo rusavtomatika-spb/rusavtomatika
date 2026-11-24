@@ -90,7 +90,8 @@
   left: 0;
   width: 128px;
   height: 40px;
-  z-index: 100; }
+  z-index: 100;
+}
 
 @media (max-width: 1024px) {
   .catalog_toolbar__item_group .open_pop_catalog {

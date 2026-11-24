@@ -1,215 +1,197 @@
 <?php
-/*if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/usdrate.txt")) {
-    $usd_currency = floatval(file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/usdrate.txt"));
-} else $usd_currency = 0;*/
 global $usd_currency, $arSettings;
-//echo $_SERVER['SCRIPT_NAME'];
 
-$apiKey = 'b237155b14c4b6f777d91207ebc3775cb712ad6d'; 
-$userIp = $_SERVER[ 'REMOTE_ADDR' ];
+$apiKey      = 'b237155b14c4b6f777d91207ebc3775cb712ad6d';
+$userIp      = $_SERVER['REMOTE_ADDR'];
 $userCountry = getCountryFromDaData($userIp, $apiKey);
 
+$renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SERVER_RENDERING';
 ?>
-<table class="<? if ( defined('SERVER_RENDERING')) {echo " IS_SERVER_RENDERING ";} else { echo " IS_NOT_SERVER_RENDERING "; }?> series_products <? echo $userCountry; ?>">
+<table class="<?= $renderClass ?> series_products <?= $userCountry ?>">
     <tbody class="catalog__table-body">
-    <?
-        if (isset($series["products"]) and is_array($series["products"])) {
-    //        if (preg_match('/(operator_panels|industrial-communication-equipment)/i',$_SERVER[ "QUERY_STRING" ]))	{
-    //        usort($series["products"], function ($a, $b) {
-    //            $valueA = intval($a['sort']); // Приводим строку к числу
-    //            $valueB = intval($b['sort']); // Приводим строку к числу
-    //
-    //            // Проверяем условие сортировки по возрастанию
-    //            if ($valueA === $valueB) {
-    //                return 0; // Элементы равны
-    //            } elseif ($valueA < $valueB) {
-    //                return -1; // Первый элемент меньше, значит идет раньше
-    //            } else {
-    //                return 1; // Первый элемент больше, значит идет позже
-    //            }
-    //        });
-    //        }
+    <?php if (isset($series['products']) && is_array($series['products'])): ?>
+        <?php foreach ($series['products'] as $product): ?>
+            <?php
+            if ($product['model'] === 'Codesys' && $userCountry !== 'RU') {
+                continue;
+            }
+            if (
+                preg_match('/(operator_panels)/i', $_SERVER['QUERY_STRING'])
+                && !preg_match('/(screenless)/i', $_SERVER['QUERY_STRING'])
+                && ($product['screenless'] == 1)
+                && !preg_match('/(series)/i', $_SERVER['QUERY_STRING'])
+            ) {
+                continue;
+            }
 
-            foreach ($series["products"] as $product) {
-                if ($product["model"]=='Codesys' && $userCountry != 'RU' ) {continue;}
-                if ((preg_match('/(operator_panels)/i',$_SERVER[ "QUERY_STRING" ]) && !preg_match('/(screenless)/i',$_SERVER[ "QUERY_STRING" ])) && ($product["screenless"] == 1) && !preg_match('/(series)/i',$_SERVER[ "QUERY_STRING" ]) ) continue;
-                if (isset($product["diagonal"]) and $product["diagonal"] != "" and $product["diagonal"] != 0 and $product["diagonal_hide"] == 0) {
-                    $product["diagonal"] = str_replace(".0", "", $product["diagonal"]);
-                    $diagonal = '<b>' . $product["diagonal"] . '&Prime;&nbsp;</b>';
-                } else $diagonal = '';
+            $diagonal = '';
+            if (
+                isset($product['diagonal'])
+                && $product['diagonal'] != ''
+                && $product['diagonal'] != 0
+                && $product['diagonal_hide'] == 0
+            ) {
+                $product['diagonal'] = str_replace('.0', '', $product['diagonal']);
+                $diagonal = '<b>' . $product['diagonal'] . '&Prime;&nbsp;</b>';
+            }
 
-                if (isset($arrPreviewFields_withNames) and is_array($arrPreviewFields_withNames)) {
-                    $short_description = "";
-                    foreach ($arrPreviewFields_withNames as $arrPreviewFields_withName) {
-                        if (isset($product[$arrPreviewFields_withName["code"]]) and $product[$arrPreviewFields_withName["code"]] != '') {
-                            $short_description .= '<span class="name_short">' . $arrPreviewFields_withName["name_short"] . ":</span>&nbsp;" . $product[$arrPreviewFields_withName["code"]] . $arrPreviewFields_withName["units"] . ", ";
+            $prod_series = explode(',', $product['series']);
+            $all_series  = get_all_series();
+
+            $model = $product['model'];
+            if ($product['brand'] === 'Faraday') {
+                $model = str_replace(['/', ' '], '_', $model);
+            }
+            $image_src = $arSettings['path_to_product_images']
+                . mb_strtolower($product['brand']) . '/'
+                . mb_strtolower($product['type']) . '/'
+                . $model . '/580/' . $model . '_1.webp';
+
+            if ($_SERVER['HTTP_HOST'] === 'www.rusavtomatika.com') {
+                $image_src = '/upload_files' . $image_src;
+            }
+
+            $brand = $product['brand'];
+
+            $price_html = '';
+            if (
+                isset($product['retail_price'])
+                && intval($product['retail_price']) > 0
+                && $product['retail_price_hide'] == 0
+            ) {
+                switch ($product['currency']) {
+                    case 'USD':
+                        if ($product['action_price'] > 0) {
+                            $price_html .= '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>&nbsp;<span class="usd">$</span></span>';
                         }
-                    }
-                    $short_description = trim($short_description, ", ");
-                } else $short_description = "";
-                $prod_serie = $product["series"];
-                $prod_series = explode(',',$product['series']);
-                $all_series = get_all_series();
-                ?>
-    <tr class="tr_product_<?= $product["model"]; ?>" data-type="<?=$product['type']?>" data-series="<?=$product['series']?>">
-        <td class="td_preview_image">
-        <?
+                        $price_html .= '<div class="usd_price"><span class="value">' . $product['retail_price'] . '</span>&nbsp;<span class="usd">$</span></div>';
+                        if ($usd_currency && intval($product['show_rub_po_kursu_usd']) !== 1) {
+                            $price_html .= '<div class="rub_price"><span class="value">'
+                                . intval($product['retail_price'] * $usd_currency)
+                                . '</span>&nbsp;<span class="rub">&#8381;</span></div>';
+                        }
+                        break;
 
-                            if($product["brand"] == "Faraday"):
-                                $model = str_replace("/", "_", $product["model"]);
-                                $model = str_replace(" ", "_", $model);
-
-                                $image_src = $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" .
-                                    mb_strtolower($product["type"]) . "/" . $model."/580/". $model."_1.webp";
-                                else:
-                                $image_src = $arSettings['path_to_product_images'] . mb_strtolower($product["brand"]) . "/" .
-                                    mb_strtolower($product["type"]) . "/" . $product["model"]."/580/". $product["model"]."_1.webp";
-                                    endif;
-
-                            ?>
-        <div class="preview_image">
-            <?
-                                if($_SERVER["HTTP_HOST"] == "www.rusavtomatika.com"){
-                                    $image_src = "/upload_files".$image_src;
-                                }
-                                ?>
-        <a href="<?= $product["link_detail_page"]; ?>">
-            <img alt="<?= $product["short_name"]?> <? if ($product["brand"] != 'IFC') { echo $product["brand"];} ?> <?=$product["model"];?>" loading="lazy"
-                                    src="<?=$image_src?>"> </div>
-        </a></td>
-        <td class="td_short_description">
-            <a href="<?= $product["link_detail_page"]; ?>">
-                <span class="model">
-                <?
-                if ($product["brand"] == 'IFC' and 0) {
-                    $brand = '';
-                } else {
-                    $brand = $product["brand"];
+                    case 'RUR':
+                        if ($product['action_price'] > 0) {
+                            $price_html .= '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>&nbsp;<span class="usd">&#8381;</span></span>';
+                        }
+                        $price_html .= '<div class="rub_price"><span class="value">'
+                            . intval($product['retail_price'])
+                            . '</span>&nbsp;<span class="rub">&#8381;</span></div>';
+                        break;
                 }
-
-                if ($product["type"] === 'controllers') {
-                    echo 'ПЛК ';
+            } else {
+                $price_html .= '<button class="series_products__button" data-rel-model="' . $product['model'] . '" @click="open_form_require_price">Запросить цену</button>';
+                if (isset($_COOKIE['dev_mode']) && $_COOKIE['dev_mode'] > 0) {
+                    $price_html .= '<span class="show_in_dev_mode">' . $product['retail_price'] . '</span>';
                 }
+            }
+            ?>
 
-                echo $product["model"];
+            <tr class="tr_product_<?= $product['model'] ?>"
+                data-type="<?= $product['type'] ?>"
+                data-series="<?= $product['series'] ?>">
 
-                if ($product["type"] === 'controllers') {
-                    echo ' с CODESYS';
-                }
-                ?></span>
-            </a>
-        <div class="preview_text_block">
-            <div>
-            <? if (count($prod_series)>0){ 
-                echo '<span>Серия: ';
+                <td class="td_preview_image">
+                    <a href="<?= $product['link_detail_page'] ?>">
+                        <div class="preview_image">
+                            <img alt="<?= $product['short_name'] ?> <?= $product['brand'] !== 'IFC' ? $product['brand'] : '' ?> <?= $product['model'] ?>"
+                                 loading="lazy"
+                                 src="<?= $image_src ?>">
+                        </div>
+                    </a>
+                </td>
+
+                <td class="td_short_description">
+                    <a href="<?= $product['link_detail_page'] ?>">
+                        <span class="model">
+                            <?php if ($product['type'] === 'controllers'): ?>ПЛК <?php endif; ?>
+                            <?= $product['model'] ?>
+                            <?php if ($product['type'] === 'controllers' && $product['codesys'] !== 'N'): ?> с CODESYS<?php endif; ?>
+                        </span>
+                    </a>
+
+                    <div class="preview_text_block">
+                        <?php if (count($prod_series) > 0): ?>
+                            <div>
+                                <span>Серия: </span>
+                                <?php
                                 $prev_ser = '';
-                                foreach ($prod_series as $ind=>$serie) {
-                                    foreach ($all_series as $i=>$all_serie) {
-                        $pattern = '/[^_,\w]*'.$product["type"].'[^_,\w]*/im';
-                        if ($all_serie['name'] != 'INDUSTRIAL' && $all_serie['name'] != $prev_ser && $all_serie['name'] == $serie && preg_match($pattern,$all_serie["type"] ) && preg_match($pattern,$all_serie["type"] ))
-    echo '<a class="tag mr-1" href="/catalog/'.$all_serie['menu_category_item_code'].'/?&series='.$all_serie['name'].'">'.$all_serie['name'].'</a>';
-                        $prev_ser = $all_serie['name'];
-                                    }
-                                }
-                echo '</span>';			}
-                ?>
-            </div>
-            <span class="preview_text">
-            <?= $product["preview_text"]; ?>
-            </span>
-            <span class="preview_text_extra">
-            <?= $product["preview_text_extra"]; ?>
-            </span>
-        </div>
-        <div class="series_products__panel_buttons">
-            <?
-                            if(in_array($brand,["Weintek","IFC","Aplex","Spiktek","Samkoon","eWON","Faraday"])){
-                            ?>
-            <a class="brand" href="/<? echo strtolower($brand); ?>/"><? echo $brand; ?></a>
-            <?
-                            }else{
-                                ?>
-            <span class="brand"><? echo $brand; ?></span>
-            <?
-                            }
-                            ?>
-            <span class="buttons_add"> <span title="Добавить в сравнение" class="series_products__button compare" @click="add_too_box"
-                                data-model="<?= $product["model"]; ?>" data-box="compare">В сравнение </span> <span title="Добавить в избранное" class="series_products__button favorites"
-                                @click="add_too_box"
-                                data-model="<?= $product["model"]; ?>" data-box="favorites"><i class="fa-regular fa-heart"></i> В избранное </span> </span> </div></td>
-        <td class="td_buttons"><div class="indicator_availability">
-            <?
-                            if (intval($product['onstock_spb']) > 0) {
-                                echo '<span class="green">В&nbsp;наличии</span>';
-                            } else echo '<span class="red">Под&nbsp;заказ</span>';
-                            ?>
-        </div>
-        <div class="price_block_wrapper">
-            <div class="price_block">
-            <?
-                                if (isset($product['retail_price']) and intval($product['retail_price']) > 0 and $product["retail_price_hide"] == 0) {
-
-                                    switch ($product['currency']) {
-                                        case 'USD':
-                                        if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
-                                            echo '<div class="usd_price"><span class="value">' . $product['retail_price'] . '</span>';
-                                            echo '&nbsp;<span class="usd">$</span>';
-                                        } else {
-                                            echo '<div class="usd_price"><span class="value">' . (int) round($product['retail_price']*$usd_currency) . '</span>';
-                                            echo '&nbsp;<span class="usd">&#8381;</span>';
+                                foreach ($prod_series as $serie) {
+                                    foreach ($all_series as $all_serie) {
+                                        $pattern = '/[^_,\w]*' . $product['type'] . '[^_,\w]*/im';
+                                        if (
+                                            $all_serie['name'] !== 'INDUSTRIAL'
+                                            && $all_serie['name'] !== $prev_ser
+                                            && $all_serie['name'] === $serie
+                                            && preg_match($pattern, $all_serie['type'])
+                                        ) {
+                                            echo '<a class="tag mr-1" href="/catalog/'
+                                                . $all_serie['menu_category_item_code']
+                                                . '/?&series=' . $all_serie['name'] . '">'
+                                                . $all_serie['name'] . '</a>';
                                         }
-                                            if ($product['action_price'] > 0) {
-                                            echo '<br><span class="act_price"><span class="value">' . $product['action_price'] . '</span>';
-                                            echo '&nbsp;<span class="usd">$</span></span>';
-                                            }
-                                            echo '</div>';
-                                            if ($usd_currency) {
-                                        if ( intval( $product[ 'show_rub_po_kursu_usd' ] ) != 1) {
-                                                ?> <div class="rub_price"><? echo intval($product['retail_price'] * $usd_currency); ?> &#8381; </div><?
-                                        } 
-                                            }
-                                            break;
-                                        case 'RUR':
-                                            ?>
-            <?
-                                            if ($usd_currency) {
-                                                ?>
-            <span><span class="value"><? echo intval($product['retail_price']); ?>&nbsp;&#8381;</span></span> 
-            <?
-                                            if ($product['action_price'] > 0) {
-                                            echo '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>';
-                                            echo '&nbsp;<span class="usd">&#8381;</span></span>';
-                                            } ?>
-            <? }
-                                            else{
-                                                echo $product['retail_price'] . ' <span class="rub">&#8381;</span>';
-                                                if ($product['action_price'] > 0) {
-                                            echo '<span class="act_price"><span class="value">' . $product['action_price'] . '</span>';
-                                            echo '&nbsp;<span class="usd">&#8381;</span></span>';
-                                            }
-                                            }
-
-                                            break;
-                                    }
-                                } else {
-                                    echo '<span class="no_price series_products__button" data-rel-model="' . $product['model'] . '" @click="open_form_require_price">Запросить цену</span>';
-                                    if(isset($_COOKIE["dev_mode"]) and $_COOKIE["dev_mode"] > 0){
-                                        echo '<span class="show_in_dev_mode">' . $product['retail_price'] . '</span>';
+                                        $prev_ser = $all_serie['name'];
                                     }
                                 }
                                 ?>
-            </div>
-        </div>
-        <div class="buttons_panel">
-            <button title="Добавить в заказ" class="series_products__button cart" @click="add_too_box"
-                                    data-model="<?= $product["model"]; ?>" data-box="cart"><i class="fa-solid fa-cart-plus" style="font-size:1.1rem;"></i>&nbsp;&nbsp;<span>В ЗАКАЗ</span></button>
-        </div></td>
-    </tr>
-    <? }
-        } else {
-            echo "<hr>Нет товаров...<hr>";
-        }
+                            </div>
+                        <?php endif; ?>
 
-        ?>
+                        <span class="preview_text"><?= $product['preview_text'] ?></span>
+                        <span class="preview_text_extra"><?= $product['preview_text_extra'] ?></span>
+                    </div>
+
+                    <div class="series_products__panel_buttons">
+                        <?php if (in_array($brand, ['Weintek', 'IFC', 'Aplex', 'Spiktek', 'Samkoon', 'eWON', 'Faraday'])): ?>
+                            <a class="brand" href="/<?= strtolower($brand) ?>/"><?= $brand ?></a>
+                        <?php else: ?>
+                            <span class="brand"><?= $brand ?></span>
+                        <?php endif; ?>
+
+                        <span class="buttons_add">
+                            <span title="Добавить в сравнение"
+                                  class="series_products__button compare"
+                                  @click="add_too_box"
+                                  data-model="<?= $product['model'] ?>"
+                                  data-box="compare">В сравнение</span>
+                            <span title="Добавить в избранное"
+                                  class="series_products__button favorites"
+                                  @click="add_too_box"
+                                  data-model="<?= $product['model'] ?>"
+                                  data-box="favorites"><i class="fa-regular fa-heart"></i> В избранное</span>
+                        </span>
+                    </div>
+                </td>
+
+                <td class="td_buttons">
+                    <div class="indicator_availability">
+                        <?php if (intval($product['onstock_spb']) > 0): ?>
+                            <span class="green">В наличии</span>
+                        <?php else: ?>
+                            <span class="red">Под заказ</span>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="price_block_wrapper">
+                        <div class="price_block"><?= $price_html ?></div>
+                    </div>
+
+                    <div class="buttons_panel">
+                        <button title="Добавить в заказ"
+                                class="series_products__button cart"
+                                @click="add_too_box"
+                                data-model="<?= $product['model'] ?>"
+                                data-box="cart">
+                            <i class="fa-solid fa-cart-plus"></i> В ЗАКАЗ
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <hr>Нет товаров...<hr>
+    <?php endif; ?>
     </tbody>
 </table>

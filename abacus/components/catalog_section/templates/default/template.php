@@ -545,13 +545,6 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                   </span>
                 </span>
 
-                <span class="item" v-if="filterSelectedSeries != ''">
-                  <span>
-                    серия: <b>{{filterSelectedSeries}}</b>
-                    <span @click="clear_filter_item('filterSelectedSeries','')" class="button_clear_filter"></span>
-                  </span>
-                </span>
-
                 <?php
                 $jsTypesDict = array();
                 if (is_array($typesDict)) {
@@ -560,6 +553,13 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                     }
                 }
                 ?>
+                <span class="item" v-if="filterSelectedBrands.length > 0">
+                  <span v-for="brand in filterSelectedBrands">
+                    бренд: <b>{{ brand }}</b>
+                    <span @click="clear_filter_item('filterSelectedBrands',brand)" class="button_clear_filter"></span>
+                  </span>
+                </span>
+
                 <span class="item" v-if="filterSelectedTypes != ''">
                   <span>
                     тип: <b>{{ (<?= htmlspecialchars(json_encode($jsTypesDict), ENT_QUOTES, 'UTF-8') ?>)[filterSelectedTypes] || filterSelectedTypes }}</b>
@@ -567,10 +567,10 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                   </span>
                 </span>
 
-                <span class="item" v-if="filterSelectedBrands.length > 0">
-                  <span v-for="brand in filterSelectedBrands">
-                    бренд: <b>{{ brand }}</b>
-                    <span @click="clear_filter_item('filterSelectedBrands',brand)" class="button_clear_filter"></span>
+                <span class="item" v-if="filterSelectedSeries != ''">
+                  <span>
+                    серия: <b>{{filterSelectedSeries}}</b>
+                    <span @click="clear_filter_item('filterSelectedSeries','')" class="button_clear_filter"></span>
                   </span>
                 </span>
 
