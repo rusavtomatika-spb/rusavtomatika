@@ -293,14 +293,8 @@ switch ( $sort_mode ) {
   </div>
   <?php
   switch ( $view_mode ) {
-    case 'table':
-      include "templates/inc.template_list_of_products_table.php";
-      break;
     case 'list':
       include "templates/inc.template_list_of_products_list.php";
-      break;
-    case 'tiles':
-      include "templates/inc.template_list_of_products_tile.php";
       break;
     case 'tile':
       include "templates/inc.template_list_of_products_tile.php";

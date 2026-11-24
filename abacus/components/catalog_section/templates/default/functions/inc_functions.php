@@ -58,13 +58,6 @@ function print_product_list($products, $view_mode)
     ?>
     <div class=" <? if($_POST["is_ajax"]) {  echo "is_ajax";   } ?> view-mode-<?= $view_mode ?>"><?
     switch ($view_mode) {
-        case 'table':
-            include $_SERVER["DOCUMENT_ROOT"]."/abacus/components/catalog_section/templates/default/templates/inc.template_list_of_products_table.php";
-
-            break;
-        case 'tiles':
-            include $_SERVER["DOCUMENT_ROOT"]."/abacus/components/catalog_section/templates/default/templates/inc.template_list_of_products_tile.php";
-            break;
         case 'tile':
             include $_SERVER["DOCUMENT_ROOT"]."/abacus/components/catalog_section/templates/default/templates/inc.template_list_of_products_tile.php";
             break;

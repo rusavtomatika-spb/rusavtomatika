@@ -191,14 +191,8 @@ $renderClass = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SER
                             <div class="indicator_availability">
                                 <?php if ($product['onstock_spb'] > 0): ?>
                                     <span class="green"><i class="fa-solid fa-check"></i> В наличии</span>
-                                    <?php if (in_array($_SERVER['SERVER_NAME'], ['www.rusavto.moisait.net', 'www.test.rusavtomatika.com'])): ?>
-                                        <?= $product['onstock_spb'] ?>
-                                    <?php endif; ?>
                                 <?php else: ?>
                                     <span class="red"><i class="fa-solid fa-clipboard-check"></i> Под заказ</span>
-                                    <?php if (in_array($_SERVER['SERVER_NAME'], ['www.rusavto.moisait.net', 'www.test.rusavtomatika.com'])): ?>
-                                        <?= $product['onstock_spb'] ?>
-                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>
