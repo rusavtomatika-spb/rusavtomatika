@@ -1,7 +1,7 @@
 <?
 
 include $_SERVER["DOCUMENT_ROOT"]."/config.php";
-include $_SERVER["DOCUMENT_ROOT"]."/include/redirect.php";
+include $_SERVER["DOCUMENT_ROOT"]."/include_utf_8/redirect.php";
 
 define("ERRORS", 1);
 
