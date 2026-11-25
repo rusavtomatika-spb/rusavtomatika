@@ -272,7 +272,7 @@ $cl_wrapper_class = $two_columns ? 'in_two_cols' : '';
                 <?php if ($has_results): ?>
 
                     <?php if ($two_columns): ?>
-                    <div class="columns ">
+                    <div class="columns gap-10">
                         <div class="column is-half">
                             <h2>Каталог</h2>
                     <?php endif; ?>

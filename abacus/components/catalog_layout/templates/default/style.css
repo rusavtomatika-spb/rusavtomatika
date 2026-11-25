@@ -24,8 +24,11 @@
     --cl-media-article:100px;
 
     --cl-btn-h:        34px;
+    --cl-actions-w:    120px;
+    --cl-actions-gap:  5px;
+
     --cl-shadow:       0 10px 34px rgba(32, 111, 75, .16);
-    --cl-ease:         cubic-bezier(.22, 1, .36, 1);
+    --cl-ease:         scale(1.1);
 }
 
 .catalog_layout {
@@ -47,6 +50,7 @@
 .catalog_layout img {
     display: block;
     max-width: 100%;
+    transform: scale(1.01);
 }
 
 .catalog_layout button {
@@ -135,7 +139,9 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform .4s var(--cl-ease);
+    transition: transform .5s var(--cl-ease);
+    background: #fff;
+    transition: .5s;
 }
 
 .cl-card:hover .cl-card__image {
@@ -265,16 +271,10 @@
     color: #fff;
 }
 
-.cl-card__aside {
+.cl-card__aside, .cl-card__deal {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.cl-card__deal {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    gap: 5px;
 }
 
 .cl-card__price {
@@ -322,12 +322,12 @@
 .cl-card__actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--cl-actions-gap);
 }
 
 .cl-card__actions-pair {
     display: flex;
-    gap: 8px;
+    gap: var(--cl-actions-gap);
 }
 
 .catalog_layout .series_products__button {
@@ -388,7 +388,7 @@
 
 .cl-card--table {
     display: grid;
-    grid-template-columns: 170px minmax(0, 1fr) 230px;
+    grid-template-columns: 170px minmax(0, 1fr) minmax(var(--cl-actions-w), max-content);
     gap: 16px;
     align-items: start;
     padding: 14px 16px;
@@ -399,24 +399,55 @@
 }
 
 .cl-card--table .cl-card__aside {
+    justify-self: end;
     align-items: stretch;
+    width: 100%;
+    min-width: var(--cl-actions-w);
 }
 
 .cl-card--table .cl-card__deal {
     align-items: flex-end;
+    width: 100%;
 }
 
 .cl-card--table .cl-card__stock {
     order: -1;
+    text-align: right;
 }
 
 .cl-card--table .cl-card__price {
     align-items: flex-end;
+    width: 100%;
+}
+
+.cl-card--table .cl-card__price .price_row {
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.cl-card--table .cl-card__price .series_products__button {
+    width: 100%;
+    min-width: var(--cl-actions-w);
+}
+
+.cl-card--table .cl-card__actions {
+    align-items: stretch;
+    width: 100%;
+}
+
+.cl-card--table .cl-card__actions-pair {
+    width: 100%;
+    gap: var(--cl-actions-gap);
 }
 
 .cl-card--table .cl-card__actions-pair .series_products__button {
     flex: 1 1 0;
+    width: auto;
     min-width: 0;
+}
+
+.cl-card--table .cl-card__actions .cart {
+    width: 100%;
 }
 
 .cl-list.in_two_cols .cl-card--table {
@@ -429,21 +460,38 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    width: 100%;
+    min-width: 0;
 }
 
 .cl-list.in_two_cols .cl-card--table .cl-card__deal {
     flex-direction: row;
     align-items: center;
     gap: 12px;
+    width: auto;
 }
 
 .cl-list.in_two_cols .cl-card--table .cl-card__stock {
     order: 0;
 }
 
+.cl-list.in_two_cols .cl-card--table .cl-card__price {
+    align-items: flex-start;
+    width: auto;
+}
+
+.cl-list.in_two_cols .cl-card--table .cl-card__price .series_products__button {
+    width: auto;
+}
+
 .cl-list.in_two_cols .cl-card--table .cl-card__actions {
     flex-direction: row;
     align-items: center;
+    width: auto;
+}
+
+.cl-list.in_two_cols .cl-card--table .cl-card__actions-pair {
+    width: auto;
 }
 
 .cl-list.in_two_cols .cl-card--table .cl-card__actions-pair .series_products__button {
@@ -579,7 +627,7 @@
 }
 
 .catalog_viewed .cl-card--table {
-    grid-template-columns: 150px minmax(0, 1fr) 220px;
+    grid-template-columns: 150px minmax(0, 1fr) minmax(var(--cl-actions-w), max-content);
 }
 
 .catalog_viewed .cl-card--table .cl-card__title {
@@ -602,8 +650,9 @@
         --cl-media-table: 100px;
     }
 
-    .cl-card--table {
-        grid-template-columns: 120px minmax(0, 1fr) 200px;
+    .cl-card--table,
+    .catalog_viewed .cl-card--table {
+        grid-template-columns: 120px minmax(0, 1fr) minmax(var(--cl-actions-w), max-content);
         gap: 12px;
         padding: 12px;
     }
@@ -617,6 +666,7 @@
 @media (max-width: 900px) {
     .cl-card--table,
     .cl-card--article,
+    .catalog_viewed .cl-card--table,
     .cl-list.in_two_cols .cl-card--table {
         display: flex;
         flex-direction: column;
@@ -645,6 +695,7 @@
     .cl-card--table .cl-card__aside,
     .cl-list.in_two_cols .cl-card--table .cl-card__aside {
         width: 100%;
+        min-width: 0;
         flex-direction: column;
         align-items: stretch;
     }
@@ -655,14 +706,17 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
+        width: 100%;
     }
 
     .cl-card--table .cl-card__stock {
         order: 0;
     }
 
-    .cl-card--table .cl-card__price {
+    .cl-card--table .cl-card__price,
+    .cl-list.in_two_cols .cl-card--table .cl-card__price {
         align-items: flex-start;
+        width: auto;
     }
 
     .cl-card--table .cl-card__price .usd_price {
@@ -671,20 +725,25 @@
 
     .cl-card--table .cl-card__actions,
     .cl-list.in_two_cols .cl-card--table .cl-card__actions {
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .cl-card--table .cl-card__actions-pair,
+    .cl-list.in_two_cols .cl-card--table .cl-card__actions-pair {
+        width: 100%;
     }
 
     .cl-card--table .cl-card__actions-pair .series_products__button,
     .cl-list.in_two_cols .cl-card--table .cl-card__actions-pair .series_products__button {
-        flex: 0 0 var(--cl-btn-h);
-        width: var(--cl-btn-h);
-        padding: 0;
+        flex: 1 1 0;
+        width: auto;
+        padding: 0 10px;
     }
 
     .cl-card--table .cl-card__actions .cart {
-        flex: 1 1 auto;
-        min-width: 0;
+        width: 100%;
     }
 
     .cl-card--tile .cl-card__deal {
@@ -711,8 +770,24 @@
     .cl-card--table .cl-card__deal,
     .cl-card--tile .cl-card__deal {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 6px;
+    }
+
+    .cl-card--table .cl-card__price,
+    .cl-list.in_two_cols .cl-card--table .cl-card__price {
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .cl-card--table .cl-card__price .series_products__button,
+    .cl-list.in_two_cols .cl-card--table .cl-card__price .series_products__button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .cl-card--table .cl-card__stock {
+        text-align: left;
     }
 
     .cl-card__date {
