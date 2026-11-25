@@ -400,7 +400,8 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             }
             include "inc_weintek_info.php";
             ?>
-            <meta name="original-title" content="<?= htmlspecialchars($TITLE, ENT_QUOTES, 'UTF-8') ?>">
+            <meta name="original-title" content="<?= htmlspecialchars((isset($TITLE_original) && $TITLE_original != '') ? $TITLE_original : $TITLE, ENT_QUOTES, 'UTF-8') ?>">
+            <meta name="original-h1" content="<?= htmlspecialchars((isset($H1_original) && $H1_original != '') ? $H1_original : $H1, ENT_QUOTES, 'UTF-8') ?>">
             <noindex class="section-actions-wrapper">
               <?php if ($arrSection['code'] == 'modules_io'): ?>
                 <?php
@@ -408,10 +409,10 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
                 $ioBrands = array_values(array_filter(array_map('trim', explode(',', $rawBrands))));
 
                 $ioProducts = CoreApplication::get_rows_from_table(
-                    'products_all',
-                    'DISTINCT brand, type',
-                    "`section` = 'modules_io' AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'",
-                    "`brand` ASC, `type` ASC"
+                  'products_all',
+                  'DISTINCT brand, type',
+                  "`section` = 'modules_io' AND `show_in_cat` = '1' AND `discontinued` != '1' AND `status` != '0'",
+                  "`brand` ASC, `type` ASC"
                 );
 
                 $brandTypesMap = array();

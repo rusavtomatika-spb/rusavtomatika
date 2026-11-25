@@ -196,7 +196,13 @@ echo CatalogLayout::render(array(
 $buffer = ob_get_clean();
 echo $buffer;
 
-$HTTP_REFERER = $is_server_rendering ? $_SERVER['REQUEST_URI'] : (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
+if ($is_server_rendering) {
+    $HTTP_REFERER = $_SERVER['REQUEST_URI'];
+} elseif (isset($_POST['page_url']) && $_POST['page_url'] !== '') {
+    $HTTP_REFERER = $_POST['page_url'];
+} else {
+    $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+}
 $HTTP_REFERER = str_replace(
     array('https://www.rusavto.moisait.net', 'https://www.rusavtomatika.com', 'https://www.test.rusavtomatika.com'),
     '',
