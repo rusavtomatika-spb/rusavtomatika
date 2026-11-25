@@ -15,83 +15,75 @@ $cl_image      = cl_product_image($product);
 $cl_price      = cl_price_html($product);
 $cl_series_tag = cl_series_tags($product, cl_get_all_series());
 $cl_codesys    = isset($product['codesys']) ? $product['codesys'] : 'N';
-$cl_short      = isset($product['short_name']) ? $product['short_name'] : '';
 $cl_preview    = isset($product['preview_text']) ? $product['preview_text'] : '';
 $cl_extra      = isset($product['preview_text_extra']) ? $product['preview_text_extra'] : '';
 $cl_onstock    = isset($product['onstock_spb']) ? intval($product['onstock_spb']) : 0;
-$cl_alt        = trim($cl_short . ' ' . ($cl_brand !== 'IFC' ? $cl_brand : '') . ' ' . $cl_model);
+$cl_alt        = htmlspecialchars(trim((isset($product['short_name']) ? $product['short_name'] : '') . ' ' . ($cl_brand !== 'IFC' ? $cl_brand : '') . ' ' . $cl_model), ENT_QUOTES, 'UTF-8');
 $cl_fields     = isset($GLOBALS['cl_preview_fields']) ? $GLOBALS['cl_preview_fields'] : array();
-$cl_short_desc = cl_short_description($product, $cl_fields);
+$cl_specs      = cl_short_description($product, $cl_fields);
 ?>
-<tr class="tr_product_<?= $cl_model ?>"
-    data-type="<?= $cl_type ?>"
-    data-series="<?= $cl_series ?>">
+<div class="cl-card cl-card--table tr_product_<?= $cl_model ?>"
+     data-type="<?= $cl_type ?>"
+     data-series="<?= $cl_series ?>">
 
-    <td class="td_preview_image">
-        <a href="<?= $cl_link ?>">
-            <div class="preview_image">
-                <img alt="<?= $cl_alt ?>" loading="lazy" src="<?= $cl_image ?>">
-            </div>
+    <div class="cl-card__media">
+        <a class="cl-card__media-link" href="<?= $cl_link ?>" aria-label="<?= $cl_alt ?>">
+            <img class="cl-card__image" alt="<?= $cl_alt ?>" loading="lazy" src="<?= $cl_image ?>">
         </a>
-    </td>
+    </div>
 
-    <td class="td_short_description">
-        <div class="brand-model-wrapper" style="align-items: center;">
-            <a href="<?= $cl_link ?>">
-                <span class="model"><?php if ($cl_type === 'controllers'): ?>ПЛК <?php endif; ?><?= $cl_model ?><?php if ($cl_type === 'controllers' && $cl_codesys !== 'N'): ?> с CODESYS<?php endif; ?></span>
-            </a>
-            <?php if ($cl_series !== ''): ?>
-                <div><span>Серия: </span><?= $cl_series_tag ?></div>
-                <div><span>Бренд: </span><?= cl_brand_tag($cl_brand) ?></div>
-            <?php endif; ?>
-        </div>
+    <div class="cl-card__body">
+        <a class="cl-card__title-link" href="<?= $cl_link ?>">
+            <span class="cl-card__title"><?php if ($cl_type === 'controllers'): ?>ПЛК <?php endif; ?><?= $cl_model ?><?php if ($cl_type === 'controllers' && $cl_codesys !== 'N'): ?> с CODESYS<?php endif; ?></span>
+        </a>
 
-        <?php if ($cl_short_desc !== ''): ?>
-            <div class="preview__text-wrapper"><?= $cl_short_desc ?></div>
+        <?php if ($cl_series !== ''): ?>
+            <div class="cl-card__meta">
+                <span class="cl-card__meta-item"><span class="cl-card__meta-label">Серия:</span><?= $cl_series_tag ?></span>
+                <span class="cl-card__meta-item"><span class="cl-card__meta-label">Бренд:</span><?= cl_brand_tag($cl_brand) ?></span>
+            </div>
         <?php endif; ?>
 
-        <div class="preview_text_block">
-            <span class="preview_text"><?= $cl_preview ?></span>
-            <span class="preview_text_extra"><?= $cl_extra ?></span>
-        </div>
-    </td>
+        <?php if ($cl_specs !== ''): ?>
+            <div class="cl-card__specs"><?= $cl_specs ?></div>
+        <?php endif; ?>
 
-    <td class="td_buttons">
-        <div class="indicator_availability">
-            <?php if ($cl_onstock > 0): ?>
-                <span class="green"><i class="fa-solid fa-check"></i> В наличии</span>
-            <?php else: ?>
-                <span class="red"><i class="fa-solid fa-clipboard-check"></i> Под заказ</span>
-            <?php endif; ?>
+        <div class="cl-card__text">
+            <?= $cl_preview ?>
+            <?php if ($cl_extra !== ''): ?><span class="cl-card__text-extra"><?= $cl_extra ?></span><?php endif; ?>
+        </div>
+    </div>
+
+    <div class="cl-card__aside">
+        <div class="cl-card__deal">
+            <div class="cl-card__price"><?= $cl_price ?></div>
+            <div class="cl-card__stock">
+                <?php if ($cl_onstock > 0): ?>
+                    <span class="green"><i class="fa-solid fa-check"></i> В наличии</span>
+                <?php else: ?>
+                    <span class="red"><i class="fa-solid fa-clipboard-check"></i> Под заказ</span>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <div class="price_block_wrapper">
-            <div class="price_block"><?= $cl_price ?></div>
-        </div>
-
-        <div class="series_products__panel_buttons">
-            <button title="Добавить в сравнение"
-                    class="series_products__button compare"
+        <div class="cl-card__actions">
+            <div class="cl-card__actions-pair">
+                <button title="Добавить в сравнение"
+                        class="series_products__button compare"
+                        @click="add_too_box"
+                        data-model="<?= $cl_model ?>"
+                        data-box="compare"><i class="fa-solid fa-align-right fa-rotate-90"></i></button>
+                <button title="Добавить в избранное"
+                        class="series_products__button favorites"
+                        @click="add_too_box"
+                        data-model="<?= $cl_model ?>"
+                        data-box="favorites"><i class="fa-regular fa-heart"></i></button>
+            </div>
+            <button title="Добавить в заказ"
+                    class="series_products__button cart"
                     @click="add_too_box"
                     data-model="<?= $cl_model ?>"
-                    data-box="compare">
-                <i class="fa-solid fa-align-right fa-rotate-90"></i>
-            </button>
-            <button title="Добавить в избранное"
-                    class="series_products__button favorites"
-                    @click="add_too_box"
-                    data-model="<?= $cl_model ?>"
-                    data-box="favorites">
-                <i class="fa-regular fa-heart"></i>
-            </button>
+                    data-box="cart"><i class="fa-solid fa-cart-plus"></i> В заказ</button>
         </div>
-
-        <button title="Добавить в заказ"
-                class="series_products__button cart"
-                @click="add_too_box"
-                data-model="<?= $cl_model ?>"
-                data-box="cart">
-            <i class="fa-solid fa-cart-plus"></i> В заказ
-        </button>
-    </td>
-</tr>
+    </div>
+</div>

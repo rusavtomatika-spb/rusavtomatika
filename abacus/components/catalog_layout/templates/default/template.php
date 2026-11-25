@@ -35,9 +35,7 @@ $CL_css_url = '/abacus/components/catalog_layout/templates/default/style.css';
 if (class_exists('CoreApplication')) {
     if (!defined('CATALOG_LAYOUT_CSS_ADDED')) {
         define('CATALOG_LAYOUT_CSS_ADDED', 1);
-        if (file_exists($CL_css_abs)) {
-            CoreApplication::add_style($CL_css_url);
-        }
+        if (file_exists($CL_css_abs)) { CoreApplication::add_style($CL_css_url); }
     }
 } elseif (!defined('CATALOG_LAYOUT_CSS_LINK_PRINTED')) {
     define('CATALOG_LAYOUT_CSS_LINK_PRINTED', 1);
@@ -46,15 +44,11 @@ if (class_exists('CoreApplication')) {
     }
 }
 
-$CL_here = str_replace('\\', '/', __DIR__);
-
+$CL_here    = str_replace('\\', '/', __DIR__);
 $CL_grouped = !empty($CL_groups);
 if (!$CL_grouped && empty($CL_items)) { return ''; }
 
-$CL_view_class = 'view-mode-list';
-if ($CL_mode === 'tile')  { $CL_view_class = 'view-mode-tile'; }
-if ($CL_mode === 'table') { $CL_view_class = 'view-mode-table'; }
-
+$CL_view_class   = 'view-mode-' . ($CL_mode === 'articles' ? 'articles' : $CL_mode);
 $CL_render_class = defined('SERVER_RENDERING') ? 'IS_SERVER_RENDERING' : 'IS_NOT_SERVER_RENDERING';
 
 $CL_c0 = isset($CL_cols[0]) ? (int)$CL_cols[0] : 1;
@@ -76,36 +70,32 @@ function cl_render_list($rows, $mode, $render_class, $country, $wrapper, $c0, $c
     }
     if (empty($visible)) { return; }
 
+    $country_class = htmlspecialchars($country);
+    $wrapper_class = htmlspecialchars($wrapper);
+
     if ($mode === 'tile') {
         ?>
-        <div class="<?= $render_class ?> series_products_tiles fixed-grid has-<?= $c0 ?>-cols-mobile has-<?= $c1 ?>-cols-tablet has-<?= $c2 ?>-cols-desktop <?= htmlspecialchars($country) ?> <?= htmlspecialchars($wrapper) ?>">
-            <div class="grid">
-                <?php foreach ($visible as $GLOBALS['product']): ?>
-                    <?php include $dir . '/inc_item_tile.php'; ?>
-                <?php endforeach; ?>
-            </div>
+        <div class="<?= $render_class ?> cl-list cl-list--tile has-<?= $c0 ?>-cols-mobile has-<?= $c1 ?>-cols-tablet has-<?= $c2 ?>-cols-desktop <?= $country_class ?> <?= $wrapper_class ?>">
+            <?php foreach ($visible as $GLOBALS['product']): ?>
+                <?php include $dir . '/inc_item_tile.php'; ?>
+            <?php endforeach; ?>
         </div>
         <?php
     } elseif ($mode === 'table') {
         ?>
-        <table class="<?= $render_class ?> series_products <?= htmlspecialchars($country) ?> <?= htmlspecialchars($wrapper) ?>">
-            <tbody class="catalog__table-body">
-                <?php foreach ($visible as $GLOBALS['product']): ?>
-                    <?php include $dir . '/inc_item_table.php'; ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="<?= $render_class ?> cl-list cl-list--table catalog__table-body <?= $country_class ?> <?= $wrapper_class ?>">
+            <?php foreach ($visible as $GLOBALS['product']): ?>
+                <?php include $dir . '/inc_item_table.php'; ?>
+            <?php endforeach; ?>
+        </div>
         <?php
     } else {
         ?>
-        <table class="series_products <?= htmlspecialchars($wrapper) ?>">
-            <tbody>
-                <tr class="separator"><td colspan="2"></td></tr>
-                <?php foreach ($visible as $GLOBALS['article']): ?>
-                    <?php include $dir . '/inc_item_article.php'; ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="<?= $render_class ?> cl-list cl-list--articles <?= $wrapper_class ?>">
+            <?php foreach ($visible as $GLOBALS['article']): ?>
+                <?php include $dir . '/inc_item_article.php'; ?>
+            <?php endforeach; ?>
+        </div>
         <?php
     }
 }
@@ -116,8 +106,8 @@ ob_start();
 <div class="catalog_layout <?= $CL_view_class ?>">
 <?php if ($CL_grouped): ?>
     <?php foreach ($CL_groups as $CL_brand_name => $CL_brand_series): ?>
-        <?php if (!is_array($CL_brand_series) || empty($CL_brand_series)) { continue; } ?>
         <?php
+        if (!is_array($CL_brand_series) || empty($CL_brand_series)) { continue; }
         $CL_first = reset($CL_brand_series);
         $CL_brand_info = (isset($CL_first['brand']) && is_array($CL_first['brand'])) ? $CL_first['brand'] : array();
         ?>

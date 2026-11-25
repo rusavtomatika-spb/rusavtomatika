@@ -1,7 +1,4 @@
 <?php
-/**
- * ОДНА карточка статьи (строка таблицы).
- */
 global $article;
 
 if (!isset($article) || !is_array($article)) { return; }
@@ -14,27 +11,32 @@ $cl_img   = isset($article['img']) ? $article['img'] : '';
 $cl_stext = isset($article['stext']) ? $article['stext'] : '';
 $cl_word  = isset($article['word']) ? $article['word'] : '';
 $cl_table = isset($article['table']) ? $article['table'] : '';
+$cl_name  = $article['name'];
 $cl_date  = '';
 if (!empty($article['date'])) {
-    $ts = strtotime($article['date']);
-    if ($ts) { $cl_date = date('d-m-Y', $ts); }
+    $cl_ts = strtotime($article['date']);
+    if ($cl_ts) { $cl_date = date('d-m-Y', $cl_ts); }
 }
-$cl_no_img = ($cl_img == '');
+$cl_has_media = ($cl_img !== '');
 ?>
-<tr class="tr_article_id<?= $cl_id ?> freqs_<?= $cl_freqs ?>">
-    <?php if (!$cl_no_img): ?>
-        <td class="td_preview_image_article" style="vertical-align: top;">
-            <a target="_blank" href="<?= $cl_link ?>">
-                <div class="preview_image_article">
-                    <img loading="lazy" src="<?= $cl_img ?>">
-                </div>
+<div class="cl-card cl-card--article<?= $cl_has_media ? '' : ' cl-card--no-media' ?> tr_article_id<?= $cl_id ?> freqs_<?= $cl_freqs ?>">
+
+    <?php if ($cl_has_media): ?>
+        <div class="cl-card__media">
+            <a class="cl-card__media-link" href="<?= $cl_link ?>" target="_blank" rel="noopener">
+                <img class="cl-card__image" alt="" loading="lazy" src="<?= $cl_img ?>">
             </a>
-        </td>
+        </div>
     <?php endif; ?>
-    <td class="td_short_description"<?php if ($cl_no_img) { echo ' colspan="2"'; } ?>>
-        <a target="_blank" href="<?= $cl_link ?>" data-word="<?= $cl_word ?>" data-table="<?= $cl_table ?>">
-            <span class="name"><?= $article['name'] ?><?php if ($cl_date != ''): ?> <span class="date"><?= $cl_date ?></span><?php endif; ?></span>
-            <span class="stext"><?= $cl_stext ?></span>
+
+    <div class="cl-card__body">
+        <a class="cl-card__title-link" href="<?= $cl_link ?>" target="_blank" rel="noopener"
+           data-word="<?= $cl_word ?>" data-table="<?= $cl_table ?>">
+            <span class="cl-card__title">
+                <?= $cl_name ?>
+                <?php if ($cl_date !== ''): ?><span class="cl-card__date"><?= $cl_date ?></span><?php endif; ?>
+            </span>
+            <span class="cl-card__excerpt"><?= $cl_stext ?></span>
         </a>
-    </td>
-</tr>
+    </div>
+</div>
