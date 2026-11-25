@@ -187,9 +187,8 @@ $cl_wrapper_class = $two_columns ? 'in_two_cols' : '';
             <? CoreApplication::include_component( array( "component" => "breadcrumbs" ) ); ?>
             <div class="columns is-gapless">
                 <div class="column is-12-desktop column_content">
-                    <h1 class="title" style="margin-left: 0;"><?= $H1 ?></h1>
-                    <div class="search_type_selector" style="margin: 10px 0 10px 0;">
-                        <label>Поиск:</label>
+                    <div class="search_type_selector">
+                        <h1 class="search__title"><?= $H1 ?></h1>
                         <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
                             <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
                             <option value="products" <?= $search_type == 'products' ? 'selected' : '' ?>>По товарам</option>
@@ -258,9 +257,8 @@ $cl_wrapper_class = $two_columns ? 'in_two_cols' : '';
 <div class="component_catalog_search" id="vue_app_component_catalog_search">
     <div class="component_wrapper">
         <? CoreApplication::include_component( array( "component" => "breadcrumbs" ) ); ?>
-        <h1><?= $H1 ?></h1>
-        <div class="search_type_selector" style="margin-left: 0;">
-            <label>Поиск:</label>
+        <div class="search_type_selector">
+            <h1 class="search__title"><?= $H1 ?></h1>
             <select onchange="window.location.href='?search=<?= urlencode(isset($_GET['search']) ? $_GET['search'] : '') ?>&type=' + this.value">
                 <option value="all" <?= $search_type == 'all' ? 'selected' : '' ?>>Везде</option>
                 <option value="products" <?= $search_type == 'products' ? 'selected' : '' ?>>По товарам</option>
