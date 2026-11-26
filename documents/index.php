@@ -10,17 +10,12 @@ $extra_openGraph = array(
   "openGraph_title" => "Weintek документы, руководство, мануалы, документация",
   "openGraph_siteName" => "Русавтоматика"
 );
-
-include $_SERVER[ 'DOCUMENT_ROOT' ] . "/cms/core/check_catalog_404.php";
 global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
 global $db;
 $DESCRIPTION = 'Ежедневно обновляемые документы, руководства, мануалы, FAQ по продукции Weintek';
 $TITLE = 'Weintek документы, руководство, мануалы, документация';
 $SERVER_PROTOCOL = $_SERVER[ 'SERVER_PROTOCOL' ] == "HTTP/1.1" ? "http://" : "https://";
 $CANONICAL = "https://www.rusavtomatika.com/documents/";
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/application/CoreApplication.php";
-
 
 require $_SERVER[ 'DOCUMENT_ROOT' ] . '/sc/lib_new.php';
 
@@ -410,8 +405,6 @@ $(".documents_list").html(response.data);
 */?>
 </article>
 <?
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
 ?>

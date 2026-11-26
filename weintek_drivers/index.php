@@ -502,8 +502,6 @@ details {
 </style>
 </article>
 <?
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
 ?>

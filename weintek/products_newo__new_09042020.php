@@ -3,7 +3,6 @@ global $microtime1;
 global $microtime2;
 global $DBWORK;
 $microtime1 = microtime(true);
-include $_SERVER["DOCUMENT_ROOT"] . "/cms/core/cache_handling.php";
 CCacheHandling::process_cache();
 
 

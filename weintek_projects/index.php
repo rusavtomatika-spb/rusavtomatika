@@ -39,20 +39,9 @@ $KEYWORDS = '';
 $CANONICAL = "https://www.rusavtomatika.com/weintek_projects/";
 
 
-
-
-
-include $_SERVER[ 'DOCUMENT_ROOT' ] . "/cms/core/check_catalog_404.php";
-
-
-
 global $db;
 
 $SERVER_PROTOCOL = $_SERVER[ 'SERVER_PROTOCOL' ] == "HTTP/1.1" ? "http://" : "https://";
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/application/CoreApplication.php";
 
 
 
@@ -1036,10 +1025,6 @@ li a,li a:hover {
 </article>
 
 <?
-
-
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
 
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 

@@ -3,9 +3,6 @@ $document_root = $_SERVER['DOCUMENT_ROOT'];
 
 include ("$document_root/sc/dbcon.php"); 
 
-if (!defined('cms')) define('cms', true);
-include_once ($_SERVER['DOCUMENT_ROOT'] . '/cms/core/classes.php');
-
 $ftp_server = '51.254.18.36';
 $ftp_user_name = 'upload_olga@weblector.ru';
 $ftp_user_pass = 'olgaglr';

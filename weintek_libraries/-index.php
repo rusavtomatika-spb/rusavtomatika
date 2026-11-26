@@ -16,16 +16,12 @@ $TITLE = 'Графические библиотеки Weintek';
 $DESCRIPTION = '';
 $KEYWORDS = '';
 
-
-include $_SERVER[ 'DOCUMENT_ROOT' ] . "/cms/core/check_catalog_404.php";
 global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
 global $db;
 $DESCRIPTION = 'Графические библиотеки Weintek';
 $TITLE = 'Графические библиотеки Weintek';
 $SERVER_PROTOCOL = $_SERVER[ 'SERVER_PROTOCOL' ] == "HTTP/1.1" ? "http://" : "https://";
 $CANONICAL = $SERVER_PROTOCOL . "www.rusavtomatika.com/weintek_libraries/";
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/application/CoreApplication.php";
 
 
 require '../sc/lib_new.php';
@@ -373,7 +369,6 @@ $(".documents_list").html(response.data);
 </article>
 <?
 
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
 ?>

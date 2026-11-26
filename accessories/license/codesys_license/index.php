@@ -5,7 +5,6 @@ if(EX != "_"){
     header('Location: https://' . $_SERVER['HTTP_HOST'] ."/accessories/codesys_license/");
     exit();
 }
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/check_catalog_404.php";
 global $current_component;
 global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
 global $db;
@@ -22,7 +21,7 @@ $extra_openGraph = Array(
     "openGraph_title" => "CODESYS (карта активации/лицензия) - программный комплекс для панелей Weintek",
     "openGraph_siteName" => "Русавтоматика"
 );
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/sc/lib_new.php';
 
@@ -461,5 +460,5 @@ $nav = '<nav style="margin-left: 0px"><a href="/">Главная</a>&nbsp;/&nbsp
 </article>
 
 <?
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
 ?>

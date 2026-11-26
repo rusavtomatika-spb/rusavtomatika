@@ -1,7 +1,6 @@
 <?
 require_once $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 $element_code = '';
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/check_news_404.php";
 global $current_component;
 global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
 $DESCRIPTION = 'Информационное и обучающее видео — продукция и технологии Weintek, IFC, Samkoon, eWON от официального дистрибьютора ООО ФАМ-Электрик';

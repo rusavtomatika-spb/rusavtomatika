@@ -16,12 +16,7 @@ $TITLE = 'Графические библиотеки Weintek';
 $DESCRIPTION = 'Ваши проекты достойны качественного дизайна. Используйте библиотеки графики Weintek при разработке проектов.';
 $CANONICAL = "https://www.rusavtomatika.com/weintek_libraries/";
 
-
-include $_SERVER[ 'DOCUMENT_ROOT' ] . "/cms/core/check_catalog_404.php";
 global $db;
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/application/CoreApplication.php";
-
 function formatSizeUnits( $bytes ) {
   if ( $bytes >= 1073741824 ) {
     $bytes = number_format( $bytes / 1073741824, 2 ) . ' GB';
@@ -443,8 +438,6 @@ $(".documents_list").html(response.data);
 */?>
 </article>
 <?
-
-//include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
 ?>

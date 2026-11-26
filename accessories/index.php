@@ -17,7 +17,6 @@ if(EX != "_"){
 }
 
 header('Content-Type: text/html; charset=windows-1251');
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/check_catalog_404.php";
 global $current_component;
 global $TITLE, $KEYWORDS, $DESCRIPTION, $CANONICAL;
 $DESCRIPTION = '';
@@ -31,7 +30,7 @@ if (file_exists($section_setup)) {
     include $section_setup;
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/prolog.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 echo "<article>";
 
 /* var_dump($current_component);
@@ -78,5 +77,5 @@ $APPLICATION->IncludeComponent("catalog", "accessories_all_products", $arguments
 /* * * END *** Подключение компонента каталога */
 /* * ****************************************************************************** */
 echo "</article>";
-include $_SERVER['DOCUMENT_ROOT'] . "/cms/core/epilog.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
 ?>
