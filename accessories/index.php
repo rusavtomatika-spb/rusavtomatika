@@ -33,15 +33,7 @@ if (file_exists($section_setup)) {
 include $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
 echo "<article>";
 
-/* var_dump($current_component);
-  var_dump($element_code);
-  var_dump($section_code);
- */
-/* * ****************************************************************************** */
-/* Подключение компонента каталога */
-/**/
 $filter = Array("section" => "accessories");
-/**/
 $SEF = Array("sections_list" => "/accessories/",
     "section" => "/accessories/#section_code#/",
     "element" => "/accessories/#section_code#/#element_code#/");
@@ -74,8 +66,6 @@ $arguments = Array(
 
 $arguments["path_to_images"] = "";
 $APPLICATION->IncludeComponent("catalog", "accessories_all_products", $arguments);
-/* * * END *** Подключение компонента каталога */
-/* * ****************************************************************************** */
 echo "</article>";
 include $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
 ?>

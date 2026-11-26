@@ -12,14 +12,14 @@ global $mysqli_db;
 
 $DESCRIPTION = 'EasyAccess 2.0';
 $KEYWORDS = '';
-$TITLE = 'EasyAccess 2.0 � ��������� ���������� ������������ ������� ��� ����������� IP-������';
+$TITLE = 'EasyAccess 2.0 — удаленное управление операторской панелью без выделенного IP-адреса';
 $SERVER_PROTOCOL = $_SERVER['SERVER_PROTOCOL'] == "HTTP/1.1" ? "http://" : "https://";
 
 global $extra_openGraph;
 $extra_openGraph = Array(
     "openGraph_image" => "https://www.rusavtomatika.com/upload_files/images/weintek/accessories/easyaccess/md/easyaccess_1.png",
-    "openGraph_title" => "EasyAccess 2.0 � ��������� ���������� ������������ ������� ��� ����������� IP-������",
-    "openGraph_siteName" => "�������������"
+    "openGraph_title" => "EasyAccess 2.0 — удаленное управление операторской панелью без выделенного IP-адреса",
+    "openGraph_siteName" => "Русавтоматика"
 );
 
 include $_SERVER['DOCUMENT_ROOT'] . "/abacus/prolog.php";
@@ -31,7 +31,7 @@ $sql = "SELECT * FROM products_all WHERE `model` = '$num' ";
 $res = mysqli_query($mysqli_db, $sql) or die(mysqli_error($mysqli_db));
 $r = mysqli_fetch_object($res);
 
-$nav = '<nav style="margin-left: 0px"><a href="/">�������</a>&nbsp;/&nbsp;<a href="/accessories/">����������</a>&nbsp;/&nbsp;' . $TITLE . '</nav>';
+$nav = '<nav style="margin-left: 0px"><a href="/">Главная</a>&nbsp;/&nbsp;<a href="/accessories/">Аксессуары</a>&nbsp;/&nbsp;' . $TITLE . '</nav>';
 
 ?>
 <script>
@@ -68,12 +68,6 @@ $nav = '<nav style="margin-left: 0px"><a href="/">�������</a>&nbsp
                     else if( difer > topdowindownext){
                         $('.tabs__guide__caption').css({'position' : 'absolute', 'top' : 'auto', 'bottom' : '0px'});
                     }
-                    /*
-if($('.tabs__guide__content').height() < tab_hight){
-    $('.tabs__guide__content').height(tab_hight) ;
-}*/
-console.log($('.tabs__guide__content').height());
-
                     $(window).scroll(function() {
 
                         var difer = $(window).scrollTop() - topblocktabs + 25;
@@ -100,8 +94,8 @@ console.log($('.tabs__guide__content').height());
                         .removeClass("active")
                         .eq($(this).index())
                         .addClass("active");
-                    if ($("#topper").length !== 0) { // �������� ������������� �������� ����� �������� ������
-                        $('html, body').animate({ scrollTop: $("#topper").offset().top }, 300); // ��������� ��������� � �������� scroll_el
+                    if ($("#topper").length !== 0) { // проверим существование элемента чтобы избежать ошибки
+                        $('html, body').animate({ scrollTop: $("#topper").offset().top }, 300); // анимируем скроолинг к элементу scroll_el
                     }
                     asd = $('.tabs__guide.vertical').height();
                     topdowindownext = asd - dsa;
@@ -111,14 +105,6 @@ console.log($('.tabs__guide__content').height());
         });
 
     })(jQuery);
-
-
-
-
-
-
-
-
 </script>
 
 <style>
@@ -149,10 +135,10 @@ console.log($('.tabs__guide__content').height());
 <article>
     <div class="blockofcols_container">
         <?=$nav?>
-        <h1>EasyAccess 2.0 (��������/���������) � ��������� ���������� ������������ ������� ��� ����������� IP-������</h1>
+        <h1>EasyAccess 2.0 (лицензия/активация) — удаленное управление операторской панелью без выделенного IP-адреса</h1>
         <div class="blockofcols_row" style="margin: 25px 0">
             <div class="col-4">
-                <a class="catalog_element_monitors_aplex__main_picture number_of_picture_1" data-fancybox="group" data-caption="�������� EasyAccess" href="//www.rusavtomatika.com/upload_files/images/weintek/accessories/easyaccess/md/easyaccess_1.png">
+                <a class="catalog_element_monitors_aplex__main_picture number_of_picture_1" data-fancybox="group" data-caption="Лицензия EasyAccess" href="//www.rusavtomatika.com/upload_files/images/weintek/accessories/easyaccess/md/easyaccess_1.png">
                     <div class="catalog_element_monitors_aplex_picture_detail_wrap">
                         <div class="catalog_element_monitors_aplex_picture_detail" style="background-image: url(https://www.rusavtomatika.com/upload_files/images/weintek/accessories/easyaccess/md/easyaccess_1.png);"></div>
                     </div>                </a>
@@ -168,7 +154,6 @@ console.log($('.tabs__guide__content').height());
                             $("a.catalog_element_monitors_aplex__main_picture.number_of_picture_1").attr("href", $(this).attr('data-rel-large'));
 
                         });
-                        /*$("a.catalog_element_monitors_aplex__main_picture").fancybox();*/
                         $(".catalog_element_monitors_aplex__thumb:first").click();
                     });
                 </script>
@@ -180,24 +165,24 @@ console.log($('.tabs__guide__content').height());
                     <div class="blockofcols_container">
                         <div class="blockofcols_row">
                             <div class="col-4">
-                                <span style="overflow: hidden;max-height: 48px;" class="field_value">��������� EasyAccess 2.0</span>
+                                <span style="overflow: hidden;max-height: 48px;" class="field_value">Активация EasyAccess 2.0</span>
                             </div>
                             <div class="col-3">
-                                <span class="field_title">���� � ���:<br></span>
+                                <span class="field_title">Цена с НДС:<br></span>
                                 <span class="catalog_element_monitors_aplex_price">
-                                                <span class="prpr" title="������� ��� ��������� � ���"><?=$r->retail_price?></span>
-                                                <span class="val_name" title="������� ��� ��������� � ���">USD</span>
+                                                <span class="prpr" title="Нажмите для пересчета в РУБ"><?=$r->retail_price?></span>
+                                                <span class="val_name" title="Нажмите для пересчета в РУБ">USD</span>
                                             </span>
 
 
                             </div>
                             <div class="col-3">
                                 <div>
-                                    <span class="field_title">�������:<br></span>
-                                    <span class="field_value"><span class="val_in_stock">���� �� ������</span></span>
+                                    <span class="field_title">Наличие:<br></span>
+                                    <span class="field_value"><span class="val_in_stock">есть на складе</span></span>
                                 </div>
                             </div>
-                            <div class="but_wr"><div class="zakazbut addToCart" idm="�������� EasyAccess"><span>� �������</span></div></div>
+                            <div class="but_wr"><div class="zakazbut addToCart" idm="Лицензия EasyAccess"><span>В корзину</span></div></div>
                         </div>
                     </div>
                 </div>
@@ -206,9 +191,9 @@ console.log($('.tabs__guide__content').height());
                 <div class="catalog_element_monitors_aplex_property catalog_element_monitors_aplex_buttons">
                     <div class="blockofcols_container">
                         <div class="blockofcols_row">
-                            <div style="display:none;width: 33%" class="col-5-5"><div class="but_wr"> <div class="zakazbut" idm="�������� EasyAccess" onclick="show_compare(this)"><span>�&nbsp;���������</span></div></div></div>
-                            <div class="col-5-5" style="width: 50%"><div class="but_wr"><div class="zakazbut" idm="�������� EasyAccess" onclick="show_backup_call(2, '�������� EasyAccess')"><span>�����&nbsp;�&nbsp;1&nbsp;����</span></div></div></div>
-                            <div class="col-5-5" style="width: 50%"><div class="but_wr"><div class="zakazbut" idm="�������� EasyAccess" onclick="show_backup_call(1, '�������� EasyAccess')"><span>��������&nbsp;������</span></div> </div></div>
+                            <div style="display:none;width: 33%" class="col-5-5"><div class="but_wr"> <div class="zakazbut" idm="Лицензия EasyAccess" onclick="show_compare(this)"><span>В&nbsp;сравнение</span></div></div></div>
+                            <div class="col-5-5" style="width: 50%"><div class="but_wr"><div class="zakazbut" idm="Лицензия EasyAccess" onclick="show_backup_call(2, 'Лицензия EasyAccess')"><span>Заказ&nbsp;в&nbsp;1&nbsp;клик</span></div></div></div>
+                            <div class="col-5-5" style="width: 50%"><div class="but_wr"><div class="zakazbut" idm="Лицензия EasyAccess" onclick="show_backup_call(1, 'Лицензия EasyAccess')"><span>Получить&nbsp;скидку</span></div> </div></div>
                         </div>
                     </div>
                 </div>
@@ -216,155 +201,97 @@ console.log($('.tabs__guide__content').height());
                 <div class="catalog_element_monitors_aplex_property catalog_element_monitors_aplex_text_detail">
                     <div class="blockofcols_container">
                         <div class="blockofcols_row">
-                            <p>�������� �������� ���������������� �� ���� ������ �� ���� ������ � �������������.</p>
-                            <p>��������� �������� 55$ ��� ������� �������������� ������������ ������ ��������� ��� ��������� ���������� Weintek. </p>
-                            <p><b>��������� �������� �������� - 80$ � ���</b></p>
+                            <p>Действие лицензии распространяется на одну панель на весь период её использования.</p>
+                            <p>Стоимость лицензии 55$ при условии одновременного приобретения панели оператора или облачного устройства Weintek. </p>
+                            <p><b>Стоимость лицензии отдельно - 80$ с НДС</b></p>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
-
-        <?/*?>
         <section>
-
-
-
-            <h2>��� �������� EasyAccess 2.0?</h2>
-            <p>���������� ������� EasyAccess 2.0 ������ ���������� �� ������������� ������� ���������� �������. ��� ��������� �������������� ��������:</p>
-
-
-
-
-
-            <div class="blockofcols_row" style="margin: 25px 0">
-                <div class="col-6" style="padding: 15px">
-                    <div style="background-color: rgba(91, 155, 213, 0.1);padding: 25px;border-bottom: 4px solid #5b9bd5;height: 181px;">
-                    <p><b>������������ ��������� ���������� (����� �����)</b></p>
-
-            <ul class="spisok">
-                <li>������ ����� ��������� ����� ��������� ���������� �������, �� ����� ��������� ������� ���������.</li>
-                <li>��� ������ �������� IP ����� ���������� ������ ���� ����������.</li>
-                <li>���� ������ ��������� ���������� ����� ��� (��� ���������) �������, ����������� ����� ���� ����������.</li>
-            </ul>
-
-    </div>
-
-                </div>
-                <div class="col-6" style="padding: 15px">
-                    <div style="background-color: rgba(142, 206, 99, 0.23);padding: 25px;border-bottom: 4px solid #466531;height: 181px;">
-                    <p><b>���������� � ������� EasyAccess 2.0 (�������� �����)</b></p>
-
-                        <ul class="spisok">
-                            <li>�� � ������ ��������� ������������ � ����������� VPN-�������, ����� ������� �������������� ����� �������</li>
-                            <li>������� �������������� �������� ���� �� ���������.</li>
-                            <li>� ������ �������� IP ����� ���������� ��������� ���������.</li>
-                            <li>���������� �� ����������� ���������������� ����� �� ������ �� ���������� EasyAccess 2.0.</li>
-                        </ul>
-
-
-                    </div>
-                </div>
-
-            </div>
-<img style="width: 100%" alt="����� 1" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/mceclip0.webp">
-
-        </section>
- <?*/?>
-
-        <section>
-
-
             <div id="topper"></div>
-            <?/*?>
-            <h2>��� ������ �������� � EasyAccess 2.0</h2>
-
-            <?*/?>
             <div class="tabs__guide  vertical">
 
                 <ul class="tabs__guide__caption">
-                    <li class="active">1. ����� � �����������</li>
-                    <li>2. ��������� ���������� � ���������</li>
-                    <li>3. ������ ������</li>
-                    <li>4. ���������� ������� (���������)</li>
-                    <li>5. ���������� ������ � �����<br>(Trial 30 ����)</li>
-                    <li>6. ���������� ������ � �����<br></li>
-                    <li>7. EasyAccess 2.0 �� ��</li>
-                    <li>8. �����������</li>
+                    <li class="active">1. Обзор и особенности</li>
+                    <li>2. Системные требования и установка</li>
+                    <li>3. Начало работы</li>
+                    <li>4. Управление доменом (аккаунтом)</li>
+                    <li>5. Добавление панели в домен<br>(Trial 30 дней)</li>
+                    <li>6. Добавление панели в домен<br></li>
+                    <li>7. EasyAccess 2.0 на ПК</li>
+                    <li>8. Ограничения</li>
                 </ul>
                 <div class="tabs__guide__content  active">
-                    <h2>��� ����� EasyAccess 2.0?</h2>
-                    <p>EasyAccess 2.0 ��� ������, � ������� �������� �� ������ �������� ������ � ����� ������� ��������� � ��� �� ����� ����� ����.
-                        ��� ���������� ������������ ������ ��������� � �������� �� � ������ �������� EasyAccess 2.0 (�� ����� weincloud.net), � ���������, ��� ������ ����� ����� � ��������.
-                        ����� ���������, �� ������� �������� � ���������� �������� � ��� � ����� ��������� ����. ������ ���������� ������ ���� ���� ����� ����� ���������� IP.
-                        ������, ������������ ����� ������ ���� �������� ���������� SSL 128 ���. ������ �������� ������������ ������������ � ���������� �������� ������.</p>
+                    <h2>Что такое EasyAccess 2.0?</h2>
+                    <p>EasyAccess 2.0 это сервис, с помощью которого вы можете получить доступ к вашим панелям оператора и ПЛК из любой точки мира.
+                        Вам достаточно активировать панели оператора и добавить их к вашему аккаунту EasyAccess 2.0 (на сайте weincloud.net), и убедиться, что панели имеют выход в Интернет.
+                        После настройки, вы сможете работать с удаленными панелями и ПЛК в вашей локальной сети. Каждое устройство внутри этой сети будет иметь уникальный IP.
+                        Данные, передаваемые через данную сеть защищены протоколом SSL 128 бит. Данный протокол обеспечивает безопасность и надежность передачи данных.</p>
                     <div class="blockofcols_row" style="margin: 25px 0">
                         <div class="col-1"></div>
                         <div class="col-2">
                             <div class="image_bg_cover" style="background-image: url('https://www.rusavtomatika.com/upload_files/images/icon-security.png')"></div>
-                            <div class="under_text">������������ ����������� SSL</div>
+                            <div class="under_text">Безопасность —шифрование SSL</div>
                         </div>
                         <div class="col-2">
                             <div class="image_bg_cover" style="background-image: url('https://www.rusavtomatika.com/upload_files/images/icon-users.png')"></div>
-                            <div class="under_text">���������� �������� �������������</div>
+                            <div class="under_text">Управление доступом пользователей</div>
                         </div>
                         <div class="col-2">
                             <div class="image_bg_cover" style="background-image: url('https://www.rusavtomatika.com/upload_files/images/icon-circle2.png')"></div>
-                            <div class="under_text">��� ����������� IP ������ ���������</div>
+                            <div class="under_text">Без выделенного IP панели оператора</div>
                         </div>
                         <div class="col-2">
                             <div class="image_bg_cover" style="background-image: url('https://www.rusavtomatika.com/upload_files/images/icon-passphrough.png')"></div>
-                            <div class="under_text">PassThrough � ���������� PLC ����� HMI</div>
+                            <div class="under_text">PassThrough — управление PLC через HMI</div>
                         </div>
                         <div class="col-2">
                             <div class="image_bg_cover" style="background-image: url('https://www.rusavtomatika.com/upload_files/images/icon-ipad2.png')"></div>
-                            <div class="under_text">���������� HMI � ��������� ���������</div>
+                            <div class="under_text">Управление HMI с мобильных устройств</div>
                         </div>
                         <div class="col-1"></div>
                     </div>
                     <h2>
-                        ��� ���� ����� EasyAccess 2.0?
+                        Для чего нужен EasyAccess 2.0?
                     </h2>
                     <p>
-                        � ��������� ����� ��� ������ ����� ���������� ������� �� ��������� ���������� �������� ���������.
-                        ���� � ��� ������ �������� ����������� � ������ ���������, ������� ����������� �� ����� ������������, �� ��� ����� ������ IP ����� ����� ������, ����� � ��� ������������. ��� ������ ���� �� �� ������ ����� IP � ������? ���� ��������� �������� ��� ��� �������.
+                        В последние время все больше стали появляться запросы на удаленное управление панелями оператора.
+                        Если у вас задача удаленно подключится к панели оператора, которая установлена на вашем производстве, то вам нужно узнать IP адрес вашей панели, чтобы к ней подключиться. Что делать если вы не знаете какой IP у панели? Есть несколько способов как это сделать.
                     </p>
-                    <p>������ ������ � ��� ������������ ������������ � ������ �� �� ������ IP ������. ������ ������ ����� ��� �����������:</p>
+                    <p>Первый способ – это классическое подключиться к панели по ее белому IP адресу. Данный способ имеет ряд затруднений:</p>
                     <ul class="spisok">
-                        <li>���������� ������� � ��������� �����, ����� �� ����� ��� ����� IP (������ ������, ����� ��� ����������)</li>
-                        <li>���������� ����������� ������� ������������</li>
-                        <li>��� ������ ������ ����� ���� ���������� ����� IP</li>
+                        <li>Необходимо просить у оператора связи, чтобы он выдал вам белый IP (Бывают случаи, когда это невозможно)</li>
+                        <li>Необходимо настраивать сетевое оборудование</li>
+                        <li>Для каждой панели нужен свой уникальный белый IP</li>
                     </ul>
-                    <p>������ ������ � ������������ EasyAccess 2.0.</p>
-                    <p>� EasyAccess 2.0 �� ������������ �� �������, ��������� � ������ �������.
-                        ������ ������ ������� ���������� ���� ����� ������ ������������, ������� ������� ���������� ���������� IP.
-                        ��������� ������ IP �����, �� ������ �������� ������������ � ������� ��������� � ��������� ����������� � ����.
+                    <p>Второй способ – использовать EasyAccess 2.0.</p>
+                    <p>С EasyAccess 2.0 вы избавляетесь от проблем, описанных в первом способе.
+                        Данный сервис создает вириальную сеть между вашими устройствами, выдавая каждому устройству уникальный IP.
+                        Используя данный IP Адрес, вы можете удаленно подключаться к панелям оператора и выполнять манипуляции с ними.
                     </p>
-                    <h2>��� ��������� ������ EasyAccess 2.0?</h2>
+                    <h2>Что позволяет делать EasyAccess 2.0?</h2>
                     <ol class="spisok">
-                        <li>��������� ������� ����� VNC-������, CMT Viewer (�������� ������ ��� ����� ������� ��������� CMT).
-                            �� ������ ������, ��� ���������� �� ������ ����� ������, �������� ������.
+                        <li>Управлять панелью через VNC-клиент, CMT Viewer (доступна только для серии панелей оператора CMT).
+                            Вы можете видеть, что происходит на экране вашей панели, нажимать кнопки.
                         </li>
-                        <li>������������ ������</li>
-                        <li>������������� ������ �������</li>
-                        <li>��������� ����� ����� FTP. (���� ������ ������������ ftp)</li>
-                        <li>����������� �����������</li>
+                        <li>Перезаливать проект</li>
+                        <li>Просматривать журнал событий</li>
+                        <li>Загружать файлы через FTP. (Если панель поддерживает ftp)</li>
+                        <li>Производить диагностику</li>
                     </ol>
 
                 </div>
                 <div class="tabs__guide__content">
-                    <h2>��������� ����������</h2>
+                    <h2>Системные требования</h2>
                     <ul class="spisok">
-                        <li>������������ �������: Windows XP, Windows 7, Windows 8 (32 / 64���), Windows 10 (32 / 64���) (���������� ����� ��������������)</li>
-                        <li>������ ��������� Weintek � �������������� EasyAccess 2.0 </li>
-                        <li>��������-����������</li>
-                        <li>EasyBuilder Pro v4.10.05 ��� �����</li>
-                        <li>IOS: 7.0 ��� ������</li>
-                        <li>Android: v4.1.2 ��� ������</li>
+                        <li>Операционная система: Windows XP, Windows 7, Windows 8 (32 / 64бит), Windows 10 (32 / 64бит) (Необходимы права администратора)</li>
+                        <li>Панель оператора Weintek с активированным EasyAccess 2.0 </li>
+                        <li>Интернет-соединение</li>
+                        <li>EasyBuilder Pro v4.10.05 или новее</li>
+                        <li>IOS: 7.0 или старше</li>
+                        <li>Android: v4.1.2 или старше</li>
                     </ul>
 
 
@@ -372,58 +299,58 @@ console.log($('.tabs__guide__content').height());
                 </div>
                 <div class="tabs__guide__content">
 
-                    <h2>������� ���������</h2>
-                    <p>����� ������ ������������ EasyAccess 2.0, ����� ��������� ��������� ����. �������� ��������������� �������, �������� ����������� ����.</p>
+                    <h2>Порядок дейсвтией</h2>
+                    <p>Чтобы начать использовать EasyAccess 2.0, нужно выполнить следующие шаги. Смотрите соответствующие разделы, подробно описывающие шаги.</p>
                     <ol class="spisok">
-                        <li>������ ��������� ������ ���� ������������ (���� ���� ������ �� ����� ��� �������������� EasyAccess2.0, �� ���������� � ����� ���������� � ������-����.)</li>
-                        <li>���������� ������� (���������) (����� 4)<br> ������ ���� ������ ������� (�����) �� ����� <a href="https://www.weincloud.net/">weincloud.net/</a></li>
-                        <li>���������� ������ � ����� (����� 6)<br>���� �� ������ ����������� 30 ������� ������, �� ���������� � (����� 5)<br>������ ��������� ������ ���� ��������� � �����</li>
-                        <li>���������� ������������ � �������� ��� ������� � ������<br>������ ���� ������� ������� ������ ������������, � ������� ����� ��������� ������ ���������</li>
-                        <li>EasyAccess 2.0 ������ ���� ���������� �� ��</li>
+                        <li>Панель оператора должна быть активирована (Если ваша панель не имеет уже активированный EasyAccess2.0, то обратитесь к нашим менеджерам в онлайн-чате.)</li>
+                        <li>Управление доменом (аккаунтом) (Пункт 4)<br> Должен быть создан аккаунт (Домен) на сайте <a href="https://www.weincloud.net/">weincloud.net/</a></li>
+                        <li>Добавление панели в домен (Пункт 6)<br>Если вы хотите попробовать 30 дневную версию, то переходите к (Пункт 5)<br>Панель оператора должна быть добавлена в Домен</li>
+                        <li>Добавление пользователя и открытия ему доступа к панели<br>Должна быть создана учетная запись Пользователя, к которой будет привязана панель оператора</li>
+                        <li>EasyAccess 2.0 должен быть установлен на ПК</li>
                     </ol>
-                    <p>����� ����, ��� ��� ���� ���������, ������������ ������ �������� ������������ � ������ ���������</p>
+                    <p>После того, как все шаги выполнены, пользователь сможет удаленно подключиться к панели оператора</p>
 
 
-                    <h2>��������� ������</h2>
-                    <p>����� ������������ ������ ���������, ����� ������ ������������ EasyAccess 2.0.
-                        � ��������� ������� ������� ��� �������������� ������ ���������, �������� <a href="/weintek/cMT3072.php">cMT3072</a>.
-                        � ����� ������� � ��� �� ����� �������� ��������� EasyAccess 2.0 ������ � ����������.
-                        � ���� ������ ��� ���������� �������� � ���, ����� ������������ ���� ������.
-                        ����� ���������, ��� ���� ������ ������������ EasyAccess 2.0.
-                        ������, ������� ������������ ������ ���������� ����� ������� ���������� ������ �� EasyAccess�.</p>
+                    <h2>Активация панели</h2>
+                    <p>Нужно активировать панель оператора, чтобы начать пользоваться EasyAccess 2.0.
+                        В модельной линейке имеются уже активированные панели оператора, например <a href="/weintek/cMT3072.php">cMT3072</a>.
+                        У таких панелей у нас на сайте написано “Лицензия EasyAccess 2.0 входит в стоимость”.
+                        В ином случае вам необходимо обраться к нам, чтобы активировать вашу панель.
+                        Также убедитесь, что ваша панель поддерживает EasyAccess 2.0.
+                        Модели, которые поддерживают данную технологию имеют пометку “Удаленный доступ по EasyAccess”.</p>
 
-                    <h2>������������</h2>
+                    <h2>Терминология</h2>
 
                     <ul class="spisok">
-                        <li><b>����� � �������������� ������</b>
-                            <p>������� ���������� �������, � �������� ������������� ������ ���������.
-                                <b>������ ��������� ����� ���� ��������� ������ � ������ ������.</b>
-                                �������������� ������, ��� ������������, ������� ����� ��������� �������� ���������
-                                � �������������� ����� ��� ��������� �� ����� (<a href="https://www.weincloud.net/">weincloud.net/</a>).
-                                ������� �������������� ������ �� ������������ ��� ����� � ���������� ��������� EasyAccess 2.0.</p></li>
-                        <li> <b>������ ������� ���������</b>
-                            <p>������ ��������� ����� ���������� � ������. ����� ������ ����� ��������� �������������.
-                                ������������ ������� ����������� ��������� ����� �������� �� ������, ������� �� ���������.
-                                ������ ��������� ����� ���� ��������� � ������ ������. ������ ��������� � ��������� ������������� ������.</p></li>
+                        <li><b>Домен и администратора домена</b>
+                            <p>Доменом называется аккаунт, к которому привязываются панели оператора.
+                                <b>Панель оператора может быть привязана только к одному домену.</b>
+                                Администратора домена, это пользователь, который может управлять панелями оператора
+                                и пользователями через веб интерфейс на сайте (<a href="https://www.weincloud.net/">weincloud.net/</a>).
+                                Аккаунт администратора домена не используется для входа в клиентскую программу EasyAccess 2.0.</p></li>
+                        <li> <b>Группа панелей оператора</b>
+                            <p>Панели оператора можно объединять в группы. Такие группы можно назначать пользователям.
+                                Пользователи получат возможность управлять всеми панелями из группы, которую им назначили.
+                                Панель оператора может быть назначена в разные группы. Группы формирует и назначает администратор домена.</p></li>
                         <li>
-                            <b>������������</b>
-                            <p>������������ � ��� �������, ������� ����� �������������� � ���������� ���������
-                                EasyAccess 2.0 � �������� ��������� �������� ���������, � ����� �������� �������,
-                                ������� ����� ��� �������� ������������� ������.</p></li>
+                            <b>Пользователь</b>
+                            <p>Пользователь — это аккаунт, который может авторизоваться в клиентской программе
+                                EasyAccess 2.0 и удаленно управлять панелями оператора, а также группами панелей,
+                                которые ранее ему назначил администратор домена.</p></li>
                     </ul>
 
 
-                    <h2>������ ������������� ����</h2>
-                    <p>���������� ��������� ������� ��� ��������������� ������� ������.</p>
+                    <h2>Пример распределения прав</h2>
+                    <p>Рассмотрим следующий рисунок для иллюстративного примера домена.</p>
                     <ol class="spisok">
-                        <li>� ���� ������� ����� � ������ ���� ������ ����� ���� �������������, ����� � ����.</li>
-                        <li>� ���� ������� ������ ��������� ������������� � ������: ������ 1, ������ 2, ������ 3 � �.�. ������ ��������� A ����������� � ���� �������</li>
-                        <li>������������ ����� ������������ �� ������ �������. � ��� �� ����� ������ � ������� ���������, ������� �� ����� ������. (������������ ���� � ������ 1)</li>
-                        <li>������������ ����� ���� �������� ������� � �������� ��������� � ����� � ��� ������. (������������ ���� � ������ ��������� J).
-                            ��������� ������������� ����� �������� ������ � ����� � ��� �� ������ ���������,
-                            ���������� �� ����, ��������� �� ��� ������� (������� ��������� �) ��� ����� ������ ����� (������ ��������� H).</li>
+                        <li>В этом примере домен с именем «Мой домен» имеет двух пользователей, Петра и Нину.</li>
+                        <li>В этом примере панели оператора сгруппированы в группы: Группа 1, Группа 2, Группа 3 и т.д. Панель оператора A принадлежит к двум группам</li>
+                        <li>Пользователи могут принадлежать ко многим группам. А так же иметь доступ к панелям оператора, которые не имеют группы. (Пользователь Петр и группа 1)</li>
+                        <li>Пользователи могут быть напрямую связаны с панелями оператора и иметь к ним доступ. (Пользователь Нина и панель оператора J).
+                            Несколько пользователей могут получить доступ к одной и той же панели оператора,
+                            независимо от того, назначены ли они группам (панелей оператора А) или путем прямой связи (панель оператора H).</li>
                     </ol>
-                    <p>������� ������������� ��������������� ������. </p>
+                    <p>Доступы настраиваются администратором домена. </p>
 
                     <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/mceclip1.webp" data-fancybox="gallery0"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/mceclip1.webp"></a></p>
 
@@ -431,37 +358,37 @@ console.log($('.tabs__guide__content').height());
                 </div>
 
                 <div class="tabs__guide__content">
-                    <h2>�������� �������� (������)</h2>
+                    <h2>Создание аккаунта (Домена)</h2>
                     <ol>
-                        <li><p>������� ���������� �������� ��������� �� ������: <a href="https://www.weincloud.net/">weincloud.net</a></p>
-                            <p>������� �� ����, ������� ������ [Create Domain account] � ���������� � ���������� ����� ������ �������</p>
+                        <li><p>Система управления доменами находится по адресу: <a href="https://www.weincloud.net/">weincloud.net</a></p>
+                            <p>Зайдите на сайт, нажмите кнопку [Create Domain account] и переходите к заполнению формы вашими данными</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/1.webp" data-fancybox="gallery1"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/1.webp"></a></p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/2.webp" data-fancybox="gallery1"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/2.webp"></a></p>
                         </li>
                         <li>
-                            <p>���� �� ��� ��������� �����, �� ��� �� ����� ������ ������ �� ������� �� �������������. ������� ��� ������ � ����������� ����������� ��������� �� ������.</p>
-                            <p>������ ����� �������������� � ������� ���������� �������. ��� ����� �� ������� ��������
-                                <a href="https://www.weincloud.net/">weincloud.net</a> ������� ������ [Domain]</p>
+                            <p>Если вы все заполнили верно, то вам на почту придет письмо со ссылкой на подтверждение. Найдите это письмо и подтвердите регистрацию переходом по ссылке.</p>
+                            <p>Теперь можно авторизоваться в системе управления доменом. Для этого на главной странице
+                                <a href="https://www.weincloud.net/">weincloud.net</a> нажмите кнопку [Domain]</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/3.webp" data-fancybox="gallery1"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/3.webp"></a></p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/4.webp" data-fancybox="gallery1"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/4.webp"></a></p>
                         </li>
                     </ol>
 
 
-                    <h2>���������� ������������ � �������� ��� �������</h2>
+                    <h2>Добавление пользователя и открытие ему доступа</h2>
 
                     <ol>
                         <li>
-                            <p>������� ������� [User] (������������). �� ����� �������� � ������ ��� ���� ���� ������������.
-                                ��� ������ ���������� ����� ������. ������� ������ [+Add User] ��� ���������� ������������. </p>
+                            <p>Найдите вкладку [User] (Пользователь). На нашей картинке в списке уже есть один пользователь.
+                                Ваш список изначально будет пустым. Нажмите кнопку [+Add User] для добавления пользователя. </p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/13.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/13.webp"></a></p>
                         </li>
                         <li>
-                            <p>��� ������ ������������ ������� ����� � ��� �����, �� ������� ������ ��������������� ������������� ������. </p>
+                            <p>Для нового пользователя введите логин и его почту, на которую придет сгенерированный автоматически пароль. </p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/14.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/14.webp"></a></p>
                         </li>
                         <li>
-                            <p> ������� ������ � ������. �������� �� � ������� ������ �������������� ��� ������ [Edit HMI]. �������� �������� ������� ������������ � ������� [Save].</p>
+                            <p> Найдите панель в списке. Отметьте ее и нажмите значок редактирования или кнопку [Edit HMI]. Отметьте галочкой нужного пользователя и нажмите [Save].</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/15.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/15.webp"></a></p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/16.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/16.webp"></a></p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/17.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/17.webp"></a></p>
@@ -470,118 +397,118 @@ console.log($('.tabs__guide__content').height());
                 </div>
 
                 <div class="tabs__guide__content">
-                    <h2>���������� ������ � ����� (Trial 30 ����)</h2>
+                    <h2>Добавление панели в домен (Trial 30 дней)</h2>
                     <ol>
                         <li>
-                            <p>� ����� ������ �� ����� <a href="https://www.weincloud.net/">weincloud.net</a>, �� ������� "Devices" - "HMI List"  ������� ������ [+ Add HMI]</p>
+                            <p>В своем домене на сайте <a href="https://www.weincloud.net/">weincloud.net</a>, на вкладке "Devices" - "HMI List"  нажмите кнопку [+ Add HMI]</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/5.webp" data-fancybox="gallery2"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/5.webp"></a></p>
                         </li>
                         <li>
-                            <p>�������� ��� ���������:  30 days Free Trial</p>
+                            <p>Выберите тип активации:  30 days Free Trial</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/6.webp" data-fancybox="gallery2"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/6.webp"></a></p>
 
-                            <p>������� Hardware key (���������� ����)  � ����������� �� ������� [Free Trial].</p>
+                            <p>Введите Hardware key (аппаратный ключ)  и подтвердите их кнопкой [Free Trial].</p>
 
-                            <p>HWkey (Hardware key - ���������� ����) �� ������ ������, ����� � ����� ������ �� �������� ��������� �������� [System Settings] �� ������� [EasyAccess 2]</p>
+                            <p>HWkey (Hardware key - аппаратный ключ) вы можете узнать, зайдя в вашей панели на страницу системных настроек [System Settings] на вкладке [EasyAccess 2]</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/7.webp" data-fancybox="gallery2"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/7.webp"></a></p>
                         </li>
                     </ol>
                 </div>
 
                 <div class="tabs__guide__content">
-                    <h2>���������� ������ � �����</h2>
+                    <h2>Добавление панели в домен</h2>
                     <ol>
                         <li>
-                            <p>��������� � ������ ����������� � �������� �� HW-key (Hardware key  - ���������� ����). ��� ������ ���� �������� � ���������� ����.
-                                �� ���������� ���, ��� ��������� ���������.</p>
+                            <p>Свяжитесь с нашими менеджерами и сообщите им HW-key (Hardware key  - аппаратный ключ). Как узнать ключ смотреть в предыдущем шаге.
+                                Мы поддвердим вам, что активация произошла.</p>
                         </li>
                         <li>
-                            <p>� ������� ��������� EasyBuilderPro ����� ������� � ��������� � ������ ������, ����������� ��������� �� ������ �������� � ����������� EasyAccess 2.0.
-                                �������� � EasyBuilderPro ����� ������. </p>
+                            <p>С помощью программы EasyBuilderPro нужно создать и загрузить в панель проект, позволяющий открывать на панели страницу с настройками EasyAccess 2.0.
+                                Создайте в EasyBuilderPro новый проект. </p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/8.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/8.webp"></a></p>
                         </li>
                         <li>
-                            <p>� ��������� ���������� ��������� ������������ ������� EasyAccess2.0. ������ ���� ������ "����������"</p>
+                            <p>В системных настройках проверьте расположение сервера EasyAccess2.0. Должен быть выбран "Глобальный"</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/9.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/9.webp"></a></p>
                         </li>
                         <li>
-                            <p>�������� �������������� ������, ������� ��������� ���� �76 EasyAccess 2.0 Settings. ��������� ������ � ������.</p>
+                            <p>Добавьте функциональную кнопку, которая открывает окно №76 EasyAccess 2.0 Settings. Загрузите проект в панель.</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/10.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/10.webp"></a></p>
                         </li>
                         <li>
-                            <p>������ � ����� ������� ����� ������ ���� ������, ��� ������� �������, ��������� ���� � ����������� EasyAccess 2.0.
-                                ���������� ���� ������ � ��������� � �������� ���� EasyAccess 2.0. ����� ������� ������ [Start] � ����� [Session ID] � [Password] �������� ��������,
-                                ������� ��� ����� ����� � ��������� ����.</p>
+                            <p>Теперь в новом проекте вашей панели есть кнопка, при нажатии которой, откроется окно с настройками EasyAccess 2.0.
+                                Подключите вашу панель к интернету и откройте окно EasyAccess 2.0. После нажатия кнопки [Start] в полях [Session ID] и [Password] появятся значения,
+                                которые вам будут нужны в следующем шаге.</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/11.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/11.webp"></a></p>
                         </li>
                         <li>
-                            <p>� ����� ������ �� ����� <a href="https://www.weincloud.net/">weincloud.net</a>, �� ������� "Devices" - "HMI List"  ������� ������ [+ Add HMI]</p>
+                            <p>В своем домене на сайте <a href="https://www.weincloud.net/">weincloud.net</a>, на вкладке "Devices" - "HMI List"  нажмите кнопку [+ Add HMI]</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/5.webp" data-fancybox="gallery2"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/5.webp"></a></p>
                         </li>
                         <li>
-                            <p> �������� ��� ���������:  [Add by session Id/password]. ������� Session ID � [Password], ���������� �� ���������� ����. ����������� ������� [Assign]. �� �������� ������ ��������� � �����. ������ ����� ������� ������������ � ������� ��� ������ � ������.</p>
+                            <p> Выберите тип активации:  [Add by session Id/password]. Введите Session ID и [Password], полученные на предыдушем шаге. Подтвердите кнопкой [Assign]. Вы добавили панель оператора в домен. Теперь нужно создать пользователя и открыть ему доступ к панели.</p>
                             <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/12.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/12.webp"></a></p>
                         </li>
                     </ol>
                 </div>
 
                 <div class="tabs__guide__content">
-                    <h2>EasyAccess 2.0 �� ��</h2>
-                    <p>EasyAccess 2.0 ��������������� ��� ��������� ���������, ������� ����� ���������� �� ��. �� ����� �������������� ���������� �� ������������ ������ EasyBuilder.</p>
+                    <h2>EasyAccess 2.0 на ПК</h2>
+                    <p>EasyAccess 2.0 предоставляется как отдельная программа, которую можно установить на ПК. Он может использоваться независимо от программного пакета EasyBuilder.</p>
                     <p><a href="/soft/EasyAccess/EasyAccess20_setup.zip">
                             <div class="download__inner" style="width: 250px;">
                                 <div class="download__img" style="background-image: url(/images/zip.svg)"></div>
-                                <div class="download__text"><div class="download__text__title">����������� ver 2.3.0 ��� PC</div><div class="download__text__p">[23-11-2016 65.12 ��]</div></div>
+                                <div class="download__text"><div class="download__text__title">Дистрибутив ver 2.3.0 для PC</div><div class="download__text__p">[23-11-2016 65.12 Мб]</div></div>
                                 <div class="clearfix"></div>
                             </div>
                         </a></p>
-                    <h3>�����������</h3>
-                    <p>��������� ��� ������, ��� ������������ ������, ������.</p>
+                    <h3>Авторизация</h3>
+                    <p>Заполните имя Домена, Имя пользователя Домена, пароль.</p>
                     <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea1.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea1.webp"></a></p>
-                    <h3>������� �����</h3>
-                    <p>����� ����, ��� �� ������� � �������, �� ��������� �� ������� ������.
-                        ��� ������������ ��� ������ ��������� ��������� ������������.
-                        ����� ������������ ������� �������. �� ������ ������������ � ��������������� ���������� �������.
-                        ������ ����� ����, ��� �� ������������ � ������, �� ��� ������ �������� ������ �������.
-                        � ����� ������ ������ ����� �� ������ ������������, �� ��� ���, ���� �� �� ����� ��������� ������� ����������.</p>
+                    <h3>Главный экран</h3>
+                    <p>После того, как вы зайдете в систему, вы окажетесь на главном экране.
+                        Тут отображаются все панели оператора доступные пользователю.
+                        Также отображаются статусы панелей. Вы можете подключаться к неограниченному количеству панелей.
+                        Однако после того, как вы подключились к панели, то эта панель получает статус “Занято”.
+                        К такой панели больше никто не сможет подключиться, до тех пор, пока вы не будет разорвано текущее соединение.</p>
                     <p style="text-align: center"><a class="img__easyaccess" href="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea2.webp" data-fancybox="gallery3"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea2.webp"></a></p>
-                    <p><b>������� ������ �� ������� ������:</b></p>
+                    <p><b>Функции иконок на главном экране:</b></p>
                     <table class="eatable">
                         <tbody>
                         <tr>
-                            <td>������</td>
-                            <td>�������</td>
+                            <td>Иконка</td>
+                            <td>Функция</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea3.webp"></p></td>
-                            <td>������ ������</td>
+                            <td>Трафик домена</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea4.webp"></p></td>
-                            <td>����� ������ ���������</td>
+                            <td>Поиск панели оператора</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea5.webp"></p></td>
                             <td>
-                                ���: ������/������</td>
+                                Вид: плитка/список</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea6.webp"></p></td>
-                            <td>���������</td>
+                            <td>Настройки</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea7.webp"></p></td>
-                            <td>����� �� �������� ������������</td>
+                            <td>Выход из текущего пользователя</td>
                         </tr>
                         <tr>
                             <td style="width: 260px;"><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea8.webp"></p></td>
-                            <td>������� �����������</td>
+                            <td>Журналы подключений</td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <h3>��������� ������ ��������� � ��������� �������</h3>
-                    <p>������ ��������� ����� ���������� � ����� �� ���������: ������, ������, ���������, ������.</p>
+                    <h3>Состояния панели оператора и настройка доступа</h3>
+                    <p>Панель оператора может находиться в одном из состояний: Офлайн, Онлайн, Соединено, Занято.</p>
                     <table class="eatable">
                         <tbody>
                         <tr style="border-bottom: none;">
@@ -589,184 +516,40 @@ console.log($('.tabs__guide__content').height());
                             <td><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea10.webp"></p></td>
                         </tr>
                         <tr>
-                            <td>������</td>
-                            <td>������</td>
+                            <td>Офлайн</td>
+                            <td>Онлайн</td>
                         </tr>
                         <tr style="border-bottom: none;">
                             <td><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea11.webp"></p></td>
                             <td><p style="text-align: left"><img loading="lazy" src="//www.rusavtomatika.com/upload_files/images/easyaccess20guide/ea12.webp"></p></td>
                         </tr>
                         <tr>
-                            <td>�������</td>
-                            <td>������</td>
+                            <td>Соедино</td>
+                            <td>Занято</td>
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
-
                 <div class="tabs__guide__content">
-
-<h2>����������� EasyAccess 2.0</h2>
-
-<ul style="margin-left:25px;">
-  <li>���������� �����������</li>
-  <li>���������� ������� � ������� ����� ���������������� ������ ���������</li>
-    <li>������������ ���������� ������������� ������� ����� ������������ � ������ ��������� � ���� �����</li>
-      <li>����</li>
-        <li>Ethernet-Ethernet Pass-through</li>
-</ul>
-
+                    <h2>Ограничения EasyAccess 2.0</h2>
+                    <ul style="margin-left:25px;">
+                    <li>Пропускная способность</li>
+                    <li>Количесвто Доменах в которых можно зарегистрировать Панель оператора</li>
+                        <li>Максимальное количество пользователей которые могут подключиться к Панели оператора в одно время</li>
+                        <li>Порт</li>
+                            <li>Ethernet-Ethernet Pass-through</li>
+                    </ul>
                 </div>
-
-
-
-
-
             </div>
-
         </section>
-<??>
-        <!--section style="margin-top: 50px;">
-            <h2>�����</h2>
-            <div class="blockofcols_row">
-                <div class="col-6">
-<iframe width="720" height="405" src="https://rutube.ru/play/embed/5b1be0c1b3c24e57fffa4f92d16fba7e/" frameBorder="0" allow="clipboard-write; autoplay" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-                    <p style="font-size: 17px;">EasyAccess 2.0 - ����������� � ��������� ������ ��� ����������� IP ������</p>
-                </div>
-                <div class="col-6">
-<iframe width="720" height="405" src="https://rutube.ru/play/embed/f826c1eea58b62b8672a02ad4ceac21b/" frameBorder="0" allow="clipboard-write; autoplay" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-                    <p style="font-size: 17px;">��������� ����������� � ������ ��������� Weintek ����� EasyAccess 2.0</p>
-                </div>
-            </div>
-
-        </section-->
-
-<?/*?>
-        <section class="all_panel_with_ea20">
-            <h2>������ ��������� � ���������� EasyAccess 2.0</h2>
-
-            <div id="tabs">
-                <ul>
-
-                    <li class="urlup" data="functions">
-                        <a href="#tabs-1">
-                            �����: <strong>MT8000iE</strong>
-                        </a>
-                    </li>
-                    <li class="urlup" data="dimensions">
-                        <a href="#tabs-2">
-                            �����: <strong>MT8000XE</strong>
-                        </a>
-                    </li>
-                    <li class="urlup" data="scheme">
-                        <a href="#tabs-3">
-                            �����: <strong>cMT</strong>
-                        </a>
-                    </li>
-                    <li class="urlup" data="scheme">
-                        <a href="#tabs-4">
-                            �����: <strong>mTV</strong>
-                        </a>
-                    </li>
-                </ul>
-
-                <div id="tabs-1">
-                    <?
-                    $component->show(array(
-                        "component_name" => "news.list",
-                        "component_template" => "easyaccess_list",
-                        "template_arguments" => array(
-                            "title" => "Weintek",
-                            "series" => "MT8000iE",
-                            "background" => "#f0f0f0;",
-                            "title_link" => "/weintek/"
-                        )),array(
-                            "table" => "products_all",
-                            "order" => "diagonal",
-                            "series" => "MT8000iE",
-                            "custom_sql_query" => "and ((`easy_access` like 'optional') or (`easy_access` like 'build_in'))"
-                        )
-                    );
-                    ?>
-                </div>
-
-                <div id="tabs-2">
-                    <?
-                    $component->show(array(
-                        "component_name" => "news.list",
-                        "component_template" => "easyaccess_list",
-                        "template_arguments" => array(
-                            "title" => "Weintek",
-                            "series" => "MT8000XE",
-                            "title_link" => "/weintek/"
-                        )),array(
-                            "table" => "products_all",
-                            "order" => "diagonal",
-                            "series" => "MT8000XE",
-                            "custom_sql_query" => "and ((`easy_access` like 'optional') or (`easy_access` like 'build_in'))"
-                        )
-                    );
-                    ?>
-                </div>
-                <div id="tabs-3">
-
-                    <?
-                    $component->show(array(
-                        "component_name" => "news.list",
-                        "component_template" => "easyaccess_list",
-                        "template_arguments" => array(
-                            "title" => "Weintek",
-                            "series" => "cMT",
-                            "background" => "#f0f0f0;",
-                            "title_link" => "/weintek/"
-                        )),array(
-                            "table" => "products_all",
-                            "order" => "diagonal",
-                            "series" => "cMT",
-                            "custom_sql_query" => "and ((`easy_access` like 'optional') or (`easy_access` like 'build_in'))"
-                        )
-                    );
-                    ?>
-
-
-                </div>
-                <div id="tabs-4">
-
-                    <?
-                    $component->show(array(
-                        "component_name" => "news.list",
-                        "component_template" => "easyaccess_list",
-                        "template_arguments" => array(
-                            "title" => "Weintek",
-                            "series" => "mTV",
-                            "title_link" => "/weintek/"
-                        )),array(
-                            "table" => "products_all",
-                            "order" => "diagonal",
-                            "series" => "mTV",
-                            "custom_sql_query" => "and ((`easy_access` like 'optional') or (`easy_access` like 'build_in'))"
-                        )
-                    );
-                    ?>
-
-
-                </div>
-            </div>
-
-
-        </section>
-<?*/?>
-
-
         <section>
-            <h2>�������</h2>
+            <h2>Скачать</h2>
             <div class="blockofcols_row">
                 <div class="col-4">
                     <a href="/soft/EasyAccess/EasyAccess20_manual.pdf">
                         <div class="download__inner">
                             <div class="download__img" style="background-image: url(/images/pdf.svg)"></div>
-                            <div class="download__text"><div class="download__text__title">����������� (eng)</div><div class="download__text__p">[3.6 ��]</div></div>
+                            <div class="download__text"><div class="download__text__title">Руководство (eng)</div><div class="download__text__p">[3.6 Мб]</div></div>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -775,7 +558,7 @@ console.log($('.tabs__guide__content').height());
                     <a href="https://play.google.com/store/apps/details?id=com.weintek.easyaccess">
                         <div class="download__inner">
                             <div class="download__img" style="background-image: url(/images/android.svg)"></div>
-                            <div class="download__text"><div class="download__text__title">����������� ��� Android</div><div class="download__text__p">[��������� ������]</div></div>
+                            <div class="download__text"><div class="download__text__title">Дистрибутив для Android</div><div class="download__text__p">[Последняя версия]</div></div>
                             <div class="clearfix"></div>
                         </div>
                     </a>
@@ -784,24 +567,15 @@ console.log($('.tabs__guide__content').height());
                     <a href="/soft/EasyAccess/EasyAccess20_setup.zip">
                         <div class="download__inner">
                             <div class="download__img" style="background-image: url(/images/zip.svg)"></div>
-                            <div class="download__text"><div class="download__text__title">����������� ��� PC</div><div class="download__text__p">[69 ��]</div></div>
+                            <div class="download__text"><div class="download__text__title">Дистрибутив для PC</div><div class="download__text__p">[69 Мб]</div></div>
                             <div class="clearfix"></div>
                         </div>
                     </a>
                 </div>
             </div>
         </section>
-
     </div>
-
-
-
-
-
-
 </article>
-
 <?
-
 include $_SERVER['DOCUMENT_ROOT'] . "/abacus/epilog.php";
 ?>

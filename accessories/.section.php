@@ -1,6 +1,6 @@
-<?php
-$extra_openGraph = Array(
-    "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/accessories.png",
-    "openGraph_title" => "Аксессуары",
-    "openGraph_siteName" => "Русавтоматика"
+<?php
+$extra_openGraph = Array(
+    "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/accessories.png",
+    "openGraph_title" => "РђРєСЃРµСЃСЃСѓР°СЂС‹",
+    "openGraph_siteName" => "Р СѓСЃР°РІС‚РѕРјР°С‚РёРєР°"
 );
