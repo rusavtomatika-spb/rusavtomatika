@@ -146,12 +146,7 @@ $extra_openGraph = array(
     </div-->
 <?php
 
-//include $_SERVER['DOCUMENT_ROOT'] . "/core/templates/rusavtomatika_bulma/include/inc_backup_call.php";
-
 include $_SERVER['DOCUMENT_ROOT'] . "/include_utf_8/widgets/inc_block_small_contacts.php";
-
-
-//include $_SERVER["DOCUMENT_ROOT"]."/sc/lib_new_includes/functions_messages.php";
 
 ?>
     <style>

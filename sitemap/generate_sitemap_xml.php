@@ -83,7 +83,7 @@ foreach ($ar_catalog_links["items"] as $sections) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // из облака тегов
-include_once $_SERVER["DOCUMENT_ROOT"]."/include/main_page/content/block_cloud_tags_data.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/include_utf_8/main_page/content/block_cloud_tags_data.php";
 if(isset($arr_cloud_tags) and count($arr_cloud_tags)>0){
     foreach ($arr_cloud_tags as $cloud_tag){
         if($cloud_tag["add_to_sitemap"] == 1) {

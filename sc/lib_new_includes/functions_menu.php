@@ -4,7 +4,7 @@ function top_buttons()
 {
 
 
-//Выборка из 2-х таблиц
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 2-пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     /*
       $brands = array(
       'Weintek'=>array('products_all','model','weintek'),
@@ -39,47 +39,47 @@ function top_buttons()
             <div class="menu_top_cont">
                 <div class="menu_top">
                     <ul>
-                        <li class="level1"><a href="/about.php"> О компании </a></li>
+                        <li class="level1"><a href="/about.php"> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </a></li>
                         <li class="separator">|</li>
                         <li class="level1">
-                            <a href="/news/"> Новости <span class="arrow-down"></span></a>
+                            <a href="/news/"> пїЅпїЅпїЅпїЅпїЅпїЅпїЅ <span class="arrow-down"></span></a>
                             <ul style="width:268px;margin-left:-9px;">
-                                <li class="level2"><a href="/new-products/"><span class="store-new-badge"></span>Новинки
-                                        продукции</a></li>
-                                <li class="level2"><a href="/video/"><span class="youtube"></span> Видеоканал
+                                <li class="level2"><a href="/new-products/"><span class="store-new-badge"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
+                                <li class="level2"><a href="/video/"><span class="youtube"></span> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                         rusavtomatika.com</a></li>
                             </ul>
                         </li>
                         <li class="separator">|</li>
-                        <li class="level1"><a href="/articles/">Статьи</a></li>
+                        <li class="level1"><a href="/articles/">пїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                         <li class="separator">|</li>
-                        <li class="level1"><a href="/advanced_search.php" title="Подбор оборудования по параметрам">Подбор</a>
+                        <li class="level1"><a href="/advanced_search.php" title="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅ</a>
                         </li>
                         <li class="separator">|</li>
-                        <li class="level1"><a href="/comparison.php">Сравнение</a></li>
+                        <li class="level1"><a href="/comparison.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                         <li class="separator">|</li>
-                        <li class="level1"><a href="/payment-shipping.php">Оплата и доставка</a></li>
+                        <li class="level1"><a href="/payment-shipping.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                         <li class="separator">|</li>
                         <li class="level1">
-                            <a href="/download.php"> Скачать <span class="arrow-down"></span></a>
+                            <a href="/download.php"> пїЅпїЅпїЅпїЅпїЅпїЅпїЅ <span class="arrow-down"></span></a>
                             <ul style="width:253px;margin-left:-50px;">
-                                <li class="level2"><a href="/download.php">Приложения и драйверы</a></li>
+                                <li class="level2"><a href="/download.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                                 <li class="separator"></li>
-                                <li class="level2"><a href="/documents/">Документы</a></li>
+                                <li class="level2"><a href="/documents/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                                 <li class="separator"></li>
-                                <li class="level2"><a href="/weintek_projects/">Демо проекты Weintek</a></li>
+                                <li class="level2"><a href="/weintek_projects/">пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek</a></li>
                                 <li class="separator"></li>
-                                <li class="level2"><a href="/weintek_projects/?find_projects=Macro%20Sample">Демо
-                                        макросы Weintek</a></li>
+                                <li class="level2"><a href="/weintek_projects/?find_projects=Macro%20Sample">пїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek</a></li>
                                 <li class="separator"></li>
-                                <li class="level2"><a href="/weintek_libraries/">Библиотеки для EasyBuilder</a></li>
+                                <li class="level2"><a href="/weintek_libraries/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ EasyBuilder</a></li>
                                 <li class="separator"></li>
-                                <li class="level2"><a href="/weintek_drivers/">Драйверы ПЛК
-                                        (совм.&nbsp;с&nbsp;Weintek)</a></li>
+                                <li class="level2"><a href="/weintek_drivers/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+                                        (пїЅпїЅпїЅпїЅ.&nbsp;пїЅ&nbsp;Weintek)</a></li>
                             </ul>
                         </li>
                         <li class="separator">|</li>
-                        <li class="level1"><a href="/contacts.php"> Контакты </a></li>
+                        <li class="level1"><a href="/contacts.php"> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </a></li>
                     </ul>
                 </div>
             </div>
@@ -115,59 +115,59 @@ function top_buttons()
             else: ?>
                 <ul>
                     <li><label class="label" for="select-catalog">
-                            <div class="top-menu-punkt full">Каталог оборудования</div>
+                            <div class="top-menu-punkt full">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                         </label>
                         <label class="label" for="close-catalog">
-                            <div class="top-menu-punkt fill">Каталог оборудования</div>
+                            <div class="top-menu-punkt fill">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                         </label>
                     </li>
                 </ul>
                 <div id="wide-menu">
                     <div id="wide-menu-category">
-                        <div class="header">Оборудование</div>
+                        <div class="header">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                         <ul>
                             <li><label class="label" id="b-r-select-paneli" for="r-select-paneli">
-                                    <div>Панели оператора</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-wince" for="r-select-wince">
-                                    <div>Панельные компьютеры Windows CE</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Windows CE</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-panel-pc" for="r-select-panel-pc">
-                                    <div>Панельные компьютеры</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-box-pc" for="r-select-box-pc">
-                                    <div>Встраиваемые компьютеры</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-pc-full-ip65" for="r-select-pc-full-ip65">
-                                    <div>Промышленные <br/>компьютеры full IP65</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <br/>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ full IP65</div>
                                 </label></li>
                             <li><label class="label utility__triger__weintek__monitor-obj-on" id="b-r-select-monitory"
                                        for="r-select-monitory">
-                                    <div>Промышленные мониторы</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-routery" for="r-select-routery">
-                                    <div>VPN-роутеры</div>
+                                    <div>VPN-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-plc" for="r-select-plc">
-                                    <div>Контроллеры (PLC)</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (PLC)</div>
                                 </label></li>
                             <li><label class="label" id="b-r-select-modbus" for="r-select-modbus">
-                                    <div>Модули ввода-вывода</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><label class="label" id="b-select-power-supply" for="r-select-power-supply">
-                                    <div>Блоки питания</div>
+                                    <div>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                 </label></li>
                             <li><a href="/ucenennye-tovary.php" style="color: inherit;"><label class="label" id=""
                                                                                                for="">
-                                        <div>Уцененные товары</div>
+                                        <div>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</div>
                                     </label></a></li>
-                            <!--li><label class="label" id="b-r-select-android" for="r-select-android"><div>Панели оператора Android</div></label></li-->
+                            <!--li><label class="label" id="b-r-select-android" for="r-select-android"><div>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Android</div></label></li-->
 
                         </ul>
                     </div>
 
                     <div id="wide-menu-manufacturers">
-                        <div class="header">Производители</div>
+                        <div class="header">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                         <ul>
                             <li><a href="/weintek/">
                                     <div class="arrow">&nbsp;</div>
@@ -230,17 +230,17 @@ function top_buttons()
                         </ul>
                     </div>
                     <div id="wide-menu-products">
-                        <div class="header" style="width:90px;">Модели</div>
+                        <div class="header" style="width:90px;">пїЅпїЅпїЅпїЅпїЅпїЅ</div>
                         <div id="wide-menu-products-content">
                             <ul id="all-models">
 
 
                                 <li id="m-ewon" class="m-routers">
                                     <div class="it-logo"><a href="/ewon/"><img src="/images/logo/ewon-s.jpg"
-                                                                               alt="eWON лого" nopin="nopin"></a></div>
+                                                                               alt="eWON пїЅпїЅпїЅпїЅ" nopin="nopin"></a></div>
 
                                     <div class="free-space"></div>
-                                    <div class="cat-name m-routers"><a href="/ewon/">VPN-роутеры eWON</a></div>
+                                    <div class="cat-name m-routers"><a href="/ewon/">VPN-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ eWON</a></div>
                                     <ul class="models m-routers">
                                         <li class="man-logo m-routers"><img src="/images/ewon/COSY131/COSY131_1.png"
                                                                             alt="COSY131" nopin="nopin"></li>
@@ -260,17 +260,17 @@ function top_buttons()
 
                                 <li id="box-pc-title" class="m-panel-pc m-pc-full-ip65">
                                     <div class="cat-name m-box-pc"><a href="/vstraivaemye-kompyutery/">
-                                            Посмотреть все встраиваемые компьютеры
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                         </a></div>
                                 </li>
                                 <li id="panel-pc-title" class="m-panel-pc m-pc-full-ip65">
                                     <div class="cat-name m-panel-pc"><a href="/panelnie-computery/">
-                                            Посмотреть все панельные компьютеры
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                         </a></div>
                                 </li>
                                 <li id="monitory-title" class="m-panel-pc m-pc-full-ip65">
                                     <div class="cat-name m-monitors"><a href="/monitors/">
-                                            Посмотреть все промышленные мониторы
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                         </a></div>
                                 </li>
 
@@ -278,17 +278,17 @@ function top_buttons()
                                 <li id="m-ifc" class="m-panel-pc m-box-pc m-monitors" data-position="2">
 
                                     <div class="it-logo"><a href="/panelnie-computery/ifc/"><img
-                                                    src="/images/logo/ifc.png" alt="IFC лого"></a></div>
+                                                    src="/images/logo/ifc.png" alt="IFC пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
 
 
                                     <div class="cat-name m-panel-pc"><a href="/panelnie-computery/ifc/IFC-L07.php">Linux
-                                            панельный компьютер 7" IFC-L07 </a><br>
-                                        <a href="/panelnie-computery/ifc/IFC-A10.php">Android панельный компьютер 10.1"
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 7" IFC-L07 </a><br>
+                                        <a href="/panelnie-computery/ifc/IFC-A10.php">Android пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 10.1"
                                             IFC-A10 </a></div>
 
-                                    <div class="cat-name m-panel-pc"><a href="/panelnie-computery/ifc/ifc-500.php">Панельные&nbsp;компьютеры
+                                    <div class="cat-name m-panel-pc"><a href="/panelnie-computery/ifc/ifc-500.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             IFC-500 <br/><span
                                                     style="font-size:smaller;">CPU Intel  Core i5-7200U</span></a></div>
                                     <ul class="models m-panel-pc">
@@ -325,7 +325,7 @@ function top_buttons()
                                                         class="my_span">21.5&#8243;</span><span> IFC-521WRi5-7200</span></a>
                                         </li>
                                     </ul>
-                                    <div class="cat-name m-panel-pc"><a href="/panelnie-computery/ifc/ifc-400.php">Панельные&nbsp;компьютеры
+                                    <div class="cat-name m-panel-pc"><a href="/panelnie-computery/ifc/ifc-400.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             IFC-400 <br/><span style="font-size:smaller;">CPU Intel  Core i3 / i5</span></a>
                                     </div>
                                     <ul class="models m-panel-pc">
@@ -384,7 +384,7 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-box-pc"><a href="/promyshlennye-kompyutery-box-pc/">Встраиваемые&nbsp;компьютеры
+                                    <div class="cat-name m-box-pc"><a href="/promyshlennye-kompyutery-box-pc/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             IFC</a></div>
                                     <ul class="models m-box-pc">
                                         <li class="man-logo m-box-pc" style="margin-left: -50px;"><img
@@ -413,24 +413,24 @@ function top_buttons()
                                         <li class="m-box-pc no-after"><a
                                                     href="/promyshlennye-kompyutery-box-pc/IFC-BOXI5-7200.php"><span
                                                         class="my_span"></span><span><span style="width:147px"
-                                                                                           class="w100">IFC-BOXI5-7200</span> CPU Intel Kaby Lake i5-7200u 2.5 ГГц</span></a>
+                                                                                           class="w100">IFC-BOXI5-7200</span> CPU Intel Kaby Lake i5-7200u 2.5 пїЅпїЅпїЅ</span></a>
                                         </li>
                                         <li class="m-box-pc no-after"><a
                                                     href="/promyshlennye-kompyutery-box-pc/IFC-BOXI5-6200-6COM.php"><span
                                                         class="my_span"></span><span><span style="width:147px"
-                                                                                           class="w100">IFC-BOXI5-6200-6COM</span>6 COM, CPU Intel Core i5-6200 2.5 ГГц</span></a>
+                                                                                           class="w100">IFC-BOXI5-6200-6COM</span>6 COM, CPU Intel Core i5-6200 2.5 пїЅпїЅпїЅ</span></a>
                                         </li>
                                         <li class="m-box-pc no-after"><a
                                                     href="/promyshlennye-kompyutery-box-pc/IFC-MBOX3455.php"><span
                                                         class="my_span"></span><span><span style="width:147px"
-                                                                                           class="w100">IFC-MBOX3455</span>CPU Intel Apollo Lake Atom J3455 4 ядра, 2.3ГГц</span></a>
+                                                                                           class="w100">IFC-MBOX3455</span>CPU Intel Apollo Lake Atom J3455 4 пїЅпїЅпїЅпїЅ, 2.3пїЅпїЅпїЅ</span></a>
                                         </li>
 
                                     </ul>
 
 
-                                    <div class="cat-name m-monitors"><a href="/monitors/#cheapmonitorsifc">Промышленные
-                                            мониторы&nbsp;IFC</a></div>
+                                    <div class="cat-name m-monitors"><a href="/monitors/#cheapmonitorsifc">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;IFC</a></div>
                                     <ul class="models m-monitors">
                                         <li class="man-logo m-monitors"><img
                                                     src="/images/ifc/monitor/IFC-M215/md/IFC-M215_1.png" alt="IFC-M215"
@@ -453,20 +453,20 @@ function top_buttons()
 
                                     <ul class="series">
                                         <li class="m-box-pc"><a href="/promyshlennye-kompyutery-box-pc/">BOX-PC</a></li>
-                                        <li class="m-monitors"><a href="/monitors/">Мониторы</a></li>
+                                        <li class="m-monitors"><a href="/monitors/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
                                     </ul>
 
                                 </li>
                                 <li id="m-aplex" class="m-panel-pc m-pc-full-ip65" data-position="1">
                                     <div class="it-logo"><a href="/panelnie-computery/aplex/"><img
-                                                    src="/images/logo/aplex.png" alt="Aplex лого" nopin="nopin"></a>
+                                                    src="/images/logo/aplex.png" alt="Aplex пїЅпїЅпїЅпїЅ" nopin="nopin"></a>
                                     </div>
 
                                     <div class="free-space"></div>
 
 
                                     <div class="cat-name m-box-pc">
-                                        <a href="/vstraivaemye-kompyutery/aplex/">Встраиваемые&nbsp;компьютеры Aplex</a>
+                                        <a href="/vstraivaemye-kompyutery/aplex/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Aplex</a>
                                     </div>
                                     <ul class="models m-box-pc">
                                         <li class="man-logo m-box-pc"><img
@@ -491,9 +491,9 @@ function top_buttons()
                                     </ul>
 
                                     <div class="cat-name m-panel-pc">
-                                        <a href="/panelnie-computery/aplex/#archmi-8-series">Панельные&nbsp;компьютеры
+                                        <a href="/panelnie-computery/aplex/#archmi-8-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             APLEX ARCHMI-8</a>
-                                        <p style="font-size:smaller;">CPU Celeron N2930 4 ядра 1.83 ГГц</p>
+                                        <p style="font-size:smaller;">CPU Celeron N2930 4 пїЅпїЅпїЅпїЅ 1.83 пїЅпїЅпїЅ</p>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-panel-pc"><img
@@ -564,7 +564,7 @@ function top_buttons()
                                     </ul>
 
                                     <div class="cat-name m-panel-pc">
-                                        <a href="/panelnie-computery/aplex/#archmi-9XX">Панельные&nbsp;компьютеры APLEX
+                                        <a href="/panelnie-computery/aplex/#archmi-9XX">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ APLEX
                                             ARCHMI-9</a>
                                         <p style="font-size:smaller;">CPU Intel Core i5-6300U</p>
                                     </div>
@@ -639,7 +639,7 @@ function top_buttons()
                                     <!-- /**/ -->
 
                                     <div class="cat-name m-monitors">
-                                        <a href="/monitors/aplex/">Промышленные мониторы Aplex</a>
+                                        <a href="/monitors/aplex/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Aplex</a>
                                     </div>
                                     <ul class="models m-monitors">
                                         <li class="man-logo m-panel-pc"><img
@@ -677,12 +677,12 @@ function top_buttons()
                                     <!-- /**/ -->
 
                                     <div class="cat-name m-pc-full-ip65">
-                                        <a href="/panelnie-computery/aplex/#vitam-series">Панельные компьютеры APLEX
-                                            ViTAM Серия 8XX</a>
+                                        <a href="/panelnie-computery/aplex/#vitam-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ APLEX
+                                            ViTAM пїЅпїЅпїЅпїЅпїЅ 8XX</a>
                                         <p style="font-size:smaller;text-decoration: none !important;">
-                                            Процессор Intel Celeron N2930
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Intel Celeron N2930
                                             <br>
-                                            Степень пылевлагозащиты IP66/IP69K и разъемы M12
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IP66/IP69K пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ M12
                                         </p></div>
 
                                     <ul class="models m-pc-full-ip65">
@@ -692,12 +692,12 @@ function top_buttons()
                                         </li>
                                     </ul>
                                     <div class="cat-name m-pc-full-ip65"><a
-                                                href="/panelnie-computery/aplex/#vitam-series">Панельные компьютеры
-                                            APLEX ViTAM Серия 9XXA</a>
+                                                href="/panelnie-computery/aplex/#vitam-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            APLEX ViTAM пїЅпїЅпїЅпїЅпїЅ 9XXA</a>
                                         <p style="font-size:smaller;text-decoration: none !important;">
-                                            Процессор Intel Skylake 6th Core i3-6100U (опционально i5-6300U /
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Intel Skylake 6th Core i3-6100U (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ i5-6300U /
                                             i7-6600U)<br>
-                                            Степень пылевлагозащиты IP66/IP69K и разъемы M12
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IP66/IP69K пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ M12
                                         </p></div>
 
                                     <ul class="models m-pc-full-ip65">
@@ -739,20 +739,20 @@ function top_buttons()
 
 
                                     <div class="cat-name m-pc-full-ip65">
-                                        <a href="/panelnie-computery/aplex/#apc-series">Панельные&nbsp;компьютеры APLEX
+                                        <a href="/panelnie-computery/aplex/#apc-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ APLEX
                                             APC</a>
-                                        <p style="font-size:smaller;">из нержавеющей стали, full IP65 <br/>CPU Intel
-                                            Atom D2550 2 ядра 1.8 ГГц</p>
+                                        <p style="font-size:smaller;">пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, full IP65 <br/>CPU Intel
+                                            Atom D2550 2 пїЅпїЅпїЅпїЅ 1.8 пїЅпїЅпїЅ</p>
                                     </div>
                                     <ul class="models m-pc-full-ip65">
                                         <li class="man-logo m-pc-full-ip65" style="margin-top: -11px;"><img
                                                     src="/images/aplex/APC-3593P/APC-3593P_1.png" alt="APC-3593P"
                                                     style="max-width: 120px;"
-                                                    title="Копус из нержавеющей стали можно мыть со всех сторон"
+                                                    title="пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"
                                                     nopin="nopin"><img src="/images/aplex/APC-3593P/APC-3593P_2.png"
                                                                        alt="APC-3593P"
                                                                        style="margin-top: -63px;margin-right: 142px;max-width: 111px;"
-                                                                       title="Копус из нержавеющей стали можно мыть со всех сторон"
+                                                                       title="пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"
                                                                        nopin="nopin"></li>
 
                                         <li class="m-pc-full-ip65"><a
@@ -852,10 +852,10 @@ function top_buttons()
                                     </ul>
 
                                     <div class="cat-name m-panel-pc">
-                                        <a href="/panelnie-computery/aplex/#armpac-6-series">Панельные&nbsp;компьютеры
-                                            APLEX ARMPAC с Android
+                                        <a href="/panelnie-computery/aplex/#armpac-6-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            APLEX ARMPAC пїЅ Android
                                         </a>
-                                        <p style="font-size:smaller;">CPU ARM Cortex A9 до 1 ГГц</p>
+                                        <p style="font-size:smaller;">CPU ARM Cortex A9 пїЅпїЅ 1 пїЅпїЅпїЅ</p>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-wince"
@@ -898,8 +898,8 @@ function top_buttons()
 
 
                                     <div class="cat-name m-wince">
-                                        <a href="/panelnie-computery/aplex/#armpac-series">Панельные&nbsp;компьютеры
-                                            APLEX ARMPAC с Windows CE <br/><span style="font-size:smaller;">CPU ARM Cortex A8 до 1 ГГц</span></a>
+                                        <a href="/panelnie-computery/aplex/#armpac-series">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            APLEX ARMPAC пїЅ Windows CE <br/><span style="font-size:smaller;">CPU ARM Cortex A8 пїЅпїЅ 1 пїЅпїЅпїЅ</span></a>
                                     </div>
                                     <ul class="models m-wince">
                                         <li class="man-logo m-wince"
@@ -941,7 +941,7 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-pc-full-ip65"><b>Другие панельные&nbsp;компьютеры APLEX</b>
+                                    <div class="cat-name m-pc-full-ip65"><b>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ APLEX</b>
                                     </div>
                                     <ul class="models m-pc-full-ip65">
                                         <?/*?><li class="man-logo m-wince" style="overflow: hidden;height: 139px;margin-bottom: -22px;"><img src="/images/aplex/ARMPAC-612P/ARMPAC-612P_1.png" alt="ARMPAC-612P" style="margin-top: 19px;margin-right: -23px;max-width: 167px;max-height: 125px;"></li><?*/ ?>
@@ -955,32 +955,32 @@ function top_buttons()
 
                                 <li id="m-paneli-title">
                                     <div class="cat-name m-paneli"><a href="/paneli-operatora/">
-                                            Посмотреть все панели оператора
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                         </a></div>
                                 </li>
                                 <li id="m-weintek" class="m-paneli m-panel-pc m-modbus" data-position="3">
                                     <div class="it-logo"><a href="/weintek/"><img src="/images/logo/weintek.png"
-                                                                                  alt="Weintek лого"></a></div>
+                                                                                  alt="Weintek пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
                                     <ul class="information" style="width: 100%;">
                                         <li><a href="/mqtt/"><span>MQTT</span></a></li>
                                         <li><a href="/easyaccess20.php"><span>EasyAccess 2.0</span></a></li>
                                         <li><a class="compare_table_link" href="/weintek-stavnenie-seriy.php"><span
-                                                        class="compare_table_icon"></span><span>Таблица сравнения всех серий Weintek по функционалу</span></a>
+                                                        class="compare_table_icon"></span><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a>
                                         </li>
                                         <li><a class="download_linkext_online"
-                                               href="/weintek-easybuilderpro-user-manual-en/"><span>EasyBuilder Pro V6 - руководство пользователя, онлайн и скачать</span></a>
+                                               href="/weintek-easybuilderpro-user-manual-en/"><span>EasyBuilder Pro V6 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a>
                                         </li>
                                         <li><a class="download_linkext_online"
-                                               href="/weintek-easybuilder-instrukciya-na-russkom/"><span>EasyBuilder Pro V6 - руководство пользователя <b>на русском языке</b>, онлайн</span></a>
+                                               href="/weintek-easybuilder-instrukciya-na-russkom/"><span>EasyBuilder Pro V6 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <b>пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</b>, пїЅпїЅпїЅпїЅпїЅпїЅ</span></a>
                                         </li>
                                     </ul>
 
 
                                     <!-- /**/ -->
-                                    <div class="cat-name m-monitors utility__triger__weintek__monitor-obj ">Промышленные
-                                        мониторы Weintek
+                                    <div class="cat-name m-monitors utility__triger__weintek__monitor-obj ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek
                                     </div>
                                     <ul class="models m-monitors utility__triger__weintek__monitor-obj">
                                         <li class="man-logo m-monitors"><img
@@ -992,13 +992,13 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000iP.php">Панели
-                                            оператора WEINTEK серия MT8000iP</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000iP.php">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ MT8000iP</a></div>
                                     <ul class="models m-paneli">
                                         <li class="man-logo m-paneli"
                                             style="overflow: hidden;height: 115px;margin-top: -34px;"><img
                                                     src="/images/weintek/MT6103iP/MT6103iP_1.png"
-                                                    alt="панель оператора weintek, операторская панель weintek, hmi weintek MT6103iP"
+                                                    alt="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ weintek, hmi weintek MT6103iP"
                                                     style="margin-right: -15px;"></li>
                                         <li class="m-paneli"><a href="/weintek/MT8051iP.php"><span class="my_span">4.3&#8243;</span><span> MT8051iP</span></a>
                                         </li>
@@ -1009,12 +1009,12 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000iE.php">Панели
-                                            оператора WEINTEK серия MT8000iE</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000iE.php">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ MT8000iE</a></div>
                                     <ul class="models m-paneli">
                                         <li class="man-logo m-paneli" style="overflow: hidden;"><img
                                                     src="/images/weintek/hmi/MT8102iE/lg/MT8102iE_1.png"
-                                                    alt="панель оператора weintek, операторская панель weintek, hmi weintek MT8102iE"
+                                                    alt="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ weintek, hmi weintek MT8102iE"
                                                     style="margin-right: -18px;"></li>
                                         <li class="m-paneli"><a href="/weintek/MT8050iE.php"><span class="my_span">4.3&#8243;</span><span> MT8050iE</span></a>
                                         </li>
@@ -1042,8 +1042,8 @@ function top_buttons()
                                         </li>
                                     </ul>
 
-                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000XE.php">Панели
-                                            оператора WEINTEK серия MT8000XE</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/series_MT8000XE.php">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ MT8000XE</a></div>
                                     <ul class="models m-paneli">
                                         <li class="man-logo m-paneli"><img src="/images/weintek/MT8092XE/MT8092XE_2.png"
                                                                            alt="MT8092XE" style="max-width: 115px;">
@@ -1058,8 +1058,8 @@ function top_buttons()
                                         </li>
                                     </ul>
 
-                                    <div class="cat-name m-paneli"><a href="/weintek/cmt-x.php">Панели оператора WEINTEK
-                                            серия cMT X</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/cmt-x.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK
+                                            пїЅпїЅпїЅпїЅпїЅ cMT X</a></div>
                                     <ul class="models m-paneli">
 
                                         <li class="man-logo m-paneli" style="overflow: hidden;"><img
@@ -1081,8 +1081,8 @@ function top_buttons()
                                                         class="my_span"></span><span class="new"> cMT-FHDX</span></a>
                                         </li>
                                     </ul>
-                                    <div class="cat-name m-paneli"><a href="/weintek/CloudHMI.php">Панели оператора
-                                            WEINTEK серия cMT (Cloud HMI)</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/CloudHMI.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            WEINTEK пїЅпїЅпїЅпїЅпїЅ cMT (Cloud HMI)</a></div>
                                     <ul class="models m-paneli">
                                         <li class="m-paneli"><a href="/weintek/cMT-G01.php"><span> cMT-G01</span></a>
                                         </li>
@@ -1125,12 +1125,12 @@ function top_buttons()
                                                         class="my_span"></span><span> cMT-iM21</span></a></li>
                                     </ul>
 
-                                    <div class="cat-name m-paneli"><a href="/weintek/series_eMT3000.php">Панели
-                                            оператора WEINTEK серия eMT3000</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/series_eMT3000.php">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ eMT3000</a></div>
                                     <ul class="models m-paneli">
                                         <li class="man-logo m-paneli" style="overflow: hidden;"><img
                                                     src="/images/weintek/eMT3070B/eMT3070B_1.png"
-                                                    alt="панель оператора weintek, операторская панель weintek, hmi weintek eMT3070B"
+                                                    alt="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ weintek, hmi weintek eMT3070B"
                                                     style="max-width: 120px;margin-right: -5px;"></li>
                                         <? /* ?><li class="m-paneli"><a href="/weintek/eMT3070A.php"><span class="my_span">7&#8243;</span><span> eMT3070A</span></a></li><? */ ?>
                                         <li class="m-paneli"><a href="/weintek/eMT3070B.php"><span class="my_span">7&#8243;</span><span> eMT3070B</span></a>
@@ -1143,9 +1143,9 @@ function top_buttons()
                                         </li>
                                     </ul>
                                     <? /* ?>
-      <div class="cat-name m-paneli"><a href="/weintek/series_MT8000i.php">Панели оператора WEINTEK серия MT8000i</a></div>
+      <div class="cat-name m-paneli"><a href="/weintek/series_MT8000i.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ MT8000i</a></div>
       <ul class="models m-paneli">
-      <li class="man-logo m-paneli" style="overflow: hidden;"><img src="/images/weintek/MT8104iH/MT8104iH_2.png" alt="панель оператора weintek, операторская панель weintek, hmi weintek MT8104iH" style="margin-right: -4px;max-width: 120px;"></li>
+      <li class="man-logo m-paneli" style="overflow: hidden;"><img src="/images/weintek/MT8104iH/MT8104iH_2.png" alt="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ weintek, hmi weintek MT8104iH" style="margin-right: -4px;max-width: 120px;"></li>
       <li class="m-paneli"><a href="/weintek/MT8050i.php"><span class="my_span">4.3&#8243;</span><span> MT8050i</span></a></li>
       <li class="m-paneli"><a href="/weintek/MT8070iH.php"><span class="my_span">7&#8243;</span><span> MT8070iH</span></a></li>
       <li class="m-paneli"><a href="/weintek/MT8100i.php"><span class="my_span">10&#8243;</span><span> MT8100i</span></a></li>
@@ -1155,26 +1155,26 @@ function top_buttons()
       <li class="m-paneli"><a href="/weintek/MT8150X.php"><span class="my_span">15&#8243;</span><span> MT8150X</span></a></li>
       </ul>
 
-      <div class="cat-name m-paneli"><a href="/weintek/series_MT6000i.php">Панели оператора WEINTEK серия MT6000i</a></div>
+      <div class="cat-name m-paneli"><a href="/weintek/series_MT6000i.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK пїЅпїЅпїЅпїЅпїЅ MT6000i</a></div>
       <ul class="models m-paneli">
-      <li class="man-logo m-paneli" style="overflow: hidden;"><img src="/images/weintek/MT6100i/MT6100i_2.png" alt="панель оператора weintek, операторская панель weintek, hmi weintek MT6100i" style="margin-right: -7px;max-width: 124px;"></li>
+      <li class="man-logo m-paneli" style="overflow: hidden;"><img src="/images/weintek/MT6100i/MT6100i_2.png" alt="пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ weintek, hmi weintek MT6100i" style="margin-right: -7px;max-width: 124px;"></li>
       <li class="m-paneli"><a href="/weintek/MT6050i.php"><span class="my_span">4.3&#8243;</span><span> MT6050i</span></a></li>
       <li class="m-paneli"><a href="/weintek/MT6070iH.php"><span class="my_span">7&#8243;</span><span> MT6070iH</span></a></li>
       <li class="m-paneli"><a href="/weintek/MT6100i.php"><span class="my_span">10&#8243;</span><span> MT6100i</span></a></li>
       </ul>
       <? */ ?>
-                                    <div class="cat-name m-paneli"><a href="/weintek/mTV-100.php">Панели оператора
-                                            WEINTEK серия mTV (Machine-TV)</a></div>
+                                    <div class="cat-name m-paneli"><a href="/weintek/mTV-100.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            WEINTEK пїЅпїЅпїЅпїЅпїЅ mTV (Machine-TV)</a></div>
                                     <ul class="models m-paneli">
                                         <li class="man-logo m-paneli" style="overflow: hidden;margin-top: 0px;"><img
                                                     src="/images/weintek/mTV-100/mTV-100_1.png"
-                                                    alt="Интерфейс Machine-TV mTV-100"
+                                                    alt="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Machine-TV mTV-100"
                                                     style="margin-right: -34px;max-width: 134px;"></li>
                                         <li class="m-paneli"><a href="/weintek/mTV-100.php"><span
                                                         class="my_span"></span><span>mTV-100</span></a></li>
                                     </ul>
 
-                                    <? /* ?><div class="cat-name m-wince"><a href="/weintek/#mt-600-windows-ce">Панельные компьютеры WEINTEK <br /><span style="font-size:smaller;">Windows CE</span></a></div>
+                                    <? /* ?><div class="cat-name m-wince"><a href="/weintek/#mt-600-windows-ce">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK <br /><span style="font-size:smaller;">Windows CE</span></a></div>
 
                                   <ul class="models m-wince">
                                   <li class="man-logo m-wince"><img src="/images/weintek/eMT612A/eMT612A_2.png" alt="MT8092XE" style="max-width: 115px;"></li>
@@ -1186,9 +1186,9 @@ function top_buttons()
                                   <li class="m-wince"><a href="/weintek/eMT615A.php"><span class="my_span">15&#8243;</span><span> eMT615A</span></a></li>
                                   </ul>
                                   <? */ ?>
-                                    <div class="cat-name m-panel-pc"><a href="/weintek/#pc">Панельные компьютеры WEINTEK
+                                    <div class="cat-name m-panel-pc"><a href="/weintek/#pc">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK
                                             <br/><span
-                                                    style="font-size:smaller;">Intel Atom E3827 2 ядра 1.75 ГГц</span></a>
+                                                    style="font-size:smaller;">Intel Atom E3827 2 пїЅпїЅпїЅпїЅ 1.75 пїЅпїЅпїЅ</span></a>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-panel-pc"><img
@@ -1205,7 +1205,7 @@ function top_buttons()
                                                     href="/weintek/series_MT8000XE.php"><span>MT8000XE</span></a></li>
                                         <li class="m-paneli"><a href="/weintek/series_eMT3000.php"><span>eMT3000</span></a>
                                         </li>
-                                        <? /* ?><li class="m-paneli"><a href="/weintek/series_MT6000i.php"><span>МТ6000i</span></a></li><? */ ?>
+                                        <? /* ?><li class="m-paneli"><a href="/weintek/series_MT6000i.php"><span>пїЅпїЅ6000i</span></a></li><? */ ?>
                                         <? /* ?><li class="m-paneli"><a href="/weintek/series_MT8000i.php"><span>MT8000i</span></a></li><? */ ?>
                                         <li class="m-paneli"><a href="/weintek/mTV-100.php"><span>mTV</span></a></li>
                                         <li class="m-paneli m-panel-pc"><a
@@ -1213,33 +1213,33 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-paneli"><a href="/accessories/">Аксессуары для панелей
-                                            оператора</a></div>
+                                    <div class="cat-name m-paneli"><a href="/accessories/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></div>
                                     <ul class="models m-paneli">
-                                        <li class="m-paneli"><a href="/accessories/HF/HF-04/">Рамка для панелей 4.3&#8243;</a>
+                                        <li class="m-paneli"><a href="/accessories/HF/HF-04/">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 4.3&#8243;</a>
                                         </li>
 
-                                        <li class="m-paneli"><a href="/accessories/HF/HF-07/">Рамка для панелей
+                                        <li class="m-paneli"><a href="/accessories/HF/HF-07/">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                                 7&#8243;</a></li>
-                                        <li class="m-paneli"><a href="/accessories/HF/HF-09/">Рамка для панелей
+                                        <li class="m-paneli"><a href="/accessories/HF/HF-09/">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                                 9&#8243;</a></li>
-                                        <li class="m-paneli"><a href="/accessories/HF/HF-12/">Рамка для панелей 12&#8243;</a>
+                                        <li class="m-paneli"><a href="/accessories/HF/HF-12/">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 12&#8243;</a>
                                         </li>
-                                        <li class="m-paneli"><a href="/routers/md/4G/TANDEM-4GR/">Роутер 4G\3G WiFi
+                                        <li class="m-paneli"><a href="/routers/md/4G/TANDEM-4GR/">пїЅпїЅпїЅпїЅпїЅпїЅ 4G\3G WiFi
                                                 TANDEM-4GR</a></li>
                                     </ul>
 
                                     <div id="m-weintek" class="m-plc m-modbus">
                                         <div class="free-space"></div>
                                         <div class="block_menu_weintek_content">
-                                            <div class="cat-name m-modbus">ПЛК Weintek</div>
+                                            <div class="cat-name m-modbus">пїЅпїЅпїЅ Weintek</div>
                                             <ul class="models m-plc m-modbus">
                                                 <li class="m-plc">
                                                     <a href="/weintek/cMT-CTRL01.php">
                                                         <img src="/images/weintek/controllers/cMT-CTRL01/sm/cMT-CTRL01_2.png"
                                                              alt="cMT-CTRL01"
                                                              style="margin-top: 8px;margin-left: -9px;float:left;">
-                                                        <span class="w150">Weintek cMT-CTRL01 - программируемый логический контроллер </span>
+                                                        <span class="w150">Weintek cMT-CTRL01 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </span>
                                                         (CODESYS, MQTT, OPC UA)
                                                     </a>
                                                 </li>
@@ -1249,15 +1249,15 @@ function top_buttons()
 
                                     </div>
 
-                                    <div class="cat-name m-modbus"><a href="/plc/weintek/">Модульная система ввода
-                                            вывода Weintek серии iR</a>
+                                    <div class="cat-name m-modbus"><a href="/plc/weintek/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅпїЅпїЅ iR</a>
                                         <br><br>
 
 
                                         <div class="cat-name2 m-modbus"><span
                                                     class="block_menu_weintek_content_section__preview_image"
-                                                    style="background-size: auto 82%;background-image: url('/images/controllers/weintek/iR-COP/sm/iR-COP_1.png');"></span>Коммуникационные
-                                            модули серии iR
+                                                    style="background-size: auto 82%;background-image: url('/images/controllers/weintek/iR-COP/sm/iR-COP_1.png');"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ iR
                                         </div>
                                         <ul class="models m-modbus">
                                             <li class="m-modbus"><a href="/plc/weintek/iR-COP.php">
@@ -1274,8 +1274,8 @@ function top_buttons()
                                         </ul>
                                         <div class="cat-name2 m-modbus"><span
                                                     class="block_menu_weintek_content_section__preview_image"
-                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-DI16-K/sm/iR-DI16-K_1.png');"></span>Дискретные
-                                            модули ввода вывода серии iR
+                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-DI16-K/sm/iR-DI16-K_1.png');"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ iR
                                         </div>
                                         <ul class="models m-modbus" style="margin-bottom: 25px;">
                                             <li class="m-modbus"><a href="/plc/weintek/iR-DI16-K.php"><span
@@ -1293,13 +1293,13 @@ function top_buttons()
                                             <li class="m-modbus"><a href="/plc/weintek/iR-DQ16-N.php"><span
                                                             class="w150">iR-DQ16-N <span>16DO(npn)</span></span></a>
                                             </li>
-                                            <li class="m-modbus"><a href="/plc/weintek/iR-DQ8-R.php"><span class="w150">iR-DQ8-R <span>8DO(реле)</span></span></a>
+                                            <li class="m-modbus"><a href="/plc/weintek/iR-DQ8-R.php"><span class="w150">iR-DQ8-R <span>8DO(пїЅпїЅпїЅпїЅ)</span></span></a>
                                             </li>
                                         </ul>
                                         <div class="cat-name2 m-modbus"><span
                                                     class="block_menu_weintek_content_section__preview_image"
-                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-AI04-TR/sm/iR-AI04-TR_1.png');"></span>Аналоговые
-                                            модули ввода вывода серии iR
+                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-AI04-TR/sm/iR-AI04-TR_1.png');"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ iR
                                         </div>
                                         <ul class="models m-modbus">
                                             <li class="m-modbus"><a href="/plc/weintek/iR-AI04-VI.php"><span
@@ -1313,8 +1313,8 @@ function top_buttons()
                                         </ul>
                                         <div class="cat-name2 m-modbus"><span
                                                     class="block_menu_weintek_content_section__preview_image"
-                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-PU01-P/sm/iR-PU01-P_1.png');"></span>Модули
-                                            для управления движением серии iR
+                                                    style="background-size: auto 100%;background-image: url('/images/controllers/weintek/iR-PU01-P/sm/iR-PU01-P_1.png');"></span>пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ iR
                                         </div>
                                         <ul class="models m-modbus">
                                             <li class="m-modbus"><a href="/plc/weintek/iR-PU01-P.php"><span
@@ -1329,13 +1329,13 @@ function top_buttons()
                                 </li>
                                 <li id="m-samkoon" class="m-paneli" data-position="4">
                                     <div class="it-logo"><a href="/samkoon/"><img src="/images/logo/samkoon.png"
-                                                                                  alt="Samkoon лого"></a></div>
+                                                                                  alt="Samkoon пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
-                                    <div class="cat-name m-paneli"><a href="/samkoon/">Панели оператора SAMKOON</a>
+                                    <div class="cat-name m-paneli"><a href="/samkoon/">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ SAMKOON</a>
                                     </div>
                                     <ul class="models m-paneli">
-                                        <li style="display: block;font-size: 13px;"><b>Серия SK</b></li>
+                                        <li style="display: block;font-size: 13px;"><b>пїЅпїЅпїЅпїЅпїЅ SK</b></li>
                                         <li class="m-paneli"><a href="/samkoon/SK-035AE.php"><span class="my_span">3.5&#8243;</span><span> SK-035AE</span></a>
                                         </li>
                                         <li class="m-paneli"><a href="/samkoon/SK-043AE.php"><span class="my_span">4.3&#8243;</span><span> SK-043AE</span></a>
@@ -1370,7 +1370,7 @@ function top_buttons()
                                                         class="my_span">10" </span><span> SK-102AS</span></a></li>
                                         <li class="m-paneli"><a href="/samkoon/SK-102HS.php"><span
                                                         class="my_span">10" </span><span> SK-102HS</span></a></li>
-                                        <li style="display: block;font-size: 13px;"><b>Серия EA</b></li>
+                                        <li style="display: block;font-size: 13px;"><b>пїЅпїЅпїЅпїЅпїЅ EA</b></li>
                                         <li class="m-paneli"><a href="/samkoon/EA-035A-T.php"><span class="my_span">3.5&#8243;</span><span>EA-035A-T</span></a>
                                         </li>
                                         <li class="m-paneli"><a href="/samkoon/EA-043A.php"><span class="my_span">4.3&#8243;</span><span>EA-043A</span></a>
@@ -1382,14 +1382,14 @@ function top_buttons()
                                                     src="/images/samkoon/SK-102HS/SK-102HS_1.png" alt="SK-102HS"
                                                     style="margin-right: -14px;max-width: 139px;"></li>
 
-                                        <li style="display: block;font-size: 13px;"><b>Серия OP</b></li>
+                                        <li style="display: block;font-size: 13px;"><b>пїЅпїЅпїЅпїЅпїЅ OP</b></li>
                                         <li class="m-paneli"><a href="/samkoon/OP-835.php"><span class="my_span">3.5&#8243;</span><span> OP-835</span></a>
                                         </li>
-                                        <li style="display: block;font-size: 13px;"><b>Серия AK</b></li>
+                                        <li style="display: block;font-size: 13px;"><b>пїЅпїЅпїЅпїЅпїЅ AK</b></li>
                                         <li class="m-paneli"><a href="/samkoon/AK-070BS.php"><span class="my_span">7&#8243;</span><span> AK-070BS</span></a>
                                         </li>
                                         <li class="m-paneli"><a href="/samkoon/AK-035A-T.php"><span class="my_span">3.5&#8243;</span><span
-                                                        class="new w150"> AK-035A-T <span>(ОС Android)</span></span></a>
+                                                        class="new w150"> AK-035A-T <span>(пїЅпїЅ Android)</span></span></a>
                                         </li>
 
                                     </ul>
@@ -1399,7 +1399,7 @@ function top_buttons()
                                     <div class="it-logo" style="overflow: hidden;height: 50px;margin-top: 10px;"><a
                                                 href="/plc/haiwell/"><img style="overflow: hidden;height: 50px"
                                                                           src="/images/logo/haiwell.png"
-                                                                          alt="Haiwell лого"></a></div>
+                                                                          alt="Haiwell пїЅпїЅпїЅпїЅ"></a></div>
                                     <br>
                                     <div class="free-space"></div>
                                     <div class="block_menu_haiwell_content">
@@ -1443,18 +1443,18 @@ function top_buttons()
                                 </li>
                                 <li id="m-yottacontrol" class="m-plc m-modbus">
                                     <div class="it-logo"><a href="/plc/yottacontrol/"><img
-                                                    src="/images/logo/yottacontrol.jpg" alt="Yottacontrol лого"></a>
+                                                    src="/images/logo/yottacontrol.jpg" alt="Yottacontrol пїЅпїЅпїЅпїЅ"></a>
                                     </div>
 
                                     <div class="free-space"></div>
 
                                     <div class="cat-name m-plc"><a href="/plc/yottacontrol/#plc-a-52">PLC YOTTACONTROL
-                                            серия A-52 <br/><span style="font-size:smaller;">Wi-Fi, дисплей, RS-485, RS-232, USB2.0</span></a>
+                                            пїЅпїЅпїЅпїЅпїЅ A-52 <br/><span style="font-size:smaller;">Wi-Fi, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, RS-485, RS-232, USB2.0</span></a>
                                     </div>
                                     <ul class="models m-plc">
                                         <li class="man-logo m-plc" style="overflow: hidden;height: 142px;"><img
                                                     src="/images/controllers/yottacontrol/A-52x/A-52x_1.png"
-                                                    alt="PLC Yottacontrol серия A-52"
+                                                    alt="PLC Yottacontrol пїЅпїЅпїЅпїЅпїЅ A-52"
                                                     style="margin-right: -28px;max-width: 183px;max-height: 172px;">
                                         </li>
 
@@ -1470,8 +1470,8 @@ function top_buttons()
                                         </li>
                                     </ul>
                                     <div class="cat-name m-plc" style="margin-top: 0px;"><a
-                                                href="/plc/yottacontrol/#plc-a-51">PLC YOTTACONTROL серия A-51
-                                            <br/><span style="font-size:smaller;">RS-485x2, RS-232, USB2.0, <br/>индикаторы/дисплей/micro-SD</span></a>
+                                                href="/plc/yottacontrol/#plc-a-51">PLC YOTTACONTROL пїЅпїЅпїЅпїЅпїЅ A-51
+                                            <br/><span style="font-size:smaller;">RS-485x2, RS-232, USB2.0, <br/>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/micro-SD</span></a>
                                     </div>
                                     <ul class="models m-plc">
                                         <li class="man-logo m-plc"><img
@@ -1508,13 +1508,13 @@ function top_buttons()
                                     </ul>
 
 
-                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-10">Модули
-                                            ввода-вывода серия A-10 <br><span
+                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-10">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ A-10 <br><span
                                                     style="font-size:smaller;">RS-485 Modbus</span></a></div>
                                     <ul class="models m-modbus">
                                         <li class="man-logo m-modbus"><img
                                                     src="/images/controllers/yottacontrol/A-10x/A-10x_10.png"
-                                                    alt="Yottacontrol универсальные модули ввода-вывода серии A-10"
+                                                    alt="Yottacontrol пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ A-10"
                                                     style="margin-right: -4px;"></li>
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-1010.php"><span class="w150">A-1010 <span>8AI 2AO</span></span></a>
                                         </li>
@@ -1538,13 +1538,13 @@ function top_buttons()
                                         </li>
                                     </ul>
 
-                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-12">Модули
-                                            ввода-вывода серия A-12 <br><span style="font-size:smaller;">Wi-Fi, Modbus TCP/IP</span></a>
+                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-12">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ A-12 <br><span style="font-size:smaller;">Wi-Fi, Modbus TCP/IP</span></a>
                                     </div>
                                     <ul class="models m-modbus">
                                         <li class="man-logo m-modbus" style="overflow: hidden;"><img
                                                     src="/images/controllers/yottacontrol/A-1212/A-1212_1.png"
-                                                    alt="Yottacontrol универсальные модули ввода-вывода с Wi-Fi серии A-12"
+                                                    alt="Yottacontrol пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Wi-Fi пїЅпїЅпїЅпїЅпїЅ A-12"
                                                     style="margin-right: -34px;"></li>
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-1212.php"><span class="w150">A-1212 <span>2DI 4AI</span></span></a>
                                         </li>
@@ -1557,13 +1557,13 @@ function top_buttons()
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-1260.php"><span class="w150">A-1260 <span>2DI 4AI</span></span></a>
                                         </li>
                                     </ul>
-                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-18">Модули
-                                            ввода-вывода серия A-18 <br><span style="font-size:smaller;">Ethernet, Modbus TCP/IP</span></a>
+                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-18">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ A-18 <br><span style="font-size:smaller;">Ethernet, Modbus TCP/IP</span></a>
                                     </div>
                                     <ul class="models m-modbus">
                                         <li class="man-logo m-modbus" style="overflow: hidden;"><img
                                                     src="/images/controllers/yottacontrol/A-1855/A-1855_1.png"
-                                                    alt="Yottacontrol универсальные модули ввода-вывода с Ethernet серии A-18"
+                                                    alt="Yottacontrol пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Ethernet пїЅпїЅпїЅпїЅпїЅ A-18"
                                                     style="margin-right: -34px;"></li>
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-1812.php"><span class="w150">A-1812 <span>2DI 4AI 2AO</span></span></a>
                                         </li>
@@ -1574,14 +1574,14 @@ function top_buttons()
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-1860.php"><span class="w150">A-1860 <span>2DI 4AI 4DO</span></span></a>
                                         </li>
                                     </ul>
-                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/A-3016.php">Радиомодуль
-                                            YOTTACONTROL <br/><span style="font-size:smaller;">RS-485, индикаторы, пульт дистанционного управления</span></a>
+                                    <div class="cat-name m-modbus"><a href="/plc/yottacontrol/A-3016.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            YOTTACONTROL <br/><span style="font-size:smaller;">RS-485, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a>
                                     </div>
                                     <ul class="models m-modbus">
                                         <li class="man-logo m-modbus"
                                             style="overflow: hidden;height: 169px;width: 200px;"><img
                                                     src="/images/controllers/yottacontrol/A-3016/A-3016_1.png"
-                                                    alt="радиомодуль ввода-вывода A-3016 Yottacontrol"
+                                                    alt="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ A-3016 Yottacontrol"
                                                     style="max-width: 215px;max-height: 210px;margin-right: -52px;">
                                         </li>
                                         <li class="m-modbus"><a href="/plc/yottacontrol/A-3016.php"><span class="w150">A-3016 <span>6DI 7DO</span></span></a>
@@ -1589,18 +1589,18 @@ function top_buttons()
                                     </ul>
                                     <ul class="series" style="margin-top: -49px;">
                                         <li class="m-plc"><a href="/plc/yottacontrol/"><span
-                                                        class="my_span"></span><span>Контроллеры</span></a></li>
+                                                        class="my_span"></span><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a></li>
                                         <li class="m-plc"><a href="/plc/yottacontrol/#modules-a-12"><span
-                                                        class="my_span"></span><span>Модули</span></a></li>
+                                                        class="my_span"></span><span>пїЅпїЅпїЅпїЅпїЅпїЅ</span></a></li>
                                     </ul>
                                 </li>
 
                                 <li id="m-faraday" class="m-power-supply">
                                     <div class="it-logo"><a href="/bloki-pitaniya/faraday/"><img
-                                                    src="/images/logo/faraday.png" alt="Faraday лого"></a></div>
+                                                    src="/images/logo/faraday.png" alt="Faraday пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
-                                    <div class="cat-name m-power-supply"><a href="/bloki-pitaniya/faraday/">Блоки&nbsp;питания
+                                    <div class="cat-name m-power-supply"><a href="/bloki-pitaniya/faraday/">пїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             FARADAY</a></div>
                                     <ul class="models m-power-supply">
                                         <li class="man-logo m-power-supply"><img
@@ -1654,35 +1654,35 @@ function top_buttons()
 
                                 <li id="m-modbus" class="m-modbus" style="width: 100%;">
                                     <div class="it-logo"><a href="/modules/"><img src="/images/logo/iecon.png"
-                                                                                  alt="IECON лого"></a></div>
+                                                                                  alt="IECON пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
-                                    <div class="cat-name m-modbus"><a href="/modules/">Модули IECON</a></div>
+                                    <div class="cat-name m-modbus"><a href="/modules/">пїЅпїЅпїЅпїЅпїЅпїЅ IECON</a></div>
                                     <ul class="models m-modbus">
                                         <li class="man-logo m-modbus" style="height: 120px;overflow: hidden;"><img
-                                                    src="/images/controllers/iecon/EBM-A/EBM-A_1.png" alt="модуль EBM-A"
+                                                    src="/images/controllers/iecon/EBM-A/EBM-A_1.png" alt="пїЅпїЅпїЅпїЅпїЅпїЅ EBM-A"
                                                     style="margin-right: -24px;"></li>
-                                        <? /* ?><li class="m-modbus"><a href="/modules/EBM-A.php">Модуль&nbsp;ввода-вывода EBM-A</a></li><? */ ?>
-                                        <li class="m-modbus"><a href="/modules/EBM-B.php">Модуль&nbsp;ввода-вывода
+                                        <? /* ?><li class="m-modbus"><a href="/modules/EBM-A.php">пїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ EBM-A</a></li><? */ ?>
+                                        <li class="m-modbus"><a href="/modules/EBM-B.php">пїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ
                                                 EBM-B</a></li>
-                                        <li class="m-modbus"><a href="/modules/CPM-C.php">Центральный процессорный
-                                                модуль CPM-C</a></li>
+                                        <li class="m-modbus"><a href="/modules/CPM-C.php">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                                пїЅпїЅпїЅпїЅпїЅпїЅ CPM-C</a></li>
                                     </ul>
 
                                 </li>
                                 <li id="m-2n" class="m-paneli m-android">
                                     <div class="it-logo"><a href="/HMI-android.php"><img src="/images/logo/2n.png"
-                                                                                         alt="2N лого"></a></div>
+                                                                                         alt="2N пїЅпїЅпїЅпїЅ"></a></div>
 
                                     <div class="free-space"></div>
-                                    <div class="cat-name m-paneli m-android"><a href="/HMI-android.php">Панели оператора
+                                    <div class="cat-name m-paneli m-android"><a href="/HMI-android.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                             2N</a></div>
                                     <ul class="models m-paneli m-android">
                                         <li class="man-logo m-paneli m-android" style="overflow:hidden;"><img
                                                     src="/images/skud/2N-indoor-touch/2N-indoor-touch_1.png"
                                                     alt="2N Indoor" style="max-width: 100px;margin-right: 5px;"></li>
                                         <li class="m-paneli m-android">
-                                            <div><a href="/HMI-android.php">Панель оператора Android для умного дома 2N
+                                            <div><a href="/HMI-android.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Android пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 2N
                                                     Indoor Touch</a>
                                         </li>
                                     </ul>
@@ -1691,13 +1691,13 @@ function top_buttons()
 
                                 <li id="m-cincoze" class="m-panel-pc m-box-pc m-monitors">
                                     <div class="it-logo"><a href="/cincoze/"><img src="/images/logo/cincoze.png"
-                                                                                  alt="Concoze лого" nopin="nopin"></a>
+                                                                                  alt="Concoze пїЅпїЅпїЅпїЅ" nopin="nopin"></a>
                                     </div>
 
                                     <div class="free-space"></div>
 
-                                    <div class="cat-name m-panel-pc"><a href="/cincoze/#panels">Панельные компьютеры
-                                            Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Atom E3845 4 ядра 1.91ГГц</span></a>
+                                    <div class="cat-name m-panel-pc"><a href="/cincoze/#panels">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Atom E3845 4 пїЅпїЅпїЅпїЅ 1.91пїЅпїЅпїЅ</span></a>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-panel-pc"><img
@@ -1729,8 +1729,8 @@ function top_buttons()
                                         </li>
                                     </ul>
 
-                                    <div class="cat-name m-panel-pc  new"><a href="/cincoze/#panels">Панельные
-                                            компьютеры Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Core U processors (Skylake) 6-й до 3ГГц</span></a>
+                                    <div class="cat-name m-panel-pc  new"><a href="/cincoze/#panels">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Core U processors (Skylake) 6-пїЅ пїЅпїЅ 3пїЅпїЅпїЅ</span></a>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-panel-pc"><img
@@ -1759,8 +1759,8 @@ function top_buttons()
                                         </li>
                                     </ul>
 
-                                    <div class="cat-name m-panel-pc new"><a href="/cincoze/#panels">Панельные компьютеры
-                                            Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Core U processors (Skylake) 6-й до 3ГГц, <br/>доп. расширение 1x PCI или 1x PCIex4</span></a>
+                                    <div class="cat-name m-panel-pc new"><a href="/cincoze/#panels">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                                            Cincoze&nbsp;Crystal <br/><span style="font-size:smaller;">CPU Intel Core U processors (Skylake) 6-пїЅ пїЅпїЅ 3пїЅпїЅпїЅ, <br/>пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1x PCI пїЅпїЅпїЅ 1x PCIex4</span></a>
                                     </div>
                                     <ul class="models m-panel-pc">
                                         <li class="man-logo m-panel-pc"><img
@@ -1791,7 +1791,7 @@ function top_buttons()
 
                                     <div class="cat-name m-box-pc"
                                          style="width: calc(100% - 150px);z-index: 3;position: relative;"><a
-                                                href="/cincoze/#boxes">Встраиваемые компьютеры Cincoze&nbsp;Diamond</a>
+                                                href="/cincoze/#boxes">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Cincoze&nbsp;Diamond</a>
                                     </div>
                                     <ul class="models m-box-pc">
                                         <li class="man-logo m-box-pc" style="width: 97px;"><img
@@ -1799,20 +1799,20 @@ function top_buttons()
                                                     style="margin-top: 52px;margin-right: 5px;max-width: 120px;"
                                                     nopin="nopin"></li>
                                         <li class="m-box-pc no-after"><a href="/cincoze/DA-1000.php"><span
-                                                        class="my_span"></span><span><span class="w70">DA-1000</span> CPU Intel Atom E3826 2 ядра 1.46 ГГц </span></a>
+                                                        class="my_span"></span><span><span class="w70">DA-1000</span> CPU Intel Atom E3826 2 пїЅпїЅпїЅпїЅ 1.46 пїЅпїЅпїЅ </span></a>
                                         </li>
                                         <li class="m-box-pc no-after"><a href="/cincoze/DC-1100.php"><span
-                                                        class="my_span"></span><span><span class="w70">DC-1100</span> CPU Intel Atom E3845 4 ядра 1.91 ГГц </span> </span>
+                                                        class="my_span"></span><span><span class="w70">DC-1100</span> CPU Intel Atom E3845 4 пїЅпїЅпїЅпїЅ 1.91 пїЅпїЅпїЅ </span> </span>
                                             </a></li>
                                         <li class="m-box-pc no-after" style="z-index: 2;"><a
                                                     href="/cincoze/DS-1000.php"><span class="my_span"></span><span><span
-                                                            class="w70">DS-1000</span> CPU Intel Core™ i3/ i5/ i7 2.4 ГГц </span>
+                                                            class="w70">DS-1000</span> CPU Intel CoreпїЅ i3/ i5/ i7 2.4 пїЅпїЅпїЅ </span>
                                                 DS-1000</span></a></li>
                                         <li class="m-box-pc no-after"><a href="/cincoze/DS-1002.php"><span
-                                                        class="my_span"></span><span><span class="w70">DS-1002</span> 	Intel Core™ i3/ i5/ i7 2.4 ГГц </span> </span>
+                                                        class="my_span"></span><span><span class="w70">DS-1002</span> 	Intel CoreпїЅ i3/ i5/ i7 2.4 пїЅпїЅпїЅ </span> </span>
                                             </a></li>
                                     </ul>
-                                    <div class="cat-name m-monitors"><a href="/cincoze/#monitors">Мониторы Cincoze&nbsp;Crystal</a>
+                                    <div class="cat-name m-monitors"><a href="/cincoze/#monitors">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Cincoze&nbsp;Crystal</a>
                                     </div>
                                     <ul class="models m-monitors">
                                         <li class="man-logo m-monitors"><img
@@ -1859,9 +1859,9 @@ function top_buttons()
     <!-- /nav -->
     <?
     /*
-      <div class="cat-name m-plc"><a href="/plc/yottacontrol/#plc-a-61">PLC YOTTACONTROL серия A-61 <br /><span style="font-size:smaller;">RS-485, индикаторы/дисплей/micro-SD</span></a></div>
+      <div class="cat-name m-plc"><a href="/plc/yottacontrol/#plc-a-61">PLC YOTTACONTROL пїЅпїЅпїЅпїЅпїЅ A-61 <br /><span style="font-size:smaller;">RS-485, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/micro-SD</span></a></div>
       <ul class="models m-plc">
-      <li class="man-logo m-plc"><img src="/images/controllers/yottacontrol/A-61x/A-61x_1.png" alt="PLC Yottacontrol серия A-61" style="margin-top: 13px;margin-right: 5px;"></li>
+      <li class="man-logo m-plc"><img src="/images/controllers/yottacontrol/A-61x/A-61x_1.png" alt="PLC Yottacontrol пїЅпїЅпїЅпїЅпїЅ A-61" style="margin-top: 13px;margin-right: 5px;"></li>
       <li class="m-plc"><a href="/plc/yottacontrol/A-6188-D.php"><span class="w150">A-6188-D <span>8DI 4DO</span></span></a></li>
       <li class="m-plc"><a href="/plc/yottacontrol/A-6188D-D.php"><span class="w150">A-6188D-D <span>8DI 4DO</span></span></a></li>
       <li class="m-plc"><a href="/plc/yottacontrol/A-6188T-D.php"><span class="w150">A-6188T-D <span>8DI 4DO</span></span></a></li>
@@ -1881,9 +1881,9 @@ function top_buttons()
       <li class="m-plc"><a href="/plc/yottacontrol/A-6189MT-D.php"><span class="w150">A-6189MT-D <span>4DI 4AI 4DO</span></span></a></li>
       </ul>
 
-      <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-2">Модули YOTTACONTROL серии A-2</a></div>
+      <div class="cat-name m-modbus"><a href="/plc/yottacontrol/#modules-a-2">пїЅпїЅпїЅпїЅпїЅпїЅ YOTTACONTROL пїЅпїЅпїЅпїЅпїЅ A-2</a></div>
       <ul class="models m-modbus">
-      <li class="man-logo m-modbus" style="overflow: hidden;"><img src="/images/controllers/yottacontrol/A-2060x/A-2060x_1.png" alt="PLC Yottacontrol серия A-21" style="max-width: 110px;margin-right: -19px;"></li>
+      <li class="man-logo m-modbus" style="overflow: hidden;"><img src="/images/controllers/yottacontrol/A-2060x/A-2060x_1.png" alt="PLC Yottacontrol пїЅпїЅпїЅпїЅпїЅ A-21" style="max-width: 110px;margin-right: -19px;"></li>
       <li class="m-modbus"><a href="/plc/yottacontrol/A-2060-D.php"><span class="w150">A-2060-D <span>8DI 4DO</span></span></a></li>
       <li class="m-modbus"><a href="/plc/yottacontrol/A-2060-A.php"><span class="w150">A-2060-A <span>4DI 4DO</span></span></a></li>
       </ul>
@@ -1897,17 +1897,17 @@ function left_menu()
     <br>
     <div id='cssmenu'>
         <ul>
-            <li class='active'><a href='index.html'><span>КАТАЛОГ</span></a></li>
-            <li class='has-sub'><a href='#'><span>ПАНЕЛИ WEINTEK</span></a>
+            <li class='active'><a href='index.html'><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a></li>
+            <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅпїЅ WEINTEK</span></a>
                 <ul>
-                    <li class='has-sub'><a href='/weintek/series6000i.php'><span>Серия MT6000i</span></a>
+                    <li class='has-sub'><a href='/weintek/series6000i.php'><span>пїЅпїЅпїЅпїЅпїЅ MT6000i</span></a>
                         <ul>
                             <li><a href='#'><span>MT6050i</span></a></li>
                             <li><a href='#'><span>MT6070iH</span></a></li>
                             <li class='last'><a href='#'><span>MT6100i</span></a></li>
                         </ul>
                     </li>
-                    <li class='has-sub'><a href='/weintek/series8000i.php'><span>Серия MT8000i</span></a>
+                    <li class='has-sub'><a href='/weintek/series8000i.php'><span>пїЅпїЅпїЅпїЅпїЅ MT8000i</span></a>
                         <ul>
                             <li><a href='#'><span>MT8050i</span></a></li>
                             <li><a href='#'><span>MT8070iH</span></a></li>
@@ -1915,7 +1915,7 @@ function left_menu()
 
                         </ul>
                     </li>
-                    <li class='has-sub'><a href='#'><span>Серия eMT3000</span></a>
+                    <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅ eMT3000</span></a>
                         <ul>
                             <li><a href='#'><span>eMT3070A</span></a></li>
                             <li><a href='#'><span>eMT3070B</span></a></li>
@@ -1925,7 +1925,7 @@ function left_menu()
                         </ul>
                     </li>
 
-                    <li class='has-sub'><a href='#'><span>Серия iE</span></a>
+                    <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅ iE</span></a>
                         <ul>
                             <li><a href='#'><span>MT8070iE</span></a></li>
                             <li><a href='#'><span>MT8100iE</span></a></li>
@@ -1934,7 +1934,7 @@ function left_menu()
                         </ul>
                     </li>
 
-                    <li class='has-sub'><a href='#'><span>Серия OPEN HMI</span></a>
+                    <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅ OPEN HMI</span></a>
                         <ul>
                             <li><a href='#'><span>MT607i</span></a></li>
                             <li><a href='#'><span>MT610i</span></a></li>
@@ -1947,17 +1947,17 @@ function left_menu()
 
                 </ul>
             </li>
-            <li class='has-sub'><a href='#'><span>КОМПЬЮТЕРЫ IFC</span></a></li>
+            <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ IFC</span></a></li>
             <ul>
 
             </ul>
-            <li class='has-sub'><a href='#'><span>КОМПЬЮТЕРЫ APLEX</span></a></li>
+            <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ APLEX</span></a></li>
             <ul>
 
             </ul>
 
-            <li class='has-sub'><a href='#'><span>ПАНЕЛИ SAMKOON</span></a></li>
-            <li class='has-sub'><a href='#'><span>КОНТРОЛЛЕРЫ</span></a></li>
+            <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅпїЅ SAMKOON</span></a></li>
+            <li class='has-sub'><a href='#'><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a></li>
 
 
         </ul>
@@ -1972,26 +1972,26 @@ function top_menu($new = 0)
 {
     ?>
 
-    <? include $_SERVER["DOCUMENT_ROOT"] . "/include/header_contacts.php"; ?>
+    <? include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/header_contacts.php"; ?>
     <?
     $top_menu = "<div class=menu_top_cont>"
         . ((0) ? "<div class=menu_top>
-<div class='top-menu-block'><a href='/about.php'>О КОМПАНИИ&nbsp;</a>
+<div class='top-menu-block'><a href='/about.php'>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&nbsp;</a>
 <ul>
-<a href='/news.php'><li>Новости</li></a>
-<a href='/articles/'><li>Статьи</li></a>
+<a href='/news.php'><li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</li></a>
+<a href='/articles/'><li>пїЅпїЅпїЅпїЅпїЅпїЅ</li></a>
 </ul>
 </div>|
-<a href='/advanced_search.php' title='Подбор оборудования по параметрам'> ПОДБОР </a> |
-<a href='/comparison.php'> СРАВНЕНИЕ </a>|
-<a href='//www.rusavtomatika.com/forum/'> ФОРУМ </a> |
-<a href='/support.php'> ТЕХ.ПОДДЕРЖКА </a> |
-<a href='/download.php'>СКАЧАТЬ</a> |
-<a href='/contacts.php'> КОНТАКТЫ </a>
+<a href='/advanced_search.php' title='пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ'> пїЅпїЅпїЅпїЅпїЅпїЅ </a> |
+<a href='/comparison.php'> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </a>|
+<a href='//www.rusavtomatika.com/forum/'> пїЅпїЅпїЅпїЅпїЅ </a> |
+<a href='/support.php'> пїЅпїЅпїЅ.пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </a> |
+<a href='/download.php'>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a> |
+<a href='/contacts.php'> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ </a>
 </div>
 " : " ") .
         "<!--<a href='/antikrizisnoe-predlozhenie.php' style='color: rgb(228, 14, 19);'><div id='rof' style='display:none;position: absolute;width: 300px;margin-left: 283px;font-size: 15px;margin-top: 19px;overflow: hidden;color: rgb(228, 14, 19);
-  font-family: \"MS Sans Serif\";  font-weight: bold;'><div class='flying' style='position:relative;right:0px;float:left;white-space: nowrap;'>Акция !  Weintek по сниженным ценам</div></div></a>-->";
+  font-family: \"MS Sans Serif\";  font-weight: bold;'><div class='flying' style='position:relative;right:0px;float:left;white-space: nowrap;'>пїЅпїЅпїЅпїЅпїЅ !  Weintek пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</div></div></a>-->";
 
     $top_menu .= "
 <script>

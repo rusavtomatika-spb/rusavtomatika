@@ -42,7 +42,7 @@ $prices_out = '
 function dich(num,link)
  {
 if (link != "0") {
-   $("#dd").html("<a id=\"biglightbox\" href=\'"+link+"\' rel=\"lightbox[1]\"><span id=\"bigimage\" title=\"Увеличить\"><img class=\"lupa\" src=\"/images/zoom.png\" /><img src=\'"+num+"\'\"></span></a>");
+   $("#dd").html("<a id=\"biglightbox\" href=\'"+link+"\' rel=\"lightbox[1]\"><span id=\"bigimage\" title=\"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\"><img class=\"lupa\" src=\"/images/zoom.png\" /><img src=\'"+num+"\'\"></span></a>");
 } else {
  $("#dd").html("<img src=\'"+num+"\'\">");
 
@@ -82,94 +82,94 @@ if($r->diagonal_hide == 1){
 
 //echo basename($_SERVER['PHP_SELF']);
 /*
-  if($r->onstock==0) $onst="<div class=onstock> <img src='../images/red_sq.gif' >&nbsp;&nbsp;&nbsp;под заказ 4 нед.</div>";
-  else $onst= "<div class=onstock><img src='../images/green_sq.gif' >&nbsp;&nbsp;&nbsp;есть на складах: СПБ, МСК, КИЕВ</div>";
+  if($r->onstock==0) $onst="<div class=onstock> <img src='../images/red_sq.gif' >&nbsp;&nbsp;&nbsp;пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 4 пїЅпїЅпїЅ.</div>";
+  else $onst= "<div class=onstock><img src='../images/green_sq.gif' >&nbsp;&nbsp;&nbsp;пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅ, пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ</div>";
  */
 
 /*
 if ($r->type == 'hmi') {
-    $type = 'ПАНЕЛЬ ОПЕРАТОРА';
-    $title = $r->model . ', ' . $r->diagonal . '&#8243; панель оператора ' . $r->brand . ' со склада по отличной цене';
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = $r->model . ', ' . $r->diagonal . '&#8243; пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->brand . ' пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ';
 };
 
 if ($r->type == 'panel_pc') {
-    $type = 'ПАНЕЛЬНЫЙ КОМПЬЮТЕР';
-    $title = 'Панельный компьютер ' . $r->diagonal . '&#8243; ' . $r->model . ', моноблок, цена, склад';
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->diagonal . '&#8243; ' . $r->model . ', пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ';
 };
 if ($r->type == 'open_hmi') {
-    $type = 'ПАНЕЛЬНЫЙ КОМПЬЮТЕР OPEN HMI';
-    $title = 'Панельный компьютер Open HMI ' . $r->model . ' ' . $r->brand . ' со склада по отличной цене';
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ OPEN HMI';
+    $title = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Open HMI ' . $r->model . ' ' . $r->brand . ' пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ';
 };
 
 if ($r->type == 'machine-tv-interface') {
-    $type = 'ИНТЕРФЕЙС MACHINE-TV';
-    $title = 'Интерфейс Machine-TV ' . $r->model . ' ' . $r->brand . ' со склада по отличной цене';
-    $podbor_text = "Подобрать устройства Weintek без дисплея";
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MACHINE-TV';
+    $title = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Machine-TV ' . $r->model . ' ' . $r->brand . ' пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ';
+    $podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 };
 if ($r->type == 'controllers') {
-    $type = 'ПЛК, PLC, программируемый логический контроллер';
+    $type = 'пїЅпїЅпїЅ, PLC, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
     $title = "{$r->model} {$r->brand} $type";
 };
 if ($r->type == 'Gateway') {
-    $type = 'Шлюз данных';
+    $type = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ';
     $title = "$type {$r->model} {$r->brand}";
 };
-$description = $r->model . ', Weintek, панели оператора, операторские панели, склад в Санкт-Петербурге, склад в Москве, склад в Киеве, низкие цены ';
+$description = $r->model . ', Weintek, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ ';
 if ($r->type == 'cloud_hmi') {
-    $type = 'ОБЛАЧНЫЙ ИНТЕРФЕЙС';
-    $title = $r->model . ', облачный интерфейс Weintek';
-    $keywords = 'Облачный интерфейс, ' . $r->model . ', Weintek, EasyAccess 2.0';
-    $description = $r->model . ' облачный интерфейс от Weintek со склада по отличной цене';
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = $r->model . ', пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek';
+    $keywords = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, ' . $r->model . ', Weintek, EasyAccess 2.0';
+    $description = $r->model . ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Weintek пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ';
 };
 if ($r->type == 'monitor_cloud_hmi') {
-    $type = 'ЭКРАН ОБЛАЧНОГО ИНТЕРФЕЙСА';
-    $title = $r->model . ', экран облачного интерфейса Weintek';
-    $keywords = 'Экран облачного интерфейса, ' . $r->model . ', Weintek, EasyAccess 2.0';
-    $description = $r->model . ' экран облачного интерфейса от Weintek со склада по отличной цене';
+    $type = 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = $r->model . ', пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek';
+    $keywords = 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, ' . $r->model . ', Weintek, EasyAccess 2.0';
+    $description = $r->model . ' пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Weintek пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ';
 };
 if ($r->type == 'Gateway') {
-    $type = 'ШЛЮЗ ДАННЫХ';
-    $title = $r->model . '&nbsp;Шлюз данных Weintek';
-    $keywords = 'шлюз, данных, ' . $r->model . ', weintek';
-    $description = 'Шлюз данных ' . $r->model . ' оптимальное сочетание цены и качества';
+    $type = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = $r->model . '&nbsp;пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Weintek';
+    $keywords = 'пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ, ' . $r->model . ', weintek';
+    $description = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->model . ' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 }
 if ($r->type == 'monitor') {
-    $type = 'ПРОМЫШЛЕННЫЙ МОНИТОР';
-    $title = $r->model . '&nbsp;Промышленный монитор ' . $r->diagonal . '&#8243; Weintek';
-    $keywords = 'Промышленный, монитор, ' . $r->model . ', IFC, диагональ ' . $r->diagonal . '&#8243;, встраиваемый, сенсорный';
-    $description = 'Промышленный монитор ' . $r->model . 'с диагональю ' . $r->diagonal . '&#8243;, встраиваемый, сенсорный - оптимальное сочетание цены и качества';
+    $type = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $title = $r->model . '&nbsp;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->diagonal . '&#8243; Weintek';
+    $keywords = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, ' . $r->model . ', IFC, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->diagonal . '&#8243;, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $description = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->model . 'пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->diagonal . '&#8243;, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 };*/
-$nav = '<br /><nav><a href="/">Главная</a>&nbsp;/&nbsp;<a href="/weintek/">Панели оператора и панельные компьютеры Weintek</a>&nbsp;/&nbsp;' . $r->title . '</nav>';
+$nav = '<br /><nav><a href="/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a>&nbsp;/&nbsp;<a href="/weintek/">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek</a>&nbsp;/&nbsp;' . $r->title . '</nav>';
 
 
 if (($r->type == 'panel_pc') OR ($r->type == 'open_hmi')) {
-    $types = 'панельный компьютер';
-    $types1 = 'панельного компьютера';
-    $typ = 'компьютер';
-    $typ1 = 'компьютера';
-    $typ2 = 'компьютером';
-    $typ3 = 'этим компьютером';
+    $types = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $types1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ2 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ3 = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 } elseif ($r->type == 'controllers') {
-    $types = 'контроллер';
-    $types1 = 'контроллера';
-    $typ = 'контроллер';
-    $typ1 = 'контроллера';
-    $typ2 = 'контроллером';
-    $typ3 = 'этим контроллером';
+    $types = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $types1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ2 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ3 = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 } else if (preg_match('/cmt-svr/i', $r->model)) {
-    $types = 'облачный интерфейс';
-    $types1 = 'облачного интерфейса';
-    $typ = 'сервер';
-    $typ1 = 'сервера';
-    $typ2 = 'сервером';
-    $typ3 = 'этим сервером';
+    $types = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $types1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ = 'пїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ1 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ2 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ3 = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 } else {
-    $types = 'панель оператора';
-    $types1 = 'панели оператора';
-    $typ = 'панель';
-    $typ1 = 'панели';
-    $typ2 = 'панелью';
-    $typ3 = 'этой панелью';
+    $types = 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $types1 = 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ = 'пїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ1 = 'пїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ2 = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+    $typ3 = 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 };
 
 $onst = show_stock($r, 1);
@@ -193,7 +193,7 @@ $onst = show_stock($r, 1);
 /*-----------------------------------
 $query_images = "SELECT * FROM `gallery` WHERE `model`='{$r->model}' ORDER BY `id`;";
 //var_dump($r);
-$query_images_result = mysqli_query($mysqli_db, $query_images) or die("ошибка запроса022" . $query_images);
+$query_images_result = mysqli_query($mysqli_db, $query_images) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ022" . $query_images);
 $iimg = mysqli_num_rows($query_images_result);
 $all_images = '<td><a href=\"#\" class=\"button_view360\"></a></td>';
 //echo $iimg;
@@ -243,7 +243,7 @@ if ($iimg > 0) {
             $i_b_path = $img_row[img_path];
 //echo $ipath.'path';
         };
-        //  if ($img_row[alt] !='') {$img_alt=$img_row[alt];} else {$img_alt= $type.' '.$r->model.' Изображение №'.$ij;};
+        //  if ($img_row[alt] !='') {$img_alt=$img_row[alt];} else {$img_alt= $type.' '.$r->model.' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ'.$ij;};
 
      //        $all_images .= '<td onclick="dich(&quot;/' . $path . $img_row[img_path] . '&quot;,&quot;/' . $path . $img_row[img_path] . '&quot;);">
     // <img src="/' . $path . $img_row[img_path] . '" width="60" alt="' . $alt . '"></td>';
@@ -298,10 +298,10 @@ if ($GLOBALS["net"] == 0) {
     };
 };
 
-// Отображение первой картинки при загрузке стр
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 if (!empty($bim1)) {
     $kartinka = "
-<a id=\"biglightbox\" href=\"$bim1\" rel=\"lightbox[1]\"><span id=\"bigimage\" title=\"Увеличить\"><img class=\"lupa\" src=\"/images/zoom.png\" />
+<a id=\"biglightbox\" href=\"$bim1\" rel=\"lightbox[1]\"><span id=\"bigimage\" title=\"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\"><img class=\"lupa\" src=\"/images/zoom.png\" />
 <img src='/$im1' alt='$alt'></span></a>";
 } else {
     $kartinka = "
@@ -313,13 +313,13 @@ if (($r->retail_price != '0') AND ($r->retail_price != '') AND ($r->retail_price
     $action_price = action_price($r->model);
     if (!empty($action_price)) {
 
-        $priceb = "<td width=60 ><span class='prpr old'>$r->retail_price</span><span class='prpr action' title='Нажмите для пересчета в РУБ' style='  margin-top: -18px;  margin-left: -25px;'>$action_price</span></td><td class=val_name title='Нажмите для пересчета в РУБ'> USD </td>";
+        $priceb = "<td width=60 ><span class='prpr old'>$r->retail_price</span><span class='prpr action' title='пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ' style='  margin-top: -18px;  margin-left: -25px;'>$action_price</span></td><td class=val_name title='пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ'> USD </td>";
     } else {
 
-        $priceb = "<td width=60 class=prpr title='Нажмите для пересчета в РУБ' >$r->retail_price</td><td class=val_name title='Нажмите для пересчета в РУБ'> USD </td>";
+        $priceb = "<td width=60 class=prpr title='пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ' >$r->retail_price</td><td class=val_name title='пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ'> USD </td>";
     };
 } else {
-    $priceb = "<td><p class='zakazbut' idm='$r->model' onclick='show_backup_call(6, \"$r->model\")'>Запросить &nbsp;цену</p></td>";
+    $priceb = "<td><p class='zakazbut' idm='$r->model' onclick='show_backup_call(6, \"$r->model\")'>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ &nbsp;пїЅпїЅпїЅпїЅ</p></td>";
 };
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/sc/analog.php')) {
     include($_SERVER['DOCUMENT_ROOT'] . '/sc/analog.php');
@@ -327,14 +327,14 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/sc/analog.php')) {
 
 /*-------------------------
 if ($r->model == 'cMT-SVR-100' or $r->model == 'cMT-HDMI' or $r->model == 'cMT-FHD' or $r->model == 'cMT-SVR-200') {
-    $h1 = "$r->model, облачный интерфейс Weintek";
-    //$podbor_text = "Подобрать еще устройства Weintek без дисплея";
+    $h1 = "$r->model, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek";
+    //$podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 } elseif ($r->type == 'Gateway') {
     $h1 = "$type <strong>$brand $r->model</strong> ";
-    //$podbor_text = "Подобрать еще устройства Weintek без дисплея";
+    //$podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 } elseif ($r->type == 'controllers') {
-    $h1 = "<strong>$brand $r->model</strong> ПЛК, PLC, программируемый логический контроллер ";
-    //$podbor_text = "Подобрать еще устройства Weintek без дисплея";
+    $h1 = "<strong>$brand $r->model</strong> пїЅпїЅпїЅ, PLC, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ";
+    //$podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 } elseif ($r->type == 'machine-tv-interface') {
     $h1 = "$type <strong>$brand $r->model</strong> ";
 } else {
@@ -342,7 +342,7 @@ if ($r->model == 'cMT-SVR-100' or $r->model == 'cMT-HDMI' or $r->model == 'cMT-F
 };
 if ($r->type == 'Gateway') {
     $h1 = "$type <strong>$brand $r->model</strong> ";
-    //$podbor_text = "Подобрать еще устройства Weintek без дисплея";
+    //$podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 }
 
 
@@ -405,7 +405,7 @@ switch ($r->type) {
             'diagonal=' . $nominal_diagonal .
             '&min_diagonal=' . $search_diagonal .
             '&max_diagonal=' . $search_diagonal2 .
-            '&types=0"><span class="link_advanced_search_icon"></span>Подобрать похожие панели с диагональю ' . $nominal_diagonal . '&Prime;</a>';
+            '&types=0"><span class="link_advanced_search_icon"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $nominal_diagonal . '&Prime;</a>';
         break;
     case "open_hmi":
         $link_advanced_search = '<a class="link_advanced_search"  href="/advanced_search.php?' .
@@ -414,7 +414,7 @@ switch ($r->type) {
             $search_diagonal .
             '&max_diagonal=' .
             $search_diagonal2 .
-            '&types=0"><span class="link_advanced_search_icon"></span>Подобрать похожие панели с диагональю ' . $nominal_diagonal . '&Prime;</a>';
+            '&types=0"><span class="link_advanced_search_icon"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $nominal_diagonal . '&Prime;</a>';
         break;
     case "panel_pc":
         $link_advanced_search = '<a class="link_advanced_search"  href="/advanced_search.php?'
@@ -423,12 +423,12 @@ switch ($r->type) {
             $search_diagonal .
             '&max_diagonal=' .
             $search_diagonal2 .
-            '&types=1"><span class="link_advanced_search_icon"></span>Подобрать панельные компьютеры с диагональю ' . $nominal_diagonal . '&Prime;</a>';
+            '&types=1"><span class="link_advanced_search_icon"></span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $nominal_diagonal . '&Prime;</a>';
         break;
     case "cloud_hmi":
     case "Gateway":
     case "machine-tv-interface":
-        $podbor_text = "Подобрать еще устройства Weintek без дисплея";
+        $podbor_text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
         $link_advanced_search = '<a class="link_advanced_search"  href="/advanced_search.php?diagonals=1&brand=Weintek&types=456"><span class="link_advanced_search_icon"></span>' . $podbor_text . '</a>';
         break;
 
@@ -458,7 +458,7 @@ ob_start();
                         <h1 class="big_pan_name <? echo ($r->new_product) ? "new" : ""; ?>"><?= $r->h1 ?></h1>
                     </td>
                     <td width="120">
-                        <div class="pan_price_big" title='Розничная цена'> Цена с НДС</div>
+                        <div class="pan_price_big" title='пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ'> пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ</div>
                     </td>
                     <?= $priceb ?>
                 </tr>
@@ -478,7 +478,7 @@ ob_start();
 
 
     <td valign="top" align="center" valign="center" width="450px">
-        <?// Картинки ?>
+        <?// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ?>
     <?
         echo print_pictures_in_detail_template($r->brand, $r->type, $r->model, $r->pics_number);
         echo $youtube_video;
@@ -492,48 +492,48 @@ ob_start();
 $prices_out .= ob_get_clean();
 
 
-if (preg_match('/заказ/i', $onst)) {
+if (preg_match('/пїЅпїЅпїЅпїЅпїЅ/i', $onst)) {
     if ($r->model == 'MT6103iP') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/MT8102iP.php'>MT8102iP</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8102iP.php'>MT8102iP</a></div>";
     };
     if ($r->model == 'eMT3070A') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/eMT3070B.php'>eMT3070B</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/eMT3070B.php'>eMT3070B</a></div>";
     };
     if ($r->model == 'MT8070iH') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. &nbsp; Аналоги: <a href='/weintek/MT8071iP.php'>MT8071iP</a> <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. &nbsp; пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8071iP.php'>MT8071iP</a> <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
     };
     if ($r->model == 'eMT607A') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/panelnie-computery/aplex/ARMPAC-507.php'>ARMPAC-507</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/panelnie-computery/aplex/ARMPAC-507.php'>ARMPAC-507</a></div>";
     };
     if ($r->model == 'eMT610P') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/panelnie-computery/aplex/ARMPAC-510.php'>ARMPAC-510</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/panelnie-computery/aplex/ARMPAC-510.php'>ARMPAC-510</a></div>";
     };
     if ($r->model == 'eMT612A') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/panelnie-computery/aplex/ARMPAC-512.php'>ARMPAC-512</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/panelnie-computery/aplex/ARMPAC-512.php'>ARMPAC-512</a></div>";
     };
     if ($r->model == 'eMT615A') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/panelnie-computery/aplex/ARCHMI-815.php'>ARMPAC-512</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/panelnie-computery/aplex/ARCHMI-815.php'>ARMPAC-512</a></div>";
     };
     if ($r->model == 'MT6051iP') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/MT8051iP.php'>MT8051iP</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8051iP.php'>MT8051iP</a></div>";
     };
     if ($r->model == 'MT6071iP') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/MT8071iP.php'>MT8071iP</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8071iP.php'>MT8071iP</a></div>";
     };
     if ($r->model == 'MT6070iE') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/MT8070iE.php'>MT8070iE</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8070iE.php'>MT8070iE</a></div>";
     };
     if ($r->model == 'MT6071iE') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналог: <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
     };
     if ($r->model == 'MT6070iH') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналоги: <a href='/weintek/MT8071iP.php'>MT8071iP</a> и <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8071iP.php'>MT8071iP</a> пїЅ <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
     };
     if ($r->model == 'MT8070iH') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства</span>. Аналоги: <a href='/weintek/MT8071iP.php'>MT8071iP</a> и <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: <a href='/weintek/MT8071iP.php'>MT8071iP</a> пїЅ <a href='/weintek/MT8071iE.php'>MT8071iE</a></div>";
     };
     if ($r->discontinued == '1') {
-        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>снята с производства.</span> " . $r->analogs . "</div>";
+        $onst = "<div class='onstock'><img src='/images/red_sq.gif'> <span style='color:red;'>пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</span> " . $r->analogs . "</div>";
     };
 }
 ;
@@ -544,7 +544,7 @@ $prices_out .= "
 <table width=100%>
 
  <tr><td colspan=3> &nbsp;</td></tr>
- <tr><td width=5>&nbsp;</td><td width=80 class=h2_text>Наличие: </td><td > $onst</td>
+ <tr><td width=5>&nbsp;</td><td width=80 class=h2_text>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: </td><td > $onst</td>
  <td>  </td>  </tr>
 
  </table><br>";
@@ -559,26 +559,26 @@ if ($link_advanced_search):
                     <td>
                         <div class=but_wr>
                             <div class='zakazbut addToCart' idm='<?= $r->model ?>'>
-                                <span>В корзину</span></div>
+                                <span>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></div>
                         </div>
                     </td>
                 <? else: ?>
                     <td>
                         <div class=but_wr>
-                            <div class='zakazbut disabled'><span>В корзину</span></div>
+                            <div class='zakazbut disabled'><span>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></div>
                         </div>
                     </td>
                 <? endif; ?>
                 <td>
                     <div class=but_wr>
                         <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_backup_call(2, "<?= $r->model ?>")'>
-                            <span>Заказ в 1 клик</span></div>
+                            <span>пїЅпїЅпїЅпїЅпїЅ пїЅ 1 пїЅпїЅпїЅпїЅ</span></div>
                     </div>
                 </td>
                 <td>
                     <div class=but_wr>
                         <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_backup_call(1, "<?= $r->model ?>")'>
-                            <span>Получить скидку</span></div>
+                            <span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</span></div>
                     </div>
                 </td>
             </tr>
@@ -586,7 +586,7 @@ if ($link_advanced_search):
         <tr>
             <td>
                 <div class=but_wr>
-                    <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_compare(this)'><span>В сравнение</span>
+                    <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_compare(this)'><span>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>
                     </div>
                 </div>
             </td>
@@ -610,24 +610,24 @@ else:
         <tr>
             <td>
                 <div class=but_wr>
-                    <div class='zakazbut addToCart' idm='<?= $r->model ?>'><span>В корзину</span></div>
+                    <div class='zakazbut addToCart' idm='<?= $r->model ?>'><span>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></div>
                 </div>
             </td>
             <td>
                 <div class=but_wr>
                     <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_backup_call(2, "<?= $r->model ?>")'>
-                        <span>Заказ в 1 клик</span></div>
+                        <span>пїЅпїЅпїЅпїЅпїЅ пїЅ 1 пїЅпїЅпїЅпїЅ</span></div>
                 </div>
             </td>
             <td>
                 <div class=but_wr>
                     <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_backup_call(1, "<?= $r->model ?>")'>
-                        <span>Получить скидку</span></div>
+                        <span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</span></div>
                 </div>
             </td>
             <td>
                 <div class=but_wr>
-                    <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_compare(this)'><span>В сравнение</span>
+                    <div class='zakazbut' idm='<?= $r->model ?>' onclick='show_compare(this)'><span>пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span>
                     </div>
                 </div>
             </td>
@@ -647,27 +647,27 @@ ob_end_clean();
 $im = "<img src='/images/tick.png' width=15 style='vertical-align: middle;'>";
 $he = "height=40 class=hl_text";
 $vc = "valign=center";
-if (($r->case_material != "Пластик") AND ($r->type != 'monitor'))
-    $cm = "<tr><td>$im </td><td $he>Литой алюминиевый корпус</td></tr>";
+if (($r->case_material != "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ") AND ($r->type != 'monitor'))
+    $cm = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>";
 else
     $cm = "";
 
 $proj_load = "";
-if ($r->usb_client != "" and $r->usb_client != "Нет")
-    $proj_load .= "с ПК по USB";
-if ($r->ethernet != "" and $r->ethernet != "Нет") {
+if ($r->usb_client != "" and $r->usb_client != "пїЅпїЅпїЅ")
+    $proj_load .= "пїЅ пїЅпїЅ пїЅпїЅ USB";
+if ($r->ethernet != "" and $r->ethernet != "пїЅпїЅпїЅ") {
     if ($proj_load != "")
         $proj_load .= ", ";
-    $proj_load .= "с ПК по Ethernet";
+    $proj_load .= "пїЅ пїЅпїЅ пїЅпїЅ Ethernet";
 }
 
-if ($r->usb_host != "" and $r->usb_host != "Нет")
-    $proj_load .= ", с флешки";
-if ($r->sdcard != "" and $r->sdcard != "Нет")
-    $proj_load .= ", с SD карты";
+if ($r->usb_host != "" and $r->usb_host != "пїЅпїЅпїЅ")
+    $proj_load .= ", пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
+if ($r->sdcard != "" and $r->sdcard != "пїЅпїЅпїЅ")
+    $proj_load .= ", пїЅ SD пїЅпїЅпїЅпїЅпїЅ";
 /*
 if (!empty($proj_load)) {
-    $proj_load1 .= "<tr><td>$im </td><td $he>Загрузка проекта: $proj_load</td></tr>";
+    $proj_load1 .= "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: $proj_load</td></tr>";
 } else {
     $proj_load1 = '';
 };*/
@@ -677,7 +677,7 @@ if ($r->os != "")
 
 /*
 if (!empty($r->software)) {
-$os1 = "<tr><td valign=center>$im </td><td valign=middle $he>ПО: $r->software (бесплатное)</td></tr> ";
+$os1 = "<tr><td valign=center>$im </td><td valign=middle $he>пїЅпїЅ: $r->software (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)</td></tr> ";
 };*/
 
 if ($r->dotnet != '') {
@@ -687,26 +687,26 @@ if ($r->dotnet != '') {
 }
 ;
 if (($r->type == 'panel_pc') OR ($r->type == 'open_hmi')) {
-    $ww = 'Компьютер';
+    $ww = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 } else {
-    $ww = 'Панель';
+    $ww = 'пїЅпїЅпїЅпїЅпїЅпїЅ';
 }
 ;
 if ($r->os != "")
-    $os1 = "<tr><td valign=center>$im </td><td valign=middle $he>" . $ww . " с операционной системой $r->os $donten</td></tr> ";
+    $os1 = "<tr><td valign=center>$im </td><td valign=middle $he>" . $ww . " пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->os $donten</td></tr> ";
 
 if ($r->modbus_support != '') {
-    if ($r->modbus_support == 'Есть') {
-        $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>Поддержка <!-- nosearch -->MODBUS<!-- /nosearch --> TCP/IP Gateway </td></tr>";
+    if ($r->modbus_support == 'пїЅпїЅпїЅпїЅ') {
+        $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <!-- nosearch -->MODBUS<!-- /nosearch --> TCP/IP Gateway </td></tr>";
     } else {
-        $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>Поддержка <!-- nosearch -->MODBUS<!-- /nosearch --> " . $r->modbus_support . "</td></tr>";
+        $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <!-- nosearch -->MODBUS<!-- /nosearch --> " . $r->modbus_support . "</td></tr>";
     }
 }
 if ($r->opc_ua != '') {
     $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>{$r->opc_ua}</td></tr>";
 }
 if ($r->model == 'cMT-G01' or $r->model == 'cMT-G02') {
-    $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>Встроенный выключатель питания </td></tr>";
+    $os1 .= "<tr><td valign=center>$im </td><td valign=middle $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ </td></tr>";
 }
 
 $inter = $r->serial;
@@ -715,7 +715,7 @@ if ($r->ethernet != "") {
     if (!empty($inter)) {
 
         if ($r->ethernets > 1) {
-            $inter .= ", " . $r->ethernets . "-порта Ethernet";
+            $inter .= ", " . $r->ethernets . "-пїЅпїЅпїЅпїЅпїЅ Ethernet";
         } else {
             $inter .= ", Ethernet";
         };
@@ -724,18 +724,18 @@ if ($r->ethernet != "") {
     };
 }
 ;
-if ($r->usb_host != "" and $r->usb_host != "Нет")
+if ($r->usb_host != "" and $r->usb_host != "пїЅпїЅпїЅ")
     $inter .= ", USB host";
-if ($r->sdcard != "" and $r->sdcard != "Нет")
-    $inter .= ", SD карта";
-if ($r->can_bus != "" and $r->can_bus != "Нет")
+if ($r->sdcard != "" and $r->sdcard != "пїЅпїЅпїЅ")
+    $inter .= ", SD пїЅпїЅпїЅпїЅпїЅ";
+if ($r->can_bus != "" and $r->can_bus != "пїЅпїЅпїЅ")
     $inter .= ", CAN";
 if (!empty($r->wifi)) {
     $inter .= ", Wi-Fi";
 }
 ;
 if ($r->linear_out != "")
-    $inter .= ", линейный аудио выход";
+    $inter .= ", пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
 if (!empty($inter)) {
     $inter1 = '<tr><td>' . $im . '</td><td ' . $he . '>' . $inter . '</td></tr>';
 } else {
@@ -749,8 +749,8 @@ if ($r->ethernet != "" && $r->os == ""){
     ob_start(); ?>
     <tr>
         <td><?= $im ?></td>
-        <td <?= $he ?>>Удаленный доступ по <?
-            if ($r->vnc_server_new == "Есть"):?>VNC, <? endif; ?>FTP, EasyAccess
+        <td <?= $he ?>>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ <?
+            if ($r->vnc_server_new == "пїЅпїЅпїЅпїЅ"):?>VNC, <? endif; ?>FTP, EasyAccess
         </td>
     </tr>
     <?
@@ -760,7 +760,7 @@ if ($r->ethernet != "" && $r->os == ""){
         ob_start(); ?>
         <tr>
             <td><?= $im ?></td>
-            <td <?= $he ?>>Удаленный доступ по EasyAccess
+            <td <?= $he ?>>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ EasyAccess
             </td>
         </tr>
         <?
@@ -768,83 +768,83 @@ if ($r->ethernet != "" && $r->os == ""){
     }
 
     if ($r->ethernet != "" && $r->os != "" && strripos($r->model, "cMT-SVR") === FALSE){
-        $remote = "<tr><td>$im </td><td $he>Удаленный доступ по VNC, FTP </td></tr>";
+        $remote = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ VNC, FTP </td></tr>";
     }
 
 } elseif ($r->type == "Gateway") {
-    $remote = "<tr><td>$im </td><td $he>Удаленный доступ по EasyAccess</td></tr>";
+    $remote = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ EasyAccess</td></tr>";
 }
 ;
 
 if ($r->matrix == "IPS") {
-    $matrix_features = '<tr><td>' . $im . '</td><td $he>Матрица: ' . $r->matrix . '</td></tr>';
+    $matrix_features = '<tr><td>' . $im . '</td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ' . $r->matrix . '</td></tr>';
 }
 
 if ($r->easy_access == "optional") {
-    $easy_access = "<tr><td>$im </td><td $he>Лицензия EasyAccess 2.0 покупается отдельно. Уточняйте у наших менеджеров.</td></tr>";
+    $easy_access = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ EasyAccess 2.0 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</td></tr>";
 } elseif ($r->easy_access == "build_in") {
-    $easy_access = "<tr><td>$im </td><td $he>Лицензия EasyAccess 2.0 входит в стоимость.</td></tr>";
+    $easy_access = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ EasyAccess 2.0 пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</td></tr>";
 
 }
 
 if ($r->codesys == "optional") {
-    $codesys = "<tr><td>$im </td><td $he>Лицензия CODESYS покупается отдельно. Уточняйте у наших менеджеров.</td></tr>";
+    $codesys = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CODESYS пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</td></tr>";
 } elseif ($r->codesys == "build_in") {
-    $codesys = "<tr><td>$im </td><td $he>Лицензия CODESYS входит в стоимость.</td></tr>";
+    $codesys = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CODESYS пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</td></tr>";
 
 }
 
 
 $fastgr = "";
 if ($r->series == "iE")
-    $fastgr = "<tr><td>$im </td><td $he>Быстрая работа с графикой <br>( до 10 раз быстрее, чем в других сериях )</td></tr>";
+    $fastgr = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <br>( пїЅпїЅ 10 пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ )</td></tr>";
 $isoports = "";
 if ($r->series == "iE")
-    $isoports = "<tr><td>$im </td><td $he>Полная гальваническая изоляция всех портов</td></tr>";
+    $isoports = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>";
 
 $speed = "";
 if ($r->series == "MT8000XE")
-    $speed = "<tr><td>$im </td><td $he>Процессор 1ГГц, СУПЕР скорость</td></tr>";
+    $speed = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>";
 /*
 if (!empty($r->touch)) {
-$touch = "<tr><td>$im </td><td $he>Сенсорный экран: $r->touch</td></tr>";
+$touch = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: $r->touch</td></tr>";
 };
 */
 
 if ((!empty($r->touch)) AND ($r->type == 'monitor')) {
-    $touch = "<tr><td>$im </td><td $he>Сенсорный экран c закаленным стеклом </td></tr>";
+    $touch = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ c пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ </td></tr>";
 }
 ;
 if (($r->type == 'monitor') AND ($r->diagonal >= 6)) {
-    $glas = "<tr><td>$im </td><td $he>Тонкое модульное исполнение и прочная конструкция</td></tr>";
+    $glas = "<tr><td>$im </td><td $he>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>";
 }
 
 if (($r->series == 'MT8000XE') OR ($r->series == 'cMT')) {
-    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a href="/mqtt/">Поддержка MQTT</a></td></tr>';
+    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a href="/mqtt/">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MQTT</a></td></tr>';
 }
 
 if (($r->brand == 'Weintek') && ($r->diagonal == 9.7)) {
-    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">Рамка для панели</a></td></tr>';
+    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a></td></tr>';
 }
 
 if (($r->brand == 'Weintek') && ($r->diagonal == 7) && ($r->model !== 'MT8071iER')) {
-    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">Рамка для панели</a></td></tr>';
+    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a></td></tr>';
 }
 if (($r->brand == 'Weintek') && ($r->diagonal == 12.1)) {
-    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">Рамка для панели</a></td></tr>';
+    $mqtt = '<tr><td>' . $im . '</td><td ' . $he . '><a class="ramkaoncart" href="#ui-id-5">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a></td></tr>';
 }
 
 
 if ($r->brand == 'Weintek') {
-    $quality = 'Высочайшее качество и надежность';
+    $quality = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 } else {
-    $quality = 'Оптимальное соотношение цены и качества';
+    $quality = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 }
 
 
 if (in_array($r->type, array("hmi")) and !(in_array($r->model, array("cMT3151", "cMT3090")))) {
     $advantage_audio_alert_module = '<tr><td width="30" style="vertical-align: top;"><img src="/images/tick.png" width="15"></td><td class="hl_text">'
-        . 'Возможность воспроизведения звука с помощью подключаемого <a href="/weintek/DAO1EM.php">модуля аудио оповещения DAO1EM</a>'
+        . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <a href="/weintek/DAO1EM.php">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ DAO1EM</a>'
         . '</td></tr>';
 }
 
@@ -853,7 +853,7 @@ if (in_array($r->series, array("cMT-X"))) {
 <tr>
 <td width="30" style="vertical-align: top;"><img src="/images/tick.png" width="15"></td>
 <td class="hl_text" height="60">'
-        . 'Управление панелью оператора через веб-браузер, без установки специального ПО (технология WebView).'
+        . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ WebView).'
         . '</td></tr>';
 }
 
@@ -862,7 +862,7 @@ if (in_array($r->model, array("cMT3072X","cMT3072XH","cMT3092X","cMT3152X","cMT3
 <tr>
 <td width="30" style="vertical-align: top;"><img src="/images/tick.png" width="15"></td>
 <td class="hl_text" height="40">'
-        . 'Веб браузер ПЛК (PLC Web browser) для подключения к встроенному веб-серверу ПЛК'
+        . 'пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (PLC Web browser) пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ'
         . '</td></tr>';
 }else $plc_web_browser = "";
 
@@ -870,27 +870,27 @@ if (in_array($r->model, array("cMT3072X","cMT3072XH","cMT3092X","cMT3152X","cMT3
 
 if ($r->type == 'monitor') {
     if ($r->diagonal >= 10) {
-        $glas2 = "<tr><td>$im </td><td $he>VGA + DVI + Audio входы</td></tr>";
+        $glas2 = "<tr><td>$im </td><td $he>VGA + DVI + Audio пїЅпїЅпїЅпїЅпїЅ</td></tr>";
     } elseif ($r->diagonal >= 8) {
-        $glas2 = "<tr><td>$im </td><td $he>VGA + Audio входы</td></tr>";
+        $glas2 = "<tr><td>$im </td><td $he>VGA + Audio пїЅпїЅпїЅпїЅпїЅ</td></tr>";
     } else {
-        $glas2 = "<tr><td>$im </td><td $he>VGA вход</td></tr>";
+        $glas2 = "<tr><td>$im </td><td $he>VGA пїЅпїЅпїЅпїЅ</td></tr>";
     };
 
-    $poverplag = '<tr><td>' . $im . '</td><td ' . $he . '>Выход сенсора экрана — USB</td></tr>
-<tr><td>' . $im . '</td><td ' . $he . '>Hапряжение питания монитора 12 VDC, в комплекте идет блок питания 220VAC - 12 VDC</td></tr>
-<tr><td>' . $im . '</td><td ' . $he . '>Пылевлагозащита по фронту ( IP65 )</td></tr>
+    $poverplag = '<tr><td>' . $im . '</td><td ' . $he . '>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ USB</td></tr>
+<tr><td>' . $im . '</td><td ' . $he . '>HпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 12 VDC, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 220VAC - 12 VDC</td></tr>
+<tr><td>' . $im . '</td><td ' . $he . '>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ( IP65 )</td></tr>
 
 ';
 }
 ;
 
 if (($r->thickness < 35)) {
-    $thickness = '<tr><td>' . $im . '</td><td ' . $he . '>Тонкий корпус — ' . $r->thickness . ' мм </td></tr>';
+    $thickness = '<tr><td>' . $im . '</td><td ' . $he . '>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ' . $r->thickness . ' пїЅпїЅ </td></tr>';
 }
 
 if (($r->model == "cMT-HDMI")) {
-    $HDMI_port = '<tr><td>' . $im . '</td><td ' . $he . '>Через HDMI можно подключаться к экранам любого размера</td></tr>';
+    $HDMI_port = '<tr><td>' . $im . '</td><td ' . $he . '>пїЅпїЅпїЅпїЅпїЅ HDMI пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
 } else {
     $HDMI_port = "";
 }
@@ -940,7 +940,7 @@ if (!empty($r->text_detail)) {
             if ($r->matrix == 'IPS'): ?>
                 <tr>
                     <td width=30><?= $im ?></td>
-                    <td <?= $he ?>>Тип матрицы <?= $r->matrix ?>, широкие углы обзора</td>
+                    <td <?= $he ?>>пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ <?= $r->matrix ?>, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>
                 </tr>
             <? endif; ?>
 
@@ -996,35 +996,35 @@ $us_tr_l1 = '</td><td class=par_val1 >';
 
 if (($r->ethernet != "" && $r->software != "") AND (!preg_match('/iP$/', $r->model)) AND ($r->type != "Gateway")) {
     if(strripos($r->model, "cMT-SVR") === FALSE){
-        $dop = "<tr><td class=par_name1 >Удаленный доступ к панели</td><td class=par_val1 >FTP(архивы, рецепты, журнал событий), VNC (удаленная работа),<br>
-        EasyAccess (удаленная работа, загрузка проекта )</td></tr>
-        <tr><td class=par_name1 >Ftp доступ к памяти панели</td><td class=par_val1 >" . ($r->ftp_access_hmi_mem ? "Есть" : "-") . "</td></tr>
-        <tr><td class=par_name1 >Ftp доступ к SD карте и флешке</td><td class=par_val1 >" . ($r->ftp_access_sd_usb ? "Есть" : "-") . "</td></tr>
+        $dop = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >FTP(пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ), VNC (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ),<br>
+        EasyAccess (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ )</td></tr>
+        <tr><td class=par_name1 >Ftp пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >" . ($r->ftp_access_hmi_mem ? "пїЅпїЅпїЅпїЅ" : "-") . "</td></tr>
+        <tr><td class=par_name1 >Ftp пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ SD пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >" . ($r->ftp_access_sd_usb ? "пїЅпїЅпїЅпїЅ" : "-") . "</td></tr>
         ";
     }else{
-        $dop = "<tr><td class=par_name1 >Удаленный доступ к панели</td><td class=par_val1 >FTP(архивы, рецепты, журнал событий),<br>
-   EasyAccess (удаленная работа, загрузка проекта )</td></tr>
-   <tr><td class=par_name1 >Ftp доступ к памяти панели</td><td class=par_val1 >" . ($r->ftp_access_hmi_mem ? "Есть" : "-") . "</td></tr>
-   <tr><td class=par_name1 >Ftp доступ к SD карте и флешке</td><td class=par_val1 >" . ($r->ftp_access_sd_usb ? "Есть" : "-") . "</td></tr>
+        $dop = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >FTP(пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ),<br>
+   EasyAccess (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ )</td></tr>
+   <tr><td class=par_name1 >Ftp пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >" . ($r->ftp_access_hmi_mem ? "пїЅпїЅпїЅпїЅ" : "-") . "</td></tr>
+   <tr><td class=par_name1 >Ftp пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ SD пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >" . ($r->ftp_access_sd_usb ? "пїЅпїЅпїЅпїЅ" : "-") . "</td></tr>
    ";
     }
 
 } elseif ($r->type == "Gateway") {
-    $dop = "<tr><td class=par_name1 >Удаленный доступ к панели</td><td class=par_val1 >EasyAccess (удаленная работа, загрузка проекта)</td></tr>
+    $dop = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >EasyAccess (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)</td></tr>
    ";
 } else
     $dop = "";
 
-$arch = "память панели";
-if ($r->usb_host != "" and $r->usb_host != "Нет")
-    $arch .= ", флешка";
-if ($r->sdcard != "" and $r->sdcard != "Нет")
-    $arch .= ", SD карта";
+$arch = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
+if ($r->usb_host != "" and $r->usb_host != "пїЅпїЅпїЅ")
+    $arch .= ", пїЅпїЅпїЅпїЅпїЅпїЅ";
+if ($r->sdcard != "" and $r->sdcard != "пїЅпїЅпїЅ")
+    $arch .= ", SD пїЅпїЅпїЅпїЅпїЅ";
 
 
 $mount = "";
-if (($r->wall_mount == "есть") OR ($r->wall_mount == "yes")) {
-    $mount .= "в щит";
+if (($r->wall_mount == "пїЅпїЅпїЅпїЅ") OR ($r->wall_mount == "yes")) {
+    $mount .= "пїЅ пїЅпїЅпїЅ";
 } else {
     $mount .= $r->wall_mount;
 }
@@ -1048,64 +1048,64 @@ if ($r->vesa100 != "") {
 ;
 
 
-$usb_drv = "<tr><td class=par_name1 >Драйвера USB (для загрузки проекта с ПК в панель )</td><td class=par_val1 >устанавливаются при установке $r->software</td></tr>";
+$usb_drv = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ USB (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ )</td><td class=par_val1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->software</td></tr>";
 if ($r->usb_client == "")
     $usb_drv = "";
 
 if ($r->diagonal == 0) {
     $display_char = '';
-    $without = '( без дисплея )';
+    $without = '( пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ )';
 } else {
 
     if (!empty($r->matrix)) {
-        $matrix = '<tr><td class=par_name1 >Матрица</td><td class=par_val1 >' . $r->matrix . '</td></tr>';
+        $matrix = '<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >' . $r->matrix . '</td></tr>';
     }
     if (empty($r->backlight)) {
         if ($r->type == 'monitor') {
-            $backlight = '<tr><td class=par_name1 >Тип подсветки</td><td class=par_val1 >LED</td></tr>';
+            $backlight = '<tr><td class=par_name1 >пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >LED</td></tr>';
         };
         if (!empty($r->backlight_life)) {
-            $backlight .= '<tr><td class=par_name1 >Время наработки на отказ</td><td class=par_val1 >' . $r->backlight_life . ' ч</td></tr>';
+            $backlight .= '<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >' . $r->backlight_life . ' пїЅ</td></tr>';
         };
     } else {
 
-        $backlight = '<tr><td class=par_name1 >Тип подсветки</td><td class=par_val1 >' . $r->backlight . '</td></tr>
- <tr><td class=par_name1 >Время жизни подсветки</td><td class=par_val1 >' . $r->backlight_life . ' ч</td></tr>';
+        $backlight = '<tr><td class=par_name1 >пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >' . $r->backlight . '</td></tr>
+ <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >' . $r->backlight_life . ' пїЅ</td></tr>';
     };
 
     if ($r->type == 'monitor') {
         if ($r->touch != '') {
             $toucho = $r->touch;
         } else {
-            $toucho = 'Резистивный с USB контроллером';
+            $toucho = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ USB пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
         }
 
     } else {
         $toucho = $r->touch;
     };
-    $display_char = " <tr><td class=par_name1>Яркость</td><td class=par_val1  >$r->brightness кд/м2</td></tr>
+    $display_char = " <tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1  >$r->brightness пїЅпїЅ/пїЅ2</td></tr>
  $backlight
- <tr><td class=par_name1>Контрастность</td><td class=par_val1 >$r->contrast</td></tr>
- <tr><td class=par_name1>Цветность</td><td class=par_val1 >$r->colors цветов</td></tr>
+ <tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->contrast</td></tr>
+ <tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->colors пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>
 
- <tr><td class=par_name1>Тип сенсора</td><td class=par_val1 >$toucho</td></tr>";
+ <tr><td class=par_name1>пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$toucho</td></tr>";
     $without = '';
 }
 ;
 if (!empty($r->pixel_pitch)) {
-    $pixel_pitch = $us_tr_l . 'Размер пикселя</td>' . $us_tr_l1 . $r->pixel_pitch . '</td></tr>';
+    $pixel_pitch = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->pixel_pitch . '</td></tr>';
 } else {
     $pixel_pitch = '';
 }
 ;
 if (!empty($r->response_time)) {
-    $response_time = $us_tr_l . 'Время ответа</td>' . $us_tr_l1 . $r->response_time . ' мс</td></tr>';
+    $response_time = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->response_time . ' пїЅпїЅ</td></tr>';
 } else {
     $response_time = '';
 }
 ;
 if (!empty($r->view_angle)) {
-    $view_angle = $us_tr_l . 'Угол обзора</td>' . $us_tr_l1 . $r->view_angle . '</td></tr>';
+    $view_angle = $us_tr_l . 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->view_angle . '</td></tr>';
 } else {
     $view_angle = '';
 }
@@ -1114,27 +1114,27 @@ if (!empty($r->view_angle)) {
 
 if (preg_match('/3600/', $r->resolution)) {
 
-    $r->resolution = 'Устанавливается при создании проекта, максимально ' . $r->resolution;
+    $r->resolution = 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->resolution;
 }
 
 ob_start(); ?>
 <? if ($r->diagonal > 0): ?>
     <div style="width:90%;">
-        <span class=hpar>Дисплей</span><br>
+        <span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>
 
         <?= $table_start ?>
         <tr>
-            <td class=par_name1>Диагональ</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
             <td class=par_val1><?= $r->diagonal ?>&#8243; <?= $without ?></td>
         </tr>
         <tr>
-            <td class=par_name1>Разрешение</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
             <td class=par_val1><?= $r->resolution ?></td>
         </tr>
 
         <? if (!empty($r->matrix)): ?>
             <tr>
-                <td class=par_name1>Тип матрицы</td>
+                <td class=par_name1>пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
                 <td class=par_val1><?= $r->matrix ?></td>
             </tr>
         <? endif; ?>
@@ -1153,72 +1153,72 @@ ob_start(); ?>
 
 
 if (!empty($r->cpu_type)) {
-    $cpu_type = "<tr><td class=par_name1 >Процессор</td><td class=par_val1 >$r->cpu_type</td></tr>";
+    $cpu_type = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->cpu_type</td></tr>";
 }
 ;
 if (!empty($r->cpu_speed)) {
-    $cpu_speed = "<tr><td class=par_name1 >Частота</td><td class=par_val1 >$r->cpu_speed МГц</td></tr>";
+    $cpu_speed = "<tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->cpu_speed пїЅпїЅпїЅ</td></tr>";
 }
 ;
 if (!empty($r->ram)) {
   if($r->ram > 999){
-    $r->ram = $r->ram / 1000 . " Гб";
+    $r->ram = $r->ram / 1000 . " пїЅпїЅ";
   }else{
-      $r->ram = $r->ram . " Мб";
+      $r->ram = $r->ram . " пїЅпїЅ";
   }
-    $ram = "<tr><td class=par_name1 >ОЗУ</td><td class=par_val1 >$r->ram</td></tr>";
+    $ram = "<tr><td class=par_name1 >пїЅпїЅпїЅ</td><td class=par_val1 >$r->ram</td></tr>";
 }
 
 if (!empty($r->flash)) {
 
 /*  if($r->flash > 999){
-    $r->flash = $r->flash / 1000 . " Гб";
+    $r->flash = $r->flash / 1000 . " пїЅпїЅ";
   }else{
-      $r->flash = $r->flash . " Мб";
+      $r->flash = $r->flash . " пїЅпїЅ";
   }*/
-    $flash = "<tr><td class=par_name1 >Flash ( встроенный )</td><td class=par_val1 >$r->flash Гб</td></tr>";
+    $flash = "<tr><td class=par_name1 >Flash ( пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ )</td><td class=par_val1 >$r->flash пїЅпїЅ</td></tr>";
 }
 ;
 if (!empty($r->rtc)) {
-    $rtc = "<tr><td class=par_name1 >RTC ( часы реального времени )</td><td class=par_val1 >" . ($r->rtc ? $r->rtc : '-') . "</td></tr>";
+    $rtc = "<tr><td class=par_name1 >RTC ( пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ )</td><td class=par_val1 >" . ($r->rtc ? $r->rtc : '-') . "</td></tr>";
 }
 ;
 
 $params = $cpu_type . $cpu_speed . $ram . $flash . $rtc;
 if (!empty($params)) {
-    $sp_data1 .= '<span class=hpar>Параметры</span><br>' .
+    $sp_data1 .= '<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>' .
         $table_start . $params . '</table><div class="separator"></div>';
 }
 ;
 /*
-  $sp_data1 .="<span class=hpar>Интерфейсы</span><br>
+  $sp_data1 .="<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>
   $table_start
-  <tr><td class=par_name1 >Последовательные интерфейсы</td><td class=par_val1 >$r->serial_full</td></tr>
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->serial_full</td></tr>
   $modbus
   $mpi
-  <tr><td class=par_name1 >USB Host</td><td class=par_val1 >".($r->usb_host?$r->usb_host:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >USB Client</td><td class=par_val1 >".($r->usb_client?$r->usb_client:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >Слот SD карты</td><td class=par_val1 >".($r->sdcard?$r->sdcard:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >Ethernet</td><td class=par_val1 >".($r->ethernet?$r->ethernet:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >Линейный аудиовыход</td><td class=par_val1 >".($r->linear_out?$r->linear_out:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >Видеовход</td><td class=par_val1 >".($r->video_input?$r->video_input:'-')."</td></tr> //есть
-  <tr><td class=par_name1 >CAN</td><td class=par_val1 >".($r->can_bus?$r->can_bus:'-')."</td></tr> //есть
+  <tr><td class=par_name1 >USB Host</td><td class=par_val1 >".($r->usb_host?$r->usb_host:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >USB Client</td><td class=par_val1 >".($r->usb_client?$r->usb_client:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅ SD пїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >".($r->sdcard?$r->sdcard:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >Ethernet</td><td class=par_val1 >".($r->ethernet?$r->ethernet:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >".($r->linear_out?$r->linear_out:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >".($r->video_input?$r->video_input:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >CAN</td><td class=par_val1 >".($r->can_bus?$r->can_bus:'-')."</td></tr> //пїЅпїЅпїЅпїЅ
   </table><br><br>";
  */
 
 
 if ($r->opc_ua != '') {
-    $opc_ua = $us_tr_l . 'Поддержка OPC UA' . $us_tr_l1 . $r->opc_ua . '</td></tr>';
+    $opc_ua = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ OPC UA' . $us_tr_l1 . $r->opc_ua . '</td></tr>';
 }
 if ($r->mqtt != '') {
-    $mqtt2 = $us_tr_l . 'Поддержка MQTT' . $us_tr_l1 . $r->mqtt . '</td></tr>';
+    $mqtt2 = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MQTT' . $us_tr_l1 . $r->mqtt . '</td></tr>';
 } elseif ($r->brand == 'Weintek' and ($r->series == 'MT8000iE' or $r->series == 'eMT3000'
         or $r->series == 'cMT' or $r->series == 'mTV' or $r->series == 'MT8000XE' or $r->series == 'MT8000XE')) {
-    $mqtt2 = $us_tr_l . 'Поддержка MQTT' . $us_tr_l1 . 'Есть</td></tr>';
+    $mqtt2 = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MQTT' . $us_tr_l1 . 'пїЅпїЅпїЅпїЅ</td></tr>';
 }
 
 if (!empty($r->voltage)) {
-    $voltage = $us_tr_l . 'Напряжение питания</td>' . $us_tr_l1 . '' . $r->voltage . '</td></tr>';
+    $voltage = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . '' . $r->voltage . '</td></tr>';
 } else {
     $voltage = '';
 }
@@ -1229,19 +1229,19 @@ if ($r->type == 'monitor' and $r->series == 'cMT') {
     ob_start(); ?>
     <? if (!empty($r->ts_usb)): ?>
         <tr>
-            <td class="par_name1">USB выход сенсора экрана</td>
+            <td class="par_name1">USB пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>
             <td class="par_val1"><?= $r->ts_usb ?></td>
         </tr>
     <? endif; ?>
     <? if (!empty($r->video_input)): ?>
         <tr>
-            <td class="par_name1">Видео-входы</td>
+            <td class="par_name1">пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ</td>
             <td class="par_val1"><?= $r->video_input ?></td>
         </tr>
     <? endif; ?>
     <? if (!empty($r->linear_out)): ?>
         <tr>
-            <td class="par_name1">Аудио-выход</td>
+            <td class="par_name1">пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ</td>
             <td class="par_val1"><?= $r->linear_out ?></td>
         </tr>
     <? endif; ?>
@@ -1266,17 +1266,17 @@ if ($r->type == 'monitor' and $r->series == 'cMT') {
 
 } elseif ($r->type == 'monitor') {
 
-    $interfaces = $us_tr_l . 'Выход сенсора экрана</td>' . $us_tr_l1 . 'USB</td></tr>';
+    $interfaces = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'USB</td></tr>';
     if ($r->diagonal >= 10) {
-        $interfaces = $us_tr_l . 'Видео-входы</td>' . $us_tr_l1 . 'VGA + DVI</td></tr>' .
-            $us_tr_l . 'Аудио-вход</td>' . $us_tr_l1 . '3,5 Jack</td></tr>' .
+        $interfaces = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'VGA + DVI</td></tr>' .
+            $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . '3,5 Jack</td></tr>' .
             $interfaces;
     } elseif ($r->diagonal >= 8) {
-        $interfaces = $us_tr_l . 'Видео-вход</td>' . $us_tr_l1 . 'VGA</td></tr>' .
-            $us_tr_l . 'Аудио-вход</td>' . $us_tr_l1 . '3,5 Jack</td></tr>' .
+        $interfaces = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'VGA</td></tr>' .
+            $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . '3,5 Jack</td></tr>' .
             $interfaces;
     } else {
-        $interfaces = $us_tr_l . 'Видео-вход</td>' . $us_tr_l1 . 'VGA</td></tr>' .
+        $interfaces = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'VGA</td></tr>' .
             $interfaces;
     };
 } elseif ($r->type == 'monitor_cloud_hmi') {
@@ -1287,7 +1287,7 @@ if ($r->type == 'monitor' and $r->series == 'cMT') {
         } else {
             $voltage_extra = '';
         }
-        $voltage = $us_tr_l . 'Напряжение питания</td>' . $us_tr_l1 . '' . $r->voltage . $voltage_extra . '</td></tr>';
+        $voltage = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . '' . $r->voltage . $voltage_extra . '</td></tr>';
     } else {
         $voltage = '';
     };
@@ -1300,15 +1300,15 @@ if ($r->type == 'monitor' and $r->series == 'cMT') {
         $ethernet_full = '';
     };
     if (!empty($r->audio)) {
-        if ($r->audio == "Нет") {
-            $audio = $us_tr_l . 'Аудио порт</td>' . $us_tr_l1 . 'Нет</td></tr>';
+        if ($r->audio == "пїЅпїЅпїЅ") {
+            $audio = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'пїЅпїЅпїЅ</td></tr>';
         } else
-            $audio = $us_tr_l . 'Аудио порт</td>' . $us_tr_l1 . $r->audio . ' разъем</td></tr>';
+            $audio = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->audio . ' пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
     } else {
         $audio = '';
     };
     if (!empty($r->sdcard)) {
-        $sdcard = $us_tr_l . 'Слот карт памяти</td>' . $us_tr_l1 . $r->sdcard . '</td></tr>';
+        $sdcard = $us_tr_l . 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->sdcard . '</td></tr>';
     } else {
         $sdcard = '';
     };
@@ -1321,53 +1321,53 @@ if ($r->type == 'monitor' and $r->series == 'cMT') {
     if ($r->ethernet != "")
         $modbus .= ", TCP/IP";
 
-    $modbus = $us_tr_l . 'Поддержка <!-- nosearch -->Modbus<!-- /nosearch -->' . $us_tr_l1 . $modbus . '</td></tr>';
+    $modbus = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <!-- nosearch -->Modbus<!-- /nosearch -->' . $us_tr_l1 . $modbus . '</td></tr>';
     if ($r->os != "")
         $modbus = "";
 
 
 if ($r->index < 552){
-    $mpi = $us_tr_l . 'Поддержка MPI' . $us_tr_l1 . '187,5 K</td></tr>';
+    $mpi = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MPI' . $us_tr_l1 . '187,5 K</td></tr>';
 
 }else{
 
     if (!empty($r->mpi)){
-        $mpi = $us_tr_l . 'Поддержка MPI' . $us_tr_l1 . $r->mpi . '</td></tr>';
+        $mpi = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ MPI' . $us_tr_l1 . $r->mpi . '</td></tr>';
     }
 }
 
     if (!empty($r->rgb)) {
-        $rgb = $us_tr_l . 'RGB видеосигнал</td>' . $us_tr_l1 . $r->rgb . '</td></tr>';
+        $rgb = $us_tr_l . 'RGB пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->rgb . '</td></tr>';
     } else {
         $rgb = '';
     };
     if (!empty($r->dc_input)) {
-        $dc_input = $us_tr_l . 'DC вход</td>' . $us_tr_l1 . $r->dc_input . '</td></tr>';
+        $dc_input = $us_tr_l . 'DC пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->dc_input . '</td></tr>';
     } else {
         $dc_input = '';
     };
     if (!empty($r->av_input)) {
-        $av_input = $us_tr_l . 'AV вход</td>' . $us_tr_l1 . $r->av_input . '</td></tr>';
+        $av_input = $us_tr_l . 'AV пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->av_input . '</td></tr>';
     } else {
         $av_input = '';
     };
     if (!empty($r->dvi_d)) {
-        $dvi_d = $us_tr_l . 'DVI-D сигнал</td>' . $us_tr_l1 . $r->dvi_d . '</td></tr>';
+        $dvi_d = $us_tr_l . 'DVI-D пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->dvi_d . '</td></tr>';
     } else {
         $dvi_d = '';
     };
     if (!empty($r->ts_rs232)) {
-        $ts_rs232 = $us_tr_l . 'RS232 сенсорного экрана</td>' . $us_tr_l1 . $r->ts_rs232 . '</td></tr>';
+        $ts_rs232 = $us_tr_l . 'RS232 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->ts_rs232 . '</td></tr>';
     } else {
         $ts_rs232 = '';
     };
     if (!empty($r->ts_usb)) {
-        $ts_usb = $us_tr_l . 'USB сенсорного экрана</td>' . $us_tr_l1 . $r->ts_usb . '</td></tr>';
+        $ts_usb = $us_tr_l . 'USB пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->ts_usb . '</td></tr>';
     } else {
         $ts_usb = '';
     };
     if (!empty($r->s_video)) {
-        $s_video = $us_tr_l . 'S-Video сигнал</td>' . $us_tr_l1 . $r->s_video . '</td></tr>';
+        $s_video = $us_tr_l . 'S-Video пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->s_video . '</td></tr>';
     } else {
         $s_video = '';
     };
@@ -1385,29 +1385,29 @@ if ($r->index < 552){
         $wifi = '';
     };
     if (!empty($r->serial_full)) {
-        $serial_full = $us_tr_l . 'Последовательный интерфейс</td>' . $us_tr_l1 . $r->serial_full . '</td></tr>';
+        $serial_full = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->serial_full . '</td></tr>';
     } else {
         $serial_full = '';
     };
     if (!empty($r->usb_host)) {
-        $usb_host = $us_tr_l . 'USB хост</td>' . $us_tr_l1 . $r->usb_host . '</td></tr>';
+        $usb_host = $us_tr_l . 'USB пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->usb_host . '</td></tr>';
     } else {
         $usb_host = '';
     };
     if (!empty($r->usb_client)) {
-        $usb_client = $us_tr_l . 'USB клиент</td>' . $us_tr_l1 . $r->usb_client . '</td></tr>';
+        $usb_client = $us_tr_l . 'USB пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->usb_client . '</td></tr>';
     } else {
         $usb_client = '';
     };
     if (empty($r->serial_full)) {
         if (!empty($r->serial)) {
-            $serial = $us_tr_l . 'Последовательный порт</td>' . $us_tr_l1 . $r->serial . ' ' . $r->serial_full . '</td></tr>';
+            $serial = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->serial . ' ' . $r->serial_full . '</td></tr>';
         } else {
             $serial = '';
         };
     };
     if (!empty($r->parallel_port)) {
-        $parallel_port = $us_tr_l . 'Парралельный порт</td>' . $us_tr_l1 . $r->parallel_port . '</td></tr>';
+        $parallel_port = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->parallel_port . '</td></tr>';
     } else {
         $parallel_port = '';
     };
@@ -1417,17 +1417,17 @@ if ($r->index < 552){
         $can_bus = '';
     };
     if (!empty($r->video_input)) {
-        $video_input = $us_tr_l . 'Видеовход</td>' . $us_tr_l1 . $r->video_input . '</td></tr>';
+        $video_input = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->video_input . '</td></tr>';
     } else {
         $video_input = '';
     };
     if (!empty($r->usb_cam)) {
-        $usb_cam = $us_tr_l . 'Подключение USB-камеры</td>' . $us_tr_l1 . $r->usb_cam . '</td></tr>';
+        $usb_cam = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ USB-пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->usb_cam . '</td></tr>';
     } else {
         $usb_cam = '';
     };
     if (!empty($r->pci_slot)) {
-        $pci_slot = $us_tr_l . 'Слот расширения PCI</td>' . $us_tr_l1 . $r->pci_slot . '</td></tr>';
+        $pci_slot = $us_tr_l . 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PCI</td>' . $us_tr_l1 . $r->pci_slot . '</td></tr>';
     } else {
         $pci_slot = '';
     };
@@ -1438,40 +1438,40 @@ if ($r->index < 552){
     };
 
     if (!empty($r->sdcard)) {
-        $sdcard = $us_tr_l . 'Слот карт памяти</td>' . $us_tr_l1 . $r->sdcard . '</td></tr>';
+        $sdcard = $us_tr_l . 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->sdcard . '</td></tr>';
     } else {
         $sdcard = '';
     };
     if (!empty($r->mic_in)) {
-        $mic_in = $us_tr_l . 'Микрофонный вход</td>' . $us_tr_l1 . $r->mic_in . '</td></tr>';
+        $mic_in = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->mic_in . '</td></tr>';
     } else {
         $mic_in = '';
     };
     if (!empty($r->linear_out)) {
-        $linear_out = $us_tr_l . 'Линейный выход</td>' . $us_tr_l1 . $r->linear_out . '</td></tr>';
+        $linear_out = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->linear_out . '</td></tr>';
     } else {
         $linear_out = '';
     };
     if (!empty($r->speakers)) {
-        $speakers = $us_tr_l . 'Динамики</td>' . $us_tr_l1 . $r->speakers . '</td></tr>';
+        $speakers = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->speakers . '</td></tr>';
     } else {
         $speakers = '';
     };
     if (!empty($r->vga_port)) {
-        $vga_port = $us_tr_l . 'VGA порт</td>' . $us_tr_l1 . $r->vga_port . ' разъем</td></tr>';
+        $vga_port = $us_tr_l . 'VGA пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->vga_port . ' пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
     } else {
         $vga_port = '';
     };
     if (!empty($r->hdmi)) {
-        $hdmi = $us_tr_l . 'HDMI порт</td>' . $us_tr_l1 . $r->hdmi . '</td></tr>';
+        $hdmi = $us_tr_l . 'HDMI пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->hdmi . '</td></tr>';
     } else {
         $hdmi = '';
     };
     if (!empty($r->audio)) {
-        if ($r->audio == "Нет") {
-            $audio = $us_tr_l . 'Аудио порт</td>' . $us_tr_l1 . 'Нет</td></tr>';
+        if ($r->audio == "пїЅпїЅпїЅ") {
+            $audio = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'пїЅпїЅпїЅ</td></tr>';
         } else
-            $audio = $us_tr_l . 'Аудио порт</td>' . $us_tr_l1 . $r->audio . ' разъем</td></tr>';
+            $audio = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->audio . ' пїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
     } else {
         $audio = '';
     };
@@ -1483,27 +1483,27 @@ if ($r->index < 552){
         } else {
             $voltage_extra = '';
         }
-        $voltage = $us_tr_l . 'Напряжение питания</td>' . $us_tr_l1 . '' . $r->voltage . $voltage_extra . '</td></tr>';
+        $voltage = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . '' . $r->voltage . $voltage_extra . '</td></tr>';
     } else {
         $voltage = '';
     };
     if (!empty($r->power_isolation)) {
-        $power_isolation = $us_tr_l . 'Развязка по питанию</td>' . $us_tr_l1 . $r->power_isolation . ' </td></tr>';
+        $power_isolation = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->power_isolation . ' </td></tr>';
     } else {
         $power_isolation = '';
     };
     if (!empty($r->voltage_resistance)) {
-        $voltage_resistance = $us_tr_l . 'Пробивная прочность корпуса</td>' . $us_tr_l1 . $r->voltage_resistance . ' </td></tr>';
+        $voltage_resistance = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->voltage_resistance . ' </td></tr>';
     } else {
         $voltage_resistance = '';
     };
     if (!empty($r->isolation_resistance)) {
-        $isolation_resistance = $us_tr_l . 'Cопротивления изоляции</td>' . $us_tr_l1 . $r->isolation_resistance . ' </td></tr>';
+        $isolation_resistance = $us_tr_l . 'CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->isolation_resistance . ' </td></tr>';
     } else {
         $isolation_resistance = '';
     };
     if (!empty($r->mysql_support) and $r->mysql_support != '') {
-        $mysql_support = $us_tr_l . 'Подключение к серверу баз данных</td>' . $us_tr_l1 . $r->mysql_support . '</td></tr>';
+        $mysql_support = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->mysql_support . '</td></tr>';
     } else {
         $mysql_support = '';
     };
@@ -1520,98 +1520,98 @@ if ($r->index < 552){
 }
 
 if (!empty($r->pcb_coating)) {
-    $pcb_coating = $us_tr_l . 'Защитное покрытие печатной платы</td>' . $us_tr_l1 . $r->pcb_coating . '</td></tr>';
+    $pcb_coating = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->pcb_coating . '</td></tr>';
 } else {
     $pcb_coating = '';
 }
 ;
 if (!empty($r->case_material)) {
-    $case_material = $us_tr_l . 'Материал корпуса</td>' . $us_tr_l1 . $r->case_material . '</td></tr>';
+    $case_material = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->case_material . '</td></tr>';
 } else {
     $case_material = '';
 }
 ;
 if (!empty($r->front_ip)) {
-    $front_ip = $us_tr_l . 'Степерь защиты лицевой панели </td>' . $us_tr_l1 . $r->front_ip . '</td></tr>';
+    $front_ip = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ </td>' . $us_tr_l1 . $r->front_ip . '</td></tr>';
 } else {
     $front_ip = '';
 }
 ;
 if (empty($r->cpu_fan)) {
-    $fan = $us_tr_l . 'Охлаждение</td>' . $us_tr_l1 . 'безвентиляторное</td></tr>';
+    $fan = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
 } else {
-    $fan = $us_tr_l . 'Охлаждение</td>' . $us_tr_l1 . 'вентилятор</td></tr>';
+    $fan = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td></tr>';
 }
 ;
 if (!empty($mount)) {
-    $mount = $us_tr_l . 'Крепление</td>' . $us_tr_l1 . $mount . '</td></tr>';
+    $mount = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $mount . '</td></tr>';
 } else {
     $mount = '';
 }
 ;
 if (!empty($r->cutout)) {
-    $cutout = $us_tr_l . 'Посадочное отверстие</td>' . $us_tr_l1 . $r->cutout . ' мм</td></tr>';
+    $cutout = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->cutout . ' пїЅпїЅ</td></tr>';
 } else {
     $cutout = '';
 }
 ;
 if (!empty($r->dimentions)) {
-    $dimentions = $us_tr_l . 'Габариты</td>' . $us_tr_l1 . $r->dimentions . ' мм</td></tr>';
+    $dimentions = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->dimentions . ' пїЅпїЅ</td></tr>';
 } else {
     $dimentions = '';
 }
 ;
 if (!empty($r->power_connector)) {
-    $power_connector = $us_tr_l . 'Разъем питания</td>' . $us_tr_l1 . $r->power_connector . '</td></tr>';
+    $power_connector = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->power_connector . '</td></tr>';
 } else {
     $power_connector = '';
 }
 ;
 if (!empty($r->netto) AND !empty($r->weight)) {
-    $netto = $us_tr_l . 'Вес (нетто / брутто)</td>' . $us_tr_l1 . $r->netto . ' / ' . $r->weight . ' кг</td></tr>';
+    $netto = $us_tr_l . 'пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ / пїЅпїЅпїЅпїЅпїЅпїЅ)</td>' . $us_tr_l1 . $r->netto . ' / ' . $r->weight . ' пїЅпїЅ</td></tr>';
 } else
     if (!empty($r->netto)) {
-        $netto = $us_tr_l . 'Вес (нетто)</td>' . $us_tr_l1 . $r->netto . ' кг</td></tr>';
+        $netto = $us_tr_l . 'пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ)</td>' . $us_tr_l1 . $r->netto . ' пїЅпїЅ</td></tr>';
     } else
         if (!empty($r->weight)) {
-            $netto = $us_tr_l . 'Вес</td>' . $us_tr_l1 . $r->weight . ' кг</td></tr>';
+            $netto = $us_tr_l . 'пїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->weight . ' пїЅпїЅ</td></tr>';
         } else {
             $netto = '';
         }
 ;
 if (!empty($r->set)) {
-    $set = $us_tr_l . 'Комплект поставки: ' . $us_tr_l1 . $r->set . '</td></tr>';
+    $set = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ' . $us_tr_l1 . $r->set . '</td></tr>';
 } else {
     $set = '';
 }
 ;
 $Design = $case_material . $front_ip . $pcb_coating . $fan . $mount . $cutout . $dimentions . $power_connector . $netto . $set;
 
-$sp_data1 .= '<span class=hpar>Интерфейсы</span><br>' .
+$sp_data1 .= '<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>' .
     $table_start . $interfaces
     . '</table><div class="separator"></div>';
 
 
 /*
-  $sp_data1 .="<span class=hpar>Конструкция</span><br>
+  $sp_data1 .="<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>
   $table_start
-  <tr><td class=par_name1 >Материал корпуса</td><td class=par_val1 >$r->case_material</td></tr> //есть
-  <tr><td class=par_name1 >Степень защиты по фронту</td><td class=par_val1 >IP65</td></tr>
-  <tr><td class=par_name1 >Способ охлаждения</td><td class=par_val1 >".($r->cpu_fan?"вентилятор":"безвентиляторное")."</td></tr> //есть
-  <tr><td class=par_name1 >Варианты установки</td><td class=par_val1 >$mount</td></tr> //есть
-  <tr><td class=par_name1 >Комплект поставки</td><td class=par_val1 >$r->set</td></tr> //есть
-  <tr><td class=par_name1 >Разъем питания</td><td class=par_val1 >$r->power_connector</td></tr> //есть
-  <tr><td class=par_name1 >Габариты</td><td class=par_val1 >$r->dimentions мм</td></tr> //есть
-  <tr><td class=par_name1 >Вырез под посадку</td><td class=par_val1 >$r->cutout мм</td></tr> //есть
-  <tr><td class=par_name1 >Вес</td><td class=par_val1 >$r->netto кг</td></tr> //есть
-  <tr><td class=par_name1 >Рабочая температура</td><td class=par_val1 >$r->temp_min&deg - $r->temp_max&deg</td></tr>
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->case_material</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >IP65</td></tr>
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >".($r->cpu_fan?"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ":"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")."</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$mount</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->set</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->power_connector</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->dimentions пїЅпїЅ</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->cutout пїЅпїЅ</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅ</td><td class=par_val1 >$r->netto пїЅпїЅ</td></tr> //пїЅпїЅпїЅпїЅ
+  <tr><td class=par_name1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->temp_min&deg - $r->temp_max&deg</td></tr>
   </table><br><br>";
  */
-$sp_data1 .= '<span class=hpar>Конструкция</span><br>' . $table_start . $Design . '</table><div class="separator"></div>';
+$sp_data1 .= '<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>' . $table_start . $Design . '</table><div class="separator"></div>';
 
 
 if ((($r->os != "") or ($r->type != 'monitor')) and $r->type != 'monitor_cloud_hmi') {
-    $sp_data1 .= "<span class=hpar>ПO</span><br>";
+    $sp_data1 .= "<span class=hpar>пїЅO</span><br>";
     $sp_data1 .= $table_start;
 
     if ($r->dotnet != '') {
@@ -1620,48 +1620,48 @@ if ((($r->os != "") or ($r->type != 'monitor')) and $r->type != 'monitor_cloud_h
 
     if ($r->os != "")
         $sp_data1 .= "
- <tr><td class=par_name1>Установленная операционная система</td><td class=par_val1 >$r->os</td></tr>
+ <tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->os</td></tr>
  $donad
- <tr><td class=par_name1>ПО</td><td class=par_val1 >С $typ3 не поставляется ПО для разработки проектов. В&nbsp;EasyBuilder8000 и EasyBuilderPro нельзя
- разработать проект для этого $typ1. Для разработки проектов необходимо использовать любую среду для создания проектов для $r->os, например Visual Studio.</td></tr>
+ <tr><td class=par_name1>пїЅпїЅ</td><td class=par_val1 >пїЅ $typ3 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅ&nbsp;EasyBuilder8000 пїЅ EasyBuilderPro пїЅпїЅпїЅпїЅпїЅпїЅ
+ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ $typ1. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ $r->os, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Visual Studio.</td></tr>
 
  ";
     elseif ($r->type != 'monitor' and $r->type != 'controllers' and $r->model != 'cMT-iV5') {
         $sp_data1 .= "
- <tr><td class=par_name1>ПО для разработки проектов</td><td class=par_val1 >$r->software</td></tr>";
+ <tr><td class=par_name1>пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->software</td></tr>";
         if ($r->type != 'Gateway') {
-            $sp_data1 .= "<tr><td class=par_name1>Максимальное количество экранов в проекте</td><td class=par_val1 >1999</td></tr>";
+            $sp_data1 .= "<tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >1999</td></tr>";
         }
 
         ob_start(); ?>
         <?= $usb_drv ?>
         <tr>
-            <td class=par_name1>Драйвера для работы с контроллерами</td>
-            <td class=par_val1>уже установлены в панели</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
+            <td class=par_val1>пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>
         </tr>
         <tr>
-            <td class=par_name1>Возможность сохранения архивов данных</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>
             <td class=par_val1><?= $arch ?></td>
         </tr>
         <?
         if ($r->codesys == "build_in"): ?>
             <tr>
-                <td class=par_name1>Поддержка CODESYS</td>
-                <td class=par_val1>Есть</td>
+                <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CODESYS</td>
+                <td class=par_val1>пїЅпїЅпїЅпїЅ</td>
             </tr>
         <? elseif ($r->codesys == "optional"):?>
             <tr>
-                <td class=par_name1>Поддержка CODESYS</td>
-                <td class=par_val1>Опционально</td>
+                <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ CODESYS</td>
+                <td class=par_val1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
             </tr>
         <?endif;?>
         <tr>
-            <td class=par_name1>Способы загрузки проекта в панель</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td>
             <td class=par_val1><?= $proj_load ?></td>
         </tr>
         <tr>
-            <td class=par_name1>Максимальный размер проекта</td>
-            <td class=par_val1><?= $r->project_size_mb ?> Мб</td>
+            <td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>
+            <td class=par_val1><?= $r->project_size_mb ?> пїЅпїЅ</td>
         </tr>
 
 
@@ -1669,16 +1669,16 @@ if ((($r->os != "") or ($r->type != 'monitor')) and $r->type != 'monitor_cloud_h
 
 
         if ($r->history_data_size_mb > 0) {
-            $sp_data1 .= "<tr><td class=par_name1>Объем памяти для сохранения архивов в панели</td><td class=par_val1 >$r->history_data_size_mb Мб</td></tr>";
+            $sp_data1 .= "<tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->history_data_size_mb пїЅпїЅ</td></tr>";
         }
         if ($r->history_data_size_str != "") {
-            $sp_data1 .= "<tr><td class=par_name1>Лимит для сохранения архивов в панели</td><td class=par_val1 >$r->history_data_size_str</td></tr>";
+            $sp_data1 .= "<tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >$r->history_data_size_str</td></tr>";
         }
-        $sp_data1 .= "<tr><td class=par_name1>Возможность создания пользовательских протоколов</td><td class=par_val1 >Есть</td></tr>
+        $sp_data1 .= "<tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >пїЅпїЅпїЅпїЅ</td></tr>
   $dop
- <tr><td class=par_name1>Операционная система</td><td class=par_val1 >возможно, она и есть в панели, но к ее функциям невозможно получить доступ. Невозможно запускать никакие
-пользовательские исполняемые файлы. Программист может
-  пользоваться только теми возможностями, которые предоставляет $r->software </td></tr>
+ <tr><td class=par_name1>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td><td class=par_val1 >пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->software </td></tr>
     ";
     }
 
@@ -1686,43 +1686,43 @@ if ((($r->os != "") or ($r->type != 'monitor')) and $r->type != 'monitor_cloud_h
 }
 ;
 if (!empty($r->temp_operating)) {
-    $tempo = $us_tr_l . 'Рабочая температура</td>' . $us_tr_l1 . $r->temp_operating . '</td></tr>';
+    $tempo = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->temp_operating . '</td></tr>';
 } else
     if (!empty($r->temp_min) OR !empty($r->temp_max)) {
-        $tempo = $us_tr_l . 'Рабочая температура</td>' . $us_tr_l1 . $r->temp_min . ' ~ ' . $r->temp_max . ' &#8451;</td></tr>';
+        $tempo = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->temp_min . ' ~ ' . $r->temp_max . ' &#8451;</td></tr>';
     }
 ;
 if (!empty($r->vibration)) {
-    $vibr = $us_tr_l . 'Виброустойчивость</td>' . $us_tr_l1 . $r->vibration . '</td></tr>';
+    $vibr = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->vibration . '</td></tr>';
 }
 ;
 if (!empty($r->shock)) {
-    $shok = $us_tr_l . 'Шоковая нагрузка</td>' . $us_tr_l1 . $r->shock . '</td></tr>';
+    $shok = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->shock . '</td></tr>';
 }
 ;
 
-//if ($r->type == 'monitor') {$powero = $us_tr_l.'Напряжение питания</td>'.$us_tr_l1.$r->voltage.' VDC</td></tr>';};
+//if ($r->type == 'monitor') {$powero = $us_tr_l.'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>'.$us_tr_l1.$r->voltage.' VDC</td></tr>';};
 if (!empty($r->temp_storage)) {
-    $tempsto = $us_tr_l . 'Температура хранения</td>' . $us_tr_l1 . $r->temp_storage . '</td></tr>';
+    $tempsto = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->temp_storage . '</td></tr>';
 }
 ;
 if (!empty($r->humidity)) {
-    $hum = $us_tr_l . 'Влажность при хранении и эксплуатации</td>' . $us_tr_l1 . $r->humidity . '</td></tr>';
+    $hum = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->humidity . '</td></tr>';
 }
 ;
 if (!empty($r->current)) {
-    $current = $us_tr_l . 'Потребляемый ток</td>' . $us_tr_l1 . $r->current . 'А</td></tr>';
+    $current = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->current . 'пїЅ</td></tr>';
 }
 ;
 if (!empty($r->certification)) {
-    $certification = $us_tr_l . 'Сертификаты</td>' . $us_tr_l1 . $r->certification . '</td></tr>';
+    $certification = $us_tr_l . 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</td>' . $us_tr_l1 . $r->certification . '</td></tr>';
 }
 ;
 
 $expluatation = $tempo . $tempsto . $current . $voltage . $power_isolation . $voltage_resistance . $isolation_resistance . $vibr . $shok . $hum . $certification;
 
 if (!empty($expluatation)) {
-    $sp_data1 .= '<span class=hpar>Эксплуатация и хранение</span><br>' .
+    $sp_data1 .= '<span class=hpar>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span><br>' .
         $table_start . $expluatation .
         '</table><div class="separator"></div>';
 }
@@ -1741,7 +1741,7 @@ $imagepath = 'images/weintek/dim';
 $dimensions = '';
 $queryd = "SELECT * FROM `dimensions` WHERE `sys_name`='{$r->model}' LIMIT 1;";
 
-$queryd = mysql_query($queryd) or die("ошибка запроса в файле product_newo.php !!!" . $queryd. " Error: ". mysql_error());
+$queryd = mysql_query($queryd) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ product_newo.php !!!" . $queryd. " Error: ". mysql_error());
 $jd = mysql_num_rows($queryd);
 if ($jd > 0) {
     $rowd = mysql_fetch_assoc($queryd);
@@ -1773,8 +1773,8 @@ if (empty($dimensions)) {
 
 
 $query2 = "SELECT * FROM `com` WHERE `model`='{$r->model}';";
-$h2_scheme = 'COM-порты устройства ' . $r->model;
-$query2 = mysqli_query($mysqli_db, $query2) or die("ошибка запроса0212" . $query2);
+$h2_scheme = 'COM-пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $r->model;
+$query2 = mysqli_query($mysqli_db, $query2) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ0212" . $query2);
 $j2 = mysqli_num_rows($query2);
 $scheme = '';
 // $row2_time = mysqli_fetch_assoc($query2);
@@ -1784,14 +1784,14 @@ if ($j2 > 0) {
         $row2 = mysqli_fetch_assoc($query2);
         $sname = str_replace("\r\n", "<br />", $row2['name']);
         if (!empty($row2['data_table_html'])) {
-            $scheme .= '<div class="com" style="display: inline-block;"><div class="com_about">Название разъема:<br />' . $sname . '<br /><br />Тип:<br />' . $row2['type'] . '<img class="" src="/images/' . $row2['image'] . '" /><br /></div>';
+            $scheme .= '<div class="com" style="display: inline-block;"><div class="com_about">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:<br />' . $sname . '<br /><br />пїЅпїЅпїЅ:<br />' . $row2['type'] . '<img class="" src="/images/' . $row2['image'] . '" /><br /></div>';
             $scheme .= '<div class="scheme">';
             $scheme .= $row2['data_table_html'];
             $scheme .= '</div></div><div class="separator"></div>';
         } else {
 
 
-            $scheme .= '<div class="com" style="display: inline-block;"><div class="com_about">Название разъема:<br />' . $sname . '<br /><br />Тип:<br />' . $row2['type'] . '<img class="" src="/images/' . $row2['image'] . '" /><br /></div>';
+            $scheme .= '<div class="com" style="display: inline-block;"><div class="com_about">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:<br />' . $sname . '<br /><br />пїЅпїЅпїЅ:<br />' . $row2['type'] . '<img class="" src="/images/' . $row2['image'] . '" /><br /></div>';
             $scheme .= '<div class="scheme">';
             $com = str_replace("\"", "", $row2['com']);
             $com = str_replace("(", " (", $com);
@@ -1820,20 +1820,20 @@ if ($j2 > 0) {
         }
     };
 } else {
-    $scheme = 'У ' . $r->model . ' com-порты отсутствуют.';
+    $scheme = 'пїЅ ' . $r->model . ' com-пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.';
 }
 
 
 
 $komplect = '';
 if (($r->diagonal == '7' and $r->model !== 'MT8071iER') or ($r->diagonal >= 9 and $r->diagonal < 10) or ($r->diagonal >= 12 and $r->diagonal < 13)) {
-    $komplect = '<li class="urlup" data="accessories"><a href="#tabs-5">АКСЕССУАРЫ</a></li>';
+    $komplect = '<li class="urlup" data="accessories"><a href="#tabs-5">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>';
 }
 ;
 if ($r->type == 'monitor') {
     $sxemy = '';
 } else {
-    $sxemy = "<li class='urlup' data='scheme'><a href='#tabs-3'>СХЕМЫ</a></li>";
+    $sxemy = "<li class='urlup' data='scheme'><a href='#tabs-3'>пїЅпїЅпїЅпїЅпїЅ</a></li>";
 }
 ;
 
@@ -1841,27 +1841,27 @@ $vyvod = '
 <div style=" min-height: 500px; overflow: auto; ">
 
 <div id="tabs">
-<a style="float:right;margin-top:10px;margin-bottom:-10px;" class="compare_table_link" href="/weintek-stavnenie-seriy.php"><span class="compare_table_icon"></span><span>Таблица сравнения серий по функционалу</span></a>
+<a style="float:right;margin-top:10px;margin-bottom:-10px;" class="compare_table_link" href="/weintek-stavnenie-seriy.php"><span class="compare_table_icon"></span><span>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</span></a>
   <ul>
-    <li class="urlup" data="functions"><a href="#tabs-1">ХАРАКТЕРИСТИКИ</a></li>
-    <li class="urlup" data="dimensions"><a href="#tabs-2">ГАБАРИТЫ</a></li>
+    <li class="urlup" data="functions"><a href="#tabs-1">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
+    <li class="urlup" data="dimensions"><a href="#tabs-2">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
     ' . $sxemy . '
-    <li class="urlup" data="software"><a href="#tabs-4">СКАЧАТЬ</a></li>
+    <li class="urlup" data="software"><a href="#tabs-4">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></li>
 	' . $komplect . '
   </ul>
   <div id="tabs-1">
 
-  <h2>Технические характеристики ' . $typ1 . ' ' . $r->model . '</h2>
+  <h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $typ1 . ' ' . $r->model . '</h2>
     ' . $sp_data1 . '
 
   </div>
-  <div id="tabs-2"><h2>Габариты ' . $typ1 . ' ' . $r->model . '</h2>
+  <div id="tabs-2"><h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $typ1 . ' ' . $r->model . '</h2>
   <img src="/images/weintek/dim/' . $r->model . '.png">
   </div>';
 if ($r->type != 'monitor') {
     $vyvod .= '<div id="tabs-3">
   <div class=connectors>
-  <h2>COM-порты ' . $typ1 . ' ' . $r->model . '</h2><br />' . $scheme . '
+  <h2>COM-пїЅпїЅпїЅпїЅпїЅ ' . $typ1 . ' ' . $r->model . '</h2><br />' . $scheme . '
   </div></div>
   ';
 }
@@ -1883,15 +1883,15 @@ $prices_out .= $vyvod;
 /*
 //---------------------download section -------------------------------- ------------------------------
 if ($r->series == "MT6000i" || $r->series == "MT8000i" || $r->series = "eMT3000")
-    $usb = "<br>USB драйвера для подключения панели $r->model к ПК устанавливаются
-  автоматически при установке $r->software";
+    $usb = "<br>USB пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ $r->model пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->software";
 else
     $usb = "";
 
 
 
 if ($r->software == "EasyBuilder8000") {
-    $serii = "Серия MT6000i, Серия MT8000i";
+    $serii = "пїЅпїЅпїЅпїЅпїЅ MT6000i, пїЅпїЅпїЅпїЅпїЅ MT8000i";
     if ($GLOBALS["net"] == 0) {
 
         if (file_exists($GLOBALS["EB8000_version"])) {
@@ -1924,7 +1924,7 @@ if ($r->software == "EasyBuilder8000") {
     };
 } else if (preg_match('/EasyBuilderPro/', $r->software)) {
     $r->software = 'EasyBuilderPro';
-    $serii = "Серия MT8000iE, Серия eMT3000, Cерия cMT";
+    $serii = "пїЅпїЅпїЅпїЅпїЅ MT8000iE, пїЅпїЅпїЅпїЅпїЅ eMT3000, CпїЅпїЅпїЅпїЅ cMT";
     if ($GLOBALS["net"] == 0) {
 
         if (file_exists($GLOBALS["EBPro_version"])) {
@@ -1968,53 +1968,53 @@ if ($r->software != "") {
     };
 
     if ($fsma > 1000) {
-        $sma = round($fsma / 1000, 2) . '&nbsp;Мб';
+        $sma = round($fsma / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $sma = round($fsma, 0) . '&nbsp;Кб';
+        $sma = round($fsma, 0) . '&nbsp;пїЅпїЅ';
     };
     if ($fsso > 1000) {
-        $sso = round($fsso / 1000, 2) . '&nbsp;Мб';
+        $sso = round($fsso / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $sso = round($fsso, 0) . '&nbsp;Кб';
+        $sso = round($fsso, 0) . '&nbsp;пїЅпїЅ';
     };
     if ($PLC_size > 1000) {
-        $splc = round($PLC_size / 1000, 2) . '&nbsp;Мб';
+        $splc = round($PLC_size / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $splc = round($PLC_size, 0) . '&nbsp;Кб';
+        $splc = round($PLC_size, 0) . '&nbsp;пїЅпїЅ';
     };
 
 
     */
-//if ($splc>1) {$splc .='&nbsp;Мб';} else {$splc = $splc*1000;$splc.='&nbsp;Кб';};
+//if ($splc>1) {$splc .='&nbsp;пїЅпїЅ';} else {$splc = $splc*1000;$splc.='&nbsp;пїЅпїЅ';};
 
 /*
 
     if ($r->type != 'panel_pc') {
-        $soft1 = " <tr><td><div class=down_item>  Программное обеспечение $r->software $ver</div>
-   <div class=down_item_descr> Программное обеспечение $r->software применяется для создания пользовательских проектов для операторских панелей Weintek всех серий.
+        $soft1 = " <tr><td><div class=down_item>  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->software $ver</div>
+   <div class=down_item_descr> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->software пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
    <br>
-   Использование ПО $r->software полностью бесплатно, вы можете скачивать ПО и пользоваться им без каких-либо ограничений.
+   пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ $r->software пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
    $usb
    </div></td>
-   <td><div class=dt_item>" . $tso . "<br>(рус)<br />" . $sso . "</div>
+   <td><div class=dt_item>" . $tso . "<br>(пїЅпїЅпїЅ)<br />" . $sso . "</div>
    </td><td><div class=down_item><a href='$so'><img src=/images/soft.jpg></a><div> </td> </tr>";
 
-        $soft2 = "<tr><td><div class=down_item>  Руководство к ПО $r->software  </div></td>
+        $soft2 = "<tr><td><div class=down_item>  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ $r->software  </div></td>
    <td><div class=dt_item>" . $tma . "<br>(eng)<br />" . $sma . "</div></td>
    <td><div class=down_item><a href='$ma'><img src=/images/manual.jpg></a></div></td></tr> ";
 
 
         $update_date_file_path = "http://www.rusavtomatika.com/upload_files/manuals/weintek/UserManual_separate_chapter/update_date.txt";
         $update_date = strip_tags(file_get_contents($update_date_file_path));
-        $soft2_2 = "<tr><td><div class=down_item>Онлайн руководство пользователя EasyBuilder Pro V6.00.01 на английском языке</div></td>
+        $soft2_2 = "<tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ EasyBuilder Pro V6.00.01 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</div></td>
    <td><div class=dt_item>$update_date</div></td>
    <td><div class=down_item><a href='/weintek-easybuilderpro-user-manual-en/'><img src='/images/link-external-big.png'></a></div></td></tr>";
 
-        $soft3 = "<tr><td><div class=down_item> Руководство по подключению контроллеров (PLC) к  панели оператора $r->model </div>
-   <div class=down_item_descr> В руководстве описано подключение к более, чем 100 PLC различных производителей,
-   даны схемы распайки кабелей для подключения панели оператора $r->model к этим PLC, описаны регистры, к которым дают доступ
-   драйвера данных PLC. <br> Все драйверы для всех PLC, упомянутых в данном руководстве, уже установлены в операторской панели $r->model. <br>
-   При подключении панели  оператора $r->model к конкретному PLC настоятельно рекомендуется ознакомиться с соответсвующим разделом данного руководства.</div>
+        $soft3 = "<tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (PLC) пїЅ  пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->model </div>
+   <div class=down_item_descr> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ 100 PLC пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ,
+   пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->model пїЅ пїЅпїЅпїЅпїЅ PLC, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+   пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ PLC. <br> пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ PLC, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ $r->model. <br>
+   пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->model пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLC пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</div>
    </td>
 
    <td><div class=dt_item>" . $PLC_date . "<br>(eng)<br />" . $splc . "</div></td>
@@ -2030,7 +2030,7 @@ if ($r->software != "") {
     $soft3 = "";
 }
 */
-//Мануал
+//пїЅпїЅпїЅпїЅпїЅпїЅ
 /*
 if ($GLOBALS["net"] == 0) {
     if (file_exists($root_php . 'manuals/' . $r->model . '.pdf')) {
@@ -2091,22 +2091,22 @@ if (($ine == 0) AND ($r->brochure != '')) {
 ;
 
 if ($fs > 1000) {
-    $s = round($fs / 1000, 2) . '&nbsp;Мб';
+    $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
 } else {
-    $s = round($fs, 0) . '&nbsp;Кб';
+    $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
 }
 ;
 
 if ($ine == 1) {
     $soft5 = "
- <tr><td><div class=down_item> Брошюра на $types $r->model </div></td>
+ <tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ $types $r->model </div></td>
    <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
    <td><div class=down_item><a target='_blank' href='/manuals/$brochure'><img src=/images/manual.jpg></a></div></td></tr>
  ";
 } elseif ($ine == 2) {
 
     $soft5 = "
- <tr><td><div class=down_item> Брошюра на $types $r->model </div></td>
+ <tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ $types $r->model </div></td>
    <td><div class=dt_item>" . $t . "<br />(eng)<br />" . $s . "</div></td>
    <td><div class=down_item><a target='_blank' href='/weintek/manuals/$brochure'><img src=/images/manual.jpg></a></div></td></tr>
  ";
@@ -2117,7 +2117,7 @@ if ($ine == 1) {
 
 
 if ($r->user_manual) {
-    $soft5 .= "<tr><td><div class=down_item> Руководство пользователя $r->model </div></td><td><div class=dt_item>";
+    $soft5 .= "<tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->model </div></td><td><div class=dt_item>";
     $soft5 .= get_file_date("/manuals/$r->user_manual");
     $soft5 .= "</div></td>
    <td><div class=down_item><a target='_blank' href='/manuals/$r->user_manual'><img src=/images/manual.jpg></a></div></td></tr>";
@@ -2140,13 +2140,13 @@ if ($r->codesys != 0) {
         };
     };
     if ($fs > 1000) {
-        $s = round($fs / 1000, 2) . '&nbsp;Мб';
+        $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $s = round($fs, 0) . '&nbsp;Кб';
+        $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
     };
 
     $soft__codesys = "
- <tr><td><div class=down_item>Техническая спецификация cMT + CODESYS</div></td>
+ <tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ cMT + CODESYS</div></td>
  <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
  <td><div class=down_item><a href='/$viewerPath' download><img src='/images/manual.jpg'></a></div></td></tr>
  ";
@@ -2170,13 +2170,13 @@ if ($r->codesys != 0) {
         };
     };
     if ($fs > 1000) {
-        $s = round($fs / 1000, 2) . '&nbsp;Мб';
+        $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $s = round($fs, 0) . '&nbsp;Кб';
+        $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
     };
 
     $soft__remoteio = "
- <tr><td><div class=down_item>Пошаговая инструкция по настройке панели оператора cMT + CODESYS и Remote I/O</div></td>
+ <tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ cMT + CODESYS пїЅ Remote I/O</div></td>
  <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
  <td><div class=down_item><a href='/$viewerPath' download><img src='/images/manual.jpg'></a></div></td></tr>
  ";
@@ -2200,13 +2200,13 @@ if (preg_match('/cmt/i', $r->model)) {
         };
     };
     if ($fs > 1000) {
-        $s = round($fs / 1000, 2) . '&nbsp;Мб';
+        $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $s = round($fs, 0) . '&nbsp;Кб';
+        $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
     };
     if ($r->type != 'controllers') {
         $soft9 = "
- <tr><td><div class=down_item>Программа cMT Viewer для удаленного управления $r->model с PC</div></td>
+ <tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ cMT Viewer пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $r->model пїЅ PC</div></td>
  <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
  <td><div class=down_item><a href='/$viewerPath' download><img src=/images/soft.jpg></a></div></td></tr>
  ";
@@ -2214,7 +2214,7 @@ if (preg_match('/cmt/i', $r->model)) {
 }
 ;
 
-//Руководство пользователя  cMT-SVR
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ  cMT-SVR
 if (preg_match('/cmt-svr/i', $r->model)) {
     $viewerPath = 'manuals/cMT-SVR-UserManual.pdf';
 
@@ -2232,13 +2232,13 @@ if (preg_match('/cmt-svr/i', $r->model)) {
     };
 
     if ($fs > 1000) {
-        $s = round($fs / 1000, 2) . '&nbsp;Мб';
+        $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $s = round($fs, 0) . '&nbsp;Кб';
+        $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
     };
 
     $soft10 = "
-	 <tr><td><div class=down_item>Руководство пользователя $types1 $r->model</div></td>
+	 <tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ $types1 $r->model</div></td>
 	 <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
 	 <td><div class=down_item><a href='/$viewerPath'><img src=/images/manual.jpg></a></div></td></tr>
 	 ";
@@ -2288,9 +2288,9 @@ if ($GLOBALS["net"] == 0) {
 
 
 if ($fs > 1000) {
-    $s = round($fs / 1000, 2) . '&nbsp;Мб';
+    $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
 } else {
-    $s = round($fs, 0) . '&nbsp;Кб';
+    $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
 }
 ;
 
@@ -2298,13 +2298,13 @@ if ($fs > 1000) {
 if ($ne == 1) {
 
     $soft6 = "
- <tr><td><div class=down_item> Руководство по установке " . $typ1 . " $r->model </div></td>
+ <tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . $typ1 . " $r->model </div></td>
    <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
    <td><div class=down_item><a href='/install/" . $r->model . ".pdf' > <img src=/images/manual.jpg></a></div></td></tr>
  ";
 } elseif ($ne == 2) {
     $soft6 = "
- <tr><td><div class=down_item> Руководство по установке " . $typ1 . " $r->model </div></td>
+ <tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . $typ1 . " $r->model </div></td>
    <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
    <td><div class=down_item><a href='/install/" . $r->install_doc . "' > <img src=/images/manual.jpg></a></div></td></tr>
  ";
@@ -2313,7 +2313,7 @@ if ($ne == 1) {
 //$s =  ceil($fs/1000);
     $s = round($fs / 1000, 2);
     $soft6 = "
- <tr><td><div class=down_item> Руководство по установке " . $typ1 . " $r->model </div></td>
+ <tr><td><div class=down_item> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . $typ1 . " $r->model </div></td>
    <td><div class=dt_item>" . $t . "<br>(eng)" . $s . "<br />$s<br />(eng)</div></td>
    <td><div class=down_item><a href='/weintek/installs/" . $r->install_doc . "' > <img src=/images/manual.jpg></a></div></td></tr>
  ";
@@ -2322,7 +2322,7 @@ if ($ne == 1) {
 }
 ;
 
-//Чертежи
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 $t = '';
 $fs = 0;
 $soft11 = '';
@@ -2349,22 +2349,22 @@ for ($i = 0; $i < $count; $i++) {
     };
 
     if ($fs > 1000) {
-        $s = round($fs / 1000, 2) . '&nbsp;Мб';
+        $s = round($fs / 1000, 2) . '&nbsp;пїЅпїЅ';
     } else {
-        $s = round($fs, 0) . '&nbsp;Кб';
+        $s = round($fs, 0) . '&nbsp;пїЅпїЅ';
     };
     if ($fs > 0) {
 
         $file_firmat = explode('.', $r1->file_name);
         if (strtolower($file_firmat[count($file_firmat) - 1]) == "sldprt") {
             $soft11 .= "
-    <tr><td><div class=down_item>3D модель $types1 $r->model в формате " . strtolower($file_firmat[count($file_firmat) - 1]) . " </div></td>
+    <tr><td><div class=down_item>3D пїЅпїЅпїЅпїЅпїЅпїЅ $types1 $r->model пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . strtolower($file_firmat[count($file_firmat) - 1]) . " </div></td>
     <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
     <td><div class=down_item><a href='/$viewerPath' download><img src=/images/soft.jpg></a></div></td></tr>
     ";
         } else {
             $soft11 .= "
-    <tr><td><div class=down_item>Чертеж $types1 $r->model в формате " . strtolower($file_firmat[count($file_firmat) - 1]) . " </div></td>
+    <tr><td><div class=down_item>пїЅпїЅпїЅпїЅпїЅпїЅ $types1 $r->model пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . strtolower($file_firmat[count($file_firmat) - 1]) . " </div></td>
     <td><div class=dt_item>" . $t . "<br>(eng)<br />" . $s . "</div></td>
     <td><div class=down_item><a href='/$viewerPath' download><img src=/images/soft.jpg></a></div></td></tr>
     ";
@@ -2385,23 +2385,23 @@ if ($r->diagonal == '7' && $r->model !== 'MT8071iER') {
     <div class="blockofcols_container">
     <div class="col-12">
         <div class="block_item" style="    margin-left: 15PX;">
-            <div class="block_item_title">Рамка для панелей оператора Weintek 7" HF-07</div>
+            <div class="block_item_title">пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Weintek 7" HF-07</div>
 
 
             <div class="blockofcols_row" style="margin-bottom:25px;">
                 <div class="col-9">
                     <div class="block_item_text">
                         <ul class="plc_weintek_ul_style1">
-                            <li>Габариты: 227х217х36 мм</li>
-                            <li>Материал: Окрашенный металл / Нержавеющая сталь</li>
+                            <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 227пїЅ217пїЅ36 пїЅпїЅ</li>
+                            <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ / пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="block_item_info">
                                     <span class="link_advanced_search block_item_info-btn" idm="HF-07"
-                                          onclick="show_backup_call(6, &quot;HF-07&quot;)">Узнать
-                                        цену</span>
+                                          onclick="show_backup_call(6, &quot;HF-07&quot;)">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅ</span>
                     </div>
                 </div>
             </div>
@@ -2434,9 +2434,9 @@ if ($r->diagonal == '7' && $r->model !== 'MT8071iER') {
 
                 </div>
             </div>
-            <div class="block_item_dim-title">Чертёж
+            <div class="block_item_dim-title">пїЅпїЅпїЅпїЅпїЅ
                 <div class="block_item_dim-pdf">
-                    <a href="/manuals/HF-07.pdf" style="display:inline-block;">Открыть чертеж (pdf)</a>
+                    <a href="/manuals/HF-07.pdf" style="display:inline-block;">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (pdf)</a>
                 </div>
             </div>
             <div>
@@ -2456,12 +2456,12 @@ if ($r->diagonal == '7' && $r->model !== 'MT8071iER') {
     if ($r->type == 'monitor_cloud_hmi') {
         $komplects = '<!-- nosearch --><div id="tabs-5">
     <div class=connectors>
-    <h2>Комплектующие экрана облачного интерфейса' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
+    <h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
     </div></div><!-- /nosearch -->';
     } else {
         $komplects = '<!-- nosearch --><div id="tabs-5">
     <div class=connectors>
-    <h2>Комплектующие ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
+    <h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
     </div></div><!-- /nosearch -->';
     }
 }
@@ -2473,24 +2473,24 @@ if ($r->diagonal >= 9 and $r->diagonal < 10) {
     <div class="blockofcols_container">
         <div class="col-12">
             <div class="block_item" style="    margin-right: 15PX;">
-                <div class="block_item_title">Рамка
-                    для <? if ($r->type == 'monitor_cloud_hmi'): ?>экрана облачного интерфейса <? else: ?>панелей оператора <? endif; ?>
+                <div class="block_item_title">пїЅпїЅпїЅпїЅпїЅ
+                    пїЅпїЅпїЅ <? if ($r->type == 'monitor_cloud_hmi'): ?>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <? else: ?>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <? endif; ?>
                     Weintek 9.7" HF-09
                 </div>
                 <div class="blockofcols_row" style="margin-bottom:25px;">
                     <div class="col-9">
                         <div class="block_item_text">
                             <ul class="plc_weintek_ul_style1">
-                                <li>Габариты: 283х226х36 мм</li>
-                                <li>Материал: Окрашенный металл</li>
+                                <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 283пїЅ226пїЅ36 пїЅпїЅ</li>
+                                <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="block_item_info">
                                     <span class="link_advanced_search block_item_info-btn" idm="HF-09"
-                                          onclick="show_backup_call(6, &quot;HF-09&quot;)">Узнать
-                                        цену</span>
+                                          onclick="show_backup_call(6, &quot;HF-09&quot;)">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅ</span>
                         </div>
                     </div>
                 </div>
@@ -2532,7 +2532,7 @@ if ($r->diagonal >= 9 and $r->diagonal < 10) {
                         </div>
                     </div>
                 </div>
-                <div class="block_item_dim-title">Чертёж</div>
+                <div class="block_item_dim-title">пїЅпїЅпїЅпїЅпїЅ</div>
 
                 <div>
                     <div class="blockofcols_row">
@@ -2558,7 +2558,7 @@ if ($r->diagonal >= 9 and $r->diagonal < 10) {
 
     $komplects = '<!-- nosearch --><div id="tabs-5">
   <div class=connectors>
-  <h2>Комплектующие ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
+  <h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
   </div></div><!-- /nosearch -->';
 }
 
@@ -2569,24 +2569,24 @@ if ($r->diagonal >= 12 and $r->diagonal < 13) {
     <div class="blockofcols_container">
         <div class="col-12">
             <div class="block_item" style="    margin-right: 15PX;">
-                <div class="block_item_title">Рамка
-                    для <? if ($r->type == 'monitor_cloud_hmi'): ?>экрана облачного интерфейса <? else: ?>панелей оператора <? endif; ?>
+                <div class="block_item_title">пїЅпїЅпїЅпїЅпїЅ
+                    пїЅпїЅпїЅ <? if ($r->type == 'monitor_cloud_hmi'): ?>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <? else: ?>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <? endif; ?>
                     Weintek 12" HF-12
                 </div>
                 <div class="blockofcols_row" style="margin-bottom:25px;">
                     <div class="col-9">
                         <div class="block_item_text">
                             <ul class="plc_weintek_ul_style1">
-                                <li>Габариты: 336х289х60 мм</li>
-                                <li>Материал: Окрашенный металл</li>
+                                <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 336пїЅ289пїЅ60 пїЅпїЅ</li>
+                                <li>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="block_item_info">
                                     <span class="link_advanced_search block_item_info-btn" idm="HF-12"
-                                          onclick="show_backup_call(6, &quot;HF-12&quot;)">Узнать
-                                        цену</span>
+                                          onclick="show_backup_call(6, &quot;HF-12&quot;)">пїЅпїЅпїЅпїЅпїЅпїЅ
+                                        пїЅпїЅпїЅпїЅ</span>
                         </div>
                     </div>
                 </div>
@@ -2630,7 +2630,7 @@ if ($r->diagonal >= 12 and $r->diagonal < 13) {
 
     $komplects = '<!-- nosearch --><div id="tabs-5">
   <div class=connectors>
-  <h2>Комплектующие ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
+  <h2>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ' . $types1 . ' ' . $r->model . '</h2><br />' . $accessories . '<br /><br /><br />
   </div></div><!-- /nosearch -->';
 }
 
@@ -2644,7 +2644,7 @@ ob_start();
 ?>
     <div id='tabs-4'>
         <div class=connectors>
-            <h2>Файлы для работы с <?= $typ2 ?> <?= $r->model ?></h2>
+            <h2>пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ <?= $typ2 ?> <?= $r->model ?></h2>
         </div>
 
         <?
@@ -2668,13 +2668,13 @@ ob_start();
         <table cellpadding=0 cellspacing=0 border=1 bordercolor=#cccccc width=900>
             <tr>
                 <td>
-                    <div class=down_h> Наименование</div>
+                    <div class=down_h> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</div>
                 </td>
                 <td width=100>
-                    <div class=down_h> Дата, размер</div>
+                    <div class=down_h> пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ</div>
                 </td>
                 <td>
-                    <div class=down_h> Ссылка</div>
+                    <div class=down_h> пїЅпїЅпїЅпїЅпїЅпїЅ</div>
                 </td>
             </tr>
             <?= $soft5 ?>
@@ -2709,7 +2709,7 @@ ob_start();?>
 
 <meta property="og:title" content="<?=$r->title?>" />
 <meta property="og:image" content="<?echo 'http://www.rusavtomatika.com' . $imgRemoteDir . 'md/' . $r->model . '_1.png'?>" />
-<meta property='og:site_name' content='Русавтоматика' />
+<meta property='og:site_name' content='пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ' />
 <link rel='image_src' href="<?echo 'http://www.rusavtomatika.com' . $imgRemoteDir . 'md/' . $r->model . '_1.png'?>">
 
 <?$expansionParam = ob_get_clean();
@@ -2730,7 +2730,7 @@ echo $head;
 ?>
     <div id="mes_backgr"></div>
     <div id="body_cont">
-<? include $_SERVER["DOCUMENT_ROOT"] . "/include/header_menu.php"; ?>
+<? include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/header_menu.php"; ?>
     <table width="100%" bgcolor="white">
         <tr height="93">
             <td width="300px">
@@ -2754,13 +2754,13 @@ show_price_val();
 //left_menu();
 /*
   echo "<br><br><div class=filter_case> <div class=filter>
-  <center>ПОДБОР ПРОДУКЦИИ</center><br>
-  СЕРИЯ 6000i<br>
-  ДИАГОНАЛЬ 7\"<br>
-  c SD картой
+  <center>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</center><br>
+  пїЅпїЅпїЅпїЅпїЅ 6000i<br>
+  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 7\"<br>
+  c SD пїЅпїЅпїЅпїЅпїЅпїЅ
   c Ethernet
-  с VNC сервером
-  c алюмин. корпусом<br>";
+  пїЅ VNC пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  c пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ<br>";
  */
 add_to_basket();
 popup_messages();

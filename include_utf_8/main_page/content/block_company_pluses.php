@@ -10,7 +10,7 @@
             <div class="columns is-multiline is-gapless">
                 <div class="column is-12-mobile is-6-tablet is-6-desktop">
                     <a class="company_pluses_item" href="/support/">
-                        <img src="/include/main_page/images/company_pluses/testdrive.png" alt="Тест-драйв оборудования">
+                        <img src="/include_utf_8/main_page/images/company_pluses/testdrive.png" alt="Тест-драйв оборудования">
                         <p class="is-size-6 has-text-weight-bold black_text">
                             Тест-драйв оборудования
                         </p>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="column is-12-mobile is-6-tablet is-6-desktop">
                     <a class="company_pluses_item" href="/support/">
-                        <img src="/include/main_page/images/company_pluses/support.png" alt="Техническая поддержка">
+                        <img src="/include_utf_8/main_page/images/company_pluses/support.png" alt="Техническая поддержка">
                         <p class="is-size-6 has-text-weight-bold black_text">
                             Техническая поддержка
                         </p>
@@ -51,7 +51,7 @@
             <div class="columns is-multiline is-gapless">
                 <div class="column is-12-mobile is-6-tablet is-6-desktop">
                     <a class="company_pluses_item" href="/payment-shipping/">
-                        <img src="/include/main_page/images/company_pluses/warehouse.png" alt="Склад">
+                        <img src="/include_utf_8/main_page/images/company_pluses/warehouse.png" alt="Склад">
                         <p class="is-size-6 has-text-weight-bold black_text">
                             Большие склады
                         </p>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="column is-12-mobile is-6-tablet is-6-desktop">
                     <a class="company_pluses_item" href="/payment-shipping/">
-                        <img src="/include/main_page/images/company_pluses/delivery.png" alt="Доставка">
+                        <img src="/include_utf_8/main_page/images/company_pluses/delivery.png" alt="Доставка">
                         <p class="is-size-6 has-text-weight-bold black_text">
                             Доставка в&nbsp;регионы
                         </p>

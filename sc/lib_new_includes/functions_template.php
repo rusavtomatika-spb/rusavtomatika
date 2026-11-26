@@ -35,14 +35,14 @@ function temp00($name) {  // UTF8
 
                         <noscript>
                             This page needs JavaScript activated to work.<br>
-                                Пожалуйста, включите Javascript чтобы просмотреть эту страницу
+                                пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Javascript пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
                                 <style>div { display:none; }</style>
                         </noscript>
 
 
                         <div id='body_cont' >
-                            <? include $_SERVER["DOCUMENT_ROOT"] . "/include/header_menu.php"; ?>
+                            <? include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/header_menu.php"; ?>
                             <table width=100% bgcolor=white><tr><td width=300px>
                                         <a href="/"><img src=/images/logo2017.png style="cursor: pointer;" /></a>
                                     </td>
@@ -144,7 +144,7 @@ function get_extra_openGraph(){
                     <link href="/sc/mistakes-4.1/mistakes.css" rel="stylesheet" type="text/css" />
 ';
                             $mistakes_link = '
-<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">Отправить сообщение об ошибке</a>
+<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a>
 ';
                             if ($_SERVER['HTTP_HOST'] == "www.rusavto.moisait.net") {
                                 $head = str_replace('[>MISTAKES<]', $mistakes, $head);
@@ -203,7 +203,7 @@ global $extra_openGraph;
                     <link href="/sc/mistakes-4.1/mistakes.css" rel="stylesheet" type="text/css" />
 ';
                             $mistakes_link = '
-<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">Отправить сообщение об ошибке</a>
+<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a>
 ';
 
                             if ($_SERVER['HTTP_HOST'] == "www.rusavto.moisait.net") {
@@ -218,42 +218,42 @@ global $extra_openGraph;
                         }
 
                         function temp0($name) {
-                            include $_SERVER['DOCUMENT_ROOT'] . "/include/template/header.php";
+                            include $_SERVER['DOCUMENT_ROOT'] . "/include_utf_8/template/header.php";
                             ?>
                             <body>
-<?//                            include $_SERVER['DOCUMENT_ROOT'] . "/include/template/top-banner.php"; ?>
+<?//                            include $_SERVER['DOCUMENT_ROOT'] . "/include_utf_8/template/top-banner.php"; ?>
                             <?
                             if ($_SERVER['HTTP_HOST'] == "www.rusavto.moisait.net") {
                                 echo '
-<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">Отправить сообщение об ошибке</a>
+<a class="mistakes_link" href="javascript:void(0)" onclick="PressLink()">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</a>
 ';
                             }
                             ?>
                                 <noscript>
                                     This page needs JavaScript activated to work.<br>
-                                        Пожалуйста, включите Javascript чтобы просмотреть эту страницу
+                                        пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Javascript пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
                                         <style>div { display:none; }</style>
                                 </noscript>
 
                                 <!--[if IE 7]>
             
-                                Вы используете устаревший браузер Internet explorer 7<br>
-                                Пожалуйста, обновите браузер, чтобы просмотреть эту страницу
+                                пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Internet explorer 7<br>
+                                пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                 <style> div { display:none; }</style>
                                 <![endif]-->
 
                                 <!--[if IE 6]>
             
-                                Вы используете устаревший браузер Internet explorer 6<br>
-                                Пожалуйста, обновите браузер, чтобы просмотреть эту страницу
+                                пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Internet explorer 6<br>
+                                пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                                 <style> div { display:none; }</style>
                                 <![endif]-->
 
 
                                 <div id=mes_backgr> </div>
                                 <div id='body_cont'>
-    <? include $_SERVER["DOCUMENT_ROOT"] . "/include/header_menu.php"; ?>
+    <? include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/header_menu.php"; ?>
                                     <div class="block_logo"><a href="/"><img src="/images/logo2017.png" style="cursor: pointer;" /></a></div>
                                     <? /* ?><table width=100% bgcolor=white>
                                       <tr height=93>
@@ -286,7 +286,7 @@ function temp3($insert_scripts = '') {
     ?>
     </td><!-- MAIN TABLE     end td right content --></tr></table><!-- end main table -->
 
-    <? include $_SERVER['DOCUMENT_ROOT'] . "/include/template/footer.php" ?>
+    <? include $_SERVER['DOCUMENT_ROOT'] . "/include_utf_8/template/footer.php" ?>
 
     </div> <!-- end main div -->
 
@@ -323,7 +323,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
                 s.src = '//code.jivosite.ru/script/widget/' + widget_id;
                 var ss = document.getElementsByTagName('script')[0];
                 ss.parentNode.insertBefore(s, ss);
-            })();</script> <div id='jivo_copyright' style='display: none'>Модуль <a href='http://www.jivosite.ru' target='_blank'>онлайн консультант</a><br> работает на JivoSite</div>
+            })();</script> <div id='jivo_copyright' style='display: none'>пїЅпїЅпїЅпїЅпїЅпїЅ <a href='http://www.jivosite.ru' target='_blank'>пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a><br> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ JivoSite</div>
         <!-- {/literal} END JIVOSITE CODE -->
         <?*/?>
     <? endif; ?>
@@ -339,7 +339,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
 
     $query = "SELECT `name`,`price` FROM `ib_catalog_elements`;";
     global $mysqli_db;
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса " . $query);
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . $query);
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -351,7 +351,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `model`,`model_fullname`,`s_name`,`brand`,`retail_price` FROM `products_all` WHERE `modification`<>'1' ;";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -375,7 +375,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     
 
     $query = "SELECT `model`,`retail_price` FROM `controllers`;";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -386,7 +386,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `name`,`section_code` FROM `ib_catalog_elements` WHERE `active`='1';";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса " . $query);
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " . $query);
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -397,7 +397,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `model`,`s_name`,`brand`,`retail_price` FROM `products_all` WHERE  (`modification`<>'1') AND (`show_in_cat`='1');";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -411,7 +411,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `model`,`retail_price` FROM `controllers` WHERE `model` NOT LIKE '%x%';";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -423,7 +423,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
 
 
     $query = "SELECT `model` FROM `products_all` WHERE `brand` IN ('eWON', '2N');";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -434,7 +434,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `model`,`model_fullname` FROM `products_all` WHERE `brand`='Faraday' or `currency` = 'RUR';";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -446,7 +446,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
     };
 
     $query = "SELECT `model` FROM `controllers` WHERE `brand`='IECON';";
-    $query_result = mysqli_query($mysqli_db, $query) or die("ошибка запроса05");
+    $query_result = mysqli_query($mysqli_db, $query) or die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ05");
     $j = mysqli_num_rows($query_result);
     if ($j > 0) {
         for ($i = 1; $i <= $j; $i++) {
@@ -483,7 +483,7 @@ global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
 
 
 
-    <? //include $_SERVER['DOCUMENT_ROOT'] . "/sc/QRCode/lib_QRCode.php"; ?> <?/* с попапом  */?>
+    <? //include $_SERVER['DOCUMENT_ROOT'] . "/sc/QRCode/lib_QRCode.php"; ?> <?/* пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ  */?>
     <? include $_SERVER['DOCUMENT_ROOT'] . "/sc/QRCode/lib_QRCode_for_agroprodmash2019.php"; ?>
 
     <? include $_SERVER['DOCUMENT_ROOT'] . "/sc/lib_new_includes/functions_statistics.php";

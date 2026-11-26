@@ -31,11 +31,11 @@ include ("../../sc/lib_new.php");
 
 
 
-$title = 'Weintek, таблица сравнения серий eMT, cMT, cMT3151, mTV, iE/iER, XE';
+$title = 'Weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ eMT, cMT, cMT3151, mTV, iE/iER, XE';
 
-$keywords = 'Weintek, таблица сравнения серий eMT, cMT, cMT3151, mTV, iE/iER, XE';
+$keywords = 'Weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ eMT, cMT, cMT3151, mTV, iE/iER, XE';
 
-$description = 'Размер проекта, логов, использования медиа, безопасность, удаленный доступ, подключение, протоколы, графические возможности, экспорт, импорт, использование баз данных, MQTT.';
+$description = 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, MQTT.';
 
 
 
@@ -45,9 +45,9 @@ $extra_openGraph = Array(
 
     "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/weintek-stavnenie-seriy.png",
 
-    "openGraph_title" => "Weintek, таблица сравнения серий",
+    "openGraph_title" => "Weintek, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
 
-    "openGraph_siteName" => "Русавтоматика"
+    "openGraph_siteName" => "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 
 );
 
@@ -70,7 +70,7 @@ echo $head;
 
 <div id='body_cont' >
 
-    <? include $_SERVER["DOCUMENT_ROOT"] . "../include/header_menu.php"; ?>
+    <? include $_SERVER["DOCUMENT_ROOT"] . "../include_utf_8/header_menu.php"; ?>
 
     <table width='100%' bgcolor='white'><tr height='93'><td width='300px'>
 

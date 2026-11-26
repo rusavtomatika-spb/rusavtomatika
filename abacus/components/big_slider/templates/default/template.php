@@ -9,37 +9,37 @@ CoreApplication::add_script(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) 
 $arItems = [
     0 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/1.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/1.webp',
         'name' => 'Панель оператора Weintek MT8092XE',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],
     1 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/2.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/2.webp',
         'name' => 'Панель оператора Weintek cMT1106X',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],
     2 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/3.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/3.webp',
         'name' => 'Панель оператора Weintek cMT2108X2',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],
     3 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/4.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/4.webp',
         'name' => 'Панельный компьютер Aplex AEx-821P',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],
     4 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/5.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/5.webp',
         'name' => 'Панельные компьютеры для пищевых производств Aplex APC',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],
     5 => [
         'url' => '#',
-        'image' => '/include/main_page/images/main-slider/6.webp',
+        'image' => '/include_utf_8/main_page/images/main-slider/6.webp',
         'name' => 'Панельные компьютеры Aplex ViTAM-9XXA для эксплуатации в экстремальных условиях',
         'description' => 'Поставка оборудования для автоматизации производства. Официальный дистрибьютор брендов Weintek, IFC, Aplex, eWON, Yottacontrol.',
     ],

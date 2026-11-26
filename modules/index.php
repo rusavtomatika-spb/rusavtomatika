@@ -192,7 +192,7 @@ echo $head;
 <div id='body_cont' >
 
 
-    <? include $_SERVER["DOCUMENT_ROOT"] . "/include/header_menu.php"; ?>
+    <? include $_SERVER["DOCUMENT_ROOT"] . "/include_utf_8/header_menu.php"; ?>
 
 
     <table width='100%' bgcolor='white'><tr height='93'><td width='300px'>
