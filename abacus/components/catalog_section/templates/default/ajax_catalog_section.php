@@ -203,11 +203,6 @@ if ($is_server_rendering) {
 } else {
     $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 }
-$HTTP_REFERER = str_replace(
-    array('https://www.rusavto.moisait.net', 'https://www.rusavtomatika.com', 'https://www.test.rusavtomatika.com'),
-    '',
-    $HTTP_REFERER
-);
 
 if ($HTTP_REFERER == '') { return; }
 

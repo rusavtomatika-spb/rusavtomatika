@@ -236,12 +236,13 @@ if ( !function_exists( 'catalogSection_apply_placeholders' ) ) {
 }
 
 $do_not_add_extra_h1 = false;
-
+$title_from_seo = false;
 if ( isset( $TITLE_original ) and $TITLE_original != "" ) {
     $TITLE = $TITLE_original;
     $do_not_add_extra_h1 = true;
 } elseif ( $seo_data !== null and !empty( $seo_data['TITLE'] ) ) {
     $TITLE = $seo_data['TITLE'];
+    $title_from_seo = true;
     $do_not_add_extra_h1 = true;
 } else {
     $TITLE = $arrSection[ "title" ];
@@ -387,8 +388,7 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             }
             ?>
             <h1 class="title">
-              <?= htmlspecialchars($H1, ENT_QUOTES, 'UTF-8') ?>
-              <span v-if="extra_h1"> (<span v-html="extra_h1"></span>)</span>
+              <span class="h1-base" v-text="display_h1_base"><?= htmlspecialchars($H1, ENT_QUOTES, 'UTF-8') ?></span><span v-if="display_h1_extra"> (<span v-html="display_h1_extra"></span>)</span>
             </h1>
             <?
             if ( isset( $pretext )and $pretext != "" ) {
@@ -400,7 +400,20 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
             }
             include "inc_weintek_info.php";
             ?>
-            <meta name="original-title" content="<?= htmlspecialchars((isset($TITLE_original) && $TITLE_original != '') ? $TITLE_original : $TITLE, ENT_QUOTES, 'UTF-8') ?>">
+            <?php
+            $__raw_h1_for_base = ($arrSection['h1'] != '') ? $arrSection['h1'] : $arrSection['name'];
+            $CL_base_h1 = catalogSection_apply_placeholders($__raw_h1_for_base, '', '');
+            $__raw_title_for_base = (isset($arrSection['title']) && $arrSection['title'] != '') ? $arrSection['title'] : $__raw_h1_for_base;
+            $CL_base_title = catalogSection_apply_placeholders($__raw_title_for_base, '', '');
+            ?>
+            <meta name="original-title" content="<?= htmlspecialchars($CL_base_title, ENT_QUOTES, 'UTF-8') ?>">
+            <meta name="original-h1" content="<?= htmlspecialchars($CL_base_h1, ENT_QUOTES, 'UTF-8') ?>">
+            <?php if (!empty($h1_from_seo)): ?>
+            <meta name="seo-override-h1" content="<?= htmlspecialchars($H1, ENT_QUOTES, 'UTF-8') ?>">
+            <?php endif; ?>
+            <?php if (!empty($title_from_seo)): ?>
+            <meta name="seo-override-title" content="<?= htmlspecialchars($TITLE, ENT_QUOTES, 'UTF-8') ?>">
+            <?php endif; ?>
             <meta name="original-h1" content="<?= htmlspecialchars((isset($H1_original) && $H1_original != '') ? $H1_original : $H1, ENT_QUOTES, 'UTF-8') ?>">
             <noindex class="section-actions-wrapper">
               <?php if ($arrSection['code'] == 'modules_io'): ?>

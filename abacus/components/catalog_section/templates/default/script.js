@@ -35,6 +35,21 @@
   var initialViewMode = readServerViewMode();
   var initialSort = readSortCookie(serverSection) || 'recommended';
 
+  function metaContent(name) {
+    var el = document.querySelector('meta[name="' + name + '"]');
+    return el ? el.getAttribute('content') : null;
+  }
+  function decodeEntities(str) {
+    var t = document.createElement('textarea');
+    t.innerHTML = str;
+    return t.value;
+  }
+  var h1BaseEl = document.querySelector('#vue_component_catalog_section h1 .h1-base');
+  var initialBaseH1 = metaContent('original-h1') || (h1BaseEl ? h1BaseEl.textContent.trim() : '');
+  var initialBaseTitle = metaContent('original-title') || document.title;
+  var initialSeoH1 = metaContent('seo-override-h1');
+  var initialSeoTitle = metaContent('seo-override-title');
+
   var app = new Vue({
     el: '#vue_component_catalog_section',
     data: function () {
@@ -121,6 +136,10 @@
         compare: [],
         cart: [],
         viewed: [],
+        base_h1: initialBaseH1,
+        base_title: initialBaseTitle,
+        seo_h1_override: initialSeoH1,
+        seo_title_override: initialSeoTitle,
         extra_h1: "",
         extra_h1_arr: [],
         filterSelectedRemoteControlPhone: false,
@@ -134,28 +153,11 @@
       };
     },
     watch: {
-      extra_h1: function (newVal) {
-        let new_h1 = $('meta[name="original-h1"]').attr('content');
-        let new_title = $('meta[name="original-title"]').attr('content');
-        if (new_h1 === undefined) { new_h1 = ''; }
-        if (new_title === undefined) { new_title = ''; }
-        let new_UPPER_SEO_TEXT = $('#component_seo_UPPER_SEO_TEXT').html();
-        let new_LOWER_SEO_TEXT = $('#component_seo_LOWER_SEO_TEXT').html();
-        if (newVal.length > 0) {
-          newVal = newVal.replace(/,/g, ', ');
-          new_h1 += ' (' + newVal + ')';
-          new_title += ' (' + newVal + ')';
-        }
-        $('h1').html(new_h1);
-        document.title = new_title;
-        $('.pretext').html(new_UPPER_SEO_TEXT);
-        $('.posttext').html(new_LOWER_SEO_TEXT);
-        if (new_UPPER_SEO_TEXT == 'no') {
-          $('.pretext').html('');
-        }
-        if (new_LOWER_SEO_TEXT == 'no') {
-          $('.posttext').html('');
-        }
+      display_title: {
+        immediate: true,
+        handler: function (newTitle) {
+          document.title = decodeEntities(newTitle);
+        },
       },
       favorites: function (newVal) {
         if (newVal.length > 0) {
@@ -287,7 +289,27 @@
         $("#USB-slider").slider("option", "values", [this.filterSelectedRangeUSB_min, this.filterSelectedRangeUSB_max]);
       },
     },
-    computed: {},
+    computed: {
+      display_h1_base: function () {
+        if (this.seo_h1_override !== null && this.seo_h1_override !== '') {
+          return this.seo_h1_override;
+        }
+        return this.base_h1;
+      },
+      display_h1_extra: function () {
+        if (this.seo_h1_override !== null && this.seo_h1_override !== '') {
+          return '';
+        }
+        return this.extra_h1 ? this.extra_h1.replace(/,/g, ', ') : '';
+      },
+      display_title: function () {
+        if (this.seo_title_override !== null && this.seo_title_override !== '') {
+          return this.seo_title_override;
+        }
+        var extra = this.extra_h1 ? ' (' + this.extra_h1.replace(/,/g, ', ') + ')' : '';
+        return this.base_title + extra;
+      },
+    },
     created: function () {},
     mounted: function () {
       var el = document.querySelector('.component_catalog_section__panel_of_products[data-server-html-id]');
@@ -1455,15 +1477,6 @@
           this.extra_h1 = '';
         }
         this.extra_h1 = this.extra_h1.replace(/^,|,$/gm, '');
-
-        const originalTitleMeta = document.querySelector('meta[name="original-title"]');
-        if (originalTitleMeta) {
-          const baseTitle = originalTitleMeta.getAttribute('content');
-          document.title = baseTitle + (
-            this.extra_h1 ? ' (' + this.extra_h1 + ')' : ''
-          );
-        }
-
         this.send_ajax_query();
       },
       send_ajax_query() {
@@ -1500,7 +1513,7 @@
           }
         });
       },
-      init_after_ajax() {
+      init_after_ajax(fromAjax) {
         var params = new URLSearchParams(document.location.search);
         var curbrand = params.get('brand');
         var curserie = params.get('series');
@@ -1528,22 +1541,25 @@
 
         let el = this.$el;
         setTimeout(() => {
-          if ($('meta[name=component_seo_h1]').length > 0) {
-            let new_h1 = $('meta[name=component_seo_h1]').attr('content');
-            if (new_h1 != "") {
-              $('h1').html(new_h1);
+          if (fromAjax) {
+            if ($('meta[name=component_seo_h1]').length > 0) {
+              let new_h1 = $('meta[name=component_seo_h1]').attr('content');
+              this.seo_h1_override = (new_h1 != "") ? new_h1 : null;
+            } else {
+              this.seo_h1_override = null;
             }
-          }
-          if ($('meta[name=component_seo_title]').length > 0) {
-            let new_title = $('meta[name=component_seo_title]').attr('content');
-            if (new_title != "") {
-              $('title').html(new_title);
+            if ($('meta[name=component_seo_title]').length > 0) {
+              let new_title = $('meta[name=component_seo_title]').attr('content');
+              this.seo_title_override = (new_title != "") ? new_title : null;
+            } else {
+              this.seo_title_override = null;
             }
           }
           let new_UPPER_SEO_TEXT = $('#component_seo_UPPER_SEO_TEXT').html();
-          $('.pretext').html(new_UPPER_SEO_TEXT);
+          if (new_UPPER_SEO_TEXT !== undefined) { $('.pretext').html(new_UPPER_SEO_TEXT); }
           let new_LOWER_SEO_TEXT = $('#component_seo_LOWER_SEO_TEXT').html();
-          $('.posttext').html(new_LOWER_SEO_TEXT);
+          if (new_LOWER_SEO_TEXT !== undefined) { $('.posttext').html(new_LOWER_SEO_TEXT); }
+
           if ($('meta[name=component_seo_DESCRIPTION]').length > 0) {
             let DESCRIPTION = $('meta[name=component_seo_DESCRIPTION]').attr('content');
             if (DESCRIPTION != "") {
