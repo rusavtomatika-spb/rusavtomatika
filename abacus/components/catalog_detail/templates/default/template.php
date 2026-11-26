@@ -763,7 +763,7 @@ if (ERROR_404) {
                 <a
                   id="<?= htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') ?>"
                   onclick="copyToClipboard('<?= $clean_copy_text ?>')"
-                  title="Копировать артикул: <?= $colored_code ?>"
+                  title="Копировать артикул: <?= htmlspecialchars($raw_code, ENT_QUOTES, 'UTF-8') ?>"
                   class="order-info-row"
                 >
                   <p class="order-info-col-code"><?= $colored_code ?></p>

@@ -794,8 +794,8 @@ font-weight: 300;
 .order-info-header,
 .order-info-row {
   display: grid;
-  grid-template-columns: 200px 100%;
-  align-items: center;
+  grid-template-columns: 200px minmax(0, 1fr);
+  align-items: stretch;
   text-decoration: none;
 }
 .order-info-header {
@@ -834,8 +834,9 @@ font-weight: 300;
   line-height: 150%;
   color: #4a4a4a;
   margin: 0;
-  width: 100%;
   padding: 5px 10px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .order-info-copy-btn {
   color: #bbb;
@@ -859,9 +860,8 @@ font-weight: 300;
     display: none;
   }
   .order-info-row {
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 8px 10px;
+    grid-template-columns: 1fr;
+    padding: 0;
   }
   .order-info-col-code {
     flex: 1 1 auto;
