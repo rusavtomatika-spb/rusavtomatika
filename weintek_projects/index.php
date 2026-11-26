@@ -46,7 +46,6 @@ $SERVER_PROTOCOL = $_SERVER[ 'SERVER_PROTOCOL' ] == "HTTP/1.1" ? "http://" : "ht
 
 
 
-
 require '../sc/lib_new.php';
 
 if ( isset( $_GET[ "section" ] ) ) {
@@ -1025,7 +1024,6 @@ li a,li a:hover {
 </article>
 
 <?
-
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
 
 

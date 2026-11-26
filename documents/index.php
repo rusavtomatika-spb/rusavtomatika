@@ -2,8 +2,6 @@
 global $CONTENT_ON_WIDE_SCREEN;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/prolog.php";
-//CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/weintek_drivers_styles.css?" . rand());
-//CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/documents.js" );
 global $extra_openGraph;
 $extra_openGraph = array(
   "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/weintek_drivers.png",
@@ -16,13 +14,11 @@ $DESCRIPTION = 'Ежедневно обновляемые документы, р
 $TITLE = 'Weintek документы, руководство, мануалы, документация';
 $SERVER_PROTOCOL = $_SERVER[ 'SERVER_PROTOCOL' ] == "HTTP/1.1" ? "http://" : "https://";
 $CANONICAL = "https://www.rusavtomatika.com/documents/";
-
 require $_SERVER[ 'DOCUMENT_ROOT' ] . '/sc/lib_new.php';
-
 global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
 $GLOBAL_ARR_SCRIPTS_TO_FOOTER[] = "/documents/documents.js";
 $docs_result = $_SERVER[ 'DOCUMENT_ROOT' ] . '/documents/docs_result.txt';
-$items = json_decode( file_get_contents( $docs_result ), true ); // JSON с документами weintek
+$items = json_decode( file_get_contents( $docs_result ), true );
 $total_docs = count( $items );
 $sections = array(
   "Среда разработки EasyBuilder Pro" => "ebx",
@@ -36,7 +32,8 @@ $sections = array(
   "Модули ввода-вывода серии iR" => "moduli",
   "Руководства по подключению ПЛК" => "plc",
   "Разное" => "other",
-  "Часто задаваемые вопросы (FAQ)" => "faq" );
+  "Часто задаваемые вопросы (FAQ)" => "faq"
+);
 $sections = array_flip( $sections );
 if ( isset( $_GET[ "docsection" ] ) ) {
   $docsec = $_GET[ "docsection" ];
@@ -55,7 +52,6 @@ $titf = array_column( $fresh, 'mod_data' );
 array_multisort( $titf, SORT_DESC, $fresh );
 $tit = array_column( $docs, 'mod_data' );
 array_multisort( $tit, SORT_DESC, $docs );
-//file_put_contents( $docs_result, json_encode( $final_json ) );
 ?>
 <article>
   <div id="app">
@@ -92,7 +88,6 @@ array_multisort( $tit, SORT_DESC, $docs );
           <div class="section2" style="font-size: 0.7rem;font-weight: 300;"><a class="section-item router-link-active active"><span class="section-item-ancore">Недавно обновлённые документы</span> </a>
             <?
             foreach ( $fresh as $item ) {
-
               ?>
             <div class="section_inner"><a id="doc_EBPro" target="_blank" href="<? echo( '/upload_files/documents/weintek/'.$item[ 'put' ]."/".$item[ 'fname' ] );?>">[
               <?
@@ -109,16 +104,6 @@ array_multisort( $tit, SORT_DESC, $docs );
         </div>
         <div class="column is-9" style="padding-left:5px">
           <div> 
-            <!--button
-                title = "Очистить поле поиска"
-                type = "reset"
-                class = "is-active"
-				style="float: right" 
-				id="clear"
-				 onclick="clearSearch()"
-              >
-                X
-              </button-->
             <input class="filterInput input" type="text" placeholder="Фильтр по названию или дате..." id="search"/>
             <p style="color:#B8B8B8; font-size: 0.8em; text-align: right;">Документы отсортированы по дате</p>
             <div id="docs" class="sectionBlockFullSubSection">
@@ -131,7 +116,6 @@ array_multisort( $tit, SORT_DESC, $docs );
                 } else {
                   $new = '';
                 }
-
                 ?>
               <section>
                 <div class="document">
@@ -168,10 +152,6 @@ array_multisort( $tit, SORT_DESC, $docs );
     display:block!important;
   }
   .filterInput{
-    /*padding: 5px 4px;
-    border: 1px solid #757171;
-    font-size: 14px;
-	width: 95% !important;*/
     margin-bottom: 5px;
   }
   #app{
@@ -186,7 +166,7 @@ array_multisort( $tit, SORT_DESC, $docs );
   }
   .documentTableStringInfo{
     -webkit-flex: auto;
-    	flex: auto;
+    flex: auto;
     position:relative;
   }
   .documentTableStringInfo_date{
@@ -201,7 +181,6 @@ array_multisort( $tit, SORT_DESC, $docs );
   }
   .documentWrapperInfo{
     margin-left: 29px;
-
   }
   .documentFormatIcon{
     position: relative;
@@ -221,14 +200,11 @@ array_multisort( $tit, SORT_DESC, $docs );
     transition: all .25s ease;
   }
   .slide-fade-enter,.slide-fade-leave-to{
-
     font-size: 0;
     margin: 0;
     opacity: 0;
     padding: 0;
   }
-
-
 
   .documents__contentTable tr > td {
     border: none;
@@ -244,7 +220,6 @@ array_multisort( $tit, SORT_DESC, $docs );
     width: 100%;
   }
 
-
   .sectionItem-arrow{
     display: inline-block;
     border-top: solid 4px rgb(0,0,0);
@@ -254,7 +229,6 @@ array_multisort( $tit, SORT_DESC, $docs );
     right: 10px;
     top: 9px;
     height: 2px;
-
   }
   .sectionItem-arrow.active{
     border-left: solid 5px #00000000;
@@ -274,14 +248,10 @@ array_multisort( $tit, SORT_DESC, $docs );
   .documentUrlLink:hover{
     color: white;
     background: #34ab5e;
-
   }
   .documentTitle, .documentTableStringInfo_date{
-word-wrap: normal ;
-      word-break: all;
-      }
-  .subSection-item{
-
+    word-wrap: normal ;
+    word-break: all;
   }
   .section-item.active {
     background: #cce9cc;;
@@ -304,11 +274,9 @@ word-wrap: normal ;
     margin-left: 15px;
   }
   .section-item .section-item-ancore{
-    <?/*?>text-decoration: underline;<?*/?>
     font-weight: 600;
     font-size: 16px;
   }
-
 
   .sideMenuDocument_sections .section{
     margin-bottom: 15px;
@@ -326,7 +294,6 @@ word-wrap: normal ;
     display:block;
   }
 
-
   .documents-enter {
     transform: scale(0.5) translatey(-80px);
     opacity:0;
@@ -337,12 +304,12 @@ word-wrap: normal ;
     opacity:0;
   }
 
-  .documents-leave-active {
-    position: absolute;
-    z-index:-1;
-  }
+.documents-leave-active {
+  position: absolute;
+  z-index:-1;
+}
 
-  .document {
+.document {
   display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;
@@ -353,72 +320,42 @@ word-wrap: normal ;
 }
 .document:hover{
   background: #ececec;
-
 }
-	  #clear {
-		  background-color: white;
-    border-radius: 4px;
-    color: #dbdbdb;
+#clear {
+  background-color: white;
+  border-radius: 4px;
+  color: #dbdbdb;
 	-webkit-appearance: none;
-    align-items: center;
-    border: 1px solid #dbdbdb;
-    box-shadow: none;
-    display: inline-flex;
-    font-size: 1rem;
-    height: 2.5em;
-    justify-content: flex-start;
-    line-height: 1.5;
-    padding-bottom: calc(0.5em - 1px);
-    padding-left: calc(0.75em - 1px);
-    padding-right: calc(0.75em - 1px);
-    padding-top: calc(0.5em - 1px);
-    position: relative;
-    vertical-align: top;
-	  }
-</style>
-  <script>
-
-
-</script>
-  <?/* asdasdasdasdasdasd
-<script>
-$( document ).ready(function() {
-
-this.loading_status = true;
-axios({
-method: 'POST',
-url: '/documents/documents_get_ajax.php',
-data: {
-
-},
-headers: {
-"Content-type": "application/x-www-form-urlencoded"
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.5em;
+  justify-content: flex-start;
+  line-height: 1.5;
+  padding-bottom: calc(0.5em - 1px);
+  padding-left: calc(0.75em - 1px);
+  padding-right: calc(0.75em - 1px);
+  padding-top: calc(0.5em - 1px);
+  position: relative;
+  vertical-align: top;
 }
-}).then((response) => {
-this.loading_status = false;
-$(".documents_list").html(response.data);
-
-});
-
-});
-</script>
-*/?>
-</article>
+</style>
 <?
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/epilog.php";
-
 ?>
 <script> 
-            $(document).ready(function() { 
-                $("#search").on("keyup", function() { 
-                    var value = $(this).val().toLowerCase(); 
-                    $("#docs section").filter(function() { 
-                        $(this).toggle($(this).text() 
-                        .toLowerCase().indexOf(value) > -1) 
-                    }); 
-                }); 
-            }); 
-	  function clearSearch() {
+  $(document).ready(function() { 
+      $("#search").on("keyup", function() { 
+          var value = $(this).val().toLowerCase(); 
+          $("#docs section").filter(function() { 
+              $(this).toggle($(this).text() 
+              .toLowerCase().indexOf(value) > -1) 
+          }); 
+      }); 
+  }); 
+  function clearSearch() {
     document.getElementById('search').value = '';
   }
-        </script>
+</script>

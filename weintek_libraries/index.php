@@ -2,8 +2,6 @@
 global $CONTENT_ON_WIDE_SCREEN;
 $CONTENT_ON_WIDE_SCREEN = false;
 require_once $_SERVER[ 'DOCUMENT_ROOT' ] . "/abacus/prolog.php";
-//CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/weintek_drivers_styles.css?" . rand());
-//CoreApplication::add_script( str_replace( $_SERVER[ "DOCUMENT_ROOT" ], "", __DIR__ ) . "/documents.js" );
 global $extra_openGraph;
 $extra_openGraph = Array(
   "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/weintek_libraries.png",
@@ -43,7 +41,7 @@ require '../sc/lib_new.php';
 global $GLOBAL_ARR_SCRIPTS_TO_FOOTER;
 $GLOBAL_ARR_SCRIPTS_TO_FOOTER[] = "/documents/documents.js";
 $docs_filename = $_SERVER[ 'DOCUMENT_ROOT' ] . '/weintek_libraries/libs.txt';
-$items = json_decode( file_get_contents( $docs_filename ), true ); // JSON с документами weintek
+$items = json_decode( file_get_contents( $docs_filename ), true );
 clearstatcache();
 $tit = array_column( $items, 'mod_data' );
 array_multisort( $tit, SORT_DESC, $items );
@@ -109,15 +107,14 @@ $stat = stat( $docs_filename );
                       </p>
                   </header>
                   <div class="card-image" style="background: #ECE9D8;">
-					  <?php
-				$headers = @get_headers($img_name);
-if (!$headers || strpos($headers[0], '404') !== false) {  // Проверяем статус-код ответа сервера
-    echo '<figure class="image  is-fullwidth has-ratio"><img src="noimage.png" alt="Готовим фото" loading="lazy"  /></figure>';
-} else {
-    echo '<figure class="image  is-fullwidth has-ratio"><a href="'.$img_name.'" data-fancybox><img src="'.$img_name.'" alt="'.$title.'" alt="'.$img_name.'" loading="lazy"  /></a></figure>';
-}
-?>
-                    
+                    <?php
+                    $headers = @get_headers($img_name);
+                    if (!$headers || strpos($headers[0], '404') !== false) {
+                        echo '<figure class="image  is-fullwidth has-ratio"><img src="noimage.png" alt="Готовим фото" loading="lazy"  /></figure>';
+                    } else {
+                        echo '<figure class="image  is-fullwidth has-ratio"><a href="'.$img_name.'" data-fancybox><img src="'.$img_name.'" alt="'.$title.'" alt="'.$img_name.'" loading="lazy"  /></a></figure>';
+                    }
+                    ?>
                   </div>
                   <footer class="card-footer">
 					  <span class="card-footer-item"><? echo( date("d.m.Y",$item[ 'mod_data' ]) )?></span> 
@@ -192,10 +189,6 @@ if (!$headers || strpos($headers[0], '404') !== false) {  // Проверяем 
     display:block!important;
   }
   .filterInput{
-    /*padding: 5px 4px;
-    border: 1px solid #757171;
-    font-size: 14px;
-	width: 95% !important;*/
     margin-bottom: 5px;
   }
   #app{
