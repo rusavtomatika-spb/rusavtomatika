@@ -3,27 +3,27 @@ $arResult["items"] = [
     0 => [
         'url' => '/weintek' . EX . '/',
         'name' => '',
-        'img' => '/include/main_page/images/brands/weintek.webp'
+        'img' => '/include_utf_8/main_page/images/brands/weintek.webp'
     ],
     1 => [
         'url' => '/spiktek' . EX . '/',
         'name' => 'Spiktek',
-        'img' => '/include/main_page/images/brands/spiktek.png'
+        'img' => '/include_utf_8/main_page/images/brands/spiktek.png'
     ],
     2 => [
         'url' => '/samkoon' . EX . '/',
         'name' => 'Samkoon',
-        'img' => '/include/main_page/images/brands/samkoon.webp'
+        'img' => '/include_utf_8/main_page/images/brands/samkoon.webp'
     ],
     3 => [
         'url' => '/ifc' . EX . '/',
         'name' => 'IFC',
-        'img' => '/include/main_page/images/brands/ifc.webp'
+        'img' => '/include_utf_8/main_page/images/brands/ifc.webp'
     ],
     4 => [
         'url' => '/licos' . EX . '/',
         'name' => 'LicOS',
-        'img' => '/include/main_page/images/brands/licos.png'
+        'img' => '/include_utf_8/main_page/images/brands/licos.png'
     ],
 ];
 

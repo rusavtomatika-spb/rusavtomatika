@@ -1,51 +1,74 @@
-.component_wrapper{
+.component_wrapper {
     padding: 0 0 30px;
-
 }
 
-.component_catalog .section_link{
-    border: 1px solid #eee;
-    padding: 15px;
-    display: block;
-    color: #000;
-    text-decoration: none;
-    font-size: 16px;
-    position: relative;
-    height: 180px;
-    margin: 0px 0px;
-    transition: 0.2s;
-    background: white;
+.catalog-items-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+}
+
+.catalog-items-wrapper .section_link {
     position: relative;
     z-index: 1;
-}
-.component_catalog .section_link:hover{
-    padding: 20px 15px 10px 15px;
-    margin: -5px -5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    z-index: 2;
-    height: 190px;
-}
-.component_catalog__title{
-    font-size: 1em;
-    line-height: 1.2em;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    width: 100%;
-    padding: 0 60px;
-    box-sizing: border-box;
-    height: 60px;
     display: flex;
-    justify-items: center;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    transition: 0.2s;
-    text-align: center;
+    border: 1px solid #eee;
+    padding: 10px;
+    text-decoration: none;
+    margin: 0;
+    background: #fff;
+    gap: 10px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
-.section_link:hover  .component_catalog__title{
-    padding-left: 65px;
-    padding-right: 65px;
-    bottom: 5px;
+
+.catalog-items-wrapper .section_link:hover {
+    z-index: 2;
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.component_catalog__title {
+    font-size: 1em;
+    line-height: 100%;
+    color: #000;
+    font-weight: 700;
+    width: 90%;
+    text-align: center;
+    min-height: 50px;
+}
+
+.catalog__section-image {
+    width: 150px;
+    height: 150px;
+}
+
+.catalog__section-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: .5s;
+    transform: scale(1.01);
+}
+
+.catalog-items-wrapper .section_link:hover .catalog__section-image img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 769px) {
+    .catalog-items-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .catalog-items-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .catalog-items-wrapper .section_link { width: 100%; }
 }
