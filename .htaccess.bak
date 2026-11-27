@@ -19,7 +19,6 @@ Options -Indexes
 </FilesMatch>
 
 RewriteEngine on
-DirectorySlash Off
 
 # Редирект с /termit/ на /accessories/
 RewriteRule ^termit/(.*)$ /accessories/$1 [R=301,L,QSD]

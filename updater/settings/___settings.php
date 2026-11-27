@@ -1,0 +1,1 @@
+{"settings":{"database_server":{"database_host":"localhost","database_name":"weblec_weintek_test","database_user":"weblec_testuser","database_password":"243344"},"updater_password":"c93c79c2608e63368b7e7163f57ff2fb"}}

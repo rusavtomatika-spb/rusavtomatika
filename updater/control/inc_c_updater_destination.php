@@ -1,385 +1,574 @@
 <?php
-define("EXTRACT_TO_FOLDER", __DIR__ . "/../../");
-define("FILENAME_ZIP_DIFF_FILES", __DIR__ . "/../data/archive_difference_files.zip");
-define("PATH_TO_DATA", __DIR__ . "/../data/");
+/**
+ * Updater: приёмник обновлений (файлы + БД).
+ * Кодировка файла: UTF-8.
+ */
+
+if (!defined('EXTRACT_TO_FOLDER'))      define('EXTRACT_TO_FOLDER', __DIR__ . "/../../");
+if (!defined('FILENAME_ZIP_DIFF_FILES')) define('FILENAME_ZIP_DIFF_FILES', __DIR__ . "/../data/archive_difference_files.zip");
+if (!defined('PATH_TO_DATA'))            define('PATH_TO_DATA', __DIR__ . "/../data/");
+if (!defined('UPDATER_SETTINGS_FILE'))   define('UPDATER_SETTINGS_FILE', __DIR__ . "/../settings/settings.php");
+if (!defined('UPDATER_DEBUG_LOGS'))      define('UPDATER_DEBUG_LOGS', false);
 
 if (!function_exists('var_dump_pre')) {
     function var_dump_pre($value)
     {
-        echo "<pre style='font-size: 11px;color: red;max-width: 1000px;overflow: scroll;padding: 10px;'>";
+        echo "<pre style='font-size:11px;color:red;max-width:1000px;overflow:scroll;padding:10px;'>";
         var_dump($value);
         echo "</pre>";
     }
 }
 
-
 class c_updater_destination
 {
+    /** @var mysqli|null */
+    private $db = null;
+    private $db_source = '';
 
+    /* ------------------------------------------------------------------ */
+    /* Настройки                                                          */
+    /* ------------------------------------------------------------------ */
 
-    /*"database_server": this.database_server,
-    "database_name": this.database_name,
-    "database_user": this.database_user,
-    "database_password": this.database_password,*/
+    private function settings_read()
+    {
+        if (!file_exists(UPDATER_SETTINGS_FILE)) {
+            return array('settings' => array(
+                'database_server' => array(
+                    'database_host' => '', 'database_name' => '',
+                    'database_user' => '', 'database_password' => '',
+                ),
+                'updater_password' => '',
+            ));
+        }
+        $raw = file_get_contents(UPDATER_SETTINGS_FILE);
+        $arr = json_decode($raw, true);
+        if (!is_array($arr)) { $arr = array(); }
+        if (!isset($arr['settings']) || !is_array($arr['settings'])) { $arr['settings'] = array(); }
+        if (!isset($arr['settings']['database_server']) || !is_array($arr['settings']['database_server'])) {
+            $arr['settings']['database_server'] = array();
+        }
+        foreach (array('database_host', 'database_name', 'database_user', 'database_password') as $k) {
+            if (!isset($arr['settings']['database_server'][$k])) {
+                $arr['settings']['database_server'][$k] = '';
+            }
+        }
+        if (!isset($arr['settings']['updater_password'])) {
+            $arr['settings']['updater_password'] = '';
+        }
+        return $arr;
+    }
 
+    private function settings_write($arr)
+    {
+        $dir = dirname(UPDATER_SETTINGS_FILE);
+        if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+        $json = json_encode($arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        return file_put_contents(UPDATER_SETTINGS_FILE, $json, LOCK_EX);
+    }
 
     public function save_settings($settings)
     {
-        //
-        $content_new = ["settings" => $settings];
-        //
-        $content_orig = file_get_contents(__DIR__ . "/../settings/settings.php");
-        $content_orig = json_decode($content_orig, true);
-        //
+        $orig = $this->settings_read();
+        $new  = is_array($settings) ? $settings : array();
 
-
-        $content_orig["settings"]["database_server"]["database_host"] = $content_new["settings"]["database_server"]["database_host"];
-        $content_orig["settings"]["database_server"]["database_name"] = $content_new["settings"]["database_server"]["database_name"];
-        $content_orig["settings"]["database_server"]["database_user"] = $content_new["settings"]["database_server"]["database_user"];
-        $content_orig["settings"]["database_server"]["database_password"] = $content_new["settings"]["database_server"]["database_password"];
-
-        if (isset($content_new["settings"]["updater_password_new"]) and $content_new["settings"]["updater_password_new"] != "") {
-            $updater_password_new_md5 = md5($content_new["settings"]["updater_password_new"]);
-            $content_orig["settings"]["updater_password"] = $updater_password_new_md5;
-        }else{
-            if(!isset($content_orig["settings"]["updater_password"])){
-                $content_orig["settings"]["updater_password"] = "";
+        if (isset($new['database_server']) && is_array($new['database_server'])) {
+            foreach (array('database_host', 'database_name', 'database_user', 'database_password') as $k) {
+                if (isset($new['database_server'][$k])) {
+                    $orig['settings']['database_server'][$k] = trim($new['database_server'][$k]);
+                }
             }
         }
 
+        if (!empty($new['updater_password_new'])) {
+            $orig['settings']['updater_password'] = md5($new['updater_password_new']);
+            /* пароль сменён — старая кука auth больше не валидна */
+            setcookie('auth', '', time() - 3600, '/');
+        }
 
-
-        $put_content = json_encode($content_orig);
-        $success = file_put_contents(__DIR__."/../settings/settings.php",$put_content);
-/*        $settings = file_get_contents(__DIR__ . "/../settings/settings.php");
-        $out = ["reply" => 'take_settings', "settings" => $settings];*/
-/*        return json_encode($out);*/
+        $this->settings_write($orig);
         return $this->read_settings();
     }
 
     public function read_settings()
     {
-        $content = file_get_contents(__DIR__ . "/../settings/settings.php");
-        //$content = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($content));
-        $content = json_decode($content);
-        $out = ["reply" => 'take_settings', "settings" => $content->settings];
-        return json_encode($out);
+        $arr = $this->settings_read();
+        return json_encode(array(
+            'reply'    => 'take_settings',
+            'settings' => $arr['settings'],
+        ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
-	
+
+    /* ------------------------------------------------------------------ */
+    /* Соединение с БД: settings → фолбэк на sc/dbcon.php                  */
+    /* ------------------------------------------------------------------ */
+
+    private function db_connect()
+    {
+        if ($this->db instanceof mysqli) { return $this->db; }
+
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
+
+        $s    = $this->settings_read();
+        $host = trim($s['settings']['database_server']['database_host']);
+        $user = trim($s['settings']['database_server']['database_user']);
+        $pass = (string)$s['settings']['database_server']['database_password'];
+        $name = trim($s['settings']['database_server']['database_name']);
+
+        if ($host !== '' && $user !== '' && $name !== '') {
+            $port = 3306;
+            if (strpos($host, ':') !== false) {
+                list($host, $port) = explode(':', $host, 2);
+                $port = (int)$port;
+            }
+            $db = @mysqli_connect($host, $user, $pass, $name, $port);
+            if ($db) {
+                $this->db = $db;
+                $this->db_source = 'settings.php (' . $name . ')';
+                return $this->db;
+            }
+            throw new Exception(
+                'Не удалось подключиться по настройкам updater: ' . mysqli_connect_error()
+                . ' [host=' . $host . ', db=' . $name . ', user=' . $user . ']'
+            );
+        }
+
+        /* Настройки пустые — берём соединение сайта */
+        $dbcon = $_SERVER['DOCUMENT_ROOT'] . '/sc/dbcon.php';
+        if (!file_exists($dbcon)) {
+            throw new Exception('Настройки БД в updater пусты, и не найден ' . $dbcon);
+        }
+        require_once $dbcon;
+        if (!function_exists('database_connect')) {
+            throw new Exception('В sc/dbcon.php нет функции database_connect()');
+        }
+        database_connect();
+
+        if (empty($GLOBALS['mysqli_db']) || !($GLOBALS['mysqli_db'] instanceof mysqli)) {
+            throw new Exception('sc/dbcon.php не создал соединение $mysqli_db');
+        }
+
+        $this->db = $GLOBALS['mysqli_db'];
+        $res = mysqli_query($this->db, 'SELECT DATABASE()');
+        $row = $res ? mysqli_fetch_row($res) : array('');
+        $this->db_source = 'sc/dbcon.php (' . $row[0] . ')';
+        return $this->db;
+    }
+
+    private function q($sql, $error_label = '')
+    {
+        $r = mysqli_query($this->db, $sql);
+        if ($r === false) {
+            throw new Exception(
+                ($error_label !== '' ? $error_label . ': ' : '')
+                . mysqli_error($this->db) . "\nSQL: " . mb_substr($sql, 0, 400, 'UTF-8')
+            );
+        }
+        return $r;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Обновление БД                                                      */
+    /* ------------------------------------------------------------------ */
+
     public function update_database()
     {
         ob_start();
-        $dump_file = __DIR__ . '/../data/sql_dump.sql';
-        $mess = "";
+        $dump_file = PATH_TO_DATA . 'sql_dump.sql';
 
-        $content = file_get_contents(__DIR__ . "/../settings/settings.php");
-        $settings = json_decode($content);
+        try {
+            $db = $this->db_connect();
+            echo 'Соединение: ' . $this->db_source . "<br>";
 
+            if (!file_exists($dump_file)) {
+                throw new Exception('Файл дампа не найден: ' . $dump_file . '. Сначала скачайте бэкап с источника.');
+            }
 
-        define('LOCAL_DB_SERVER', $settings->settings->database_server->database_host);
-        define('LOCAL_DB_USER', $settings->settings->database_server->database_user);
-        define('LOCAL_DB_DBNAME', $settings->settings->database_server->database_name);
-        define('LOCAL_DB_PASSWORD', $settings->settings->database_server->database_password);
+            /* Дамп с источника в cp1251 — импортируем в той же кодировке */
+            mysqli_set_charset($db, 'cp1251');
 
-        $success = FALSE;
-        $dt = date('Y-m-d-H-i');
-        $dtb = date('Y-m-d');
-        $dump_file_short = $dump_file;
-        //$dump_file = LOCAL_TEMPORARY_FOLDER . $dump_file;
-        $db = mysql_connect(LOCAL_DB_SERVER, LOCAL_DB_USER, LOCAL_DB_PASSWORD); // Соединяемся с сервером БД
-        if (!$db) {
-            print("Database connection failed.");
-        } else {
-            if (!mysql_select_db(LOCAL_DB_DBNAME)) { // Если нет такой БД
-                print("Database select failed.");
-            } else {
-                print("Database connection good.");
-                mysql_query("SET NAMES 'cp1251'");
+            $dump = file_get_contents($dump_file);
+            $dump = str_replace(array("\r\n", "\n", "\r"), '', $dump);
+            echo 'Размер дампа: ' . number_format(strlen($dump) / 1024, 2, '.', ' ') . ' KB<br>';
 
+            $pieces = explode(';nYn;', $dump);
+            $done = 0;
+            foreach ($pieces as $piece) {
+                $piece = trim($piece);
+                if ($piece === '') { continue; }
+                $this->q($piece . ';', 'Ошибка импорта запроса #' . ($done + 1));
+                $done++;
+            }
+            echo 'Выполнено запросов: ' . $done . '<br>';
 
-                if (file_exists($dump_file)) {
+            /* Список временных таблиц */
+            $tmp_tables = array();
+            $r = $this->q("SHOW TABLES LIKE '%\_temp'", 'SHOW TABLES');
+            while ($row = mysqli_fetch_row($r)) { $tmp_tables[] = $row[0]; }
+            mysqli_free_result($r);
 
-                    $dump = file_get_contents($dump_file);
-                    $dump = str_replace("\r\n", "", $dump);
-                    $dump = str_replace("\n", "", $dump);
-                    $dump = str_replace("\r", "", $dump);
-                    $qk = 1;
-                    $pieces = explode(";nYn;", $dump);
-                    $mess = strlen($dump);
-                    echo " length: " . $mess;
-                    while (list($key, $val) = each($pieces)) {
-                        if ($val != '') {
-                            $val = $val . ';';
+            if (count($tmp_tables) === 0) {
+                throw new Exception('В дампе не найдено ни одной таблицы *_temp — импорт не выполнен.');
+            }
 
+            $preserve_stock = array('products_all', 'controllers');
+            $stock_fields = array(
+                'onstock', 'onstock_spb', 'onstock_msk', 'onstock_kiv', 'onstock_ptg',
+                'res_onstock_spb', 'res_onstock_msk', 'res_onstock_kiv', 'res_onstock_ptg',
+            );
 
-                            $query_result = mysql_query($val) or die("file: " . __FILE__ . " line: " . __LINE__ . " error $qk" . mysql_error() . " val:" . $val);
+            echo '<p>Обработанные таблицы:</p><p style="text-align:left;">';
+            $counter = 0;
 
-                        };
-                        $qk++;
-                    };
-// Конец загрузки временных таблиц
-// Перенос в основные таблицы
-                    if (!mysql_error()) {
-                        $query = "SHOW TABLES LIKE '%_temp';";
-                        $r = mysql_query($query) or die("error 2");
-                        if (!mysql_error()) {
-                            if (mysql_num_rows($r) > 0) {
-                                echo "<p>Extracted tables:</p><p style='text-align:left;'>";
-                                $counter = 0;
-                                while ($row = mysql_fetch_array($r, MYSQL_NUM)) {
-                                    $counter++;
-//                                if (true) {
-                                    if (($row[0] != 'products_all_temp') and ($row[0] != 'controllers_temp')) {
-                                        $table = str_replace("_temp", "", $row[0]);
-                                        echo $table . ", ";
-                                        $query = "DROP TABLE IF EXISTS `{$table}`;";////////////!!!!!!!!!!!!!!!
-                                        mysql_query($query) or die("error " . $query);
-                                        /*$tableex = "SHOW TABLES LIKE '{$table}'";
-                                        $ru = mysql_query($tableex) or die("error 10");
-                                        if (mysql_num_rows($ru) > 0) {
-                                            $query = "RENAME TABLE `{$table}` TO `{$table}-{$dt}`;";
-                                            $query_result = mysql_query($query) or die("error 3 $query");
-                                        };*/
-                                        $query = "RENAME TABLE `{$row[0]}` TO `{$table}`;";
-                                        $query_result = mysql_query($query) or die("error 4");
-                                    } else {
-                                        $tableOriginal = str_replace('_temp', '', $row[0]);
-                                        echo $tableOriginal . ", ";
-                                        $tableex = "SHOW TABLES LIKE '{$tableOriginal}'";
-                                        $ru = mysql_query($tableex) or die("error 10");
-                                        if (mysql_num_rows($ru) > 0) {
+            foreach ($tmp_tables as $tmp) {
+                $original = preg_replace('/_temp$/', '', $tmp);
+                $counter++;
+                echo htmlspecialchars($original, ENT_QUOTES, 'UTF-8') . ', ';
 
-//                                        $query = "SELECT  `index` ,  `model` ,  `onstock` ,  `show_on_stock`, `onstock_spb` ,  `onstock_msk` ,  `onstock_kiv` ,  `onstock_ptg` ,  `res_onstock_spb` , `res_onstock_msk` ,  `res_onstock_kiv` ,  `res_onstock_ptg` ,  `retail_price` FROM  `{$tableOriginal}`;";
-                                            $query = "SELECT  `index` ,  `model` ,  `onstock` ,  `show_on_stock`, `onstock_spb` ,  `onstock_msk` ,  `onstock_kiv` ,  `onstock_ptg` ,  `res_onstock_spb` , `res_onstock_msk` ,  `res_onstock_kiv` ,  `res_onstock_ptg`  FROM  `{$tableOriginal}`;";
-                                            $query_result = mysql_query($query) or die("error 5");
-                                            $j = mysql_num_rows($query_result);
-                                                    $ro111 = mysql_fetch_assoc($query_result);
+                $exists = mysqli_num_rows($this->q("SHOW TABLES LIKE '" . mysqli_real_escape_string($db, $original) . "'")) > 0;
 
-                                            if (!mysql_error()) {
-                                                for ($i = 0; $i < $j; $i++) {
-                                                    $ro = mysql_fetch_assoc($query_result);
-                                                    $q1 = "SELECT * FROM `{$tableOriginal}_temp` WHERE `model`='{$ro[model]}';";
-                                                    $query_re = mysql_query($q1) or die("error 6");
+                /* Сохраняем остатки/складские поля из текущей таблицы */
+                if ($exists && in_array($original, $preserve_stock, true)) {
+                    $cols_res = $this->q("SHOW COLUMNS FROM `{$original}`");
+                    $cols = array();
+                    while ($c = mysqli_fetch_assoc($cols_res)) { $cols[$c['Field']] = true; }
+                    mysqli_free_result($cols_res);
 
-                                                    $q = mysql_num_rows($query_re);
+                    $use_fields = array();
+                    foreach ($stock_fields as $f) { if (isset($cols[$f])) { $use_fields[] = $f; } }
 
-                                                    if ($q > 0) {
-                                                        $qp = "UPDATE `{$tableOriginal}_temp` SET `onstock`={$ro[onstock]}, `onstock_spb` ={$ro[onstock_spb]},  `onstock_msk` ={$ro[onstock_msk]},  `onstock_kiv` ={$ro[onstock_kiv]},  `onstock_ptg` ={$ro[onstock_ptg]},  `res_onstock_spb` ={$ro[res_onstock_spb]}, `res_onstock_msk` ={$ro[res_onstock_msk]},  `res_onstock_kiv` ={$ro[res_onstock_kiv]},  `res_onstock_ptg` ={$ro[res_onstock_ptg]} WHERE `{$tableOriginal}_temp`.`model` = '{$ro[model]}';";
-//
-                                                        $queryp = mysql_query($qp) or die("error 7");
+                    if (!empty($use_fields) && isset($cols['model'])) {
+                        $sel = '`model`';
+                        foreach ($use_fields as $f) { $sel .= ', `' . $f . '`'; }
+                        $res = $this->q("SELECT {$sel} FROM `{$original}`", 'Чтение остатков');
 
-                                                        if ($q != 1) {
+                        $updated = 0; $missing = 0;
+                        while ($ro = mysqli_fetch_assoc($res)) {
+                            $model = mysqli_real_escape_string($db, $ro['model']);
+                            $check = $this->q("SELECT 1 FROM `{$tmp}` WHERE `model`='{$model}' LIMIT 1");
+                            $found = mysqli_num_rows($check);
+                            mysqli_free_result($check);
 
-                                                            $mess .= '<br />' . $ro[model] . ' - ' . $q . ' записей в новой базе данных<br />';
-                                                        };
-                                                    } else {
-                                                        $mess .= '<br />' . $ro[model] . ' - ' . $q . ' записей в новой базе данных<br />';
-                                                    };
-                                                };
-                                            };
-                                        };
-
-                                        if (!mysql_error()) {
-
-//$query =  "DROP TABLE IF EXISTS `products_all`;";
-                                            $query = "DROP TABLE IF EXISTS `{$tableOriginal}`;";
-                                            mysql_query($query) or die("error " . $query);
-                                            /*
-                                            $tableex = "SHOW TABLES LIKE '{$tableOriginal}'";
-                                            $ru = mysql_query($tableex) or die("error 15");
-                                            if (mysql_num_rows($ru) > 0) {
-                                                $query = "RENAME TABLE `{$tableOriginal}` TO `{$tableOriginal}-{$dt}`;";
-                                                $query_result = mysql_query($query) or die("Error 8");
-                                            };*/
-                                            $query = "RENAME TABLE `{$tableOriginal}_temp` TO `{$tableOriginal}`;";
-                                            $query_result = mysql_query($query) or die("Error 9");
-
-                                            if ($tableOriginal == 'products_all') {
-                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
-                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp_storage` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
-                                                mysql_query("ALTER TABLE `products_all` MODIFY `temp_operating` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
-                                                mysql_query("ALTER TABLE `products_all` MODIFY `brightness` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
-                                                mysql_query("ALTER TABLE `products_all` MODIFY `current` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
-                                            }
-                                        } else {
-                                            echo 'ended error 4';
-                                        };
-                                    };
-                                };
-                                echo "</p><p>[total amount: $counter]</p>";
-                                $params["sql"] = $dump_file_short;
-                                //save_current_versions($params);
-                                //delete_file($dump_file_short);
-                                $success = TRUE;
-                                //!!!!!!!!!!
-                                //get_current_versions_html();
-					$errors = file_get_contents(__DIR__ . '/../error_log');
-					echo 'Лог ошибок: <br>'.$errors;
-
-                            };
-                        };
-                    } else {
-                        echo 'ended error 2';
-                    };
-                    $mess .= '<br />Конец обновления базы данных<br />';
-                } else {
-                    $mess .= 'Файл с выгрузкой базы данных ' . $dump_file . ' не найден! База данных обновляться не будет!<br />';
+                            if ($found === 0) {
+                                $missing++;
+                                continue;
+                            }
+                            $set = array();
+                            foreach ($use_fields as $f) {
+                                $v = $ro[$f];
+                                $set[] = "`{$f}`=" . (($v === null || $v === '') ? '0' : (int)$v);
+                            }
+                            $this->q(
+                                "UPDATE `{$tmp}` SET " . implode(', ', $set) . " WHERE `model`='{$model}'",
+                                'Перенос остатков'
+                            );
+                            $updated++;
+                        }
+                        mysqli_free_result($res);
+                        echo '<br><small>' . htmlspecialchars($original, ENT_QUOTES, 'UTF-8')
+                            . ': остатков перенесено ' . $updated
+                            . ', нет в новом дампе ' . $missing . '</small><br>';
+                    }
                 }
-            };
+
+                if ($exists) {
+                    $this->q("DROP TABLE IF EXISTS `{$original}`", 'DROP старой таблицы');
+                }
+                $this->q("RENAME TABLE `{$tmp}` TO `{$original}`", 'RENAME временной таблицы');
+
+                if ($original === 'products_all') {
+                    $utf8_cols = array('temp', 'temp_storage', 'temp_operating', 'brightness', 'current');
+                    $cols_res = $this->q("SHOW COLUMNS FROM `products_all`");
+                    $have = array();
+                    while ($c = mysqli_fetch_assoc($cols_res)) { $have[$c['Field']] = true; }
+                    mysqli_free_result($cols_res);
+                    foreach ($utf8_cols as $col) {
+                        if (!isset($have[$col])) { continue; }
+                        @mysqli_query($db, "ALTER TABLE `products_all` MODIFY `{$col}` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci");
+                    }
+                }
+            }
+
+            echo '</p><p>Всего таблиц: ' . $counter . '</p>';
+
+            /* Возвращаем кодировку соединения сайта */
+            mysqli_set_charset($db, 'utf8mb4');
+
+            $log = $_SERVER['DOCUMENT_ROOT'] . '/error_log';
+            if (file_exists($log) && is_readable($log)) {
+                $tail = substr(file_get_contents($log), -4000);
+                if (trim($tail) !== '') {
+                    echo '<p>Последние записи error_log:</p><pre style="white-space:pre-wrap;font-size:11px">'
+                        . htmlspecialchars($tail, ENT_QUOTES, 'UTF-8') . '</pre>';
+                }
+            }
+
+            echo '<br>База данных обновлена.<br>';
+            $buffer = ob_get_clean();
+
+            return json_encode(array(
+                'reply'  => 'database_is_updated',
+                'buffer' => $buffer,
+            ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        } catch (Exception $e) {
+            if ($this->db instanceof mysqli) { @mysqli_set_charset($this->db, 'utf8mb4'); }
+            echo '<br><b style="color:#c00">Ошибка:</b> '
+                . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . '<br>';
+            $buffer = ob_get_clean();
+
+            return json_encode(array(
+                'reply'  => 'fail_updating_database',
+                'buffer' => $buffer,
+            ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
-        $buffer = ob_get_clean();
-        $buffer = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($buffer));
-        $out = ["reply" => "database_is_updated", "buffer" => $buffer];
-
-        return json_encode($out);
-
     }
 
+    /* ------------------------------------------------------------------ */
+    /* Загрузка файлов с источника                                        */
+    /* ------------------------------------------------------------------ */
+
+    private function fetch_url($url)
+    {
+        $url = trim((string)$url);
+        if ($url === '') { return false; }
+
+        if (ini_get('allow_url_fopen')) {
+            $ctx = stream_context_create(array(
+                'http' => array('timeout' => 300, 'follow_location' => 1),
+                'ssl'  => array('verify_peer' => false, 'verify_peer_name' => false),
+            ));
+            $data = @file_get_contents($url, false, $ctx);
+            if ($data !== false && strlen($data) > 0) { return $data; }
+        }
+
+        if (function_exists('curl_init')) {
+            $ch = curl_init($url);
+            curl_setopt_array($ch, array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS      => 5,
+                CURLOPT_TIMEOUT        => 600,
+                CURLOPT_CONNECTTIMEOUT => 20,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => 0,
+            ));
+            $data = curl_exec($ch);
+            $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if ($data !== false && strlen($data) > 0 && ($code === 0 || $code === 200)) { return $data; }
+        }
+
+        return false;
+    }
+
+    private function ensure_data_dir()
+    {
+        if (!is_dir(PATH_TO_DATA)) { @mkdir(PATH_TO_DATA, 0755, true); }
+        return is_dir(PATH_TO_DATA);
+    }
 
     public function download_sql_backup($link)
     {
-        if (!$result = file_exists(PATH_TO_DATA)) {
-            $result = mkdir(PATH_TO_DATA);
+        if (!$this->ensure_data_dir()) {
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Нет папки ' . PATH_TO_DATA));
         }
-        $local_file = PATH_TO_DATA . '/sql_dump.sql';
-        $success = file_put_contents($local_file, file_get_contents($link));
-        if ($success) {
-            $bytes = number_format($success / 1024, 2) . ' KB';
-            $out = ["reply" => "sql_backup_is_downloaded", "buffer" => $bytes];
+        $data = $this->fetch_url($link);
+        if ($data === false) {
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Не удалось скачать: ' . $link));
+        }
+        $bytes_written = file_put_contents(PATH_TO_DATA . 'sql_dump.sql', $data, LOCK_EX);
+        if (!$bytes_written) {
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Не удалось записать sql_dump.sql'));
+        }
+        return json_encode(array(
+            'reply'  => 'sql_backup_is_downloaded',
+            'buffer' => number_format($bytes_written / 1024, 2, '.', ' ') . ' KB',
+        ));
+    }
 
-        } else {
-            $out = ["reply" => "fail_downloading_sql_backup", "buffer" => $success];
+    public function download_zip_from_source($link)
+    {
+        if (!$this->ensure_data_dir()) {
+            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Нет папки ' . PATH_TO_DATA));
         }
-        return json_encode($out);
+        $data = $this->fetch_url($link);
+        if ($data === false) {
+            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Не удалось скачать: ' . $link));
+        }
+        $bytes_written = file_put_contents(FILENAME_ZIP_DIFF_FILES, $data, LOCK_EX);
+        if (!$bytes_written) {
+            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Не удалось записать архив'));
+        }
+        return json_encode(array(
+            'reply'  => 'zip_file_is_downloaded',
+            'buffer' => number_format($bytes_written / 1024, 2, '.', ' ') . ' KB',
+        ));
     }
 
     public function extract_zip_list_of_files()
     {
         ob_start();
-        $zip = new ZipArchive;
-        $res = $zip->open(FILENAME_ZIP_DIFF_FILES);
-        if ($res === TRUE) {
-            $zip->extractTo(EXTRACT_TO_FOLDER); //$_SERVER['DOCUMENT_ROOT'] . '/'
-            $zip->close();
 
-            $out = ["reply" => 'zip_file_is_extracted'];
-        } else {
-            $out = ["reply" => 'fail_extracting_zip_file'];
+        if (!class_exists('ZipArchive')) {
+            ob_end_clean();
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Нет расширения PHP zip (ZipArchive)'));
         }
+        if (!file_exists(FILENAME_ZIP_DIFF_FILES)) {
+            ob_end_clean();
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив не найден: ' . FILENAME_ZIP_DIFF_FILES));
+        }
+
+        $zip = new ZipArchive();
+        if ($zip->open(FILENAME_ZIP_DIFF_FILES) !== true) {
+            ob_end_clean();
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив повреждён'));
+        }
+
+        $root = realpath(EXTRACT_TO_FOLDER);
+        $extracted = 0;
+        $skipped = array();
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name = $zip->getNameIndex($i);
+            if ($name === false || substr($name, -1) === '/') { continue; }
+
+            /* защита от выхода за пределы корня и от служебных файлов */
+            $clean = str_replace('\\', '/', $name);
+            if (strpos($clean, '..') !== false || strpos($clean, "\0") !== false) {
+                $skipped[] = $name; continue;
+            }
+            $base = basename($clean);
+            if ($base === 'dbcon.php' || $base === 'settings.php' || $base === '.htaccess') {
+                $skipped[] = $name; continue;
+            }
+
+            $target = $root . '/' . ltrim($clean, '/');
+            $dir = dirname($target);
+            if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+
+            $stream = $zip->getStream($name);
+            if (!$stream) { $skipped[] = $name; continue; }
+            $content = stream_get_contents($stream);
+            fclose($stream);
+            if (file_put_contents($target, $content, LOCK_EX) !== false) {
+                $extracted++;
+                echo htmlspecialchars($clean, ENT_QUOTES, 'UTF-8') . '<br>';
+            } else {
+                $skipped[] = $name;
+            }
+        }
+        $zip->close();
+
+        echo '<b>Распаковано файлов: ' . $extracted . '</b><br>';
+        if (!empty($skipped)) {
+            echo 'Пропущено: ' . htmlspecialchars(implode(', ', $skipped), ENT_QUOTES, 'UTF-8') . '<br>';
+        }
+
         $buffer = ob_get_clean();
-        $out["buffer"] = $buffer;
-        return json_encode($out);
+        return json_encode(array(
+            'reply'  => $extracted > 0 ? 'zip_file_is_extracted' : 'fail_extracting_zip_file',
+            'buffer' => $buffer,
+        ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
-
-    public function download_zip_from_source($link)
-    {
-        $local_file = __DIR__ . '/../data/archive_difference_files.zip';
-        $success = file_put_contents($local_file, file_get_contents($link));
-        if ($success) {
-
-            $bytes = number_format($success / 1024, 2) . ' KB';
-
-            $out = ["reply" => "zip_file_is_downloaded", "buffer" => $bytes];
-
-        } else {
-            $out = ["reply" => "fail_downloading_zip_file", "buffer" => $success];
-        }
-        return json_encode($out);
-    }
+    /* ------------------------------------------------------------------ */
+    /* Список своих файлов                                                */
+    /* ------------------------------------------------------------------ */
 
     public function create_dest_list_of_files()
     {
-        if (!$result = file_exists(__DIR__ . "/../data/")) {
-            $result = mkdir(__DIR__ . "/../data/");
-        }
-        global $processing_files;
-        $out = [];
-        $processing_files = new c_processing_files();
-        $processing_files->find("/");
+        $this->ensure_data_dir();
+
+        $scanner = new c_processing_files();
+        $scanner->find('/');
 
         $arr = array(
-            "names" => $processing_files->a_fname,
-            "dirs" => $processing_files->a_fdir,
-            "hashes" => $processing_files->a_hash_file,
+            'names'  => $scanner->a_fname,
+            'dirs'   => $scanner->a_fdir,
+            'hashes' => $scanner->a_hash_file,
         );
-        if (count($arr) > 0) {
-            $data_file = json_encode($arr, 0, 1024);
 
-
-            file_put_contents(__DIR__ . "/../data/dest_list_of_files_print.txt", print_r($arr, true));
-            $success = file_put_contents(__DIR__ . "/../data/dest_list_of_files.txt", $data_file);
-            if ($success > 0) {
-                $out = ["reply" => "dest_list_of_files_is_created", "files" => $arr];
-            }
-        } else {
-            $out = ["reply" => "failing_creating_dest_list_of_files"];
-        };
-        /*       switch (json_last_error()) {
-                   case JSON_ERROR_NONE:
-                       echo ' - Ошибок нет';
-                       break;
-                   case JSON_ERROR_DEPTH:
-                       echo ' - Достигнута максимальная глубина стека';
-                       break;
-                   case JSON_ERROR_STATE_MISMATCH:
-                       echo ' - Некорректные разряды или несоответствие режимов';
-                       break;
-                   case JSON_ERROR_CTRL_CHAR:
-                       echo ' - Некорректный управляющий символ';
-                       break;
-                   case JSON_ERROR_SYNTAX:
-                       echo ' - Синтаксическая ошибка, некорректный JSON';
-                       break;
-                   case JSON_ERROR_UTF8:
-                       echo ' - Некорректные символы UTF-8, возможно неверно закодирован';
-                       break;
-                   default:
-                       echo ' - Неизвестная ошибка';
-                       break;
-               }*/
-
-        return json_encode($out, 0, 1024);
-    }
-}
-
-class c_processing_files
-{
-    public $a_fname = [];
-    public $a_fsize = [];
-    public $a_fdir = [];
-    public $a_hash_file = [];
-
-    public $cofiles = 0;
-
-    function find($in_dir)
-    {
-        $regexp_folders = "/^\/\/(backup|updater_source|admin|service|images|export|import|_.*)\/*.*/i";
-        $regexp_files_include = "/\.(htaccess|js|json|css|php|html|xml|txt|jpg|png|svg|gif|woff2|ttf|csv|z)$/i";
-        $regexp_files_exclude = "/dbcon.php|settings.php/";
-        $dir_handle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir);
-        while ($file = readdir($dir_handle)) {
-            $file = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($file));
-            if ($file != ".." && $file != "." && is_dir($_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file)) {
-                if (!preg_match($regexp_folders, $in_dir)) $this->find($in_dir . "/" . $file);
-                else file_put_contents("excludes.txt", $in_dir . "\n", FILE_APPEND | LOCK_EX);
-            }
-            if (is_file($_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file) && $file != ".." && $file != ".") {
-                if (preg_match($regexp_files_include, $file) and !preg_match($regexp_folders, $in_dir) and !preg_match($regexp_files_exclude, $file)) {
-                    $this->a_fname[$this->cofiles] = $file;
-                    $this->a_fsize[$this->cofiles] = filesize($_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file);
-                    $this->a_hash_file[$this->cofiles] = hash_file("md5", $_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file);
-                    $this->a_fdir [$this->cofiles] = $in_dir;
-                    $this->cofiles++;
-                    file_put_contents("includes_files.txt", $_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file . "\n", FILE_APPEND | LOCK_EX);
-                    if ($this->cofiles > 100000) break;
-                }else{
-                    file_put_contents("excludes_files.txt", $_SERVER['DOCUMENT_ROOT'] . '/' . $in_dir . "/" . $file . "\n", FILE_APPEND | LOCK_EX);
-                }
-            }
+        if (count($arr['names']) === 0) {
+            return json_encode(array('reply' => 'failing_creating_dest_list_of_files'));
         }
-        closedir($dir_handle);
+
+        $json = json_encode($arr, JSON_UNESCAPED_SLASHES);
+        $ok = file_put_contents(PATH_TO_DATA . 'dest_list_of_files.txt', $json, LOCK_EX);
+
+        if (UPDATER_DEBUG_LOGS) {
+            file_put_contents(PATH_TO_DATA . 'dest_list_of_files_print.txt', print_r($arr, true));
+        }
+
+        if (!$ok) {
+            return json_encode(array('reply' => 'failing_creating_dest_list_of_files'));
+        }
+
+        return json_encode(array(
+            'reply' => 'dest_list_of_files_is_created',
+            'files' => $arr,
+        ), JSON_UNESCAPED_SLASHES);
     }
 }
 
+/* ---------------------------------------------------------------------- */
+/* Сканер файлов                                                          */
+/* ---------------------------------------------------------------------- */
 
+if (!class_exists('c_processing_files')) {
+    class c_processing_files
+    {
+        public $a_fname = array();
+        public $a_fsize = array();
+        public $a_fdir = array();
+        public $a_hash_file = array();
+        public $cofiles = 0;
+
+        private $re_folders_exclude = "/^\/(backup|test|updater_source|admin|service|images|export|upl|import|cache|node_modules|\.git|_.+)(\/|$)/i";
+        private $re_files_include   = "/\.(htaccess|js|json|css|php|html|xml|txt|jpg|png|svg|webp|gif|woff2|ttf|csv|zip)$/i";
+        private $re_files_exclude   = "/(dbcon\.php|settings\.php)$/i";
+
+        public function find($in_dir)
+        {
+            $in_dir = '/' . trim(str_replace('\\', '/', $in_dir), '/');
+            if ($in_dir === '/') { $in_dir = ''; }
+
+            $abs = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $in_dir;
+            if (!is_dir($abs)) { return; }
+
+            $dh = @opendir($abs);
+            if (!$dh) { return; }
+
+            while (($file = readdir($dh)) !== false) {
+                if ($file === '.' || $file === '..') { continue; }
+
+                $rel_dir  = ($in_dir === '') ? '/' : $in_dir . '/';
+                $abs_path = $abs . '/' . $file;
+
+                if (is_dir($abs_path)) {
+                    if (!preg_match($this->re_folders_exclude, $rel_dir)) {
+                        $this->find($rel_dir . $file);
+                    }
+                    continue;
+                }
+
+                if (!is_file($abs_path)) { continue; }
+                if (!preg_match($this->re_files_include, $file)) { continue; }
+                if (preg_match($this->re_files_exclude, $file)) { continue; }
+                if (preg_match($this->re_folders_exclude, $rel_dir)) { continue; }
+
+                $this->a_fname[]     = $file;
+                $this->a_fsize[]     = filesize($abs_path);
+                $this->a_hash_file[] = hash_file('md5', $abs_path);
+                $this->a_fdir[]      = rtrim($rel_dir, '/');
+                if ($this->a_fdir[count($this->a_fdir) - 1] === '') {
+                    $this->a_fdir[count($this->a_fdir) - 1] = '/';
+                }
+                $this->cofiles++;
+
+                if ($this->cofiles > 100000) { break; }
+            }
+            closedir($dh);
+        }
+    }
+}
