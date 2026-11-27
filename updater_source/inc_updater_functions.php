@@ -32,126 +32,122 @@ class c_updater_source
         return json_encode($out);
     }
 
-    public function create_source_list_of_files($data)
+        public function create_source_list_of_files($data)
     {
-        ob_start();
-var_dump($data);
-        $processing_files = new c_processing_files();
-        if (isset($data["folder_for_updating"]) and $data["folder_for_updating"] != '') $in_dir = $data["folder_for_updating"];
-        else $in_dir = "/";
+        $folder = (isset($data['folder_for_updating']) && $data['folder_for_updating'] !== '')
+            ? $data['folder_for_updating'] : '/';
 
-
-
-
-        $processing_files->find($in_dir);
+        $scanner = new c_processing_files();
+        $scanner->find($folder);
 
         $arr = array(
-            "names" => $processing_files->a_fname,
-            "dirs" => $processing_files->a_fdir,
-            "hashes" => $processing_files->a_hash_file,
+            'names'  => $scanner->a_fname,
+            'dirs'   => $scanner->a_fdir,
+            'hashes' => $scanner->a_hash_file,
         );
-        if (count($arr) > 0) {
 
-
-            //$out = ["reply" => "source_list_of_files_is_created_on_source"];
-            //$out["files"] = $arr;
-            $out = json_encode($arr, 0, 1024);
-            $success = file_put_contents(FILENAME_SOURCE_LIST_OF_FILES, $out);
-            //file_put_contents(PRINT_FILENAME_SOURCE_LIST_OF_FILES, print_r($arr,true));
-
-            if ($success > 0) {
-                $out = ["reply" => 'source_list_of_files_is_created_on_source'];
-            } else {
-                $out = ["reply" => 'failed_creating_source_list_of_files_on_source'];
-            }
-        } else {
-            $out = ["reply" => 'failed_creating_source_list_of_files_on_source'];
+        if (count($arr['names']) === 0) {
+            return json_encode(array(
+                'reply'  => 'failed_creating_source_list_of_files_on_source',
+                'buffer' => 'Сканер не нашёл файлов. Проверь ограничители и папку: ' . $folder,
+            ), JSON_UNESCAPED_UNICODE);
         }
 
-        $out["buffer"] =ob_get_clean();
-        return json_encode($out);
+        $ok = file_put_contents(FILENAME_SOURCE_LIST_OF_FILES, json_encode($arr, JSON_UNESCAPED_SLASHES), LOCK_EX);
+
+        return json_encode(array(
+            'reply'   => $ok ? 'source_list_of_files_is_created_on_source' : 'failed_creating_source_list_of_files_on_source',
+            'counter' => count($arr['names']),
+            'buffer'  => 'Файлов источника: ' . count($arr['names']) . ', пропущено по размеру: ' . $scanner->skipped_big,
+        ), JSON_UNESCAPED_UNICODE);
     }
 
     public function create_difference_list_of_files()
     {
-        $arr_diff_list_of_files = [];
-        $success = false;
-        ob_start();
-        if (file_exists(FILENAME_SOURCE_LIST_OF_FILES) and file_exists(FILENAME_DEST_LIST_OF_FILES)) {
-            $source_file_content = file_get_contents(FILENAME_SOURCE_LIST_OF_FILES);
-            $dest_file_content = file_get_contents(FILENAME_DEST_LIST_OF_FILES);
-            $source_data = json_decode($source_file_content, true);
-            $dest_data = json_decode($dest_file_content, true);
-
-            $dest_str = "";
-
-            foreach ($dest_data["names"] as $key=>$name){
-                $dest_str .= " | ".$dest_data["dirs"][$key]."/".$name." hash:".$dest_data["hashes"][$key];
-            }
-
-            //echo "dest_str: ".$dest_str."!!!!!!!!!!!!!!!!!!!!!!!!!!!<br>";
-
-            $source_names = $source_data["names"];
-            $counter = 0;
-            foreach ($source_names as $key => $name) {
-                 $source_str = $source_data["dirs"][$key]."/".$name." hash:".$source_data["hashes"][$key];
-                if (strpos($dest_str,$source_str) === false) {
-                    $counter++;
-                    $arr_diff_list_of_files[] = $source_data["dirs"][$key] . "/" . $source_data["names"][$key];
-                    //echo "<br>".$source_data["dirs"][$key] . "/" . $source_data["names"][$key].$source_data["hashes"][$key]."<br>";
-                }
-            }
-            echo " (Total files: " . $counter . ")\n";
-            $success = file_put_contents(FILENAME_DIFFERENCE_LIST_OF_FILES, json_encode($arr_diff_list_of_files));
-            /*            echo "<pre style='font-size: small'>";
-                        var_dump($dest_data);
-                        echo "</pre>";*/
-
-        } else {
-            echo "no file!!! " . __FILE__ . "<br>";
+        if (!file_exists(FILENAME_SOURCE_LIST_OF_FILES) || !file_exists(FILENAME_DEST_LIST_OF_FILES)) {
+            return json_encode(array('reply' => 'fail_creating_difference_list_of_files_on_source', 'buffer' => 'Нет списков файлов'));
         }
 
-
-        $buffer = ob_get_clean();
-        $buffer = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($buffer));
-        if ($success) {
-            $out = ["reply" => 'difference_list_of_files_is_created_on_source', "data" => $buffer, "counter" => $counter];
-        } else {
-            $out = ["reply" => 'fail_creating_difference_list_of_files_on_source', "data" => $buffer];
+        $source = json_decode(file_get_contents(FILENAME_SOURCE_LIST_OF_FILES), true);
+        $dest   = json_decode(file_get_contents(FILENAME_DEST_LIST_OF_FILES), true);
+        if (!is_array($source) || !is_array($dest)) {
+            return json_encode(array('reply' => 'fail_creating_difference_list_of_files_on_source', 'buffer' => 'Списки повреждены'));
         }
-        return json_encode($out);
+
+        /* быстрый индекс приёмника: путь => хеш */
+        $dest_map = array();
+        foreach ($dest['names'] as $k => $name) {
+            $dest_map[$dest['dirs'][$k] . '/' . $name] = $dest['hashes'][$k];
+        }
+
+        $diff = array();
+        foreach ($source['names'] as $k => $name) {
+            $path = $source['dirs'][$k] . '/' . $name;
+            $hash = $source['hashes'][$k];
+            if (!isset($dest_map[$path]) || $dest_map[$path] !== $hash) {
+                $diff[] = $path;
+            }
+        }
+
+        $ok = file_put_contents(FILENAME_DIFFERENCE_LIST_OF_FILES, json_encode($diff, JSON_UNESCAPED_SLASHES), LOCK_EX);
+
+        return json_encode(array(
+            'reply'   => $ok ? 'difference_list_of_files_is_created_on_source' : 'fail_creating_difference_list_of_files_on_source',
+            'counter' => count($diff),
+            'data'    => '(Total files: ' . count($diff) . ')',
+        ), JSON_UNESCAPED_UNICODE);
     }
 
-    public function create_zip_list_of_files()
+    public function create_zip_list_of_files($data = array())
     {
-        ob_start();
-        echo "<div style='font-size: 10px'>";
-        if (file_exists(FILENAME_DIFFERENCE_LIST_OF_FILES)) {
-            $diff_file_content = file_get_contents(FILENAME_DIFFERENCE_LIST_OF_FILES);
-            $list = json_decode($diff_file_content, true);
-            if (is_array($list) and count($list) > 0) {
-                $zip = new ZipArchive;
-                if (file_exists(FILENAME_ZIP_DIFF_FILES)) {
-                    unlink(FILENAME_ZIP_DIFF_FILES);
-                }
-                if ($zip->open(FILENAME_ZIP_DIFF_FILES, ZipArchive::CREATE) === TRUE) {
-                    echo "Backup file's been created:<br>" . FILENAME_ZIP_DIFF_FILES . "<br><br>";
-                    $counter = 1;
-                    foreach ($list as $file) {
-                        // echo $counter++ . " " . $file . "<br>";
-                        $zip->addFile($_SERVER["DOCUMENT_ROOT"] . $file, $file);
-                    }
-                    $zip->close();
-                    echo '<br>Files are added to an archive.<br>';
-                }
-            }
-            //var_dump($data);
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
+
+        if (!file_exists(FILENAME_DIFFERENCE_LIST_OF_FILES)) {
+            return json_encode(array('reply' => 'fail_creating_zip_file', 'buffer' => 'Нет списка отличий'));
         }
-        echo "</div>";
-        $buffer = ob_get_clean();
-        $buffer = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($buffer));
-        $out = ["reply" => 'zip_file_is_created_on_source', "data" => ["link" => URL_FILENAME_ZIP_DIFF_FILES], "buffer" => $buffer];
-        return json_encode($out);
+        $list = json_decode(file_get_contents(FILENAME_DIFFERENCE_LIST_OF_FILES), true);
+        if (!is_array($list) || count($list) === 0) {
+            return json_encode(array('reply' => 'fail_creating_zip_file', 'buffer' => 'Список отличий пуст'));
+        }
+
+        $total  = count($list);
+        $chunk  = defined('UPDATER_ZIP_CHUNK') ? (int)UPDATER_ZIP_CHUNK : 300;
+        $offset = isset($data['offset']) ? (int)$data['offset'] : 0;
+        if ($offset < 0) { $offset = 0; }
+
+        if (!is_dir(DATA_PATH)) { @mkdir(DATA_PATH, 0755, true); }
+
+        $mode = ($offset === 0) ? (ZipArchive::CREATE | ZipArchive::OVERWRITE) : ZipArchive::CREATE;
+        $zip = new ZipArchive();
+        if ($zip->open(FILENAME_ZIP_DIFF_FILES, $mode) !== true) {
+            return json_encode(array('reply' => 'fail_creating_zip_file', 'buffer' => 'Не удалось открыть архив'));
+        }
+
+        $added = 0;
+        $end = min($offset + $chunk, $total);
+        for ($i = $offset; $i < $end; $i++) {
+            $rel = $list[$i];
+            $abs = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/' . ltrim(str_replace('\\', '/', $rel), '/');
+            if (is_file($abs)) { $zip->addFile($abs, ltrim($rel, '/')); $added++; }
+        }
+        $zip->close();
+
+        if ($end < $total) {
+            return json_encode(array(
+                'reply'       => 'zip_file_is_created_partially',
+                'next_offset' => $end,
+                'done'        => $end,
+                'total'       => $total,
+            ));
+        }
+
+        return json_encode(array(
+            'reply' => 'zip_file_is_created_on_source',
+            'data'  => array('link' => URL_FILENAME_ZIP_DIFF_FILES),
+            'done'  => $total,
+            'total' => $total,
+        ));
     }
 
     public function update_database_create_sql_dump()

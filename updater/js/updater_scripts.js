@@ -106,6 +106,7 @@
                     this.append('<b>Ошибка (' + this.escape(reply) + '):</b>'
                         + '<pre style="white-space:pre-wrap;font-size:11px">'
                         + this.escape(val.buffer || val.raw || '(без текста)') + '</pre><hr>');
+                    this.start_updating_all = 0;
                     this.enable_buttons_submit();
                     return;
                 }
@@ -164,14 +165,23 @@
 
                     case 'zip_file_is_downloaded':
                         this.progress_bar_value += 10;
+                        this._extractBase = this.progress_bar_value;
                         this.append(label + ' ' + this.escape(val.buffer) + '<br>');
                         this.send(this.destination_ajax_url, 'extract_zip_list_of_files', {});
                         break;
 
+                    case 'zip_file_is_extracted_partially':
+                        var done = Number(val.done) || 0;
+                        var total = Number(val.total) || 1;
+                        this.append(val.buffer || '');
+                        this.progress_bar_value = this._extractBase + Math.round(20 * done / total);
+                        this.send(this.destination_ajax_url, 'extract_zip_list_of_files', {});
+                        break;
+
                     case 'zip_file_is_extracted':
-                        this.progress_bar_value += 10;
-                        this.append(label + '<br>' + this.escape(val.buffer) + '<br>');
+                        this.append(label + '<br>' + (val.buffer || '') + '<br>');
                         if (this.start_updating_all === 1) {
+                            this.progress_bar_value = this._extractBase + 20;
                             this.start_updating_all = 2;
                         } else {
                             this.progress_bar_value = this.progress_bar_max_value;
