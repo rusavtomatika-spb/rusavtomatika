@@ -340,7 +340,7 @@ $GLOBALS['server_view_mode'] = $server_view_mode;
     <div class="component_catalog_section">
       <div class="component_wrapper">
         <div class="columns is-gapless">
-          <?php if ($arrSection['code'] == 'modules_io'): ?>
+          <?php if ($arrSection['code'] == 'modules_io' || $arrSection['code'] == 'servo-drivers'): ?>
             <transition name="filter-slide-right">
               <div
                 class="is-hidden-touch column is-2-desktop column_filter is-narrow"

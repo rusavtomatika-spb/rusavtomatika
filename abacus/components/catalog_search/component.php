@@ -1,5 +1,9 @@
-<?php
-$arguments["component"] = "catalog_search";
-$arguments["template"] = "default";
-
-CoreApplication::include_template($arguments);
+<?php
+
+$arguments["component"] = "catalog_search";
+
+$arguments["template"] = "default";
+
+
+
+CoreApplication::include_template($arguments);

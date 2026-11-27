@@ -42,12 +42,3 @@ if(isset($arguments["component_route_params"]["section"])){
             break;
     }
 }
-
-
-
-
-
-
-
-
-
