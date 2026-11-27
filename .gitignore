@@ -45,7 +45,6 @@
 *.zip
 *.rar
 *.sql
-*.min.js
 *.apk
 *.package
 *.icc
