@@ -8,7 +8,7 @@ $KEYWORDS = 'видео, Weintek, IFC, Samkoon, eWON, операторские �
 $TITLE = 'Видео Weintek Easybuilder Pro EBPro, IFC, Samkoon, eWON';
 $SERVER_PROTOCOL = $_SERVER['SERVER_PROTOCOL'] == "HTTP/1.1" ? "http://" : "https://";
 //$CANONICAL = $SERVER_PROTOCOL . "www.rusavtomatika.com/video/";
-
+include $_SERVER['DOCUMENT_ROOT'] . "/abacus/components/newslist/templates/video/template.php";
 if($current_component != "element"){
     $extra_openGraph = Array(
         "openGraph_image" => "http://www.rusavtomatika.com/upload_files/images/openGraph_images/video.png",

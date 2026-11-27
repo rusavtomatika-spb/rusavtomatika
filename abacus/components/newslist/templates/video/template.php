@@ -1,7 +1,4 @@
 <?
-if (!defined('cms'))
-    exit;
-
 global $APPLICATION,$CANONICAL;
 $CANONICAL = "https://www.rusavtomatika.com/video/";
 CoreApplication::add_style(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__) . "/style.css");
