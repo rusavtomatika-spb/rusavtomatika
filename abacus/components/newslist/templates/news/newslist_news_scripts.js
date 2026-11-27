@@ -194,6 +194,11 @@ var app = new Vue({
 
                     height: "1000",
 
+                    verify_html: false, 
+                    cleanup: false, 
+                    valid_elements: '*[*]', 
+                    allow_conditional_comments: true
+
                     width: "100%",
 
                     theme: 'silver',
