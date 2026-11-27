@@ -15,11 +15,12 @@
         <div class="panel">
 
             <div class="setting_item">
-
-                <label>Источник обновлений:</label>
-
-                <input type="text" v-model="source_ajax_url" placeholder="Введите адрес скрипта источника обновлений">
-
+            <label>Источник обновлений:</label>
+            <input type="text" v-model="source_ajax_url" placeholder="Введите адрес скрипта источника обновлений">
+            </div>
+            <div class="setting_item">
+            <label>Обновлять только папку:</label>
+            <input type="text" v-model="update_folder" placeholder="/abacus  (пусто = все разрешённые)">
             </div>
 
             <progress class="progress_bar" :max="progress_bar_max_value" :value="progress_bar_value" v-show="progress_bar_value"></progress>

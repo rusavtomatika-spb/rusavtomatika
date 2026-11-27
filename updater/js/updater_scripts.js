@@ -47,6 +47,7 @@
             panel_loading: false,
             panel_settings: false,
 
+            update_folder: '',
             start_updating_all: 0,
             current_step_files: 0,
             current_step_database: 0,
@@ -61,6 +62,8 @@
                 source_list_of_files_is_created_on_source: 'Список файлов источника создан',
                 difference_list_of_files_is_created_on_source: 'Список отличий файлов создан',
                 zip_file_is_created_on_source: 'Zip-архив отличий создан на источнике',
+                zip_file_is_created_partially: 'Сборка архива',
+                zip_file_is_extracted_partially: 'Распаковка',
                 zip_file_is_downloaded: 'Zip-архив скачан',
                 zip_file_is_extracted: 'Zip-архив распакован',
                 sql_backup_is_created: 'SQL-бэкап базы создан на источнике',
@@ -129,8 +132,19 @@
                         break;
 
                     case 'dest_list_of_files_is_saved_on_source':
-                        this.step(10, label);
-                        this.send(this.source_ajax_url, 'create_source_list_of_files', {});
+                        this.progress_bar_value += 10;
+                        this.append(label + '<br>');
+                        this.send(this.source_ajax_url, 'create_source_list_of_files', { folder_for_updating: this.update_folder });
+                        break;
+
+                    case 'zip_file_is_created_partially':
+                        this.append('Сборка архива: ' + val.done + ' / ' + val.total + '<br>');
+                        this.send(this.source_ajax_url, 'create_zip_list_of_files', { offset: val.next_offset });
+                        break;
+
+                    case 'zip_file_is_extracted_partially':
+                        this.append('Распаковка: ' + val.done + ' / ' + val.total + '<br>');
+                        this.send(this.destination_ajax_url, 'extract_zip_list_of_files', { offset: val.next_offset });
                         break;
 
                     case 'source_list_of_files_is_created_on_source':
@@ -165,9 +179,8 @@
 
                     case 'zip_file_is_downloaded':
                         this.progress_bar_value += 10;
-                        this._extractBase = this.progress_bar_value;
                         this.append(label + ' ' + this.escape(val.buffer) + '<br>');
-                        this.send(this.destination_ajax_url, 'extract_zip_list_of_files', {});
+                        this.send(this.destination_ajax_url, 'extract_zip_list_of_files', { offset: 0 });
                         break;
 
                     case 'zip_file_is_extracted_partially':
@@ -335,7 +348,7 @@
                 this.start_updating_all = updatingAll;
                 this.disable_buttons_submit();
                 this.ajax_reply_message = '';
-                this.send(this.destination_ajax_url, action, {});
+                this.send(this.destination_ajax_url, action, { folder_for_updating: this.update_folder });
             },
 
             button_update_all_clicked: function () {

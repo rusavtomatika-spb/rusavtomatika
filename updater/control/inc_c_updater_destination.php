@@ -1,14 +1,10 @@
 <?php
-/**
- * Updater: приёмник обновлений (файлы + БД).
- * Кодировка файла: UTF-8.
- */
-
 if (!defined('EXTRACT_TO_FOLDER'))      define('EXTRACT_TO_FOLDER', __DIR__ . "/../../");
 if (!defined('FILENAME_ZIP_DIFF_FILES')) define('FILENAME_ZIP_DIFF_FILES', __DIR__ . "/../data/archive_difference_files.zip");
 if (!defined('PATH_TO_DATA'))            define('PATH_TO_DATA', __DIR__ . "/../data/");
 if (!defined('UPDATER_SETTINGS_FILE'))   define('UPDATER_SETTINGS_FILE', __DIR__ . "/../settings/settings.php");
 if (!defined('UPDATER_DEBUG_LOGS'))      define('UPDATER_DEBUG_LOGS', false);
+require_once __DIR__ . '/inc_c_processing_files.php';
 
 if (!function_exists('var_dump_pre')) {
     function var_dump_pre($value)
@@ -470,152 +466,86 @@ class c_updater_destination
         ));
     }
 
-    public function extract_zip_list_of_files()
+        public function extract_zip_list_of_files($data = array())
     {
-        @set_time_limit(25);
+        @set_time_limit(0);
         @ini_set('memory_limit', '512M');
 
-        $budget    = 18;
-        $started   = microtime(true);
-        $deadline  = $started + $budget;
-        $stateFile = PATH_TO_DATA . 'extract_state.json';
-
         if (!class_exists('ZipArchive')) {
-            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Нет расширения PHP zip (ZipArchive)'), JSON_UNESCAPED_UNICODE);
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Нет расширения PHP zip'));
         }
         if (!file_exists(FILENAME_ZIP_DIFF_FILES)) {
-            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив не найден: ' . FILENAME_ZIP_DIFF_FILES), JSON_UNESCAPED_UNICODE);
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив не найден'));
         }
 
         $zip = new ZipArchive();
         if ($zip->open(FILENAME_ZIP_DIFF_FILES) !== true) {
-            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив повреждён'), JSON_UNESCAPED_UNICODE);
+            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Архив повреждён'));
         }
 
-        $root  = realpath(EXTRACT_TO_FOLDER);
+        $root = realpath(EXTRACT_TO_FOLDER);
         $total = $zip->numFiles;
+        $chunk = defined('UPDATER_EXTRACT_CHUNK') ? (int)UPDATER_EXTRACT_CHUNK : 150;
+        $offset = isset($data['offset']) ? (int)$data['offset'] : 0;
+        if ($offset < 0) { $offset = 0; }
 
-        if (!$root) {
-            $zip->close();
-            return json_encode(array('reply' => 'fail_extracting_zip_file', 'buffer' => 'Не определён корень сайта'), JSON_UNESCAPED_UNICODE);
-        }
-
-        $stamp = filemtime(FILENAME_ZIP_DIFF_FILES) . ':' . filesize(FILENAME_ZIP_DIFF_FILES);
-        $index = 0;
-        $extractedTotal = 0;
-        $skippedTotal   = 0;
-
-        if (file_exists($stateFile)) {
-            $st = json_decode(file_get_contents($stateFile), true);
-            if (is_array($st) && isset($st['stamp']) && $st['stamp'] === $stamp) {
-                $index          = isset($st['index']) ? (int)$st['index'] : 0;
-                $extractedTotal = isset($st['extracted']) ? (int)$st['extracted'] : 0;
-                $skippedTotal   = isset($st['skipped']) ? (int)$st['skipped'] : 0;
+        $protect = array();
+        if (defined('UPDATER_PROTECT_FILES')) {
+            foreach (explode(',', strtolower(UPDATER_PROTECT_FILES)) as $p) {
+                $p = trim($p);
+                if ($p !== '') { $protect[] = $p; }
             }
         }
-        if ($index < 0 || $index > $total) { $index = 0; }
 
-        $names   = array();
-        $skipped = array();
-
-        for ($i = $index; $i < $total; $i++) {
-
-            if (microtime(true) >= $deadline) {
-                $zip->close();
-                file_put_contents($stateFile, json_encode(array(
-                    'stamp'     => $stamp,
-                    'index'     => $i,
-                    'extracted' => $extractedTotal,
-                    'skipped'   => $skippedTotal,
-                )), LOCK_EX);
-
-                $left = $total - $i;
-                $msg  = '<b>Порция готова:</b> обработано ' . $i . ' из ' . $total
-                      . ', осталось ' . $left . '<br>';
-                if (!empty($names)) {
-                    $msg .= '<span style="font-size:11px">' . htmlspecialchars(implode(', ', $names), ENT_QUOTES, 'UTF-8') . '</span><br>';
-                }
-
-                return json_encode(array(
-                    'reply'     => 'zip_file_is_extracted_partially',
-                    'buffer'    => $msg,
-                    'done'      => $i,
-                    'total'     => $total,
-                    'extracted' => $extractedTotal,
-                    'skipped'   => $skippedTotal,
-                ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            }
-
+        $done = 0; $skipped = 0; $i = $offset; $end = min($offset + $chunk, $total);
+        for (; $i < $end; $i++) {
             $name = $zip->getNameIndex($i);
-            if ($name === false) { $skippedTotal++; continue; }
+            if ($name === false || substr($name, -1) === '/') { continue; }
 
             $clean = str_replace('\\', '/', $name);
-
-            /* запись каталога */
-            if (substr($clean, -1) === '/') {
-                if (strpos($clean, '..') === false && strpos($clean, "\0") === false) {
-                    $d = $root . '/' . ltrim($clean, '/');
-                    if (!is_dir($d)) { @mkdir($d, 0755, true); }
-                }
-                continue;
-            }
-
-            if (strpos($clean, '..') !== false || strpos($clean, "\0") !== false) {
-                $skippedTotal++; $skipped[] = $name; continue;
-            }
-
-            $base = basename($clean);
-            if ($base === 'dbcon.php' || $base === 'settings.php') {
-                $skippedTotal++; $skipped[] = $name; continue;
-            }
+            if (strpos($clean, '..') !== false || strpos($clean, "\0") !== false) { $skipped++; continue; }
+            if (in_array(strtolower(basename($clean)), $protect, true)) { $skipped++; continue; }
 
             $target = $root . '/' . ltrim($clean, '/');
-            $dir    = dirname($target);
+            $dir = dirname($target);
             if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
 
             $stream = $zip->getStream($name);
-            if (!$stream) { $skippedTotal++; $skipped[] = $name; continue; }
+            if (!$stream) { $skipped++; continue; }
             $content = stream_get_contents($stream);
             fclose($stream);
 
-            if (@file_put_contents($target, $content, LOCK_EX) !== false) {
-                $extractedTotal++;
-                if (count($names) < 40) { $names[] = $clean; }
-            } else {
-                $skippedTotal++; $skipped[] = $name;
-            }
+            if (file_put_contents($target, $content, LOCK_EX) !== false) { $done++; } else { $skipped++; }
         }
-
         $zip->close();
-        if (file_exists($stateFile)) { @unlink($stateFile); }
 
-        $msg  = '<b>Распаковано файлов: ' . $extractedTotal . '</b><br>';
-        $msg .= 'Пропущено (служебные/битые): ' . $skippedTotal . '<br>';
-        if (!empty($skipped)) {
-            $show = array_slice($skipped, 0, 40);
-            $msg .= '<span style="font-size:11px">' . htmlspecialchars(implode(', ', $show), ENT_QUOTES, 'UTF-8') . '</span><br>';
+        if ($i < $total) {
+            return json_encode(array(
+                'reply'       => 'zip_file_is_extracted_partially',
+                'next_offset' => $i,
+                'done'        => $i,
+                'total'       => $total,
+            ));
         }
 
         return json_encode(array(
-            'reply'     => $extractedTotal > 0 ? 'zip_file_is_extracted' : 'fail_extracting_zip_file',
-            'buffer'    => $msg,
-            'done'      => $total,
-            'total'     => $total,
-            'extracted' => $extractedTotal,
-            'skipped'   => $skippedTotal,
-        ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            'reply'  => 'zip_file_is_extracted',
+            'buffer' => 'Распаковано файлов: ' . $done . ', пропущено: ' . $skipped,
+            'done'   => $total,
+            'total'  => $total,
+        ), JSON_UNESCAPED_UNICODE);
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Список своих файлов                                                */
-    /* ------------------------------------------------------------------ */
-
-    public function create_dest_list_of_files()
+    public function create_dest_list_of_files($data = array())
     {
+        @set_time_limit(0);
         $this->ensure_data_dir();
 
+        $folder = (isset($data['folder_for_updating']) && $data['folder_for_updating'] !== '')
+            ? $data['folder_for_updating'] : '/';
+
         $scanner = new c_processing_files();
-        $scanner->find('/');
+        $scanner->find($folder);
 
         $arr = array(
             'names'  => $scanner->a_fname,
@@ -624,99 +554,21 @@ class c_updater_destination
         );
 
         if (count($arr['names']) === 0) {
-            return json_encode(array('reply' => 'failing_creating_dest_list_of_files'));
+            return json_encode(array(
+                'reply'  => 'failing_creating_dest_list_of_files',
+                'buffer' => 'Сканер не нашёл файлов. Папка: ' . $folder,
+            ), JSON_UNESCAPED_UNICODE);
         }
 
-        $json = json_encode($arr, JSON_UNESCAPED_SLASHES);
-        $ok = file_put_contents(PATH_TO_DATA . 'dest_list_of_files.txt', $json, LOCK_EX);
-
-        if (UPDATER_DEBUG_LOGS) {
-            file_put_contents(PATH_TO_DATA . 'dest_list_of_files_print.txt', print_r($arr, true));
-        }
-
+        $ok = file_put_contents(PATH_TO_DATA . 'dest_list_of_files.txt', json_encode($arr, JSON_UNESCAPED_SLASHES), LOCK_EX);
         if (!$ok) {
-            return json_encode(array('reply' => 'failing_creating_dest_list_of_files'));
+            return json_encode(array('reply' => 'failing_creating_dest_list_of_files', 'buffer' => 'Не удалось записать список'));
         }
 
         return json_encode(array(
-            'reply' => 'dest_list_of_files_is_created',
-            'files' => $arr,
+            'reply'   => 'dest_list_of_files_is_created',
+            'files'   => $arr,
+            'counter' => count($arr['names']),
         ), JSON_UNESCAPED_SLASHES);
-    }
-}
-
-/* ---------------------------------------------------------------------- */
-/* Сканер файлов                                                          */
-/* ---------------------------------------------------------------------- */
-
-if (!class_exists('c_processing_files')) {
-    class c_processing_files
-    {
-        public $a_fname     = array();
-        public $a_fsize     = array();
-        public $a_fdir      = array();
-        public $a_hash_file = array();
-        public $cofiles     = 0;
-
-        private $any_exclude = array(
-            'node_modules', 'cache', 'data', 'sql_backups', 'logs', 'log', 'tmp', 'temp',
-        );
-
-        private $root_exclude = array(
-            'images', 'upload_files', 'documents', 'download',
-            'backup', 'backups', 'updater_source', 'export', 'upl', 'import',
-            'test', 'admin', 'service',
-        );
-
-        private $include_ext = '/\.(php|js|css|html|htm|xml|txt|json|svg|png|jpg|jpeg|webp|gif|woff|woff2|ttf|eot|map|htaccess)$/i';
-
-        private $exclude_files = '/(^settings\.php$|^error_log$|\.log$|\.sql$|\.zip$|\.bak$|\.old$|^usdrate\.txt$|^\.htaccess\.local$|^\.htaccess\.bak$)/i';
-
-        private $max_files = 50000;
-
-        private function is_excluded_dir($name, $parent)
-        {
-            if ($name === '' ) { return true; }
-            if ($name[0] === '_' || $name[0] === '.') { return true; }
-            $lower = strtolower($name);
-            if (in_array($lower, $this->any_exclude, true)) { return true; }
-            if ($parent === '' && in_array($lower, $this->root_exclude, true)) { return true; }
-            return false;
-        }
-
-        public function find($in_dir)
-        {
-            $in_dir = '/' . trim(str_replace('\\', '/', $in_dir), '/');
-            if ($in_dir === '/') { $in_dir = ''; }
-
-            $abs = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $in_dir;
-            if (!is_dir($abs)) { return; }
-
-            $dh = @opendir($abs);
-            if (!$dh) { return; }
-
-            while (($file = readdir($dh)) !== false) {
-                if ($file === '.' || $file === '..') { continue; }
-                $path = $abs . '/' . $file;
-
-                if (is_dir($path)) {
-                    if ($this->is_excluded_dir($file, $in_dir)) { continue; }
-                    $this->find($in_dir . '/' . $file);
-                    continue;
-                }
-
-                if (!is_file($path)) { continue; }
-                if (!preg_match($this->include_ext, $file)) { continue; }
-                if (preg_match($this->exclude_files, $file)) { continue; }
-                if ($this->cofiles >= $this->max_files) { break; }
-
-                $this->a_fname[]     = $file;
-                $this->a_fsize[]     = filesize($path);
-                $this->a_hash_file[] = hash_file('md5', $path);
-                $this->a_fdir[]      = ($in_dir === '') ? '/' : $in_dir;
-                $this->cofiles++;
-            }
-            closedir($dh);
-        }
     }
 }
