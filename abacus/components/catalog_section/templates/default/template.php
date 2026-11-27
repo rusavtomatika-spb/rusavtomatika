@@ -80,7 +80,11 @@ if (isset($_GET['series'])) {
 }
 
 if (isset($_GET['availablity'])) {
-    $condition .= " AND `onstock` = " . $_GET['availablity'];
+    if ($_GET['availablity'] == '1') {
+        $condition .= " AND EXISTS (SELECT 1 FROM `product_stock` ps WHERE ps.`product_index` = `products_all`.`index` AND ps.`onstock_spb` > 0)";
+    } elseif ($_GET['availablity'] == '2') {
+        $condition .= " AND NOT EXISTS (SELECT 1 FROM `product_stock` ps WHERE ps.`product_index` = `products_all`.`index` AND ps.`onstock_spb` > 0)";
+    }
 }
 
 if (isset($_GET['sensor_type'])) {

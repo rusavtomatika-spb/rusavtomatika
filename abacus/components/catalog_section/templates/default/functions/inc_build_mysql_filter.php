@@ -235,10 +235,12 @@ if (isset($_GET["USB_range_max"]) and $_GET["USB_range_max"] != '') {
     $filter_exists = true;
 } else $USB_range_max = "";
 
-if (isset($_GET["availablity"]) and $_GET["availablity"] != '') {
-    $availablity = intval($_GET["availablity"]);
-    $filter_exists = true;
-} else $availablity = "0";
+if (isset($_GET['availablity']) && $_GET['availablity'] == '1') {
+    $mysql_product_filter .= " AND EXISTS (SELECT 1 FROM `product_stock` ps WHERE ps.`product_index` = `products_all`.`index` AND ps.`onstock_spb` > 0)";
+}
+if (isset($_GET['availablity']) && $_GET['availablity'] == '2') {
+    $mysql_product_filter .= " AND NOT EXISTS (SELECT 1 FROM `product_stock` ps WHERE ps.`product_index` = `products_all`.`index` AND ps.`onstock_spb` > 0)";
+}
 
 if (isset($_GET["management"]) and $_GET["management"] != '') {
     $management = intval($_GET["management"]);
