@@ -328,38 +328,69 @@ class c_updater_destination
     /* Загрузка файлов с источника                                        */
     /* ------------------------------------------------------------------ */
 
-    private function fetch_url($url)
+        /**
+     * Качает URL сразу в файл, минуя память.
+     * Возвращает array(байты|false, текст_ошибки)
+     */
+    private function fetch_url_to_file($url, $target)
     {
         $url = trim((string)$url);
-        if ($url === '') { return false; }
+        if ($url === '') { return array(false, 'Пустая ссылка'); }
 
-        if (ini_get('allow_url_fopen')) {
-            $ctx = stream_context_create(array(
-                'http' => array('timeout' => 300, 'follow_location' => 1),
-                'ssl'  => array('verify_peer' => false, 'verify_peer_name' => false),
-            ));
-            $data = @file_get_contents($url, false, $ctx);
-            if ($data !== false && strlen($data) > 0) { return $data; }
-        }
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
 
+        $dir = dirname($target);
+        if (!is_dir($dir)) { @mkdir($dir, 0755, true); }
+
+        /* curl — пишем потоком в файл */
         if (function_exists('curl_init')) {
+            $fp = @fopen($target, 'wb');
+            if (!$fp) { return array(false, 'Не открыть для записи: ' . $target); }
+
             $ch = curl_init($url);
             curl_setopt_array($ch, array(
-                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FILE           => $fp,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_MAXREDIRS      => 5,
-                CURLOPT_TIMEOUT        => 600,
-                CURLOPT_CONNECTTIMEOUT => 20,
+                CURLOPT_TIMEOUT        => 1800,
+                CURLOPT_CONNECTTIMEOUT => 30,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_FAILONERROR    => true,
+                CURLOPT_ENCODING       => '',
             ));
-            $data = curl_exec($ch);
+            $ok   = curl_exec($ch);
             $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD);
+            $err  = curl_error($ch);
             curl_close($ch);
-            if ($data !== false && strlen($data) > 0 && ($code === 0 || $code === 200)) { return $data; }
+            fclose($fp);
+
+            if ($ok && $size > 0) { return array($size, ''); }
+            @unlink($target);
+            return array(false, 'curl: HTTP ' . $code . ($err !== '' ? ' / ' . $err : ''));
         }
 
-        return false;
+        /* фолбэк: потоки PHP */
+        if (ini_get('allow_url_fopen')) {
+            $ctx = stream_context_create(array(
+                'http' => array('timeout' => 1800, 'follow_location' => 1),
+                'ssl'  => array('verify_peer' => false, 'verify_peer_name' => false),
+            ));
+            $in = @fopen($url, 'rb', false, $ctx);
+            if (!$in) { return array(false, 'Не открыть URL: ' . $url); }
+            $out = @fopen($target, 'wb');
+            if (!$out) { fclose($in); return array(false, 'Не открыть для записи: ' . $target); }
+            $copied = stream_copy_to_stream($in, $out);
+            fclose($in);
+            fclose($out);
+            if ($copied > 0) { return array($copied, ''); }
+            @unlink($target);
+            return array(false, 'Скачано 0 байт');
+        }
+
+        return array(false, 'На сервере нет ни curl, ни allow_url_fopen');
     }
 
     private function ensure_data_dir()
@@ -373,17 +404,32 @@ class c_updater_destination
         if (!$this->ensure_data_dir()) {
             return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Нет папки ' . PATH_TO_DATA));
         }
-        $data = $this->fetch_url($link);
-        if ($data === false) {
-            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Не удалось скачать: ' . $link));
+
+        $tmp  = PATH_TO_DATA . 'sql_dump.sql.part';
+        $dest = PATH_TO_DATA . 'sql_dump.sql';
+
+        list($bytes, $err) = $this->fetch_url_to_file($link, $tmp);
+        if ($bytes === false || $bytes <= 0) {
+            @unlink($tmp);
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => $err), JSON_UNESCAPED_UNICODE);
         }
-        $bytes_written = file_put_contents(PATH_TO_DATA . 'sql_dump.sql', $data, LOCK_EX);
-        if (!$bytes_written) {
-            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Не удалось записать sql_dump.sql'));
+
+        $head = '';
+        $fh = @fopen($tmp, 'rb');
+        if ($fh) { $head = fread($fh, 200); fclose($fh); }
+        if (stripos($head, '<html') !== false || stripos($head, '<!doctype') !== false) {
+            @unlink($tmp);
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Вместо дампа пришёл HTML'), JSON_UNESCAPED_UNICODE);
         }
+
+        if (!@rename($tmp, $dest)) {
+            @unlink($tmp);
+            return json_encode(array('reply' => 'fail_downloading_sql_backup', 'buffer' => 'Не удалось переименовать в ' . $dest));
+        }
+
         return json_encode(array(
             'reply'  => 'sql_backup_is_downloaded',
-            'buffer' => number_format($bytes_written / 1024, 2, '.', ' ') . ' KB',
+            'buffer' => number_format($bytes / 1024, 2, '.', ' ') . ' KB',
         ));
     }
 
@@ -392,22 +438,42 @@ class c_updater_destination
         if (!$this->ensure_data_dir()) {
             return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Нет папки ' . PATH_TO_DATA));
         }
-        $data = $this->fetch_url($link);
-        if ($data === false) {
-            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Не удалось скачать: ' . $link));
+
+        $tmp = FILENAME_ZIP_DIFF_FILES . '.part';
+
+        list($bytes, $err) = $this->fetch_url_to_file($link, $tmp);
+        if ($bytes === false || $bytes <= 0) {
+            @unlink($tmp);
+            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => $err), JSON_UNESCAPED_UNICODE);
         }
-        $bytes_written = file_put_contents(FILENAME_ZIP_DIFF_FILES, $data, LOCK_EX);
-        if (!$bytes_written) {
-            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Не удалось записать архив'));
+
+        /* проверяем сигнатуру ZIP — иначе сервер отдал страницу ошибки */
+        $sig = '';
+        $fh = @fopen($tmp, 'rb');
+        if ($fh) { $sig = fread($fh, 2); fclose($fh); }
+        if ($sig !== 'PK') {
+            @unlink($tmp);
+            return json_encode(array(
+                'reply'  => 'fail_downloading_zip_file',
+                'buffer' => 'Скачан не ZIP (сигнатура "' . htmlspecialchars($sig, ENT_QUOTES, 'UTF-8') . '", ' . $bytes . ' байт). Вероятно, сервер отдал HTML-ошибку.',
+            ), JSON_UNESCAPED_UNICODE);
         }
+
+        if (!@rename($tmp, FILENAME_ZIP_DIFF_FILES)) {
+            @unlink($tmp);
+            return json_encode(array('reply' => 'fail_downloading_zip_file', 'buffer' => 'Не удалось переименовать архив'));
+        }
+
         return json_encode(array(
             'reply'  => 'zip_file_is_downloaded',
-            'buffer' => number_format($bytes_written / 1024, 2, '.', ' ') . ' KB',
+            'buffer' => number_format($bytes / 1024, 2, '.', ' ') . ' KB',
         ));
     }
 
     public function extract_zip_list_of_files()
     {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
         ob_start();
 
         if (!class_exists('ZipArchive')) {
@@ -433,7 +499,6 @@ class c_updater_destination
             $name = $zip->getNameIndex($i);
             if ($name === false || substr($name, -1) === '/') { continue; }
 
-            /* защита от выхода за пределы корня и от служебных файлов */
             $clean = str_replace('\\', '/', $name);
             if (strpos($clean, '..') !== false || strpos($clean, "\0") !== false) {
                 $skipped[] = $name; continue;
@@ -518,15 +583,37 @@ class c_updater_destination
 if (!class_exists('c_processing_files')) {
     class c_processing_files
     {
-        public $a_fname = array();
-        public $a_fsize = array();
-        public $a_fdir = array();
+        public $a_fname     = array();
+        public $a_fsize     = array();
+        public $a_fdir      = array();
         public $a_hash_file = array();
-        public $cofiles = 0;
+        public $cofiles     = 0;
 
-        private $re_folders_exclude = "/^\/(backup|test|updater_source|admin|service|images|export|upl|import|cache|node_modules|\.git|_.+)(\/|$)/i";
-        private $re_files_include   = "/\.(htaccess|js|json|css|php|html|xml|txt|jpg|png|svg|webp|gif|woff2|ttf|csv|zip)$/i";
-        private $re_files_exclude   = "/(dbcon\.php|settings\.php)$/i";
+        private $any_exclude = array(
+            'node_modules', 'cache', 'data', 'sql_backups', 'logs', 'log', 'tmp', 'temp',
+        );
+
+        private $root_exclude = array(
+            'images', 'upload_files', 'documents', 'download',
+            'backup', 'backups', 'updater_source', 'export', 'upl', 'import',
+            'test', 'admin', 'service',
+        );
+
+        private $include_ext = '/\.(php|js|css|html|htm|xml|txt|json|svg|png|jpg|jpeg|webp|gif|woff|woff2|ttf|eot|map|htaccess)$/i';
+
+        private $exclude_files = '/(^settings\.php$|^error_log$|\.log$|\.sql$|\.zip$|\.bak$|\.old$|^usdrate\.txt$|^\.htaccess\.local$|^\.htaccess\.bak$)/i';
+
+        private $max_files = 50000;
+
+        private function is_excluded_dir($name, $parent)
+        {
+            if ($name === '' ) { return true; }
+            if ($name[0] === '_' || $name[0] === '.') { return true; }
+            $lower = strtolower($name);
+            if (in_array($lower, $this->any_exclude, true)) { return true; }
+            if ($parent === '' && in_array($lower, $this->root_exclude, true)) { return true; }
+            return false;
+        }
 
         public function find($in_dir)
         {
@@ -541,32 +628,24 @@ if (!class_exists('c_processing_files')) {
 
             while (($file = readdir($dh)) !== false) {
                 if ($file === '.' || $file === '..') { continue; }
+                $path = $abs . '/' . $file;
 
-                $rel_dir  = ($in_dir === '') ? '/' : $in_dir . '/';
-                $abs_path = $abs . '/' . $file;
-
-                if (is_dir($abs_path)) {
-                    if (!preg_match($this->re_folders_exclude, $rel_dir)) {
-                        $this->find($rel_dir . $file);
-                    }
+                if (is_dir($path)) {
+                    if ($this->is_excluded_dir($file, $in_dir)) { continue; }
+                    $this->find($in_dir . '/' . $file);
                     continue;
                 }
 
-                if (!is_file($abs_path)) { continue; }
-                if (!preg_match($this->re_files_include, $file)) { continue; }
-                if (preg_match($this->re_files_exclude, $file)) { continue; }
-                if (preg_match($this->re_folders_exclude, $rel_dir)) { continue; }
+                if (!is_file($path)) { continue; }
+                if (!preg_match($this->include_ext, $file)) { continue; }
+                if (preg_match($this->exclude_files, $file)) { continue; }
+                if ($this->cofiles >= $this->max_files) { break; }
 
                 $this->a_fname[]     = $file;
-                $this->a_fsize[]     = filesize($abs_path);
-                $this->a_hash_file[] = hash_file('md5', $abs_path);
-                $this->a_fdir[]      = rtrim($rel_dir, '/');
-                if ($this->a_fdir[count($this->a_fdir) - 1] === '') {
-                    $this->a_fdir[count($this->a_fdir) - 1] = '/';
-                }
+                $this->a_fsize[]     = filesize($path);
+                $this->a_hash_file[] = hash_file('md5', $path);
+                $this->a_fdir[]      = ($in_dir === '') ? '/' : $in_dir;
                 $this->cofiles++;
-
-                if ($this->cofiles > 100000) { break; }
             }
             closedir($dh);
         }

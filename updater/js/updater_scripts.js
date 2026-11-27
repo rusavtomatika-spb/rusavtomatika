@@ -102,9 +102,10 @@
                 var reply = val.reply;
                 var label = this.mess_strings[reply];
 
-                if (reply === '__bad_response__') {
-                    this.append('<b>Сервер вернул не JSON:</b><pre style="white-space:pre-wrap;font-size:11px">'
-                        + this.escape(val.raw) + '</pre><hr>');
+                if (reply === '__bad_response__' || reply.indexOf('fail_') === 0) {
+                    this.append('<b>Ошибка (' + this.escape(reply) + '):</b>'
+                        + '<pre style="white-space:pre-wrap;font-size:11px">'
+                        + this.escape(val.buffer || val.raw || '(без текста)') + '</pre><hr>');
                     this.enable_buttons_submit();
                     return;
                 }
