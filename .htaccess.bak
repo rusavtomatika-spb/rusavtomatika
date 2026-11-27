@@ -19,6 +19,7 @@ Options -Indexes
 </FilesMatch>
 
 RewriteEngine on
+DirectorySlash Off
 
 # Редирект с /termit/ на /accessories/
 RewriteRule ^termit/(.*)$ /accessories/$1 [R=301,L,QSD]
@@ -36,7 +37,17 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# МАРШРУТИЗАЦИЯ (должна быть ПЕРВОЙ после редиректов)
+# Редирект на HTTPS и www
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule (.*) https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{THE_REQUEST} \s/+(.*?)/{2,}([^\s]*)
+RewriteRule ^ /%1/%2 [R=301,L]
+
+# МАРШРУТИЗАЦИЯ
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^news/(.*)$ news/index.php?q=$1 [L,QSA]
@@ -48,6 +59,10 @@ RewriteRule ^articles/(.*)$ articles/index.php?q=$1 [L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ifc/(.*)$ ifc/index.php?q=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^weintek/(.*?)/*$ weintek/index.php?q=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

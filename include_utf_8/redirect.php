@@ -99,9 +99,10 @@ foreach ($dynamicRules as $rule) {
 
     if (!empty($rule['suffix'])) {
         $s = $rule['suffix'];
-        if (substr($model, -strlen($s)) === $s) {
-            $model = substr($model, 0, -strlen($s));
+        if (substr($model, -strlen($s)) !== $s) {
+            continue;
         }
+        $model = substr($model, 0, -strlen($s));
     }
 
     if ($model === '' || $model === false) {
