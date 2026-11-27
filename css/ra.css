@@ -4267,7 +4267,7 @@ a:hover .catalog_box-pc-aplex__h3 {
 .catalog_detail_features ul li{
     padding: 5px 5px 5px 25px;
     margin: 10px 10px 10px 0px;
-    background: url("/core/templates/rusavtomatika_adaptive/images/check_mark_green.png") -1px 6px no-repeat;
+    background: url("/abacus/templates/rusavtomatika_adaptive/images/check_mark_green.png") -1px 6px no-repeat;
     list-style: none;
 }
 

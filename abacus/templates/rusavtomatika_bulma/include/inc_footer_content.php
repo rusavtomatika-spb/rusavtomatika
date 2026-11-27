@@ -125,7 +125,7 @@
         </ul>
       </div>
       <div class="column is-12-mobile is-6-tablet">
-        <p class="is-size-5 has-text-weight-semibold footer_column_title"> <img class="logo" src="/core/templates/rusavtomatika_bulma/images/logo.svg" alt="Русавтоматика"> </p>
+        <p class="is-size-5 has-text-weight-semibold footer_column_title"> <img class="logo" src="/abacus/templates/rusavtomatika_bulma/images/logo.svg" alt="Русавтоматика"> </p>
         <div class="phone_block">
           <p> <span class="nowrap work_time">пн-чт 09:00-18:00, пт 09:00-17:00</span> </p>
           <p> <a itemprop="telephone" rel="nofollow" href="tel:+88006003347" class="nowrap header_phone">8 (800) 600-33-47</a> </p>

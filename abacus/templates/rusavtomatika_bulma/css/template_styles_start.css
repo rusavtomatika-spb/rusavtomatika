@@ -242,7 +242,7 @@ header ul, header li {
 .button_open_panel_contacts.is-active {
     overflow: hidden;
     text-indent: -9999px;
-    background: url("/core/templates/rusavtomatika_bulma/images/close-light.svg") center/cover no-repeat;
+    background: url("/abacus/templates/rusavtomatika_bulma/images/close-light.svg") center/cover no-repeat;
     height: 40px;
     width: 40px;
     margin: 0 0 0 64px;
@@ -700,5 +700,3 @@ iframe {
         max-width: 100%;
     }
 }
-
-

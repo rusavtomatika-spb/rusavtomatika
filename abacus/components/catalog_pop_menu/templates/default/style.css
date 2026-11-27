@@ -117,7 +117,7 @@ html.pop-menu-opened .sticky_block.fixed {
     height: 16px;
     display: inline-block;
     vertical-align: sub;
-    background: url("/core/templates/rusavtomatika_bulma/images/arr_right_white.png") center no-repeat;
+    background: url("/abacus/rusavtomatika_bulma/images/arr_right_white.png") center no-repeat;
     opacity: 0.9;
 }
 #vue_catalog_pop_menu .category_link a:hover span.arrow {
@@ -445,7 +445,7 @@ html.pop-menu-opened .sticky_block.fixed {
 }
 
 #vue_catalog_pop_menu .cataloge-right-side.loading .loading_info_panel {
-    background: url("/core/templates/rusavtomatika_bulma/images/loading-menu.gif") 20px 10px no-repeat #f3f9f9;
+    background: url("/abacus/templates/rusavtomatika_bulma/images/loading-menu.gif") 20px 10px no-repeat #f3f9f9;
     position: absolute;
     top: 0;
     left: 0;
